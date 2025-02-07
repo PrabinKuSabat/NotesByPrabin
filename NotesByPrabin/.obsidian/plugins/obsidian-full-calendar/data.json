@@ -1,0 +1,21 @@
+{
+  "calendarSources": [
+    {
+      "type": "dailynote",
+      "color": "#000000",
+      "heading": "Tasks"
+    },
+    {
+      "type": "local",
+      "color": "#1a90ff",
+      "directory": "CALENDER"
+    }
+  ],
+  "defaultCalendar": 0,
+  "firstDay": 1,
+  "initialView": {
+    "desktop": "timeGridWeek",
+    "mobile": "timeGrid3Days"
+  },
+  "timeFormat24h": false
+}

@@ -1,5 +1,14 @@
-# List
+# Simulators List
 
-1. [[TPTPUSim]] - <mark style="background: #FFB8EBA6;">Incomplete</mark>
-2. [[GPGPU-Sim]] - <mark style="background: #FFB8EBA6;">Incomplete</mark>
-3. [[GPUWattch]] - <mark style="background: #FFB8EBA6;">Incomplete</mark>
+1. [[List of GPU Simulators]]
+
+# Simulators Notes
+
+## GPUTejas
+
+[[Parameters available in GPUTejas config.xml]]
+
+## GPGPU
+
+1. [[GPGPU-Sim Manual]]
+2. [[GPGPU-Installation]]

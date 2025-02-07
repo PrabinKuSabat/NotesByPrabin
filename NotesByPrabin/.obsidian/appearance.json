@@ -1,0 +1,17 @@
+{
+  "accentColor": "#09e8ec",
+  "theme": "moonstone",
+  "cssTheme": "Aura",
+  "nativeMenus": false,
+  "translucency": false,
+  "interfaceFontFamily": "Cascadia Code",
+  "textFontFamily": "Book Antiqua",
+  "monospaceFontFamily": "Comic Sans MS",
+  "baseFontSize": 15,
+  "baseFontSizeAction": true,
+  "showViewHeader": true,
+  "enabledCssSnippets": [
+    "booksearch",
+    "custom-admonitions.c5575a"
+  ]
+}

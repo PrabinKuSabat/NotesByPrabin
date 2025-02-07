@@ -1,0 +1,6 @@
+{
+  "new-line-trigger": "shift-enter",
+  "new-note-folder": "Required/_KanbanNotes",
+  "hide-tags-in-title": true,
+  "show-relative-date": true
+}

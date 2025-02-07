@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Define the directories
+
+DIR1='/home/prabin-kumar-sabat/Documents/"PRABIN\'s KB"/.obsidian/icons/'
+DIR2='/home/prabin-kumar-sabat/Documents/"PRABIN\'s KB"/.obsidian/icons/simple_icons/'
+
+# Check if directories exist
+if [ ! -d "$DIR1" ] || [ ! -d "$DIR2" ]; then
+  echo "One or both directories do not exist."
+  exit 1
+fi
+
+# List files in both directories
+FILES1=$(find "$DIR1" -maxdepth 1 -type f -exec basename {} \;)
+FILES2=$(find "$DIR2" -maxdepth 1 -type f -exec basename {} \;)
+
+# Find common files
+COMMON_FILES=$(echo "$FILES1" "$FILES2" | tr ' ' '\n' | sort | uniq -d)
+
+# Remove common files
+for FILE in $COMMON_FILES; do
+  # Remove from the first directory
+  if [ -f "$DIR1/$FILE" ]; then
+    rm "$DIR1/$FILE"
+    echo "Removed $DIR1/$FILE"
+  fi
+
+  # Remove from the second directory
+  if [ -f "$DIR2/$FILE" ]; then
+    rm "$DIR2/$FILE"
+    echo "Removed $DIR2/$FILE"
+  fi
+done
+
+echo "Removal process complete."

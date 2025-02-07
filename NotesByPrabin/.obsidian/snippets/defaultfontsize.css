@@ -1,0 +1,10 @@
+@media print {
+  body {
+    --font-interface-override: "Times New Roman" !important;
+    --font-text-override: "Times New Roman" !important;
+    --font-print-override: "Times New Roman" !important;
+    --font-monospace-override: "Consolas" !important;
+    --font-text-size: 08px !important;
+    font-family: "Times New Roman" !important;
+  }
+}

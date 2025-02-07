@@ -1,0 +1,385 @@
+{
+  "version": 2,
+  "projects": [
+    {
+      "fieldConfig": {
+        "status": {
+          "richText": true,
+          "options": [
+            "YET TO START",
+            "READING",
+            "FINISHED READING",
+            "REVIEWED"
+          ]
+        },
+        "name": {
+          "richText": true
+        },
+        "Intrested": {}
+      },
+      "defaultName": "",
+      "templates": [],
+      "excludedNotes": [
+        "ATLAS/Templates/_BookNote.md"
+      ],
+      "isDefault": false,
+      "dataSource": {
+        "kind": "folder",
+        "config": {
+          "path": "Required/Books",
+          "recursive": false
+        }
+      },
+      "newNotesFolder": "",
+      "views": [
+        {
+          "config": {
+            "coverField": "cover",
+            "fitStyle": "contain",
+            "includeFields": [
+              "author",
+              "category",
+              "publish",
+              "publisher",
+              "status",
+              "total",
+              "RATING",
+              "Intrested"
+            ]
+          },
+          "filter": {
+            "conjunction": "and",
+            "conditions": [
+              {
+                "field": "status",
+                "operator": "contains",
+                "enabled": true,
+                "value": "YET TO START"
+              }
+            ]
+          },
+          "colors": {
+            "conditions": []
+          },
+          "sort": {
+            "criteria": [
+              {
+                "field": "Intrested",
+                "order": "desc",
+                "enabled": true
+              },
+              {
+                "field": "updated",
+                "order": "asc",
+                "enabled": true
+              }
+            ]
+          },
+          "id": "0d22fa3d-b10f-4021-a7b2-f4b27490e4a6",
+          "name": "YET TO START",
+          "type": "gallery"
+        },
+        {
+          "config": {
+            "fitStyle": "contain",
+            "coverField": "cover",
+            "includeFields": [
+              "author",
+              "category",
+              "publish",
+              "publisher",
+              "status",
+              "total",
+              "tags"
+            ]
+          },
+          "filter": {
+            "conjunction": "and",
+            "conditions": [
+              {
+                "field": "status",
+                "operator": "is",
+                "enabled": true,
+                "value": "READING"
+              }
+            ]
+          },
+          "colors": {
+            "conditions": []
+          },
+          "sort": {
+            "criteria": []
+          },
+          "id": "0a88f859-3759-4926-812f-a2fe4ea860b6",
+          "name": "Reading",
+          "type": "gallery"
+        },
+        {
+          "config": {
+            "coverField": "cover",
+            "fitStyle": "contain",
+            "includeFields": [
+              "author",
+              "category",
+              "publish",
+              "publisher",
+              "status",
+              "tags",
+              "total"
+            ]
+          },
+          "filter": {
+            "conjunction": "and",
+            "conditions": [
+              {
+                "field": "status",
+                "operator": "is",
+                "enabled": true,
+                "value": "FINISHED READING"
+              }
+            ]
+          },
+          "colors": {
+            "conditions": []
+          },
+          "sort": {
+            "criteria": []
+          },
+          "id": "000ec4b9-29fd-4b3c-83ed-fb0c467dac99",
+          "name": "FINISHED READING",
+          "type": "gallery"
+        },
+        {
+          "config": {
+            "includeFields": [
+              "author",
+              "category",
+              "publish",
+              "publisher",
+              "RATING",
+              "status",
+              "total"
+            ]
+          },
+          "filter": {
+            "conjunction": "and",
+            "conditions": [
+              {
+                "field": "status",
+                "operator": "contains",
+                "enabled": true,
+                "value": "REVIEWED"
+              }
+            ]
+          },
+          "colors": {
+            "conditions": []
+          },
+          "sort": {
+            "criteria": []
+          },
+          "id": "1af5b595-1722-4d6f-8a58-9457e8f27fcf",
+          "name": "REVIEWED",
+          "type": "gallery"
+        },
+        {
+          "config": {
+            "orderFields": [
+              "name",
+              "author",
+              "category",
+              "Intrested",
+              "status",
+              "RATING",
+              "total",
+              "publish",
+              "publisher",
+              "updated",
+              "tag"
+            ],
+            "fieldConfig": {
+              "cover": {
+                "hide": true
+              },
+              "created": {
+                "hide": true
+              },
+              "localCover": {
+                "hide": true
+              },
+              "path": {
+                "hide": true
+              },
+              "isbn": {
+                "hide": true
+              },
+              "subtitle": {
+                "hide": true
+              },
+              "tags": {
+                "hide": true
+              },
+              "title": {
+                "hide": true
+              },
+              "updated": {
+                "width": 246,
+                "hide": true
+              },
+              "total": {
+                "width": 177
+              },
+              "publish": {
+                "width": 154
+              },
+              "publisher": {
+                "width": 205
+              },
+              "status": {
+                "width": 259
+              },
+              "RATING": {
+                "width": 206
+              },
+              "category": {
+                "width": 207
+              },
+              "name": {
+                "width": 493
+              },
+              "tag": {
+                "hide": true
+              }
+            }
+          },
+          "filter": {
+            "conjunction": "and",
+            "conditions": []
+          },
+          "colors": {
+            "conditions": [
+              {
+                "color": "#d3b703",
+                "condition": {
+                  "field": "status",
+                  "operator": "contains",
+                  "enabled": true,
+                  "value": "FINISHED READING"
+                }
+              }
+            ]
+          },
+          "sort": {
+            "criteria": [
+              {
+                "field": "created",
+                "order": "desc",
+                "enabled": true
+              }
+            ]
+          },
+          "id": "1977647a-ec20-442b-a5ea-b97f21e235c0",
+          "name": "EDITING",
+          "type": "table"
+        }
+      ],
+      "id": "70f4364d-df90-401c-b448-2f0d112fb6c2",
+      "name": "Library"
+    },
+    {
+      "fieldConfig": {},
+      "defaultName": "",
+      "templates": [
+        "ATLAS/Templates/CPP Class Notes.md"
+      ],
+      "excludedNotes": [],
+      "isDefault": false,
+      "dataSource": {
+        "kind": "folder",
+        "config": {
+          "path": "ATLAS/SubjectNotes/C PP",
+          "recursive": true
+        }
+      },
+      "newNotesFolder": "",
+      "views": [
+        {
+          "config": {
+            "fieldConfig": {
+              "path": {
+                "width": 307
+              },
+              "name": {
+                "width": 333
+              }
+            },
+            "orderFields": [
+              "name",
+              "path",
+              "aliases",
+              "category",
+              "File",
+              "tags"
+            ]
+          },
+          "filter": {
+            "conjunction": "and",
+            "conditions": []
+          },
+          "colors": {
+            "conditions": [
+              {
+                "color": "#2f09ec",
+                "condition": {
+                  "field": "tags",
+                  "operator": "has-keyword",
+                  "enabled": true,
+                  "value": "cppclass"
+                }
+              },
+              {
+                "color": "#09e8ec",
+                "condition": {
+                  "field": "tags",
+                  "operator": "has-keyword",
+                  "enabled": true,
+                  "value": "CPPpdf"
+                }
+              }
+            ]
+          },
+          "sort": {
+            "criteria": [
+              {
+                "field": "tags",
+                "order": "asc",
+                "enabled": true
+              }
+            ]
+          },
+          "id": "50d441ec-2c8e-4b13-9f41-ac0e47cd0b66",
+          "name": "Table",
+          "type": "table"
+        }
+      ],
+      "id": "a8e0adc3-1449-48aa-b38a-7dd1b69bd81f",
+      "name": "C++"
+    }
+  ],
+  "archives": [],
+  "preferences": {
+    "projectSizeLimit": 1000,
+    "frontmatter": {
+      "quoteStrings": "PLAIN"
+    },
+    "locale": {
+      "firstDayOfWeek": "default"
+    },
+    "commands": [
+      {
+        "project": "a8e0adc3-1449-48aa-b38a-7dd1b69bd81f"
+      }
+    ],
+    "linkBehavior": "open-editor"
+  }
+}

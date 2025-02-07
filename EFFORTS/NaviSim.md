@@ -46,7 +46,9 @@
 26. What are OpenCL and HIP kernels?
 27. AMD ROCm platform?
 28. What is Wavefront Dispatching?
+
 ---
+
 ---
 
 # Architectures
@@ -143,6 +145,7 @@ Comparing cache latencies between the GCN and RDNA GPUs, while running the point
 ![[Pasted image 20240912203601.png]]
 
 ---
+
 ---
 
 # NAVISIM [`ris:Navigation`](https://github.com/autonomousvision/navsim)  

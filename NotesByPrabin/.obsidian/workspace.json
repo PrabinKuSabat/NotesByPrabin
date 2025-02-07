@@ -1,0 +1,306 @@
+{
+  "main": {
+    "id": "5324373015726ba8",
+    "type": "split",
+    "children": [
+      {
+        "id": "4509724f8bf84da7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e7a7b303c61786dc",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Homepage.md",
+                "mode": "source",
+                "backlinks": true,
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Homepage"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "e50fecc47fceb20a",
+    "type": "split",
+    "children": [
+      {
+        "id": "eee1ce37f7e285e3",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "4b44bc66b81b0ac8",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "byModifiedTime"
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "0445b4c3c474b762",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "[\"tags\"]",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "dd26984cf0895579",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          },
+          {
+            "id": "0c3b46ad5abe31b8",
+            "type": "leaf",
+            "state": {
+              "type": "mk-path-view",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "Plugin no longer active"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 414.5
+  },
+  "right": {
+    "id": "43fc27400badb105",
+    "type": "split",
+    "children": [
+      {
+        "id": "1c065ec571345d62",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "141091543637c66f",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": false
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "c44e965ec4ffd46f",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Homepage.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": false
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Homepage"
+            }
+          },
+          {
+            "id": "a6df045dc5c37977",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "d23d8299e353448c",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Homepage.md"
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Homepage"
+            }
+          },
+          {
+            "id": "1a664d19271f8831",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {},
+              "icon": "spreadsheet",
+              "title": "Advanced Tables"
+            }
+          },
+          {
+            "id": "058bebb3067d4924",
+            "type": "leaf",
+            "state": {
+              "type": "file-properties",
+              "state": {
+                "file": "Homepage.md"
+              },
+              "icon": "lucide-info",
+              "title": "File properties for Homepage"
+            }
+          },
+          {
+            "id": "450eaf829269d505",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
+            }
+          },
+          {
+            "id": "b3f579caef584553",
+            "type": "leaf",
+            "state": {
+              "type": "planner-timeline",
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Timeline"
+            }
+          },
+          {
+            "id": "2ec51cd4ad75cd52",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          }
+        ],
+        "currentTab": 5
+      }
+    ],
+    "direction": "horizontal",
+    "width": 471.5,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "obsidian-custom-frames:Open Google Calendar": false,
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": true,
+      "command-palette:Open command palette": true,
+      "workspaces:Manage workspace layouts": false,
+      "canvas:Create new canvas": false,
+      "obsidian-kanban:Create new board": false,
+      "obsidian-projects:Open projects": false,
+      "obsidian-book-search-plugin:Create new book note": false,
+      "templater-obsidian:Templater": false,
+      "obsidian-statusbar-pomo:Start pomodoro": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "pdf-plus:PDF++: Toggle auto-copy": false,
+      "pdf-plus:PDF++: Toggle auto-focus": false,
+      "pdf-plus:PDF++: Toggle auto-paste": false,
+      "homepage:Open homepage": false,
+      "obsidian-git:Open Git source control": false,
+      "obsidian-day-planner:Open Timeline": false,
+      "obsidian-day-planner:Open Multi-Day View": false,
+      "obsidian-full-calendar:Open Full Calendar": false,
+      "periodic-notes:Open today": false
+    }
+  },
+  "active": "e7a7b303c61786dc",
+  "lastOpenFiles": [
+    "Homepage.md",
+    "Heatmaps.md",
+    "CALENDER/2025-01-15.md",
+    "Templates/Daily Template.md",
+    "CALENDER/2025-01-16.md",
+    "CALENDER/Wed 15-01-2025.md",
+    "CALENDER/Thu 16-01-2025.md",
+    "ATTACHMENTS/Pasted image 20250116101539.png",
+    "CALENDER/(Every R) JAVA Lab.md",
+    "CALENDER/(Every R) PMAT-203.md",
+    "CALENDER/(Every R) PMAT-201.md",
+    "CALENDER/(Every R) Moral Class.md",
+    "CALENDER/2025-01-16 Moral Class.md",
+    "CALENDER/Events.md",
+    "Calendar",
+    "EFFORTS/GPGPU-Sim.md",
+    "Templates/Weekly Note.md",
+    "EFFORTS/Simulators.md",
+    "EFFORTS/Efforts.md",
+    "ProofReading.md",
+    "Untitled.md",
+    "EFFORTS/GPUWattch.md",
+    "EFFORTS/TPTPUSim.md",
+    "ATLAS/Atlas.md",
+    "CALENDER/Dec 52nd Week 2024.md",
+    "CALENDER/Aug 34th Week 2024.md",
+    "CALENDER/Fri 20-12-2024.md",
+    "EFFORTS/Binary Search.canvas",
+    "ATTACHMENTS/Pasted image 20241209213544.png",
+    "ATTACHMENTS/Pasted image 20241209213532.png",
+    "ATTACHMENTS/Pasted image 20241209213050.png",
+    "ATTACHMENTS/Pasted image 20241209203923.png",
+    "ATTACHMENTS/Pasted image 20241209202233.png",
+    "ATTACHMENTS/Pasted image 20241209201857.png",
+    "ATTACHMENTS/Pasted image 20241209185953.png",
+    "ATTACHMENTS/Pasted image 20240916145901.png",
+    "ATTACHMENTS/Pasted image 20240916145837.png",
+    "ATTACHMENTS/Matrix Analysis and Applied Linear Algebra  Solutions Manual (Carl D. Meyer)2001 (Z-Library).pdf",
+    "trial/NotesByPrabin",
+    "trial",
+    "NotesByPrabin",
+    "Templates",
+    "ATTACHMENTS",
+    "EFFORTS",
+    "CALENDER",
+    "ATLAS",
+    "!HOME.canvas",
+    "Untitled.canvas",
+    "ATLAS/SubjectNotes/C PP/Untitled.canvas",
+    "EFFORTS/CS-COD Assignments/CS-COD Assignments.canvas",
+    "EFFORTS/!ABAW/!ABAW.canvas",
+    "ATLAS/SubjectNotes/C PP/C PP.canvas",
+    "EFFORTS/EFFORTS.canvas",
+    "ATLAS/SubjectNotes/SubjectNotes.canvas"
+  ]
+}

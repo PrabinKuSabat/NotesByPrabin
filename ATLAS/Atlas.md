@@ -7,4 +7,5 @@
 > [[Real Analyis|RA]]
 
 > [!abstract] Computer Science  
-> [[CPP|C++]]
+> [[CPP|C++]]  
+> [[AI]]

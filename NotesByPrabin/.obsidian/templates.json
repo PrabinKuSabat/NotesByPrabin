@@ -1,0 +1,5 @@
+{
+  "dateFormat": "dddd_Do_MMM_y",
+  "timeFormat": "{{ HH: :MM: :S A }}",
+  "folder": "Templates"
+}

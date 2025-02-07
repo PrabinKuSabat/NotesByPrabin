@@ -1,0 +1,19 @@
+{
+  "types": {
+    "aliases": "aliases",
+    "cssclasses": "multitext",
+    "tags": "tags",
+    "status": "text",
+    "Finished": "checkbox",
+    "Date": "date",
+    "Completed": "checkbox",
+    "RATING": "number",
+    "total": "number",
+    "Intrested": "number",
+    "Suprabhatam": "checkbox",
+    "Jogging": "checkbox",
+    "Mandir": "checkbox",
+    "Night Lab": "checkbox",
+    "Project Work": "checkbox"
+  }
+}
