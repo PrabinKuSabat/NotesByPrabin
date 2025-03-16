@@ -15,8 +15,17 @@
               "state": {
                 "file": "Homepage.md",
                 "mode": "source",
+                "source": false,
                 "backlinks": true,
-                "source": false
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
               "icon": "lucide-file",
               "title": "Homepage"
@@ -41,7 +50,8 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "byModifiedTime"
+                "sortOrder": "byModifiedTime",
+                "autoReveal": false
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -161,8 +171,8 @@
             "state": {
               "type": "advanced-tables-toolbar",
               "state": {},
-              "icon": "spreadsheet",
-              "title": "Advanced Tables"
+              "icon": "lucide-file",
+              "title": "Plugin no longer active"
             }
           },
           {
@@ -183,8 +193,8 @@
             "state": {
               "type": "calendar",
               "state": {},
-              "icon": "calendar-with-checkmark",
-              "title": "Calendar"
+              "icon": "lucide-file",
+              "title": "Plugin no longer active"
             }
           },
           {
@@ -193,8 +203,8 @@
             "state": {
               "type": "planner-timeline",
               "state": {},
-              "icon": "calendar-with-checkmark",
-              "title": "Timeline"
+              "icon": "lucide-file",
+              "title": "Plugin no longer active"
             }
           },
           {
@@ -210,6 +220,26 @@
               "icon": "lucide-archive",
               "title": "All properties"
             }
+          },
+          {
+            "id": "1623c71af33af217",
+            "type": "leaf",
+            "state": {
+              "type": "planner-timeline",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "Plugin no longer active"
+            }
+          },
+          {
+            "id": "9e05f90576bded9b",
+            "type": "leaf",
+            "state": {
+              "type": "planner-timeline",
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Timeline"
+            }
           }
         ],
         "currentTab": 5
@@ -221,7 +251,6 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "obsidian-custom-frames:Open Google Calendar": false,
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "daily-notes:Open today's daily note": false,
@@ -229,71 +258,74 @@
       "command-palette:Open command palette": true,
       "workspaces:Manage workspace layouts": false,
       "canvas:Create new canvas": false,
+      "periodic-notes:Open today": false,
       "obsidian-kanban:Create new board": false,
       "obsidian-projects:Open projects": false,
       "obsidian-book-search-plugin:Create new book note": false,
       "templater-obsidian:Templater": false,
       "obsidian-statusbar-pomo:Start pomodoro": false,
       "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "obsidian-git:Open Git source control": false,
+      "homepage:Open homepage": false,
       "pdf-plus:PDF++: Toggle auto-copy": false,
       "pdf-plus:PDF++: Toggle auto-focus": false,
       "pdf-plus:PDF++: Toggle auto-paste": false,
-      "homepage:Open homepage": false,
-      "obsidian-git:Open Git source control": false,
-      "obsidian-day-planner:Open Timeline": false,
-      "obsidian-day-planner:Open Multi-Day View": false,
       "obsidian-full-calendar:Open Full Calendar": false,
-      "periodic-notes:Open today": false
+      "obsidian-custom-frames:Open Google Calendar": false,
+      "obsidian-day-planner:Open Timeline": false,
+      "obsidian-day-planner:Open Multi-Day View": false
     }
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Homepage.md",
-    "Heatmaps.md",
-    "CALENDER/2025-01-15.md",
-    "Templates/Daily Template.md",
-    "CALENDER/2025-01-16.md",
-    "CALENDER/Wed 15-01-2025.md",
-    "CALENDER/Thu 16-01-2025.md",
-    "ATTACHMENTS/Pasted image 20250116101539.png",
-    "CALENDER/(Every R) JAVA Lab.md",
-    "CALENDER/(Every R) PMAT-203.md",
-    "CALENDER/(Every R) PMAT-201.md",
-    "CALENDER/(Every R) Moral Class.md",
-    "CALENDER/2025-01-16 Moral Class.md",
-    "CALENDER/Events.md",
-    "Calendar",
-    "EFFORTS/GPGPU-Sim.md",
-    "Templates/Weekly Note.md",
-    "EFFORTS/Simulators.md",
-    "EFFORTS/Efforts.md",
-    "ProofReading.md",
-    "Untitled.md",
-    "EFFORTS/GPUWattch.md",
-    "EFFORTS/TPTPUSim.md",
-    "ATLAS/Atlas.md",
-    "CALENDER/Dec 52nd Week 2024.md",
-    "CALENDER/Aug 34th Week 2024.md",
-    "CALENDER/Fri 20-12-2024.md",
-    "EFFORTS/Binary Search.canvas",
-    "ATTACHMENTS/Pasted image 20241209213544.png",
-    "ATTACHMENTS/Pasted image 20241209213532.png",
-    "ATTACHMENTS/Pasted image 20241209213050.png",
-    "ATTACHMENTS/Pasted image 20241209203923.png",
-    "ATTACHMENTS/Pasted image 20241209202233.png",
-    "ATTACHMENTS/Pasted image 20241209201857.png",
-    "ATTACHMENTS/Pasted image 20241209185953.png",
-    "ATTACHMENTS/Pasted image 20240916145901.png",
-    "ATTACHMENTS/Pasted image 20240916145837.png",
-    "ATTACHMENTS/Matrix Analysis and Applied Linear Algebra  Solutions Manual (Carl D. Meyer)2001 (Z-Library).pdf",
-    "trial/NotesByPrabin",
-    "trial",
+    "NotesByPrabin/Templates/Weekly Note.md",
+    "NotesByPrabin/Templates/Daily Template.md",
+    "NotesByPrabin/Templates/Canva Right Align.md",
+    "NotesByPrabin/Templates/Canva Left Align.md",
+    "NotesByPrabin/Templates/Canva Center Align.md",
+    "NotesByPrabin/Templates/Atlas Template.md",
+    "NotesByPrabin/Templates",
+    "NotesByPrabin/ProofReading.md",
+    "NotesByPrabin/Homepage.md",
+    "NotesByPrabin/Heatmaps.md",
+    "NotesByPrabin/EFFORTS/shaders.md",
+    "NotesByPrabin/EFFORTS/chiplet packaging.md",
+    "NotesByPrabin/EFFORTS/bfloat16.md",
+    "NotesByPrabin/EFFORTS/Trillium (TPUv6).md",
+    "NotesByPrabin/EFFORTS/TPUv3.md",
+    "NotesByPrabin/EFFORTS/TPUv2.md",
+    "NotesByPrabin/EFFORTS/TPU - Tensor Processing Units.md",
+    "NotesByPrabin/EFFORTS/TPTPUSim.md",
+    "NotesByPrabin/EFFORTS/Survey and Benchmarking of Machine Learning Accelerators.md",
+    "NotesByPrabin/EFFORTS/Simulators.md",
+    "NotesByPrabin/EFFORTS/Notes of Survey and Benchmarking of Machine Learning Accelerators.md",
+    "NotesByPrabin/EFFORTS/NaviSim.md",
+    "NotesByPrabin/EFFORTS/Leetcode.md",
+    "NotesByPrabin/EFFORTS/L3-Infinity-Cache.md",
+    "NotesByPrabin/EFFORTS/IBM Workshop.md",
+    "NotesByPrabin/EFFORTS/Given by Naveen.md",
+    "NotesByPrabin/EFFORTS/GPUWattch.md",
+    "NotesByPrabin/EFFORTS/Binary Search.canvas",
+    "NotesByPrabin/EFFORTS",
+    "NotesByPrabin/CALENDER",
+    "NotesByPrabin/ATTACHMENTS/Pasted image 20250116101539.png",
+    "NotesByPrabin/ATTACHMENTS/Pasted image 20241209213544.png",
+    "NotesByPrabin/ATTACHMENTS/Pasted image 20241209213532.png",
+    "NotesByPrabin/ATTACHMENTS/Pasted image 20241209213050.png",
+    "NotesByPrabin/ATTACHMENTS/Pasted image 20241209203923.png",
+    "NotesByPrabin/ATTACHMENTS/Pasted image 20241209202233.png",
+    "NotesByPrabin/ATTACHMENTS/Pasted image 20241209201857.png",
+    "NotesByPrabin/ATTACHMENTS/Pasted image 20241209185953.png",
+    "NotesByPrabin/ATTACHMENTS/Pasted image 20240916145901.png",
+    "NotesByPrabin/ATTACHMENTS/Pasted image 20240916145837.png",
+    "NotesByPrabin/ATTACHMENTS/Matrix Analysis and Applied Linear Algebra  Solutions Manual (Carl D. Meyer)2001 (Z-Library).pdf",
+    "NotesByPrabin/ATTACHMENTS",
+    "NotesByPrabin/ATLAS",
     "NotesByPrabin",
-    "Templates",
-    "ATTACHMENTS",
-    "EFFORTS",
-    "CALENDER",
-    "ATLAS",
+    "Excalidraw/Scripts/Downloaded",
+    "Excalidraw/Scripts",
+    "Excalidraw",
+    "EFFORTS/Binary Search.canvas",
     "!HOME.canvas",
     "Untitled.canvas",
     "ATLAS/SubjectNotes/C PP/Untitled.canvas",

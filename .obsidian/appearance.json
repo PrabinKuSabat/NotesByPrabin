@@ -13,5 +13,6 @@
   "enabledCssSnippets": [
     "booksearch",
     "custom-admonitions.c5575a"
-  ]
+  ],
+  "showRibbon": true
 }
