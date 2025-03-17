@@ -2,6 +2,7 @@
 - [ ] Find the xxHash implementation in Java
 - [ ] Implement the FlipHash in java 
 	- [ ] Convert the c code to java
+	- [ ] Make the fliphash write the hashes to a cache file.
 - [ ] Make a thread run as a socket.
 - [ ] Make FlipHash work on the IP and port numbers.
 	- [ ] Each new server added to the server list should be considered as a new thread **[server thread]**.
