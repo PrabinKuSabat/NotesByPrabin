@@ -14,3 +14,7 @@ tags:
 
 1. [[NaviSim]] : Simulator for RDNA
 2. [[Survey and Benchmarking of Machine Learning Accelerators]]
+
+# Future
+
+[[Papers to refer]]
