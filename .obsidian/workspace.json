@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "ATLAS/Design and Analysis of Algorithms.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Design and Analysis of Algorithms"
             }
           }
         ]
@@ -98,8 +98,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5,
-    "collapsed": true
+    "width": 414.5
   },
   "right": {
     "id": "43fc27400badb105",
@@ -249,11 +248,14 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "ATLAS/Design and Analysis of Algorithms.md",
+    "ATTACHMENTS/image.png",
+    "ATTACHMENTS/image-1.png",
+    "ATTACHMENTS/Pasted image 20250317211533.png",
     "ATLAS/Atlas.md",
     "Homepage.md",
     "EFFORTS/Efforts.md",
     "EFFORTS/JAVA Project.md",
+    "ATLAS/Design and Analysis of Algorithms.md",
     "EFFORTS/CA Research.md",
     "EFFORTS/GPU NOtes.md",
     "EFFORTS/Simulators.md",
@@ -275,7 +277,6 @@
     "NotesByPrabin/EFFORTS/chiplet packaging.md",
     "NotesByPrabin/EFFORTS/bfloat16.md",
     "NotesByPrabin/EFFORTS/Trillium (TPUv6).md",
-    "NotesByPrabin/EFFORTS/TPUv3.md",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "NotesByPrabin/EFFORTS",
     "NotesByPrabin/CALENDER",
@@ -287,8 +288,6 @@
     "NotesByPrabin/ATTACHMENTS/Pasted image 20241209202233.png",
     "NotesByPrabin/ATTACHMENTS/Pasted image 20241209201857.png",
     "NotesByPrabin/ATTACHMENTS/Pasted image 20241209185953.png",
-    "NotesByPrabin/ATTACHMENTS/Pasted image 20240916145901.png",
-    "NotesByPrabin/ATTACHMENTS/Pasted image 20240916145837.png",
     "NotesByPrabin/ATTACHMENTS/Matrix Analysis and Applied Linear Algebra  Solutions Manual (Carl D. Meyer)2001 (Z-Library).pdf",
     "NotesByPrabin/ATTACHMENTS",
     "NotesByPrabin/ATLAS",
