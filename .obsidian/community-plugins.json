@@ -1,10 +1,7 @@
 [
   "obsidian-mind-map",
-  "url-into-selection",
   "obsidian-outliner",
-  "obsidian-admonition",
   "highlightr-plugin",
-  "oz-image-plugin",
   "obsidian-tasks-plugin",
   "periodic-notes",
   "obsidian-kanban",
@@ -27,7 +24,6 @@
   "better-export-pdf",
   "obsidian-icons-plugin",
   "obsidian-image-layouts",
-  "obsidian-banners",
   "homepage",
   "oz-clear-unused-images",
   "pdf-plus",
@@ -36,6 +32,7 @@
   "heatmap-calendar",
   "calendar",
   "obsidian-custom-frames",
-  "obsidian-day-planner",
-  "obsidian-excalidraw-plugin"
+  "obsidian-excalidraw-plugin",
+  "obsidian-hider",
+  "excalibrain"
 ]

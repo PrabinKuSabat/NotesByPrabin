@@ -140,6 +140,10 @@
   "blue-topaz-theme@@view-button-front": false,
   "blue-topaz-theme@@tab-title-bar-position": true,
   "blue-topaz-theme@@toggle-divider-lines": false,
-  "blue-topaz-theme@@layout-style-options": "bt-bubble-layout",
-  "blue-topaz-theme@@colorful-p-kanban": true
+  "blue-topaz-theme@@layout-style-options": "asymmetric-split-left",
+  "blue-topaz-theme@@colorful-p-kanban": true,
+  "blue-topaz-theme@@scrollbar-style-option": "remove-scrollbars",
+  "blue-topaz-theme@@toggle-header-bottom-line": false,
+  "blue-topaz-theme@@full-width-backlinks": true,
+  "blue-topaz-theme@@bt-status-on": false
 }

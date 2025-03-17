@@ -30,8 +30,71 @@
               "icon": "lucide-file",
               "title": "Random"
             }
+          },
+          {
+            "id": "ba9bbb1a55346740",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
+            }
           }
         ]
+      },
+      {
+        "id": "52da03a4660e33c1",
+        "type": "split",
+        "children": [
+          {
+            "id": "e41f903cc9f4f68d",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "6338bda2aa6a1add",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "Homepage.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Homepage"
+                }
+              }
+            ]
+          },
+          {
+            "id": "1527053df1c71759",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "a74699b9c4436066",
+                "type": "leaf",
+                "state": {
+                  "type": "empty",
+                  "state": {},
+                  "icon": "lucide-file",
+                  "title": "New tab"
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "horizontal"
       }
     ],
     "direction": "vertical"
@@ -98,8 +161,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5,
-    "collapsed": true
+    "width": 414.5
   },
   "right": {
     "id": "43fc27400badb105",
@@ -200,16 +262,6 @@
             }
           },
           {
-            "id": "b3f579caef584553",
-            "type": "leaf",
-            "state": {
-              "type": "planner-timeline",
-              "state": {},
-              "icon": "calendar-with-checkmark",
-              "title": "Timeline"
-            }
-          },
-          {
             "id": "2ec51cd4ad75cd52",
             "type": "leaf",
             "state": {
@@ -222,39 +274,9 @@
               "icon": "lucide-archive",
               "title": "All properties"
             }
-          },
-          {
-            "id": "1623c71af33af217",
-            "type": "leaf",
-            "state": {
-              "type": "planner-timeline",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "Plugin no longer active"
-            }
-          },
-          {
-            "id": "9e05f90576bded9b",
-            "type": "leaf",
-            "state": {
-              "type": "planner-timeline",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "Plugin no longer active"
-            }
-          },
-          {
-            "id": "b9bfca0f046de6ee",
-            "type": "leaf",
-            "state": {
-              "type": "planner-timeline",
-              "state": {},
-              "icon": "calendar-with-checkmark",
-              "title": "Timeline"
-            }
           }
         ],
-        "currentTab": 7
+        "currentTab": 6
       }
     ],
     "direction": "horizontal",
@@ -291,11 +313,11 @@
   },
   "active": "c5f9e179365e07fd",
   "lastOpenFiles": [
+    "Homepage.md",
     "Random.md",
     "EFFORTS/List of GPU Simulators.md",
     "EFFORTS/Simulators.md",
     "EFFORTS/Efforts.md",
-    "Homepage.md",
     "ATLAS/Atlas.md",
     "NotesByPrabin/Templates/Weekly Note.md",
     "NotesByPrabin/Templates/Daily Template.md",
