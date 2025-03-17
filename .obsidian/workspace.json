@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "EFFORTS/Efforts.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,10 +28,35 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Efforts"
+            }
+          },
+          {
+            "id": "47e3276b78ba5ad1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "EFFORTS/JAVA Project.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "JAVA Project"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -247,8 +272,9 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "47e3276b78ba5ad1",
   "lastOpenFiles": [
+    "EFFORTS/JAVA Project.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
     "EFFORTS/CA Research.md",
@@ -275,7 +301,6 @@
     "NotesByPrabin/EFFORTS/Trillium (TPUv6).md",
     "NotesByPrabin/EFFORTS/TPUv3.md",
     "NotesByPrabin/EFFORTS/TPUv2.md",
-    "NotesByPrabin/EFFORTS/TPU - Tensor Processing Units.md",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "NotesByPrabin/EFFORTS",
     "NotesByPrabin/CALENDER",
