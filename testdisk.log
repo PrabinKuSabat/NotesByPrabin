@@ -1,0 +1,318 @@
+
+
+Sun Mar 16 15:20:22 2025
+Command line: TestDisk
+
+TestDisk 7.1, Data Recovery Utility, July 2019
+Christophe GRENIER <grenier@cgsecurity.org>
+https://www.cgsecurity.org
+OS: Linux, kernel 6.11.0-19-generic (#19~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Feb 17 11:51:52 UTC 2) x86_64
+Compiler: GCC 13.2
+ext2fs lib: 1.47.0, ntfs lib: libntfs-3g, reiserfs lib: none, ewf lib: none, curses lib: ncurses 6.4
+/dev/sda: LBA, LBA48 support
+/dev/sda: size       1000215216 sectors
+/dev/sda: user_max   1000215216 sectors
+Warning: can't get size for Disk /dev/mapper/control - 0 B - 0 sectors, sector size=512
+Warning: can't get size for Disk /dev/loop0 - 0 B - 0 sectors, sector size=512
+Warning: can't get size for Disk /dev/loop1 - 0 B - 0 sectors, sector size=512
+Warning: can't get size for Disk /dev/loop2 - 0 B - 0 sectors, sector size=512
+Warning: can't get size for Disk /dev/loop3 - 0 B - 0 sectors, sector size=512
+Warning: can't get size for Disk /dev/loop4 - 0 B - 0 sectors, sector size=512
+Warning: can't get size for Disk /dev/loop5 - 0 B - 0 sectors, sector size=512
+Warning: can't get size for Disk /dev/loop6 - 0 B - 0 sectors, sector size=512
+Warning: can't get size for Disk /dev/loop7 - 0 B - 0 sectors, sector size=512
+Hard disk list
+Disk /dev/sda - 512 GB / 476 GiB - CHS 62260 255 63, sector size=512 - CONSISTENT SSD S6 512GB, S/N:58114838465568066230, FW:HP3618B7
+Disk /dev/nvme0n1 - 512 GB / 476 GiB - CHS 488386 64 32, sector size=512
+
+Partition table type (auto): EFI GPT
+Disk /dev/nvme0n1 - 512 GB / 476 GiB
+Partition table type: EFI GPT
+
+Interface Advanced
+hdr_size=92
+hdr_lba_self=1
+hdr_lba_alt=1000215215 (expected 1000215215)
+hdr_lba_start=34
+hdr_lba_end=1000215182
+hdr_lba_table=2
+hdr_entries=128
+hdr_entsz=128
+check_part_gpt failed for partition
+ 2 P MS Reserved               206848     239615      32768 [Microsoft reserved partition]
+ 1 P EFI System                  2048     206847     204800 [EFI system partition]
+ 2 P MS Reserved               206848     239615      32768 [Microsoft reserved partition]
+ 3 P MS Data                   239616  207325183  207085568 [Basic data partition] [System Files]
+     NTFS, blocksize=4096, 106 GB / 98 GiB
+ 4 P Windows Recovery Env   207325184  209635327    2310144
+ 5 P MS Data                209637376  355184639  145547264 [Basic data partition] [Second]
+     NTFS, blocksize=4096, 74 GB / 69 GiB
+ 9 P Linux filesys. data    355184640  590198783  235014144
+ 6 P MS Data                855717888  998117375  142399488 [Basic data partition] [Extras]
+     NTFS, blocksize=4096, 72 GB / 67 GiB
+ 7 P Windows Recovery Env   998117376 1000214527    2097152 [Basic data partition]
+
+
+dir_partition inode=2
+ 9 P Linux filesys. data    355184640  590198783  235014144
+Directory /
+       2 drwxr-xr-x     0      0      4096 15-Mar-2025 16:14 .
+       2 drwxr-xr-x     0      0      4096 15-Mar-2025 16:14 ..
+      11 drwx------     0      0     16384  6-Feb-2025 21:11 lost+found
+ 3145729 drwxr-xr-x     0      0      4096 12-Mar-2025 14:18 boot
+      12 lrwxrwxrwx     0      0         7 22-Apr-2024 18:38 bin
+      13 lrwxrwxrwx     0      0         7 22-Apr-2024 18:38 lib
+      14 lrwxrwxrwx     0      0         9 22-Apr-2024 18:38 lib64
+      15 lrwxrwxrwx     0      0         8 22-Apr-2024 18:38 sbin
+  786433 drwxr-xr-x     0      0      4096 26-Feb-2024 18:28 bin.usr-is-merged
+ 1572865 dr-xr-xr-x     0      0      4096 27-Aug-2024 21:52 cdrom
+  524289 drwxr-xr-x     0      0      4096 27-Aug-2024 21:07 dev
+ 2883585 drwxr-xr-x     0      0     12288 15-Mar-2025 11:42 etc
+ 1310721 drwxr-xr-x     0      0      4096  8-Feb-2025 12:05 home
+ 1048577 drwxr-xr-x     0      0      4096  8-Apr-2024 20:07 lib.usr-is-merged
+  917505 drwxr-xr-x     0      0      4096  6-Feb-2025 21:19 media
+  262145 drwxr-xr-x     0      0      4096 11-Feb-2025 15:33 mnt
+  393217 drwxr-xr-x     0      0      4096 15-Mar-2025 15:24 opt
+ 3407873 drwxr-xr-x     0      0      4096 22-Apr-2024 18:38 proc
+  131073 drwx------     0      0      4096 15-Mar-2025 16:10 root
+ 1179649 drwxr-xr-x     0      0      4096 27-Aug-2024 21:12 run
+  655361 drwxr-xr-x     0      0      4096 31-Mar-2024 14:30 sbin.usr-is-merged
+ 6553601 drwxr-xr-x     0      0      4096 15-Mar-2025 16:14 snap
+ 1966081 drwxr-xr-x     0      0      4096 27-Aug-2024 21:07 srv
+ 2097153 drwxr-xr-x     0      0      4096 22-Apr-2024 18:38 sys
+ 3014657 drwxrwxrwt     0      0      4096 16-Mar-2025 15:22 tmp
+ 2621441 drwxr-xr-x     0      0      4096 27-Aug-2024 21:07 usr
+ 3276801 drwxr-xr-x     0      0      4096 15-Mar-2025 16:14 var
+      16 -rw-------     0      0 8589934592  6-Feb-2025 21:14 swap.img
+
+dir_partition inode=11
+ 9 P Linux filesys. data    355184640  590198783  235014144
+Directory /lost+found
+      11 drwx------     0      0     16384  6-Feb-2025 21:11 .
+       2 drwxr-xr-x     0      0      4096 15-Mar-2025 16:14 ..
+Directory /
+       2 drwxr-xr-x     0      0      4096 15-Mar-2025 16:14 .
+       2 drwxr-xr-x     0      0      4096 15-Mar-2025 16:14 ..
+      11 drwx------     0      0     16384  6-Feb-2025 21:11 lost+found
+ 3145729 drwxr-xr-x     0      0      4096 12-Mar-2025 14:18 boot
+      12 lrwxrwxrwx     0      0         7 22-Apr-2024 18:38 bin
+      13 lrwxrwxrwx     0      0         7 22-Apr-2024 18:38 lib
+      14 lrwxrwxrwx     0      0         9 22-Apr-2024 18:38 lib64
+      15 lrwxrwxrwx     0      0         8 22-Apr-2024 18:38 sbin
+  786433 drwxr-xr-x     0      0      4096 26-Feb-2024 18:28 bin.usr-is-merged
+ 1572865 dr-xr-xr-x     0      0      4096 27-Aug-2024 21:52 cdrom
+  524289 drwxr-xr-x     0      0      4096 27-Aug-2024 21:07 dev
+ 2883585 drwxr-xr-x     0      0     12288 15-Mar-2025 11:42 etc
+ 1310721 drwxr-xr-x     0      0      4096  8-Feb-2025 12:05 home
+ 1048577 drwxr-xr-x     0      0      4096  8-Apr-2024 20:07 lib.usr-is-merged
+  917505 drwxr-xr-x     0      0      4096  6-Feb-2025 21:19 media
+  262145 drwxr-xr-x     0      0      4096 11-Feb-2025 15:33 mnt
+  393217 drwxr-xr-x     0      0      4096 15-Mar-2025 15:24 opt
+ 3407873 drwxr-xr-x     0      0      4096 22-Apr-2024 18:38 proc
+  131073 drwx------     0      0      4096 15-Mar-2025 16:10 root
+ 1179649 drwxr-xr-x     0      0      4096 27-Aug-2024 21:12 run
+  655361 drwxr-xr-x     0      0      4096 31-Mar-2024 14:30 sbin.usr-is-merged
+ 6553601 drwxr-xr-x     0      0      4096 15-Mar-2025 16:14 snap
+ 1966081 drwxr-xr-x     0      0      4096 27-Aug-2024 21:07 srv
+ 2097153 drwxr-xr-x     0      0      4096 22-Apr-2024 18:38 sys
+ 3014657 drwxrwxrwt     0      0      4096 16-Mar-2025 15:22 tmp
+ 2621441 drwxr-xr-x     0      0      4096 27-Aug-2024 21:07 usr
+ 3276801 drwxr-xr-x     0      0      4096 15-Mar-2025 16:14 var
+      16 -rw-------     0      0 8589934592  6-Feb-2025 21:14 swap.img
+
+dir_partition inode=1310721
+ 9 P Linux filesys. data    355184640  590198783  235014144
+Directory /home
+ 1310721 drwxr-xr-x     0      0      4096  8-Feb-2025 12:05 .
+       2 drwxr-xr-x     0      0      4096 15-Mar-2025 16:14 ..
+ 1441833 drwxr-x---  1000   1000      4096 16-Mar-2025 15:20 prabin
+
+dir_partition inode=1441833
+ 9 P Linux filesys. data    355184640  590198783  235014144
+Directory /home/prabin
+ 1441833 drwxr-x---  1000   1000      4096 16-Mar-2025 15:20 .
+ 1310721 drwxr-xr-x     0      0      4096  8-Feb-2025 12:05 ..
+ 1441834 -rw-r--r--  1000   1000       807 31-Mar-2024 14:11 .profile
+ 1441835 -rw-r--r--  1000   1000       220 31-Mar-2024 14:11 .bash_logout
+ 1441836 -rw-r--r--  1000   1000      3889  1-Mar-2025 21:27 .bashrc
+ 1704395 drwxr-xr-x  1000   1000      4096 18-Feb-2025 10:22 .local
+ 1441840 drwx------  1000   1000      4096  7-Feb-2025 16:00 snap
+ 1441905 drwx------  1000   1000      4096 16-Mar-2025 15:11 .cache
+ 1441913 drwxr-xr-x  1000   1000      4096 25-Feb-2025 18:51 Desktop
+ 1441914 drwxr-xr-x  1000   1000      4096 16-Mar-2025 14:42 Downloads
+ 1441915 drwxr-xr-x  1000   1000      4096  6-Feb-2025 21:18 Templates
+ 1441916 drwxr-xr-x  1000   1000      4096  6-Feb-2025 21:18 Public
+ 1441917 drwxr-xr-x  1000   1000      4096 16-Mar-2025 15:10 Documents
+ 1441918 drwxr-xr-x  1000   1000      4096  6-Feb-2025 21:18 Music
+ 1441919 drwxr-xr-x  1000   1000      4096 15-Mar-2025 15:18 Pictures
+ 1441920 drwxr-xr-x  1000   1000      4096 15-Mar-2025 15:18 Videos
+ 1441921 drwx------  1000   1000      4096  3-Mar-2025 15:10 .config
+ 1442042 drwx------  1000   1000      4096  7-Mar-2025 10:18 .ssh
+ 1442680 -rw-r--r--  1000   1000         0  6-Feb-2025 21:25 .sudo_as_admin_successful
+ 1442826 drwx------  1000   1000      4096 15-Mar-2025 16:16 .gnupg
+ 1445189 -rw-------  1000   1000     24321  2-Mar-2025 09:20 .bash_history
+ 1445562 -rw-rw-r--  1000   1000     83357  6-Feb-2025 21:38 old_packages.txt
+ 1445660 drwxrwxr-x  1000   1000      4096  6-Feb-2025 21:46 oldPackages
+ 1449067 drwx------  1000   1000      4096  7-Feb-2025 13:30 .pki
+ 1453033 drwx------  1000   1000      4096  7-Feb-2025 15:36 .zotero
+ 1466818 drwx------  1000   1000      4096  7-Feb-2025 15:36 .mozilla
+ 1468290 drwxr-xr-x  1000   1000      4096  7-Mar-2025 14:19 Zotero
+ 1858980 drwxrwxr-x  1000   1000      4096 10-Mar-2025 20:43 calibre
+ 1467530 drwxrwxr-x  1000   1000      4096  7-Feb-2025 16:30 .vscode
+ 1537889 -rw-rw-r--  1000   1000      2403  3-Mar-2025 14:52 .zshrc
+ 1477967 -rw-rw-r--  1000   1000       215 18-Feb-2025 11:54 .wget-hsts
+ 1478760 -rw-rw-r--  1000   1000       145  7-Feb-2025 21:27 .gitconfig
+ 1851489 drwxr-xr-x  1000   1000      4096 11-Feb-2025 15:56 .var
+ 1473859 -rw-------  1000   1000        20 15-Mar-2025 15:24 .lesshst
+ 1715761 drwxrwxr-x  1000   1000      4096  8-Feb-2025 15:37 .sonarlint
+ 1476210 -rw-------  1000   1000        71 16-Mar-2025 15:12 .git-credentials
+ 1713558 drwx------  1000   1000      4096  8-Feb-2025 11:23 .launchpadlib
+ 1854186 drwxrwxr-x  1000   1000      4096 11-Feb-2025 20:37 .redhat
+ 1548523 -rw-rw-r--  1000   1000        29  2-Mar-2025 09:26 .zshrc.zni
+ 1541099 -rw-rw-r--  1000   1000      9867  2-Mar-2025 09:34 .p10k.zsh
+ 1497682 -rw-rw-r--  1000   1000       390  2-Mar-2025 09:26 .zshrc.backup
+ 1529568 -rw-rw-r--  1000   1000     58553 14-Mar-2025 14:54 .zcompdump
+ 1850591 drwxrwxr-x  1000   1000      4096  3-Mar-2025 13:56 .dotnet
+ 1474941 -rw-------  1000   1000     15140 16-Mar-2025 15:20 .zsh_history
+ 1862343 drwxrwxr-x  1000   1000      4096  3-Mar-2025 14:55 .dotfiles
+ 1502197 -rw-rw-r--  1000   1000     13957 14-Apr-2021 11:03 Lab on Networking.docx
+ 1474741 -rw-rw-r--  1000   1000  47489780 16-Mar-2025 14:45 obsidian_1.5.11_amd64.deb
+ 1530144 -rw-rw-r--  1000   1000     39655 18-Feb-2025 21:40 GPUTejas
+ 1523305 -rw-rw-r--  1000   1000      1246 18-Feb-2025 12:20 .tmux.conf
+ 1708166 drwxrwxr-x  1000   1000      4096 17-Feb-2025 16:26 custom_modules
+ 1526341 -rw-rw-r--  1000   1000      2224 21-Feb-2025 09:55 Error.txt
+ 1472020 -rw-rw-r--  1000   1000  40174478 24-Feb-2025 18:13 gpgpuoutput.txt
+ 1456005 -rw-------  1000   1000         0  2-Mar-2025 11:02 lu240363qpo2.tmp
+
+dir_partition inode=1441917
+ 9 P Linux filesys. data    355184640  590198783  235014144
+Directory /home/prabin/Documents
+ 1441917 drwxr-xr-x  1000   1000      4096 16-Mar-2025 15:10 .
+ 1441833 drwxr-x---  1000   1000      4096 16-Mar-2025 15:20 ..
+ 1448338 -rw-rw-r--  1000   1000      1635 22-Jan-2019 15:26 SecurityAppliance_SSL_CA.pem
+ 1448355 -rw-rw-r--  1000   1000      1635  7-Feb-2025 10:37 SecurityAppliance_SSL_CA.crt
+ 1456934 drwxrwxr-x  1000   1000      4096 16-Mar-2025 15:20 NotesByPrabin
+ 1863776 drwxrwxr-x  1000   1000      4096  3-Mar-2025 14:36 Computer Networking
+ 1713518 drwxrwxr-x  1000   1000      4096  5-Mar-2025 20:38 java
+ 1488170 -rw-rw-r--  1000   1000        35  8-Feb-2025 10:50 workspace.code-workspace
+ 1713712 drwxrwxr-x  1000   1000      4096 13-Mar-2025 20:23 JAVA
+ 1727762 drwxrwxr-x  1000   1000      4096  3-Mar-2025 14:35 Books
+ 1704491 drwxrwxr-x  1000   1000      4096 12-Mar-2025 15:23 Java workspaces
+ 1707335 drwxr-xr-x  1000   1000      4096  7-Feb-2025 16:25 Zotero
+ 1727803 drwxr-xr-x  1000   1000      4096 16-Mar-2025 14:51 PRABIN's KB
+ 1705396 drwxrwxrwx  1000   1000      4096 12-Dec-2024 14:31 jdk-17.0.2_doc-all
+ 1713519 drwxrwxr-x  1000   1000      4096 10-Feb-2025 15:18 msc
+ 1704318 drwxrwxrwx  1000   1000      4096 28-Aug-2024 15:33 (The Morgan Kaufmann Series in Computer Architecture and Design) David A. Patterson, John L. Hennessy - Computer Organization and Design ARM Edition_ The Hardware Software Interface (Instructor's Edu 
+ 1498244 -rw-rw-r--  1000   1000  22558576  8-Mar-2025 14:02 CloudSim 7G_ An Integrated Toolkit for Modeling and Simulation of Future Generation Cloud Computing Environments.pdf
+Directory /home/prabin
+ 1441833 drwxr-x---  1000   1000      4096 16-Mar-2025 15:20 .
+ 1310721 drwxr-xr-x     0      0      4096  8-Feb-2025 12:05 ..
+ 1441834 -rw-r--r--  1000   1000       807 31-Mar-2024 14:11 .profile
+ 1441835 -rw-r--r--  1000   1000       220 31-Mar-2024 14:11 .bash_logout
+ 1441836 -rw-r--r--  1000   1000      3889  1-Mar-2025 21:27 .bashrc
+ 1704395 drwxr-xr-x  1000   1000      4096 18-Feb-2025 10:22 .local
+ 1441840 drwx------  1000   1000      4096  7-Feb-2025 16:00 snap
+ 1441905 drwx------  1000   1000      4096 16-Mar-2025 15:11 .cache
+ 1441913 drwxr-xr-x  1000   1000      4096 25-Feb-2025 18:51 Desktop
+ 1441914 drwxr-xr-x  1000   1000      4096 16-Mar-2025 14:42 Downloads
+ 1441915 drwxr-xr-x  1000   1000      4096  6-Feb-2025 21:18 Templates
+ 1441916 drwxr-xr-x  1000   1000      4096  6-Feb-2025 21:18 Public
+ 1441917 drwxr-xr-x  1000   1000      4096 16-Mar-2025 15:10 Documents
+ 1441918 drwxr-xr-x  1000   1000      4096  6-Feb-2025 21:18 Music
+ 1441919 drwxr-xr-x  1000   1000      4096 15-Mar-2025 15:18 Pictures
+ 1441920 drwxr-xr-x  1000   1000      4096 15-Mar-2025 15:18 Videos
+ 1441921 drwx------  1000   1000      4096  3-Mar-2025 15:10 .config
+ 1442042 drwx------  1000   1000      4096  7-Mar-2025 10:18 .ssh
+ 1442680 -rw-r--r--  1000   1000         0  6-Feb-2025 21:25 .sudo_as_admin_successful
+ 1442826 drwx------  1000   1000      4096 15-Mar-2025 16:16 .gnupg
+ 1445189 -rw-------  1000   1000     24321  2-Mar-2025 09:20 .bash_history
+ 1445562 -rw-rw-r--  1000   1000     83357  6-Feb-2025 21:38 old_packages.txt
+ 1445660 drwxrwxr-x  1000   1000      4096  6-Feb-2025 21:46 oldPackages
+ 1449067 drwx------  1000   1000      4096  7-Feb-2025 13:30 .pki
+ 1453033 drwx------  1000   1000      4096  7-Feb-2025 15:36 .zotero
+ 1466818 drwx------  1000   1000      4096  7-Feb-2025 15:36 .mozilla
+ 1468290 drwxr-xr-x  1000   1000      4096  7-Mar-2025 14:19 Zotero
+ 1858980 drwxrwxr-x  1000   1000      4096 10-Mar-2025 20:43 calibre
+ 1467530 drwxrwxr-x  1000   1000      4096  7-Feb-2025 16:30 .vscode
+ 1537889 -rw-rw-r--  1000   1000      2403  3-Mar-2025 14:52 .zshrc
+ 1477967 -rw-rw-r--  1000   1000       215 18-Feb-2025 11:54 .wget-hsts
+ 1478760 -rw-rw-r--  1000   1000       145  7-Feb-2025 21:27 .gitconfig
+ 1851489 drwxr-xr-x  1000   1000      4096 11-Feb-2025 15:56 .var
+ 1473859 -rw-------  1000   1000        20 15-Mar-2025 15:24 .lesshst
+ 1715761 drwxrwxr-x  1000   1000      4096  8-Feb-2025 15:37 .sonarlint
+ 1476210 -rw-------  1000   1000        71 16-Mar-2025 15:12 .git-credentials
+ 1713558 drwx------  1000   1000      4096  8-Feb-2025 11:23 .launchpadlib
+ 1854186 drwxrwxr-x  1000   1000      4096 11-Feb-2025 20:37 .redhat
+ 1548523 -rw-rw-r--  1000   1000        29  2-Mar-2025 09:26 .zshrc.zni
+ 1541099 -rw-rw-r--  1000   1000      9867  2-Mar-2025 09:34 .p10k.zsh
+ 1497682 -rw-rw-r--  1000   1000       390  2-Mar-2025 09:26 .zshrc.backup
+ 1529568 -rw-rw-r--  1000   1000     58553 14-Mar-2025 14:54 .zcompdump
+ 1850591 drwxrwxr-x  1000   1000      4096  3-Mar-2025 13:56 .dotnet
+ 1474941 -rw-------  1000   1000     15140 16-Mar-2025 15:20 .zsh_history
+ 1862343 drwxrwxr-x  1000   1000      4096  3-Mar-2025 14:55 .dotfiles
+ 1502197 -rw-rw-r--  1000   1000     13957 14-Apr-2021 11:03 Lab on Networking.docx
+ 1474741 -rw-rw-r--  1000   1000  47489780 16-Mar-2025 14:45 obsidian_1.5.11_amd64.deb
+ 1530144 -rw-rw-r--  1000   1000     39655 18-Feb-2025 21:40 GPUTejas
+ 1523305 -rw-rw-r--  1000   1000      1246 18-Feb-2025 12:20 .tmux.conf
+ 1708166 drwxrwxr-x  1000   1000      4096 17-Feb-2025 16:26 custom_modules
+ 1526341 -rw-rw-r--  1000   1000      2224 21-Feb-2025 09:55 Error.txt
+ 1472020 -rw-rw-r--  1000   1000  40174478 24-Feb-2025 18:13 gpgpuoutput.txt
+ 1456005 -rw-------  1000   1000         0  2-Mar-2025 11:02 lu240363qpo2.tmp
+Directory /home
+ 1310721 drwxr-xr-x     0      0      4096  8-Feb-2025 12:05 .
+       2 drwxr-xr-x     0      0      4096 15-Mar-2025 16:14 ..
+ 1441833 drwxr-x---  1000   1000      4096 16-Mar-2025 15:20 prabin
+Directory /
+       2 drwxr-xr-x     0      0      4096 15-Mar-2025 16:14 .
+       2 drwxr-xr-x     0      0      4096 15-Mar-2025 16:14 ..
+      11 drwx------     0      0     16384  6-Feb-2025 21:11 lost+found
+ 3145729 drwxr-xr-x     0      0      4096 12-Mar-2025 14:18 boot
+      12 lrwxrwxrwx     0      0         7 22-Apr-2024 18:38 bin
+      13 lrwxrwxrwx     0      0         7 22-Apr-2024 18:38 lib
+      14 lrwxrwxrwx     0      0         9 22-Apr-2024 18:38 lib64
+      15 lrwxrwxrwx     0      0         8 22-Apr-2024 18:38 sbin
+  786433 drwxr-xr-x     0      0      4096 26-Feb-2024 18:28 bin.usr-is-merged
+ 1572865 dr-xr-xr-x     0      0      4096 27-Aug-2024 21:52 cdrom
+  524289 drwxr-xr-x     0      0      4096 27-Aug-2024 21:07 dev
+ 2883585 drwxr-xr-x     0      0     12288 15-Mar-2025 11:42 etc
+ 1310721 drwxr-xr-x     0      0      4096  8-Feb-2025 12:05 home
+ 1048577 drwxr-xr-x     0      0      4096  8-Apr-2024 20:07 lib.usr-is-merged
+  917505 drwxr-xr-x     0      0      4096  6-Feb-2025 21:19 media
+  262145 drwxr-xr-x     0      0      4096 11-Feb-2025 15:33 mnt
+  393217 drwxr-xr-x     0      0      4096 15-Mar-2025 15:24 opt
+ 3407873 drwxr-xr-x     0      0      4096 22-Apr-2024 18:38 proc
+  131073 drwx------     0      0      4096 15-Mar-2025 16:10 root
+ 1179649 drwxr-xr-x     0      0      4096 27-Aug-2024 21:12 run
+  655361 drwxr-xr-x     0      0      4096 31-Mar-2024 14:30 sbin.usr-is-merged
+ 6553601 drwxr-xr-x     0      0      4096 15-Mar-2025 16:14 snap
+ 1966081 drwxr-xr-x     0      0      4096 27-Aug-2024 21:07 srv
+ 2097153 drwxr-xr-x     0      0      4096 22-Apr-2024 18:38 sys
+ 3014657 drwxrwxrwt     0      0      4096 16-Mar-2025 15:22 tmp
+ 2621441 drwxr-xr-x     0      0      4096 27-Aug-2024 21:07 usr
+ 3276801 drwxr-xr-x     0      0      4096 15-Mar-2025 16:14 var
+      16 -rw-------     0      0 8589934592  6-Feb-2025 21:14 swap.img
+
+Interface Advanced
+hdr_size=92
+hdr_lba_self=1
+hdr_lba_alt=1000215215 (expected 1000215215)
+hdr_lba_start=34
+hdr_lba_end=1000215182
+hdr_lba_table=2
+hdr_entries=128
+hdr_entsz=128
+check_part_gpt failed for partition
+ 2 P MS Reserved               206848     239615      32768 [Microsoft reserved partition]
+ 1 P EFI System                  2048     206847     204800 [EFI system partition]
+ 2 P MS Reserved               206848     239615      32768 [Microsoft reserved partition]
+ 3 P MS Data                   239616  207325183  207085568 [Basic data partition] [System Files]
+     NTFS, blocksize=4096, 106 GB / 98 GiB
+ 4 P Windows Recovery Env   207325184  209635327    2310144
+ 5 P MS Data                209637376  355184639  145547264 [Basic data partition] [Second]
+     NTFS, blocksize=4096, 74 GB / 69 GiB
+ 9 P Linux filesys. data    355184640  590198783  235014144
+ 6 P MS Data                855717888  998117375  142399488 [Basic data partition] [Extras]
+     NTFS, blocksize=4096, 72 GB / 67 GiB
+ 7 P Windows Recovery Env   998117376 1000214527    2097152 [Basic data partition]
+
+TestDisk exited normally.

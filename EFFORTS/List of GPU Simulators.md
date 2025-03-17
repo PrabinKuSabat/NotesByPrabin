@@ -17,6 +17,29 @@
 	- [Website](https://ieeexplore.ieee.org/abstract/document/7482100)
 	- [Paper(Sci-Hub)](https://sci-hub.se/https://ieeexplore.ieee.org/abstract/document/7482100/authors#authors)
 
+
+
+ULTI-GPU Simulators
+1. MGPUSim:
+Enabling multi-GPU performance modeling and optimization
+Error as low as 5.5%
+Some good papers
+2. Need for Speed : Experiences Building a Trustworthy System-Level GPU Simulator.
+__List of GPU Simulators__ || 1 || 2. Performance Characterisation and simulation of Intel's Integrated GPU Architecture.
+3. A Survey on Heterogeneous CPU–GPU Architectures and Simulators
+4. Demystifying the Nvidia Ampere Architecture through Microbenchmarking and Instruction-level Analysis
+5. SimNet: Accurate and High-Performance Computer Architecture Simulation using Deep Learning
+6. Daisen: A framework for Visualizing Detailed GPU Execution
+Used by MGPUSim
+7. Power Modeling for GPU Architectures Using McPAT
+8. Accelerating GPGPU architecture simulation
+9. Power analysis and optimizations for GPU architecture using a power simulator
+Memory Traces
+10. Ocelot GPU emulators :
+Benchmarks
+11. Rodinia
+
+
 # Some good papers
 
 1. [**Need for Speed** : Experiences Building a Trustworthy System-Level GPU Simulator.](https://ieeexplore.ieee.org/abstract/document/9407154/authors#authors)

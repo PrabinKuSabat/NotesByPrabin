@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "4509724f8bf84da7",
+        "id": "9d159ac24045c952",
         "type": "tabs",
         "children": [
           {
-            "id": "e7a7b303c61786dc",
+            "id": "c5f9e179365e07fd",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "Random.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Random"
             }
           }
         ]
@@ -98,7 +98,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5
+    "width": 414.5,
+    "collapsed": true
   },
   "right": {
     "id": "43fc27400badb105",
@@ -114,6 +115,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Homepage.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -123,7 +125,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "Backlinks"
+              "title": "Backlinks for Homepage"
             }
           },
           {
@@ -203,8 +205,8 @@
             "state": {
               "type": "planner-timeline",
               "state": {},
-              "icon": "lucide-file",
-              "title": "Plugin no longer active"
+              "icon": "calendar-with-checkmark",
+              "title": "Timeline"
             }
           },
           {
@@ -237,12 +239,22 @@
             "state": {
               "type": "planner-timeline",
               "state": {},
+              "icon": "lucide-file",
+              "title": "Plugin no longer active"
+            }
+          },
+          {
+            "id": "b9bfca0f046de6ee",
+            "type": "leaf",
+            "state": {
+              "type": "planner-timeline",
+              "state": {},
               "icon": "calendar-with-checkmark",
               "title": "Timeline"
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 7
       }
     ],
     "direction": "horizontal",
@@ -273,11 +285,18 @@
       "obsidian-full-calendar:Open Full Calendar": false,
       "obsidian-custom-frames:Open Google Calendar": false,
       "obsidian-day-planner:Open Timeline": false,
-      "obsidian-day-planner:Open Multi-Day View": false
+      "obsidian-day-planner:Open Multi-Day View": false,
+      "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "c5f9e179365e07fd",
   "lastOpenFiles": [
+    "Random.md",
+    "EFFORTS/List of GPU Simulators.md",
+    "EFFORTS/Simulators.md",
+    "EFFORTS/Efforts.md",
+    "Homepage.md",
+    "ATLAS/Atlas.md",
     "NotesByPrabin/Templates/Weekly Note.md",
     "NotesByPrabin/Templates/Daily Template.md",
     "NotesByPrabin/Templates/Canva Right Align.md",
@@ -299,12 +318,6 @@
     "NotesByPrabin/EFFORTS/Survey and Benchmarking of Machine Learning Accelerators.md",
     "NotesByPrabin/EFFORTS/Simulators.md",
     "NotesByPrabin/EFFORTS/Notes of Survey and Benchmarking of Machine Learning Accelerators.md",
-    "NotesByPrabin/EFFORTS/NaviSim.md",
-    "NotesByPrabin/EFFORTS/Leetcode.md",
-    "NotesByPrabin/EFFORTS/L3-Infinity-Cache.md",
-    "NotesByPrabin/EFFORTS/IBM Workshop.md",
-    "NotesByPrabin/EFFORTS/Given by Naveen.md",
-    "NotesByPrabin/EFFORTS/GPUWattch.md",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "NotesByPrabin/EFFORTS",
     "NotesByPrabin/CALENDER",

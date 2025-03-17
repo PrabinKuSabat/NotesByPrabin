@@ -133,5 +133,13 @@
   "aura@@h2-font": "C059",
   "aura@@aura-workspace-background-workspace-slider-light": 1,
   "aura@@aura-file-icons": true,
-  "aura@@aura-folder-icons": true
+  "aura@@aura-folder-icons": true,
+  "blue-topaz-theme@@color-scheme-options": "color-scheme-options-simplicity-topaz",
+  "blue-topaz-theme@@disable-auto-hide-header": false,
+  "blue-topaz-theme@@left-ribbon-style": "bt-bubble-ribbon-hide-left",
+  "blue-topaz-theme@@view-button-front": false,
+  "blue-topaz-theme@@tab-title-bar-position": true,
+  "blue-topaz-theme@@toggle-divider-lines": false,
+  "blue-topaz-theme@@layout-style-options": "bt-bubble-layout",
+  "blue-topaz-theme@@colorful-p-kanban": true
 }
