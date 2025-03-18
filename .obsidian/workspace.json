@@ -14,7 +14,7 @@
               "type": "markdown",
               "state": {
                 "file": "ATLAS/Design and Analysis of Algorithms.md",
-                "mode": "source",
+                "mode": "preview",
                 "source": false,
                 "backlinks": true,
                 "backlinkOpts": {
@@ -98,7 +98,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5
+    "width": 414.5,
+    "collapsed": true
   },
   "right": {
     "id": "43fc27400badb105",
@@ -248,6 +249,8 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "ATTACHMENTS/image-21.png",
+    "ATTACHMENTS/image-20.png",
     "ATTACHMENTS/image-19.png",
     "ATTACHMENTS/image-18.png",
     "ATTACHMENTS/image-17.png",
@@ -260,8 +263,6 @@
     "ATLAS/Design and Analysis of Algorithms.md",
     "ATTACHMENTS/image-12.png",
     "ATTACHMENTS/image-11.png",
-    "ATTACHMENTS/image-10.png",
-    "ATTACHMENTS/image-9.png",
     "EFFORTS/Efforts.md",
     "EFFORTS/JAVA Project.md",
     "EFFORTS/CA Research.md",
