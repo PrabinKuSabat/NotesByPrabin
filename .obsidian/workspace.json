@@ -11,24 +11,10 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "ATLAS/Design and Analysis of Algorithms.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Design and Analysis of Algorithms"
+              "title": "New tab"
             }
           }
         ]
@@ -248,6 +234,9 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "ATLAS/Design and Analysis of Algorithms.md",
+    "ATTACHMENTS/image-3.png",
+    "ATTACHMENTS/image-2.png",
     "ATTACHMENTS/image.png",
     "ATTACHMENTS/image-1.png",
     "ATTACHMENTS/Pasted image 20250317211533.png",
@@ -255,7 +244,6 @@
     "Homepage.md",
     "EFFORTS/Efforts.md",
     "EFFORTS/JAVA Project.md",
-    "ATLAS/Design and Analysis of Algorithms.md",
     "EFFORTS/CA Research.md",
     "EFFORTS/GPU NOtes.md",
     "EFFORTS/Simulators.md",
@@ -285,9 +273,6 @@
     "NotesByPrabin/ATTACHMENTS/Pasted image 20241209213532.png",
     "NotesByPrabin/ATTACHMENTS/Pasted image 20241209213050.png",
     "NotesByPrabin/ATTACHMENTS/Pasted image 20241209203923.png",
-    "NotesByPrabin/ATTACHMENTS/Pasted image 20241209202233.png",
-    "NotesByPrabin/ATTACHMENTS/Pasted image 20241209201857.png",
-    "NotesByPrabin/ATTACHMENTS/Pasted image 20241209185953.png",
     "NotesByPrabin/ATTACHMENTS/Matrix Analysis and Applied Linear Algebra  Solutions Manual (Carl D. Meyer)2001 (Z-Library).pdf",
     "NotesByPrabin/ATTACHMENTS",
     "NotesByPrabin/ATLAS",
