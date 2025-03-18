@@ -11,10 +11,24 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "ATLAS/Design and Analysis of Algorithms.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Design and Analysis of Algorithms"
             }
           }
         ]
@@ -234,6 +248,8 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "ATLAS/Atlas.md",
+    "Homepage.md",
     "ATLAS/Design and Analysis of Algorithms.md",
     "ATTACHMENTS/image-12.png",
     "ATTACHMENTS/image-11.png",
@@ -244,8 +260,6 @@
     "ATTACHMENTS/image-6.png",
     "ATTACHMENTS/image-5.png",
     "ATTACHMENTS/image-4.png",
-    "ATLAS/Atlas.md",
-    "Homepage.md",
     "ATTACHMENTS/image-3.png",
     "EFFORTS/Efforts.md",
     "EFFORTS/JAVA Project.md",
