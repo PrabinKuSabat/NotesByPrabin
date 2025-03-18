@@ -21,3 +21,4 @@
 ### Deleting`ris:StarS`
 
 ![[image-8.png]]![[image-9.png]]![[image-10.png]]![[image-11.png]]![[image-12.png]]
+## L40
