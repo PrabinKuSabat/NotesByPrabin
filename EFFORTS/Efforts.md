@@ -2,10 +2,7 @@
 
 > [!note] `ris:Computer` Architecture  
 > [[CA Research|Research]]  
-> [[CA Notes|Notes]]  
-> [[TPU - Tensor Processing Units]]  
-> [[Architecture Laws]]  
-> [[Simulators]]
+> [[CA Notes|Short Notes]]  
 
 > [! important] coding `fas:Brain`  
 > [[Leetcode]]  

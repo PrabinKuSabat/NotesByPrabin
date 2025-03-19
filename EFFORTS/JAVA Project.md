@@ -2,7 +2,7 @@
 
 - [ ] Find the xxHash implementation in Java
 - [ ] Implement the FlipHash in java
-	- [ ] Convert the c code to java
+	- [x] Convert the c code to java ✅ 2025-03-19
 	- [ ] Make the fliphash write the hashes to a cache file.
 - [ ] Make a thread run as a socket.
 - [ ] Make FlipHash work on the IP and port numbers.
@@ -14,3 +14,7 @@
 	- [ ] show the no. of servers active. **[as icons of servers]**
 	- [ ] Show the load on the servers. **[Basically the no. of requests waiting on that.]**
 	- [ ] If the server list increases beyond 25, convert the GUI to a spread sheet.
+
+# Extra
+
+- [f] Implement Dictionary using FlipHash.

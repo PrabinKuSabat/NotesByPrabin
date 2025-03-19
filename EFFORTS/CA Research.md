@@ -9,11 +9,13 @@ tags:
 1. [[Given by Naveen]]  
 2. [[Chiplets]]
 3. [[TPU - Tensor Processing Units]]
+4. [[NotesByPrabin/EFFORTS/Simulators|Simulators]]
 
 ## Notes
 
 1. [[NaviSim]] : Simulator for RDNA
 2. [[Survey and Benchmarking of Machine Learning Accelerators]]
+3. [[NotesByPrabin/EFFORTS/Architecture Laws|Architecture Laws]]
 
 # Future
 
