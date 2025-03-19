@@ -281,5 +281,22 @@
       ],
       "key": "A"
     }
+  ],
+  "editor:toggle-numbered-list": [
+    {
+      "modifiers": [
+        "Alt",
+        "Shift"
+      ],
+      "key": "-"
+    }
+  ],
+  "editor:toggle-bullet-list": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "-"
+    }
   ]
 }
