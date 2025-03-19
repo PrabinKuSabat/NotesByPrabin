@@ -11,10 +11,24 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "ATLAS/Design and Analysis of Algorithms.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Design and Analysis of Algorithms"
             }
           }
         ]
@@ -234,12 +248,13 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/22nd Dec 2024.md",
+    "ATLAS/Atlas.md",
     "Homepage.md",
+    "EFFORTS/Efforts.md",
+    "EFFORTS/22nd Dec 2024.md",
     "EFFORTS/TPU - Tensor Processing Units.md",
     "EFFORTS/CA Research.md",
     "EFFORTS/Given by Naveen.md",
-    "EFFORTS/Efforts.md",
     "EFFORTS/JAVA Project.md",
     "EFFORTS/IBM Workshop.md",
     "EFFORTS/Leetcode.md",
@@ -248,7 +263,6 @@
     "EFFORTS/Computing's Energy Problem.md",
     "EFFORTS/AMD RDNA.md",
     "EFFORTS/Simulators.md",
-    "ATLAS/Atlas.md",
     "ATLAS/Design and Analysis of Algorithms.md",
     "ATTACHMENTS/image-29.png",
     "ATTACHMENTS/image-28.png",
