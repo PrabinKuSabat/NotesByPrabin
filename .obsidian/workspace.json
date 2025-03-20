@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ATLAS/Atlas.md",
+                "file": "ATLAS/Design and Analysis of Algorithms.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Atlas"
+              "title": "Design and Analysis of Algorithms"
             }
           }
         ]
@@ -248,9 +248,10 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "ATTACHMENTS/image-39.png",
+    "ATLAS/Atlas.md",
     "Homepage.md",
     "ATLAS/Design and Analysis of Algorithms.md",
-    "ATLAS/Atlas.md",
     "ATTACHMENTS/image-38.png",
     "ATTACHMENTS/image-37.png",
     "ATTACHMENTS/image-36.png",
