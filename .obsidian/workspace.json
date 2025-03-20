@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "ATLAS/Atlas.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Atlas"
             }
           }
         ]
@@ -248,9 +248,9 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Homepage.md",
     "ATLAS/Design and Analysis of Algorithms.md",
     "ATLAS/Atlas.md",
-    "Homepage.md",
     "ATTACHMENTS/image-38.png",
     "ATTACHMENTS/image-37.png",
     "ATTACHMENTS/image-36.png",
