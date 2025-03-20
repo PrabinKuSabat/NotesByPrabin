@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ATLAS/Design and Analysis of Algorithms.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Design and Analysis of Algorithms"
+              "title": "Homepage"
             }
           }
         ]
@@ -248,13 +248,18 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "ATLAS/Design and Analysis of Algorithms.md",
+    "ATTACHMENTS/image-38.png",
+    "ATTACHMENTS/image-37.png",
+    "ATTACHMENTS/image-36.png",
+    "ATTACHMENTS/image-35.png",
+    "ATLAS/Atlas.md",
+    "Homepage.md",
     "ATTACHMENTS/image-34.png",
     "ATTACHMENTS/image-33.png",
     "ATTACHMENTS/image-32.png",
     "ATTACHMENTS/image-31.png",
     "ATTACHMENTS/image-30.png",
-    "ATLAS/Atlas.md",
-    "Homepage.md",
     "EFFORTS/Efforts.md",
     "EFFORTS/22nd Dec 2024.md",
     "EFFORTS/TPU - Tensor Processing Units.md",
@@ -268,13 +273,7 @@
     "EFFORTS/Computing's Energy Problem.md",
     "EFFORTS/AMD RDNA.md",
     "EFFORTS/Simulators.md",
-    "ATLAS/Design and Analysis of Algorithms.md",
     "ATTACHMENTS/image-29.png",
-    "ATTACHMENTS/image-28.png",
-    "ATTACHMENTS/image-27.png",
-    "ATTACHMENTS/image-26.png",
-    "ATTACHMENTS/image-25.png",
-    "ATTACHMENTS/image-24.png",
     "EFFORTS/GPU NOtes.md",
     "Heatmaps.md",
     "Random.md",
