@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "4509724f8bf84da7",
+        "id": "c06ee2b1e29acdcd",
         "type": "tabs",
         "children": [
           {
-            "id": "e7a7b303c61786dc",
+            "id": "5bb96f94cea8c496",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ATLAS/Design and Analysis of Algorithms.md",
+                "file": "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Design and Analysis of Algorithms"
+              "title": "Papers to refer"
             }
           }
         ]
@@ -98,7 +98,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5
+    "width": 414.5,
+    "collapsed": true
   },
   "right": {
     "id": "43fc27400badb105",
@@ -246,12 +247,29 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "5bb96f94cea8c496",
   "lastOpenFiles": [
+    "EFFORTS/List of GPUSImulators 2.md",
+    "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
+    "EFFORTS/List of GPUSimulators 2",
+    "EFFORTS/CA Research.md",
+    "EFFORTS/List of GPU Simulators.md",
+    "EFFORTS/Simulators.md",
+    "NotesByPrabin/EFFORTS/Simulators.md",
+    "EFFORTS/Efforts.md",
+    "Homepage.md",
+    "EFFORTS/Survey and Benchmarking of Machine Learning Accelerators.md",
+    "EFFORTS/Notes of Survey and Benchmarking of Machine Learning Accelerators.md",
+    "EFFORTS/Parameters available in GPUTejas config.xml.md",
+    "EFFORTS/NaviSim.md",
+    "EFFORTS/Given by Naveen.md",
+    "EFFORTS/TPU - Tensor Processing Units.md",
+    "NotesByPrabin/EFFORTS/Architecture Laws.md",
+    "EFFORTS/Chiplets.md",
+    "EFFORTS/CA Notes.md",
+    "ATLAS/Design and Analysis of Algorithms.md",
     "ATTACHMENTS/image-39.png",
     "ATLAS/Atlas.md",
-    "Homepage.md",
-    "ATLAS/Design and Analysis of Algorithms.md",
     "ATTACHMENTS/image-38.png",
     "ATTACHMENTS/image-37.png",
     "ATTACHMENTS/image-36.png",
@@ -261,30 +279,14 @@
     "ATTACHMENTS/image-32.png",
     "ATTACHMENTS/image-31.png",
     "ATTACHMENTS/image-30.png",
-    "EFFORTS/Efforts.md",
     "EFFORTS/22nd Dec 2024.md",
-    "EFFORTS/TPU - Tensor Processing Units.md",
-    "EFFORTS/CA Research.md",
-    "EFFORTS/Given by Naveen.md",
     "EFFORTS/JAVA Project.md",
     "EFFORTS/IBM Workshop.md",
     "EFFORTS/Leetcode.md",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
-    "EFFORTS/CA Notes.md",
     "EFFORTS/Computing's Energy Problem.md",
     "EFFORTS/AMD RDNA.md",
-    "EFFORTS/Simulators.md",
-    "ATTACHMENTS/image-29.png",
     "EFFORTS/GPU NOtes.md",
-    "Heatmaps.md",
-    "Random.md",
-    "ProofReading.md",
-    "EFFORTS/List of GPU Simulators.md",
-    "NotesByPrabin/Templates/Weekly Note.md",
-    "NotesByPrabin/Templates/Daily Template.md",
-    "NotesByPrabin/Templates/Canva Right Align.md",
-    "NotesByPrabin/Templates/Canva Left Align.md",
-    "NotesByPrabin/Templates/Canva Center Align.md",
     "NotesByPrabin/Templates",
     "NotesByPrabin/EFFORTS",
     "NotesByPrabin/CALENDER",
@@ -294,7 +296,6 @@
     "NotesByPrabin",
     "Excalidraw/Scripts/Downloaded",
     "Excalidraw/Scripts",
-    "Excalidraw",
     "EFFORTS/Binary Search.canvas",
     "!HOME.canvas",
     "Untitled.canvas",

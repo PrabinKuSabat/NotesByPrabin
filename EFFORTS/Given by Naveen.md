@@ -13,7 +13,7 @@
 
 [https://arxiv.org/pdf/2401.10082v1](https://arxiv.org/pdf/2401.10082v1)  -- Good paper   
 
-# [[Simulators]]
+# Simulators
 
 [https://bu-icsg.github.io/publications/2022/navisim_pact_2022.pdf](https://bu-icsg.github.io/publications/2022/navisim_pact_2022.pdf)  -AMD simulator   
 [https://research.cs.wisc.edu/multifacet/papers/cal14_gem5gpu.pdf](https://research.cs.wisc.edu/multifacet/papers/cal14_gem5gpu.pdf)  

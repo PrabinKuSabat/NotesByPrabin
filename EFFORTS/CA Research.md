@@ -9,7 +9,8 @@ tags:
 1. [[Given by Naveen]]  
 2. [[Chiplets]]
 3. [[TPU - Tensor Processing Units]]
-4. [[NotesByPrabin/EFFORTS/Simulators|Simulators]]
+4. [[List of GPUSImulators 2 |GPU Simulators List]]  
+[[EFFORTS/Simulators]]
 
 ## Notes
 
