@@ -33,3 +33,23 @@
 [Ppt-**gpu**: Scalable **gpu** performance modeling](https://ieeexplore.ieee.org/abstract/document/8665984/)
 
 [\[PDF\] ieee.org](https://ieeexplore.ieee.org/ielaam/10208/8610345/8665984-aam.pdf)
+
+### [Simnet: Accurate and high-performance computer **architecture simulation** using deep learning](https://dl.acm.org/doi/abs/10.1145/3530891)
+
+[\[PDF\] acm.org](https://dl.acm.org/doi/pdf/10.1145/3530891)
+
+### [Navisim: A highly accurate **gpu simulator** for amd rdna **gpus**](https://dl.acm.org/doi/abs/10.1145/3559009.3569666)
+
+[\[PDF\] github.io](https://michaeltshen.github.io/Files/NaviSim.pdf)
+
+### [Barra: A parallel functional **simulator** for gpgpu](https://ieeexplore.ieee.org/abstract/document/5581577/)
+
+[\[PDF\] hal.science](https://hal.science/hal-00359342v4/file/Collange_BarraSimulatorGPGPU_MASCOTS09.pdf)
+
+### [GPGPU-MiniBench: accelerating GPGPU micro-**architecture simulation**](https://ieeexplore.ieee.org/abstract/document/7018049/)
+
+[\[PDF\] google.com](https://drive.google.com/file/d/1qZUSrkppZS-2I0apZWtqL5qVnnXs68a5/view)
+
+### [Mgpusim: Enabling multi-**gpu** performance modeling and optimization](https://dl.acm.org/doi/abs/10.1145/3307650.3322230)
+
+[\[PDF\] acm.org](https://dl.acm.org/doi/pdf/10.1145/3307650.3322230)
