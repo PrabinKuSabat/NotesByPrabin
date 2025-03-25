@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Papers to refer"
             }
           }
         ]
@@ -249,14 +249,14 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/Efforts.md",
-    "Homepage.md",
-    "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
-    "EFFORTS/JAVA Project.md",
     "EFFORTS/List of GPUSImulators 2.md",
     "EFFORTS/CA Research.md",
     "EFFORTS/Simulators.md",
     "EFFORTS/List of GPU Simulators.md",
+    "EFFORTS/Efforts.md",
+    "Homepage.md",
+    "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
+    "EFFORTS/JAVA Project.md",
     "EFFORTS/List of GPUSimulators 2",
     "NotesByPrabin/EFFORTS/Simulators.md",
     "EFFORTS/Survey and Benchmarking of Machine Learning Accelerators.md",

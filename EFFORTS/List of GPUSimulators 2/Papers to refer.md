@@ -65,3 +65,11 @@
 # [MCMG **simulator**: A unified **simulation** framework for CPU and graphic **==GPU==**](https://www.sciencedirect.com/science/article/pii/S0022000014001044)
 
 [\[HTML\] sciencedirect.com](https://www.sciencedirect.com/science/article/pii/S0022000014001044)
+
+### \[HTML\]\[HTML\] [MCMG **simulator**: A unified **simulation** framework for CPU and graphic **GPU**](https://www.sciencedirect.com/science/article/pii/S0022000014001044)
+
+[\[HTML\] sciencedirect.com](https://www.sciencedirect.com/science/article/pii/S0022000014001044)
+
+### [AccelWattch: A power modeling framework for modern **GPUs**](https://dl.acm.org/doi/abs/10.1145/3466752.3480063)
+
+[\[PDF\] acm.org](https://dl.acm.org/doi/pdf/10.1145/3466752.3480063)
