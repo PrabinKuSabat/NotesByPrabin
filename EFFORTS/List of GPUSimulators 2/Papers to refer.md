@@ -73,3 +73,17 @@
 ### [AccelWattch: A power modeling framework for modern **GPUs**](https://dl.acm.org/doi/abs/10.1145/3466752.3480063)
 
 [\[PDF\] acm.org](https://dl.acm.org/doi/pdf/10.1145/3466752.3480063)
+
+### [Parallelizing a modern **GPU simulator**](https://arxiv.org/abs/2502.14691)
+
+[\[PDF\] arxiv.org](https://arxiv.org/pdf/2502.14691)
+
+### [GPUCloudSim: an extension of CloudSim for modeling and **simulation** of **GPUs** in cloud data centers](https://link.springer.com/article/10.1007/s11227-018-2636-7)
+
+[\[PDF\] springer.com](https://link.springer.com/content/pdf/10.1007/s11227-018-2636-7.pdf)
+
+### [Exploiting **gpus** to **simulate** complex systems](https://ieeexplore.ieee.org/abstract/document/6603946/)
+
+### [Power modeling for **GPU architectures** using McPAT](https://dl.acm.org/doi/abs/10.1145/2611758)
+
+[\[PDF\] gatech.edu](https://hparch.gatech.edu/papers/lim_todaes14.pdf)
