@@ -87,3 +87,27 @@
 ### [Power modeling for **GPU architectures** using McPAT](https://dl.acm.org/doi/abs/10.1145/2611758)
 
 [\[PDF\] gatech.edu](https://hparch.gatech.edu/papers/lim_todaes14.pdf)
+
+### [Modeling **GPU**\-CPU workloads and systems](https://dl.acm.org/doi/abs/10.1145/1735688.1735696)
+
+[\[PDF\] keldysh.ru](https://ftp.keldysh.ru/K_student/AUTO_PARALLELIZATION/GPU/CUDA/2010-03-GPGPU-ModelingGPGPU.pdf)
+
+### [ONNXim: A Fast, Cycle-level Multi-core NPU **Simulator**](https://ieeexplore.ieee.org/abstract/document/10726822/)
+
+[\[PDF\] arxiv.org](https://arxiv.org/pdf/2406.08051)
+
+### [Minime-**gpu**: Multicore benchmark synthesizer for **gpus**](https://dl.acm.org/doi/abs/10.1145/2818693)
+
+[\[PDF\] acm.org](https://dl.acm.org/doi/pdf/10.1145/2818693)
+
+### [Mgsim+ mgmark: A framework for multi-**gpu** system research](https://arxiv.org/abs/1811.02884)
+
+[\[PDF\] arxiv.org](https://arxiv.org/pdf/1811.02884)
+
+### [GPUVolt: Modeling and characterizing voltage noise in **GPU architectures**](https://dl.acm.org/doi/abs/10.1145/2627369.2627605)
+
+[\[PDF\] harvard.edu](https://projects.iq.harvard.edu/files/GPUVolt.pdf)
+
+[M2S-CGM: A detailed **architectural simulator** for coherent CPU-**GPU** systems](https://ieeexplore.ieee.org/abstract/document/8119257/)
+
+[\[PDF\] ucf.edu](http://csl.cs.ucf.edu/~heinrich/papers/iccd17.pdf)
