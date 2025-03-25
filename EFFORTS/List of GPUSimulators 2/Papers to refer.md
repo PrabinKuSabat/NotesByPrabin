@@ -57,3 +57,11 @@
 ### [Full-system **simulation** of mobile cpu/**gpu** platforms](https://ieeexplore.ieee.org/abstract/document/8695656/)
 
 [\[PDF\] st-andrews.ac.uk](https://research-repository.st-andrews.ac.uk/bitstream/handle/10023/24324/Kaszyk_2019_IEEE_Full_System_Simulation_AAM.pdf?sequence=1)
+
+### [Macsim: A cpu-**==gpu==** heterogeneous **simulation** framework user guide](https://google-code-archive-downloads.storage.googleapis.com/v2/code.google.com/macsim/macsim.pdf)
+
+[\[PDF\] googleapis.com](https://google-code-archive-downloads.storage.googleapis.com/v2/code.google.com/macsim/macsim.pdf)
+
+### [MCMG **simulator**: A unified **simulation** framework for CPU and graphic **==GPU==**](https://www.sciencedirect.com/science/article/pii/S0022000014001044)
+
+[\[HTML\] sciencedirect.com](https://www.sciencedirect.com/science/article/pii/S0022000014001044)
