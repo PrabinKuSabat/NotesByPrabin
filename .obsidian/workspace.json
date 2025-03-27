@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
+                "file": "EFFORTS/JAVA Project.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Papers to refer"
+              "title": "JAVA Project"
             }
           }
         ]
@@ -249,11 +249,11 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/List of GPUSImulators 2.md",
-    "EFFORTS/CA Research.md",
     "EFFORTS/Efforts.md",
+    "EFFORTS/CA Research.md",
     "Homepage.md",
     "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
+    "EFFORTS/List of GPUSImulators 2.md",
     "EFFORTS/Simulators.md",
     "EFFORTS/List of GPU Simulators.md",
     "EFFORTS/JAVA Project.md",
