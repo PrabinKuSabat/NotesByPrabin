@@ -5,10 +5,10 @@
 	- [x] Convert the c code to java ✅ 2025-03-19
 	- [ ] Make the fliphash write the hashes to a cache file.
 - [ ] Make a thread run as a socket.
-- [ ] Make FlipHash work on the IP and port numbers.
+- [x] Make FlipHash work on the IP and port numbers. ✅ 2025-03-27
 	- [ ] Each new server added to the server list should be considered as a new thread **[server thread]**.
 	- [ ] The hashed output should send the client request to that server thread.
-- [ ] Allow clients to access the server.
+- [x] Allow clients to access the server. ✅ 2025-03-27
 - [ ] A new thread is being generated for each server.
 - [ ] Make a GUI
 	- [ ] show the no. of servers active. **[as icons of servers]**
