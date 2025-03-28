@@ -14,14 +14,14 @@
 		- [x] send the client jar file to the backend server for processing. ✅ 2025-03-27
 		- [ ] Run check
 - [-] Allow clients to access the server. ✅ 2025-03-27
-	- [ ] Allow clients to access the backend servers.
-	- [ ] Allow clients to send files to the backend servers
+	- [x] Allow clients to access the backend servers. ✅ 2025-03-28
+	- [x] Allow clients to send files to the backend servers ✅ 2025-03-28
 	- [ ] Run check
 - [ ] Backend Servers should run the jar files in a protected environment.
-	- [ ] Client receiving output directly from the backend server.
+	- [x] Client receiving output directly from the backend server. ✅ 2025-03-28
 		- [ ] Run check
 - [-] A new thread is being generated for each server.
-	- [ ] Client being run as thread in the backends.
+	- [x] Client being run as thread in the backends. ✅ 2025-03-28
 	- [ ] run check
 - [ ] Make a GUI
 	- [ ] show the no. of servers active. **[as icons of servers]**

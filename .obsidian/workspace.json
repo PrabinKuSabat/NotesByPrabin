@@ -8,27 +8,30 @@
         "type": "tabs",
         "children": [
           {
-            "id": "e7a7b303c61786dc",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "New tab"
-            }
-          },
-          {
             "id": "15d439dceac54f10",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "EFFORTS/JAVA Project.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "JAVA Project"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -246,9 +249,9 @@
   },
   "active": "15d439dceac54f10",
   "lastOpenFiles": [
-    "EFFORTS/JAVA Project.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
+    "EFFORTS/JAVA Project.md",
     "EFFORTS/CA Research.md",
     "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
     "EFFORTS/List of GPUSImulators 2.md",
