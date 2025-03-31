@@ -10,3 +10,5 @@
 > [[CPP|C++]]  
 > [[AI]]  
 > [[Design and Analysis of Algorithms]]
+
+[[Inner Product Verification L2]]

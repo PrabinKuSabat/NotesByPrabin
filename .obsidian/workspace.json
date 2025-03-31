@@ -8,12 +8,12 @@
         "type": "tabs",
         "children": [
           {
-            "id": "15d439dceac54f10",
+            "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/JAVA Project.md",
+                "file": "ATLAS/Atlas.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,10 +28,59 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "JAVA Project"
+              "title": "Atlas"
+            }
+          },
+          {
+            "id": "c27ccd7321f49ec5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "ATLAS/Atlas.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Atlas"
+            }
+          },
+          {
+            "id": "5b4fd20e954a2cc3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Clippings/Inner Product Verification L2.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Inner Product Verification L2"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -98,8 +147,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5,
-    "collapsed": true
+    "width": 414.5
   },
   "right": {
     "id": "43fc27400badb105",
@@ -247,10 +295,16 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "15d439dceac54f10",
+  "active": "5b4fd20e954a2cc3",
   "lastOpenFiles": [
-    "EFFORTS/Efforts.md",
+    "ATLAS/Atlas.md",
+    "Clippings/Inner Product Verification L2.md",
+    "ATLAS/Functional.md",
+    "Clippings",
+    "ATLAS/Inner Product Verification L2.md",
+    "ATLAS/Functional",
     "Homepage.md",
+    "EFFORTS/Efforts.md",
     "EFFORTS/JAVA Project.md",
     "EFFORTS/CA Research.md",
     "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
@@ -270,7 +324,6 @@
     "EFFORTS/CA Notes.md",
     "ATLAS/Design and Analysis of Algorithms.md",
     "ATTACHMENTS/image-39.png",
-    "ATLAS/Atlas.md",
     "ATTACHMENTS/image-38.png",
     "ATTACHMENTS/image-37.png",
     "ATTACHMENTS/image-36.png",
@@ -284,9 +337,6 @@
     "EFFORTS/IBM Workshop.md",
     "EFFORTS/Leetcode.md",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
-    "EFFORTS/Computing's Energy Problem.md",
-    "EFFORTS/AMD RDNA.md",
-    "EFFORTS/GPU NOtes.md",
     "NotesByPrabin/Templates",
     "NotesByPrabin/EFFORTS",
     "NotesByPrabin/CALENDER",
@@ -294,8 +344,6 @@
     "NotesByPrabin/ATTACHMENTS",
     "NotesByPrabin/ATLAS",
     "NotesByPrabin",
-    "Excalidraw/Scripts/Downloaded",
-    "Excalidraw/Scripts",
     "EFFORTS/Binary Search.canvas",
     "!HOME.canvas",
     "Untitled.canvas",
