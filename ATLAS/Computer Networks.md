@@ -72,11 +72,14 @@ IP broadcast: 255.255.255.255
 > IP addresses are managed under the authority of the Internet Corporation for Assigned Names and Numbers (ICANN)  
 
 ### DHCP
+
 **Dynamic Host Configuration Protocol (DHCP)**
 - Plug and play protocol  
 DHCP relay agent(a router):
 - Works as a DHCP in it's absence
-#### 4 Steps 
+
+#### 4 Steps
+
 1. DHCP server discovery:
 	- Port 67
 	- Broadcast
@@ -91,8 +94,10 @@ DHCP relay agent(a router):
 	- Broadcast
 4. DHCP ACK:
 	- Confirmation
+
 ### NAT
-**Network Address Translation**
+
+**Network Address Translation**  
  Creates a realm with private addresses.
 - Stores IP addresses with port numbers.
 
@@ -102,8 +107,34 @@ UPnP : Universal Plug and Play
 - Allows user to discover and configure a nearby NAT
 
 ## ICMP
-**Internet Control Message Protocol**
+
+**Internet Control Message Protocol**  
 Contains:
 - Type
 - code field
 - Header and 8b of the datagram that caused error.
+  
+IETF : Internet Engineering Task Force
+
+### IPV6 Format
+
+![[image-33.png]]
+
+#### Changes
+1. Expanded Addressing Mode(128b)
+	- Also introduced any cast. 
+2. 40-byte fixed header
+	- New encoding of options allows for faster encryption
+3. Flow and traffic
+	- labeling of packets belonging to particular flows for which the sender requests special handling, such as a nondefault quality of service or real-time service.
+
+#### Fields 
+1. Version(6b)
+2. Traffic(8b)
+3. Flow label(20b)
+4. Payload Length(16b)
+5. Next header (same as upper layer protocol)(8b)
+6. Hop limit (same as TTL)
+7. Source add.
+8. Dest add.
+9. Data
