@@ -42,7 +42,7 @@ Early Random Detection ( widely studied based on weighted average of the length 
 
 ### Total 14 items in the datagram format
 
->  Each line represents 32 bits.  
+> Each line represents 32 bits.  
 
 Line 1 -
 1. IP Version Number(4)
@@ -62,6 +62,13 @@ Single Lines (each 32b) -
 12. Desti. IP
 13. Options
 14. Data
- 
+
 ## IPV4 Addressing
-CIDR(pr. CIDER) - Classless Interdomain Routing
+
+CIDR(pr. CIDER) - Classless Interdomain Routing  
+Classful Addressing - 8, 16, 24 different sizes for addressing  
+IP broadcast: 255.255.255.255
+
+> IP addresses are managed under the authority of the Internet Corporation for Assigned Names and Numbers (ICANN)  
+
+Dynamic Host Configuration Protocol (DHCP)
