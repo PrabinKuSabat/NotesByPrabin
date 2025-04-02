@@ -9,6 +9,7 @@
 > [!abstract] Computer Science  
 > [[CPP|C++]]  
 > [[AI]]  
-> [[Design and Analysis of Algorithms]]
+> [[Design and Analysis of Algorithms]]  
+> [[Computer Networks]]
 
 [[Inner Product Verification L2]]

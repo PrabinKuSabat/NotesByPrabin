@@ -14,9 +14,9 @@
               "type": "pdf",
               "state": {
                 "file": "ATTACHMENTS/Computer Networking A Top-Down Approach 6t - Unknown.pdf",
-                "page": 333,
-                "left": -55,
-                "top": 279,
+                "page": 337,
+                "left": -147,
+                "top": 288,
                 "zoom": 1.7
               },
               "icon": "lucide-file-text",
@@ -24,17 +24,30 @@
             }
           },
           {
-            "id": "9557521fb6aaab64",
+            "id": "42248bc65fdfdb21",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "ATLAS/Computer Networks.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Computer Networks"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -97,12 +110,12 @@
               "title": "Plugin no longer active"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 414.5
+    "width": 414.5,
+    "collapsed": true
   },
   "right": {
     "id": "43fc27400badb105",
@@ -250,12 +263,13 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "9557521fb6aaab64",
+  "active": "03d0861cd2b6c874",
   "lastOpenFiles": [
+    "ATLAS/Computer Networks.md",
     "ATTACHMENTS/Computer Networking A Top-Down Approach 6t - Unknown.pdf",
+    "ATLAS/Atlas.md",
     "Homepage.md",
     "Clippings/Inner Product Verification L2.md",
-    "ATLAS/Atlas.md",
     "ATLAS/Functional.md",
     "Clippings",
     "ATLAS/Inner Product Verification L2.md",
@@ -290,7 +304,6 @@
     "ATTACHMENTS/image-31.png",
     "ATTACHMENTS/image-30.png",
     "EFFORTS/22nd Dec 2024.md",
-    "EFFORTS/IBM Workshop.md",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "NotesByPrabin/Templates",
     "NotesByPrabin/EFFORTS",
