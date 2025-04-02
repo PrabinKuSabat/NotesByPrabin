@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "ATLAS/Computer Networks.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Computer Networks"
             }
           }
         ]
@@ -98,7 +98,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5
+    "width": 414.5,
+    "collapsed": true
   },
   "right": {
     "id": "43fc27400badb105",
@@ -248,6 +249,8 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "ATLAS/Atlas.md",
+    "ATLAS/Computer Networks.md",
     "Homepage.md",
     "EFFORTS/Drawing 2025-04-02 10.41.40.excalidraw.md",
     "/EFFORTS/Networking.xopp",
@@ -260,8 +263,6 @@
     "ATTACHMENTS/Pasted image 20250122214510.png",
     "ATTACHMENTS/image-6.png",
     "ATTACHMENTS/Computer Networking A Top-Down Approach 6t - Unknown.pdf",
-    "ATLAS/Computer Networks.md",
-    "ATLAS/Atlas.md",
     "Clippings/Inner Product Verification L2.md",
     "ATLAS/Functional.md",
     "Clippings",
