@@ -79,6 +79,15 @@ DHCP relay agent(a router):
 #### 4 Steps 
 1. DHCP server discovery:
 	- Port 67
-2. DHCP server offers
-	- Transaction ID
-	- 
+	- Broadcast
+2. DHCP server offers:
+	- Contains
+		- Transaction ID
+		- Proposed address
+		- Subnet Mask
+		- Lease TIme
+	- Broadcast
+3. DHCP Request:
+	- Broadcast
+4. DHCP ACK:
+	- Confirmation
