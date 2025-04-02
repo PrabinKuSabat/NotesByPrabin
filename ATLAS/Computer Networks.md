@@ -91,3 +91,7 @@ DHCP relay agent(a router):
 	- Broadcast
 4. DHCP ACK:
 	- Confirmation
+### NAT
+**Network Address Translation**
+ Creates a realm with private addresses.
+- Stores IP addresses with port numbers.
