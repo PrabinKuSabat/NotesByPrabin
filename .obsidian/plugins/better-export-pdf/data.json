@@ -5,7 +5,7 @@
   "displayFooter": true,
   "headerTemplate": "<div style=\"width: 100vw; font-size: 12px; text-align: right; position: relative; padding: 10px\">\n    __<span class=\"title\"></span>__",
   "footerTemplate": "<div style=\"width: 100vw;font-family:'Latin Modern Mono Caps'; font-size: 12px; text-align: right; position: relative;\">\n    __<span class=\"title\"></span>__ || <span class=\"pageNumber\"></span> ||",
-  "printBackground": true,
+  "printBackground": false,
   "generateTaggedPDF": false,
   "displayMetadata": true,
   "debug": true,

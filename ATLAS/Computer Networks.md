@@ -156,24 +156,32 @@ IETF : Internet Engineering Task Force
 	- Load-insensitive
 
 ### Link-State Routing Algorithms
+
 1. Dijkstra’s Algorithms
 	- After k steps k shortest paths are know to k nodes.
 	- Take the shortest route at every step.
 	- O(n<sup>2</sup>)
->  Congestion sensitive routing results in oscillations.
+
+> Congestion sensitive routing results in oscillations.
 
 ### Distance Vector Routing Algorithms
+
 - Whenever there is a change in the connecting edge or a update from any of the neighbors the table is updated.
-- And the updated table is forwarded to all the neighbors. 
+- And the updated table is forwarded to all the neighbors.
+
 #### Poisoned Reverse
+
 If y takes a different route then the direct route then y advertises saying d<sub>y</sub>(x).
+
 ### Comparison Between LS and DV
+
 1. Message Complexity
 2. Speed Convergence
 3. Robustness
 
 ### Hierarchical routing algorithms
-Solves: 
+
+Solves:
 - Scalability in the modern world.
 - Administrative autonomy
 
@@ -181,12 +189,40 @@ Makes use of AS(Autonomous Systems).
 - Consists of a group of routers following the same routing algorithm.
 - Intra-autonomous system routing algorithm
 
-**Gateway router**
+**Gateway router**  
 **Intra-AS routing algorithm :** BGP4
 
 Hot-potato method to solve conflict between two outside AS. ( make use of shortest path to one of the ASs. )
 
 ## Routing in the Internet
+
 Mainly used:
 1. RIP(Routing Information Protocol)
 2. OSPF(Open Shortest Path First)
+
+### RIP
+
+#### Messages
+
+1. RIP response message or RIP advertisements
+2. RIP requests
+
+#### About
+
+- Is a DV algorithm.
+	- Distance is calculated using number of hops required to reach the destination address(Including it).
+	- Maximum limit is set at 15.
+		- Only AS having a diameter of 15 can implement this.
+- Sends routing advertisements every 30 seconds
+- Routing Table
+	- Contains both the distance vector and the Forwarding Table.
+	- Has three columns
+		1. Destination Subnet
+		2. Next router on the shortest path to the destination
+		3. Hop count
+- Communicates over port 570 using UDP
+	- As it runs as a process named **Routed**.
+		- Thus is implemented as a Application Layer Process.
+		- Using standard socket and transport protocols.
+- If doesn't receive advertisement for more than 180 seconds considers the neighbor to be unreachable.
+	- Updates the table and send an advertisement.
