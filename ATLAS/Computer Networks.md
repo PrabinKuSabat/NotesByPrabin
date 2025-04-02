@@ -71,4 +71,14 @@ IP broadcast: 255.255.255.255
 
 > IP addresses are managed under the authority of the Internet Corporation for Assigned Names and Numbers (ICANN)  
 
-Dynamic Host Configuration Protocol (DHCP)
+### DHCP
+**Dynamic Host Configuration Protocol (DHCP)**
+- Plug and play protocol  
+DHCP relay agent(a router):
+- Works as a DHCP in it's absence
+#### 4 Steps 
+1. DHCP server discovery:
+	- Port 67
+2. DHCP server offers
+	- Transaction ID
+	- 
