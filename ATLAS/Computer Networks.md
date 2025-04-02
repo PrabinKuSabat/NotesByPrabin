@@ -121,14 +121,16 @@ IETF : Internet Engineering Task Force
 ![[image-33.png]]
 
 #### Changes
+
 1. Expanded Addressing Mode(128b)
-	- Also introduced any cast. 
+	- Also introduced any cast.
 2. 40-byte fixed header
 	- New encoding of options allows for faster encryption
 3. Flow and traffic
 	- labeling of packets belonging to particular flows for which the sender requests special handling, such as a nondefault quality of service or real-time service.
 
-#### Fields 
+#### Fields
+
 1. Version(6b)
 2. Traffic(8b)
 3. Flow label(20b)
@@ -138,3 +140,17 @@ IETF : Internet Engineering Task Force
 7. Source add.
 8. Dest add.
 9. Data
+
+## Routing Algorithms
+
+### Three ways to Classify
+
+1. First : Manner of Calculating least-cost path.
+	- Centralized
+	- Decentralized
+2. Second : Speed of updating routes
+	- Static
+	- Dynamic
+3. Third Load sensitive
+	- Load-sensitive
+	- Load-insensitive
