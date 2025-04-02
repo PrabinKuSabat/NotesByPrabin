@@ -171,3 +171,22 @@ If y takes a different route then the direct route then y advertises saying d<su
 1. Message Complexity
 2. Speed Convergence
 3. Robustness
+
+### Hierarchical routing algorithms
+Solves: 
+- Scalability in the modern world.
+- Administrative autonomy
+
+Makes use of AS(Autonomous Systems).
+- Consists of a group of routers following the same routing algorithm.
+- Intra-autonomous system routing algorithm
+
+**Gateway router**
+**Intra-AS routing algorithm :** BGP4
+
+Hot-potato method to solve conflict between two outside AS. ( make use of shortest path to one of the ASs. )
+
+## Routing in the Internet
+Mainly used:
+1. RIP(Routing Information Protocol)
+2. OSPF(Open Shortest Path First)
