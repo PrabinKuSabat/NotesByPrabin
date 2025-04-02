@@ -163,4 +163,5 @@ IETF : Internet Engineering Task Force
 >  Congestion sensitive routing results in oscillations.
 
 ### Distance Vector Routing Algorithms
-
+- Whenever there is a change in the connecting edge or a update from any of the neighbors the table is updated.
+- And the updated table is forwarded to all the neighbours. 
