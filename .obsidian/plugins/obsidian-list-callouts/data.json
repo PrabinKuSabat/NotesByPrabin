@@ -29,5 +29,11 @@
   {
     "color": "158, 158, 158",
     "char": "%"
+  },
+  {
+    "char": "*",
+    "color": "4, 144, 231",
+    "icon": "lucide-star",
+    "custom": true
   }
 ]
