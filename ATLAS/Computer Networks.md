@@ -156,3 +156,11 @@ IETF : Internet Engineering Task Force
 	- Load-insensitive
 
 ### Link-State Routing Algorithms
+1. Dijkstra’s Algorithms
+	- After k steps k shortest paths are know to k nodes.
+	- Take the shortest route at every step.
+	- O(n<sup>2</sup>)
+>  Congestion sensitive routing results in oscillations.
+
+### Distance Vector Routing Algorithms
+
