@@ -34,8 +34,8 @@
       "template": "{{linkWithDisplay}}"
     },
     {
-      "name": "Embed",
-      "template": "!{{link}}"
+      "name": "Text",
+      "template": "{{text}}"
     },
     {
       "name": "Callout",
