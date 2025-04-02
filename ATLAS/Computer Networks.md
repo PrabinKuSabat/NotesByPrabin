@@ -95,3 +95,15 @@ DHCP relay agent(a router):
 **Network Address Translation**
  Creates a realm with private addresses.
 - Stores IP addresses with port numbers.
+
+**Connection reversal used by P2P applications for NAT traversal.**
+
+UPnP : Universal Plug and Play
+- Allows user to discover and configure a nearby NAT
+
+## ICMP
+**Internet Control Message Protocol**
+Contains:
+- Type
+- code field
+- Header and 8b of the datagram that caused error.
