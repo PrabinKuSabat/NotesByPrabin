@@ -24,4 +24,7 @@ B = RTT ⭈ C - Previous Theory
 ### Dropping
 - AQM(Active Queue Management Algorithms Collection)
 Drop-tail : Simply drop
-Early Random Detection ( widely studied  based on weighted  average of the length of the output queue
+Early Random Detection ( widely studied  based on weighted  average of the length of the output queue.
+
+## IPv4
+![[image-20.png]]
