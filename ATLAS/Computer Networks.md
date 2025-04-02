@@ -164,4 +164,10 @@ IETF : Internet Engineering Task Force
 
 ### Distance Vector Routing Algorithms
 - Whenever there is a change in the connecting edge or a update from any of the neighbors the table is updated.
-- And the updated table is forwarded to all the neighbours. 
+- And the updated table is forwarded to all the neighbors. 
+#### Poisoned Reverse
+If y takes a different route then the direct route then y advertises saying d<sub>y</sub>(x).
+### Comparison Between LS and DV
+1. Message Complexity
+2. Speed Convergence
+3. Robustness
