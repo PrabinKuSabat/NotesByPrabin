@@ -8,79 +8,33 @@
         "type": "tabs",
         "children": [
           {
-            "id": "e7a7b303c61786dc",
+            "id": "03d0861cd2b6c874",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "pdf",
               "state": {
-                "file": "ATLAS/Atlas.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
+                "file": "ATTACHMENTS/Computer Networking A Top-Down Approach 6t - Unknown.pdf",
+                "page": 333,
+                "left": -55,
+                "top": 279,
+                "zoom": 1.7
               },
-              "icon": "lucide-file",
-              "title": "Atlas"
+              "icon": "lucide-file-text",
+              "title": "Computer Networking A Top-Down Approach 6t - Unknown"
             }
           },
           {
-            "id": "c27ccd7321f49ec5",
+            "id": "9557521fb6aaab64",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "ATLAS/Atlas.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Atlas"
-            }
-          },
-          {
-            "id": "5b4fd20e954a2cc3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Clippings/Inner Product Verification L2.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Inner Product Verification L2"
+              "title": "New tab"
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -112,7 +66,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "[\"tags\"]",
+                "query": "file:6th",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -143,7 +97,8 @@
               "title": "Plugin no longer active"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -295,15 +250,16 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "5b4fd20e954a2cc3",
+  "active": "9557521fb6aaab64",
   "lastOpenFiles": [
-    "ATLAS/Atlas.md",
+    "ATTACHMENTS/Computer Networking A Top-Down Approach 6t - Unknown.pdf",
+    "Homepage.md",
     "Clippings/Inner Product Verification L2.md",
+    "ATLAS/Atlas.md",
     "ATLAS/Functional.md",
     "Clippings",
     "ATLAS/Inner Product Verification L2.md",
     "ATLAS/Functional",
-    "Homepage.md",
     "EFFORTS/Efforts.md",
     "EFFORTS/JAVA Project.md",
     "EFFORTS/CA Research.md",
@@ -335,7 +291,6 @@
     "ATTACHMENTS/image-30.png",
     "EFFORTS/22nd Dec 2024.md",
     "EFFORTS/IBM Workshop.md",
-    "EFFORTS/Leetcode.md",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "NotesByPrabin/Templates",
     "NotesByPrabin/EFFORTS",
@@ -343,7 +298,6 @@
     "NotesByPrabin/ATTACHMENTS/Matrix Analysis and Applied Linear Algebra  Solutions Manual (Carl D. Meyer)2001 (Z-Library).pdf",
     "NotesByPrabin/ATTACHMENTS",
     "NotesByPrabin/ATLAS",
-    "NotesByPrabin",
     "EFFORTS/Binary Search.canvas",
     "!HOME.canvas",
     "Untitled.canvas",

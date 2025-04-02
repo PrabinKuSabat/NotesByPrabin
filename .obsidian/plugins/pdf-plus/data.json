@@ -217,7 +217,7 @@
   "clickPDFInternalLinkWithModifierKey": true,
   "clickOutlineItemWithModifierKey": true,
   "clickThumbnailWithModifierKey": true,
-  "focusEditorAfterAutoPaste": true,
+  "focusEditorAfterAutoPaste": false,
   "clearSelectionAfterAutoPaste": true,
   "respectCursorPositionWhenAutoPaste": true,
   "blankLineAboveAppendedContent": true,
