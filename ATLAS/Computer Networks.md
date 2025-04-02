@@ -63,3 +63,5 @@ Single Lines (each 32b) -
 13. Options
 14. Data
  
+## IPV4 Addressing
+CIDR(pr. CIDER) - Classless Interdomain Routing
