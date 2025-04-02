@@ -4,17 +4,31 @@
     "type": "split",
     "children": [
       {
-        "id": "72cd78a4775090e1",
+        "id": "4509724f8bf84da7",
         "type": "tabs",
         "children": [
           {
-            "id": "76daba1180974c9c",
+            "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Homepage.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Homepage"
             }
           }
         ]
@@ -49,7 +63,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "file:6th",
+                "query": "file:Net",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -232,8 +246,13 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "4b44bc66b81b0ac8",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Homepage.md",
+    "EFFORTS/Drawing 2025-04-02 10.41.40.excalidraw.md",
+    "/EFFORTS/Networking.xopp",
+    "EFFORTS/Networking.xopp",
+    "/EFFORTS",
     "ATTACHMENTS/Pasted image 20240912204038.png",
     "ATTACHMENTS/Pasted image 20250121185022.png",
     "ATTACHMENTS/Pasted image 20250121162527.png",
@@ -243,7 +262,6 @@
     "ATTACHMENTS/Computer Networking A Top-Down Approach 6t - Unknown.pdf",
     "ATLAS/Computer Networks.md",
     "ATLAS/Atlas.md",
-    "Homepage.md",
     "Clippings/Inner Product Verification L2.md",
     "ATLAS/Functional.md",
     "Clippings",
@@ -272,15 +290,11 @@
     "ATTACHMENTS/image-38.png",
     "ATTACHMENTS/image-37.png",
     "ATTACHMENTS/image-36.png",
-    "ATTACHMENTS/image-35.png",
     "EFFORTS/22nd Dec 2024.md",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "NotesByPrabin/Templates",
     "NotesByPrabin/EFFORTS",
     "NotesByPrabin/CALENDER",
-    "NotesByPrabin/ATTACHMENTS/Matrix Analysis and Applied Linear Algebra  Solutions Manual (Carl D. Meyer)2001 (Z-Library).pdf",
-    "NotesByPrabin/ATTACHMENTS",
-    "NotesByPrabin/ATLAS",
     "EFFORTS/Binary Search.canvas",
     "!HOME.canvas",
     "Untitled.canvas",
