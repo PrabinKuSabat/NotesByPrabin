@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Papers to refer"
             }
           }
         ]
@@ -249,9 +249,9 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Homepage.md",
     "ATLAS/Computer Networks.md",
     "ATLAS/Atlas.md",
-    "Homepage.md",
     "ATTACHMENTS/image-33.png",
     "ATTACHMENTS/image-20.png",
     "EFFORTS/Drawing 2025-04-02 10.41.40.excalidraw.md",
