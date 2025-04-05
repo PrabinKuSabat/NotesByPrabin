@@ -38,7 +38,7 @@ Early Random Detection ( widely studied based on weighted average of the length 
 
 ## IPv4
 
-![[image-20.png]]
+![[image-20.png|IPV4 Format]]
 
 ### Total 14 items in the datagram format
 
