@@ -8,12 +8,12 @@
         "type": "tabs",
         "children": [
           {
-            "id": "e7a7b303c61786dc",
+            "id": "678db9a58f2bfd24",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
+                "file": "EFFORTS/Report for mini-project.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Papers to refer"
+              "title": "Report for mini-project"
             }
           }
         ]
@@ -247,9 +247,13 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "678db9a58f2bfd24",
   "lastOpenFiles": [
+    "EFFORTS/CA Research.md",
+    "EFFORTS/Report for mini-project.md",
+    "EFFORTS/Efforts.md",
     "Homepage.md",
+    "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
     "ATLAS/Computer Networks.md",
     "ATLAS/Atlas.md",
     "ATTACHMENTS/image-33.png",
@@ -270,10 +274,7 @@
     "Clippings",
     "ATLAS/Inner Product Verification L2.md",
     "ATLAS/Functional",
-    "EFFORTS/Efforts.md",
     "EFFORTS/JAVA Project.md",
-    "EFFORTS/CA Research.md",
-    "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
     "EFFORTS/List of GPUSImulators 2.md",
     "EFFORTS/Simulators.md",
     "EFFORTS/List of GPU Simulators.md",

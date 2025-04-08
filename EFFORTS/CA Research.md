@@ -12,6 +12,8 @@ tags:
 4. [[List of GPUSImulators 2 |GPU Simulators List]]  
 [[EFFORTS/Simulators]]
 
+> [[Report for mini-project]]
+
 ## Notes
 
 1. [[NaviSim]] : Simulator for RDNA
