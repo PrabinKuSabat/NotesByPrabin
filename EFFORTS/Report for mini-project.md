@@ -3,3 +3,7 @@
 - [ ] Then share some other info about the possible research possibilities that I have seen.
 - [ ] Wind up with conclusion.
 - [ ] In total 5 pages.
+
+
+---
+# List of all the required 
