@@ -21,6 +21,8 @@
 
 [GPUCloudSim: an extension of CloudSim for modeling and **simulation** of **GPUs** in cloud data centers](https://link.springer.com/article/10.1007/s11227-018-2636-7)  
 [\[PDF\] springer.com](https://link.springer.com/content/pdf/10.1007/s11227-018-2636-7.pdf)  
+[M2S-CGM: A detailed **architectural simulator** for coherent CPU-**GPU** systems](https://ieeexplore.ieee.org/abstract/document/8119257/)  
+[\[PDF\] ucf.edu](http://csl.cs.ucf.edu/~heinrich/papers/iccd17.pdf)  
 
 # Multi-GPU Simulators
 
@@ -28,6 +30,9 @@
 [\[PDF\] acm.org](https://dl.acm.org/doi/pdf/10.1145/3307650.3322230)  
 [MCMG **simulator**: A unified **simulation** framework for CPU and graphic **==GPU==**](https://www.sciencedirect.com/science/article/pii/S0022000014001044)  
 [\[HTML\] sciencedirect.com](https://www.sciencedirect.com/science/article/pii/S0022000014001044)  
+
+[Mgsim+ mgmark: A framework for multi-**gpu** system research](https://arxiv.org/abs/1811.02884)  
+[\[PDF\] arxiv.org](https://arxiv.org/pdf/1811.02884)  
 
 # GPU Architecture Related Papers
 
@@ -37,8 +42,13 @@
 
 [AccelWattch: A power modeling framework for modern **GPUs**](https://dl.acm.org/doi/abs/10.1145/3466752.3480063)  
 [\[PDF\] acm.org](https://dl.acm.org/doi/pdf/10.1145/3466752.3480063)  
+- Used by Accel-Sim  
 [Power modeling for **GPU architectures** using McPAT](https://dl.acm.org/doi/abs/10.1145/2611758)  
 [\[PDF\] gatech.edu](https://hparch.gatech.edu/papers/lim_todaes14.pdf)  
+[GPUVolt: Modeling and characterizing voltage noise in **GPU architectures**](https://dl.acm.org/doi/abs/10.1145/2627369.2627605)  
+[\[PDF\] harvard.edu](https://projects.iq.harvard.edu/files/GPUVolt.pdf)  
+[GPUWattch: Enabling energy optimizations in GPGPUs](https://dl.acm.org/doi/abs/10.1145/2508148.2485964)  
+[\[PDF\] ubc.ca](https://people.ece.ubc.ca/aamodt/publications/papers/gpuwattch.isca2013.pdf)  
 
 # GPU Related Papers
 
@@ -53,6 +63,26 @@
 [Parallelizing a modern **GPU simulator**](https://arxiv.org/abs/2502.14691)  
 [\[PDF\] arxiv.org](https://arxiv.org/pdf/2502.14691)  
 
+# GPU Benchmark
+
+[Minime-**gpu**: Multicore benchmark synthesizer for **gpus**](https://dl.acm.org/doi/abs/10.1145/2818693)  
+[\[PDF\] acm.org](https://dl.acm.org/doi/pdf/10.1145/2818693)  
+- Auto Benchmark Synthesizer
+
+[Modeling **GPU**\-CPU workloads and systems](https://dl.acm.org/doi/abs/10.1145/1735688.1735696)  
+[\[PDF\] keldysh.ru](https://ftp.keldysh.ru/K_student/AUTO_PARALLELIZATION/GPU/CUDA/2010-03-GPGPU-ModelingGPGPU.pdf)  
+- Checks same workloads on both GPU and CPU.
+
+# GPU Performance Checking
+
+[Stargazer: Automated regression-based **GPU** design space exploration](https://ieeexplore.ieee.org/abstract/document/6189201/)  
+[\[PDF\] princeton.edu](https://oar.princeton.edu/bitstream/88435/pr1nc3p/1/DesignSpaceExplore.pdf)  
+
+# Mobile GPU Simulators
+
+[**Simulation** methodologies for mobile **GPUs**](https://era.ed.ac.uk/handle/1842/38739)  
+[\[PDF\] ed.ac.uk](https://era.ed.ac.uk/bitstream/handle/1842/38739/KaszykK_2022.pdf?sequence=1&isAllowed=y)  
+
 # Some Interesting Papers
 
 [Simnet: Accurate and high-performance computer **architecture simulation** using deep learning](https://dl.acm.org/doi/abs/10.1145/3530891)  
@@ -64,3 +94,13 @@
 [Exploiting **gpus** to **simulate** complex systems](https://ieeexplore.ieee.org/abstract/document/6603946/)  
 [ONNXim: A Fast, Cycle-level Multi-core NPU **Simulator**](https://ieeexplore.ieee.org/abstract/document/10726822/)  
 [\[PDF\] arxiv.org](https://arxiv.org/pdf/2406.08051)  
+[Using **gpu** to accelerate cache **simulation**](https://ieeexplore.ieee.org/abstract/document/5207880/)  
+[Architecting waferscale processors-a **gpu** case study](https://ieeexplore.ieee.org/abstract/document/8675211/)  
+[\[PDF\] ucla.edu](https://nanocad.ee.ucla.edu/wp-content/papercite-data/pdf/c107.pdf)  
+
+[GPUMech: **GPU** performance modeling technique based on interval analysis](https://ieeexplore.ieee.org/abstract/document/7011394/)  
+[\[PDF\] psu.edu](https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=9fcbf89aab2b77d5d9383318291e415d5be07a53)  
+[Source level performance **simulation** of **gpu** cores](https://ieeexplore.ieee.org/abstract/document/7092385/)  
+[\[PDF\] date-conference.com](https://www.date-conference.com/proceedings-archive/2017/pyear/2015/pdf/0916.pdf)  
+[Tejas: A java based versatile micro-**architectural simulator**](https://ieeexplore.ieee.org/abstract/document/7347586/)  
+[\[PDF\] iitd.ac.in](https://www.cse.iitd.ac.in/~srsarangi/files/papers/patmospaper.pdf)  
