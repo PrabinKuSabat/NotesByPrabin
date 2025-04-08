@@ -4,6 +4,8 @@
 - [ ] Wind up with conclusion.
 - [ ] In total 5 pages.
 
-
 ---
-# List of all the required 
+
+# [[List of all GPU features]]
+
+# [[Research Papers Categorized]]
