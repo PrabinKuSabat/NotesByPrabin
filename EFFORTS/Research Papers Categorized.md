@@ -28,6 +28,8 @@
 	1. [\[PDF\] google.com](https://drive.google.com/file/d/1Tl9z7Vgtj6eMElM8NTkWeZ-Je8MpYTAd/view)  
 15. [GATSim: Abstract timing **simulation** of **GPUs**](https://ieeexplore.ieee.org/abstract/document/7926956/)  
 	1. [\[PDF\] utexas.edu](https://users.ece.utexas.edu/~gerstl/publications/date17.GATSim.pdf)  
+16. [GpuTejas: A parallel **simulator** for **GPU** architectures](https://ieeexplore.ieee.org/abstract/document/7116897/)
+	1. [\[PDF\] iitd.ac.in](https://www.cse.iitd.ac.in/~srsarangi/files/papers/gputejas.pdf)
 
 # Multi-GPU Simulators
 
@@ -73,6 +75,9 @@
 	1. [\[PDF\] purdue.edu](https://engineering.purdue.edu/tgrogers/papers/khairy.ispass2019.poster.pdf)  
 8. [Scheduling techniques for **GPU architectures** with processing-in-memory capabilities](https://dl.acm.org/doi/abs/10.1145/2967938.2967940)  
 	1. [\[PDF\] acm.org](https://dl.acm.org/doi/pdf/10.1145/2967938.2967940)
+9. [Enabling Multi-GPU Support in gem5](https://par.nsf.gov/biblio/10192412)
+10. [**Daisen**: A framework for visualizing detailed gpu execution](https://onlinelibrary.wiley.com/doi/abs/10.1111/cgf.14303)
+	1. [\[PDF\] wiley.com](https://onlinelibrary.wiley.com/doi/pdf/10.1111/cgf.14303)
 
 # GPU Benchmark
 
@@ -82,6 +87,22 @@
 2. [Modeling **GPU**\-CPU workloads and systems](https://dl.acm.org/doi/abs/10.1145/1735688.1735696)  
 	1. [\[PDF\] keldysh.ru](https://ftp.keldysh.ru/K_student/AUTO_PARALLELIZATION/GPU/CUDA/2010-03-GPGPU-ModelingGPGPU.pdf)  
 		1. Checks same workloads on both GPU and CPU.
+
+# GPU Microbenchmarking
+
+1. [**Demystifying GPU** microarchitecture through microbenchmarking](https://ieeexplore.ieee.org/abstract/document/5452013/)
+	1. [\[PDF\] washington.edu](https://courses.cs.washington.edu/courses/cse470/24sp/readings/Demystifying_GPU_microarchitecture_through_microbenchmarking.pdf)
+2. [**Demystifying NVIDIA GPU** Internals to Enable Reliable **GPU** Management](https://ieeexplore.ieee.org/abstract/document/10568069/)
+	1. [\[PDF\] unc.edu](https://www.cs.unc.edu/~jbakita/rtas24-private.pdf)
+3. [**Demystifying** the **nvidia** ampere architecture through microbenchmarking and instruction-level analysis](https://ieeexplore.ieee.org/abstract/document/9926299/)
+4. [**Dissecting** the **NVIDIA** volta GPU **architecture** via microbenchmarking](https://arxiv.org/abs/1804.06826)
+	1. [\[PDF\] arxiv.org](https://arxiv.org/pdf/1804.06826)
+5. [Benchmarking and **dissecting** the **nvidia** hopper gpu **architecture**](https://ieeexplore.ieee.org/abstract/document/10579250/)
+	1. [\[PDF\] arxiv.org](https://arxiv.org/pdf/2402.13499)
+6. [**Dissecting** the **nvidia** turing t4 gpu via microbenchmarking](https://arxiv.org/abs/1903.07486)
+	1. [\[PDF\] arxiv.org](https://arxiv.org/pdf/1903.07486)
+7. [**Dissecting** the **NVIDIA** Hopper **Architecture** through Microbenchmarking and Multiple Level Analysis](https://arxiv.org/abs/2501.12084)
+	1. [\[PDF\] arxiv.org](https://arxiv.org/pdf/2501.12084)
 
 # GPU Performance Checking
 
