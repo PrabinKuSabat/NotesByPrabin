@@ -1,6 +1,6 @@
 # Simulators List
 
-1. [[List of GPU Simulators]]
+1. [[List of GPU Simulators |Previous List]]
 
 # Simulators Notes
 
