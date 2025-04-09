@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "4509724f8bf84da7",
+        "id": "2f58ea06a0972133",
         "type": "tabs",
         "children": [
           {
-            "id": "80ce5e831b879ba9",
+            "id": "a8c0d3abb18dbea3",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/List of GPU Simulators.md",
+                "file": "EFFORTS/Research Papers Categorized.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,35 +28,40 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "List of GPU Simulators"
-            }
-          },
-          {
-            "id": "fc90cbf687fe989a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "EFFORTS/List of GPU Simulators.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "List of GPU Simulators"
+              "title": "Research Papers Categorized"
             }
           }
-        ],
-        "currentTab": 1
+        ]
+      },
+      {
+        "id": "a84fc29f9e83d8f2",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "65561b42b5ee1183",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Papers to refer"
+            }
+          }
+        ]
       }
     ],
     "direction": "vertical"
@@ -272,17 +277,17 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "fc90cbf687fe989a",
+  "active": "65561b42b5ee1183",
   "lastOpenFiles": [
-    "EFFORTS/Simulators.md",
+    "EFFORTS/Research Papers Categorized.md",
+    "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
+    "EFFORTS/Report for mini-project.md",
     "EFFORTS/CA Research.md",
     "EFFORTS/Efforts.md",
-    "EFFORTS/CA Notes.md",
     "Homepage.md",
     "EFFORTS/List of GPU Simulators.md",
-    "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
-    "EFFORTS/Research Papers Categorized.md",
-    "EFFORTS/Report for mini-project.md",
+    "EFFORTS/Simulators.md",
+    "EFFORTS/CA Notes.md",
     "EFFORTS/List of all GPU features.md",
     "EFFORTS/List of GPUSImulators 2.md",
     "ATLAS/Atlas.md",
