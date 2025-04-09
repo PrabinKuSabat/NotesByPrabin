@@ -9,4 +9,5 @@
 > [[IBM Workshop]]  
 > [[JAVA Project]]
 
-[[Department Farewell]]
+> [! summary] Regular Works `fas:ListAlt`  
+> [[SSSIHL]]

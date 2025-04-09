@@ -1,19 +1,5 @@
 
 
-[**GPU**\-accelerated sparse LU factorization for circuit **simulation** with performance modeling](https://ieeexplore.ieee.org/abstract/document/6774937/)  
-[Analyzing Modern **NVIDIA GPU** cores](https://arxiv.org/abs/2503.20481)  
-[\[PDF\] arxiv.org](https://arxiv.org/pdf/2503.20481)  
-\[PDF\]\[PDF\] [FATSEA–An **Architectural Simulator** for General Purpose Computing on **GPUs**](https://www.academia.edu/download/54237095/rapido10.pdf)  
-[\[PDF\] academia.edu](https://www.academia.edu/download/54237095/rapido10.pdf)  
-[FastLanes: An FPGA accelerated **GPU** microarchitecture **simulator**](https://ieeexplore.ieee.org/abstract/document/6657049/)  
-[PasTiS: building an **NVIDIA** Pascal **GPU simulator** for embedded AI applications](https://ut3-toulouseinp.hal.science/hal-03684680/)  
-[\[PDF\] hal.science](https://ut3-toulouseinp.hal.science/hal-03684680/document)  
-[Accurately modeling the on-chip and off-chip **GPU** memory subsystem](https://www.sciencedirect.com/science/article/pii/S0167739X17302091)  
-[\[PDF\] upv.es](https://riunet.upv.es/bitstream/handle/10251/145974/Candel-Margaix%3BPetit%3BSahuquillo%20-%20Accurately%20modeling%20the%20on-chip%20and%20off-chip%20GPU%20memory%20subsystem.pdf?sequence=3)  
-[Nvbit: A dynamic binary instrumentation framework for **nvidia gpus**](https://dl.acm.org/doi/abs/10.1145/3352460.3358307)  
-[\[PDF\] google.com](https://drive.google.com/file/d/1Tl9z7Vgtj6eMElM8NTkWeZ-Je8MpYTAd/view)  
-[GATSim: Abstract timing **simulation** of **GPUs**](https://ieeexplore.ieee.org/abstract/document/7926956/)  
-[\[PDF\] utexas.edu](https://users.ece.utexas.edu/~gerstl/publications/date17.GATSim.pdf)  
 [A detailed model for contemporary **GPU** memory systems](https://ieeexplore.ieee.org/abstract/document/8695658/)  
 [\[PDF\] purdue.edu](https://engineering.purdue.edu/tgrogers/papers/khairy.ispass2019.poster.pdf)  
 

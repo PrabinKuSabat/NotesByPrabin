@@ -23,6 +23,14 @@
 [\[PDF\] springer.com](https://link.springer.com/content/pdf/10.1007/s11227-018-2636-7.pdf)  
 [M2S-CGM: A detailed **architectural simulator** for coherent CPU-**GPU** systems](https://ieeexplore.ieee.org/abstract/document/8119257/)  
 [\[PDF\] ucf.edu](http://csl.cs.ucf.edu/~heinrich/papers/iccd17.pdf)  
+[PasTiS: building an **NVIDIA** Pascal **GPU simulator** for embedded AI applications](https://ut3-toulouseinp.hal.science/hal-03684680/)  
+[\[PDF\] hal.science](https://ut3-toulouseinp.hal.science/hal-03684680/document)  
+
+[Nvbit: A dynamic binary instrumentation framework for **nvidia gpus**](https://dl.acm.org/doi/abs/10.1145/3352460.3358307)  
+[\[PDF\] google.com](https://drive.google.com/file/d/1Tl9z7Vgtj6eMElM8NTkWeZ-Je8MpYTAd/view)  
+
+[GATSim: Abstract timing **simulation** of **GPUs**](https://ieeexplore.ieee.org/abstract/document/7926956/)  
+[\[PDF\] utexas.edu](https://users.ece.utexas.edu/~gerstl/publications/date17.GATSim.pdf)  
 
 # Multi-GPU Simulators
 
@@ -37,6 +45,8 @@
 # GPU Architecture Related Papers
 
 1. [Performance characterisation and **simulation** of Intel's integrated **GPU architecture**](https://ieeexplore.ieee.org/abstract/document/8366948/)
+2. [Analyzing Modern **NVIDIA GPU** cores](https://arxiv.org/abs/2503.20481)  
+	1. [\[PDF\] arxiv.org](https://arxiv.org/pdf/2503.20481)  
 
 # GPU Power Modeling
 
@@ -62,6 +72,8 @@
 
 [Parallelizing a modern **GPU simulator**](https://arxiv.org/abs/2502.14691)  
 [\[PDF\] arxiv.org](https://arxiv.org/pdf/2502.14691)  
+[Accurately modeling the on-chip and off-chip **GPU** memory subsystem](https://www.sciencedirect.com/science/article/pii/S0167739X17302091)  
+[\[PDF\] upv.es](https://riunet.upv.es/bitstream/handle/10251/145974/Candel-Margaix%3BPetit%3BSahuquillo%20-%20Accurately%20modeling%20the%20on-chip%20and%20off-chip%20GPU%20memory%20subsystem.pdf?sequence=3)  
 
 # GPU Benchmark
 
@@ -104,3 +116,5 @@
 [\[PDF\] date-conference.com](https://www.date-conference.com/proceedings-archive/2017/pyear/2015/pdf/0916.pdf)  
 [Tejas: A java based versatile micro-**architectural simulator**](https://ieeexplore.ieee.org/abstract/document/7347586/)  
 [\[PDF\] iitd.ac.in](https://www.cse.iitd.ac.in/~srsarangi/files/papers/patmospaper.pdf)  
+
+[FastLanes: An FPGA accelerated **GPU** microarchitecture **simulator**](https://ieeexplore.ieee.org/abstract/document/6657049/)  

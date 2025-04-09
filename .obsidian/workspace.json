@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,37 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Papers to refer"
+            }
+          }
+        ]
+      },
+      {
+        "id": "b12f1534c8214e8f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "91b7583e97731d00",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "EFFORTS/Research Papers Categorized.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Research Papers Categorized"
             }
           }
         ]
@@ -249,19 +279,20 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/Department Farewell.md",
-    "EFFORTS/Efforts.md",
-    "Homepage.md",
     "EFFORTS/Research Papers Categorized.md",
-    "EFFORTS/Report for mini-project.md",
     "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
-    "EFFORTS/List of all GPU features.md",
     "EFFORTS/CA Research.md",
-    "EFFORTS/List of GPUSImulators 2.md",
     "EFFORTS/Simulators.md",
     "EFFORTS/List of GPU Simulators.md",
-    "ATLAS/Computer Networks.md",
+    "EFFORTS/List of GPUSImulators 2.md",
+    "EFFORTS/Report for mini-project.md",
+    "EFFORTS/List of all GPU features.md",
+    "EFFORTS/Efforts.md",
+    "Homepage.md",
     "ATLAS/Atlas.md",
+    "EFFORTS/Department Farewell.md",
+    "EFFORTS/SSSIHL.md",
+    "ATLAS/Computer Networks.md",
     "ATTACHMENTS/image-33.png",
     "ATTACHMENTS/image-20.png",
     "EFFORTS/Drawing 2025-04-02 10.41.40.excalidraw.md",
@@ -289,7 +320,6 @@
     "EFFORTS/NaviSim.md",
     "EFFORTS/Given by Naveen.md",
     "EFFORTS/TPU - Tensor Processing Units.md",
-    "NotesByPrabin/EFFORTS/Architecture Laws.md",
     "ATTACHMENTS/image-39.png",
     "ATTACHMENTS/image-38.png",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
