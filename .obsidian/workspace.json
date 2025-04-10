@@ -4,31 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "2f58ea06a0972133",
+        "id": "4509724f8bf84da7",
         "type": "tabs",
         "children": [
           {
-            "id": "a8c0d3abb18dbea3",
+            "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "EFFORTS/Research Papers Categorized.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Research Papers Categorized"
+              "title": "New tab"
             }
           }
         ]
@@ -247,14 +233,14 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "a8c0d3abb18dbea3",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
     "EFFORTS/Research Papers Categorized.md",
     "EFFORTS/Report for mini-project.md",
     "EFFORTS/CA Research.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
+    "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
     "EFFORTS/List of GPU Simulators.md",
     "EFFORTS/Simulators.md",
     "EFFORTS/CA Notes.md",
