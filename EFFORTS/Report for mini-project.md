@@ -9,3 +9,5 @@
 # [[List of all GPU features]]
 
 # [[Research Papers Categorized]]
+
+[[Research Paper Notes]]

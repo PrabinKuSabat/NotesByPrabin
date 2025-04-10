@@ -11,13 +11,52 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "EFFORTS/Research Papers Categorized.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Research Papers Categorized"
+            }
+          },
+          {
+            "id": "d971ab07f815480e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "EFFORTS/Research Paper Notes.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Research Paper Notes"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -233,18 +272,19 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "d971ab07f815480e",
   "lastOpenFiles": [
-    "EFFORTS/Efforts.md",
-    "Homepage.md",
     "EFFORTS/Research Papers Categorized.md",
     "EFFORTS/Report for mini-project.md",
+    "EFFORTS/Research Paper Notes.md",
     "EFFORTS/CA Research.md",
+    "EFFORTS/Efforts.md",
+    "Homepage.md",
+    "EFFORTS/List of all GPU features.md",
+    "EFFORTS/CA Notes.md",
     "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
     "EFFORTS/List of GPU Simulators.md",
     "EFFORTS/Simulators.md",
-    "EFFORTS/CA Notes.md",
-    "EFFORTS/List of all GPU features.md",
     "EFFORTS/List of GPUSImulators 2.md",
     "ATLAS/Atlas.md",
     "EFFORTS/Department Farewell.md",
@@ -275,7 +315,6 @@
     "EFFORTS/Notes of Survey and Benchmarking of Machine Learning Accelerators.md",
     "EFFORTS/Parameters available in GPUTejas config.xml.md",
     "EFFORTS/NaviSim.md",
-    "EFFORTS/Given by Naveen.md",
     "ATTACHMENTS/image-39.png",
     "ATTACHMENTS/image-38.png",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
