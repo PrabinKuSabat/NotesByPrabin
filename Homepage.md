@@ -2,8 +2,6 @@
 
 # [[Atlas|ATLAS]]
 
-
-
 > [!info]  
 > `fas:HandPointUp` Contains all Subject related notes.
 
