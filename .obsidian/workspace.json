@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Research Papers Categorized.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Research Papers Categorized"
+              "title": "Homepage"
             }
           }
         ]
@@ -98,7 +98,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5
+    "width": 414.5,
+    "collapsed": true
   },
   "right": {
     "id": "43fc27400badb105",
@@ -229,7 +230,6 @@
       "command-palette:Open command palette": true,
       "workspaces:Manage workspace layouts": false,
       "canvas:Create new canvas": false,
-      "periodic-notes:Open today": false,
       "obsidian-kanban:Create new board": false,
       "obsidian-projects:Open projects": false,
       "obsidian-book-search-plugin:Create new book note": false,
@@ -243,17 +243,18 @@
       "pdf-plus:PDF++: Toggle auto-paste": false,
       "obsidian-full-calendar:Open Full Calendar": false,
       "obsidian-custom-frames:Open Google Calendar": false,
-      "obsidian-excalidraw-plugin:New drawing": false
+      "obsidian-excalidraw-plugin:New drawing": false,
+      "periodic-notes:Open today": false
     }
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/Research Papers Categorized.md",
     "EFFORTS/Report for mini-project.md",
     "EFFORTS/CA Research.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
     "EFFORTS/Research Paper Notes.md",
-    "EFFORTS/Research Papers Categorized.md",
     "EFFORTS/List of all GPU features.md",
     "EFFORTS/CA Notes.md",
     "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
