@@ -11,10 +11,24 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "EFFORTS/Efforts.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Efforts"
             }
           }
         ]
@@ -235,9 +249,10 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/SSSIHL.md",
     "EFFORTS/Efforts.md",
-    "EFFORTS/Online Courses.md",
     "Homepage.md",
+    "EFFORTS/Online Courses.md",
     "EFFORTS/Research Papers Categorized.md",
     "EFFORTS/Report for mini-project.md",
     "EFFORTS/CA Research.md",
@@ -250,7 +265,6 @@
     "EFFORTS/List of GPUSImulators 2.md",
     "ATLAS/Atlas.md",
     "EFFORTS/Department Farewell.md",
-    "EFFORTS/SSSIHL.md",
     "ATLAS/Computer Networks.md",
     "ATTACHMENTS/image-33.png",
     "ATTACHMENTS/image-20.png",
