@@ -6,4 +6,4 @@
 
 # Tasks to Do
 
-- [ ] Check the Bernstein polynomials on page no. 170.
+- [x] Check the Bernstein polynomials on page no. 170. ✅ 2025-06-11

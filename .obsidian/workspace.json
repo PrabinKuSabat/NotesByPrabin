@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Efforts.md",
+                "file": "EFFORTS/POA By Naveen Bro.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Efforts"
+              "title": "POA By Naveen Bro"
             }
           }
         ]
@@ -249,12 +249,20 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/SSSIHL.md",
-    "EFFORTS/Efforts.md",
+    "EFFORTS/Dissertation.md",
+    "EFFORTS/POA By Naveen Bro.md",
     "Homepage.md",
-    "EFFORTS/Online Courses.md",
-    "EFFORTS/Research Papers Categorized.md",
+    "TO-DO List.md",
     "EFFORTS/Report for mini-project.md",
+    "EFFORTS/JAVA Project.md",
+    "Random.md",
+    "Heatmaps.md",
+    "EFFORTS/Online Courses.md",
+    "EFFORTS/Efforts.md",
+    "EFFORTS/SSSIHL.md",
+    "ATLAS/Atlas.md",
+    "ATLAS/AI.md",
+    "EFFORTS/Research Papers Categorized.md",
     "EFFORTS/CA Research.md",
     "EFFORTS/Research Paper Notes.md",
     "EFFORTS/List of all GPU features.md",
@@ -263,7 +271,6 @@
     "EFFORTS/List of GPU Simulators.md",
     "EFFORTS/Simulators.md",
     "EFFORTS/List of GPUSImulators 2.md",
-    "ATLAS/Atlas.md",
     "EFFORTS/Department Farewell.md",
     "ATLAS/Computer Networks.md",
     "ATTACHMENTS/image-33.png",
@@ -280,16 +287,9 @@
     "ATTACHMENTS/image-6.png",
     "ATTACHMENTS/Computer Networking A Top-Down Approach 6t - Unknown.pdf",
     "Clippings/Inner Product Verification L2.md",
-    "ATLAS/Functional.md",
     "Clippings",
-    "ATLAS/Inner Product Verification L2.md",
     "ATLAS/Functional",
-    "EFFORTS/JAVA Project.md",
     "EFFORTS/List of GPUSimulators 2",
-    "NotesByPrabin/EFFORTS/Simulators.md",
-    "EFFORTS/Survey and Benchmarking of Machine Learning Accelerators.md",
-    "EFFORTS/Notes of Survey and Benchmarking of Machine Learning Accelerators.md",
-    "EFFORTS/Parameters available in GPUTejas config.xml.md",
     "ATTACHMENTS/image-39.png",
     "ATTACHMENTS/image-38.png",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",

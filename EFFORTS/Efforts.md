@@ -3,8 +3,7 @@
 > [!note] `ris:Computer` Architecture  
 > [[CA Research|Research]]  
 > [[CA Notes|Short Notes]]  
-> [[Online Courses]]
-> [[]]
+> [[Dissertation]]
 
 > [! important] coding `fas:Brain`  
 > [[Leetcode]]  
