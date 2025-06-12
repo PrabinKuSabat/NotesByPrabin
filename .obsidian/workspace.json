@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/POA By Naveen Bro.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "POA By Naveen Bro"
+              "title": "Homepage"
             }
           }
         ]
@@ -249,9 +249,9 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/Dissertation.md",
-    "EFFORTS/POA By Naveen Bro.md",
     "Homepage.md",
+    "EFFORTS/POA By Naveen Bro.md",
+    "EFFORTS/Dissertation.md",
     "TO-DO List.md",
     "EFFORTS/Report for mini-project.md",
     "EFFORTS/JAVA Project.md",
