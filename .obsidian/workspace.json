@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "EFFORTS/List of Available GPU Products.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "List of Available GPU Products"
             }
           }
         ]
@@ -250,10 +250,11 @@
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
     "EFFORTS/POA By Naveen Bro.md",
+    "EFFORTS/List of Available GPU Products.md",
     "EFFORTS/Dissertation.md",
-    "EFFORTS/Online Courses.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
+    "EFFORTS/Online Courses.md",
     "ATLAS/Atlas.md",
     "TO-DO List.md",
     "EFFORTS/Report for mini-project.md",
@@ -286,7 +287,6 @@
     "ATTACHMENTS/Pasted image 20250122214510.png",
     "ATTACHMENTS/image-6.png",
     "ATTACHMENTS/Computer Networking A Top-Down Approach 6t - Unknown.pdf",
-    "Clippings/Inner Product Verification L2.md",
     "Clippings",
     "ATLAS/Functional",
     "EFFORTS/List of GPUSimulators 2",
