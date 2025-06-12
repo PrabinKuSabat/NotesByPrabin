@@ -1,4 +1,7 @@
- - [ ] ML Algorithms Architecture ⛔ ri5yx0 ⏫ ➕ 2025-06-11 📅 2025-06-29
+- [ ] Available GPU products
+- [ ] Simulator
+- [ ] GPU Benchmarks used out there 🔺 ➕ 2025-06-11 📅 2025-06-12
+- [ ] ML Algorithms Architecture ⛔ ri5yx0 ⏫ ➕ 2025-06-11 📅 2025-06-29
  - [ ] Check MLIR, LLVM, C, C++, VLLM, Geeks Quiz. ➕ 2025-06-11 📅 2025-06-29
  - [ ] Comprehensive View of Accelerators Available 📅 2025-06-12
 	 - [ ] Mobile Accelerators 📅 2025-06-13
@@ -17,7 +20,4 @@
  - [ ] DSA
  - [ ] Presenting Mode
  - [ ] Understanding GPU Architecture
- - [ ] Available GPU products
  - [ ] Accel-sim
- - [ ] Simulator
- - [ ] GPU Benchmarks used out there 🔺 ➕ 2025-06-11 📅 2025-06-12

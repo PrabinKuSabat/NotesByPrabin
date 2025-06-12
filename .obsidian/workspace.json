@@ -195,8 +195,8 @@
             "state": {
               "type": "calendar",
               "state": {},
-              "icon": "lucide-file",
-              "title": "Plugin no longer active"
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
             }
           },
           {
@@ -249,18 +249,18 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Homepage.md",
     "EFFORTS/POA By Naveen Bro.md",
     "EFFORTS/Dissertation.md",
+    "EFFORTS/Online Courses.md",
+    "EFFORTS/Efforts.md",
+    "Homepage.md",
+    "ATLAS/Atlas.md",
     "TO-DO List.md",
     "EFFORTS/Report for mini-project.md",
     "EFFORTS/JAVA Project.md",
     "Random.md",
     "Heatmaps.md",
-    "EFFORTS/Online Courses.md",
-    "EFFORTS/Efforts.md",
     "EFFORTS/SSSIHL.md",
-    "ATLAS/Atlas.md",
     "ATLAS/AI.md",
     "EFFORTS/Research Papers Categorized.md",
     "EFFORTS/CA Research.md",
