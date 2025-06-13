@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Dissertation.md",
+                "file": "EFFORTS/Notes.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,16 +28,16 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Dissertation"
+              "title": "Notes"
             }
           },
           {
-            "id": "8d8adfc3b89328af",
+            "id": "e0fe0248eb3d802c",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/List of Available GPU Products.md",
+                "file": "EFFORTS/GPU Architectures  and Programming.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -52,23 +52,23 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "List of Available GPU Products"
+              "title": "GPU Architectures  and Programming"
             }
           }
         ],
         "currentTab": 1
       },
       {
-        "id": "52efb1c642ef6e72",
+        "id": "22e6b5f2d9ae7901",
         "type": "tabs",
         "children": [
           {
-            "id": "e217a79c1df5cb73",
+            "id": "9f43ed9e1d7f7e5a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/POA By Naveen Bro.md",
+                "file": "EFFORTS/Online Courses.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -83,7 +83,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "POA By Naveen Bro"
+              "title": "Online Courses"
             }
           }
         ]
@@ -302,14 +302,18 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "8d8adfc3b89328af",
+  "active": "e0fe0248eb3d802c",
   "lastOpenFiles": [
-    "EFFORTS/POA By Naveen Bro.md",
-    "EFFORTS/List of Available GPU Products.md",
+    "ATTACHMENTS/image-40.png",
+    "ATTACHMENTS/image-36.png",
+    "EFFORTS/GPU Architectures  and Programming.md",
+    "EFFORTS/Notes.md",
+    "EFFORTS/Online Courses.md",
     "EFFORTS/Dissertation.md",
+    "EFFORTS/List of Available GPU Products.md",
+    "EFFORTS/POA By Naveen Bro.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
-    "EFFORTS/Online Courses.md",
     "ATLAS/Atlas.md",
     "TO-DO List.md",
     "EFFORTS/Report for mini-project.md",
@@ -327,11 +331,8 @@
     "EFFORTS/List of GPU Simulators.md",
     "EFFORTS/Simulators.md",
     "EFFORTS/List of GPUSImulators 2.md",
-    "EFFORTS/Department Farewell.md",
-    "ATLAS/Computer Networks.md",
     "ATTACHMENTS/image-33.png",
     "ATTACHMENTS/image-20.png",
-    "EFFORTS/Drawing 2025-04-02 10.41.40.excalidraw.md",
     "/EFFORTS/Networking.xopp",
     "EFFORTS/Networking.xopp",
     "/EFFORTS",
@@ -346,7 +347,6 @@
     "ATLAS/Functional",
     "EFFORTS/List of GPUSimulators 2",
     "ATTACHMENTS/image-39.png",
-    "ATTACHMENTS/image-38.png",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "NotesByPrabin/Templates",
     "NotesByPrabin/EFFORTS",
