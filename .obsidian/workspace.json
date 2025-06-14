@@ -13,30 +13,6 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Notes.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Notes"
-            }
-          },
-          {
-            "id": "e0fe0248eb3d802c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
                 "file": "EFFORTS/GPU Architectures  and Programming.md",
                 "mode": "source",
                 "source": false,
@@ -53,37 +29,6 @@
               },
               "icon": "lucide-file",
               "title": "GPU Architectures  and Programming"
-            }
-          }
-        ],
-        "currentTab": 1
-      },
-      {
-        "id": "22e6b5f2d9ae7901",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "9f43ed9e1d7f7e5a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "EFFORTS/Online Courses.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Online Courses"
             }
           }
         ]
@@ -302,8 +247,14 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e0fe0248eb3d802c",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "ATTACHMENTS/image-53.png",
+    "EFFORTS/Notes.md",
+    "EFFORTS/Dissertation.md",
+    "EFFORTS/Efforts.md",
+    "Homepage.md",
+    "EFFORTS/GPU Architectures  and Programming.md",
     "ATTACHMENTS/image-52.png",
     "ATTACHMENTS/image-51.png",
     "ATTACHMENTS/image-50.png",
@@ -314,15 +265,9 @@
     "ATTACHMENTS/image-45.png",
     "ATTACHMENTS/image-44.png",
     "EFFORTS/Online Courses.md",
-    "EFFORTS/GPU Architectures  and Programming.md",
     "ATTACHMENTS/image-43.png",
-    "ATTACHMENTS/image-42.png",
-    "EFFORTS/Notes.md",
-    "EFFORTS/Dissertation.md",
     "EFFORTS/List of Available GPU Products.md",
     "EFFORTS/POA By Naveen Bro.md",
-    "EFFORTS/Efforts.md",
-    "Homepage.md",
     "ATLAS/Atlas.md",
     "TO-DO List.md",
     "EFFORTS/Report for mini-project.md",

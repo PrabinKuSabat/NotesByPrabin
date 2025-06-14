@@ -8,10 +8,12 @@
 
 ![[image-41.png]]  
 ![[image-42.png]]  
-![[image-43.png]]
-![[image-44.png]]
-![[image-45.png]]
-![[image-46.png]]
+![[image-43.png]]  
+![[image-44.png]]  
+![[image-45.png]]  
+![[image-46.png]]  
 ![[image-47.png]]![[image-48.png]]![[image-49.png]]
+
 # Intro To GPU Arch
-![[image-50.png]]![[image-51.png]]![[image-52.png]]
+
+![[image-50.png]]![[image-51.png]]![[image-52.png]]![[image-53.png]]
