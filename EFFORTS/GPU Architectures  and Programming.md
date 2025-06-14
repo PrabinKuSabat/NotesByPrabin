@@ -13,3 +13,4 @@
 ![[image-45.png]]
 ![[image-46.png]]
 ![[image-47.png]]![[image-48.png]]![[image-49.png]]
+# Intro To GPU Arch
