@@ -11,24 +11,10 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "EFFORTS/GPU Architectures  and Programming.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "GPU Architectures  and Programming"
+              "title": "New tab"
             }
           }
         ]
@@ -249,6 +235,7 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/GPU Architectures  and Programming.md",
     "ATTACHMENTS/image-63.png",
     "ATTACHMENTS/image-62.png",
     "ATTACHMENTS/image-61.png",
@@ -261,10 +248,8 @@
     "EFFORTS/Dissertation.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
-    "EFFORTS/GPU Architectures  and Programming.md",
     "ATTACHMENTS/image-55.png",
     "ATTACHMENTS/image-54.png",
-    "ATTACHMENTS/image-53.png",
     "EFFORTS/Online Courses.md",
     "EFFORTS/List of Available GPU Products.md",
     "EFFORTS/POA By Naveen Bro.md",
