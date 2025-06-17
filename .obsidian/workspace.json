@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Online Courses.md",
+                "file": "EFFORTS/GPU Architectures  and Programming.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Online Courses"
+              "title": "GPU Architectures  and Programming"
             }
           }
         ]
@@ -249,8 +249,12 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/Dissertation.md",
+    "ATTACHMENTS/image-79.png",
+    "ATTACHMENTS/image-78.png",
+    "ATTACHMENTS/image-77.png",
     "EFFORTS/Notes.md",
+    "EFFORTS/Dissertation.md",
+    "EFFORTS/Online Courses.md",
     "EFFORTS/GPU Architectures  and Programming.md",
     "ATTACHMENTS/image-76.png",
     "ATTACHMENTS/image-75.png",
@@ -260,11 +264,8 @@
     "ATTACHMENTS/image-71.png",
     "ATTACHMENTS/image-70.png",
     "ATTACHMENTS/image-69.png",
-    "ATTACHMENTS/image-68.png",
-    "ATTACHMENTS/image-67.png",
     "EFFORTS/Efforts.md",
     "Homepage.md",
-    "EFFORTS/Online Courses.md",
     "EFFORTS/List of Available GPU Products.md",
     "EFFORTS/POA By Naveen Bro.md",
     "ATLAS/Atlas.md",
