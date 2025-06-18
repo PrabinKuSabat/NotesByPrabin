@@ -89,4 +89,12 @@ export CUDA_VISIBLE_DEVICES=0 #Choose the device u want to tune to.
 ./util/tuner/GPU_Microbenchmark/run_all.sh | tee stats.txt
 # Run the tuner with the stats.txt from the previous step
 ./util/tuner/tuner.py -s stats.txt
+
+#ensure to copy the generated folder to the gpgpu-sim and accel-sim directories
+cp -r TITAN_V ../../gpu-simulator/gpgpu-sim/configs/tested-cfgs/
+cp -r TITAN_V ../../gpu-simulator/configs/tested-cfgs/
+
+# Volta
+TITANV:
+   base_file: "$GPGPUSIM_ROOT/configs/tested-cfgs/TITAN_V/gpgpusim.config"
 ```
