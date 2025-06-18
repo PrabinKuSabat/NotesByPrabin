@@ -1,5 +1,7 @@
 # Basic AccelSim workings
+
 - [ ] 1. Tracer
+
 ```bash
 # after building once only execute
 source ./gpu-app-collection/src/setup_environment
@@ -8,9 +10,11 @@ source ./gpu-app-collection/src/setup_environment
 ## give the prper device Number after -D
 ./util/tracer_nvbit/run_hw_trace.py -B rodinia_2.0-ft -D 0
 ```
-More on `ris:ArrowRightS` [[AccelSim Tracer Extended to other apps.]] 
+
+More on `ris:ArrowRightS` [[AccelSim Tracer Extended to other apps.]]
 
 - [ ] 2. SASS Generation
+
 ```bash
 # Do the following basics first
 pip3 install -r requirements.txt
@@ -35,7 +39,9 @@ cmake --install ./gpu-simulator/build
 
 
 ```
+
 - [ ] 3. Correlator
+
 ```bash 
 # export the following it's necessary
 # ensure that the accel-sim-framework directory path is correct
@@ -44,7 +50,9 @@ export GPUAPPS_ROOT=/home/cab-prj/Prabin/accel-sim-framework/gpu-app-collection
 nano c
 
 ```
+
 - [ ] 4. Tuner
+
 ```c
 //RTX4090 HW Primary Definition File
 //loveLace_RTX4090_hw_def.h <- File Name
@@ -100,3 +108,7 @@ cp -r TITAN_V ../../gpu-simulator/configs/tested-cfgs/
 TITANV:
    base_file: "$GPGPUSIM_ROOT/configs/tested-cfgs/TITAN_V/gpgpusim.config"
 ```
+
+# TUNER Correlating
+
+[[Tuner Correlating in Accelsim]]

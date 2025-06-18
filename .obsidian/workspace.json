@@ -54,9 +54,33 @@
               "icon": "lucide-file",
               "title": "AccelSim"
             }
+          },
+          {
+            "id": "21d6101c7d68c9d7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "EFFORTS/Tuner Correlating in Accelsim.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Tuner Correlating in Accelsim"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -272,8 +296,9 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e0ab7e17d424ae37",
+  "active": "21d6101c7d68c9d7",
   "lastOpenFiles": [
+    "EFFORTS/Tuner Correlating in Accelsim.md",
     "EFFORTS/AccelSim.md",
     "EFFORTS/Notes.md",
     "EFFORTS/Dissertation.md",
@@ -309,7 +334,6 @@
     "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
     "EFFORTS/List of GPU Simulators.md",
     "EFFORTS/Simulators.md",
-    "EFFORTS/List of GPUSImulators 2.md",
     "/EFFORTS/Networking.xopp",
     "EFFORTS/Networking.xopp",
     "/EFFORTS",
