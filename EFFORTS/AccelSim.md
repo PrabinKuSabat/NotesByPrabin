@@ -1,15 +1,25 @@
 # Basic AccelSim workings
 - [ ] 1. Tracer
- ```bash
-  # after building once only execute
-  source ./gpu-app-collection/src/setup_environment
-	./util/tracer_nvbit/run_hw_trace.py -B rodinia_2.0-ft -D <gpu-device-num-to-run-on>
-	```
+```bash
+# after building once only execute
+source ./gpu-app-collection/src/setup_environment
+./util/tracer_nvbit/run_hw_trace.py -B rodinia_2.0-ft -D <gpu-device-num-to-run-on>
+```
+More on `ris:ArrowRightS` [[AccelSim Tracer Extended to other apps.]] 
 
 - [ ] 2. SASS Generation
+```bash
+# Do the following basics first
+pip3 install -r requirements.txt
+source ./gpu-simulator/setup_envrionment.sh
+
+```
 - [ ] 3. Correlator
 - [ ] 4. Tuner
 ```c
+//RTX4090 HW Primary Definition File
+//loveLace_RTX4090_hw_def.h <- File Name
+
 #ifndef NV4090_HW_DEF_H
 #define NV4090_HW_DEF_H
 
@@ -40,3 +50,16 @@
 
 ```
 
+``` bash
+#After adding the above .h to the directory hw_def 
+#add the file name to the hw_def.h file.
+
+make -C ./util/tuner/GPU_Microbenchmark/
+
+export CUDA_VISIBLE_DEVICES=0 #Choose the device u want to tune to.
+
+# Run the ubench and save output in stats.txt
+./util/tuner/GPU_Microbenchmark/run_all.sh | tee stats.txt
+# Run the tuner with the stats.txt from the previous step
+./util/tuner/tuner.py -s stats.txt
+```
