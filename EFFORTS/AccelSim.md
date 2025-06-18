@@ -3,7 +3,9 @@
 ```bash
 # after building once only execute
 source ./gpu-app-collection/src/setup_environment
-./util/tracer_nvbit/run_hw_trace.py -B rodinia_2.0-ft -D <gpu-device-num-to-run-on>
+
+# give the prper device Number after -D
+./util/tracer_nvbit/run_hw_trace.py -B rodinia_2.0-ft -D 0
 ```
 More on `ris:ArrowRightS` [[AccelSim Tracer Extended to other apps.]] 
 
