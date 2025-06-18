@@ -1,6 +1,6 @@
-- [ ] 1. Provide HW def file and run microbenchmarks
-	- [ ] `make -C ./GPU_Microbenchmark/`
-	- [ ] `export CUDA_VISIBLE_DEVICES=0`
+1- [ ] 1. Provide HW def file and run microbenchmarks  
+	- [ ] `make -C ./GPU_Microbenchmark/`  
+	- [ ] `export CUDA_VISIBLE_DEVICES=0`  
 	- [ ] `./GPU_Microbenchmark/run_alll.sh | tee stats.txt`
 - [ ] 2. Run the tuner
 	- [ ] `./tuner.py -s stats.txt`

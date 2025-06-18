@@ -6,7 +6,7 @@
 # after building once only execute
 source ./gpu-app-collection/src/setup_environment
 
-# This generates traces for the benchmark
+# This generates traces for the benchmark (Replace Rodinia with the list of benchmarks)
 ## give the prper device Number after -D
 ./util/tracer_nvbit/run_hw_trace.py -B rodinia_2.0-ft -D 0
 ```

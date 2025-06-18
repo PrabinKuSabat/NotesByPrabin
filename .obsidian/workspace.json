@@ -13,30 +13,6 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Notes.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Notes"
-            }
-          },
-          {
-            "id": "e0ab7e17d424ae37",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
                 "file": "EFFORTS/AccelSim.md",
                 "mode": "source",
                 "source": false,
@@ -54,33 +30,8 @@
               "icon": "lucide-file",
               "title": "AccelSim"
             }
-          },
-          {
-            "id": "21d6101c7d68c9d7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "EFFORTS/Tuner Correlating in Accelsim.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Tuner Correlating in Accelsim"
-            }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -296,14 +247,14 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "21d6101c7d68c9d7",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/Tuner Correlating in Accelsim.md",
-    "EFFORTS/AccelSim.md",
     "EFFORTS/Notes.md",
     "EFFORTS/Dissertation.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
+    "EFFORTS/Tuner Correlating in Accelsim.md",
+    "EFFORTS/AccelSim.md",
     "EFFORTS/GPU Architectures  and Programming.md",
     "ATTACHMENTS/image-92.png",
     "ATTACHMENTS/image-91.png",
