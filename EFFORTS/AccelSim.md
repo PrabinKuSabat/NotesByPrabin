@@ -15,6 +15,14 @@ source ./gpu-simulator/setup_envrionment.sh
 
 ```
 - [ ] 3. Correlator
+```bash 
+# export the following it's necessary
+# ensure that the accel-sim-framework directory path is correct
+export GPUAPPS_ROOT=/home/cab-prj/Prabin/accel-sim-framework/gpu-app-collection
+
+nano c
+
+```
 - [ ] 4. Tuner
 ```c
 //RTX4090 HW Primary Definition File
