@@ -4,7 +4,8 @@
 # after building once only execute
 source ./gpu-app-collection/src/setup_environment
 
-# give the prper device Number after -D
+# This generates traces for the benchmark
+## give the prper device Number after -D
 ./util/tracer_nvbit/run_hw_trace.py -B rodinia_2.0-ft -D 0
 ```
 More on `ris:ArrowRightS` [[AccelSim Tracer Extended to other apps.]] 
@@ -24,10 +25,11 @@ cmake -S ./gpu-simulator/ -B ./gpu-simulator/build
 ## For the next one, cast the outputs of YY_ to (char *) from (char const *) at line 1248 and 1137 wherever the yyerror() is called.
 cmake --build ./gpu-simulator/build -j8
 
-# Produces an executable in a ./gpu-simulator/bin/release/accel-sim.out
+# Produces an executable in 
+## ./gpu-simulator/bin/release/accel-sim.out
 cmake --install ./gpu-simulator/build
 
-# Sample Example For SASS traces-driven mode.
+# Sample Example For Acel-Sim's SASS traces-driven mode.
 ./util/job_launching/run_simulations.py -B rodinia_2.0-ft -C QV100-SASS -T ./hw_run/traces/device-<device-num>/<cuda-version>/ -N myTest
 
 
