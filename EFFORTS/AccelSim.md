@@ -112,3 +112,7 @@ TITANV:
 # TUNER Correlating
 
 [[Tuner Correlating in Accelsim]]
+
+# Steps For Release Branch
+
+[[Release Branch Installation]]

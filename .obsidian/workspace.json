@@ -30,8 +30,33 @@
               "icon": "lucide-file",
               "title": "AccelSim"
             }
+          },
+          {
+            "id": "653e66c34afb4e21",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "EFFORTS/Release Branch Installation.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Release Branch Installation"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -247,14 +272,15 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "653e66c34afb4e21",
   "lastOpenFiles": [
+    "EFFORTS/Release Branch Installation.md",
+    "EFFORTS/AccelSim.md",
     "EFFORTS/Notes.md",
     "EFFORTS/Dissertation.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
     "EFFORTS/Tuner Correlating in Accelsim.md",
-    "EFFORTS/AccelSim.md",
     "EFFORTS/GPU Architectures  and Programming.md",
     "ATTACHMENTS/image-92.png",
     "ATTACHMENTS/image-91.png",
@@ -284,7 +310,6 @@
     "EFFORTS/CA Notes.md",
     "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
     "EFFORTS/List of GPU Simulators.md",
-    "EFFORTS/Simulators.md",
     "/EFFORTS/Networking.xopp",
     "EFFORTS/Networking.xopp",
     "/EFFORTS",
