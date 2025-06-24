@@ -8,6 +8,6 @@
 	  conda deactivate && conda activate accelRelease  
 	  which gcc  
 
-
 # Conda Env Creation
+
 [[accelReleaseCondaEnv.yml]]
