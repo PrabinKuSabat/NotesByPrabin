@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "EFFORTS/NVIDIA Tensor Core Evolution.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "NVIDIA Tensor Core Evolution"
             }
           }
         ]
@@ -249,12 +249,13 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/GPU Architectures  and Programming.md",
     "EFFORTS/Notes.md",
+    "EFFORTS/NVIDIA Tensor Core Evolution.md",
     "EFFORTS/Dissertation.md",
-    "EFFORTS/Online Courses.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
+    "EFFORTS/GPU Architectures  and Programming.md",
+    "EFFORTS/Online Courses.md",
     "EFFORTS/Release Branch Installation.md",
     "EFFORTS/accelReleaseCondaEnv.yml.md",
     "EFFORTS/AccelSim.md",
@@ -284,7 +285,6 @@
     "EFFORTS/Research Paper Notes.md",
     "EFFORTS/List of all GPU features.md",
     "EFFORTS/CA Notes.md",
-    "EFFORTS/List of GPUSimulators 2/Papers to refer.md",
     "/EFFORTS/Networking.xopp",
     "EFFORTS/Networking.xopp",
     "/EFFORTS",
