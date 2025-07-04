@@ -30,6 +30,30 @@
               "icon": "lucide-file",
               "title": "WEB Gmail - NVIDIA Tensor Core Evolution From Volta To Blackwell"
             }
+          },
+          {
+            "id": "b0b2172e86c22006",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "CALENDER/2025-07-04.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "2025-07-04"
+            }
           }
         ]
       }
@@ -98,7 +122,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5
+    "width": 414.5,
+    "collapsed": true
   },
   "right": {
     "id": "43fc27400badb105",
@@ -217,8 +242,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 471.5,
-    "collapsed": true
+    "width": 471.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -243,13 +267,25 @@
       "obsidian-full-calendar:Open Full Calendar": false,
       "obsidian-custom-frames:Open Google Calendar": false,
       "obsidian-excalidraw-plugin:New drawing": false,
-      "periodic-notes:Open today": false
+      "periodic-notes:Open today": false,
+      "obsidian-local-images-plus:Local Images Plus  0.16.3\r\nLocalize attachments (plugin folder)": false
     }
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Homepage.md",
+    "CALENDER/2025-07-04.md",
     "webclips/WEB Gmail - NVIDIA Tensor Core Evolution From Volta To Blackwell.md",
+    "ATTACHMENTS/5e8298ecc308b6e52f8c5a0a83f24334_MD5.png",
+    "ATTACHMENTS/37dabba3187cc680e3a47ec9f792360f_MD5.png",
+    "ATTACHMENTS/618f40c7cd6f0126e4f18ff54af5db42_MD5.png",
+    "ATTACHMENTS/3cdabb456174144d28036a18b2b00a5c_MD5.png",
+    "ATTACHMENTS/58a3043127cda3629b0871594bbdb66d_MD5.png",
+    "ATTACHMENTS/b708cef582ab5e32d4bd6746e60cb42f_MD5.png",
+    "ATTACHMENTS/783973f06558107576dc067317e31f93_MD5.png",
+    "ATTACHMENTS/796d857a5918edc0a9ee9ed3bb3e801b_MD5.png",
+    "ATTACHMENTS/8824b7a51b900f863a6208ef9ffb400e_MD5.png",
+    "ATTACHMENTS/812898e92f9d545c589963108b6475a3_MD5.png",
+    "Homepage.md",
     "webclips",
     "EFFORTS/NVIDIA Tensor Core Evolution.md",
     "EFFORTS/Notes.md",
@@ -261,16 +297,6 @@
     "EFFORTS/accelReleaseCondaEnv.yml.md",
     "EFFORTS/AccelSim.md",
     "EFFORTS/Tuner Correlating in Accelsim.md",
-    "ATTACHMENTS/image-92.png",
-    "ATTACHMENTS/image-91.png",
-    "ATTACHMENTS/image-90.png",
-    "ATTACHMENTS/image-88.png",
-    "ATTACHMENTS/image-75.png",
-    "ATTACHMENTS/image-57.png",
-    "ATTACHMENTS/image-54.png",
-    "ATTACHMENTS/image-89.png",
-    "ATTACHMENTS/image-87.png",
-    "ATTACHMENTS/image-86.png",
     "EFFORTS/List of Available GPU Products.md",
     "EFFORTS/POA By Naveen Bro.md",
     "ATLAS/Atlas.md",
@@ -284,7 +310,6 @@
     "EFFORTS/Research Papers Categorized.md",
     "EFFORTS/CA Research.md",
     "EFFORTS/Research Paper Notes.md",
-    "EFFORTS/List of all GPU features.md",
     "/EFFORTS/Networking.xopp",
     "EFFORTS/Networking.xopp",
     "/EFFORTS",
