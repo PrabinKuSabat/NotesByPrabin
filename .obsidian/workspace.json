@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/NVIDIA Tensor Core Evolution.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "NVIDIA Tensor Core Evolution"
+              "title": "Homepage"
             }
           }
         ]
@@ -249,11 +249,13 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/Notes.md",
+    "Homepage.md",
+    "webclips/WEB Gmail - NVIDIA Tensor Core Evolution From Volta To Blackwell.md",
+    "webclips",
     "EFFORTS/NVIDIA Tensor Core Evolution.md",
+    "EFFORTS/Notes.md",
     "EFFORTS/Dissertation.md",
     "EFFORTS/Efforts.md",
-    "Homepage.md",
     "EFFORTS/GPU Architectures  and Programming.md",
     "EFFORTS/Online Courses.md",
     "EFFORTS/Release Branch Installation.md",
@@ -284,7 +286,6 @@
     "EFFORTS/CA Research.md",
     "EFFORTS/Research Paper Notes.md",
     "EFFORTS/List of all GPU features.md",
-    "EFFORTS/CA Notes.md",
     "/EFFORTS/Networking.xopp",
     "EFFORTS/Networking.xopp",
     "/EFFORTS",
@@ -295,7 +296,6 @@
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "NotesByPrabin/Templates",
     "NotesByPrabin/EFFORTS",
-    "NotesByPrabin/CALENDER",
     "EFFORTS/Binary Search.canvas",
     "!HOME.canvas",
     "Untitled.canvas",
