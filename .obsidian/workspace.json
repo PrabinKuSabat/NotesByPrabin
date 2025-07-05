@@ -277,6 +277,8 @@
   },
   "active": "c13edd9cad4078c0",
   "lastOpenFiles": [
+    "Bibliography/References.bib",
+    "Bibliography",
     "EFFORTS/Untitled.canvas",
     "EFFORTS/Dissecting the NVIDIA Volta GPU Architecture via Microbenchmarking.md",
     "EFFORTS/Dissecting the NVIDIA Volta GPU Architecture via Microbenchmarking/Untitled.md",
@@ -323,7 +325,6 @@
     "ATLAS/Functional",
     "EFFORTS/List of GPUSimulators 2",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
-    "NotesByPrabin/Templates",
     "EFFORTS/Binary Search.canvas",
     "!HOME.canvas",
     "Untitled.canvas",
