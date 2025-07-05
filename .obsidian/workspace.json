@@ -39,7 +39,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Dissecting the NVIDIA Volta GPU Architecture via Microbenchmarking.md",
+                "file": "ZoteroExports/Comment Technical report. First Edition. April 18th, 2018. 66 pages.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -54,7 +54,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Dissecting the NVIDIA Volta GPU Architecture via Microbenchmarking"
+              "title": "Comment Technical report. First Edition. April 18th, 2018. 66 pages"
             }
           }
         ],
@@ -277,10 +277,12 @@
   },
   "active": "c13edd9cad4078c0",
   "lastOpenFiles": [
+    "EFFORTS/Dissecting the NVIDIA Volta GPU Architecture via Microbenchmarking.md",
+    "ZoteroExports/Comment Technical report. First Edition. April 18th, 2018. 66 pages.md",
+    "ZoteroExports",
     "Bibliography/References.bib",
     "Bibliography",
     "EFFORTS/Untitled.canvas",
-    "EFFORTS/Dissecting the NVIDIA Volta GPU Architecture via Microbenchmarking.md",
     "EFFORTS/Dissecting the NVIDIA Volta GPU Architecture via Microbenchmarking/Untitled.md",
     "EFFORTS/Dissecting the NVIDIA Volta GPU Architecture via Microbenchmarking",
     "Untitled.md",
@@ -322,8 +324,6 @@
     "/EFFORTS",
     "ATTACHMENTS/Computer Networking A Top-Down Approach 6t - Unknown.pdf",
     "Clippings",
-    "ATLAS/Functional",
-    "EFFORTS/List of GPUSimulators 2",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "EFFORTS/Binary Search.canvas",
     "!HOME.canvas",
