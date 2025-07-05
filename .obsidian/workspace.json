@@ -125,7 +125,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5
+    "width": 414.5,
+    "collapsed": true
   },
   "right": {
     "id": "43fc27400badb105",
@@ -254,8 +255,8 @@
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": true,
       "command-palette:Open command palette": true,
-      "workspaces:Manage workspace layouts": false,
       "canvas:Create new canvas": false,
+      "workspaces:Manage workspace layouts": false,
       "obsidian-kanban:Create new board": false,
       "obsidian-projects:Open projects": false,
       "obsidian-book-search-plugin:Create new book note": false,
@@ -276,8 +277,12 @@
   },
   "active": "c13edd9cad4078c0",
   "lastOpenFiles": [
-    "EFFORTS/Notes.md",
+    "EFFORTS/Untitled.canvas",
     "EFFORTS/Dissecting the NVIDIA Volta GPU Architecture via Microbenchmarking.md",
+    "EFFORTS/Dissecting the NVIDIA Volta GPU Architecture via Microbenchmarking/Untitled.md",
+    "EFFORTS/Dissecting the NVIDIA Volta GPU Architecture via Microbenchmarking",
+    "Untitled.md",
+    "EFFORTS/Notes.md",
     "EFFORTS/Dissertation.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
@@ -310,9 +315,6 @@
     "Random.md",
     "Heatmaps.md",
     "EFFORTS/SSSIHL.md",
-    "ATLAS/AI.md",
-    "EFFORTS/Research Papers Categorized.md",
-    "EFFORTS/CA Research.md",
     "/EFFORTS/Networking.xopp",
     "EFFORTS/Networking.xopp",
     "/EFFORTS",
@@ -322,7 +324,6 @@
     "EFFORTS/List of GPUSimulators 2",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "NotesByPrabin/Templates",
-    "NotesByPrabin/EFFORTS",
     "EFFORTS/Binary Search.canvas",
     "!HOME.canvas",
     "Untitled.canvas",
@@ -330,7 +331,6 @@
     "EFFORTS/CS-COD Assignments/CS-COD Assignments.canvas",
     "EFFORTS/!ABAW/!ABAW.canvas",
     "ATLAS/SubjectNotes/C PP/C PP.canvas",
-    "EFFORTS/EFFORTS.canvas",
-    "ATLAS/SubjectNotes/SubjectNotes.canvas"
+    "EFFORTS/EFFORTS.canvas"
   ]
 }
