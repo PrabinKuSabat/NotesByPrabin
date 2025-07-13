@@ -8,38 +8,12 @@
         "type": "tabs",
         "children": [
           {
-            "id": "a70b3dbbb849fb27",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "EFFORTS/Notes.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "pinned": true,
-              "icon": "lucide-file",
-              "title": "Notes"
-            }
-          },
-          {
-            "id": "c13edd9cad4078c0",
+            "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ZoteroExports/Comment Technical report. First Edition. April 18th, 2018. 66 pages.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -54,11 +28,10 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Comment Technical report. First Edition. April 18th, 2018. 66 pages"
+              "title": "Homepage"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -275,10 +248,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "c13edd9cad4078c0",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/Dissecting the NVIDIA Volta GPU Architecture via Microbenchmarking.md",
+    "Homepage.md",
     "ZoteroExports/Comment Technical report. First Edition. April 18th, 2018. 66 pages.md",
+    "EFFORTS/Dissecting the NVIDIA Volta GPU Architecture via Microbenchmarking.md",
     "ZoteroExports",
     "Bibliography/References.bib",
     "Bibliography",
@@ -289,7 +263,6 @@
     "EFFORTS/Notes.md",
     "EFFORTS/Dissertation.md",
     "EFFORTS/Efforts.md",
-    "Homepage.md",
     "webclips/WEB Gmail - NVIDIA Tensor Core Evolution From Volta To Blackwell.md",
     "CALENDER/2025-07-04.md",
     "ATTACHMENTS/5e8298ecc308b6e52f8c5a0a83f24334_MD5.png",
