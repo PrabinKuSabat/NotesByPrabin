@@ -1,5 +1,6 @@
 # Basic AccelSim workings
 
+[[AccelSim Trials]]
 - [ ] 1. Tracer
 
 ```bash

@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "EFFORTS/AccelSim.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,10 +28,35 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "AccelSim"
+            }
+          },
+          {
+            "id": "086bb35e02640234",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "EFFORTS/AccelSim Trials.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "AccelSim Trials"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -248,13 +273,15 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "086bb35e02640234",
   "lastOpenFiles": [
-    "EFFORTS/Dissertation.md",
-    "EFFORTS/Dissertation TO-Do Lists.md",
+    "EFFORTS/AccelSim Trials.md",
+    "EFFORTS/AccelSim.md",
     "EFFORTS/Notes.md",
+    "EFFORTS/Dissertation.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
+    "EFFORTS/Dissertation TO-Do Lists.md",
     "ZoteroExports/Comment Technical report. First Edition. April 18th, 2018. 66 pages.md",
     "EFFORTS/Dissecting the NVIDIA Volta GPU Architecture via Microbenchmarking.md",
     "ZoteroExports",
@@ -282,7 +309,6 @@
     "EFFORTS/Online Courses.md",
     "EFFORTS/Release Branch Installation.md",
     "EFFORTS/accelReleaseCondaEnv.yml.md",
-    "EFFORTS/AccelSim.md",
     "EFFORTS/Tuner Correlating in Accelsim.md",
     "EFFORTS/List of Available GPU Products.md",
     "EFFORTS/POA By Naveen Bro.md",
@@ -291,7 +317,6 @@
     "EFFORTS/Report for mini-project.md",
     "EFFORTS/JAVA Project.md",
     "Random.md",
-    "Heatmaps.md",
     "/EFFORTS/Networking.xopp",
     "EFFORTS/Networking.xopp",
     "/EFFORTS",
