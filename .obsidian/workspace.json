@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Dissertation.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,35 +28,10 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Dissertation"
-            }
-          },
-          {
-            "id": "36c3922432d5f6fb",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "EFFORTS/Dissertation TO-Do Lists.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Dissertation TO-Do Lists"
+              "title": "Homepage"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -273,10 +248,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "36c3922432d5f6fb",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/Dissertation TO-Do Lists.md",
     "EFFORTS/Dissertation.md",
+    "EFFORTS/Dissertation TO-Do Lists.md",
     "EFFORTS/Notes.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
