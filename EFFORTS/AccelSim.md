@@ -1,6 +1,46 @@
 # Basic AccelSim workings
 
 [[AccelSim Trials]]
+## Configs available
+1. KEPLER_TITAN
+2. TITANX
+3. RTX2060
+4. RTX2060_S
+5. GV100
+6. QV100 
+7. TITANV 
+8. A100
+9. RTX3070
+ 
+## Benchmarks Available
+1. rodinia_2.0-ft
+2. GPU_Microbenchmark
+3. GPU_Atomic
+4. Atomic_Profile
+5. Atomic_Diverge
+6. Deepbench_nvidia_tencore
+7. Deepbench_nvidia_normal
+8. sdk-4.2-scaled
+9. rodinia-3.1
+10. parboil
+11. polybench
+12. cutlass_volta
+13. cutlass_ampere
+14. cutlass_hopper
+15. cutlass
+16. ispass-2009
+17. dragon-naive
+18. dragon-cdp
+19. proxy-apps-doe
+20. pannotia
+21. lonestargpu-2.0
+22. mlperf_inference
+23. mlperf_training
+24. mlperf_inference_no_external_datasets
+25. pytorch_examples
+26. huggingface
+
+
 - [ ] 1. Tracer
 
 ```bash
