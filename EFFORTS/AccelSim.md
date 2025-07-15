@@ -24,6 +24,7 @@
 9. rodinia-3.1
 	1. myocyte failed (TITANV-PTX, 15-07)
 10. parboil
+	1. all 9 tests failed (TITANV-PTX, 15-07)
 11. polybench
 12. cutlass_volta
 13. cutlass_ampere
