@@ -1,18 +1,21 @@
 # Basic AccelSim workings
 
 [[AccelSim Trials]]
+
 ## Configs available
+
 1. KEPLER_TITAN
 2. TITANX
 3. RTX2060
 4. RTX2060_S
 5. GV100
-6. QV100 
-7. TITANV 
+6. QV100
+7. TITANV
 8. A100
 9. RTX3070
- 
+
 ## Benchmarks Available
+
 1. rodinia_2.0-ft
 2. GPU_Microbenchmark
 3. GPU_Atomic
@@ -44,10 +47,13 @@
 	1. Failed executing helloworld(TITANV-PTX, 15-07)
 
 ### Benchmark Running Process
+
 #### Simulating
+
 `../job_launching/run_simulations.py -B parboil -C TITANV-PTX  -N parboil`
 
 #### Monitoring a process
+
 `./util/job_launching/monitor_func_test.py -N rodT2`
 
 - [ ] 1. Tracer
