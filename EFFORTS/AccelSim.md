@@ -22,6 +22,7 @@
 7. Deepbench_nvidia_normal
 8. sdk-4.2-scaled
 9. rodinia-3.1
+	1. myocyte failed (TITANV-PTX, 15-07)
 10. parboil
 11. polybench
 12. cutlass_volta
@@ -39,7 +40,14 @@
 24. mlperf_inference_no_external_datasets
 25. pytorch_examples
 26. huggingface
+	1. Failed executing helloworld(TITANV-PTX, 15-07)
 
+### Benchmark Running Process
+#### Simulating
+`../job_launching/run_simulations.py -B parboil -C TITANV-PTX  -N parboil`
+
+#### Monitoring a process
+`./util/job_launching/monitor_func_test.py -N rodT2`
 
 - [ ] 1. Tracer
 
