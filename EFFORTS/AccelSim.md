@@ -34,6 +34,7 @@
 14. cutlass_hopper
 15. cutlass
 16. ispass-2009
+	1. 7/10 no error(QV100-PTX, 15 -07)
 17. dragon-naive
 18. dragon-cdp
 19. proxy-apps-doe
@@ -55,6 +56,12 @@
 #### Monitoring a process
 
 `./util/job_launching/monitor_func_test.py -N rodT2`
+
+#### Getting Stats 
+`./get_stats.py -R -B ispass-2009 -C QV100-PTX | tee ../../csvStats/ispass-2009.csv`
+
+#### Plotting
+``
 
 - [ ] 1. Tracer
 
