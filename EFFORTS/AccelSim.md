@@ -72,7 +72,6 @@ void yyerror(const char* s){
 void yyerror(const char* s);
 ```
 
-```
 ### Benchmark Running Process
 
 #### Simulating
