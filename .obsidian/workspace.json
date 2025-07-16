@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "EFFORTS/AccelSim.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "AccelSim"
             }
           }
         ]
@@ -250,11 +250,11 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/AccelSim.md",
     "EFFORTS/Notes.md",
     "EFFORTS/Dissertation.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
+    "EFFORTS/AccelSim.md",
     "EFFORTS/AccelSim Trials.md",
     "EFFORTS/Dissertation TO-Do Lists.md",
     "ZoteroExports/Comment Technical report. First Edition. April 18th, 2018. 66 pages.md",

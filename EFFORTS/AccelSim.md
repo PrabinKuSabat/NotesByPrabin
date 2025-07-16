@@ -47,6 +47,14 @@
 26. huggingface
 	1. Failed executing helloworld(TITANV-PTX, 15-07)
 
+### Available Traces
+        cutlass: Compressed = 77.00 G, Uncompressed = 1.70 T
+        deepbench: Compressed = 55.00 G, Uncompressed = 1.20 T
+        parboil: Compressed = 8.70 G, Uncompressed = 182.00 G
+        polybench: Compressed = 17.00 G, Uncompressed = 585.00 G
+        rodinia_2.0-ft: Compressed = 7.20 M, Uncompressed = 162.00 M
+        rodinia-3.1: Compressed = 1.80 G, Uncompressed = 56.00 G
+        ubench: Compressed = 82.00 M, Uncompressed = 2.60 G
 ### Benchmark Running Process
 
 #### Simulating
