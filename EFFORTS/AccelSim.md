@@ -55,6 +55,24 @@
         rodinia_2.0-ft: Compressed = 7.20 M, Uncompressed = 162.00 M
         rodinia-3.1: Compressed = 1.80 G, Uncompressed = 56.00 G
         ubench: Compressed = 82.00 M, Uncompressed = 2.60 G
+
+### Modifications made
+#### ~/Prabin/secTry/accel-sim-framework/gpu-simulator/gpgpu-sim/src/intersim2/config.l
+``` 
+# added
+void yyerror(const char* s);
+void yyerror(const char* s){
+  fprintf(stderr, "Parse error: %s\n", s);
+}
+```
+
+#### ~/Prabin/secTry/accel-sim-framework/gpu-simulator/gpgpu-sim/src/intersim2/config.y
+```
+#added
+void yyerror(const char* s);
+```
+
+```
 ### Benchmark Running Process
 
 #### Simulating
