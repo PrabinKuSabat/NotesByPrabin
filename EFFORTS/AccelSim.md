@@ -48,6 +48,7 @@
 	1. Failed executing helloworld(TITANV-PTX, 15-07)
 
 ### Available Traces
+
         cutlass: Compressed = 77.00 G, Uncompressed = 1.70 T
         deepbench: Compressed = 55.00 G, Uncompressed = 1.20 T
         parboil: Compressed = 8.70 G, Uncompressed = 182.00 G
@@ -57,7 +58,9 @@
         ubench: Compressed = 82.00 M, Uncompressed = 2.60 G
 
 ### Modifications made
+
 #### ~/Prabin/secTry/accel-sim-framework/gpu-simulator/gpgpu-sim/src/intersim2/config.l
+
 ``` 
 # added
 void yyerror(const char* s);
@@ -67,6 +70,7 @@ void yyerror(const char* s){
 ```
 
 #### ~/Prabin/secTry/accel-sim-framework/gpu-simulator/gpgpu-sim/src/intersim2/config.y
+
 ```
 #added
 void yyerror(const char* s);
