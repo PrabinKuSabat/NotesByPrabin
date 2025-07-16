@@ -57,10 +57,12 @@
 
 `./util/job_launching/monitor_func_test.py -N rodT2`
 
-#### Getting Stats 
+#### Getting Stats
+
 `./get_stats.py -R -B ispass-2009 -C QV100-PTX | tee ../../csvStats/ispass-2009.csv`
 
 #### Plotting
+
 ``
 
 - [ ] 1. Tracer
