@@ -22,8 +22,11 @@
 4. Atomic_Profile
 5. Atomic_Diverge
 6. Deepbench_nvidia_tencore
+	1. Not available (18-07)
 7. Deepbench_nvidia_normal
+	1. Not available (18-07)
 8. sdk-4.2-scaled
+	1. Not available (18-07)
 9. rodinia-3.1
 	1. myocyte failed (TITANV-PTX, 15-07)
 10. parboil
