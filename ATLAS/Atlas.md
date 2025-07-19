@@ -19,5 +19,5 @@ title: Architecture
 [[AMD Architecture]]
 [[Intel Architectures]]
 [[NVIDIA- Architectures]]
-
+[[Wafers]]
 ```

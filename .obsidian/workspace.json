@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ATLAS/AMD Architecture.md",
+                "file": "ATLAS/Wafers.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "AMD Architecture"
+              "title": "Wafers"
             }
           },
           {
@@ -79,8 +79,7 @@
               "title": "RDNA 6 - AMD"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -297,15 +296,18 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "d4f6b7e2b5710e7b",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "ATLAS/Atlas.md",
+    "ATLAS/Wafers.md",
+    "ATLAS/Intel Architectures.md",
+    "ATLAS/NVIDIA- Architectures.md",
+    "ATLAS/AMD Architecture.md",
+    "ATLAS/Magnus - AMD.md",
     "ATTACHMENTS/feac75db30d83d25aaac968e558e7174_MD5.jpeg",
     "ATTACHMENTS/image-93.png",
-    "ATLAS/Magnus - AMD.md",
-    "ATLAS/AMD Architecture.md",
     "ATLAS/RDNA 6 - AMD.md",
     "ATTACHMENTS/d93a667d97a381d7296809c8c0d4befb_MD5.jpeg",
-    "ATLAS/Atlas.md",
     "Homepage.md",
     "EFFORTS/Efforts.md",
     "EFFORTS/Dissertation.md",
@@ -336,11 +338,8 @@
     "ATTACHMENTS/58a3043127cda3629b0871594bbdb66d_MD5.png",
     "ATTACHMENTS/b708cef582ab5e32d4bd6746e60cb42f_MD5.png",
     "ATTACHMENTS/783973f06558107576dc067317e31f93_MD5.png",
-    "ATTACHMENTS/796d857a5918edc0a9ee9ed3bb3e801b_MD5.png",
     "webclips",
     "EFFORTS/NVIDIA Tensor Core Evolution.md",
-    "EFFORTS/List of Available GPU Products.md",
-    "EFFORTS/POA By Naveen Bro.md",
     "/EFFORTS/Networking.xopp",
     "EFFORTS/Networking.xopp",
     "/EFFORTS",
