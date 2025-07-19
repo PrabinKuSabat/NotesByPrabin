@@ -13,3 +13,11 @@
 > [[Computer Networks]]
 
 [[Inner Product Verification L2]]
+
+```ad-summary
+title: Architecture
+[[AMD Architecture]]
+[[Intel Architectures]]
+[[NVIDIA- Architectures]]
+
+```

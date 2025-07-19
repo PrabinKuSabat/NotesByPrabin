@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/AccelSim.md",
+                "file": "ATLAS/AMD Architecture.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,10 +28,59 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "AccelSim"
+              "title": "AMD Architecture"
+            }
+          },
+          {
+            "id": "d4f6b7e2b5710e7b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "ATLAS/Magnus - AMD.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Magnus - AMD"
+            }
+          },
+          {
+            "id": "b3def6b7d77a299a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "ATLAS/RDNA 6 - AMD.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "RDNA 6 - AMD"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -248,15 +297,22 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "d4f6b7e2b5710e7b",
   "lastOpenFiles": [
-    "EFFORTS/Notes.md",
-    "EFFORTS/GPU Architectures  and Programming.md",
-    "EFFORTS/Dissertation.md",
-    "EFFORTS/Online Courses.md",
-    "EFFORTS/AccelSim.md",
-    "EFFORTS/Efforts.md",
+    "ATTACHMENTS/feac75db30d83d25aaac968e558e7174_MD5.jpeg",
+    "ATTACHMENTS/image-93.png",
+    "ATLAS/Magnus - AMD.md",
+    "ATLAS/AMD Architecture.md",
+    "ATLAS/RDNA 6 - AMD.md",
+    "ATTACHMENTS/d93a667d97a381d7296809c8c0d4befb_MD5.jpeg",
+    "ATLAS/Atlas.md",
     "Homepage.md",
+    "EFFORTS/Efforts.md",
+    "EFFORTS/Dissertation.md",
+    "EFFORTS/Notes.md",
+    "EFFORTS/AccelSim.md",
+    "EFFORTS/GPU Architectures  and Programming.md",
+    "EFFORTS/Online Courses.md",
     "EFFORTS/Tuner Correlating in Accelsim.md",
     "EFFORTS/Release Branch Installation.md",
     "EFFORTS/accelReleaseCondaEnv.yml.md",
@@ -281,17 +337,10 @@
     "ATTACHMENTS/b708cef582ab5e32d4bd6746e60cb42f_MD5.png",
     "ATTACHMENTS/783973f06558107576dc067317e31f93_MD5.png",
     "ATTACHMENTS/796d857a5918edc0a9ee9ed3bb3e801b_MD5.png",
-    "ATTACHMENTS/8824b7a51b900f863a6208ef9ffb400e_MD5.png",
-    "ATTACHMENTS/812898e92f9d545c589963108b6475a3_MD5.png",
     "webclips",
     "EFFORTS/NVIDIA Tensor Core Evolution.md",
     "EFFORTS/List of Available GPU Products.md",
     "EFFORTS/POA By Naveen Bro.md",
-    "ATLAS/Atlas.md",
-    "TO-DO List.md",
-    "EFFORTS/Report for mini-project.md",
-    "EFFORTS/JAVA Project.md",
-    "Random.md",
     "/EFFORTS/Networking.xopp",
     "EFFORTS/Networking.xopp",
     "/EFFORTS",
