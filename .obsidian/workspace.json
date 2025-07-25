@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ATLAS/Wafers.md",
+                "file": "CALENDER/2025-07-25.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,55 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Wafers"
-            }
-          },
-          {
-            "id": "d4f6b7e2b5710e7b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "ATLAS/Magnus - AMD.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Magnus - AMD"
-            }
-          },
-          {
-            "id": "b3def6b7d77a299a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "ATLAS/RDNA 6 - AMD.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "RDNA 6 - AMD"
+              "title": "2025-07-25"
             }
           }
         ]
@@ -266,8 +218,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 471.5,
-    "collapsed": true
+    "width": 471.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -298,8 +249,10 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "ATLAS/Atlas.md",
+    "Homepage.md",
+    "CALENDER/2025-07-25.md",
     "ATLAS/Wafers.md",
+    "ATLAS/Atlas.md",
     "ATLAS/Intel Architectures.md",
     "ATLAS/NVIDIA- Architectures.md",
     "ATLAS/AMD Architecture.md",
@@ -308,7 +261,6 @@
     "ATTACHMENTS/image-93.png",
     "ATLAS/RDNA 6 - AMD.md",
     "ATTACHMENTS/d93a667d97a381d7296809c8c0d4befb_MD5.jpeg",
-    "Homepage.md",
     "EFFORTS/Efforts.md",
     "EFFORTS/Dissertation.md",
     "EFFORTS/Notes.md",
@@ -339,7 +291,6 @@
     "ATTACHMENTS/b708cef582ab5e32d4bd6746e60cb42f_MD5.png",
     "ATTACHMENTS/783973f06558107576dc067317e31f93_MD5.png",
     "webclips",
-    "EFFORTS/NVIDIA Tensor Core Evolution.md",
     "/EFFORTS/Networking.xopp",
     "EFFORTS/Networking.xopp",
     "/EFFORTS",

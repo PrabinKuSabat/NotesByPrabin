@@ -97,7 +97,7 @@ void yyerror(const char* s);
 
 ``
 
-- [ ] 1. Tracer
+- [x] 1. Tracer ✅ 2025-07-25
 
 ```bash
 # after building once only execute
@@ -110,7 +110,7 @@ source ./gpu-app-collection/src/setup_environment
 
 More on `ris:ArrowRightS` [[AccelSim Tracer Extended to other apps.]]
 
-- [ ] 2. SASS Generation
+- [x] 2. SASS Generation ✅ 2025-07-25
 
 ```bash
 # Do the following basics first
