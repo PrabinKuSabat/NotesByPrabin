@@ -13,8 +13,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Research Papers Categorized.md",
-                "mode": "preview",
+                "file": "EFFORTS/SSSIHL.md",
+                "mode": "source",
                 "source": false,
                 "backlinks": true,
                 "backlinkOpts": {
@@ -28,10 +28,35 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Research Papers Categorized"
+              "title": "SSSIHL"
+            }
+          },
+          {
+            "id": "afdfa7dd3a661844",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "EFFORTS/2025-26.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "2025-26"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -248,8 +273,12 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "afdfa7dd3a661844",
   "lastOpenFiles": [
+    "EFFORTS/2025-26.md",
+    "EFFORTS/SSSIHL.md",
+    "EFFORTS/Efforts.md",
+    "Homepage.md",
     "EFFORTS/Research Papers Categorized.md",
     "EFFORTS/Report for mini-project.md",
     "EFFORTS/List of all GPU features.md",
@@ -257,9 +286,7 @@
     "EFFORTS/CA Research.md",
     "EFFORTS/Simulators.md",
     "EFFORTS/Parameters available in GPUTejas config.xml.md",
-    "EFFORTS/Efforts.md",
     "EFFORTS/Dissertation.md",
-    "Homepage.md",
     "CALENDER/2025-07-25.md",
     "ATLAS/Wafers.md",
     "ATLAS/Atlas.md",
@@ -277,8 +304,6 @@
     "EFFORTS/Online Courses.md",
     "EFFORTS/Tuner Correlating in Accelsim.md",
     "EFFORTS/Release Branch Installation.md",
-    "EFFORTS/accelReleaseCondaEnv.yml.md",
-    "EFFORTS/AccelSim Trials.md",
     "ZoteroExports",
     "Bibliography/References.bib",
     "Bibliography",
