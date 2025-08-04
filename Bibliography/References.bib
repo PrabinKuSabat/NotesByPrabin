@@ -7,6 +7,21 @@
   file = {/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/AI5HP8ZA/2024-global-trends-in-ai.html}
 }
 
+@inproceedings{abdelkhalikDemystifyingNvidiaAmpere2022,
+  title = {Demystifying the {{Nvidia Ampere Architecture}} through {{Microbenchmarking}} and {{Instruction-level Analysis}}},
+  booktitle = {2022 {{IEEE High Performance Extreme Computing Conference}} ({{HPEC}})},
+  author = {Abdelkhalik, Hamdy and Arafa, Yehia and Santhi, Nandakishore and Badawy, Abdel-Hameed A.},
+  year = {2022},
+  month = sep,
+  pages = {1--8},
+  issn = {2643-1971},
+  doi = {10.1109/HPEC55821.2022.9926299},
+  urldate = {2025-08-04},
+  abstract = {Graphics Processing Units (GPUs) are now considered the leading hardware to accelerate general-purpose workloads such as AI, data analytics, and HPC. Over the last decade, researchers have focused on demystifying and evaluating the microarchitecture features of various GPU architectures beyond what vendors reveal. This line of work is necessary to understand the hardware better and build more efficient workloads and applications. Many works have studied the recent Nvidia architectures, such as Volta and Turing, comparing them to their successor, Ampere. However, some microarchitecture features, such as the clock cycles for the different instructions, have not been extensively studied for the Ampere architecture. In this paper, we study the clock cycles per instruction with various data types found in the instruction-set architecture (ISA) of Nvidia GPUs. We measure the clock cycles for PTX ISA instructions and their SASS ISA counterparts using microbench-marks. We further calculate the clock cycles needed to access each memory unit. Moreover, we demystify the new version of the tensor core unit found in the Ampere architecture using the WMMA API and measuring its clock cycles per instruction and throughput for the different data types and input shapes. Our results should guide software developers and hardware architects. Furthermore, the clock cycles per instructions are widely used by performance modeling simulators and tools to model and predict the performance of the hardware.},
+  keywords = {Ampere,Architecture,Computer architecture,Graphics processing units,Instructions Latency,Microarchitecture,Predictive models,PTX,SASS,Tensor core throughput,Tensors,Throughput},
+  file = {/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/QK9QEYAG/9926299.html}
+}
+
 @misc{AccelSimAccelSimFramework,
   title = {Accel-{{Sim}}: {{The Accel-Sim Framework}}},
   urldate = {2024-10-26},
@@ -89,6 +104,26 @@
   abstract = {The present work presents a cycle-level execution-driven simulator for modern GPU architectures. We discuss the simulation model used for our GPU simulator, based in the concept of boxes and signals, and the relation between the timing simulator and the functional emulator. The simulation model we use helps to increase the accuracy and reduce the number of errors in the timing simulator while allowing for an easy extensibility of the simulated GPU architecture. We also introduce the OpenGL framework used to feed the simulator with traces from real applications (UT2004, Doom3) and a performance debugging tool (Signal Trace Visualizer). The presented ATTILA simulator supports the simulation of a whole range of GPU configurations and architectures, from the embedded segment to the high end PC segment, supporting both the unified and non unified shader architectural models.},
   keywords = {Computational modeling,Computer architecture,Feeds,Graphics,Hardware,Kernel,Layout,Microarchitecture,Rendering (computer graphics),Timing},
   file = {/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/QDEEJBDA/1620807.html}
+}
+
+@article{denizMINIMEGPUMulticoreBenchmark2016,
+  title = {{{MINIME-GPU}}: {{Multicore Benchmark Synthesizer}} for {{GPUs}}},
+  shorttitle = {{{MINIME-GPU}}},
+  author = {Deniz, Etem and Sen, Alper},
+  year = {2016},
+  month = jan,
+  journal = {ACM Transactions on Architecture and Code Optimization},
+  volume = {12},
+  number = {4},
+  pages = {1--25},
+  publisher = {Association for Computing Machinery (ACM)},
+  issn = {1544-3566, 1544-3973},
+  doi = {10.1145/2818693},
+  urldate = {2025-08-04},
+  abstract = {We introduce MINIME-GPU, a novel automated benchmark synthesis framework for graphics processing units (GPUs) that serves to speed up architectural simulation of modern GPU architectures. Our framework captures important characteristics of original GPU applications and generates synthetic GPU benchmarks using the Open Computing Language (OpenCL) library from those applications. To the best of our knowledge, this is the first time synthetic OpenCL benchmarks for GPUs are generated from existing applications. We use several characteristics, including instruction throughput, compute unit occupancy, and memory efficiency, to compare the similarity of original applications and their corresponding synthetic benchmarks. The experimental results show that our synthetic benchmark generation framework is capable of generating synthetic benchmarks that have similar characteristics with the original applications from which they are generated. On average, the similarity (accuracy) is 96\% and the speedup is 541 {\texttimes}. In addition, our synthetic benchmarks use the OpenCL library, which allows us to obtain portable human readable benchmarks as opposed to using assembly-level code, and they are faster and smaller than the original applications from which they are generated. We experimentally validated that our synthetic benchmarks preserve the characteristics of the original applications across different architectures.},
+  copyright = {https://www.acm.org/publications/policies/copyright\_policy\#Background},
+  langid = {english},
+  file = {/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/LDH96CQK/Deniz and Sen - 2016 - MINIME-GPU Multicore Benchmark Synthesizer for GPUs.pdf}
 }
 
 @inproceedings{dingDaViTDualAttention2022,
@@ -188,6 +223,13 @@
   abstract = {Graphic processing units (GPUs) contain a lot of complex architectural features, which make performance analysis and simulation of applications using them for general purpose computation very difficult. Especially when trying to do performance simulations at a higher abstraction level than interpreted instruction set simulators these features are not handled accurately by state of the art simulation techniques. This paper proposes a method for source level performance simulation of the microarchitecture of a GPU core that provides high enough simulation speeds to make testing of large application scenarios possible.},
   keywords = {Algorithm design and analysis,Analytical models,Graphics processing units,Instruction sets,Kernel,Pipelines,Timing},
   file = {/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/AZZC3HGP/0916.pdf;/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/5295IUHL/7092385.html}
+}
+
+@misc{GPGPUMiniBench_Accelerating_GPGPU_MicroArchitecture_Simulationpdf,
+  title = {{{GPGPU-MiniBench}}\_{{Accelerating}}\_{{GPGPU}}\_{{Micro-Architecture}}\_{{Simulation}}.Pdf},
+  journal = {Google Docs},
+  urldate = {2025-08-04},
+  howpublished = {https://drive.google.com/file/d/1qZUSrkppZS-2I0apZWtqL5qVnnXs68a5/view?usp=embed\_facebook}
 }
 
 @misc{GpgpusimGpgpusim_distribution2024,
@@ -323,6 +365,23 @@
   file = {/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/AALDHI7M/hw6.html}
 }
 
+@misc{jiaDissectingNVidiaTuring2019,
+  title = {Dissecting the {{NVidia Turing T4 GPU}} via {{Microbenchmarking}}},
+  author = {Jia, Zhe and Maggioni, Marco and Smith, Jeffrey and Scarpazza, Daniele Paolo},
+  year = {2019},
+  month = mar,
+  number = {arXiv:1903.07486},
+  eprint = {1903.07486},
+  primaryclass = {cs},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.1903.07486},
+  urldate = {2025-08-04},
+  abstract = {In 2019, the rapid rate at which GPU manufacturers refresh their designs, coupled with their reluctance to disclose microarchitectural details, is still a hurdle for those software designers who want to extract the highest possible performance. Last year, these very reasons motivated us to dissect the Volta GPU architecture using microbenchmarks. The introduction in August 2018 of Turing, NVidia's latest architecture, pressed us to update our study. In this report, we examine Turing and compare it quantitatively against previous NVidia GPU generations. Specifically, we study the T4 GPU: a low-power board aiming at inference applications. We describe its improvements against its inference-oriented predecessor: the P4 GPU based on the Pascal architecture. Both T4 and P4 GPUs achieve significantly higher frequency-per-Watt figures than their full-size counterparts. We study the performance of the T4's TensorCores, finding a much higher throughput on low-precision operands than on the P4 GPU. We reveal that Turing introduces new instructions that express matrix math more succinctly. We map Turing's instruction space, finding the same encoding as Volta, and additional instructions. We reveal that the Turing TU104 chip has the same memory hierarchy depth as the Volta GV100; cache levels sizes on the TU104 are frequently twice as large as those found on the Pascal GP104. We benchmark each constituent of the T4 memory hierarchy and find substantial overall performance improvements over its P4 predecessor. We studied how clock throttling affects compute-intensive workloads that hit power or thermal limits. Many of our findings are novel, published here for the first time. All of them can guide high-performance software developers get closer to the GPU's peak performance.},
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Distributed Parallel and Cluster Computing},
+  file = {/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/R3PYTNJ7/Jia et al. - 2019 - Dissecting the NVidia Turing T4 GPU via Microbenchmarking.pdf;/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/WLAHTBRJ/1903.html}
+}
+
 @misc{jiaDissectingNVIDIAVolta2018,
   title = {Dissecting the {{NVIDIA Volta GPU Architecture}} via {{Microbenchmarking}}},
   author = {Jia, Zhe and Maggioni, Marco and Staiger, Benjamin and Scarpazza, Daniele P.},
@@ -338,6 +397,23 @@
   archiveprefix = {arXiv},
   keywords = {Computer Science - Distributed Parallel and Cluster Computing,Computer Science - Performance,GPU,Microbenchmarking,Volta},
   file = {/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/FX66U3YG/Jia et al. - 2018 - Dissecting the NVIDIA Volta GPU Architecture via Microbenchmarking.pdf;/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/QZ39JIDY/1804.html}
+}
+
+@misc{jiaDissectingNVIDIAVolta2018a,
+  title = {Dissecting the {{NVIDIA Volta GPU Architecture}} via {{Microbenchmarking}}},
+  author = {Jia, Zhe and Maggioni, Marco and Staiger, Benjamin and Scarpazza, Daniele P.},
+  year = {2018},
+  month = apr,
+  number = {arXiv:1804.06826},
+  eprint = {1804.06826},
+  primaryclass = {cs},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.1804.06826},
+  urldate = {2025-08-04},
+  abstract = {Every year, novel NVIDIA GPU designs are introduced. This rapid architectural and technological progression, coupled with a reluctance by manufacturers to disclose low-level details, makes it difficult for even the most proficient GPU software designers to remain up-to-date with the technological advances at a microarchitectural level. To address this dearth of public, microarchitectural-level information on the novel NVIDIA GPUs, independent researchers have resorted to microbenchmarks-based dissection and discovery. This has led to a prolific line of publications that shed light on instruction encoding, and memory hierarchy's geometry and features at each level. Namely, research that describes the performance and behavior of the Kepler, Maxwell and Pascal architectures. In this technical report, we continue this line of research by presenting the microarchitectural details of the NVIDIA Volta architecture, discovered through microbenchmarks and instruction set disassembly. Additionally, we compare quantitatively our Volta findings against its predecessors, Kepler, Maxwell and Pascal.},
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Distributed Parallel and Cluster Computing,Computer Science - Performance},
+  file = {/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/5AKMXEQP/Jia et al. - 2018 - Dissecting the NVIDIA Volta GPU Architecture via Microbenchmarking.pdf;/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/NYZ7KU2V/1804.html}
 }
 
 @article{jouppiDomainspecificSupercomputerTraining2020,
@@ -421,6 +497,23 @@
   archiveprefix = {arXiv},
   keywords = {Computer Science - Computation and Language,Computer Science - Hardware Architecture,Computer Science - Machine Learning},
   file = {/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/HYF662CQ/Kachris - 2024 - A Survey on Hardware Accelerators for Large Language Models.pdf;/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/EPKSFQHK/2401.html}
+}
+
+@inproceedings{kerrModelingGPUCPUWorkloads2010,
+  title = {Modeling {{GPU-CPU}} Workloads and Systems},
+  booktitle = {Proceedings of the 3rd {{Workshop}} on {{General-Purpose Computation}} on {{Graphics Processing Units}}},
+  author = {Kerr, Andrew and Diamos, Gregory and Yalamanchili, Sudhakar},
+  year = {2010},
+  month = mar,
+  series = {{{GPGPU-3}}},
+  pages = {31--42},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  doi = {10.1145/1735688.1735696},
+  urldate = {2025-08-03},
+  abstract = {Heterogeneous systems, systems with multiple processors tailored for specialized tasks, are challenging programming environments. While it may be possible for domain experts to optimize a high performance application for a very specific and well documented system, it may not perform as well or even function on a different system. Developers who have less experience with either the application domain or the system architecture may devote a significant effort to writing a program that merely functions correctly. We believe that a comprehensive analysis and modeling frame-work is necessary to ease application development and automate program optimization on heterogeneous platforms.This paper reports on an empirical evaluation of 25 CUDA applications on four GPUs and three CPUs, leveraging the Ocelot dynamic compiler infrastructure which can execute and instrument the same CUDA applications on either target. Using a combination of instrumentation and statistical analysis, we record 37 different metrics for each application and use them to derive relationships between program behavior and performance on heterogeneous processors. These relationships are then fed into a modeling frame-work that attempts to predict the performance of similar classes of applications on different processors. Most significantly, this study identifies several non-intuitive relationships between program characteristics and demonstrates that it is possible to accurately model CUDA kernel performance using only metrics that are available before a kernel is executed.},
+  isbn = {978-1-60558-935-0},
+  file = {/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/WF98ISEN/Kerr et al. - 2010 - Modeling GPU-CPU workloads and systems.pdf}
 }
 
 @article{khairyAccelSimExtensibleSimulation,
@@ -523,6 +616,23 @@
   file = {/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/HVXF58UB/Liu et al. - 2021 - Swin Transformer Hierarchical Vision Transformer .pdf}
 }
 
+@misc{luoBenchmarkingDissectingNvidia2024,
+  title = {Benchmarking and {{Dissecting}} the {{Nvidia Hopper GPU Architecture}}},
+  author = {Luo, Weile and Fan, Ruibo and Li, Zeyu and Du, Dayou and Wang, Qiang and Chu, Xiaowen},
+  year = {2024},
+  month = feb,
+  number = {arXiv:2402.13499},
+  eprint = {2402.13499},
+  primaryclass = {cs},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2402.13499},
+  urldate = {2025-08-04},
+  abstract = {Graphics processing units (GPUs) are continually evolving to cater to the computational demands of contemporary general-purpose workloads, particularly those driven by artificial intelligence (AI) utilizing deep learning techniques. A substantial body of studies have been dedicated to dissecting the microarchitectural metrics characterizing diverse GPU generations, which helps researchers understand the hardware details and leverage them to optimize the GPU programs. However, the latest Hopper GPUs present a set of novel attributes, including new tensor cores supporting FP8, DPX, and distributed shared memory. Their details still remain mysterious in terms of performance and operational characteristics. In this research, we propose an extensive benchmarking study focused on the Hopper GPU. The objective is to unveil its microarchitectural intricacies through an examination of the new instruction-set architecture (ISA) of Nvidia GPUs and the utilization of new CUDA APIs. Our approach involves two main aspects. Firstly, we conduct conventional latency and throughput comparison benchmarks across the three most recent GPU architectures, namely Hopper, Ada, and Ampere. Secondly, we delve into a comprehensive discussion and benchmarking of the latest Hopper features, encompassing the Hopper DPX dynamic programming (DP) instruction set, distributed shared memory, and the availability of FP8 tensor cores. The microbenchmarking results we present offer a deeper understanding of the novel GPU AI function units and programming features introduced by the Hopper architecture. This newfound understanding is expected to greatly facilitate software optimization and modeling efforts for GPU architectures. To the best of our knowledge, this study makes the first attempt to demystify the tensor core performance and programming instruction sets unique to Hopper GPUs.},
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Hardware Architecture},
+  file = {/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/EBEB44DL/Luo et al. - 2024 - Benchmarking and Dissecting the Nvidia Hopper GPU Architecture.pdf;/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/SJC84GKS/2402.html}
+}
+
 @misc{luoDissectingNVIDIAHopper2025,
   title = {Dissecting the {{NVIDIA Hopper Architecture}} through {{Microbenchmarking}} and {{Multiple Level Analysis}}},
   author = {Luo, Weile and Fan, Ruibo and Li, Zeyu and Du, Dayou and Liu, Hongyuan and Wang, Qiang and Chu, Xiaowen},
@@ -538,6 +648,41 @@
   archiveprefix = {arXiv},
   keywords = {Computer Science - Distributed Parallel and Cluster Computing,Computer Science - Hardware Architecture,Computer Science - Performance},
   file = {/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/Q486FLEZ/Luo et al. - 2025 - Dissecting the NVIDIA Hopper Architecture through Microbenchmarking and Multiple Level Analysis.pdf}
+}
+
+@misc{luoDissectingNVIDIAHopper2025a,
+  title = {Dissecting the {{NVIDIA Hopper Architecture}} through {{Microbenchmarking}} and {{Multiple Level Analysis}}},
+  author = {Luo, Weile and Fan, Ruibo and Li, Zeyu and Du, Dayou and Liu, Hongyuan and Wang, Qiang and Chu, Xiaowen},
+  year = {2025},
+  month = jan,
+  number = {arXiv:2501.12084},
+  eprint = {2501.12084},
+  primaryclass = {cs},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2501.12084},
+  urldate = {2025-08-04},
+  abstract = {Modern GPUs, with their specialized hardware like tensor cores, are essential for demanding AI and deep learning applications. This study presents a comprehensive, multi-level microbenchmarking analysis of the NVIDIA Hopper GPU architecture, delving into its performance characteristics and novel features. We benchmark Hopper's memory subsystem latency and throughput, comparing its L2 partitioned cache behavior and global memory access patterns against recent GPU generations, Ampere and Ada Lovelace. Our analysis reveals significant performance differences and architectural improvements in Hopper. A core contribution of this work is a detailed evaluation of Hopper's fourth-generation tensor cores, including their FP8 precision support and the novel asynchronous wgmma instructions, assessing their impact on matrix multiply-accumulate operations. We further investigate the performance implications of other key Hopper innovations: DPX instructions for accelerating dynamic programming algorithms, distributed shared memory (DSM) for inter-SM communication, and the Tensor Memory Accelerator (TMA) for asynchronous data movement. This multi-level approach encompasses instruction-level microbenchmarks, library-level analysis of the Transformer Engine, and application-level benchmarks of tensor core performance within large language models. Our findings provide valuable, in-depth insights for software developers seeking to optimize performance and develop accurate performance models for the Hopper architecture, ultimately contributing to a deeper understanding of its potential for accelerating AI and other computationally intensive workloads.},
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Distributed Parallel and Cluster Computing,Computer Science - Hardware Architecture,Computer Science - Performance},
+  file = {/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/5NJG2SCC/Luo et al. - 2025 - Dissecting the NVIDIA Hopper Architecture through Microbenchmarking and Multiple Level Analysis.pdf;/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/KD7CV2D2/2501.html}
+}
+
+@article{maMCMGSimulatorUnified2015,
+  title = {{{MCMG}} Simulator: {{A}} Unified Simulation Framework for {{CPU}} and Graphic {{GPU}}},
+  shorttitle = {{{MCMG}} Simulator},
+  author = {Ma, Jianliang and Yu, Licheng and Ye, John M. and Chen, Tianzhou},
+  year = {2015},
+  month = feb,
+  journal = {Journal of Computer and System Sciences},
+  volume = {81},
+  number = {1},
+  pages = {57--71},
+  issn = {0022-0000},
+  doi = {10.1016/j.jcss.2014.06.017},
+  urldate = {2025-08-04},
+  abstract = {Accurate simulation is vital for the proper design and evaluation of any computing architecture. Researchers seek unified simulation frameworks that can model heterogeneous architectures like CPU and GPU devices and their interactions as computing patterns move toward heterogeneous era. In this paper, we introduce MCMG (Multi-CPU Multi-GPU) simulator, a cycle accurate, modular and open-source toolset that enables simulating x86 CPUs and Nvidia G80 like GPUs simultaneously. Targeting heterogeneous architectural exploration, MCMG supports fully configuration of multiple CPUs, GPUs and their memory sub-system. Not only CPUs, relative running frequency of each GPU can be also defined conveniently. Simulation validation is demonstrated with a preliminary architectural exploration study. Then we present shared LLC access results of heterogeneous cores and show reasonable explanation. Finally, we conclude the job.},
+  keywords = {Heterogeneous multi-core architecture,MCMG (Multi-CPU Multi-GPU) simulator,System validation},
+  file = {/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/7WXS9HYM/Ma et al. - 2015 - MCMG simulator A unified simulation framework for CPU and graphic GPU.pdf;/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/CZE6VLH7/S0022000014001044.html}
 }
 
 @misc{massonFlipHashConstantTimeConsistent2024,
@@ -572,6 +717,14 @@
   urldate = {2024-03-30},
   copyright = {https://www.springer.com/tdm},
   langid = {english}
+}
+
+@misc{MICRO_19_NVBitpdf,
+  title = {{{MICRO}}\_19\_{{NVBit}}.Pdf},
+  journal = {Google Docs},
+  urldate = {2025-08-04},
+  howpublished = {https://drive.google.com/file/d/1Tl9z7Vgtj6eMElM8NTkWeZ-Je8MpYTAd/view?usp=embed\_facebook},
+  file = {/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/MK4KBQ7E/view.html}
 }
 
 @article{mittalSurveyHardwareAccelerators2021,
@@ -951,6 +1104,40 @@
 @article{SparseCoreAcceleratorStructurally,
   title = {{{SparseCore}}: {{An Accelerator}} for {{Structurally Sparse CNNs}}},
   file = {/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/VVIT79SK/SparseCore An Accelerator for Structurally Sparse CNNs.pdf}
+}
+
+@inproceedings{sunMGPUSimEnablingMultiGPU2019,
+  title = {{{MGPUSim}}: Enabling Multi-{{GPU}} Performance Modeling and Optimization},
+  shorttitle = {{{MGPUSim}}},
+  booktitle = {Proceedings of the 46th {{International Symposium}} on {{Computer Architecture}}},
+  author = {Sun, Yifan and Baruah, Trinayan and Mojumder, Saiful A. and Dong, Shi and Gong, Xiang and Treadway, Shane and Bao, Yuhui and Hance, Spencer and McCardwell, Carter and Zhao, Vincent and Barclay, Harrison and Ziabari, Amir Kavyan and Chen, Zhongliang and Ubal, Rafael and Abell{\'a}n, Jos{\'e} L. and Kim, John and Joshi, Ajay and Kaeli, David},
+  year = {2019},
+  month = jun,
+  pages = {197--209},
+  publisher = {ACM},
+  address = {Phoenix Arizona},
+  doi = {10.1145/3307650.3322230},
+  urldate = {2025-08-04},
+  copyright = {https://www.acm.org/publications/policies/copyright\_policy\#Background},
+  file = {/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/V2PS5RPG/Sun et al. - 2019 - MGPUSim enabling multi-GPU performance modeling and optimization.pdf}
+}
+
+@misc{sunMGSimMGMarkFramework2018,
+  title = {{{MGSim}} + {{MGMark}}: {{A Framework}} for {{Multi-GPU System Research}}},
+  shorttitle = {{{MGSim}} + {{MGMark}}},
+  author = {Sun, Yifan and Baruah, Trinayan and Mojumder, Saiful A. and Dong, Shi and Ubal, Rafael and Gong, Xiang and Treadway, Shane and Bao, Yuhui and Zhao, Vincent and Abell{\'a}n, Jos{\'e} L. and Kim, John and Joshi, Ajay and Kaeli, David},
+  year = {2018},
+  month = nov,
+  number = {arXiv:1811.02884},
+  eprint = {1811.02884},
+  primaryclass = {cs},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.1811.02884},
+  urldate = {2025-08-04},
+  abstract = {The rapidly growing popularity and scale of data-parallel workloads demand a corresponding increase in raw computational power of GPUs (Graphics Processing Units). As single-GPU systems struggle to satisfy the performance demands, multi-GPU systems have begun to dominate the high-performance computing world. The advent of such systems raises a number of design challenges, including the GPU microarchitecture, multi-GPU interconnect fabrics, runtime libraries and associated programming models. The research community currently lacks a publically available and comprehensive multi-GPU simulation framework and benchmark suite to evaluate multi-GPU system design solutions. In this work, we present MGSim, a cycle-accurate, extensively validated, multi-GPU simulator, based on AMD's Graphics Core Next 3 (GCN3) instruction set architecture. We complement MGSim with MGMark, a suite of multi-GPU workloads that explores multi-GPU collaborative execution patterns. Our simulator is scalable and comes with in-built support for multi-threaded execution to enable fast and efficient simulations. In terms of performance accuracy, MGSim differs \$5.5{\textbackslash}\%\$ on average when compared against actual GPU hardware. We also achieve a \$3.5{\textbackslash}times\$ and a \$2.5{\textbackslash}times\$ average speedup in function emulation and architectural simulation with 4 CPU cores, while delivering the same accuracy as the serial simulation. We illustrate the novel simulation capabilities provided by our simulator through a case study exploring programming models based on a unified multi-GPU system (U-MGPU) and a discrete multi-GPU system (D-MGPU) that both utilize unified memory space and cross-GPU memory access. We evaluate the design implications from our case study, suggesting that D-MGPU is an attractive programming model for future multi-GPU systems.},
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Distributed Parallel and Cluster Computing,Computer Science - Hardware Architecture},
+  file = {/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/IQYAACP9/Sun et al. - 2018 - MGSim + MGMark A Framework for Multi-GPU System Research.pdf;/home/prabinkumarsabat/snap/zotero-snap/common/Zotero/storage/L4ZZIQK4/1811.html}
 }
 
 @article{t.k.moonExpectationmaximizationAlgorithm1996,
