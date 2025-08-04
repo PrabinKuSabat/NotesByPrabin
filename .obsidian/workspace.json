@@ -13,8 +13,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CALENDER/2025-07-25.md",
-                "mode": "source",
+                "file": "EFFORTS/Research Papers Categorized.md",
+                "mode": "preview",
                 "source": false,
                 "backlinks": true,
                 "backlinkOpts": {
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "2025-07-25"
+              "title": "Research Papers Categorized"
             }
           }
         ]
@@ -218,7 +218,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 471.5
+    "width": 471.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -249,6 +250,15 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/Research Papers Categorized.md",
+    "EFFORTS/Report for mini-project.md",
+    "EFFORTS/List of all GPU features.md",
+    "EFFORTS/Research Paper Notes.md",
+    "EFFORTS/CA Research.md",
+    "EFFORTS/Simulators.md",
+    "EFFORTS/Parameters available in GPUTejas config.xml.md",
+    "EFFORTS/Efforts.md",
+    "EFFORTS/Dissertation.md",
     "Homepage.md",
     "CALENDER/2025-07-25.md",
     "ATLAS/Wafers.md",
@@ -261,8 +271,6 @@
     "ATTACHMENTS/image-93.png",
     "ATLAS/RDNA 6 - AMD.md",
     "ATTACHMENTS/d93a667d97a381d7296809c8c0d4befb_MD5.jpeg",
-    "EFFORTS/Efforts.md",
-    "EFFORTS/Dissertation.md",
     "EFFORTS/Notes.md",
     "EFFORTS/AccelSim.md",
     "EFFORTS/GPU Architectures  and Programming.md",
@@ -271,18 +279,11 @@
     "EFFORTS/Release Branch Installation.md",
     "EFFORTS/accelReleaseCondaEnv.yml.md",
     "EFFORTS/AccelSim Trials.md",
-    "EFFORTS/Dissertation TO-Do Lists.md",
-    "ZoteroExports/Comment Technical report. First Edition. April 18th, 2018. 66 pages.md",
-    "EFFORTS/Dissecting the NVIDIA Volta GPU Architecture via Microbenchmarking.md",
     "ZoteroExports",
     "Bibliography/References.bib",
     "Bibliography",
     "EFFORTS/Untitled.canvas",
-    "EFFORTS/Dissecting the NVIDIA Volta GPU Architecture via Microbenchmarking/Untitled.md",
     "EFFORTS/Dissecting the NVIDIA Volta GPU Architecture via Microbenchmarking",
-    "Untitled.md",
-    "webclips/WEB Gmail - NVIDIA Tensor Core Evolution From Volta To Blackwell.md",
-    "CALENDER/2025-07-04.md",
     "ATTACHMENTS/5e8298ecc308b6e52f8c5a0a83f24334_MD5.png",
     "ATTACHMENTS/37dabba3187cc680e3a47ec9f792360f_MD5.png",
     "ATTACHMENTS/618f40c7cd6f0126e4f18ff54af5db42_MD5.png",
