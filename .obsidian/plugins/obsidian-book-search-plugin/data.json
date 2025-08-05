@@ -5,7 +5,7 @@
   "content": "",
   "useDefaultFrontmatter": true,
   "defaultFrontmatterKeyType": "Camel Case",
-  "templateFile": "ATLAS/Templates/_BookNote.md",
+  "templateFile": "Extras/Templates/BooksTemplate.md",
   "serviceProvider": "google",
   "naverClientId": "",
   "naverClientSecret": "",
@@ -14,6 +14,7 @@
   "openPageOnCompletion": false,
   "showCoverImageInSearch": true,
   "enableCoverImageSave": true,
-  "coverImagePath": "Atlas/Attachements/Book Covers",
+  "enableCoverImageEdgeCurl": true,
+  "coverImagePath": "Extras/ATTACHMENTS/Book Covers",
   "askForLocale": false
 }

@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CALENDER/CALENDAR.md",
+                "file": "Extras/Books/Library.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -52,7 +52,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "CALENDAR"
+              "title": "Library"
             }
           }
         ],
@@ -207,10 +207,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "CALENDER/CALENDAR.md"
+                "file": "Extras/Books/Library.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for CALENDAR"
+              "title": "File properties for Library"
             }
           },
           {
@@ -273,9 +273,13 @@
   },
   "active": "4b44bc66b81b0ac8",
   "lastOpenFiles": [
+    "Extras/Templates/BooksTemplate.md",
+    "Extras/Books/Library.md",
+    "CALENDER/CALENDAR.md",
+    "Extras/ATTACHMENTS/Book Covers",
+    "Extras/Books",
     "Extras",
     "CALENDER/Heatmaps.md",
-    "CALENDER/CALENDAR.md",
     "Extras/NotesByPrabin/Heatmaps.md",
     "Homepage.md",
     "Random.md",
@@ -298,7 +302,6 @@
     "EFFORTS/SSSIHL.md",
     "EFFORTS/2025-26.md",
     "EFFORTS/Research Papers Categorized.md",
-    "EFFORTS/Report for mini-project.md",
     "Extras/ATTACHMENTS/feac75db30d83d25aaac968e558e7174_MD5.jpeg",
     "ATTACHMENTS/image-93.png",
     "Extras/ATTACHMENTS/d93a667d97a381d7296809c8c0d4befb_MD5.jpeg",
@@ -317,9 +320,6 @@
     "webclips",
     "/EFFORTS/Networking.xopp",
     "EFFORTS/Networking.xopp",
-    "/EFFORTS",
-    "ATTACHMENTS/Computer Networking A Top-Down Approach 6t - Unknown.pdf",
-    "Extras/Clippings",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "EFFORTS/Binary Search.canvas",
     "!HOME.canvas",
