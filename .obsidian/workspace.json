@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "EFFORTS/Dissertation.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Dissertation"
             }
           }
         ]
@@ -249,9 +249,12 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/Efforts.md",
     "Homepage.md",
-    "Extras/Library.md",
     "CALENDER/CALENDAR.md",
+    "Bibliography/References.bib",
+    "Bibliography",
+    "Extras/Library.md",
     "CALENDER/2025-08-04.md",
     "CALENDER/Heatmaps.md",
     "Extras/ATTACHMENTS/39aba9038c139ca85a93922de496d3b6_MD5.jpg",
@@ -275,11 +278,9 @@
     "CALENDER/Dec 52nd Week 2024.md",
     "CALENDER/Events.md",
     "CALENDER/Thu 22-08-2024.md",
-    "EFFORTS/Efforts.md",
     "CALENDER/2025-07-25.md",
     "CALENDER/2025-01-25.md",
     "EFFORTS/3rd Sem.md",
-    "EFFORTS/SSSIHL.md",
     "Extras/ATTACHMENTS/feac75db30d83d25aaac968e558e7174_MD5.jpeg",
     "ATTACHMENTS/image-93.png",
     "Extras/ATTACHMENTS/d93a667d97a381d7296809c8c0d4befb_MD5.jpeg",
@@ -294,8 +295,6 @@
     "Extras/ATTACHMENTS/3cdabb456174144d28036a18b2b00a5c_MD5.png",
     "Extras/ATTACHMENTS/58a3043127cda3629b0871594bbdb66d_MD5.png",
     "webclips",
-    "/EFFORTS/Networking.xopp",
-    "EFFORTS/Networking.xopp",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "EFFORTS/Binary Search.canvas",
     "!HOME.canvas",
