@@ -3,11 +3,11 @@
 ## Subjects
 
 > [! summary] `ris:Add`Mathematics  
-> [[Linear Algebra|LA]]  
-> [[Real Analyis|RA]]
+> [[ATLAS/Linear Algebra|LA]]  
+> [[ATLAS/Real Analyis|RA]]
 
 > [!abstract] Computer Science  
-> [[CPP|C++]]  
+> [[ATLAS/CPP|C++]]  
 > [[AI]]  
 > [[Design and Analysis of Algorithms]]  
 > [[Computer Networks]]

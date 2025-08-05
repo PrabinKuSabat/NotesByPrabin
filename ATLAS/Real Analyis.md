@@ -1,6 +1,6 @@
 # Notes
 
-[[Important Sections For End Sem]]
+[[ATLAS/Important Sections For End Sem]]
 
 ---
 

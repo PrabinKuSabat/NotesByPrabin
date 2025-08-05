@@ -2,13 +2,13 @@ the end of Dennard Scaling in the late 2000s as well as the end of classic Moore
 
 compute capabilities have continued to improve at a rapid pace, with the baton being passed to other technologies such as [advanced packaging](https://semianalysis.com/2021/12/15/advanced-packaging-part-1-pad-limited/?access_token=eyJhbGciOiJFUzI1NiIsImtpZCI6InNlbWlhbmFseXNpcy5wYXNzcG9ydC5vbmxpbmUiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJzZW1pYW5hbHlzaXMucGFzc3BvcnQub25saW5lIiwiYXpwIjoiS1NncVhBaGFmZmtwVjQzbmt0UU1INSIsImVudCI6eyJhdWQiOlsiNThZNVhua2U4U1ZnTkFRRm5GZUVIQiJdLCJ1cmkiOlsiaHR0cHM6Ly9zZW1pYW5hbHlzaXMuY29tLzIwMjEvMTIvMTUvYWR2YW5jZWQtcGFja2FnaW5nLXBhcnQtMS1wYWQtbGltaXRlZC8iXX0sImV4cCI6MTc1MzI1MjA1MiwiaWF0IjoxNzUwNjYwMDUyLCJpc3MiOiJodHRwczovL3NlbWlhbmFseXNpcy5wYXNzcG9ydC5vbmxpbmUvb2F1dGgiLCJzY29wZSI6ImZlZWQ6cmVhZCBhcnRpY2xlOnJlYWQgYXNzZXQ6cmVhZCBjYXRlZ29yeTpyZWFkIGVudGl0bGVtZW50cyIsInN1YiI6IjM3MzJiODk2LWIwZDUtNDZmMS04ZGQ4LWFhOWQzYTU4MTc0ZiIsInVzZSI6ImFjY2VzcyJ9.CgKx19qAZkbQiaJ_PD7oRjAhgK3jMl4gHW-cI9IOFA1m7G06qLs2KsTAAZxjvtfBPhEOyUyqY-NwfkAAzR41IQ), [3D stacking](https://semianalysis.com/2025/02/05/iedm2024/?access_token=eyJhbGciOiJFUzI1NiIsImtpZCI6InNlbWlhbmFseXNpcy5wYXNzcG9ydC5vbmxpbmUiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJzZW1pYW5hbHlzaXMucGFzc3BvcnQub25saW5lIiwiYXpwIjoiS1NncVhBaGFmZmtwVjQzbmt0UU1INSIsImVudCI6eyJhdWQiOlsiNThZNVhua2U4U1ZnTkFRRm5GZUVIQiJdLCJ1cmkiOlsiaHR0cHM6Ly9zZW1pYW5hbHlzaXMuY29tLzIwMjUvMDIvMDUvaWVkbTIwMjQvIl19LCJleHAiOjE3NTMyNTIwNTIsImlhdCI6MTc1MDY2MDA1MiwiaXNzIjoiaHR0cHM6Ly9zZW1pYW5hbHlzaXMucGFzc3BvcnQub25saW5lL29hdXRoIiwic2NvcGUiOiJmZWVkOnJlYWQgYXJ0aWNsZTpyZWFkIGFzc2V0OnJlYWQgY2F0ZWdvcnk6cmVhZCBlbnRpdGxlbWVudHMiLCJzdWIiOiIzNzMyYjg5Ni1iMGQ1LTQ2ZjEtOGRkOC1hYTlkM2E1ODE3NGYiLCJ1c2UiOiJhY2Nlc3MifQ.zSyA6Clqwf5jE1mMIQN9RfCPKo9n3xZHiqDnSQiXJ8_Ji0D65V7uWBv0GMx3SKoG48Ozu36QfuF1O86IjTGwZg), [new transistor types](https://semianalysis.com/2023/02/21/the-future-of-the-transistor/?access_token=eyJhbGciOiJFUzI1NiIsImtpZCI6InNlbWlhbmFseXNpcy5wYXNzcG9ydC5vbmxpbmUiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJzZW1pYW5hbHlzaXMucGFzc3BvcnQub25saW5lIiwiYXpwIjoiS1NncVhBaGFmZmtwVjQzbmt0UU1INSIsImVudCI6eyJhdWQiOlsiNThZNVhua2U4U1ZnTkFRRm5GZUVIQiJdLCJ1cmkiOlsiaHR0cHM6Ly9zZW1pYW5hbHlzaXMuY29tLzIwMjMvMDIvMjEvdGhlLWZ1dHVyZS1vZi10aGUtdHJhbnNpc3Rvci8iXX0sImV4cCI6MTc1MzI1MjA1MiwiaWF0IjoxNzUwNjYwMDUyLCJpc3MiOiJodHRwczovL3NlbWlhbmFseXNpcy5wYXNzcG9ydC5vbmxpbmUvb2F1dGgiLCJzY29wZSI6ImZlZWQ6cmVhZCBhcnRpY2xlOnJlYWQgYXNzZXQ6cmVhZCBjYXRlZ29yeTpyZWFkIGVudGl0bGVtZW50cyIsInN1YiI6IjM3MzJiODk2LWIwZDUtNDZmMS04ZGQ4LWFhOWQzYTU4MTc0ZiIsInVzZSI6ImFjY2VzcyJ9.1RaUIJnQpJgQAk3jwvJh4UfxgnryPXlfG2iZuBgc_U5egpxo_0gu9po01ABHYB5dZBAQ8FtgEcHpeYJXBse94Q) and specialized architectures such as the GPU.
 
-![[ATTACHMENTS/812898e92f9d545c589963108b6475a3_MD5.png]]
+![[812898e92f9d545c589963108b6475a3_MD5.png]]
 
 Source: Nvidia
 
 GPU compute capabilities have improved at a faster than Moore’s law pace, consistently delivering remarkable “[Huang’s Law](https://en.wikipedia.org/wiki/Huang%27s_law)” performance improvements
 
-![[ATTACHMENTS/8824b7a51b900f863a6208ef9ffb400e_MD5.png]]
+![[8824b7a51b900f863a6208ef9ffb400e_MD5.png]]
 
 Source: SemiAnalysis, [HC2023-K2: Hardware for Deep Learning](https://www.youtube.com/watch?v=rsxCZAE8QNA)
 
@@ -20,7 +20,7 @@ For a fixed problem size, Amdahl’s Law specifies the maximum speedup you can o
 
 scaling compute resources only drives down the execution time of the parallel portion, so the performance improvement is bounded by the serial portion.
 
-![[ATTACHMENTS/796d857a5918edc0a9ee9ed3bb3e801b_MD5.png]]
+![[796d857a5918edc0a9ee9ed3bb3e801b_MD5.png]]
 
 where S is the parallel work execution time and p is the speedup of the parallelizable work.
 
@@ -28,7 +28,7 @@ Strong scaling refers to scaling compute resources to solve a fixed-size problem
 
 weak scaling refers to scaling compute resources to solve larger problems at a constant time.
 
-![[ATTACHMENTS/783973f06558107576dc067317e31f93_MD5.png]]
+![[783973f06558107576dc067317e31f93_MD5.png]]
 
 Source: SemiAnalysis, [Performance and Scalability – SCENET Summer School](https://acenet-arc.github.io/ACENET_Summer_School_General/05-performance/index.html)
 
@@ -54,7 +54,7 @@ PTX program describes a **kernel function** that is executed with a large number
 
 threads have per-thread **registers**, threads within a CTA have **shared memory**, and all threads can access **global memory**
 
-![[ATTACHMENTS/3cdabb456174144d28036a18b2b00a5c_MD5.png]]
+![[3cdabb456174144d28036a18b2b00a5c_MD5.png]]
 
 Source: SemiAnalysis
 
@@ -64,7 +64,7 @@ The GPU architecture is built around an array of streaming multiprocessors (**SM
 
 At instruction issue time, the instruction unit selects a warp and issues an instruction to the threads of the warp. This execution method is called single-instruction, multiple threads (**SIMT**).
 
-![[ATTACHMENTS/58a3043127cda3629b0871594bbdb66d_MD5.png]]
+![[58a3043127cda3629b0871594bbdb66d_MD5.png]]
 
 PTX Machine model. Source: SemiAnalysis, [PTX ISA Documentation – Figure 4](https://docs.nvidia.com/cuda/parallel-thread-execution/index.html#set-of-simt-multiprocessors-hardware-model)
 
@@ -88,7 +88,7 @@ half-precision matrix multiply and accumulate (==HMMA==) instruction
 
 The corresponding dedicated hardware to execute this instruction is the Tensor Core, introduced in the Tesla V100 GPU of Volta architecture in 2017.
 
-![[ATTACHMENTS/b708cef582ab5e32d4bd6746e60cb42f_MD5.png]]
+![[b708cef582ab5e32d4bd6746e60cb42f_MD5.png]]
 
 Source: [Trends in Deep Learning Hardware: Specialized Instructions Amortize Overhead](https://www.youtube.com/watch?v=kLiwvnr4L80&t=869)
 
@@ -110,7 +110,7 @@ An SM of a Tesla V100 GPU contains 8 Tensor Cores, grouped in partitions of two.
 
 Each Tensor Core is capable of computing an equivalent of 4x4x4 matrix multiplication per cycle, which amounts to 1024 FLOPs per cycle per SM
 
-![[ATTACHMENTS/618f40c7cd6f0126e4f18ff54af5db42_MD5.png]]
+![[618f40c7cd6f0126e4f18ff54af5db42_MD5.png]]
 
 [Source: Volta Tensor Core Training](https://www.olcf.ornl.gov/wp-content/uploads/2019/11/ORNL_Tensor_Core_Training_Aug2019.pdf)
 
@@ -118,7 +118,7 @@ NVIDIA designed PTX instruction mma to target the lower level ==HMMA== instructi
 
 On Volta architecture, an MMA instruction performs an 8x8x4 matrix multiplication, and a quadpair of 8 threads participate in the operation by collectively holding the input and output matrices.
 
-![[ATTACHMENTS/5e8298ecc308b6e52f8c5a0a83f24334_MD5.png]]
+![[5e8298ecc308b6e52f8c5a0a83f24334_MD5.png]]
 
 Source: SemiAnalysis. Generated with CUTLASS visualizer
 
@@ -154,7 +154,7 @@ The corresponding SASS is LDGSTS, asynchronous global to shared memory copy
 
 exact synchronization methods are async-group and mbarrier-based completion mechanisms, detailed [here](https://docs.nvidia.com/cuda/parallel-thread-execution/index.html?highlight=tcgen05%2520cp#data-movement-and-conversion-instructions-asynchronous-copy-completion-mechanisms).
 
-![[ATTACHMENTS/37dabba3187cc680e3a47ec9f792360f_MD5.png]]
+![[37dabba3187cc680e3a47ec9f792360f_MD5.png]]
 
 Source: [NVIDIA A100 Tensor Core GPU Architecture Whitepaper](https://images.nvidia.com/aem-dam/en-zz/Solutions/data-center/nvidia-ampere-architecture-whitepaper.pdf)
 

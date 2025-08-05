@@ -34,7 +34,7 @@
 	 - Data Coherence?
 		- refers to the consistency and uniformity of data across different systems and datasets,
 		- ensuring that all instances of shared data reflect the same values and logical relationships.
-20. [[Cache stale]]
+20. [[Extras/NotesByPrabin/EFFORTS/Cache stale]]
 	 - Cache staleness refers to the condition where cached data is considered outdated or expired but is still retained in the cache for potential use.
 	 - caching strategies that aim to improve application performance and reliability by allowing systems to serve stale data when fresh data is unavailable.
 	 - TTL(Time to Live) decides how long the content can be served fresh.

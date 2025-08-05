@@ -5,7 +5,7 @@
 
 # Notes
 
-![[Simulators#Simulators Notes]]
+![[EFFORTS/Simulators#Simulators Notes]]
 
 ## Asked by Naveen
 

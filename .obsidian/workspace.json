@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "4509724f8bf84da7",
+        "id": "06e63c73b8ce6954",
         "type": "tabs",
         "children": [
           {
-            "id": "e7a7b303c61786dc",
+            "id": "aeb2841ad6cd8ddb",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -32,12 +32,12 @@
             }
           },
           {
-            "id": "405a9e6e2b6c8fe8",
+            "id": "4a384da4c20959c1",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Heatmaps.md",
+                "file": "CALENDER/CALENDAR.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -52,41 +52,11 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Heatmaps"
+              "title": "CALENDAR"
             }
           }
         ],
         "currentTab": 1
-      },
-      {
-        "id": "224055025c4e4570",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "83524d28cdf2d92a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CALENDER/2025-07-25.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "2025-07-25"
-            }
-          }
-        ]
       }
     ],
     "direction": "vertical"
@@ -153,8 +123,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5,
-    "collapsed": true
+    "width": 414.5
   },
   "right": {
     "id": "43fc27400badb105",
@@ -238,10 +207,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Heatmaps.md"
+                "file": "CALENDER/CALENDAR.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Heatmaps"
+              "title": "File properties for CALENDAR"
             }
           },
           {
@@ -302,55 +271,55 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "405a9e6e2b6c8fe8",
+  "active": "4b44bc66b81b0ac8",
   "lastOpenFiles": [
-    "CALENDER/2025-07-25.md",
-    "Heatmaps.md",
-    "CALENDER/2025-01-25.md",
-    "CALENDAR.md",
+    "Extras",
+    "CALENDER/Heatmaps.md",
+    "CALENDER/CALENDAR.md",
+    "Extras/NotesByPrabin/Heatmaps.md",
     "Homepage.md",
+    "Random.md",
+    "CALENDER/2025-08-05.md",
+    "Extras/Templates/Daily Template.md",
     "TO-DO List.md",
+    "CALENDER/Aug 34th Week 2024.md",
+    "CALENDER/2025-01-16.md",
+    "CALENDER/(Every R) PMAT-201.md",
+    "CALENDER/(Every R) Moral Class.md",
+    "CALENDER/(Every R) JAVA Lab.md",
+    "CALENDER/(Every R) PMAT-203.md",
+    "CALENDER/Dec 52nd Week 2024.md",
+    "CALENDER/Events.md",
+    "CALENDER/Thu 22-08-2024.md",
+    "EFFORTS/Efforts.md",
+    "CALENDER/2025-07-25.md",
+    "CALENDER/2025-01-25.md",
     "EFFORTS/3rd Sem.md",
     "EFFORTS/SSSIHL.md",
-    "EFFORTS/Efforts.md",
     "EFFORTS/2025-26.md",
     "EFFORTS/Research Papers Categorized.md",
     "EFFORTS/Report for mini-project.md",
-    "EFFORTS/List of all GPU features.md",
-    "EFFORTS/Research Paper Notes.md",
-    "EFFORTS/CA Research.md",
-    "EFFORTS/Simulators.md",
-    "EFFORTS/Parameters available in GPUTejas config.xml.md",
-    "EFFORTS/Dissertation.md",
-    "ATLAS/Wafers.md",
-    "ATLAS/Atlas.md",
-    "ATLAS/Intel Architectures.md",
-    "ATLAS/NVIDIA- Architectures.md",
-    "ATLAS/AMD Architecture.md",
-    "ATLAS/Magnus - AMD.md",
-    "ATTACHMENTS/feac75db30d83d25aaac968e558e7174_MD5.jpeg",
+    "Extras/ATTACHMENTS/feac75db30d83d25aaac968e558e7174_MD5.jpeg",
     "ATTACHMENTS/image-93.png",
-    "ATLAS/RDNA 6 - AMD.md",
-    "ATTACHMENTS/d93a667d97a381d7296809c8c0d4befb_MD5.jpeg",
-    "EFFORTS/Notes.md",
+    "Extras/ATTACHMENTS/d93a667d97a381d7296809c8c0d4befb_MD5.jpeg",
     "ZoteroExports",
-    "Bibliography/References.bib",
-    "Bibliography",
+    "Extras/Bibliography/References.bib",
+    "Extras/Bibliography",
     "EFFORTS/Untitled.canvas",
     "EFFORTS/Dissecting the NVIDIA Volta GPU Architecture via Microbenchmarking",
-    "ATTACHMENTS/5e8298ecc308b6e52f8c5a0a83f24334_MD5.png",
-    "ATTACHMENTS/37dabba3187cc680e3a47ec9f792360f_MD5.png",
-    "ATTACHMENTS/618f40c7cd6f0126e4f18ff54af5db42_MD5.png",
-    "ATTACHMENTS/3cdabb456174144d28036a18b2b00a5c_MD5.png",
-    "ATTACHMENTS/58a3043127cda3629b0871594bbdb66d_MD5.png",
-    "ATTACHMENTS/b708cef582ab5e32d4bd6746e60cb42f_MD5.png",
-    "ATTACHMENTS/783973f06558107576dc067317e31f93_MD5.png",
+    "Extras/ATTACHMENTS/5e8298ecc308b6e52f8c5a0a83f24334_MD5.png",
+    "Extras/ATTACHMENTS/37dabba3187cc680e3a47ec9f792360f_MD5.png",
+    "Extras/ATTACHMENTS/618f40c7cd6f0126e4f18ff54af5db42_MD5.png",
+    "Extras/ATTACHMENTS/3cdabb456174144d28036a18b2b00a5c_MD5.png",
+    "Extras/ATTACHMENTS/58a3043127cda3629b0871594bbdb66d_MD5.png",
+    "Extras/ATTACHMENTS/b708cef582ab5e32d4bd6746e60cb42f_MD5.png",
+    "Extras/ATTACHMENTS/783973f06558107576dc067317e31f93_MD5.png",
     "webclips",
     "/EFFORTS/Networking.xopp",
     "EFFORTS/Networking.xopp",
     "/EFFORTS",
     "ATTACHMENTS/Computer Networking A Top-Down Approach 6t - Unknown.pdf",
-    "Clippings",
+    "Extras/Clippings",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "EFFORTS/Binary Search.canvas",
     "!HOME.canvas",

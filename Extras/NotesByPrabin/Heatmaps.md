@@ -33,4 +33,4 @@ renderHeatmapCalendar(this.container, calendarData)
 
 ```
 
-![[Pasted image 20250116101539.png]]
+![[Extras/NotesByPrabin/ATTACHMENTS/Pasted image 20250116101539.png]]

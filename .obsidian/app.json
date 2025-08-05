@@ -1,7 +1,7 @@
 {
   "tabSize": 2,
   "alwaysUpdateLinks": true,
-  "attachmentFolderPath": "ATTACHMENTS",
+  "attachmentFolderPath": "Extras/ATTACHMENTS",
   "useMarkdownLinks": false,
   "pdfExportSettings": {
     "includeName": true,

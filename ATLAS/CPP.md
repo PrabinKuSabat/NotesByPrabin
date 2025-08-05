@@ -8,4 +8,4 @@ tags:
 
 # Class Notes
 
-[[08-22-2024 Thursday]]
+[[ATLAS/08-22-2024 Thursday]]

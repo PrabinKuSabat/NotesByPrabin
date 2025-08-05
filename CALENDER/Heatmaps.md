@@ -29,21 +29,11 @@ for (let page of dv.pages('"CALENDER"').where(p => p.Suprabhatam)) {
 	})
 }
 
-for (let page of dv.pages('"CALENDER"').where(p => p.Jogging)) {
-	//dv.span("<br>" + page.file.name)
-	calendarData.entries.push({
-		date: page.file.name,
-		intensity: page.Jogging,
-		//content: "⏳",
-		color: "red",
-	})
-}
-
 renderHeatmapCalendar(this.container, calendarData)
 ```
 
 ```dataviewjs
-dv.span("** 😊 Suprabhatam  😥**") /* optional ⏹️💤⚡⚠🧩↑↓⏳📔💾📁📝🔄📝🔀⌨️🕸️📅🔍✨ 🏋️ */
+dv.span("** 🏋️ Jogging 🏋️**") /* optional ⏹️💤⚡⚠🧩↑↓⏳📔💾📁📝🔄📝🔀⌨️🕸️📅🔍✨ 🏋️ */
 const calendarData = {
 	year: 2025,
 	colors: {
@@ -69,6 +59,62 @@ for (let page of dv.pages('"CALENDER"').where(p => p.Jogging)) {
 		intensity: page.Jogging,
 		//content: "⏳",
 		color: "red",
+	})
+}
+
+renderHeatmapCalendar(this.container, calendarData)
+```
+
+```dataviewjs
+dv.span("**✨ Mandir ✨**") /* optional ⏹️💤⚡⚠🧩↑↓⏳📔💾📁📝🔄📝🔀⌨️🕸️📅🔍✨ 🏋️ */
+const calendarData = {
+	year: 2025,
+	colors: {
+		green:       ["#c6e48b", "#7bc96f", "#49af5d", "#2e8840", "#196127"],
+	},
+	showCurrentDayBorder: true,
+	defaultEntryIntensity: 4,
+	intensityScaleStart: 10,
+	intensityScaleEnd: 100,
+	entries: [],
+}
+
+//DataviewJS loop
+for (let page of dv.pages('"CALENDER"').where(p => p.Mandir)) {
+	//dv.span("<br>" + page.file.name)
+	calendarData.entries.push({
+		date: page.file.name,
+		intensity: page.Mandir,
+		//content: "⏳",
+		color: "green",
+	})
+}
+
+renderHeatmapCalendar(this.container, calendarData)
+```
+
+```dataviewjs
+dv.span("**💤 Night Lab 💤**") /* optional ⏹️💤⚡⚠🧩↑↓⏳📔💾📁📝🔄📝🔀⌨️🕸️📅🔍✨ 🏋️ */
+const calendarData = {
+	year: 2025,
+	colors: {
+		blue:        ["#8cb9ff", "#69a3ff", "#428bff", "#1872ff", "#0058e2"],
+	},
+	showCurrentDayBorder: true,
+	defaultEntryIntensity: 4,
+	intensityScaleStart: 10,
+	intensityScaleEnd: 100,
+	entries: [],
+}
+
+//DataviewJS loop
+for (let page of dv.pages('"CALENDER"').where(p => p.NightLab)) {
+	//dv.span("<br>" + page.file.name)
+	calendarData.entries.push({
+		date: page.file.name,
+		intensity: page.NightLab,
+		//content: "⏳",
+		color: "blue",
 	})
 }
 

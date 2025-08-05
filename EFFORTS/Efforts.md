@@ -1,13 +1,13 @@
 # Efforts
 
 > [!note] `ris:Computer` Architecture  
-> [[CA Research|Research]]  
-> [[CA Notes|Short Notes]]  
+> [[EFFORTS/CA Research|Research]]  
+> [[EFFORTS/CA Notes|Short Notes]]  
 > [[Dissertation]]
 
 > [! important] coding `fas:Brain`  
-> [[Leetcode]]  
-> [[IBM Workshop]]  
+> [[EFFORTS/Leetcode]]  
+> [[EFFORTS/IBM Workshop]]  
 > [[JAVA Project]]
 
 > [! summary] Regular Works `fas:ListAlt`  

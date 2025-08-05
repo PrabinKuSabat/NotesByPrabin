@@ -1,13 +1,13 @@
 # Contents
 
-# [[Atlas|ATLAS]]
+# [[ATLAS/Atlas|ATLAS]]
 
 > [!info]  
 > `fas:HandPointUp` Contains all Subject related notes.
 
-# [[Efforts|EFFORTS]]
+# [[EFFORTS/Efforts|EFFORTS]]
 
 > [!info]  
 > `fas:HandPointUp` contains all Project Notes.
 
-[[CALENDAR]]
+# [[CALENDAR]]

@@ -2,8 +2,8 @@
 Suprabhatam: false
 Jogging: 
 Mandir: 
-Night Lab: 
-Project Work:
+NightLab: 
+GOAL:
 ---
 
 # How's the 🌄🌅🌇?

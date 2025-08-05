@@ -1,4 +1,4 @@
 # Gpu's
 
-[[AMD RDNA|RDNA 3]]  
-[[Computing's Energy Problem]]
+[[EFFORTS/AMD RDNA|RDNA 3]]  
+[[EFFORTS/Computing's Energy Problem]]
