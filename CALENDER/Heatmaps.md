@@ -120,5 +120,3 @@ for (let page of dv.pages('"CALENDER"').where(p => p.NightLab)) {
 
 renderHeatmapCalendar(this.container, calendarData)
 ```
-
-`![[Pasted image 20250116101539.png]]`

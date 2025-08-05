@@ -4,17 +4,31 @@
     "type": "split",
     "children": [
       {
-        "id": "4509724f8bf84da7",
+        "id": "41614aa2c6828dff",
         "type": "tabs",
         "children": [
           {
-            "id": "e7a7b303c61786dc",
+            "id": "24800fba6b6a1570",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Homepage.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Homepage"
             }
           }
         ]
@@ -167,9 +181,11 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {},
+              "state": {
+                "file": "Homepage.md"
+              },
               "icon": "lucide-info",
-              "title": "File properties"
+              "title": "File properties for Homepage"
             }
           },
           {
@@ -201,22 +217,18 @@
       }
     ],
     "direction": "horizontal",
-    "width": 471.5
+    "width": 471.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Open quick switcher": false,
-      "graph:Open graph view": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": true,
       "command-palette:Open command palette": true,
-      "canvas:Create new canvas": false,
-      "workspaces:Manage workspace layouts": false,
-      "obsidian-kanban:Create new board": false,
       "obsidian-projects:Open projects": false,
-      "obsidian-book-search-plugin:Create new book note": false,
+      "obsidian-kanban:Create new board": false,
+      "obsidian-excalidraw-plugin:New drawing": false,
       "templater-obsidian:Templater": false,
-      "obsidian-statusbar-pomo:Start pomodoro": false,
       "table-editor-obsidian:Advanced Tables Toolbar": false,
       "obsidian-git:Open Git source control": false,
       "homepage:Open homepage": false,
@@ -225,22 +237,30 @@
       "pdf-plus:PDF++: Toggle auto-paste": false,
       "obsidian-full-calendar:Open Full Calendar": false,
       "obsidian-custom-frames:Open Google Calendar": false,
-      "obsidian-excalidraw-plugin:New drawing": false,
+      "periodic-notes:Open today": false,
       "obsidian-local-images-plus:Local Images Plus  0.16.3\r\nLocalize attachments (plugin folder)": false,
-      "periodic-notes:Open today": false
+      "switcher:Open quick switcher": false,
+      "obsidian-statusbar-pomo:Start pomodoro": false,
+      "obsidian-book-search-plugin:Create new book note": false,
+      "workspaces:Manage workspace layouts": false,
+      "canvas:Create new canvas": false,
+      "graph:Open graph view": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "24800fba6b6a1570",
   "lastOpenFiles": [
-    "Extras/Books/Library.md",
-    "Extras/Templates/BooksTemplate.md",
     "CALENDER/CALENDAR.md",
+    "CALENDER/Heatmaps.md",
+    "Homepage.md",
+    "Extras/Library.md",
+    "Extras/ATTACHMENTS/39aba9038c139ca85a93922de496d3b6_MD5.jpg",
+    "Extras/Books/Atomic Habits.md",
+    "Extras/ATTACHMENTS/Book Covers/Atomic Habits.jpg",
+    "Extras/Templates/BooksTemplate.md",
     "Extras/ATTACHMENTS/Book Covers",
     "Extras/Books",
     "Extras",
-    "CALENDER/Heatmaps.md",
     "Extras/NotesByPrabin/Heatmaps.md",
-    "Homepage.md",
     "Random.md",
     "CALENDER/2025-08-05.md",
     "Extras/Templates/Daily Template.md",
@@ -259,8 +279,6 @@
     "CALENDER/2025-01-25.md",
     "EFFORTS/3rd Sem.md",
     "EFFORTS/SSSIHL.md",
-    "EFFORTS/2025-26.md",
-    "EFFORTS/Research Papers Categorized.md",
     "Extras/ATTACHMENTS/feac75db30d83d25aaac968e558e7174_MD5.jpeg",
     "ATTACHMENTS/image-93.png",
     "Extras/ATTACHMENTS/d93a667d97a381d7296809c8c0d4befb_MD5.jpeg",
@@ -274,8 +292,6 @@
     "Extras/ATTACHMENTS/618f40c7cd6f0126e4f18ff54af5db42_MD5.png",
     "Extras/ATTACHMENTS/3cdabb456174144d28036a18b2b00a5c_MD5.png",
     "Extras/ATTACHMENTS/58a3043127cda3629b0871594bbdb66d_MD5.png",
-    "Extras/ATTACHMENTS/b708cef582ab5e32d4bd6746e60cb42f_MD5.png",
-    "Extras/ATTACHMENTS/783973f06558107576dc067317e31f93_MD5.png",
     "webclips",
     "/EFFORTS/Networking.xopp",
     "EFFORTS/Networking.xopp",
