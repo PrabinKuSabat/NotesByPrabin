@@ -9,3 +9,5 @@
 
 > [!info]  
 > `fas:HandPointUp` contains all Project Notes.
+
+[[CALENDAR]]
