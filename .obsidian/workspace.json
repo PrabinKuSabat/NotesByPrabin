@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "TO-DO List.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,35 +28,10 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "TO-DO List"
-            }
-          },
-          {
-            "id": "3fe858637064c258",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "EFFORTS/2025-26.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "2025-26"
+              "title": "Homepage"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -272,13 +247,14 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "3fe858637064c258",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Homepage.md",
     "TO-DO List.md",
-    "EFFORTS/2025-26.md",
+    "EFFORTS/3rd Sem.md",
     "EFFORTS/SSSIHL.md",
     "EFFORTS/Efforts.md",
-    "Homepage.md",
+    "EFFORTS/2025-26.md",
     "EFFORTS/Research Papers Categorized.md",
     "EFFORTS/Report for mini-project.md",
     "EFFORTS/List of all GPU features.md",
@@ -302,7 +278,6 @@
     "EFFORTS/AccelSim.md",
     "EFFORTS/GPU Architectures  and Programming.md",
     "EFFORTS/Online Courses.md",
-    "EFFORTS/Tuner Correlating in Accelsim.md",
     "ZoteroExports",
     "Bibliography/References.bib",
     "Bibliography",
