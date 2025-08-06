@@ -11,24 +11,10 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "EFFORTS/Dissertation.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Dissertation"
+              "title": "New tab"
             }
           }
         ]
@@ -98,8 +84,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5,
-    "collapsed": true
+    "width": 414.5
   },
   "right": {
     "id": "43fc27400badb105",
@@ -249,6 +234,10 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "TO-DO List.md",
+    "EFFORTS/Dissertation TO-Do Lists.md",
+    "EFFORTS/POA By Naveen Bro.md",
+    "EFFORTS/Dissertation.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
     "CALENDER/CALENDAR.md",
@@ -268,7 +257,6 @@
     "Random.md",
     "CALENDER/2025-08-05.md",
     "Extras/Templates/Daily Template.md",
-    "TO-DO List.md",
     "CALENDER/Aug 34th Week 2024.md",
     "CALENDER/2025-01-16.md",
     "CALENDER/(Every R) PMAT-201.md",
@@ -279,8 +267,6 @@
     "CALENDER/Events.md",
     "CALENDER/Thu 22-08-2024.md",
     "CALENDER/2025-07-25.md",
-    "CALENDER/2025-01-25.md",
-    "EFFORTS/3rd Sem.md",
     "Extras/ATTACHMENTS/feac75db30d83d25aaac968e558e7174_MD5.jpeg",
     "ATTACHMENTS/image-93.png",
     "Extras/ATTACHMENTS/d93a667d97a381d7296809c8c0d4befb_MD5.jpeg",
