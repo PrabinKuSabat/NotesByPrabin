@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "CALENDER/2025-08-06.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "2025-08-06"
             }
           }
         ]
@@ -98,7 +98,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5
+    "width": 414.5,
+    "collapsed": true
   },
   "right": {
     "id": "43fc27400badb105",
@@ -172,20 +173,8 @@
             "state": {
               "type": "advanced-tables-toolbar",
               "state": {},
-              "icon": "lucide-file",
-              "title": "Plugin no longer active"
-            }
-          },
-          {
-            "id": "058bebb3067d4924",
-            "type": "leaf",
-            "state": {
-              "type": "file-properties",
-              "state": {
-                "file": "Homepage.md"
-              },
-              "icon": "lucide-info",
-              "title": "File properties for Homepage"
+              "icon": "spreadsheet",
+              "title": "Advanced Tables"
             }
           },
           {
@@ -214,6 +203,24 @@
           }
         ],
         "currentTab": 5
+      },
+      {
+        "id": "5be65b7a15dbdafe",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "058bebb3067d4924",
+            "type": "leaf",
+            "state": {
+              "type": "file-properties",
+              "state": {
+                "file": "CALENDER/2025-08-06.md"
+              },
+              "icon": "lucide-info",
+              "title": "File properties for 2025-08-06"
+            }
+          }
+        ]
       }
     ],
     "direction": "horizontal",
@@ -248,6 +255,10 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Extras/NotesByPrabin/CALENDER/Fri 04-10-2024.md",
+    "CALENDER/2025-08-06.md",
+    "CALENDER/Fri 04-10-2024.md",
+    "CALENDER/2025-08-05.md",
     "Homepage.md",
     "TO-DO List.md",
     "EFFORTS/Dissertation TO-Do Lists.md",
@@ -269,7 +280,6 @@
     "Extras",
     "Extras/NotesByPrabin/Heatmaps.md",
     "Random.md",
-    "CALENDER/2025-08-05.md",
     "Extras/Templates/Daily Template.md",
     "CALENDER/Aug 34th Week 2024.md",
     "CALENDER/2025-01-16.md",
@@ -278,9 +288,6 @@
     "CALENDER/(Every R) JAVA Lab.md",
     "CALENDER/(Every R) PMAT-203.md",
     "CALENDER/Dec 52nd Week 2024.md",
-    "CALENDER/Events.md",
-    "CALENDER/Thu 22-08-2024.md",
-    "CALENDER/2025-07-25.md",
     "Extras/ATTACHMENTS/feac75db30d83d25aaac968e558e7174_MD5.jpeg",
     "ATTACHMENTS/image-93.png",
     "Extras/ATTACHMENTS/d93a667d97a381d7296809c8c0d4befb_MD5.jpeg",
