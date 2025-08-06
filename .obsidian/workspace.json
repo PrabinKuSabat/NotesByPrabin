@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CALENDER/2025-08-06.md",
+                "file": "CALENDER/CALENDAR.md",
                 "mode": "preview",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "2025-08-06"
+              "title": "CALENDAR"
             }
           }
         ]
@@ -98,8 +98,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5,
-    "collapsed": true
+    "width": 414.5
   },
   "right": {
     "id": "43fc27400badb105",
@@ -214,10 +213,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "CALENDER/2025-08-06.md"
+                "file": "CALENDER/CALENDAR.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for 2025-08-06"
+              "title": "File properties for CALENDAR"
             }
           }
         ]
@@ -255,11 +254,11 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Extras/NotesByPrabin/CALENDER/Fri 04-10-2024.md",
+    "Homepage.md",
     "CALENDER/2025-08-06.md",
+    "Extras/NotesByPrabin/CALENDER/Fri 04-10-2024.md",
     "CALENDER/Fri 04-10-2024.md",
     "CALENDER/2025-08-05.md",
-    "Homepage.md",
     "TO-DO List.md",
     "EFFORTS/Dissertation TO-Do Lists.md",
     "EFFORTS/POA By Naveen Bro.md",
