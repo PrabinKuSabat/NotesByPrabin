@@ -11,10 +11,24 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Homepage.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Homepage"
             }
           }
         ]
@@ -84,7 +98,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5
+    "width": 414.5,
+    "collapsed": true
   },
   "right": {
     "id": "43fc27400badb105",
@@ -199,10 +214,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "EFFORTS/Dissertation.md"
+                "file": "EFFORTS/Efforts.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Dissertation"
+              "title": "File properties for Efforts"
             }
           }
         ]
@@ -240,12 +255,14 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/Dissertation.md",
-    "EFFORTS/Dissertation TO-Do Lists.md",
     "EFFORTS/Efforts.md",
-    "EFFORTS/Leetcode.md",
     "Homepage.md",
     "CALENDER/CALENDAR.md",
+    "CALENDER/2025-08-08.md",
+    "CALENDER/2025-08-07.md",
+    "EFFORTS/Dissertation.md",
+    "EFFORTS/Dissertation TO-Do Lists.md",
+    "EFFORTS/Leetcode.md",
     "CALENDER/2025-08-06.md",
     "Extras/NotesByPrabin/CALENDER/Fri 04-10-2024.md",
     "CALENDER/Fri 04-10-2024.md",
@@ -271,8 +288,6 @@
     "CALENDER/2025-01-16.md",
     "CALENDER/(Every R) PMAT-201.md",
     "CALENDER/(Every R) Moral Class.md",
-    "CALENDER/(Every R) JAVA Lab.md",
-    "CALENDER/(Every R) PMAT-203.md",
     "Extras/ATTACHMENTS/feac75db30d83d25aaac968e558e7174_MD5.jpeg",
     "ATTACHMENTS/image-93.png",
     "Extras/ATTACHMENTS/d93a667d97a381d7296809c8c0d4befb_MD5.jpeg",
