@@ -60,6 +60,8 @@
     "dg-publish": "checkbox",
     "dg-home": "checkbox",
     "dg-pinned": "checkbox",
-    "excalidraw-embed-md": "checkbox"
+    "excalidraw-embed-md": "checkbox",
+    "dg-show-backlinks": "text",
+    "dg-hide-in-graph": "text"
   }
 }

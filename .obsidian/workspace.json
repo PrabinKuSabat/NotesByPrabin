@@ -56,7 +56,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -239,18 +239,17 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "EFFORTS/AccelSim.md"
+                "file": "Excalidraw/Accel-sim Walk Around.excalidraw.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for AccelSim"
+              "title": "File properties for Accel-sim Walk Around.excalidraw"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 471.5,
-    "collapsed": true
+    "width": 471.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -279,10 +278,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "fe181f48ffdcb116",
+  "active": "93cecedf91e275f9",
   "lastOpenFiles": [
-    "Excalidraw/Accel-sim Walk Around.excalidraw.md",
     "EFFORTS/AccelSim.md",
+    "Excalidraw/Accel-sim Walk Around.excalidraw.md",
     "Homepage.md",
     "Untitled.md",
     "Extras/Excalidraw/excalibrain.md",
