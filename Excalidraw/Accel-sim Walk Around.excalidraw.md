@@ -11,6 +11,7 @@ dg-hide-in-graph: "true"
 # Excalidraw Data
 
 ## Text Elements
+
 First Satisfy all the simulator software requirements . ^tk6BAdGM
 
 TRACER ^oXK2uByp
@@ -68,21 +69,24 @@ Next Run the simulation using:
 
 If you have a traces from a hw with SM 8.x, you can generate SASS & PTX for RTX3070 & A100. ^HmTfI2IU
 
-Here mlperf_inference_no_external_datasets
+Here mlperf_inference_no_external_datasets  
 is the benchmark name. ^M66QxXkS
 
 Use the Process name to monitor the simulation status:
 
 ./monitor_func_test.py -N matrix
 
-Here each executable in the benchmark is considered as a task.
+Here each executable in the benchmark is considered as a task.  
 {So if you have 2 executable in the benchmark then you might see Running: 1/2} ^1Umtu5ob
 
 ## Element Links
+
 NhXVUW6G: [[Configs available In AccelSim]]
 
 %%
+
 ## Drawing
+
 ```compressed-json
 N4KAkARALgngDgUwgLgAQQQDwMYEMA2AlgCYBOuA7hADTgQBuCpAzoQPYB2KqATLZMzYBXUtiRoIACyhQ4zZAHoFAc0JRJQgEYA6bGwC2CgF7N6hbEcK4OCtptbErHALRY8RMpWdx8Q1TdIEfARcZgRmBShcZQUebQBGAFZtAAYaOiCEfQQOKGZuAG1wMFAwMogSbggABQ4AazYAOSMAZgB9AE0AR2sOgFkAQVwAGQBFYYB1AHF0sshYRCrA7CiO
 
@@ -282,4 +286,5 @@ yDbM5UMES8A1UJR0UdMkiCzyg0CEiaFwriCR24AZHRMi8A7HecB4gvLokB0dSOBW2ltVICNm8J5YrKnQ
 
 trV5K7ZxYFZBVgQAA===
 ```
+
 %%
