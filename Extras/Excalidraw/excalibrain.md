@@ -18,7 +18,9 @@ For the best experience enable 'Open in adjacent pane'
 in Excalidraw settings under 'Links and Transclusion'. ^4mylk7KK
 
 %%
+
 ## Drawing
+
 ```compressed-json
 N4KAkARALgngDgUwgLgAQQQDwMYEMA2AlgCYBOuA7hADTgQBuCpAzoQPYB2KqATLZMzYBXUtiRoIACyhQ4zZAHoFAc0JRJQgEYA6bGwC2CgF7N6hbEcK4OCtptbErHALRY8RMpWdx8Q1TdIEfARcZgRmBShcZQUebQB2bQBWGjoghH0EDihmbgBtcDBQMBLoeHF0KCwoVJLIRhZ2LjQ+QvqmVk4AOU4xbgBGADYkwf74+P6AFgAOflLCZgARdKri
 
@@ -36,4 +38,5 @@ SMw+AABR2rMqDVgApNQvCGlbACU1wQOepCalAfpVPoTy8gg+vChIADEpIh8zauu+7nsZNr3a6/K/sqrJ
 
 ITseFD0FKQAACgQTKctha8MrgCfcWVOAC1mmrVmC4EDYxhtxBhtI3rOm4PjQmtIbKKJgqQAm4IOD5IqfUqpDphBQCbHjVp0TSh2BIggbAOQHhNLgBorRTTQp6K2G0yA7wsqMCknQ/AJSHSwEQG3dIQymijUUr+fQwCNmcxyY2M8PYNgzM7KEZq2zFnLJmvcEW4AUl0FuMEIMwBRbCyAA
 ```
+
 %%

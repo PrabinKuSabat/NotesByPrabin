@@ -4,20 +4,59 @@
     "type": "split",
     "children": [
       {
-        "id": "4509724f8bf84da7",
+        "id": "0d6967bdfb7303ad",
         "type": "tabs",
         "children": [
           {
-            "id": "e7a7b303c61786dc",
+            "id": "d5d6dd99a9b888d9",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "excalidraw",
+              "state": {
+                "file": "Excalidraw/Accel-sim Walk Around.excalidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Accel-sim Walk Around.excalidraw"
+            }
+          },
+          {
+            "id": "fe181f48ffdcb116",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "EFFORTS/AccelSim.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "AccelSim"
+            }
+          },
+          {
+            "id": "93cecedf91e275f9",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Excalidraw/Accel-sim Walk Around.excalidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Accel-sim Walk Around.excalidraw"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -169,8 +208,8 @@
             "state": {
               "type": "calendar",
               "state": {},
-              "icon": "lucide-ghost",
-              "title": "calendar"
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
             }
           },
           {
@@ -200,10 +239,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Prabins KB ~.md"
+                "file": "EFFORTS/AccelSim.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Prabins KB ~"
+              "title": "File properties for AccelSim"
             }
           }
         ]
@@ -240,18 +279,20 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "fe181f48ffdcb116",
   "lastOpenFiles": [
-    "Excalidraw/Drawing 2025-08-23 15.00.11.excalidraw.md",
+    "Excalidraw/Accel-sim Walk Around.excalidraw.md",
+    "EFFORTS/AccelSim.md",
+    "Homepage.md",
+    "Untitled.md",
+    "Extras/Excalidraw/excalibrain.md",
+    "Prabins KB ~.md",
     "K Sarath  - Cahe Replacement.md",
     "Excalidraw/Scripts/Downloaded/Connect elements.svg",
     "Excalidraw/Scripts/Downloaded/Connect elements.md",
     "Excalidraw/Scripts/Downloaded",
     "Excalidraw/Scripts",
-    "EFFORTS/AccelSim.md",
-    "Homepage.md",
     "Excalidraw",
-    "Prabins KB ~.md",
     "Extras/ATTACHMENTS/image-95.png",
     "Extras/ATTACHMENTS/image-96.png",
     "EFFORTS/Benchmarks Available In Accel-Sim.md",
@@ -278,8 +319,6 @@
     "EFFORTS/Dissertation.md",
     "CALENDER/2025-08-10.md",
     "CALENDER/2025-08-09.md",
-    "CALENDER/CALENDAR.md",
-    "CALENDER/2025-08-08.md",
     "Bibliography/References.bib",
     "Bibliography",
     "Extras/ATTACHMENTS/39aba9038c139ca85a93922de496d3b6_MD5.jpg",

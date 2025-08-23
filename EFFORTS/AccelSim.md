@@ -12,6 +12,8 @@ dg-publish: true
 
 ---
 
+# [[Accel-sim Walk Around.excalidraw]]
+
 ## [[Configs available In AccelSim|Available Architecture Configs]]
 
 ## [[Benchmarks Available In Accel-Sim|In-built Benchmarks]]

@@ -12,5 +12,3 @@ banner_y: 0.42957
 # Notes
 
 [[AccelSim]]
-
-changes
