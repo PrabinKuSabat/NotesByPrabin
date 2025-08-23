@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "Prabins KB ~.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Prabins KB ~"
             }
           }
         ]
@@ -90,8 +90,8 @@
             "state": {
               "type": "mk-path-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "Plugin no longer active"
+              "icon": "lucide-ghost",
+              "title": "mk-path-view"
             }
           }
         ]
@@ -173,8 +173,8 @@
             "state": {
               "type": "advanced-tables-toolbar",
               "state": {},
-              "icon": "spreadsheet",
-              "title": "Advanced Tables"
+              "icon": "lucide-ghost",
+              "title": "advanced-tables-toolbar"
             }
           },
           {
@@ -183,8 +183,8 @@
             "state": {
               "type": "calendar",
               "state": {},
-              "icon": "calendar-with-checkmark",
-              "title": "Calendar"
+              "icon": "lucide-ghost",
+              "title": "calendar"
             }
           },
           {
@@ -214,10 +214,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "EFFORTS/Efforts.md"
+                "file": "Prabins KB ~.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Efforts"
+              "title": "File properties for Prabins KB ~"
             }
           }
         ]
@@ -229,13 +229,20 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "bases:Create new base": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": true,
       "command-palette:Open command palette": true,
-      "obsidian-projects:Open projects": false,
+      "switcher:Open quick switcher": false,
+      "workspaces:Manage workspace layouts": false,
+      "canvas:Create new canvas": false,
+      "graph:Open graph view": false,
+      "periodic-notes:Open today": false,
       "obsidian-kanban:Create new board": false,
-      "obsidian-excalidraw-plugin:New drawing": false,
+      "obsidian-projects:Open projects": false,
+      "obsidian-book-search-plugin:Create new book note": false,
       "templater-obsidian:Templater": false,
+      "obsidian-statusbar-pomo:Start pomodoro": false,
       "table-editor-obsidian:Advanced Tables Toolbar": false,
       "obsidian-git:Open Git source control": false,
       "homepage:Open homepage": false,
@@ -243,65 +250,58 @@
       "pdf-plus:PDF++: Toggle auto-focus": false,
       "pdf-plus:PDF++: Toggle auto-paste": false,
       "obsidian-custom-frames:Open Google Calendar": false,
-      "obsidian-local-images-plus:Local Images Plus  0.16.3\r\nLocalize attachments (plugin folder)": false,
-      "switcher:Open quick switcher": false,
-      "obsidian-statusbar-pomo:Start pomodoro": false,
-      "obsidian-book-search-plugin:Create new book note": false,
-      "workspaces:Manage workspace layouts": false,
-      "canvas:Create new canvas": false,
-      "graph:Open graph view": false,
-      "periodic-notes:Open today": false
+      "obsidian-excalidraw-plugin:New drawing": false,
+      "digitalgarden:Digital Garden Publication Center": false
     }
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/Efforts.md",
     "Homepage.md",
+    "Prabins KB ~.md",
+    "Extras/ATTACHMENTS/image-95.png",
+    "Extras/ATTACHMENTS/image-96.png",
+    "EFFORTS/AccelSim.md",
+    "EFFORTS/Benchmarks Available In Accel-Sim.md",
+    "EFFORTS/rodinia_2.0-ft.md",
+    "EFFORTS/Things to try out.md",
+    "EFFORTS/Release Branch Installation.md",
+    "EFFORTS/accelReleaseCondaEnv.yml.md",
+    "Extras/ATTACHMENTS/image-93.png",
+    "EFFORTS/Configs available In AccelSim.md",
+    "Extras/ATTACHMENTS/image-94.png",
+    "Extras/ATTACHMENTS/image-94.webp",
+    "Extras/ATTACHMENTS/Pasted image 20250822145458.png",
+    "Extras/ATTACHMENTS/6fa03769aed19d8a5a32de971d5c312a_MD5.jpeg",
+    "EFFORTS/Efforts.md",
+    "ATLAS/Atlas.md",
+    "Random.md",
+    "TO-DO List.md",
+    "Untitled",
+    "EFFORTS/Available Traces.md",
+    "EFFORTS/AccelSim Trials.md",
+    "EFFORTS/Notes.md",
+    "EFFORTS/Tuner Correlating in Accelsim.md",
+    "EFFORTS/AccelSimpu Trials.md",
+    "EFFORTS/Dissertation.md",
+    "CALENDER/2025-08-10.md",
+    "CALENDER/2025-08-09.md",
     "CALENDER/CALENDAR.md",
     "CALENDER/2025-08-08.md",
     "CALENDER/2025-08-07.md",
-    "EFFORTS/Dissertation.md",
     "EFFORTS/Dissertation TO-Do Lists.md",
-    "EFFORTS/Leetcode.md",
-    "CALENDER/2025-08-06.md",
-    "Extras/NotesByPrabin/CALENDER/Fri 04-10-2024.md",
-    "CALENDER/Fri 04-10-2024.md",
-    "CALENDER/2025-08-05.md",
-    "TO-DO List.md",
-    "EFFORTS/POA By Naveen Bro.md",
     "Bibliography/References.bib",
     "Bibliography",
-    "Extras/Library.md",
-    "CALENDER/2025-08-04.md",
-    "CALENDER/Heatmaps.md",
     "Extras/ATTACHMENTS/39aba9038c139ca85a93922de496d3b6_MD5.jpg",
-    "Extras/Books/Atomic Habits.md",
     "Extras/ATTACHMENTS/Book Covers/Atomic Habits.jpg",
-    "Extras/Templates/BooksTemplate.md",
     "Extras/ATTACHMENTS/Book Covers",
     "Extras/Books",
     "Extras",
-    "Extras/NotesByPrabin/Heatmaps.md",
-    "Random.md",
-    "Extras/Templates/Daily Template.md",
-    "CALENDER/Aug 34th Week 2024.md",
-    "CALENDER/2025-01-16.md",
-    "CALENDER/(Every R) PMAT-201.md",
-    "CALENDER/(Every R) Moral Class.md",
     "Extras/ATTACHMENTS/feac75db30d83d25aaac968e558e7174_MD5.jpeg",
-    "ATTACHMENTS/image-93.png",
-    "Extras/ATTACHMENTS/d93a667d97a381d7296809c8c0d4befb_MD5.jpeg",
     "ZoteroExports",
     "Extras/Bibliography/References.bib",
     "Extras/Bibliography",
     "EFFORTS/Untitled.canvas",
     "EFFORTS/Dissecting the NVIDIA Volta GPU Architecture via Microbenchmarking",
-    "Extras/ATTACHMENTS/5e8298ecc308b6e52f8c5a0a83f24334_MD5.png",
-    "Extras/ATTACHMENTS/37dabba3187cc680e3a47ec9f792360f_MD5.png",
-    "Extras/ATTACHMENTS/618f40c7cd6f0126e4f18ff54af5db42_MD5.png",
-    "Extras/ATTACHMENTS/3cdabb456174144d28036a18b2b00a5c_MD5.png",
-    "Extras/ATTACHMENTS/58a3043127cda3629b0871594bbdb66d_MD5.png",
-    "webclips",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "EFFORTS/Binary Search.canvas",
     "!HOME.canvas",

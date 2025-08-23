@@ -134,7 +134,7 @@
   "aura@@aura-workspace-background-workspace-slider-light": 1,
   "aura@@aura-file-icons": true,
   "aura@@aura-folder-icons": true,
-  "blue-topaz-theme@@color-scheme-options": "color-scheme-options-avocado-topaz",
+  "blue-topaz-theme@@color-scheme-options": "color-scheme-options-monochrome-topaz",
   "blue-topaz-theme@@disable-auto-hide-header": false,
   "blue-topaz-theme@@left-ribbon-style": "bt-bubble-ribbon",
   "blue-topaz-theme@@view-button-front": false,
@@ -145,5 +145,6 @@
   "blue-topaz-theme@@scrollbar-style-option": "remove-scrollbars",
   "blue-topaz-theme@@toggle-header-bottom-line": false,
   "blue-topaz-theme@@full-width-backlinks": true,
-  "blue-topaz-theme@@bt-status-on": false
+  "blue-topaz-theme@@bt-status-on": false,
+  "blue-topaz-theme@@background-primary-bg-4-bt@@dark": "#01000080"
 }

@@ -20,7 +20,6 @@
   "various-complements",
   "easy-typing-obsidian",
   "better-export-pdf",
-  "obsidian-icons-plugin",
   "obsidian-image-layouts",
   "homepage",
   "oz-clear-unused-images",
@@ -34,5 +33,9 @@
   "excalibrain",
   "image-converter",
   "obsidian-admonition",
-  "obsidian-local-images-plus"
+  "digitalgarden",
+  "obsidian-icon-folder",
+  "obsidian-icons-plugin",
+  "obsidian-emoji-toolbar",
+  "mousewheel-image-zoom"
 ]

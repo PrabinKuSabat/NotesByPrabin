@@ -1,1 +1,24 @@
-{}
+{
+  "EFFORTS/Configs available In AccelSim.md": {
+    "fcdb728c7ee5dc29657ae272807947b1": {
+      "position": "center",
+      "width": "990px",
+      "height": "281px",
+      "wrap": false
+    },
+    "b138ab410018c29345d228a898e3da25": {
+      "position": "center",
+      "width": "871px",
+      "height": "389px",
+      "wrap": false
+    }
+  },
+  "Prabins KB ~.md": {
+    "a2997eae13d90580a336966d8d78d3a2": {
+      "position": "center",
+      "width": "1125px",
+      "height": "352px",
+      "wrap": false
+    }
+  }
+}

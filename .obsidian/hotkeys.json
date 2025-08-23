@@ -371,5 +371,39 @@
       ],
       "key": "T"
     }
+  ],
+  "digitalgarden:dg-mark-note-for-publish": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "P"
+    }
+  ],
+  "digitalgarden:publish-multiple-notes": [
+    {
+      "modifiers": [
+        "Alt",
+        "Shift"
+      ],
+      "key": "P"
+    }
+  ],
+  "digitalgarden:publish-note": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "S"
+    }
+  ],
+  "obsidian-excalidraw-plugin:save": [
+    {
+      "modifiers": [
+        "Alt",
+        "Mod"
+      ],
+      "key": "S"
+    }
   ]
 }
