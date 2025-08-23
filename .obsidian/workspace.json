@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Prabins KB ~.md",
+                "file": "EFFORTS/AccelSim.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,10 +28,23 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Prabins KB ~"
+              "title": "AccelSim"
+            }
+          },
+          {
+            "id": "431476e1fc4f65a0",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Excalidraw/Drawing 2025-08-23 15.00.11.excalidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Drawing 2025-08-23 15.00.11.excalidraw"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -98,7 +111,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5
+    "width": 414.5,
+    "collapsed": true
   },
   "right": {
     "id": "43fc27400badb105",
@@ -253,13 +267,15 @@
       "digitalgarden:Digital Garden Publication Center": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "431476e1fc4f65a0",
   "lastOpenFiles": [
     "Homepage.md",
+    "Excalidraw/Drawing 2025-08-23 15.00.11.excalidraw.md",
+    "EFFORTS/AccelSim.md",
+    "Excalidraw",
     "Prabins KB ~.md",
     "Extras/ATTACHMENTS/image-95.png",
     "Extras/ATTACHMENTS/image-96.png",
-    "EFFORTS/AccelSim.md",
     "EFFORTS/Benchmarks Available In Accel-Sim.md",
     "EFFORTS/rodinia_2.0-ft.md",
     "EFFORTS/Things to try out.md",
@@ -300,7 +316,6 @@
     "Extras/Bibliography/References.bib",
     "Extras/Bibliography",
     "EFFORTS/Untitled.canvas",
-    "EFFORTS/Dissecting the NVIDIA Volta GPU Architecture via Microbenchmarking",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "EFFORTS/Binary Search.canvas",
     "!HOME.canvas",

@@ -5,7 +5,10 @@
     "fontSize": 16,
     "emojiStyle": "native",
     "iconColor": null,
-    "recentlyUsedIcons": [],
+    "recentlyUsedIcons": [
+      "LiAlarmClockCheck",
+      "LiAlarmSmoke"
+    ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
     "extraMargin": {
