@@ -124,6 +124,32 @@
         "description": "Fixed horizontal spacing between elements"
       },
       "Remember last spacing?": false
+    },
+    "Downloaded/Connect elements": {
+      "Starting arrowhead": {
+        "value": "none",
+        "valueset": [
+          "none",
+          "arrow",
+          "triangle",
+          "bar",
+          "dot"
+        ]
+      },
+      "Ending arrowhead": {
+        "value": "triangle",
+        "valueset": [
+          "none",
+          "arrow",
+          "triangle",
+          "bar",
+          "dot"
+        ]
+      },
+      "Line points": {
+        "value": 1,
+        "description": "Number of line points between start and end"
+      }
     }
   },
   "defaultTrayMode": true,
