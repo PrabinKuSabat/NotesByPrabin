@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/AccelSim.md",
+                "file": "EFFORTS/Configs available In AccelSim.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -40,7 +40,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "AccelSim"
+              "title": "Configs available In AccelSim"
             }
           },
           {
@@ -249,7 +249,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 471.5
+    "width": 471.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -280,8 +281,9 @@
   },
   "active": "93cecedf91e275f9",
   "lastOpenFiles": [
-    "EFFORTS/AccelSim.md",
+    "EFFORTS/Configs available In AccelSim.md",
     "Excalidraw/Accel-sim Walk Around.excalidraw.md",
+    "EFFORTS/AccelSim.md",
     "Homepage.md",
     "Untitled.md",
     "Extras/Excalidraw/excalibrain.md",
@@ -300,7 +302,6 @@
     "EFFORTS/Release Branch Installation.md",
     "EFFORTS/accelReleaseCondaEnv.yml.md",
     "Extras/ATTACHMENTS/image-93.png",
-    "EFFORTS/Configs available In AccelSim.md",
     "Extras/ATTACHMENTS/image-94.png",
     "Extras/ATTACHMENTS/image-94.webp",
     "Extras/ATTACHMENTS/Pasted image 20250822145458.png",
