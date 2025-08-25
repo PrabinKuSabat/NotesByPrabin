@@ -3,7 +3,6 @@ excalidraw-plugin: parsed
 tags: excalidraw
 dg-publish: true
 dg-show-backlinks: "false"
-dg-hide-in-graph: "true"
 dg-content-classes: excalidraw-fullpage
 ---
 
