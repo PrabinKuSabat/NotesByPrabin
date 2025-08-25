@@ -15,4 +15,3 @@
 # [[Prabins KB ~|Website Homepage]]
 
 How to get ISA for ada lovelace?
-
