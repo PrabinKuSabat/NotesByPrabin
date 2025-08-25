@@ -11,12 +11,24 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "Excalidraw/Accel-sim Walk Around.excalidraw.md"
+                "file": "EFFORTS/AccelSim.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "excalidraw-icon",
-              "title": "Accel-sim Walk Around.excalidraw"
+              "icon": "lucide-file",
+              "title": "AccelSim"
             }
           }
         ]
@@ -202,18 +214,17 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Excalidraw/Accel-sim Walk Around.excalidraw.md"
+                "file": "EFFORTS/AccelSim.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Accel-sim Walk Around.excalidraw"
+              "title": "File properties for AccelSim"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 471.5,
-    "collapsed": true
+    "width": 471.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -244,8 +255,8 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/Configs available In AccelSim.md",
     "Excalidraw/Accel-sim Walk Around.excalidraw.md",
+    "EFFORTS/Configs available In AccelSim.md",
     "Homepage.md",
     "EFFORTS/AccelSim.md",
     "Prabins KB ~.md",
