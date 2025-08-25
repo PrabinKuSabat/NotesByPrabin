@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "EFFORTS/AccelSim.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "AccelSim"
             }
           }
         ]
@@ -214,10 +214,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Homepage.md"
+                "file": "EFFORTS/AccelSim.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Homepage"
+              "title": "File properties for AccelSim"
             }
           }
         ]
@@ -256,10 +256,10 @@
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
     "Prabins KB ~.md",
+    "Homepage.md",
     "EFFORTS/AccelSim.md",
     "Excalidraw/Accel-sim Walk Around.excalidraw.md",
     "EFFORTS/Configs available In AccelSim.md",
-    "Homepage.md",
     "Untitled.md",
     "Extras/Excalidraw/excalibrain.md",
     "K Sarath  - Cahe Replacement.md",
