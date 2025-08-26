@@ -18,33 +18,8 @@
               "icon": "excalidraw-icon",
               "title": "Accel-sim Walk Around.excalidraw"
             }
-          },
-          {
-            "id": "273a3139ab31b029",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "EFFORTS/Configs available In AccelSim.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Configs available In AccelSim"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -227,10 +202,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "EFFORTS/Configs available In AccelSim.md"
+                "file": "Excalidraw/Accel-sim Walk Around.excalidraw.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Configs available In AccelSim"
+              "title": "File properties for Accel-sim Walk Around.excalidraw"
             }
           }
         ]
@@ -266,11 +241,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "273a3139ab31b029",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/Configs available In AccelSim.md",
     "Extras/ATTACHMENTS/image-97.png",
     "Excalidraw/Accel-sim Walk Around.excalidraw.md",
-    "EFFORTS/Configs available In AccelSim.md",
     "EFFORTS/AccelSim.md",
     "Prabins KB ~.md",
     "Homepage.md",
@@ -309,7 +284,6 @@
     "Bibliography/References.bib",
     "Bibliography",
     "Extras/ATTACHMENTS/39aba9038c139ca85a93922de496d3b6_MD5.jpg",
-    "Extras/ATTACHMENTS/Book Covers/Atomic Habits.jpg",
     "Extras/ATTACHMENTS/Book Covers",
     "Extras/Books",
     "Extras",
