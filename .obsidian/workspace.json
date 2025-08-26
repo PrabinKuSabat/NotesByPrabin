@@ -11,12 +11,24 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "Excalidraw/Accel-sim Walk Around.excalidraw.md"
+                "file": "Homepage.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "excalidraw-icon",
-              "title": "Accel-sim Walk Around.excalidraw"
+              "icon": "lucide-file",
+              "title": "Homepage"
             }
           }
         ]
@@ -244,9 +256,9 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Excalidraw/Accel-sim Walk Around.excalidraw.md",
     "EFFORTS/Configs available In AccelSim.md",
     "Extras/ATTACHMENTS/image-97.png",
-    "Excalidraw/Accel-sim Walk Around.excalidraw.md",
     "EFFORTS/AccelSim.md",
     "Prabins KB ~.md",
     "Homepage.md",
