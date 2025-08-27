@@ -12,7 +12,7 @@ dg-publish: true
 
 ---
 
-# [[Accel-sim Walk Around.excalidraw|Walk-through For Accel-Sim]]
+## [[Accel-sim Walk Around.excalidraw|Walk-through For Accel-Sim]]
 
 ## [[Configs available In AccelSim|Available Architecture Configs]]
 

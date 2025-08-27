@@ -11,10 +11,12 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "New tab"
+              "type": "excalidraw",
+              "state": {
+                "file": "Excalidraw/Accel-sim Walk Around.excalidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Accel-sim Walk Around.excalidraw"
             }
           }
         ]
@@ -242,9 +244,9 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/AccelSim.md",
     "Excalidraw/Accel-sim Walk Around.excalidraw.md",
     "Homepage.md",
-    "EFFORTS/AccelSim.md",
     "Prabins KB ~.md",
     "EFFORTS/Configs available In AccelSim.md",
     "Extras/ATTACHMENTS/image-97.png",
