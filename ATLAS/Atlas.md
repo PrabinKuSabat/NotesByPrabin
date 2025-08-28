@@ -2,7 +2,7 @@
 
 ## Subjects
 
-> [! summary] `ris:Add`Mathematics  
+> [! summary] `ris:Divide`Mathematics  
 > [[ATLAS/Linear Algebra|LA]]  
 > [[ATLAS/Real Analyis|RA]]
 

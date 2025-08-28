@@ -2,7 +2,6 @@
 
 1. RRIP
 	1. SRRIP
-	2. 
 	 ---
 
 Search out the above.
