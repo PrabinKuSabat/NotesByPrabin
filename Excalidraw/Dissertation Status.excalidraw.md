@@ -46,7 +46,9 @@ Create Kanban-board for updates.
 Finished installation and Toy Benchmark run for Accel-sim. ^2FEU7WGH
 
 %%
+
 ## Drawing
+
 ```compressed-json
 N4KAkARALgngDgUwgLgAQQQDwMYEMA2AlgCYBOuA7hADTgQBuCpAzoQPYB2KqATLZMzYBXUtiRoIACyhQ4zZAHoFAc0JRJQgEYA6bGwC2CgF7N6hbEcK4OCtptbErHALRY8RMpWdx8Q1TdIEfARcZgRmBShcZQUebQBGAFZtAAYaOiCEfQQOKGZuAG1wMFAwMogSbggAMVN8AHkAIXiAUQAzFIBVACUASQoAKQBpABUAOSgARUT0sshYRCrA7CiO
 
@@ -152,4 +154,5 @@ e7fd/uwPcHtD0obbaEhqQ5kvsOOGFDLh/DW4Y8NeHtDuh0gPod5ABGTDzgII2+yOXu1XC7hB3X+xskEN
 
 ndOBgBUC+cuE+LEkyzEoZHDvNGn8AlGASOAHvoyg5Q4QVFnhBwhAA===
 ```
+
 %%

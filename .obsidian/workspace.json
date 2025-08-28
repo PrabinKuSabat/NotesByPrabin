@@ -11,12 +11,24 @@
             "id": "792d9042b599c6c4",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "Excalidraw/Dissertation Status.excalidraw.md"
+                "file": "Prabin's KB ~/Vast.AI.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "excalidraw-icon",
-              "title": "Dissertation Status.excalidraw"
+              "icon": "lucide-file",
+              "title": "Vast.AI"
             }
           },
           {
@@ -226,10 +238,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Excalidraw/Dissertation Status.excalidraw.md"
+                "file": "Prabin's KB ~/Vast.AI.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Dissertation Status.excalidraw"
+              "title": "File properties for Vast.AI"
             }
           }
         ]
@@ -269,6 +281,7 @@
   "active": "792d9042b599c6c4",
   "lastOpenFiles": [
     "Prabin's KB ~/Prabins KB ~.md",
+    "Excalidraw/Dissertation Status.excalidraw.md",
     "Prabin's KB ~/Vast.AI.md",
     "Prabin's KB ~/Dissertation Conversation 25-26.md",
     "ATLAS/Atlas.md",
@@ -287,7 +300,6 @@
     "Extras/ATTACHMENTS/5e8298ecc308b6e52f8c5a0a83f24334_MD5.png",
     "Extras/ATTACHMENTS/feac75db30d83d25aaac968e558e7174_MD5.jpeg",
     "Extras/ATTACHMENTS/39aba9038c139ca85a93922de496d3b6_MD5.jpg",
-    "Excalidraw/Dissertation Status.excalidraw.md",
     "Excalidraw/Scripts/Downloaded/Normalize Selected Arrows.md",
     "EFFORTS/AccelSim.md",
     "Excalidraw/Scripts/Downloaded/Uniform size.md",
