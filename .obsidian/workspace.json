@@ -11,12 +11,10 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Excalidraw/Accel-sim Walk Around.excalidraw.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "Accel-sim Walk Around.excalidraw"
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
             }
           }
         ]
@@ -202,10 +200,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Excalidraw/Accel-sim Walk Around.excalidraw.md"
+                "file": "Excalidraw/Dissertation Status.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Accel-sim Walk Around.excalidraw"
+              "title": "File properties for Dissertation Status"
             }
           }
         ]
@@ -244,47 +242,47 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Excalidraw/Dissertation Status.md",
+    "Vast.AI.md",
+    "Excalidraw/Scripts/Downloaded/Uniform size.svg",
+    "Excalidraw/Scripts/Downloaded/Uniform size.md",
+    "Excalidraw/Scripts/Downloaded/Text to Sticky Notes.svg",
+    "Excalidraw/Scripts/Downloaded/Text to Sticky Notes.md",
+    "Excalidraw/Scripts/Downloaded/Text to Path.svg",
+    "Excalidraw/Scripts/Downloaded/Text to Path.md",
+    "Excalidraw/Scripts/Downloaded/Text Aura.svg",
+    "Excalidraw/Scripts/Downloaded/Text Aura.md",
+    "Excalidraw/Scripts/Downloaded/Slideshow.svg",
+    "Excalidraw/Scripts/Downloaded/Slideshow.md",
+    "Excalidraw/Scripts/Downloaded/Set Grid.svg",
+    "Excalidraw/Scripts/Downloaded/Set Grid.md",
+    "Excalidraw/Scripts/Downloaded/Repeat Elements.svg",
+    "Excalidraw/Scripts/Downloaded/Repeat Elements.md",
+    "Excalidraw/Scripts/Downloaded/Mindmap format.svg",
+    "Excalidraw/Scripts/Downloaded/Mindmap format.md",
+    "Excalidraw/Scripts/Downloaded/Full-Year Calendar Generator.svg",
+    "Excalidraw/Scripts/Downloaded/Full-Year Calendar Generator.md",
+    "Excalidraw/Scripts/Downloaded/Grid Selected Images.svg",
+    "Excalidraw/Scripts/Downloaded/Grid Selected Images.md",
+    "Excalidraw/Scripts/Downloaded/Fixed spacing.md",
+    "Excalidraw/Scripts/Downloaded/Expand rectangles vertically.md",
+    "Excalidraw/Scripts/Downloaded/Expand rectangles vertically keep text centered.md",
+    "Excalidraw/Scripts/Downloaded/Expand rectangles horizontally.md",
+    "Excalidraw/Scripts/Downloaded/Expand rectangles horizontally keep text centered.md",
+    "Excalidraw/Scripts/Downloaded/Elbow connectors.md",
+    "Prabins KB ~.md",
+    "Homepage.md",
     "EFFORTS/AccelSim.md",
     "Excalidraw/Accel-sim Walk Around.excalidraw.md",
-    "Homepage.md",
-    "Prabins KB ~.md",
     "EFFORTS/Configs available In AccelSim.md",
-    "Extras/ATTACHMENTS/image-97.png",
     "Untitled.md",
     "Extras/Excalidraw/excalibrain.md",
-    "K Sarath  - Cahe Replacement.md",
-    "Excalidraw/Scripts/Downloaded/Connect elements.svg",
-    "Excalidraw/Scripts/Downloaded/Connect elements.md",
     "Excalidraw/Scripts/Downloaded",
     "Excalidraw/Scripts",
     "Excalidraw",
-    "Extras/ATTACHMENTS/image-95.png",
-    "Extras/ATTACHMENTS/image-96.png",
-    "EFFORTS/Benchmarks Available In Accel-Sim.md",
-    "EFFORTS/rodinia_2.0-ft.md",
-    "EFFORTS/Things to try out.md",
-    "EFFORTS/Release Branch Installation.md",
-    "EFFORTS/accelReleaseCondaEnv.yml.md",
-    "Extras/ATTACHMENTS/image-93.png",
-    "Extras/ATTACHMENTS/image-94.png",
-    "Extras/ATTACHMENTS/image-94.webp",
-    "Extras/ATTACHMENTS/Pasted image 20250822145458.png",
-    "Extras/ATTACHMENTS/6fa03769aed19d8a5a32de971d5c312a_MD5.jpeg",
-    "EFFORTS/Efforts.md",
-    "ATLAS/Atlas.md",
-    "Random.md",
-    "TO-DO List.md",
     "Untitled",
-    "EFFORTS/Available Traces.md",
-    "EFFORTS/AccelSim Trials.md",
-    "EFFORTS/Notes.md",
-    "EFFORTS/Tuner Correlating in Accelsim.md",
-    "EFFORTS/AccelSimpu Trials.md",
-    "EFFORTS/Dissertation.md",
-    "CALENDER/2025-08-10.md",
     "Bibliography/References.bib",
     "Bibliography",
-    "Extras/ATTACHMENTS/39aba9038c139ca85a93922de496d3b6_MD5.jpg",
     "Extras/ATTACHMENTS/Book Covers",
     "Extras/Books",
     "Extras",

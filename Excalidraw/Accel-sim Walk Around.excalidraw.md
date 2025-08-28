@@ -80,13 +80,17 @@ Here each executable in the benchmark is considered as a task.
 {So if you have 2 executable in the benchmark then you might see Running: 1/2} ^1Umtu5ob
 
 ## Element Links
+
 9DhpcHQj: [[Configs available In AccelSim]]
 
 ## Embedded Files
+
 815c90466e36e0c5c70b6c9c2e68c9056f460041: [[Configs available In AccelSim#Architectures that can be simulated]]
 
 %%
+
 ## Drawing
+
 ```compressed-json
 N4KAkARALgngDgUwgLgAQQQDwMYEMA2AlgCYBOuA7hADTgQBuCpAzoQPYB2KqATLZMzYBXUtiRoIACyhQ4zZAHoFAc0JRJQgEYA6bGwC2CgF7N6hbEcK4OCtptbErHALRY8RMpWdx8Q1TdIEfARcZgRmBShcZQUebQBGAFZtAAYaOiCEfQQOKGZuAG1wMFAwMogSbggABQ4AazYAOSMAZgB9AE0AR2sOgFkAQVwAGQBFYYB1AHF0sshYRCrA7CiO
 
@@ -284,4 +288,5 @@ MggoSwdtj7kaj+ZiQL8yqgiCLSZlwPiK224A7bc/K8AE7YJ6Esplf22ptqradC0tDIHy0zxF3sC0sqiC
 
 rCRQ4ADRA1W4QIzwWQdYEAA=
 ```
+
 %%

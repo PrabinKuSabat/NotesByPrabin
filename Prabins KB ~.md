@@ -9,6 +9,8 @@ banner_y: 0.42957
 ![[image-95.png]]  
 **Welcome to Prabin's KB!** 📚
 
+# 
 # Notes
 
-[[AccelSim]]
+[[AccelSim]]  
+[[Vast.AI]]
