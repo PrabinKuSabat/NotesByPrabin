@@ -152,7 +152,7 @@
       }
     }
   },
-  "defaultTrayMode": true,
+  "defaultTrayMode": false,
   "previousRelease": "2.15.0",
   "showReleaseNotes": true,
   "showNewVersionNotification": true,

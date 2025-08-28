@@ -11,10 +11,36 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Prabins KB ~.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Prabins KB ~"
+            }
+          },
+          {
+            "id": "51e46d76311041cf",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Excalidraw/Dissertation Status.excalidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Dissertation Status.excalidraw"
             }
           }
         ]
@@ -200,10 +226,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Excalidraw/Dissertation Status.md"
+                "file": "Prabins KB ~.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Dissertation Status"
+              "title": "File properties for Prabins KB ~"
             }
           }
         ]
@@ -242,7 +268,10 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Excalidraw/Dissertation Status.md",
+    "Excalidraw/Dissertation Status.excalidraw.md",
+    "Homepage.md",
+    "Prabins KB ~.md",
+    "EFFORTS/AccelSim.md",
     "Vast.AI.md",
     "Excalidraw/Scripts/Downloaded/Uniform size.svg",
     "Excalidraw/Scripts/Downloaded/Uniform size.md",
@@ -270,9 +299,6 @@
     "Excalidraw/Scripts/Downloaded/Expand rectangles horizontally.md",
     "Excalidraw/Scripts/Downloaded/Expand rectangles horizontally keep text centered.md",
     "Excalidraw/Scripts/Downloaded/Elbow connectors.md",
-    "Prabins KB ~.md",
-    "Homepage.md",
-    "EFFORTS/AccelSim.md",
     "Excalidraw/Accel-sim Walk Around.excalidraw.md",
     "EFFORTS/Configs available In AccelSim.md",
     "Untitled.md",
