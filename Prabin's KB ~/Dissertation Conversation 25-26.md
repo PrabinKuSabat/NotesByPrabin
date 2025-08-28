@@ -49,6 +49,7 @@ I did some research using ChatGPT on latest papers on Accel-sim : 
 	 Papers 2 and 3 sound interesting to me . You can reach out to the authors or check if they can share their implementations publicly or with you .
 
 # 27-08 : Naveen
+
 @Prabin Sabat   @Dr. R. Raghunatha Sarma, Assistant Professor, DMACS, SSSIHL  Please check  [https://vast.ai/](https://vast.ai/) seems extremely reasonable, mostly around 50$ for 1 month usage which is extremely cheap . You could even rent it for a short period of time . SaladCloud needs you to deploy everything as a container which might be good for you to learn as a technology.   
 @Prabin Sabat document every little system detail starting from nvidia-smi output, lscpu, os details . Maybe ask ChatGPT to write a bash script for these and have them as part of your output logs  . @Saketh Cherukuri This holds especially well for you where you log the python packages and their versions.
 
@@ -57,4 +58,3 @@ I did some research using ChatGPT on latest papers on Accel-sim : 
 Yes. We will look into this. I have added Dr srinath also this thread.
 
 Raghu
-

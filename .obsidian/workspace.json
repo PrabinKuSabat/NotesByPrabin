@@ -11,24 +11,12 @@
             "id": "792d9042b599c6c4",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "Prabin's KB ~/Dissertation Conversation 25-26.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
+                "file": "Excalidraw/Dissertation Status.excalidraw.md"
               },
-              "icon": "lucide-file",
-              "title": "Dissertation Conversation 25-26"
+              "icon": "excalidraw-icon",
+              "title": "Dissertation Status.excalidraw"
             }
           },
           {
@@ -238,10 +226,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Prabin's KB ~/Dissertation Conversation 25-26.md"
+                "file": "Excalidraw/Dissertation Status.excalidraw.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Dissertation Conversation 25-26"
+              "title": "File properties for Dissertation Status.excalidraw"
             }
           }
         ]
@@ -281,8 +269,8 @@
   "active": "792d9042b599c6c4",
   "lastOpenFiles": [
     "Prabin's KB ~/Prabins KB ~.md",
-    "Prabin's KB ~/Dissertation Conversation 25-26.md",
     "Prabin's KB ~/Vast.AI.md",
+    "Prabin's KB ~/Dissertation Conversation 25-26.md",
     "ATLAS/Atlas.md",
     "Random.md",
     "Homepage.md",
