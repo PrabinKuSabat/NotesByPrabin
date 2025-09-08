@@ -11,10 +11,48 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Prabin's KB ~/Ada Lovelace GPU Architecture - Design Changes over Ampere.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Ada Lovelace GPU Architecture - Design Changes over Ampere"
+            }
+          },
+          {
+            "id": "557aaa696f6ca09e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Prabin's KB ~/Ada Lovelace GPU Architecture - Design Changes over Ampere.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Ada Lovelace GPU Architecture - Design Changes over Ampere"
             }
           }
         ]
@@ -242,13 +280,15 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Prabin's KB ~/Dissertation Conversation 25-26.md",
-    "Prabin's KB ~/Vast.AI.md",
     "Prabin's KB ~/Prabins KB ~.md",
     "Excalidraw/Dissertation Status.excalidraw.md",
+    "Homepage.md",
+    "Prabin's KB ~/Ada Lovelace GPU Architecture - Design Changes over Ampere.md",
+    "Extras/ATTACHMENTS/image-95.png",
+    "Prabin's KB ~/Dissertation Conversation 25-26.md",
+    "Prabin's KB ~/Vast.AI.md",
     "ATLAS/Atlas.md",
     "Random.md",
-    "Homepage.md",
     "Prabin's KB ~",
     "K Sarath  - Cahe Replacement.md",
     "TO-DO List.md",
@@ -261,7 +301,6 @@
     "Extras/ATTACHMENTS/618f40c7cd6f0126e4f18ff54af5db42_MD5.png",
     "Extras/ATTACHMENTS/5e8298ecc308b6e52f8c5a0a83f24334_MD5.png",
     "Extras/ATTACHMENTS/feac75db30d83d25aaac968e558e7174_MD5.jpeg",
-    "Extras/ATTACHMENTS/39aba9038c139ca85a93922de496d3b6_MD5.jpg",
     "Excalidraw/Scripts/Downloaded/Normalize Selected Arrows.md",
     "EFFORTS/AccelSim.md",
     "Excalidraw/Scripts/Downloaded/Uniform size.md",
@@ -278,7 +317,6 @@
     "Excalidraw/Scripts/Downloaded/Expand rectangles vertically.md",
     "Excalidraw/Scripts/Downloaded/Expand rectangles vertically keep text centered.md",
     "Excalidraw/Scripts/Downloaded/Expand rectangles horizontally.md",
-    "Excalidraw/Scripts/Downloaded/Expand rectangles horizontally keep text centered.md",
     "Excalidraw/Scripts/Downloaded",
     "Excalidraw/Scripts",
     "Excalidraw",

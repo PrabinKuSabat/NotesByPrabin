@@ -11,6 +11,16 @@ banner_y: 0.42957
 
 ---
 
+> [!important] What's New?
+
+![[image-95.png]]
+
+[[Ada Lovelace GPU Architecture - Design Changes over Ampere ]]
+
+---
+
+> [!check] TO-DO Kanban Boards👇
+
 # [[Dissertation Status.excalidraw|Dissertation To-DO]]
 
 > [!info]  
