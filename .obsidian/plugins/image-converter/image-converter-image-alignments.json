@@ -16,8 +16,14 @@
   "Prabin's KB ~/Prabins KB ~.md": {
     "f9d3d656b3bccee02230a114e7060e2b": {
       "position": "center",
-      "width": "",
-      "height": "",
+      "width": "655px",
+      "height": "322px",
+      "wrap": false
+    },
+    "5cb1efcd6d3083ff24e54cb0cbb7173c": {
+      "position": "center",
+      "width": "937px",
+      "height": "362px",
       "wrap": false
     }
   }

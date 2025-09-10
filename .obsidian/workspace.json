@@ -14,7 +14,7 @@
               "type": "markdown",
               "state": {
                 "file": "Prabin's KB ~/Prabins KB ~.md",
-                "mode": "preview",
+                "mode": "source",
                 "source": false,
                 "backlinks": true,
                 "backlinkOpts": {
@@ -214,10 +214,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Prabin's KB ~/Dissertation Conversation 25-26.md"
+                "file": "Prabin's KB ~/Prabins KB ~.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Dissertation Conversation 25-26"
+              "title": "File properties for Prabins KB ~"
             }
           }
         ]
@@ -256,10 +256,10 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Homepage.md",
-    "Prabin's KB ~/Prabins KB ~.md",
-    "Prabin's KB ~/Ada Lovelace GPU Architecture - Design Changes over Ampere.md",
     "Excalidraw/Dissertation Status.excalidraw.md",
+    "Prabin's KB ~/Prabins KB ~.md",
+    "Homepage.md",
+    "Prabin's KB ~/Ada Lovelace GPU Architecture - Design Changes over Ampere.md",
     "Extras/ATTACHMENTS/image-95.png",
     "Prabin's KB ~/Dissertation Conversation 25-26.md",
     "Prabin's KB ~/Vast.AI.md",

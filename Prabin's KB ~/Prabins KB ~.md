@@ -1,19 +1,15 @@
 ---
 dg-publish: true
-dg-home: true
-dg-pinned: true
-banner: "![[image-95.png]]"
-banner_y: 0.42957
 ---
 
-![[image-96.png]]  
+![[image-96.png|937x362]]  
 **Welcome to Prabin's Knowledge-Base!** 📚
 
 ---
 
 > [!important] What's New?
 
-![[image-95.png]]
+![[image-95.png|655x322]]
 
 [[Ada Lovelace GPU Architecture - Design Changes over Ampere ]]
 
