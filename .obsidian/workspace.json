@@ -11,10 +11,24 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Prabin's KB ~/Prabins KB ~.md",
+                "mode": "preview",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Prabins KB ~"
             }
           }
         ]
@@ -242,10 +256,10 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Prabin's KB ~/Ada Lovelace GPU Architecture - Design Changes over Ampere.md",
-    "Prabin's KB ~/Prabins KB ~.md",
-    "Excalidraw/Dissertation Status.excalidraw.md",
     "Homepage.md",
+    "Prabin's KB ~/Prabins KB ~.md",
+    "Prabin's KB ~/Ada Lovelace GPU Architecture - Design Changes over Ampere.md",
+    "Excalidraw/Dissertation Status.excalidraw.md",
     "Extras/ATTACHMENTS/image-95.png",
     "Prabin's KB ~/Dissertation Conversation 25-26.md",
     "Prabin's KB ~/Vast.AI.md",
