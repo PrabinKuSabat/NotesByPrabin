@@ -13,30 +13,6 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Prabin's KB ~/Prabins KB ~.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Prabins KB ~"
-            }
-          },
-          {
-            "id": "e4feebacb2f77f8d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
                 "file": "Prabin's KB ~/GPU Architectures and Whitepapers.md",
                 "mode": "source",
                 "source": false,
@@ -55,8 +31,7 @@
               "title": "GPU Architectures and Whitepapers"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -279,10 +254,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e4feebacb2f77f8d",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Prabin's KB ~/GPU Architectures and Whitepapers.md",
     "Prabin's KB ~/Prabins KB ~.md",
+    "Prabin's KB ~/GPU Architectures and Whitepapers.md",
     "Excalidraw/Dissertation Status.excalidraw.md",
     "Homepage.md",
     "Prabin's KB ~/Ada Lovelace GPU Architecture - Design Changes over Ampere.md",
