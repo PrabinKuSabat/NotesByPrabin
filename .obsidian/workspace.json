@@ -30,8 +30,33 @@
               "icon": "lucide-file",
               "title": "Prabins KB ~"
             }
+          },
+          {
+            "id": "e4feebacb2f77f8d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Prabin's KB ~/GPU Architectures and Whitepapers.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "GPU Architectures and Whitepapers"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -214,10 +239,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Prabin's KB ~/Prabins KB ~.md"
+                "file": "Prabin's KB ~/GPU Architectures and Whitepapers.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Prabins KB ~"
+              "title": "File properties for GPU Architectures and Whitepapers"
             }
           }
         ]
@@ -254,10 +279,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "e4feebacb2f77f8d",
   "lastOpenFiles": [
-    "Excalidraw/Dissertation Status.excalidraw.md",
+    "Prabin's KB ~/GPU Architectures and Whitepapers.md",
     "Prabin's KB ~/Prabins KB ~.md",
+    "Excalidraw/Dissertation Status.excalidraw.md",
     "Homepage.md",
     "Prabin's KB ~/Ada Lovelace GPU Architecture - Design Changes over Ampere.md",
     "Extras/ATTACHMENTS/image-95.png",
@@ -268,7 +294,7 @@
     "Prabin's KB ~",
     "K Sarath  - Cahe Replacement.md",
     "TO-DO List.md",
-    "Extras/ATTACHMENTS/image-96.png",
+    "Extras/ATTACHMENTS/image-96.jpeg",
     "Extras/ATTACHMENTS/image-93.png",
     "Extras/ATTACHMENTS/image-94.png",
     "Extras/ATTACHMENTS/image-92.png",
@@ -292,7 +318,6 @@
     "Excalidraw/Scripts/Downloaded/Fixed spacing.md",
     "Excalidraw/Scripts/Downloaded/Expand rectangles vertically.md",
     "Excalidraw/Scripts/Downloaded/Expand rectangles vertically keep text centered.md",
-    "Excalidraw/Scripts/Downloaded/Expand rectangles horizontally.md",
     "Excalidraw/Scripts/Downloaded",
     "Excalidraw/Scripts",
     "Excalidraw",

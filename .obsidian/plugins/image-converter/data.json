@@ -215,7 +215,7 @@
   "singleImageModalSettings": {
     "conversionPresetName": "None",
     "outputFormat": "JPEG",
-    "quality": 100,
+    "quality": 49,
     "colorDepth": 1,
     "resizeMode": "Width",
     "desiredWidth": 1240,

@@ -1,8 +1,9 @@
 ---
 dg-publish: true
+dg-home: true
 ---
 
-![[image-96.png|937x362]]  
+![[image-96.jpeg|937x362]]  
 **Welcome to Prabin's Knowledge-Base!** 📚
 
 ---
@@ -27,7 +28,8 @@ dg-publish: true
 # Notes
 
 [[AccelSim]]  
-[[Vast.AI]]
+[[Vast.AI]]  
+[[GPU Architectures and Whitepapers]]
 
 ---
 
