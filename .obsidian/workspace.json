@@ -4,7 +4,7 @@
     "type": "split",
     "children": [
       {
-        "id": "4509724f8bf84da7",
+        "id": "fc96b4051ab965c6",
         "type": "tabs",
         "children": [
           {
@@ -13,8 +13,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Benchmarks Available In Accel-Sim.md",
-                "mode": "source",
+                "file": "EFFORTS/AccelSim.md",
+                "mode": "preview",
                 "source": false,
                 "backlinks": true,
                 "backlinkOpts": {
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Benchmarks Available In Accel-Sim"
+              "title": "AccelSim"
             }
           }
         ]
@@ -214,10 +214,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Prabin's KB ~/GPU Architectures and Whitepapers.md"
+                "file": "EFFORTS/AccelSim.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for GPU Architectures and Whitepapers"
+              "title": "File properties for AccelSim"
             }
           }
         ]
@@ -256,20 +256,34 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/AccelSim.md",
-    "Prabin's KB ~/Prabins KB ~.md",
-    "Prabin's KB ~/Dissertation Conversation 25-26.md",
+    "Excalidraw/Accel-sim Walk Around.excalidraw.md",
     "Homepage.md",
-    "Prabin's KB ~/GPU Architectures and Whitepapers.md",
-    "Excalidraw/Dissertation Status.excalidraw.md",
-    "Prabin's KB ~/Ada Lovelace GPU Architecture - Design Changes over Ampere.md",
+    "EFFORTS/AccelSim.md",
+    "EFFORTS/Benchmarks Available In Accel-Sim.md",
+    "EFFORTS/huggingface.md",
+    "EFFORTS/pytorch_examples.md",
+    "EFFORTS/mlperf_inference_no_external_datasets.md",
+    "EFFORTS/mlperf_training.md",
+    "EFFORTS/mlperf_inference.md",
+    "EFFORTS/pannotia.md",
+    "EFFORTS/lonestargpu-2.0.md",
+    "EFFORTS/proxy-apps-doe.md",
+    "EFFORTS/dragon-cdp.md",
+    "EFFORTS/dragon-naive.md",
+    "EFFORTS/ispass-2009.md",
+    "EFFORTS/cutlass.md",
+    "EFFORTS/cutlass_hopper.md",
+    "EFFORTS/cutlass_ampere.md",
+    "EFFORTS/cutlass_volta.md",
+    "EFFORTS/polybench.md",
+    "EFFORTS/parboil.md",
+    "EFFORTS/rodinia-3.1.md",
+    "EFFORTS/sdk-4.2-scaled.md",
+    "EFFORTS/Deepbench_nvidia_tencore.md",
+    "EFFORTS/Deepbench_nvidia_normal.md",
+    "EFFORTS/Atomic_Diverge.md",
     "Extras/ATTACHMENTS/image-95.png",
-    "Prabin's KB ~/Vast.AI.md",
-    "ATLAS/Atlas.md",
-    "Random.md",
     "Prabin's KB ~",
-    "K Sarath  - Cahe Replacement.md",
-    "TO-DO List.md",
     "Extras/ATTACHMENTS/image-96.jpeg",
     "Extras/ATTACHMENTS/image-93.png",
     "Extras/ATTACHMENTS/image-94.png",
@@ -279,20 +293,6 @@
     "Extras/ATTACHMENTS/618f40c7cd6f0126e4f18ff54af5db42_MD5.png",
     "Extras/ATTACHMENTS/5e8298ecc308b6e52f8c5a0a83f24334_MD5.png",
     "Extras/ATTACHMENTS/feac75db30d83d25aaac968e558e7174_MD5.jpeg",
-    "Excalidraw/Scripts/Downloaded/Normalize Selected Arrows.md",
-    "Excalidraw/Scripts/Downloaded/Uniform size.md",
-    "Excalidraw/Scripts/Downloaded/Text to Sticky Notes.md",
-    "Excalidraw/Scripts/Downloaded/Text to Path.md",
-    "Excalidraw/Scripts/Downloaded/Text Aura.md",
-    "Excalidraw/Scripts/Downloaded/Slideshow.md",
-    "Excalidraw/Scripts/Downloaded/Set Grid.md",
-    "Excalidraw/Scripts/Downloaded/Repeat Elements.md",
-    "Excalidraw/Scripts/Downloaded/Mindmap format.md",
-    "Excalidraw/Scripts/Downloaded/Full-Year Calendar Generator.md",
-    "Excalidraw/Scripts/Downloaded/Grid Selected Images.md",
-    "Excalidraw/Scripts/Downloaded/Fixed spacing.md",
-    "Excalidraw/Scripts/Downloaded/Expand rectangles vertically.md",
-    "Excalidraw/Scripts/Downloaded/Expand rectangles vertically keep text centered.md",
     "Excalidraw/Scripts/Downloaded",
     "Excalidraw/Scripts",
     "Excalidraw",
