@@ -13,8 +13,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/AccelSim.md",
-                "mode": "preview",
+                "file": "EFFORTS/Benchmarks Available In Accel-Sim.md",
+                "mode": "source",
                 "source": false,
                 "backlinks": true,
                 "backlinkOpts": {
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "AccelSim"
+              "title": "Benchmarks Available In Accel-Sim"
             }
           }
         ]
@@ -256,6 +256,7 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/AccelSim.md",
     "Prabin's KB ~/Prabins KB ~.md",
     "Prabin's KB ~/Dissertation Conversation 25-26.md",
     "Homepage.md",
@@ -279,7 +280,6 @@
     "Extras/ATTACHMENTS/5e8298ecc308b6e52f8c5a0a83f24334_MD5.png",
     "Extras/ATTACHMENTS/feac75db30d83d25aaac968e558e7174_MD5.jpeg",
     "Excalidraw/Scripts/Downloaded/Normalize Selected Arrows.md",
-    "EFFORTS/AccelSim.md",
     "Excalidraw/Scripts/Downloaded/Uniform size.md",
     "Excalidraw/Scripts/Downloaded/Text to Sticky Notes.md",
     "Excalidraw/Scripts/Downloaded/Text to Path.md",
