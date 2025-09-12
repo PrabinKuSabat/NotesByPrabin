@@ -4,7 +4,7 @@
     "type": "split",
     "children": [
       {
-        "id": "fc96b4051ab965c6",
+        "id": "4509724f8bf84da7",
         "type": "tabs",
         "children": [
           {
@@ -13,8 +13,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/AccelSim.md",
-                "mode": "preview",
+                "file": "Homepage.md",
+                "mode": "source",
                 "source": false,
                 "backlinks": true,
                 "backlinkOpts": {
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "AccelSim"
+              "title": "Homepage"
             }
           }
         ]
@@ -214,10 +214,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "EFFORTS/AccelSim.md"
+                "file": "Homepage.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for AccelSim"
+              "title": "File properties for Homepage"
             }
           }
         ]
@@ -256,9 +256,9 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Excalidraw/Accel-sim Walk Around.excalidraw.md",
     "Homepage.md",
     "EFFORTS/AccelSim.md",
+    "Excalidraw/Accel-sim Walk Around.excalidraw.md",
     "EFFORTS/Benchmarks Available In Accel-Sim.md",
     "EFFORTS/huggingface.md",
     "EFFORTS/pytorch_examples.md",
