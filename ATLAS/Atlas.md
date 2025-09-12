@@ -20,4 +20,5 @@ title: Architecture
 [[Intel Architectures]]
 [[NVIDIA- Architectures]]
 [[Wafers]]
+[[Ada Lovelace ISA]]
 ```

@@ -8,12 +8,12 @@
         "type": "tabs",
         "children": [
           {
-            "id": "e7a7b303c61786dc",
+            "id": "6f7b3253357a7293",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "ATLAS/Ada Lovelace ISA.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Ada Lovelace ISA"
             }
           }
         ]
@@ -254,8 +254,13 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "6f7b3253357a7293",
   "lastOpenFiles": [
+    "ATLAS/Ada Lovelace ISA.md",
+    "ATLAS/Atlas.md",
+    "Homepage.md",
+    "EFFORTS/Efforts.md",
+    "EFFORTS/SSSIHL.md",
     "Prabin's KB ~/Prabins KB ~.md",
     "EFFORTS/AccelSim.md",
     "EFFORTS/Configs available In AccelSim.md",
@@ -263,7 +268,6 @@
     "EFFORTS/polybench.md",
     "EFFORTS/rodinia_2.0-ft.md",
     "EFFORTS/rodinia-3.1.md",
-    "Homepage.md",
     "Excalidraw/Accel-sim Walk Around.excalidraw.md",
     "EFFORTS/huggingface.md",
     "EFFORTS/pytorch_examples.md",
@@ -278,10 +282,6 @@
     "EFFORTS/ispass-2009.md",
     "EFFORTS/cutlass.md",
     "EFFORTS/cutlass_hopper.md",
-    "EFFORTS/cutlass_ampere.md",
-    "EFFORTS/cutlass_volta.md",
-    "EFFORTS/parboil.md",
-    "EFFORTS/sdk-4.2-scaled.md",
     "Extras/ATTACHMENTS/image-95.png",
     "Prabin's KB ~",
     "Extras/ATTACHMENTS/image-96.jpeg",
