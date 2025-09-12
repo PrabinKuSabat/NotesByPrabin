@@ -13,8 +13,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Prabin's KB ~/GPU Architectures and Whitepapers.md",
-                "mode": "source",
+                "file": "EFFORTS/AccelSim.md",
+                "mode": "preview",
                 "source": false,
                 "backlinks": true,
                 "backlinkOpts": {
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "GPU Architectures and Whitepapers"
+              "title": "AccelSim"
             }
           }
         ]
@@ -257,12 +257,12 @@
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
     "Prabin's KB ~/Prabins KB ~.md",
+    "Prabin's KB ~/Dissertation Conversation 25-26.md",
+    "Homepage.md",
     "Prabin's KB ~/GPU Architectures and Whitepapers.md",
     "Excalidraw/Dissertation Status.excalidraw.md",
-    "Homepage.md",
     "Prabin's KB ~/Ada Lovelace GPU Architecture - Design Changes over Ampere.md",
     "Extras/ATTACHMENTS/image-95.png",
-    "Prabin's KB ~/Dissertation Conversation 25-26.md",
     "Prabin's KB ~/Vast.AI.md",
     "ATLAS/Atlas.md",
     "Random.md",
