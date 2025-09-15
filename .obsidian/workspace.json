@@ -8,13 +8,13 @@
         "type": "tabs",
         "children": [
           {
-            "id": "6f7b3253357a7293",
+            "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ATLAS/Ada Lovelace ISA.md",
-                "mode": "source",
+                "file": "EFFORTS/AccelSim.md",
+                "mode": "preview",
                 "source": false,
                 "backlinks": true,
                 "backlinkOpts": {
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Ada Lovelace ISA"
+              "title": "AccelSim"
             }
           }
         ]
@@ -254,34 +254,34 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "6f7b3253357a7293",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "ATLAS/Ada Lovelace ISA.md",
-    "ATLAS/Atlas.md",
-    "Homepage.md",
-    "EFFORTS/Efforts.md",
-    "EFFORTS/SSSIHL.md",
-    "Prabin's KB ~/Prabins KB ~.md",
+    "EFFORTS/AccelSim Trials.md",
     "EFFORTS/AccelSim.md",
-    "EFFORTS/Configs available In AccelSim.md",
     "EFFORTS/Benchmarks Available In Accel-Sim.md",
-    "EFFORTS/polybench.md",
-    "EFFORTS/rodinia_2.0-ft.md",
-    "EFFORTS/rodinia-3.1.md",
-    "Excalidraw/Accel-sim Walk Around.excalidraw.md",
     "EFFORTS/huggingface.md",
     "EFFORTS/pytorch_examples.md",
     "EFFORTS/mlperf_inference_no_external_datasets.md",
     "EFFORTS/mlperf_training.md",
     "EFFORTS/mlperf_inference.md",
-    "EFFORTS/pannotia.md",
     "EFFORTS/lonestargpu-2.0.md",
+    "EFFORTS/pannotia.md",
     "EFFORTS/proxy-apps-doe.md",
     "EFFORTS/dragon-cdp.md",
     "EFFORTS/dragon-naive.md",
+    "EFFORTS/Deepbench_nvidia_tencore.md",
+    "EFFORTS/Atomic_Profile.md",
+    "EFFORTS/GPU_Microbenchmark.md",
     "EFFORTS/ispass-2009.md",
-    "EFFORTS/cutlass.md",
-    "EFFORTS/cutlass_hopper.md",
+    "EFFORTS/cutlass_volta.md",
+    "EFFORTS/polybench.md",
+    "EFFORTS/parboil.md",
+    "EFFORTS/rodinia-3.1.md",
+    "EFFORTS/sdk-4.2-scaled.md",
+    "EFFORTS/Deepbench_nvidia_normal.md",
+    "EFFORTS/Atomic_Diverge.md",
+    "EFFORTS/GPU_Atomic.md",
+    "EFFORTS/rodinia_2.0-ft.md",
     "Extras/ATTACHMENTS/image-95.png",
     "Prabin's KB ~",
     "Extras/ATTACHMENTS/image-96.jpeg",
