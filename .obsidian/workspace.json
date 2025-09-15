@@ -13,8 +13,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Benchmarks Available In Accel-Sim.md",
-                "mode": "preview",
+                "file": "Homepage.md",
+                "mode": "source",
                 "source": false,
                 "backlinks": true,
                 "backlinkOpts": {
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Benchmarks Available In Accel-Sim"
+              "title": "Homepage"
             }
           }
         ]
@@ -256,9 +256,10 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/Benchmarks Available In Accel-Sim.md",
+    "EFFORTS/Available Traces.md",
     "EFFORTS/AccelSim.md",
     "EFFORTS/AccelSim Trials.md",
-    "EFFORTS/Benchmarks Available In Accel-Sim.md",
     "EFFORTS/huggingface.md",
     "EFFORTS/pytorch_examples.md",
     "EFFORTS/mlperf_inference_no_external_datasets.md",
@@ -281,7 +282,6 @@
     "EFFORTS/Deepbench_nvidia_normal.md",
     "EFFORTS/Atomic_Diverge.md",
     "EFFORTS/GPU_Atomic.md",
-    "EFFORTS/rodinia_2.0-ft.md",
     "Extras/ATTACHMENTS/image-95.png",
     "Prabin's KB ~",
     "Extras/ATTACHMENTS/image-96.jpeg",

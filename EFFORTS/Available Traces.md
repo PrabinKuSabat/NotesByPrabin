@@ -2,6 +2,8 @@
 dg-publish: true
 ---
 
+# Available Traces
+
 **cutlass:** Compressed = _77.00 G_, Uncompressed = _1.70 T_  
 **deepbench:** Compressed = _55.00 G_, Uncompressed = _1.20 T_  
 **parboil:** Compressed = _8.70 G_, Uncompressed = _182.00 G_  
@@ -9,3 +11,12 @@ dg-publish: true
 **rodinia_2.0-ft:** Compressed = _7.20 M_, Uncompressed = _162.00 M_  
 **rodinia-3.1:** Compressed = _1.80 G_, Uncompressed = _56.00 G_  
 **ubench:** Compressed = _82.00 M_, Uncompressed = _2.60 G_
+
+---
+
+> _ONLY AVAILABLE FOR V100 CARD._  
+> Total UNCOMPRESSED Size: 1.70T  
+> Total Download Size : 159.59 G
+
+---
+---

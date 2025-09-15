@@ -21,11 +21,10 @@ title: Total app-data : 2.4G ( Individual sizes  has to be checked manually )
 
 ```
 
-> [!info]
+> [!info]  
 > `Compiled/Total/compiled_not_working`  
 > ✅ : Executable Available  
 > ❌ : Couldn't _MAKE_ executable
-
 
 1. [[rodinia_2.0-ft]] ✅
 2. [[GPU_Microbenchmark]] `8/13/2`
@@ -74,3 +73,5 @@ The Accel-Sim framework integrates these by name in its **define-all-apps** YAML
 ```
 
 ---
+
+# [[Available Traces]]
