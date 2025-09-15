@@ -4,7 +4,29 @@ dg-publish: true
 
 # Benchmarks Provided
 
-`Compiled/Total/compiled_not_working`
+```ad-info
+title: Total app-data : 2.4G ( Individual sizes  has to be checked manually )
+***Available:***
+	Rodinia_2.0 
+	Rodinia-3.1
+	SDK_4.2
+	ispass-2009
+	lonestargpu-2.0
+	pannotia
+	dragon
+	proxy-apps-doe 
+	parboil
+
+
+
+```
+
+> [!info]
+> `Compiled/Total/compiled_not_working`  
+> ✅ : Executable Available  
+> ❌ : Couldn't _MAKE_ executable
+
+
 1. [[rodinia_2.0-ft]] ✅
 2. [[GPU_Microbenchmark]] `8/13/2`
 3. [[GPU_Atomic]] ✅

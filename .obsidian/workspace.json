@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/AccelSim.md",
+                "file": "EFFORTS/Benchmarks Available In Accel-Sim.md",
                 "mode": "preview",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "AccelSim"
+              "title": "Benchmarks Available In Accel-Sim"
             }
           }
         ]
@@ -256,8 +256,8 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/AccelSim Trials.md",
     "EFFORTS/AccelSim.md",
+    "EFFORTS/AccelSim Trials.md",
     "EFFORTS/Benchmarks Available In Accel-Sim.md",
     "EFFORTS/huggingface.md",
     "EFFORTS/pytorch_examples.md",
