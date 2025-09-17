@@ -22,6 +22,8 @@ dg-publish: true
 
 ## [[Available Traces|Provided Traces]]
 
+## [[Special Permissions Required]]
+
 ---
 
 ## Modifications made
