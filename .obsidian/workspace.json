@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ATLAS/Atlas.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Atlas"
+              "title": "Homepage"
             }
           }
         ]
@@ -256,9 +256,10 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "ATLAS/Movie Watch List.md",
-    "ATLAS/Atlas.md",
+    "Prabin's KB ~/Prabins KB ~.md",
     "Homepage.md",
+    "ATLAS/Atlas.md",
+    "ATLAS/Movie Watch List.md",
     "EFFORTS/Benchmarks Available In Accel-Sim.md",
     "EFFORTS/Available Traces.md",
     "EFFORTS/AccelSim.md",
@@ -281,7 +282,6 @@
     "EFFORTS/polybench.md",
     "EFFORTS/parboil.md",
     "EFFORTS/rodinia-3.1.md",
-    "EFFORTS/sdk-4.2-scaled.md",
     "Extras/ATTACHMENTS/image-95.png",
     "Prabin's KB ~",
     "Extras/ATTACHMENTS/image-96.jpeg",
