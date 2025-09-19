@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/AccelSim.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,31 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "AccelSim"
-            }
-          },
-          {
-            "id": "45a9b9a29a2634c5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "EFFORTS/Special Permissions Required.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Special Permissions Required"
+              "title": "Homepage"
             }
           }
         ]
@@ -280,12 +256,12 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/Special Permissions Required.md",
+    "Homepage.md",
     "EFFORTS/AccelSim.md",
+    "EFFORTS/Special Permissions Required.md",
     "EFFORTS/Benchmarks Available In Accel-Sim.md",
     "EFFORTS/rodinia-3.1.md",
     "Prabin's KB ~/Prabins KB ~.md",
-    "Homepage.md",
     "ATLAS/Atlas.md",
     "ATLAS/Movie Watch List.md",
     "EFFORTS/Available Traces.md",
