@@ -5,7 +5,7 @@ dg-publish: true
 # Notes on the GPU-Simulator Accel-Sim
 
 > [!info] Disclaimer  
-> The note is not fully complete. It's always will be under constant changes (until the accel-sim development stops 😿.)
+> The notes are not complete. They will be under constant changes (until the accel-sim development stops 😿.)
 
 > [!success] Link to the Research Paper  
 > The research paper can be find at [LINK.](https://par.nsf.gov/servlets/purl/10302226)

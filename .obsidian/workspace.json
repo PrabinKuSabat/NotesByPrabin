@@ -11,24 +11,12 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "Homepage.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
+                "file": "Excalidraw/Dissertation Status.excalidraw.md"
               },
-              "icon": "lucide-file",
-              "title": "Homepage"
+              "icon": "excalidraw-icon",
+              "title": "Dissertation Status.excalidraw"
             }
           }
         ]
@@ -257,15 +245,16 @@
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
     "Homepage.md",
+    "Excalidraw/Dissertation Status.excalidraw.md",
+    "Prabin's KB ~/Prabins KB ~.md",
     "EFFORTS/AccelSim.md",
-    "EFFORTS/Special Permissions Required.md",
     "EFFORTS/Benchmarks Available In Accel-Sim.md",
     "EFFORTS/rodinia-3.1.md",
-    "Prabin's KB ~/Prabins KB ~.md",
+    "EFFORTS/AccelSim Trials.md",
+    "EFFORTS/Special Permissions Required.md",
     "ATLAS/Atlas.md",
     "ATLAS/Movie Watch List.md",
     "EFFORTS/Available Traces.md",
-    "EFFORTS/AccelSim Trials.md",
     "EFFORTS/huggingface.md",
     "EFFORTS/pytorch_examples.md",
     "EFFORTS/mlperf_inference_no_external_datasets.md",
@@ -281,7 +270,6 @@
     "EFFORTS/GPU_Microbenchmark.md",
     "EFFORTS/ispass-2009.md",
     "EFFORTS/cutlass_volta.md",
-    "EFFORTS/polybench.md",
     "Extras/ATTACHMENTS/image-95.png",
     "Prabin's KB ~",
     "Extras/ATTACHMENTS/image-96.jpeg",
