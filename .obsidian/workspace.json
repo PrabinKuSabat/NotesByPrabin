@@ -8,15 +8,27 @@
         "type": "tabs",
         "children": [
           {
-            "id": "e7a7b303c61786dc",
+            "id": "557d3fc1f4765eae",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "Excalidraw/Dissertation Status.excalidraw.md"
+                "file": "Homepage.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "excalidraw-icon",
-              "title": "Dissertation Status.excalidraw"
+              "icon": "lucide-file",
+              "title": "Homepage"
             }
           }
         ]
@@ -242,10 +254,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "557d3fc1f4765eae",
   "lastOpenFiles": [
-    "Homepage.md",
     "Excalidraw/Dissertation Status.excalidraw.md",
+    "Homepage.md",
     "Prabin's KB ~/Prabins KB ~.md",
     "EFFORTS/AccelSim.md",
     "EFFORTS/Benchmarks Available In Accel-Sim.md",
