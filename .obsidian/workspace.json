@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/AccelSim.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,31 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "AccelSim"
-            }
-          },
-          {
-            "id": "f290e14cd2839f9a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "EFFORTS/Benchmarking and Dissecting the Nvidia Hopper  GPU Architecture.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Benchmarking and Dissecting the Nvidia Hopper  GPU Architecture"
+              "title": "Homepage"
             }
           }
         ]
@@ -280,9 +256,10 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/Special Permissions Required.md",
+    "EFFORTS/AccelSim.md",
     "Excalidraw/Accel-sim Walk Around.excalidraw.md",
     "Homepage.md",
-    "EFFORTS/AccelSim.md",
     "EFFORTS/Tuner Correlating in Accelsim.md",
     "Prabin's KB ~/Prabins KB ~.md",
     "EFFORTS/Efforts.md",
@@ -299,7 +276,6 @@
     "EFFORTS/rodinia-3.1.md",
     "Excalidraw/Dissertation Status.excalidraw.md",
     "EFFORTS/AccelSim Trials.md",
-    "EFFORTS/Special Permissions Required.md",
     "EFFORTS/Available Traces.md",
     "EFFORTS/huggingface.md",
     "EFFORTS/pytorch_examples.md",
