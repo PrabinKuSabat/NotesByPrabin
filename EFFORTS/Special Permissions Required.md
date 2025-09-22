@@ -1,7 +1,9 @@
 ---
 dg-publish: true
 ---
+
 ****
+
 # NVIDIA Development Tools Solutions - ERR_NVGPUCTRPERM: Permission issue with Performance Counters
 
 _Short URL: <https://developer.nvidia.com/ERR_NVGPUCTRPERM_>

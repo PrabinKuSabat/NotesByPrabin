@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "EFFORTS/Efforts.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Efforts"
             }
           }
         ]
@@ -256,32 +256,32 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/Special Permissions Required.md",
-    "EFFORTS/AccelSim.md",
-    "Excalidraw/Accel-sim Walk Around.excalidraw.md",
-    "Homepage.md",
-    "EFFORTS/Tuner Correlating in Accelsim.md",
-    "Prabin's KB ~/Prabins KB ~.md",
-    "EFFORTS/Efforts.md",
     "EFFORTS/Dissertation.md",
+    "EFFORTS/Dissertation TO-Do Lists.md",
+    "EFFORTS/Online Courses.md",
     "EFFORTS/Notes.md",
+    "EFFORTS/AccelSim.md",
+    "EFFORTS/Efforts.md",
+    "Homepage.md",
+    "Prabin's KB ~/Prabins KB ~.md",
+    "EFFORTS/Release Branch Installation.md",
+    "EFFORTS/Tuner Correlating in Accelsim.md",
+    "EFFORTS/Available Traces.md",
+    "Excalidraw/Accel-sim Walk Around.excalidraw.md",
+    "EFFORTS/Benchmarks Available In Accel-Sim.md",
+    "EFFORTS/Special Permissions Required.md",
     "EFFORTS/Benchmarking and Dissecting the Nvidia Hopper  GPU Architecture.md",
     "EFFORTS/SSSIHL.md",
     "ATLAS/Atlas.md",
     "ATLAS/Wafers.md",
     "ATLAS/Ada Lovelace ISA.md",
     "EFFORTS/rodinia_2.0-ft.md",
-    "EFFORTS/Benchmarks Available In Accel-Sim.md",
     "ATLAS/Movie Watch List.md",
     "EFFORTS/rodinia-3.1.md",
     "Excalidraw/Dissertation Status.excalidraw.md",
     "EFFORTS/AccelSim Trials.md",
-    "EFFORTS/Available Traces.md",
     "EFFORTS/huggingface.md",
     "EFFORTS/pytorch_examples.md",
-    "EFFORTS/mlperf_inference_no_external_datasets.md",
-    "EFFORTS/mlperf_training.md",
-    "EFFORTS/mlperf_inference.md",
     "Extras/ATTACHMENTS/image-95.png",
     "Prabin's KB ~",
     "Extras/ATTACHMENTS/image-96.jpeg",
