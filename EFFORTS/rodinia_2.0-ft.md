@@ -14,6 +14,7 @@ Rodinia is a widely used heterogeneous benchmark suite (CPU+GPU) from University
 	 ✅
 - **heartwall-rodinia-2.0-ft** – (Medical image/video processing)  
 	 ✅
+- 
 - **lud-rodinia-2.0-ft** – (Dense linear algebra: LU decomposition)  
 	 ✅
 - **nw-rodinia-2.0-ft** – (Needleman-Wunsch sequence alignment)  
