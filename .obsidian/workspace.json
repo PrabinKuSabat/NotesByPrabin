@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "EFFORTS/Notes.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,10 +28,35 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Notes"
+            }
+          },
+          {
+            "id": "f290e14cd2839f9a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "EFFORTS/Benchmarking and Dissecting the Nvidia Hopper  GPU Architecture.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Benchmarking and Dissecting the Nvidia Hopper  GPU Architecture"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -254,16 +279,23 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "f290e14cd2839f9a",
   "lastOpenFiles": [
+    "EFFORTS/Benchmarking and Dissecting the Nvidia Hopper  GPU Architecture.md",
+    "EFFORTS/Notes.md",
+    "EFFORTS/Dissertation.md",
+    "EFFORTS/Efforts.md",
+    "EFFORTS/SSSIHL.md",
+    "Homepage.md",
+    "ATLAS/Atlas.md",
+    "ATLAS/Wafers.md",
+    "ATLAS/Ada Lovelace ISA.md",
+    "Prabin's KB ~/Prabins KB ~.md",
     "EFFORTS/rodinia_2.0-ft.md",
     "EFFORTS/Benchmarks Available In Accel-Sim.md",
     "ATLAS/Movie Watch List.md",
-    "ATLAS/Atlas.md",
-    "Homepage.md",
     "EFFORTS/rodinia-3.1.md",
     "EFFORTS/AccelSim.md",
-    "Prabin's KB ~/Prabins KB ~.md",
     "Excalidraw/Dissertation Status.excalidraw.md",
     "EFFORTS/AccelSim Trials.md",
     "EFFORTS/Special Permissions Required.md",
@@ -275,13 +307,6 @@
     "EFFORTS/mlperf_inference.md",
     "EFFORTS/lonestargpu-2.0.md",
     "EFFORTS/pannotia.md",
-    "EFFORTS/proxy-apps-doe.md",
-    "EFFORTS/dragon-cdp.md",
-    "EFFORTS/dragon-naive.md",
-    "EFFORTS/Deepbench_nvidia_tencore.md",
-    "EFFORTS/Atomic_Profile.md",
-    "EFFORTS/GPU_Microbenchmark.md",
-    "EFFORTS/ispass-2009.md",
     "Extras/ATTACHMENTS/image-95.png",
     "Prabin's KB ~",
     "Extras/ATTACHMENTS/image-96.jpeg",
