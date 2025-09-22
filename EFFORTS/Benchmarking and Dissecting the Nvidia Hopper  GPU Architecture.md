@@ -1,5 +1,6 @@
 # Unknown Terms
-- [ ] Atomics 
+
+- [ ] Atomics
 - [ ] Learn MMA in detail
 - [ ] wmma APIs
 - [ ] DPX asynchronous operation support

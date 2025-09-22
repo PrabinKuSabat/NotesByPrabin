@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Notes.md",
+                "file": "EFFORTS/AccelSim.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Notes"
+              "title": "AccelSim"
             }
           },
           {
@@ -55,8 +55,7 @@
               "title": "Benchmarking and Dissecting the Nvidia Hopper  GPU Architecture"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -279,23 +278,25 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "f290e14cd2839f9a",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/Benchmarking and Dissecting the Nvidia Hopper  GPU Architecture.md",
-    "EFFORTS/Notes.md",
-    "EFFORTS/Dissertation.md",
-    "EFFORTS/Efforts.md",
-    "EFFORTS/SSSIHL.md",
+    "Excalidraw/Accel-sim Walk Around.excalidraw.md",
     "Homepage.md",
+    "EFFORTS/AccelSim.md",
+    "EFFORTS/Tuner Correlating in Accelsim.md",
+    "Prabin's KB ~/Prabins KB ~.md",
+    "EFFORTS/Efforts.md",
+    "EFFORTS/Dissertation.md",
+    "EFFORTS/Notes.md",
+    "EFFORTS/Benchmarking and Dissecting the Nvidia Hopper  GPU Architecture.md",
+    "EFFORTS/SSSIHL.md",
     "ATLAS/Atlas.md",
     "ATLAS/Wafers.md",
     "ATLAS/Ada Lovelace ISA.md",
-    "Prabin's KB ~/Prabins KB ~.md",
     "EFFORTS/rodinia_2.0-ft.md",
     "EFFORTS/Benchmarks Available In Accel-Sim.md",
     "ATLAS/Movie Watch List.md",
     "EFFORTS/rodinia-3.1.md",
-    "EFFORTS/AccelSim.md",
     "Excalidraw/Dissertation Status.excalidraw.md",
     "EFFORTS/AccelSim Trials.md",
     "EFFORTS/Special Permissions Required.md",
@@ -305,8 +306,6 @@
     "EFFORTS/mlperf_inference_no_external_datasets.md",
     "EFFORTS/mlperf_training.md",
     "EFFORTS/mlperf_inference.md",
-    "EFFORTS/lonestargpu-2.0.md",
-    "EFFORTS/pannotia.md",
     "Extras/ATTACHMENTS/image-95.png",
     "Prabin's KB ~",
     "Extras/ATTACHMENTS/image-96.jpeg",
