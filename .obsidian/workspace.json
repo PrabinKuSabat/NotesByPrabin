@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Efforts.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Efforts"
+              "title": "Homepage"
             }
           }
         ]
@@ -256,19 +256,19 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/Benchmarks Available In Accel-Sim.md",
+    "EFFORTS/AccelSim.md",
+    "Prabin's KB ~/Prabins KB ~.md",
+    "Homepage.md",
+    "EFFORTS/Efforts.md",
     "EFFORTS/Dissertation.md",
     "EFFORTS/Dissertation TO-Do Lists.md",
     "EFFORTS/Online Courses.md",
     "EFFORTS/Notes.md",
-    "EFFORTS/AccelSim.md",
-    "EFFORTS/Efforts.md",
-    "Homepage.md",
-    "Prabin's KB ~/Prabins KB ~.md",
     "EFFORTS/Release Branch Installation.md",
     "EFFORTS/Tuner Correlating in Accelsim.md",
     "EFFORTS/Available Traces.md",
     "Excalidraw/Accel-sim Walk Around.excalidraw.md",
-    "EFFORTS/Benchmarks Available In Accel-Sim.md",
     "EFFORTS/Special Permissions Required.md",
     "EFFORTS/Benchmarking and Dissecting the Nvidia Hopper  GPU Architecture.md",
     "EFFORTS/SSSIHL.md",
