@@ -11,10 +11,24 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Homepage.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Homepage"
             }
           }
         ]
@@ -242,10 +256,10 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Homepage.md",
     "EFFORTS/Benchmarks Available In Accel-Sim.md",
     "EFFORTS/AccelSim.md",
     "Prabin's KB ~/Prabins KB ~.md",
-    "Homepage.md",
     "EFFORTS/Things to try out.md",
     "EFFORTS/Tuner Correlating in Accelsim.md",
     "EFFORTS/Available Traces.md",
