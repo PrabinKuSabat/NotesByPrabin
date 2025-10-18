@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/3070 stats collection.md",
+                "file": "EFFORTS/Benchmarks Available In Accel-Sim.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -52,7 +52,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "3070 stats collection"
+              "title": "Benchmarks Available In Accel-Sim"
             }
           }
         ],

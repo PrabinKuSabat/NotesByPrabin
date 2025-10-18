@@ -1,6 +1,6 @@
->  Just a quick Link!
->  [[Benchmarks Available In Accel-Sim#Benchmarks Provided]]
+> Just a quick Link!  
+> [[Benchmarks Available In Accel-Sim#Benchmarks Provided]]
 
-# Steps Done 
-1. Cloned a stable instance 
-2. 
+# Steps Done
+
+1. Cloned a stable instance
