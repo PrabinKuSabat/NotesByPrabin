@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Dissertation.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Dissertation"
+              "title": "Homepage"
             }
           },
           {
@@ -79,8 +79,7 @@
               "title": "Correlation Outputs RTX3070"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -303,13 +302,13 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "9212d01875695a22",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/Efforts.md",
+    "EFFORTS/Dissertation.md",
     "EFFORTS/Correlation Outputs RTX3070.md",
     "EFFORTS/3070 stats collection.md",
     "EFFORTS/Benchmarks Available In Accel-Sim.md",
-    "EFFORTS/Dissertation.md",
-    "EFFORTS/Efforts.md",
     "Homepage.md",
     "ATLAS/Movie Watch List.md",
     "ATLAS/Atlas.md",
