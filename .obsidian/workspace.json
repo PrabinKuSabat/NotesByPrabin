@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Benchmarks Available In Accel-Sim.md",
+                "file": "EFFORTS/3070 stats collection.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -52,11 +52,35 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Benchmarks Available In Accel-Sim"
+              "title": "3070 stats collection"
+            }
+          },
+          {
+            "id": "9212d01875695a22",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "EFFORTS/Correlation Outputs RTX3070.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Correlation Outputs RTX3070"
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -279,15 +303,16 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "ca5bd50992e25e88",
+  "active": "9212d01875695a22",
   "lastOpenFiles": [
+    "EFFORTS/Correlation Outputs RTX3070.md",
     "EFFORTS/3070 stats collection.md",
+    "EFFORTS/Benchmarks Available In Accel-Sim.md",
     "EFFORTS/Dissertation.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
     "ATLAS/Movie Watch List.md",
     "ATLAS/Atlas.md",
-    "EFFORTS/Benchmarks Available In Accel-Sim.md",
     "EFFORTS/AccelSim.md",
     "Prabin's KB ~/Prabins KB ~.md",
     "EFFORTS/Things to try out.md",
@@ -306,7 +331,6 @@
     "EFFORTS/rodinia_2.0-ft.md",
     "EFFORTS/rodinia-3.1.md",
     "Excalidraw/Dissertation Status.excalidraw.md",
-    "EFFORTS/AccelSim Trials.md",
     "Extras/ATTACHMENTS/image-95.png",
     "Prabin's KB ~",
     "Extras/ATTACHMENTS/image-96.jpeg",
