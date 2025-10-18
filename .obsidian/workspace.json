@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "EFFORTS/Dissertation.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,10 +28,35 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Dissertation"
+            }
+          },
+          {
+            "id": "ca5bd50992e25e88",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "EFFORTS/3070 stats collection.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "3070 stats collection"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -254,11 +279,14 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "ca5bd50992e25e88",
   "lastOpenFiles": [
+    "EFFORTS/3070 stats collection.md",
+    "EFFORTS/Dissertation.md",
+    "EFFORTS/Efforts.md",
+    "Homepage.md",
     "ATLAS/Movie Watch List.md",
     "ATLAS/Atlas.md",
-    "Homepage.md",
     "EFFORTS/Benchmarks Available In Accel-Sim.md",
     "EFFORTS/AccelSim.md",
     "Prabin's KB ~/Prabins KB ~.md",
@@ -266,8 +294,6 @@
     "EFFORTS/Tuner Correlating in Accelsim.md",
     "EFFORTS/Available Traces.md",
     "Excalidraw/Accel-sim Walk Around.excalidraw.md",
-    "EFFORTS/Efforts.md",
-    "EFFORTS/Dissertation.md",
     "EFFORTS/Dissertation TO-Do Lists.md",
     "EFFORTS/Online Courses.md",
     "EFFORTS/Notes.md",
@@ -281,7 +307,6 @@
     "EFFORTS/rodinia-3.1.md",
     "Excalidraw/Dissertation Status.excalidraw.md",
     "EFFORTS/AccelSim Trials.md",
-    "EFFORTS/huggingface.md",
     "Extras/ATTACHMENTS/image-95.png",
     "Prabin's KB ~",
     "Extras/ATTACHMENTS/image-96.jpeg",
