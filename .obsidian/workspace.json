@@ -30,54 +30,6 @@
               "icon": "lucide-file",
               "title": "Homepage"
             }
-          },
-          {
-            "id": "ca5bd50992e25e88",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "EFFORTS/3070 stats collection.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "3070 stats collection"
-            }
-          },
-          {
-            "id": "9212d01875695a22",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "EFFORTS/Correlation Outputs RTX3070.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Correlation Outputs RTX3070"
-            }
           }
         ]
       }
@@ -304,12 +256,12 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Homepage.md",
     "EFFORTS/Efforts.md",
     "EFFORTS/Dissertation.md",
     "EFFORTS/Correlation Outputs RTX3070.md",
     "EFFORTS/3070 stats collection.md",
     "EFFORTS/Benchmarks Available In Accel-Sim.md",
-    "Homepage.md",
     "ATLAS/Movie Watch List.md",
     "ATLAS/Atlas.md",
     "EFFORTS/AccelSim.md",
