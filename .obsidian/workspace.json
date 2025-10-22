@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "EFFORTS/Dissertation.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -52,7 +52,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Dissertation"
             }
           }
         ],
@@ -239,10 +239,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Homepage.md"
+                "file": "EFFORTS/Dissertation.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Homepage"
+              "title": "File properties for Dissertation"
             }
           }
         ]
@@ -281,9 +281,9 @@
   },
   "active": "c16a0e95d00cadf4",
   "lastOpenFiles": [
-    "CALENDER/2025-10-22.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
+    "CALENDER/2025-10-22.md",
     "EFFORTS/Dissertation.md",
     "EFFORTS/Correlation Outputs RTX3070.md",
     "EFFORTS/3070 stats collection.md",
