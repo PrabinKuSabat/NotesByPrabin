@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "CALENDER/2025-10-22.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "2025-10-22"
             }
           }
         ]
@@ -214,10 +214,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Homepage.md"
+                "file": "CALENDER/2025-10-22.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Homepage"
+              "title": "File properties for 2025-10-22"
             }
           }
         ]
@@ -256,8 +256,9 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Homepage.md",
     "EFFORTS/Efforts.md",
+    "CALENDER/2025-10-22.md",
+    "Homepage.md",
     "EFFORTS/Dissertation.md",
     "EFFORTS/Correlation Outputs RTX3070.md",
     "EFFORTS/3070 stats collection.md",
@@ -281,7 +282,6 @@
     "ATLAS/Ada Lovelace ISA.md",
     "EFFORTS/rodinia_2.0-ft.md",
     "EFFORTS/rodinia-3.1.md",
-    "Excalidraw/Dissertation Status.excalidraw.md",
     "Extras/ATTACHMENTS/image-95.png",
     "Prabin's KB ~",
     "Extras/ATTACHMENTS/image-96.jpeg",
