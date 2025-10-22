@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CALENDER/2025-10-22.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,16 +28,22 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "2025-10-22"
+              "title": "Homepage"
             }
-          },
+          }
+        ]
+      },
+      {
+        "id": "5e7c1dfe110d2ff3",
+        "type": "tabs",
+        "children": [
           {
-            "id": "c16a0e95d00cadf4",
+            "id": "8b0153e54983acdf",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Dissertation.md",
+                "file": "EFFORTS/Interim Report.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -52,11 +58,10 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Dissertation"
+              "title": "Interim Report"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -279,12 +284,13 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "c16a0e95d00cadf4",
+  "active": "8b0153e54983acdf",
   "lastOpenFiles": [
-    "EFFORTS/Efforts.md",
     "Homepage.md",
-    "CALENDER/2025-10-22.md",
+    "EFFORTS/Interim Report.md",
+    "EFFORTS/Efforts.md",
     "EFFORTS/Dissertation.md",
+    "CALENDER/2025-10-22.md",
     "EFFORTS/Correlation Outputs RTX3070.md",
     "EFFORTS/3070 stats collection.md",
     "EFFORTS/Benchmarks Available In Accel-Sim.md",
@@ -306,7 +312,6 @@
     "ATLAS/Wafers.md",
     "ATLAS/Ada Lovelace ISA.md",
     "EFFORTS/rodinia_2.0-ft.md",
-    "EFFORTS/rodinia-3.1.md",
     "Extras/ATTACHMENTS/image-95.png",
     "Prabin's KB ~",
     "Extras/ATTACHMENTS/image-96.jpeg",
