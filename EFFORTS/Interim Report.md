@@ -4,7 +4,7 @@
 4. Objectives of the study
 5. Literature Review
 	1. Why the need to simulate GPU Architecture ✅
-	2. Brief history of GPU Simulators and Developments
+	2. Brief history of GPU Simulators and Developments ✅
 	3. Available GPU Simulators
 		1. AMD
 		2. NVIDIA
