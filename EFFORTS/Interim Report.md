@@ -10,7 +10,7 @@
 		2. NVIDIA
 	4. Why choose NVIDIA architecture ✅
 	5. Why choose Accel-Sim?
-6. Benchmarks natively supported by Accel-sim. 
+6. Benchmarks natively supported by Accel-sim.
 7. Outcomes obtained from Accel-Sim
 	1. Simulations
 	2. Verification of the Accel-Sim framework for RX3070 for [[rodinia_2.0-ft].
