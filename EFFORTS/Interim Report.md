@@ -17,7 +17,6 @@
 8. Problems faced
 9. Road-Map
 
-
 ```latex
 \subsection{Need for Simulating GPU Architectures}
 
