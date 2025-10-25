@@ -30,6 +30,16 @@
               "icon": "lucide-file",
               "title": "2025-10-25"
             }
+          },
+          {
+            "id": "c2248f6c0972c2e8",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
+            }
           }
         ]
       }
@@ -256,8 +266,9 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Homepage.md",
+    "Untitled.md",
     "CALENDER/2025-10-25.md",
+    "Homepage.md",
     "EFFORTS/Interim Report.md",
     "EFFORTS/Dissertation.md",
     "EFFORTS/Efforts.md",
@@ -281,7 +292,6 @@
     "EFFORTS/Benchmarking and Dissecting the Nvidia Hopper  GPU Architecture.md",
     "EFFORTS/SSSIHL.md",
     "ATLAS/Wafers.md",
-    "ATLAS/Ada Lovelace ISA.md",
     "Extras/ATTACHMENTS/image-95.png",
     "Prabin's KB ~",
     "Extras/ATTACHMENTS/image-96.jpeg",
