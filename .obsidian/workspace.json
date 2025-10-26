@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CALENDER/2025-10-25.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,17 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "2025-10-25"
-            }
-          },
-          {
-            "id": "c2248f6c0972c2e8",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Homepage"
             }
           }
         ]
@@ -266,8 +256,8 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Untitled.md",
     "CALENDER/2025-10-25.md",
+    "Untitled.md",
     "Homepage.md",
     "EFFORTS/Interim Report.md",
     "EFFORTS/Dissertation.md",
