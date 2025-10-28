@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/SSSIHL.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,35 +28,10 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "SSSIHL"
-            }
-          },
-          {
-            "id": "c57292b097eb8214",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "EFFORTS/PMAT-303 LeetCode Assignment.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "PMAT-303 LeetCode Assignment"
+              "title": "Homepage"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -279,7 +254,7 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "c57292b097eb8214",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
     "EFFORTS/PMAT-303 LeetCode Assignment.md",
     "EFFORTS/SSSIHL.md",
