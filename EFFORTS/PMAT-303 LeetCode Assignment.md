@@ -6,7 +6,7 @@ FROM Products
 WHERE low_fats = 'Y' AND recyclable = 'Y';
   ```
 
-2. Find Customer Referee
+1. Find Customer Referee
 
 ```sql
 SELECT name
@@ -14,7 +14,7 @@ FROM Customer
 WHERE referee_id <> 2 OR referee_id IS NULL;
 ```
 
-3. Big Countries
+1. Big Countries
 
 ```sql
 SELECT name, population, area
@@ -22,7 +22,7 @@ FROM World
 WHERE area >= 3000000 OR population >= 25000000;
 ```
 
-4. Article Views I
+1. Article Views I
 
 ```sql
 SELECT DISTINCT author_id AS id
@@ -31,7 +31,7 @@ WHERE author_id = viewer_id
 ORDER BY id;
 ```
 
-5. Invalid Tweets
+1. Invalid Tweets
 
 ```sql
 SELECT tweet_id
@@ -39,7 +39,7 @@ FROM Tweets
 WHERE LENGTH(content) > 15;
 ```
 
-6. [Replace Employee ID With The Unique Identifier](https://leetcode.com/problems/replace-employee-id-with-the-unique-identifier/)
+1. [Replace Employee ID With The Unique Identifier](https://leetcode.com/problems/replace-employee-id-with-the-unique-identifier/)
 
 ```sql
 SELECT euni.unique_id, e.name
@@ -48,7 +48,8 @@ LEFT JOIN EmployeeUNI euni
 ON e.id = euni.id;
 ```
 
-7. Product Sales Analysis I
+1. Product Sales Analysis I
+
 ```sql
 SELECT p.product_name, s.year, s.price
 FROM Sales s
@@ -56,7 +57,8 @@ JOIN Product p
 ON s.product_id = p.product_id;
 ```
 
-8. Customer Who Visited but Did Not Make Any Transactions
+1. Customer Who Visited but Did Not Make Any Transactions
+
 ```sql
 SELECT
     v.customer_id,
@@ -68,7 +70,8 @@ WHERE t.visit_id IS NULL
 GROUP BY v.customer_id;
 ```
 
-9. Rising Temperature
+1. Rising Temperature
+
 ```sql
 SELECT w1.id
 FROM Weather w1
@@ -77,7 +80,8 @@ ON DATEDIFF(w1.recordDate, w2.recordDate) = 1
 WHERE w1.temperature > w2.temperature;
 ```
 
-10. Average Time of Process per Machine
+1. Average Time of Process per Machine
+
 ```sql
 SELECT 
     a.machine_id,
@@ -91,7 +95,8 @@ JOIN Activity b
 GROUP BY a.machine_id;
 ```
 
-11. Employee Bonus
+1. Employee Bonus
+
 ```sql
 SELECT e.name, b.bonus
 FROM Employee e
@@ -99,7 +104,8 @@ LEFT JOIN Bonus b ON e.empId = b.empId
 WHERE b.bonus < 1000 OR b.bonus IS NULL;
 ```
 
-12. Students and Examinations
+1. Students and Examinations
+
 ```sql
 SELECT 
     s.student_id,
@@ -114,7 +120,9 @@ LEFT JOIN Examinations e
 GROUP BY s.student_id, s.student_name, sub.subject_name
 ORDER BY s.student_id, sub.subject_name;
 ```
-13. Managers with at Least 5 Direct Reports
+
+1. Managers with at Least 5 Direct Reports
+
 ```sql
 SELECT m.name
 FROM Employee m
@@ -123,7 +131,8 @@ GROUP BY m.id, m.name
 HAVING COUNT(*) >= 5;
 ```
 
-14. Confirmation Rate
+1. Confirmation Rate
+
 ```sql
 SELECT 
   s.user_id,
@@ -139,7 +148,8 @@ LEFT JOIN Confirmations c
 GROUP BY s.user_id;
 ```
 
-15. Not Boring Movies
+1. Not Boring Movies
+
 ```sql
 SELECT id, movie, description, rating
 FROM Cinema
@@ -148,7 +158,8 @@ WHERE id % 2 = 1
 ORDER BY rating DESC;
 ```
 
-16. Average Selling Price
+1. Average Selling Price
+
 ```sql
 SELECT 
     p.product_id,
@@ -163,7 +174,8 @@ LEFT JOIN UnitsSold u
 GROUP BY p.product_id;
 ```
 
-17. Project Employees I
+1. Project Employees I
+
 ```sql
 SELECT 
     p.project_id,
@@ -174,7 +186,8 @@ JOIN Employee e
 GROUP BY p.project_id;
 ```
 
-18. Percentage of Users Attended a Contest
+1. Percentage of Users Attended a Contest
+
 ```sql
 SELECT 
     r.contest_id,
@@ -184,7 +197,8 @@ GROUP BY r.contest_id
 ORDER BY percentage DESC, r.contest_id ASC;
 ```
 
-19. Queries Quality and Percentage
+1. Queries Quality and Percentage
+
 ```sql
 SELECT
     query_name,
@@ -194,7 +208,8 @@ FROM Queries
 GROUP BY query_name;
 ```
 
-20. Monthly Transactions I
+1. Monthly Transactions I
+
 ```sql
 SELECT
     DATE_FORMAT(trans_date, '%Y-%m') AS month,
