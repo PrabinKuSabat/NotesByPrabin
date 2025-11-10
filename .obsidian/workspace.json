@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CALENDER/2025-10-22.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "2025-10-22"
+              "title": "Homepage"
             }
           }
         ]
@@ -214,17 +214,18 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "CALENDER/2025-10-22.md"
+                "file": "EFFORTS/AccelSim.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for 2025-10-22"
+              "title": "File properties for AccelSim"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 471.5
+    "width": 471.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -255,23 +256,23 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/AccelSim.md",
+    "Prabin's KB ~/Prabins KB ~.md",
     "Homepage.md",
+    "EFFORTS/Efforts.md",
+    "EFFORTS/Dissertation.md",
     "CALENDER/2025-10-22.md",
     "CALENDER/2025-10-25.md",
-    "EFFORTS/Efforts.md",
     "EFFORTS/SSSIHL.md",
     "EFFORTS/3rd Sem.md",
     "ATLAS/Atlas.md",
     "EFFORTS/PMAT-303 LeetCode Assignment.md",
     "Untitled.md",
     "EFFORTS/Interim Report.md",
-    "EFFORTS/Dissertation.md",
     "EFFORTS/Correlation Outputs RTX3070.md",
     "EFFORTS/3070 stats collection.md",
     "EFFORTS/Benchmarks Available In Accel-Sim.md",
     "ATLAS/Movie Watch List.md",
-    "EFFORTS/AccelSim.md",
-    "Prabin's KB ~/Prabins KB ~.md",
     "EFFORTS/Things to try out.md",
     "EFFORTS/Tuner Correlating in Accelsim.md",
     "EFFORTS/Available Traces.md",
