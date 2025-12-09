@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "EFFORTS/Dissertation.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Dissertation"
             }
           }
         ]
@@ -256,12 +256,12 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/Efforts.md",
+    "Homepage.md",
     "EFFORTS/AccelSim.md",
     "EFFORTS/Tuner Correlating in Accelsim.md",
     "Excalidraw/Accel-sim Walk Around.excalidraw.md",
-    "Homepage.md",
     "Prabin's KB ~/Prabins KB ~.md",
-    "EFFORTS/Efforts.md",
     "EFFORTS/Dissertation.md",
     "CALENDER/2025-10-22.md",
     "CALENDER/2025-10-25.md",
