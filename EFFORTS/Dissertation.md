@@ -7,6 +7,8 @@
 [[Interim Report]]
 
 ---
+
 # Things to Do
-- [ ] Read GPGPU-Sim mainpage
+
+- [ ] Read GPGPU-Sim mainpage  
   [GPGPU-Sim 3.x Manual](http://gpgpu-sim.org/manual/index.php/Main_Page)
