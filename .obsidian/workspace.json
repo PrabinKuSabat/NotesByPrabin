@@ -11,52 +11,13 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CALENDER/2025-12-10.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "2025-12-10"
-            }
-          },
-          {
-            "id": "1fba0b6a1c51494e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CALENDER/L40 pricing @vast.ai.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "L40 pricing @vast.ai"
+              "title": "New tab"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -279,16 +240,18 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "1fba0b6a1c51494e",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "CALENDER/L40 pricing @vast.ai.md",
-    "CALENDER/2025-12-10.md",
-    "Homepage.md",
-    "EFFORTS/Dissertation.md",
-    "EFFORTS/Efforts.md",
     "EFFORTS/AccelSim.md",
     "EFFORTS/Tuner Correlating in Accelsim.md",
+    "EFFORTS/Notes.md",
     "Excalidraw/Accel-sim Walk Around.excalidraw.md",
+    "Homepage.md",
+    "EFFORTS/Dissertation.md",
+    "EFFORTS/Dissertation TO-Do Lists.md",
+    "EFFORTS/Efforts.md",
+    "CALENDER/L40 pricing @vast.ai.md",
+    "CALENDER/2025-12-10.md",
     "Prabin's KB ~/Prabins KB ~.md",
     "CALENDER/2025-10-22.md",
     "CALENDER/2025-10-25.md",
@@ -304,9 +267,7 @@
     "ATLAS/Movie Watch List.md",
     "EFFORTS/Things to try out.md",
     "EFFORTS/Available Traces.md",
-    "EFFORTS/Dissertation TO-Do Lists.md",
     "EFFORTS/Online Courses.md",
-    "EFFORTS/Notes.md",
     "Extras/ATTACHMENTS/image-95.png",
     "Prabin's KB ~",
     "Extras/ATTACHMENTS/image-96.jpeg",
