@@ -11,10 +11,24 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "EFFORTS/AccelSim.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "AccelSim"
             }
           }
         ]
@@ -242,14 +256,14 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/Notes.md",
+    "EFFORTS/Dissertation.md",
+    "EFFORTS/Efforts.md",
+    "Homepage.md",
     "EFFORTS/AccelSim.md",
     "EFFORTS/Tuner Correlating in Accelsim.md",
-    "EFFORTS/Notes.md",
     "Excalidraw/Accel-sim Walk Around.excalidraw.md",
-    "Homepage.md",
-    "EFFORTS/Dissertation.md",
     "EFFORTS/Dissertation TO-Do Lists.md",
-    "EFFORTS/Efforts.md",
     "CALENDER/L40 pricing @vast.ai.md",
     "CALENDER/2025-12-10.md",
     "Prabin's KB ~/Prabins KB ~.md",

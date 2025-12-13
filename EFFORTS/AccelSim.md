@@ -45,6 +45,16 @@ dg-publish: true
 > void yyerror(const char* s);
 > ```
 
+- Add sm89 support to compiled files
+	- *Yet to complete*
+
+For newer Architectures:
+- Modify gpgusim.config files after creating
+	- gpgpu_n_mem 32
+	- gpgpu_memory_partition_indexing 64
+	- -gpgpu_cache:dl2 S:512:128:24,L:B:m:L:P,A:192:4,32:F,32
+	  0 was replace with F in **:F,32**.
+
 ---
 
 ## Benchmark Running Process
