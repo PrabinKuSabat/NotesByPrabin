@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/AccelSim.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "AccelSim"
+              "title": "Homepage"
             }
           }
         ]
@@ -214,18 +214,17 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "CALENDER/L40 pricing @vast.ai.md"
+                "file": "Homepage.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for L40 pricing @vast.ai"
+              "title": "File properties for Homepage"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 471.5,
-    "collapsed": true
+    "width": 471.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -256,11 +255,11 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/AccelSim.md",
     "EFFORTS/Notes.md",
     "EFFORTS/Dissertation.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
-    "EFFORTS/AccelSim.md",
     "EFFORTS/Tuner Correlating in Accelsim.md",
     "Excalidraw/Accel-sim Walk Around.excalidraw.md",
     "EFFORTS/Dissertation TO-Do Lists.md",
