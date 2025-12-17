@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "CALENDER/2025-12-17.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "2025-12-17"
             }
           }
         ]
@@ -214,17 +214,18 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Homepage.md"
+                "file": "CALENDER/2025-12-17.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Homepage"
+              "title": "File properties for 2025-12-17"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 471.5
+    "width": 471.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -255,11 +256,12 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Homepage.md",
+    "CALENDER/2025-12-17.md",
     "EFFORTS/AccelSim.md",
     "EFFORTS/Notes.md",
     "EFFORTS/Dissertation.md",
     "EFFORTS/Efforts.md",
-    "Homepage.md",
     "EFFORTS/Tuner Correlating in Accelsim.md",
     "Excalidraw/Accel-sim Walk Around.excalidraw.md",
     "EFFORTS/Dissertation TO-Do Lists.md",
@@ -280,7 +282,6 @@
     "ATLAS/Movie Watch List.md",
     "EFFORTS/Things to try out.md",
     "EFFORTS/Available Traces.md",
-    "EFFORTS/Online Courses.md",
     "Extras/ATTACHMENTS/image-95.png",
     "Prabin's KB ~",
     "Extras/ATTACHMENTS/image-96.jpeg",
