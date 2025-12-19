@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CALENDER/2025-12-17.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "2025-12-17"
+              "title": "Homepage"
             }
           }
         ]
@@ -256,8 +256,8 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Homepage.md",
     "CALENDER/2025-12-17.md",
+    "Homepage.md",
     "EFFORTS/AccelSim.md",
     "EFFORTS/Notes.md",
     "EFFORTS/Dissertation.md",
