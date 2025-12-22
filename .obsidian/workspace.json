@@ -30,33 +30,8 @@
               "icon": "lucide-file",
               "title": "Homepage"
             }
-          },
-          {
-            "id": "137a4061f0585a2a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Buffer.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Buffer"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -279,14 +254,14 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "137a4061f0585a2a",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
     "Buffer.md",
     "Homepage.md",
+    "EFFORTS/Efforts.md",
+    "EFFORTS/Dissertation.md",
     "EFFORTS/AccelSim.md",
     "EFFORTS/Notes.md",
-    "EFFORTS/Dissertation.md",
-    "EFFORTS/Efforts.md",
     "Prabin's KB ~/Prabins KB ~.md",
     "CALENDER/2025-12-17.md",
     "EFFORTS/Tuner Correlating in Accelsim.md",
