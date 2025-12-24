@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Dissertation.md",
+                "file": "EFFORTS/Interim Report.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,31 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Dissertation"
+              "title": "Interim Report"
+            }
+          },
+          {
+            "id": "b6889585db6cd879",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "EFFORTS/Presentation 24-12-2025, Accel-sim Go-Through.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Presentation 24-12-2025, Accel-sim Go-Through"
             }
           },
           {
@@ -41,7 +65,8 @@
               "title": "New tab"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -108,7 +133,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5
+    "width": 414.5,
+    "collapsed": true
   },
   "right": {
     "id": "43fc27400badb105",
@@ -223,10 +249,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "CALENDER/2025-12-17.md"
+                "file": "EFFORTS/Presentation 24-12-2025, Accel-sim Go-Through.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for 2025-12-17"
+              "title": "File properties for Presentation 24-12-2025, Accel-sim Go-Through"
             }
           }
         ]
@@ -263,26 +289,27 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "b6889585db6cd879",
   "lastOpenFiles": [
+    "EFFORTS/Interim Report.md",
     "EFFORTS/Dissertation.md",
+    "EFFORTS/Presentation 24-12-2025, Accel-sim Go-Through.md",
+    "EFFORTS/Notes.md",
+    "EFFORTS/AccelSim.md",
+    "Excalidraw/Accel-sim Walk Around.excalidraw.md",
+    "Homepage.md",
     "Excalidraw/Scripts/Downloaded/Scribble Helper.svg",
     "Excalidraw/Scripts/Downloaded/Scribble Helper.md",
     "Excalidraw/Scripts/Downloaded/Shade Master.svg",
     "Excalidraw/Scripts/Downloaded/Shade Master.md",
     "Excalidraw/Scripts/Downloaded/Printable Layout Wizard.svg",
     "Excalidraw/Scripts/Downloaded/Printable Layout Wizard.md",
-    "EFFORTS/Notes.md",
-    "EFFORTS/AccelSim.md",
-    "Excalidraw/Accel-sim Walk Around.excalidraw.md",
     "Excalidraw/Scripts/Downloaded/Convert freedraw to line.svg",
     "Excalidraw/Scripts/Downloaded/Convert freedraw to line.md",
     "Excalidraw/Scripts/Downloaded/Deconstruct selected elements into new drawing.svg",
     "Excalidraw/Scripts/Downloaded/Deconstruct selected elements into new drawing.md",
     "Excalidraw/Scripts/Downloaded/Mindmap Builder.svg",
     "Excalidraw/Scripts/Downloaded/Mindmap Builder.md",
-    "Homepage.md",
-    "EFFORTS/Interim Report.md",
     "EFFORTS/Dissertation TO-Do Lists.md",
     "EFFORTS/Efforts.md",
     "Prabin's KB ~/Prabins KB ~.md",

@@ -63,6 +63,8 @@
     "excalidraw-embed-md": "checkbox",
     "dg-show-backlinks": "text",
     "dg-hide-in-graph": "text",
-    "cssclass": "text"
+    "cssclass": "text",
+    "excalidraw-export-internal-links": "checkbox",
+    "tasks": "checkbox"
   }
 }

@@ -1,4 +1,6 @@
 {
+  "copyLinkToElemenetAnchorTo100": false,
+  "copyFrameLinkByName": false,
   "disableDoubleClickTextEditing": false,
   "folder": "Excalidraw",
   "cropFolder": "",
@@ -38,6 +40,8 @@
   "overrideObsidianFontSize": false,
   "dynamicStyling": "colorful",
   "isLeftHanded": false,
+  "desktopUIMode": "tray",
+  "tabletUIMode": "compact",
   "iframeMatchExcalidrawTheme": true,
   "matchTheme": false,
   "matchThemeAlways": false,
@@ -107,7 +111,7 @@
   "library2": {
     "type": "excalidrawlib",
     "version": 2,
-    "source": "https://github.com/zsviczian/obsidian-excalidraw-plugin/releases/tag/2.15.2",
+    "source": "https://github.com/zsviczian/obsidian-excalidraw-plugin/releases/tag/2.18.3",
     "libraryItems": []
   },
   "imageElementNotice": true,
@@ -151,11 +155,68 @@
         "value": 1,
         "description": "Number of line points between start and end"
       }
+    },
+    "Downloaded/Scribble Helper": {
+      "Default action": {
+        "value": "Text",
+        "valueset": [
+          "Text",
+          "Sticky",
+          "Wrap"
+        ],
+        "description": "What type of element should CTRL/CMD+ENTER create. TEXT: A regular text element. STICKY: A sticky note with border color and background color (using the current setting of the canvas). STICKY: A sticky note with transparent border and background color."
+      }
+    },
+    "Downloaded/Shade Master": {
+      "Color Format": {
+        "value": "RGB",
+        "valueset": [
+          "HSL",
+          "RGB",
+          "HEX"
+        ],
+        "description": "Output color format."
+      },
+      "Modify Stroke Color": {
+        "value": true
+      },
+      "Modify Background Color": {
+        "value": true
+      }
+    },
+    "Downloaded/Normalize Selected Arrows": {
+      "Gap": {
+        "value": 8,
+        "description": "The value of the gap between the connection line and the element, which must be greater than 0. If you want the connector to be next to the element, set it to 1."
+      }
+    },
+    "Downloaded/Mindmap format": {
+      "MindMap Format": {
+        "value": "Excalidraw/MindMap Format",
+        "description": "This is prepared for the namespace of MindMap Format and does not need to be modified"
+      },
+      "default gap": {
+        "value": 10,
+        "description": "Interval size of element"
+      },
+      "curve length": {
+        "value": 40,
+        "description": "The length of the curve part in the mind map line"
+      },
+      "length between element and line": {
+        "value": 50,
+        "description": "The distance between the tail of the connection and the connecting elements of the mind map"
+      }
+    },
+    "Downloaded/Mindmap Builder": {
+      "Box Children": {
+        "value": true
+      }
     }
   },
-  "defaultTrayMode": true,
-  "previousRelease": "2.15.2",
+  "previousRelease": "2.18.3",
   "showReleaseNotes": true,
+  "compareManifestToPluginVersion": true,
   "showNewVersionNotification": true,
   "latexBoilerplate": "\\color{blue}",
   "latexPreambleLocation": "preamble.sty",
@@ -512,6 +573,7 @@
   "aiEnabled": true,
   "openAIAPIToken": "",
   "openAIDefaultTextModel": "gpt-3.5-turbo-1106",
+  "openAIDefaultTextModelMaxTokens": 4096,
   "openAIDefaultVisionModel": "gpt-4o",
   "openAIDefaultImageGenerationModel": "dall-e-3",
   "openAIURL": "https://api.openai.com/v1/chat/completions",
@@ -838,5 +900,7 @@
     "customPaperColor": "#ffffff",
     "alignment": "center",
     "margin": "normal"
-  }
+  },
+  "disableContextMenu": false,
+  "defaultTrayMode": true
 }

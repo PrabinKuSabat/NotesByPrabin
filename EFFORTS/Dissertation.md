@@ -4,7 +4,8 @@
 [[Notes]]  
 [[Dissertation TO-Do Lists]]  
 [[3070 stats collection]]  
-[[Interim Report]]
+[[Interim Report]]  
+[[Presentation 24-12-2025, Accel-sim Go-Through]]
 
 ---
 

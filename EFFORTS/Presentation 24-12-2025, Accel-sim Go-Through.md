@@ -1,0 +1,15 @@
+---
+tasks: false
+---
+- [ ] Why accel-sim and why it's important in current scenerio of GPU_developement?
+	- [ ] Who are the active developers or moderators and their background?
+	- [ ] Where was accel-sim developed and what's the current status of it?
+- [ ] Walk-through of all the stages.
+- [ ] Stage 1:
+	- [ ] Tracer
+		- [ ] why the traces are important 
+		- [ ] where are the trace files being generated
+		- [ ] what does the traces contain 
+		- [ ] how does the traces look mean and what does it mean 
+		- [ ] what's being used for generating traces and how's it being done 
+		- [ ] 

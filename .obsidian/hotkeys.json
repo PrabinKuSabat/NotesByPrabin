@@ -160,7 +160,8 @@
   "app:toggle-right-sidebar": [
     {
       "modifiers": [
-        "Alt"
+        "Alt",
+        "Shift"
       ],
       "key": "ArrowUp"
     }
@@ -168,7 +169,8 @@
   "app:toggle-left-sidebar": [
     {
       "modifiers": [
-        "Alt"
+        "Alt",
+        "Shift"
       ],
       "key": "ArrowDown"
     }
@@ -176,7 +178,8 @@
   "app:go-back": [
     {
       "modifiers": [
-        "Alt"
+        "Alt",
+        "Shift"
       ],
       "key": "ArrowLeft"
     }
@@ -184,7 +187,8 @@
   "app:go-forward": [
     {
       "modifiers": [
-        "Alt"
+        "Alt",
+        "Shift"
       ],
       "key": "ArrowRight"
     }
