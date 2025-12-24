@@ -52,7 +52,9 @@ Collect all GPU Arch. from white papers and go through them. ^JUbjVyrZ
 Trace all the Available Benchmarks in the RTX 4090. ^NMWqs041
 
 %%
+
 ## Drawing
+
 ```compressed-json
 N4KAkARALgngDgUwgLgAQQQDwMYEMA2AlgCYBOuA7hADTgQBuCpAzoQPYB2KqATLZMzYBXUtiRoIACyhQ4zZAHoFAc0JRJQgEYA6bGwC2CgF7N6hbEcK4OCtptbErHALRY8RMpWdx8Q1TdIEfARcZgRmBShcZQUebQBGAFZtHho6IIR9BA4oZm4AbXAwUDBSiBJuCAAxU3wAeQAheIBRADMABgBVACUASQoAKQBpABUAOSgARUS00shYRErA7CiO
 
@@ -172,4 +174,5 @@ rIQYqW076eLo+QQz4Vs2H4Y9OMn7joZyMHwZlQ5npTzIFUHEyFOLQ/mAkNgGJDyhZpi7ZIOcGCjnofQv
 
 e4AKX/wWl9jV5f0vcQrwa2QC7ye4wsnZIcp3sMLIqY7jCAeOI2BdxrAPnZQbINI5xfuwiAyLn2uUYgBu4sgWvcjDHAfMGuXQdZpgGMCOgmuygZr0gFi+CA4uAXdgT7DhWYAKg3cxcPfggDtd7j0IKwQgIwEFxUhlXGd4EvdckHuxvmscfQEs7TziHK7TptsQYAVAZA/X2BKfW7MJDpDbYAbtgEG94KCRwAr9excEB774RcIQAA==
 ```
+
 %%

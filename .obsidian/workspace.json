@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "EFFORTS/Notes.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Notes"
             }
           }
         ]
@@ -256,17 +256,18 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Buffer.md",
-    "Homepage.md",
-    "EFFORTS/Efforts.md",
     "EFFORTS/Dissertation.md",
+    "EFFORTS/Dissertation TO-Do Lists.md",
+    "EFFORTS/Efforts.md",
+    "Homepage.md",
+    "Prabin's KB ~/Prabins KB ~.md",
+    "Excalidraw/Dissertation Status.excalidraw.md",
+    "Buffer.md",
     "EFFORTS/AccelSim.md",
     "EFFORTS/Notes.md",
-    "Prabin's KB ~/Prabins KB ~.md",
     "CALENDER/2025-12-17.md",
     "EFFORTS/Tuner Correlating in Accelsim.md",
     "Excalidraw/Accel-sim Walk Around.excalidraw.md",
-    "EFFORTS/Dissertation TO-Do Lists.md",
     "CALENDER/L40 pricing @vast.ai.md",
     "CALENDER/2025-12-10.md",
     "CALENDER/2025-10-22.md",
@@ -281,7 +282,6 @@
     "EFFORTS/3070 stats collection.md",
     "EFFORTS/Benchmarks Available In Accel-Sim.md",
     "ATLAS/Movie Watch List.md",
-    "EFFORTS/Things to try out.md",
     "Extras/ATTACHMENTS/image-95.png",
     "Prabin's KB ~",
     "Extras/ATTACHMENTS/image-96.jpeg",
