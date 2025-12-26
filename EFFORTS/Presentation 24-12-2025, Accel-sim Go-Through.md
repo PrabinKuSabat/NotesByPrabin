@@ -30,4 +30,31 @@ tasks: false
 			- [ ] What all parameters the `monitor_func_test.py` can take?
 		- [ ] Stats collection
 			- [ ] How't it done?
-			- [ ] 
+			- [ ] What's the format in which it's stored?
+- [ ] Stage 3:
+	- [ ] Correlation
+		- [ ] How does `run_hw.py` work?
+			- [ ] Input, Output
+			- [ ] Parameters cant take.
+		- [ ] What `get_stats.py` does?
+			- [ ] Parameters
+			- [ ] Output Values
+			- [ ] Input, Output
+	- [ ] Hardware stats
+		- [ ] How's it done?
+		- [ ] What does it output? (format)
+		- [ ] What's the requirement?
+		- [ ] Why it should be done?
+- [ ] Stage 4:
+	- [ ] Tuning
+		- [ ] Process
+		- [ ] Why it's done?
+		- [ ] My Current Status
+		- [ ] What to expect and what not to?
+		- [ ] What all things are under tuning?
+
+- [ ] How's gpgpu-sim is being used?
+- [ ] Read accel-sim whitepaper
+- [ ] Read gpgpu-sim manual
+- [ ] Understand all the stuff and then start making the ppt.
+- [ ] It's done.
