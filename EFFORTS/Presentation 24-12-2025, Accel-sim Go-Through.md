@@ -11,5 +11,23 @@ tasks: false
 		- [ ] why the traces are important
 		- [ ] where are the trace files being generated
 		- [ ] what does the traces contain
-		- [ ] how does the traces look mean and what does it mean
+		- [ ] how does the traces look and what does it mean
 		- [ ] what's being used for generating traces and how's it being done
+- [ ] Stage 2: 
+	- [ ] Simulation 
+		- [ ] What does it mean?
+		- [ ] How's it being done?
+			- [ ] What are the two methods
+			- [ ] What all parameters can the `run_simulations.py` can take in? 
+		- [ ] How's GPGPU-Sim being used in this?
+		- [ ] Outputs
+			- [ ] Where the outputs are being saved?
+			- [ ] How it looks?
+			- [ ] What it contains?
+			- [ ] How it will be used?
+		- [ ] Monitoring
+			- [ ] How's it done?
+			- [ ] What all parameters the `monitor_func_test.py` can take?
+		- [ ] Stats collection
+			- [ ] How't it done?
+			- [ ] 
