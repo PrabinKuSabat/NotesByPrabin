@@ -13,12 +13,12 @@ tasks: false
 		- [ ] what does the traces contain
 		- [ ] how does the traces look and what does it mean
 		- [ ] what's being used for generating traces and how's it being done
-- [ ] Stage 2: 
-	- [ ] Simulation 
+- [ ] Stage 2:
+	- [ ] Simulation
 		- [ ] What does it mean?
 		- [ ] How's it being done?
 			- [ ] What are the two methods
-			- [ ] What all parameters can the `run_simulations.py` can take in? 
+			- [ ] What all parameters can the `run_simulations.py` can take in?
 		- [ ] How's GPGPU-Sim being used in this?
 		- [ ] Outputs
 			- [ ] Where the outputs are being saved?
@@ -52,9 +52,10 @@ tasks: false
 		- [ ] My Current Status
 		- [ ] What to expect and what not to?
 		- [ ] What all things are under tuning?
-
 - [ ] How's gpgpu-sim is being used?
 - [ ] Read accel-sim whitepaper
 - [ ] Read gpgpu-sim manual
 - [ ] Understand all the stuff and then start making the ppt.
 - [ ] It's done.
+
+[[GPGPU-SIM Manual Notes]]
