@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Presentation 24-12-2025, Accel-sim Go-Through.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,31 +28,17 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Presentation 24-12-2025, Accel-sim Go-Through"
+              "title": "Homepage"
             }
           },
           {
-            "id": "d13b96dee0e8ae49",
+            "id": "1fa0e4adaba72f5c",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "EFFORTS/GPGPU-SIM Manual Notes.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "GPGPU-SIM Manual Notes"
+              "title": "New tab"
             }
           }
         ],
@@ -279,32 +265,35 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "d13b96dee0e8ae49",
+  "active": "1fa0e4adaba72f5c",
   "lastOpenFiles": [
-    "Extras/ATTACHMENTS/image-100.png",
-    "Extras/ATTACHMENTS/image-99.png",
-    "Extras/ATTACHMENTS/image-98.png",
-    "Extras/ATTACHMENTS/image-96.png",
-    "EFFORTS/GPGPU-SIM Manual Notes.md",
-    "EFFORTS/Presentation 24-12-2025, Accel-sim Go-Through.md",
-    "EFFORTS/Dissertation.md",
-    "EFFORTS/Efforts.md",
     "Homepage.md",
+    "EFFORTS/Presentation 24-12-2025, Accel-sim Go-Through.md",
+    "Excalidraw/Drawing 2025-12-26 20.15.13.excalidraw.md",
+    "Excalidraw/Scripts/Downloaded/Full-Year Calendar Generator.svg",
+    "Excalidraw/Scripts/Downloaded/Set Grid.svg",
+    "Excalidraw/Scripts/Downloaded/Uniform size.svg",
+    "Excalidraw/Scripts/Downloaded/Text to Sticky Notes.svg",
+    "Excalidraw/Scripts/Downloaded/Normalize Selected Arrows.svg",
+    "Excalidraw/Scripts/Downloaded/Elbow connectors.svg",
+    "Excalidraw/Scripts/Downloaded/Connect elements.svg",
+    "Excalidraw/Scripts/Downloaded/Mindmap format.svg",
+    "Excalidraw/Scripts/Downloaded/Grid Selected Images.svg",
+    "Excalidraw/Scripts/Downloaded/Fixed spacing.svg",
+    "EFFORTS/Dissertation.md",
+    "excalibrain.md",
+    "EFFORTS/Efforts.md",
+    "Excalidraw/Drawing 2025-12-26 20.01.48.excalidraw.md",
+    "EFFORTS/GPGPU-SIM Manual Notes.md",
     "EFFORTS/Interim Report.md",
     "EFFORTS/Notes.md",
     "EFFORTS/AccelSim.md",
     "Excalidraw/Accel-sim Walk Around.excalidraw.md",
-    "Excalidraw/Scripts/Downloaded/Scribble Helper.svg",
     "Excalidraw/Scripts/Downloaded/Scribble Helper.md",
-    "Excalidraw/Scripts/Downloaded/Shade Master.svg",
     "Excalidraw/Scripts/Downloaded/Shade Master.md",
-    "Excalidraw/Scripts/Downloaded/Printable Layout Wizard.svg",
     "Excalidraw/Scripts/Downloaded/Printable Layout Wizard.md",
-    "Excalidraw/Scripts/Downloaded/Convert freedraw to line.svg",
     "Excalidraw/Scripts/Downloaded/Convert freedraw to line.md",
-    "Excalidraw/Scripts/Downloaded/Deconstruct selected elements into new drawing.svg",
     "Excalidraw/Scripts/Downloaded/Deconstruct selected elements into new drawing.md",
-    "Excalidraw/Scripts/Downloaded/Mindmap Builder.svg",
     "Excalidraw/Scripts/Downloaded/Mindmap Builder.md",
     "EFFORTS/Dissertation TO-Do Lists.md",
     "Prabin's KB ~/Prabins KB ~.md",
@@ -313,10 +302,6 @@
     "CALENDER/2025-12-17.md",
     "EFFORTS/Tuner Correlating in Accelsim.md",
     "CALENDER/L40 pricing @vast.ai.md",
-    "CALENDER/2025-12-10.md",
-    "CALENDER/2025-10-22.md",
-    "CALENDER/2025-10-25.md",
-    "Extras/ATTACHMENTS/image-95.png",
     "Prabin's KB ~",
     "Excalidraw/Scripts/Downloaded",
     "Excalidraw/Scripts",

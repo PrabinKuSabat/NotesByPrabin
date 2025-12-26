@@ -2,10 +2,10 @@
 tasks: false
 ---
 
-- [ ] Why accel-sim and why it's important in current scenerio of GPU_developement?
-	- [ ] Who are the active developers or moderators and their background?
-	- [ ] Where was accel-sim developed and what's the current status of it?
-- [ ] Walk-through of all the stages.
+- [x] Why accel-sim and why it's important in current scenerio of GPU_developement? ✅ 2025-12-26
+	- [x] Who are the active developers or moderators and their background? ✅ 2025-12-26
+	- [x] Where was accel-sim developed and what's the current status of it? ✅ 2025-12-26
+- [ ] Walk-through of all the 2stages.
 - [ ] Stage 1:
 	- [ ] Tracer
 		- [ ] why the traces are important

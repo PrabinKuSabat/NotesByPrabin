@@ -39,9 +39,9 @@
   "height": "",
   "overrideObsidianFontSize": false,
   "dynamicStyling": "colorful",
-  "isLeftHanded": false,
-  "desktopUIMode": "tray",
-  "tabletUIMode": "compact",
+  "isLeftHanded": true,
+  "desktopUIMode": "compact",
+  "tabletUIMode": "tray",
   "iframeMatchExcalidrawTheme": true,
   "matchTheme": false,
   "matchThemeAlways": false,
@@ -222,7 +222,13 @@
   "latexPreambleLocation": "preamble.sty",
   "taskboneEnabled": false,
   "taskboneAPIkey": "",
-  "pinnedScripts": [],
+  "pinnedScripts": [
+    "Excalidraw/Scripts/Downloaded/Slideshow.md",
+    "Excalidraw/Scripts/Downloaded/Shade Master.md",
+    "Excalidraw/Scripts/Downloaded/Scribble Helper.md",
+    "Excalidraw/Scripts/Downloaded/Normalize Selected Arrows.md",
+    "Excalidraw/Scripts/Downloaded/Mindmap Builder.md"
+  ],
   "customPens": [
     {
       "type": "default",
