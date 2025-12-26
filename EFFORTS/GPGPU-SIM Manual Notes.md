@@ -57,3 +57,5 @@ But `injection port buffer is shared`.
 5. Decode
 	- The recent inst. are decoded and stored in respective entry in the I-B.
 
+> Each SIMT core has one SP unit and one SFU unit. Each unit has an independent issue port from the operand collector. Both units share the same output pipeline register that connects to a common writeback stage. There is a result bus allocator at the output of the operand collector to ensure that the units will never be stalled due to the shared writeback. Each instruction will need to allocate a cycle slot in the result bus before being issued to either unit. Notice that the memory pipeline has its own writeback stage and is not managed by this result bus allocator.
+
