@@ -6,24 +6,25 @@ tasks: false
 	- [x] Who are the active developers or moderators and their background? ✅ 2025-12-26
 	- [x] Where was accel-sim developed and what's the current status of it? ✅ 2025-12-26
 - [ ] Walk-through of all the 2stages.
-- [ ] Stage 1:
-	- [ ] Tracer
+- [x] Stage 1: ✅ 2025-12-27
+	- [x] Tracer ✅ 2025-12-27
 		- [x] why the traces are important ✅ 2025-12-27
 		- [x] where are the trace files being generated ✅ 2025-12-27
 		- [x] what does the traces contain ✅ 2025-12-27
 		- [x] how does the traces look and what does it mean ✅ 2025-12-27
 		- [x] what's being used for generating traces and how's it being done ✅ 2025-12-27
 - [ ] Stage 2:
-	- [ ] Simulation
-		- [ ] Why it's done?
-		- [ ] How's it being done?
-			- [ ] What are the two methods
-			- [ ] What all parameters can the `run_simulations.py` can take in?
-		- [ ] How's GPGPU-Sim being used in this?
-		- [ ] Outputs
-			- [ ] Where the outputs are being saved?
-			- [ ] How it looks?
-			- [ ] What it contains?
+	- [x] Simulation ✅ 2025-12-27
+		- [x] Why it's done? ✅ 2025-12-27
+		- [x] How's it being done? ✅ 2025-12-27
+			- [x] What are the two methods ✅ 2025-12-27
+			- [x] What all parameters can the `run_simulations.py` can take in? ✅ 2025-12-27
+		- [x] How's GPGPU-Sim being used in this? ✅ 2025-12-27
+		- [x] Outputs ✅ 2025-12-27
+			- [x] Where the outputs are being saved? ✅ 2025-12-27
+			- [x] How it looks? ✅ 2025-12-27
+			- [x] What it contains? ✅ 2025-12-27
+				- [ ] Go through gpgpusim output files
 			- [ ] How it will be used?
 		- [ ] Monitoring
 			- [ ] How's it done?
