@@ -211,6 +211,9 @@
     "Downloaded/Mindmap Builder": {
       "Box Children": {
         "value": true
+      },
+      "Growth Mode": {
+        "value": "Radial"
       }
     }
   },

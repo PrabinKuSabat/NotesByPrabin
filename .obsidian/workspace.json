@@ -13,8 +13,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
-                "mode": "source",
+                "file": "EFFORTS/Presentation 24-12-2025, Accel-sim Go-Through.md",
+                "mode": "preview",
                 "source": false,
                 "backlinks": true,
                 "backlinkOpts": {
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Presentation 24-12-2025, Accel-sim Go-Through"
             }
           }
         ]
@@ -254,13 +254,50 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "floating": {
+    "id": "fec75aff2c86e5fc",
+    "type": "floating",
+    "children": [
+      {
+        "id": "00b0118dbbd86fe0",
+        "type": "window",
+        "children": [
+          {
+            "id": "8ed7ddc1b23ab049",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "7c4eef79ac3dad8a",
+                "type": "leaf",
+                "state": {
+                  "type": "excalidraw",
+                  "state": {
+                    "file": "Excalidraw/Drawing 2025-12-26 20.15.13.excalidraw.md"
+                  },
+                  "icon": "excalidraw-icon",
+                  "title": "Drawing 2025-12-26 20.15.13.excalidraw"
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "vertical",
+        "x": 2770,
+        "y": 371,
+        "width": 1024,
+        "height": 800,
+        "maximize": true,
+        "zoom": 0
+      }
+    ]
+  },
+  "active": "7c4eef79ac3dad8a",
   "lastOpenFiles": [
     "EFFORTS/Presentation 24-12-2025, Accel-sim Go-Through.md",
+    "Excalidraw/Drawing 2025-12-26 20.15.13.excalidraw.md",
+    "Homepage.md",
     "EFFORTS/Dissertation.md",
     "EFFORTS/Efforts.md",
-    "Homepage.md",
-    "Excalidraw/Drawing 2025-12-26 20.15.13.excalidraw.md",
     "Excalidraw/Scripts/Downloaded/Full-Year Calendar Generator.svg",
     "Excalidraw/Scripts/Downloaded/Set Grid.svg",
     "Excalidraw/Scripts/Downloaded/Uniform size.svg",

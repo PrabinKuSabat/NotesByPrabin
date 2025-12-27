@@ -52,9 +52,9 @@ tasks: false
 		- [ ] My Current Status
 		- [ ] What to expect and what not to?
 		- [ ] What all things are under tuning?
-- [ ] How's gpgpu-sim is being used?
-- [ ] Read accel-sim whitepaper
-- [ ] Read gpgpu-sim manual
+- [x] How's gpgpu-sim is being used? ✅ 2025-12-27
+- [x] Read accel-sim whitepaper ✅ 2025-12-27
+- [x] Read gpgpu-sim manual ✅ 2025-12-27
 - [ ] Understand all the stuff and then start making the ppt.
 - [ ] It's done.
 
