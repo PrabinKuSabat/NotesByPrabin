@@ -213,10 +213,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Untitled 1.md"
+                "file": "Excalidraw/Drawing 2025-12-26 20.15.13.excalidraw.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Untitled 1"
+              "title": "File properties for Drawing 2025-12-26 20.15.13.excalidraw"
             }
           }
         ]
@@ -301,8 +301,7 @@
                   "title": "Untitled 1"
                 }
               }
-            ],
-            "currentTab": 1
+            ]
           }
         ],
         "direction": "vertical",
@@ -315,7 +314,7 @@
       }
     ]
   },
-  "active": "bef0596f0184a293",
+  "active": "7c4eef79ac3dad8a",
   "lastOpenFiles": [
     "Untitled 1.md",
     "Excalidraw/Drawing 2025-12-26 20.15.13.excalidraw.md",
