@@ -25,13 +25,13 @@ tasks: false
 			- [x] How it looks? ✅ 2025-12-27
 			- [x] What it contains? ✅ 2025-12-27
 				- [ ] Go through gpgpusim output files
-			- [ ] How it will be used?
-		- [ ] Monitoring
-			- [ ] How's it done?
-			- [ ] What all parameters the `monitor_func_test.py` can take?
-		- [ ] Stats collection
-			- [ ] How't it done?
-			- [ ] What's the format in which it's stored?
+			- [x] How it will be used? ✅ 2025-12-27
+		- [x] Monitoring ✅ 2025-12-27
+			- [x] How's it done? ✅ 2025-12-27
+			- [x] What all parameters the `monitor_func_test.py` can take? ✅ 2025-12-27
+		- [x] Stats collection ✅ 2025-12-27
+			- [x] How't it done? ✅ 2025-12-27
+			- [x] What's the format in which it's stored? ✅ 2025-12-27
 - [ ] Stage 3:
 	- [ ] Correlation
 		- [ ] How does `run_hw.py` work?
@@ -54,7 +54,7 @@ tasks: false
 		- [ ] What to expect and what not to?
 		- [ ] What all things are under tuning?
 - [x] How's gpgpu-sim is being used? ✅ 2025-12-27
-- [x] Read accel-sim whitepaper ✅ 2025-12-27
+ - [x] Read accel-sim whitepaper ✅ 2025-12-27
 - [x] Read gpgpu-sim manual ✅ 2025-12-27
 - [ ] Understand all the stuff and then start making the ppt.
 - [ ] It's done.

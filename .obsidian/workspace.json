@@ -94,8 +94,7 @@
               "title": "mk-path-view"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -291,12 +290,14 @@
       }
     ]
   },
-  "active": "7c4eef79ac3dad8a",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/Presentation 24-12-2025, Accel-sim Go-Through.md",
     "Excalidraw/Drawing 2025-12-26 20.15.13.excalidraw.md",
-    "Homepage.md",
+    "EFFORTS/Presentation 24-12-2025, Accel-sim Go-Through.md",
     "EFFORTS/Dissertation.md",
+    "EFFORTS/GPGPU-SIM Manual Notes.md",
+    "Extras/ATTACHMENTS/Sample CSV.pdf",
+    "Homepage.md",
     "EFFORTS/Efforts.md",
     "Excalidraw/Scripts/Downloaded/Full-Year Calendar Generator.svg",
     "Excalidraw/Scripts/Downloaded/Set Grid.svg",
@@ -310,7 +311,6 @@
     "Excalidraw/Scripts/Downloaded/Fixed spacing.svg",
     "excalibrain.md",
     "Excalidraw/Drawing 2025-12-26 20.01.48.excalidraw.md",
-    "EFFORTS/GPGPU-SIM Manual Notes.md",
     "EFFORTS/Interim Report.md",
     "EFFORTS/Notes.md",
     "EFFORTS/AccelSim.md",
@@ -337,7 +337,6 @@
     "Bibliography",
     "Extras/ATTACHMENTS/Book Covers",
     "Extras/Books",
-    "Extras",
     "EFFORTS/Untitled.canvas",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "EFFORTS/Binary Search.canvas",

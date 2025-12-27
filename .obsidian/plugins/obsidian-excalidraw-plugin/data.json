@@ -210,7 +210,7 @@
     },
     "Downloaded/Mindmap Builder": {
       "Box Children": {
-        "value": false
+        "value": true
       },
       "Growth Mode": {
         "value": "Right-facing"
