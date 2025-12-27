@@ -32,27 +32,27 @@ tasks: false
 		- [x] Stats collection ✅ 2025-12-27
 			- [x] How't it done? ✅ 2025-12-27
 			- [x] What's the format in which it's stored? ✅ 2025-12-27
-- [ ] Stage 3:
-	- [ ] Correlation
-		- [ ] How does `run_hw.py` work?
-			- [ ] Input, Output
-			- [ ] Parameters cant take.
-		- [ ] What `get_stats.py` does?
-			- [ ] Parameters
-			- [ ] Output Values
-			- [ ] Input, Output
-	- [ ] Hardware stats
-		- [ ] How's it done?
-		- [ ] What does it output? (format)
-		- [ ] What's the requirement?
-		- [ ] Why it should be done?
-- [ ] Stage 4:
-	- [ ] Tuning
-		- [ ] Process
-		- [ ] Why it's done?
-		- [ ] My Current Status
-		- [ ] What to expect and what not to?
-		- [ ] What all things are under tuning?
+- [x] Stage 3: ✅ 2025-12-27
+	- [x] Correlation ✅ 2025-12-27
+		- [x] How does `run_hw.py` work? ✅ 2025-12-27
+			- [x] Input, Output ✅ 2025-12-27
+			- [x] Parameters cant take. ✅ 2025-12-27
+		- [x] What `get_stats.py` does? ✅ 2025-12-27
+			- [x] Parameters ✅ 2025-12-27
+			- [x] Output Values ✅ 2025-12-27
+			- [x] Input, Output ✅ 2025-12-27
+	- [x] Hardware stats ✅ 2025-12-27
+		- [x] How's it done? ✅ 2025-12-27
+		- [x] What does it output? (format) ✅ 2025-12-27
+		- [x] What's the requirement? ✅ 2025-12-27
+		- [x] Why it should be done? ✅ 2025-12-27
+- [x] Stage 4: ✅ 2025-12-27
+	- [x] Tuning ✅ 2025-12-27
+		- [x] Process ✅ 2025-12-27
+		- [x] Why it's done? ✅ 2025-12-27
+		- [x] My Current Status ✅ 2025-12-27
+		- [x] What to expect and what not to? ✅ 2025-12-27
+		- [x] What all things are under tuning? ✅ 2025-12-27
 - [x] How's gpgpu-sim is being used? ✅ 2025-12-27
  - [x] Read accel-sim whitepaper ✅ 2025-12-27
 - [x] Read gpgpu-sim manual ✅ 2025-12-27
