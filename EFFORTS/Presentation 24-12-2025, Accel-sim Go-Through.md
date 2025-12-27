@@ -8,14 +8,14 @@ tasks: false
 - [ ] Walk-through of all the 2stages.
 - [ ] Stage 1:
 	- [ ] Tracer
-		- [ ] why the traces are important
-		- [ ] where are the trace files being generated
-		- [ ] what does the traces contain
-		- [ ] how does the traces look and what does it mean
-		- [ ] what's being used for generating traces and how's it being done
+		- [x] why the traces are important ✅ 2025-12-27
+		- [x] where are the trace files being generated ✅ 2025-12-27
+		- [x] what does the traces contain ✅ 2025-12-27
+		- [x] how does the traces look and what does it mean ✅ 2025-12-27
+		- [x] what's being used for generating traces and how's it being done ✅ 2025-12-27
 - [ ] Stage 2:
 	- [ ] Simulation
-		- [ ] What does it mean?
+		- [ ] Why it's done?
 		- [ ] How's it being done?
 			- [ ] What are the two methods
 			- [ ] What all parameters can the `run_simulations.py` can take in?

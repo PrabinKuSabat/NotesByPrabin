@@ -14,7 +14,7 @@
               "type": "markdown",
               "state": {
                 "file": "EFFORTS/Presentation 24-12-2025, Accel-sim Go-Through.md",
-                "mode": "preview",
+                "mode": "source",
                 "source": false,
                 "backlinks": true,
                 "backlinkOpts": {
@@ -63,7 +63,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "file:Net",
+                "query": "tag:#blocks",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -94,12 +94,12 @@
               "title": "mk-path-view"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
-    "width": 414.5,
-    "collapsed": true
+    "width": 414.5
   },
   "right": {
     "id": "43fc27400badb105",
