@@ -217,6 +217,9 @@
       },
       "Is Minimized": {
         "value": false
+      },
+      "Arrow Stroke Style": {
+        "value": false
       }
     }
   },
