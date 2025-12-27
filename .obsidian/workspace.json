@@ -213,10 +213,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Excalidraw/Drawing 2025-12-26 20.15.13.excalidraw.md"
+                "file": "Untitled 1.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Drawing 2025-12-26 20.15.13.excalidraw"
+              "title": "File properties for Untitled 1"
             }
           }
         ]
@@ -276,8 +276,33 @@
                   "icon": "excalidraw-icon",
                   "title": "Drawing 2025-12-26 20.15.13.excalidraw"
                 }
+              },
+              {
+                "id": "bef0596f0184a293",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "Untitled 1.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Untitled 1"
+                }
               }
-            ]
+            ],
+            "currentTab": 1
           }
         ],
         "direction": "vertical",
@@ -290,10 +315,11 @@
       }
     ]
   },
-  "active": "7c4eef79ac3dad8a",
+  "active": "bef0596f0184a293",
   "lastOpenFiles": [
-    "Homepage.md",
+    "Untitled 1.md",
     "Excalidraw/Drawing 2025-12-26 20.15.13.excalidraw.md",
+    "Homepage.md",
     "Extras/ATTACHMENTS/Sample CSV.pdf",
     "EFFORTS/Presentation 24-12-2025, Accel-sim Go-Through.md",
     "EFFORTS/Dissertation.md",
