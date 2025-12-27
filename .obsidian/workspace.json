@@ -30,19 +30,8 @@
               "icon": "lucide-file",
               "title": "Homepage"
             }
-          },
-          {
-            "id": "1fa0e4adaba72f5c",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "New tab"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -265,10 +254,12 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "1fa0e4adaba72f5c",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Homepage.md",
     "EFFORTS/Presentation 24-12-2025, Accel-sim Go-Through.md",
+    "EFFORTS/Dissertation.md",
+    "EFFORTS/Efforts.md",
+    "Homepage.md",
     "Excalidraw/Drawing 2025-12-26 20.15.13.excalidraw.md",
     "Excalidraw/Scripts/Downloaded/Full-Year Calendar Generator.svg",
     "Excalidraw/Scripts/Downloaded/Set Grid.svg",
@@ -280,9 +271,7 @@
     "Excalidraw/Scripts/Downloaded/Mindmap format.svg",
     "Excalidraw/Scripts/Downloaded/Grid Selected Images.svg",
     "Excalidraw/Scripts/Downloaded/Fixed spacing.svg",
-    "EFFORTS/Dissertation.md",
     "excalibrain.md",
-    "EFFORTS/Efforts.md",
     "Excalidraw/Drawing 2025-12-26 20.01.48.excalidraw.md",
     "EFFORTS/GPGPU-SIM Manual Notes.md",
     "EFFORTS/Interim Report.md",
