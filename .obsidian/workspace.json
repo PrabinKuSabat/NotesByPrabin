@@ -4,17 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "803a7f64f6eb5331",
+        "id": "4509724f8bf84da7",
         "type": "tabs",
         "children": [
           {
-            "id": "e10cbd8b81e774b9",
+            "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Presentation 24-12-2025, Accel-sim Go-Through.md",
-                "mode": "preview",
+                "file": "Homepage.md",
+                "mode": "source",
                 "source": false,
                 "backlinks": true,
                 "backlinkOpts": {
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Presentation 24-12-2025, Accel-sim Go-Through"
+              "title": "Homepage"
             }
           }
         ]
@@ -213,10 +213,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "EFFORTS/Presentation 24-12-2025, Accel-sim Go-Through.md"
+                "file": "Homepage.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Presentation 24-12-2025, Accel-sim Go-Through"
+              "title": "File properties for Homepage"
             }
           }
         ]
@@ -253,76 +253,15 @@
       "periodic-notes:Open today": false
     }
   },
-  "floating": {
-    "id": "fec75aff2c86e5fc",
-    "type": "floating",
-    "children": [
-      {
-        "id": "00b0118dbbd86fe0",
-        "type": "window",
-        "children": [
-          {
-            "id": "8ed7ddc1b23ab049",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "7c4eef79ac3dad8a",
-                "type": "leaf",
-                "state": {
-                  "type": "excalidraw",
-                  "state": {
-                    "file": "Excalidraw/Drawing 2025-12-26 20.15.13.excalidraw.md"
-                  },
-                  "icon": "excalidraw-icon",
-                  "title": "Drawing 2025-12-26 20.15.13.excalidraw"
-                }
-              },
-              {
-                "id": "bef0596f0184a293",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "Untitled 1.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": true,
-                    "backlinkOpts": {
-                      "collapseAll": false,
-                      "extraContext": false,
-                      "sortOrder": "alphabetical",
-                      "showSearch": false,
-                      "searchQuery": "",
-                      "backlinkCollapsed": false,
-                      "unlinkedCollapsed": true
-                    }
-                  },
-                  "icon": "lucide-file",
-                  "title": "Untitled 1"
-                }
-              }
-            ]
-          }
-        ],
-        "direction": "vertical",
-        "x": 2770,
-        "y": 371,
-        "width": 1024,
-        "height": 800,
-        "maximize": true,
-        "zoom": 0
-      }
-    ]
-  },
-  "active": "e10cbd8b81e774b9",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/GPGPU-SIM Manual Notes.md",
+    "Homepage.md",
     "Excalidraw/Drawing 2025-12-26 20.15.13.excalidraw.md",
     "Extras/ATTACHMENTS/combined_RTX4090_no_skip_first2rows_v3.pdf",
+    "EFFORTS/GPGPU-SIM Manual Notes.md",
     "EFFORTS/Presentation 24-12-2025, Accel-sim Go-Through.md",
     "EFFORTS/Dissertation.md",
     "EFFORTS/Efforts.md",
-    "Homepage.md",
     "Untitled 1.md",
     "Extras/ATTACHMENTS/Sample CSV.pdf",
     "Excalidraw/Scripts/Downloaded/Full-Year Calendar Generator.svg",
