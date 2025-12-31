@@ -11,10 +11,24 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Homepage.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Homepage"
             }
           }
         ]
@@ -84,8 +98,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5,
-    "collapsed": true
+    "width": 414.5
   },
   "right": {
     "id": "43fc27400badb105",
@@ -242,12 +255,12 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Excalidraw/Drawing 2025-12-26 20.15.13.excalidraw.md",
-    "Extras/ATTACHMENTS/combined_RTX4090_no_skip_first2rows_v3.pdf",
-    "Homepage.md",
     "EFFORTS/Presentation 24-12-2025, Accel-sim Go-Through.md",
     "EFFORTS/Dissertation.md",
     "EFFORTS/Efforts.md",
+    "Homepage.md",
+    "Excalidraw/Drawing 2025-12-26 20.15.13.excalidraw.md",
+    "Extras/ATTACHMENTS/combined_RTX4090_no_skip_first2rows_v3.pdf",
     "EFFORTS/GPGPU-SIM Manual Notes.md",
     "Untitled 1.md",
     "Extras/ATTACHMENTS/Sample CSV.pdf",
