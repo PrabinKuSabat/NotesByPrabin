@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "EFFORTS/GDB Notes.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "GDB Notes"
             }
           }
         ]
@@ -256,14 +256,14 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/Dissertation.md",
+    "EFFORTS/Efforts.md",
+    "Homepage.md",
     "EFFORTS/GDB Notes.md",
     "Extras/ATTACHMENTS/image-102.png",
     "Extras/ATTACHMENTS/image-101.png",
     "Extras/ATTACHMENTS/image-99.png",
     "Extras/ATTACHMENTS/image-97.png",
-    "EFFORTS/Dissertation.md",
-    "EFFORTS/Efforts.md",
-    "Homepage.md",
     "ATLAS/Atlas.md",
     "ATLAS/Ada Lovelace ISA.md",
     "EFFORTS/Presentation 24-12-2025, Accel-sim Go-Through.md",
