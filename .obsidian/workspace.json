@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/GDB Notes.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "GDB Notes"
+              "title": "Homepage"
             }
           }
         ]
@@ -256,12 +256,12 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/GDB Notes.md",
     "Extras/ATTACHMENTS/image-102.png",
     "Extras/ATTACHMENTS/image-101.png",
     "Extras/ATTACHMENTS/image-99.png",
     "Extras/ATTACHMENTS/image-97.png",
     "EFFORTS/Dissertation.md",
-    "EFFORTS/GDB Notes.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
     "ATLAS/Atlas.md",
@@ -278,7 +278,6 @@
     "Excalidraw/Scripts/Downloaded/Text to Sticky Notes.svg",
     "Excalidraw/Scripts/Downloaded/Normalize Selected Arrows.svg",
     "Excalidraw/Scripts/Downloaded/Elbow connectors.svg",
-    "Excalidraw/Scripts/Downloaded/Connect elements.svg",
     "excalibrain.md",
     "Excalidraw/Drawing 2025-12-26 20.01.48.excalidraw.md",
     "EFFORTS/Interim Report.md",
