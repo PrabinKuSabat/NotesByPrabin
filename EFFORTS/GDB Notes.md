@@ -31,3 +31,17 @@
 - ![[image-102.png]]
 
 # Source : Write your own OS
+- coredumpctl -o coredump dump ./gdbtest
+- target core coredump
+- gcore \<filename>
+- checkpoint
+  creates a checkpoint at the current position of execution or pc.
+- restart <checkpoint_id> will restart from that checkpoint
+- info threads
+- ![[image-103.png]]symbol-file _extracted-debug-file-name_
+- gdbserver _adress:port_, _program-name_
+- target remote _adress:port_
+- actions 
+
+>  intresting stuff
+>  asm("int $3") : manual breakpoint or stall command to system

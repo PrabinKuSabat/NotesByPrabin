@@ -14,7 +14,7 @@
               "type": "markdown",
               "state": {
                 "file": "EFFORTS/GDB Notes.md",
-                "mode": "source",
+                "mode": "preview",
                 "source": false,
                 "backlinks": true,
                 "backlinkOpts": {
@@ -256,6 +256,7 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Extras/ATTACHMENTS/image-103.png",
     "EFFORTS/Dissertation.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
