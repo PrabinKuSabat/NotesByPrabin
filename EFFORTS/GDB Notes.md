@@ -42,6 +42,6 @@
 - gdbserver _adress:port_, _program-name_
 - target remote _adress:port_
 - actions 
-
+- info reg
 >  intresting stuff
 >  asm("int $3") : manual breakpoint or stall command to system
