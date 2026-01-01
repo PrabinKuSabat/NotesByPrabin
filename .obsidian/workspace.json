@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/GDB Notes.md",
+                "file": "EFFORTS/Accel-Sim Findings.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "GDB Notes"
+              "title": "Accel-Sim Findings"
             }
           }
         ]
@@ -256,11 +256,12 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Extras/ATTACHMENTS/image-103.png",
     "EFFORTS/Dissertation.md",
+    "EFFORTS/Accel-Sim Findings.md",
+    "EFFORTS/GDB Notes.md",
+    "Extras/ATTACHMENTS/image-103.png",
     "EFFORTS/Efforts.md",
     "Homepage.md",
-    "EFFORTS/GDB Notes.md",
     "Extras/ATTACHMENTS/image-102.png",
     "Extras/ATTACHMENTS/image-101.png",
     "Extras/ATTACHMENTS/image-99.png",
@@ -278,7 +279,6 @@
     "Excalidraw/Scripts/Downloaded/Uniform size.svg",
     "Excalidraw/Scripts/Downloaded/Text to Sticky Notes.svg",
     "Excalidraw/Scripts/Downloaded/Normalize Selected Arrows.svg",
-    "Excalidraw/Scripts/Downloaded/Elbow connectors.svg",
     "excalibrain.md",
     "Excalidraw/Drawing 2025-12-26 20.01.48.excalidraw.md",
     "EFFORTS/Interim Report.md",

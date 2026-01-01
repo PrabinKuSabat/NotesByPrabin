@@ -6,7 +6,8 @@
 [[3070 stats collection]]  
 [[Interim Report]]  
 [[Presentation 24-12-2025, Accel-sim Go-Through]]  
-[[GDB Notes]]
+[[GDB Notes]]  
+[[Accel-Sim Findings]]
 
 ---
 
