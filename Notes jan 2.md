@@ -25,4 +25,13 @@
   graph size is large than 32kbyte  
   node size is  
 - if we have 32 byte cache line we have 512 graph nodes in the cache whereas 256 byte gives us only 128 graph nodes which makes it a bit slow.
-- Graph reversing bi
+- <mark style="background: #FFB86CA6;">Graph reversing bandwidth with different cache lines and different graph nodes!</mark>
+- **A top-down method for micro-architecture analysis!** Research paper 
+- no more spec 
+- u tune your own benchmarks 
+- oracle does best on IBM cz of 12 byte line size but not in intel. 
+- bottom up and top down micro-architecture analysis 
+-  diff btwn in quantum and normal is the no. of cycles taken. 
+  but you need to interpret the spin of the quantum. 
+- <mark style="background: #FFB86CA6;">How do you secure each level of hardware to increase security?</mark>
+- 
