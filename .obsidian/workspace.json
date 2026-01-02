@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Accel-Sim Findings.md",
+                "file": "Notes jan 2.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,19 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Accel-Sim Findings"
+              "title": "Notes jan 2"
+            }
+          },
+          {
+            "id": "c586f774bdfd6316",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Excalidraw/Dissertation Status.excalidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Dissertation Status.excalidraw"
             }
           }
         ]
@@ -214,10 +226,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Excalidraw/Drawing 2025-12-26 20.15.13.excalidraw.md"
+                "file": "Notes jan 2.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Drawing 2025-12-26 20.15.13.excalidraw"
+              "title": "File properties for Notes jan 2"
             }
           }
         ]
@@ -256,12 +268,17 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/Dissertation.md",
+    "Excalidraw/Dissertation Status.excalidraw.md",
+    "Notes jan 2.md",
+    "Homepage.md",
+    "EFFORTS/Deepbench_nvidia_tencore.md",
+    "Untitled Kanban.md",
+    "Extras/ATTACHMENTS/image-104.png",
     "EFFORTS/Accel-Sim Findings.md",
+    "EFFORTS/Dissertation.md",
     "EFFORTS/GDB Notes.md",
     "Extras/ATTACHMENTS/image-103.png",
     "EFFORTS/Efforts.md",
-    "Homepage.md",
     "Extras/ATTACHMENTS/image-102.png",
     "Extras/ATTACHMENTS/image-101.png",
     "Extras/ATTACHMENTS/image-99.png",
@@ -278,7 +295,6 @@
     "Excalidraw/Scripts/Downloaded/Set Grid.svg",
     "Excalidraw/Scripts/Downloaded/Uniform size.svg",
     "Excalidraw/Scripts/Downloaded/Text to Sticky Notes.svg",
-    "Excalidraw/Scripts/Downloaded/Normalize Selected Arrows.svg",
     "excalibrain.md",
     "Excalidraw/Drawing 2025-12-26 20.01.48.excalidraw.md",
     "EFFORTS/Interim Report.md",
@@ -290,10 +306,6 @@
     "Excalidraw/Scripts/Downloaded/Printable Layout Wizard.md",
     "Excalidraw/Scripts/Downloaded/Convert freedraw to line.md",
     "Excalidraw/Scripts/Downloaded/Deconstruct selected elements into new drawing.md",
-    "Excalidraw/Scripts/Downloaded/Mindmap Builder.md",
-    "EFFORTS/Dissertation TO-Do Lists.md",
-    "Prabin's KB ~/Prabins KB ~.md",
-    "Excalidraw/Dissertation Status.excalidraw.md",
     "Prabin's KB ~",
     "Excalidraw/Scripts/Downloaded",
     "Excalidraw/Scripts",

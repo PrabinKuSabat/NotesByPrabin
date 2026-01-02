@@ -12,6 +12,8 @@ FF# Contents
 
 # [[CALENDAR]]
 
+[[Notes jan 2]]
+
 # [[Prabins KB ~|Website Homepage]]
 
 How to get ISA for ada lovelace?  
