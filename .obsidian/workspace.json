@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "Buffer.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,10 +28,23 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Buffer"
+            }
+          },
+          {
+            "id": "651d43cb5adfe0a8",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Excalidraw/Drawing 2026-01-04 12.07.10.excalidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Drawing 2026-01-04 12.07.10.excalidraw"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -254,11 +267,13 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "651d43cb5adfe0a8",
   "lastOpenFiles": [
+    "Homepage.md",
+    "Excalidraw/Drawing 2026-01-04 12.07.10.excalidraw.md",
+    "Buffer.md",
     "Notes jan 2.md",
     "Excalidraw/Dissertation Status.excalidraw.md",
-    "Homepage.md",
     "EFFORTS/Deepbench_nvidia_tencore.md",
     "Untitled Kanban.md",
     "Extras/ATTACHMENTS/image-104.png",
@@ -292,8 +307,6 @@
     "Excalidraw/Scripts/Downloaded/Scribble Helper.md",
     "Excalidraw/Scripts/Downloaded/Shade Master.md",
     "Excalidraw/Scripts/Downloaded/Printable Layout Wizard.md",
-    "Excalidraw/Scripts/Downloaded/Convert freedraw to line.md",
-    "Excalidraw/Scripts/Downloaded/Deconstruct selected elements into new drawing.md",
     "Prabin's KB ~",
     "Excalidraw/Scripts/Downloaded",
     "Excalidraw/Scripts",

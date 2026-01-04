@@ -210,15 +210,18 @@
     },
     "Downloaded/Mindmap Builder": {
       "Box Children": {
-        "value": true
+        "value": false
       },
       "Growth Mode": {
-        "value": "Radial"
+        "value": "Right-facing"
       },
       "Is Minimized": {
         "value": false
       },
       "Arrow Stroke Style": {
+        "value": false
+      },
+      "Rounded Corners": {
         "value": false
       }
     }

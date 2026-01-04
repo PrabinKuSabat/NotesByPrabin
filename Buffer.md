@@ -458,3 +458,12 @@ unsigned ipoly_hash_function(new_addr_type higher_bits, unsigned index,
   }
 }
 ```
+
+---
+
+1. find out load store units
+
+---
+What happens when simultaneous stores happens.
+
+- L1 is always write through.
