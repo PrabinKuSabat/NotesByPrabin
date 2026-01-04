@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Notes jan 2.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,19 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Notes jan 2"
-            }
-          },
-          {
-            "id": "c586f774bdfd6316",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Excalidraw/Dissertation Status.excalidraw.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "Dissertation Status.excalidraw"
+              "title": "Homepage"
             }
           }
         ]
@@ -268,8 +256,8 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Excalidraw/Dissertation Status.excalidraw.md",
     "Notes jan 2.md",
+    "Excalidraw/Dissertation Status.excalidraw.md",
     "Homepage.md",
     "EFFORTS/Deepbench_nvidia_tencore.md",
     "Untitled Kanban.md",
