@@ -31,3 +31,12 @@
 	- sets : 512
 	- coherency size : 64
 
+> [!question]
+> What's all the parameters shown in gretconf -a mean?
+> POSIX, it's types and usages?
+
+
+
+
+
+
