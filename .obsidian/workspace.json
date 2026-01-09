@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Buffer.md",
+                "file": "EFFORTS/RV2.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,23 +28,10 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Buffer"
-            }
-          },
-          {
-            "id": "651d43cb5adfe0a8",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Excalidraw/Drawing 2026-01-04 12.07.10.excalidraw.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "Drawing 2026-01-04 12.07.10.excalidraw"
+              "title": "RV2"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -267,8 +254,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "651d43cb5adfe0a8",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/RISC-V.md",
+    "EFFORTS/RV2.md",
+    "EFFORTS/Efforts.md",
     "Homepage.md",
     "Excalidraw/Drawing 2026-01-04 12.07.10.excalidraw.md",
     "Buffer.md",
@@ -281,7 +271,6 @@
     "EFFORTS/Dissertation.md",
     "EFFORTS/GDB Notes.md",
     "Extras/ATTACHMENTS/image-103.png",
-    "EFFORTS/Efforts.md",
     "Extras/ATTACHMENTS/image-102.png",
     "Extras/ATTACHMENTS/image-101.png",
     "Extras/ATTACHMENTS/image-99.png",
@@ -305,8 +294,6 @@
     "EFFORTS/AccelSim.md",
     "Excalidraw/Accel-sim Walk Around.excalidraw.md",
     "Excalidraw/Scripts/Downloaded/Scribble Helper.md",
-    "Excalidraw/Scripts/Downloaded/Shade Master.md",
-    "Excalidraw/Scripts/Downloaded/Printable Layout Wizard.md",
     "Prabin's KB ~",
     "Excalidraw/Scripts/Downloaded",
     "Excalidraw/Scripts",

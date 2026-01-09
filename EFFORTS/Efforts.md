@@ -3,7 +3,8 @@
 > [!note] `ris:Computer` Architecture  
 > [[EFFORTS/CA Research|Research]]  
 > [[EFFORTS/CA Notes|Short Notes]]  
-> [[Dissertation]]
+> [[Dissertation]]  
+> [[RISC-V]]
 
 > [! important] coding `fas:Brain`  
 > [[EFFORTS/Leetcode]]  
