@@ -11,24 +11,12 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "Homepage.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
+                "file": "Excalidraw/Drawing 2025-12-26 20.15.13.excalidraw.md"
               },
-              "icon": "lucide-file",
-              "title": "Homepage"
+              "icon": "excalidraw-icon",
+              "title": "Drawing 2025-12-26 20.15.13.excalidraw"
             }
           }
         ]
@@ -98,8 +86,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5,
-    "collapsed": true
+    "width": 414.5
   },
   "right": {
     "id": "43fc27400badb105",
@@ -254,12 +241,14 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "4b44bc66b81b0ac8",
   "lastOpenFiles": [
+    "Excalidraw/Accel-sim Walk Around.excalidraw.md",
+    "Excalidraw/Drawing 2025-12-26 20.01.48.excalidraw.md",
+    "Homepage.md",
     "EFFORTS/RV2.md",
     "EFFORTS/RISC-V.md",
     "EFFORTS/Efforts.md",
-    "Homepage.md",
     "Excalidraw/Drawing 2026-01-04 12.07.10.excalidraw.md",
     "Buffer.md",
     "Notes jan 2.md",
@@ -288,11 +277,9 @@
     "Excalidraw/Scripts/Downloaded/Uniform size.svg",
     "Excalidraw/Scripts/Downloaded/Text to Sticky Notes.svg",
     "excalibrain.md",
-    "Excalidraw/Drawing 2025-12-26 20.01.48.excalidraw.md",
     "EFFORTS/Interim Report.md",
     "EFFORTS/Notes.md",
     "EFFORTS/AccelSim.md",
-    "Excalidraw/Accel-sim Walk Around.excalidraw.md",
     "Excalidraw/Scripts/Downloaded/Scribble Helper.md",
     "Prabin's KB ~",
     "Excalidraw/Scripts/Downloaded",
