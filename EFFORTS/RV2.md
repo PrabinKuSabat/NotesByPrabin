@@ -37,8 +37,8 @@
 
 ---
 **Latency:**
-1. l1 : 17.0 cycles / 1.7ns
+1. l1 : 17.0 cycles / 1.7nsx
 2. l2 : 22.6 cycles / 15.9 ns
 3. memory :
-	- 20 MB load : 65.1 cycles / 42.4ns
 	- 24MB load : 91.4 cycles
+	- 20 MB load : 65.1 cycles / 42.4ns
