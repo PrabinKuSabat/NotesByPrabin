@@ -3,3 +3,9 @@
 
 
 # Sources for Learning
+
+
+# Interesting Stuff
+1. Furiso AI
+2. AMD X3D2 and other high 
+3. Nvidia Getting Back RTX 3060
