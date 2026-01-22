@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Writing a Operating System.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Writing a Operating System"
+              "title": "Homepage"
             }
           }
         ]
@@ -256,8 +256,8 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/RISC-V.md",
     "EFFORTS/Writing a Operating System.md",
+    "EFFORTS/RISC-V.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
     "EFFORTS/RV2.md",
