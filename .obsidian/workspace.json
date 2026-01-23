@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CALENDER/2026-01-23.md",
+                "file": "Buffer.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "2026-01-23"
+              "title": "Buffer"
             }
           }
         ]
@@ -214,10 +214,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "CALENDER/2026-01-23.md"
+                "file": "Buffer.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for 2026-01-23"
+              "title": "File properties for Buffer"
             }
           }
         ]
@@ -255,7 +255,11 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Extras/ATTACHMENTS/image-107.png",
+    "Extras/ATTACHMENTS/image-106.png",
+    "Extras/ATTACHMENTS/image-105.png",
     "Homepage.md",
+    "CALENDER/2026-01-23.md",
     "TO-DO List.md",
     "EFFORTS/Online Courses.md",
     "CALENDER/2025-01-25.md",
@@ -265,7 +269,6 @@
     "EFFORTS/Dissertation TO-Do Lists.md",
     "EFFORTS/Benchmarking and Dissecting the Nvidia Hopper  GPU Architecture.md",
     "EFFORTS/POA By Naveen Bro.md",
-    "CALENDER/2026-01-23.md",
     "Buffer.md",
     "Notes jan 2.md",
     "Untitled Kanban 1.md",
@@ -281,7 +284,6 @@
     "EFFORTS/Deepbench_nvidia_tencore.md",
     "Untitled Kanban.md",
     "Extras/ATTACHMENTS/image-104.png",
-    "EFFORTS/Accel-Sim Findings.md",
     "Extras/ATTACHMENTS/image-103.png",
     "Extras/ATTACHMENTS/image-102.png",
     "Extras/ATTACHMENTS/image-101.png",
@@ -291,8 +293,6 @@
     "Extras/ATTACHMENTS/Sample CSV.pdf",
     "Excalidraw/Scripts/Downloaded/Full-Year Calendar Generator.svg",
     "Excalidraw/Scripts/Downloaded/Set Grid.svg",
-    "Excalidraw/Scripts/Downloaded/Uniform size.svg",
-    "Excalidraw/Scripts/Downloaded/Text to Sticky Notes.svg",
     "Prabin's KB ~",
     "Excalidraw/Scripts/Downloaded",
     "Excalidraw/Scripts",
