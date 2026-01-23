@@ -1,19 +1,19 @@
 # 301 (Diff Geo)
 
-- [ ] Finish Reading Book 301 4/08
+- [x] Finish Reading Book 301 4/08 ✅ 2026-01-23
 
 # 302 (Optimization)
 
-- [ ] Finish Reading Book 302 4/08
+- [x] Finish Reading Book 302 4/08 ✅ 2026-01-23
 
 # 303 (Database System)
 
-- [ ] Finish Reading Book 303 4/08
+- [x] Finish Reading Book 303 4/08 ✅ 2026-01-23
 
 # 304 (Operating System)
 
-- [ ] Finish Reading Book 304 4/08
+- [x] Finish Reading Book 304 4/08 ✅ 2026-01-23
 
 # IKS
 
-- [ ] Start Something From IKS
+- [x] Start Something From IKS ✅ 2026-01-23

@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "CALENDER/2026-01-23.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "2026-01-23"
             }
           }
         ]
@@ -98,7 +98,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5
+    "width": 414.5,
+    "collapsed": true
   },
   "right": {
     "id": "43fc27400badb105",
@@ -213,18 +214,17 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Notes jan 2.md"
+                "file": "CALENDER/2026-01-23.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Notes jan 2"
+              "title": "File properties for 2026-01-23"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 471.5,
-    "collapsed": true
+    "width": 471.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -255,8 +255,20 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Untitled Kanban 1.md",
     "Homepage.md",
+    "TO-DO List.md",
+    "EFFORTS/Online Courses.md",
+    "CALENDER/2025-01-25.md",
+    "EFFORTS/NaviSim.md",
+    "EFFORTS/Things to try out.md",
+    "Extras/NotesByPrabin/EFFORTS/NaviSim.md",
+    "EFFORTS/Dissertation TO-Do Lists.md",
+    "EFFORTS/Benchmarking and Dissecting the Nvidia Hopper  GPU Architecture.md",
+    "EFFORTS/POA By Naveen Bro.md",
+    "CALENDER/2026-01-23.md",
+    "Buffer.md",
+    "Notes jan 2.md",
+    "Untitled Kanban 1.md",
     "EFFORTS/Writing a Operating System.md",
     "EFFORTS/RISC-V.md",
     "EFFORTS/Efforts.md",
@@ -265,34 +277,22 @@
     "Excalidraw/Accel-sim Walk Around.excalidraw.md",
     "Excalidraw/Drawing 2025-12-26 20.01.48.excalidraw.md",
     "Excalidraw/Drawing 2026-01-04 12.07.10.excalidraw.md",
-    "Buffer.md",
-    "Notes jan 2.md",
     "Excalidraw/Dissertation Status.excalidraw.md",
     "EFFORTS/Deepbench_nvidia_tencore.md",
     "Untitled Kanban.md",
     "Extras/ATTACHMENTS/image-104.png",
     "EFFORTS/Accel-Sim Findings.md",
-    "EFFORTS/Dissertation.md",
-    "EFFORTS/GDB Notes.md",
     "Extras/ATTACHMENTS/image-103.png",
     "Extras/ATTACHMENTS/image-102.png",
     "Extras/ATTACHMENTS/image-101.png",
     "Extras/ATTACHMENTS/image-99.png",
     "Extras/ATTACHMENTS/image-97.png",
-    "ATLAS/Atlas.md",
-    "ATLAS/Ada Lovelace ISA.md",
-    "EFFORTS/Presentation 24-12-2025, Accel-sim Go-Through.md",
     "Extras/ATTACHMENTS/combined_RTX4090_no_skip_first2rows_v3.pdf",
-    "EFFORTS/GPGPU-SIM Manual Notes.md",
-    "Untitled 1.md",
     "Extras/ATTACHMENTS/Sample CSV.pdf",
     "Excalidraw/Scripts/Downloaded/Full-Year Calendar Generator.svg",
     "Excalidraw/Scripts/Downloaded/Set Grid.svg",
     "Excalidraw/Scripts/Downloaded/Uniform size.svg",
     "Excalidraw/Scripts/Downloaded/Text to Sticky Notes.svg",
-    "excalibrain.md",
-    "EFFORTS/Interim Report.md",
-    "EFFORTS/Notes.md",
     "Prabin's KB ~",
     "Excalidraw/Scripts/Downloaded",
     "Excalidraw/Scripts",

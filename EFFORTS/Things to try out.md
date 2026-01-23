@@ -40,7 +40,7 @@ cmake --install ./gpu-simulator/build
 
 ```
 
-- [ ] 3. Correlator
+- [x] 3. Correlator ✅ 2026-01-23
 
 ```bash 
 # export the following it's necessary
@@ -51,7 +51,7 @@ nano c
 
 ```
 
-- [ ] 4. Tuner
+- [x] 4. Tuner ✅ 2026-01-23
 
 ```c
 //RTX4090 HW Primary Definition File

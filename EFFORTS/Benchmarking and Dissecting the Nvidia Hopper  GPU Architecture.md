@@ -1,5 +1,6 @@
 # Unknown Terms
 
+```
 - [ ] Atomics
 - [ ] Learn MMA in detail
 - [ ] wmma APIs
@@ -8,3 +9,4 @@
 - [ ] ca and cg modifiers
 - [ ] TLB
 - [ ] What are the different levels of APIs like the c-level wmma or PTX-level mma.
+```

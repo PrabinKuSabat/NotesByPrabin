@@ -5,7 +5,7 @@ tasks: false
 - [x] Why accel-sim and why it's important in current scenerio of GPU_developement? ✅ 2025-12-26
 	- [x] Who are the active developers or moderators and their background? ✅ 2025-12-26
 	- [x] Where was accel-sim developed and what's the current status of it? ✅ 2025-12-26
-- [ ] Walk-through of all the 2stages.
+- [x] Walk-through of all the 2stages. ✅ 2026-01-23
 - [x] Stage 1: ✅ 2025-12-27
 	- [x] Tracer ✅ 2025-12-27
 		- [x] why the traces are important ✅ 2025-12-27
@@ -13,7 +13,7 @@ tasks: false
 		- [x] what does the traces contain ✅ 2025-12-27
 		- [x] how does the traces look and what does it mean ✅ 2025-12-27
 		- [x] what's being used for generating traces and how's it being done ✅ 2025-12-27
-- [ ] Stage 2:
+- [x] Stage 2: ✅ 2026-01-23
 	- [x] Simulation ✅ 2025-12-27
 		- [x] Why it's done? ✅ 2025-12-27
 		- [x] How's it being done? ✅ 2025-12-27
@@ -24,7 +24,7 @@ tasks: false
 			- [x] Where the outputs are being saved? ✅ 2025-12-27
 			- [x] How it looks? ✅ 2025-12-27
 			- [x] What it contains? ✅ 2025-12-27
-				- [ ] Go through gpgpusim output files
+				- [x] Go through gpgpusim output files ✅ 2026-01-23
 			- [x] How it will be used? ✅ 2025-12-27
 		- [x] Monitoring ✅ 2025-12-27
 			- [x] How's it done? ✅ 2025-12-27
@@ -56,7 +56,7 @@ tasks: false
 - [x] How's gpgpu-sim is being used? ✅ 2025-12-27
  - [x] Read accel-sim whitepaper ✅ 2025-12-27
 - [x] Read gpgpu-sim manual ✅ 2025-12-27
-- [ ] Understand all the stuff and then start making the ppt.
-- [ ] It's done.
+- [x] Understand all the stuff and then start making the ppt. ✅ 2026-01-23
+- [x] It's done. ✅ 2026-01-23
 
 [[GPGPU-SIM Manual Notes]]

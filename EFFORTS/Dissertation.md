@@ -13,5 +13,5 @@
 
 # Things to Do
 
-- [ ] Read GPGPU-Sim mainpage  
+- [x] Read GPGPU-Sim mainpage ✅ 2026-01-23
   [GPGPU-Sim 3.x Manual](http://gpgpu-sim.org/manual/index.php/Main_Page)

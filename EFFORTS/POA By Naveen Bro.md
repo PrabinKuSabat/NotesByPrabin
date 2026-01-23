@@ -1,5 +1,6 @@
 # Tasks
 
+```
 - [ ] Available GPU products
 - [ ] Simulator
 - [ ] GPU Benchmarks used out there 🔺 ➕ 2025-06-11 📅 2025-06-12
@@ -23,6 +24,7 @@
  - [ ] Presenting Mode
  - [ ] Understanding GPU Architecture
  - [ ] Accel-sim
+```
 
 # Results
 

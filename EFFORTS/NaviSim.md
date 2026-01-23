@@ -189,5 +189,7 @@ The Command Processor maintains resource masks
 
 # Tasks
 
+```
 - [ ] Go through the RDNA Whitepaper.
-- [ ] Check [Cache Eviction](https://docs.jboss.org/jbossclustering/hibernate-caching/3.3/en-US/html/eviction.html)
+- [x] Check [Cache Eviction](https://docs.jboss.org/jbossclustering/hibernate-caching/3.3/en-US/html/eviction.html) ✅ 2026-01-23
+```
