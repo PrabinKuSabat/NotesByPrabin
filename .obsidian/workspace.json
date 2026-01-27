@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Buffer.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Buffer"
+              "title": "Homepage"
             }
           }
         ]
@@ -213,11 +213,9 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {
-                "file": "Buffer.md"
-              },
+              "state": {},
               "icon": "lucide-info",
-              "title": "File properties for Buffer"
+              "title": "File properties"
             }
           }
         ]
@@ -255,11 +253,12 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Homepage.md",
+    "Buffer.md",
     "Extras/ATTACHMENTS/image-108.png",
     "Extras/ATTACHMENTS/image-107.png",
     "Extras/ATTACHMENTS/image-106.png",
     "Extras/ATTACHMENTS/image-105.png",
-    "Homepage.md",
     "CALENDER/2026-01-23.md",
     "TO-DO List.md",
     "EFFORTS/Online Courses.md",
@@ -270,7 +269,6 @@
     "EFFORTS/Dissertation TO-Do Lists.md",
     "EFFORTS/Benchmarking and Dissecting the Nvidia Hopper  GPU Architecture.md",
     "EFFORTS/POA By Naveen Bro.md",
-    "Buffer.md",
     "Notes jan 2.md",
     "Untitled Kanban 1.md",
     "EFFORTS/Writing a Operating System.md",
@@ -292,7 +290,6 @@
     "Extras/ATTACHMENTS/image-97.png",
     "Extras/ATTACHMENTS/combined_RTX4090_no_skip_first2rows_v3.pdf",
     "Extras/ATTACHMENTS/Sample CSV.pdf",
-    "Excalidraw/Scripts/Downloaded/Full-Year Calendar Generator.svg",
     "Prabin's KB ~",
     "Excalidraw/Scripts/Downloaded",
     "Excalidraw/Scripts",
