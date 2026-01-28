@@ -13,3 +13,7 @@
 # Terms
 
 1. Hardware Abstraction Layer(HAL)
+
+# Notes
+
+[[QEMU Setups]]
