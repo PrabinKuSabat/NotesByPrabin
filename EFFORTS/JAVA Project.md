@@ -30,4 +30,4 @@
 
 # Extra
 
-- [f] Implement Dictionary using FlipHash.
+- [x] Implement Dictionary using FlipHash. ✅ 2026-01-28

@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "CALENDER/2026-01-28.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "2026-01-28"
             }
           }
         ]
@@ -213,16 +213,19 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {},
+              "state": {
+                "file": "CALENDER/2026-01-28.md"
+              },
               "icon": "lucide-info",
-              "title": "File properties"
+              "title": "File properties for 2026-01-28"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 471.5
+    "width": 471.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -253,13 +256,14 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Buffer.md",
+    "CALENDER/2026-01-23.md",
+    "CALENDER/2026-01-28.md",
     "Homepage.md",
+    "Buffer.md",
     "Extras/ATTACHMENTS/image-108.png",
     "Extras/ATTACHMENTS/image-107.png",
     "Extras/ATTACHMENTS/image-106.png",
     "Extras/ATTACHMENTS/image-105.png",
-    "CALENDER/2026-01-23.md",
     "TO-DO List.md",
     "EFFORTS/Online Courses.md",
     "CALENDER/2025-01-25.md",
