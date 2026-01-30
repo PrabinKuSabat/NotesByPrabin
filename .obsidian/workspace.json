@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "EFFORTS/QEMU Setups.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "QEMU Setups"
             }
           }
         ]
@@ -256,12 +256,12 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/QEMU Setups.md",
     "EFFORTS/Writing a Operating System.md",
     "EFFORTS/RISC-V.md",
-    "EFFORTS/RV2.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
+    "EFFORTS/QEMU Setups.md",
+    "EFFORTS/RV2.md",
     "CALENDER/2026-01-28.md",
     "CALENDER/2026-01-23.md",
     "Buffer.md",

@@ -18,6 +18,7 @@ telnet 127.0.0.1 55555
 ```
 
 # GDB Method
+
 ```bash
 qemu-system-riscv64 \
   -machine virt -cpu rv64 -m 4G -smp 2 \
@@ -35,4 +36,8 @@ qemu-system-riscv64 \
 ```bash
 gdb-multiarch ~/riscv/linux-orangepi/vmlinux #to start gdb.
 target remote localhost:1234 #connect to the qemu.
+```
+
+```bash
+# Command to check how many files will get compiled inside  
 ```
