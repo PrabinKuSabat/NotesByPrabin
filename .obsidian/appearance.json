@@ -7,7 +7,7 @@
   "interfaceFontFamily": "Cascadia Code",
   "textFontFamily": "Book Antiqua",
   "monospaceFontFamily": "Comic Sans MS",
-  "baseFontSize": 13,
+  "baseFontSize": 30,
   "baseFontSizeAction": true,
   "showViewHeader": true,
   "enabledCssSnippets": [
