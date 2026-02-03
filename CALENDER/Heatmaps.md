@@ -2,7 +2,7 @@
 
 dv.span("** 😊 Suprabhatam  😥**") /* optional ⏹️💤⚡⚠🧩↑↓⏳📔💾📁📝🔄📝🔀⌨️🕸️📅🔍✨ 🏋️ */
 const calendarData = {
-	year: 2025,
+	year: 2026,
 	colors: {
 		blue:        ["#8cb9ff", "#69a3ff", "#428bff", "#1872ff", "#0058e2"],
 		green:       ["#c6e48b", "#7bc96f", "#49af5d", "#2e8840", "#196127"],
@@ -35,7 +35,7 @@ renderHeatmapCalendar(this.container, calendarData)
 ```dataviewjs
 dv.span("** 🏋️ Jogging 🏋️**") /* optional ⏹️💤⚡⚠🧩↑↓⏳📔💾📁📝🔄📝🔀⌨️🕸️📅🔍✨ 🏋️ */
 const calendarData = {
-	year: 2025,
+	year: 2026,
 	colors: {
 		blue:        ["#8cb9ff", "#69a3ff", "#428bff", "#1872ff", "#0058e2"],
 		green:       ["#c6e48b", "#7bc96f", "#49af5d", "#2e8840", "#196127"],
@@ -68,7 +68,7 @@ renderHeatmapCalendar(this.container, calendarData)
 ```dataviewjs
 dv.span("**✨ Mandir ✨**") /* optional ⏹️💤⚡⚠🧩↑↓⏳📔💾📁📝🔄📝🔀⌨️🕸️📅🔍✨ 🏋️ */
 const calendarData = {
-	year: 2025,
+	year: 2026,
 	colors: {
 		green:       ["#c6e48b", "#7bc96f", "#49af5d", "#2e8840", "#196127"],
 	},
@@ -96,7 +96,7 @@ renderHeatmapCalendar(this.container, calendarData)
 ```dataviewjs
 dv.span("**💤 Night Lab 💤**") /* optional ⏹️💤⚡⚠🧩↑↓⏳📔💾📁📝🔄📝🔀⌨️🕸️📅🔍✨ 🏋️ */
 const calendarData = {
-	year: 2025,
+	year: 2026,
 	colors: {
 		blue:        ["#8cb9ff", "#69a3ff", "#428bff", "#1872ff", "#0058e2"],
 	},

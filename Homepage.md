@@ -1,6 +1,6 @@
 # Contents
 
-[[TO-DO List]]
+# [[TO-DO List]]
 
 # [[ATLAS/Atlas|ATLAS]]
 
@@ -37,12 +37,3 @@ ajaya kumar samal : +255
 gilber strang math videos
 
 [[Buffer]]  
-[[]]
-
-
-8793746684 - advait
-9995856779 - arjun
-9311137967 - gosh
-8929361858 - ishan
-7680064509 - sarthwik
-8480951393 - Suvendu

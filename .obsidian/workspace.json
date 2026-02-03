@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "CALENDER/2026-02-03.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "2026-02-03"
             }
           }
         ]
@@ -214,10 +214,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "CALENDER/2026-01-28.md"
+                "file": "CALENDER/2026-02-03.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for 2026-01-28"
+              "title": "File properties for 2026-02-03"
             }
           }
         ]
@@ -256,7 +256,12 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "CALENDER/Heatmaps.md",
+    "CALENDER/2026-02-03.md",
+    "CALENDER/CALENDAR.md",
     "Homepage.md",
+    "Extras/Library.md",
+    "TO-DO List.md",
     "EFFORTS/RV2.md",
     "EFFORTS/RISC-V.md",
     "EFFORTS/Efforts.md",
@@ -269,7 +274,6 @@
     "Extras/ATTACHMENTS/image-107.png",
     "Extras/ATTACHMENTS/image-106.png",
     "Extras/ATTACHMENTS/image-105.png",
-    "TO-DO List.md",
     "EFFORTS/Online Courses.md",
     "CALENDER/2025-01-25.md",
     "EFFORTS/NaviSim.md",
@@ -282,10 +286,6 @@
     "Untitled Kanban 1.md",
     "Excalidraw/Drawing 2025-12-26 20.15.13.excalidraw.md",
     "Excalidraw/Accel-sim Walk Around.excalidraw.md",
-    "Excalidraw/Drawing 2025-12-26 20.01.48.excalidraw.md",
-    "Excalidraw/Drawing 2026-01-04 12.07.10.excalidraw.md",
-    "Excalidraw/Dissertation Status.excalidraw.md",
-    "EFFORTS/Deepbench_nvidia_tencore.md",
     "Extras/ATTACHMENTS/image-104.png",
     "Extras/ATTACHMENTS/image-103.png",
     "Extras/ATTACHMENTS/image-102.png",
