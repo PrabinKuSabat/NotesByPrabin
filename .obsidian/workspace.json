@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CALENDER/2026-02-03.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "2026-02-03"
+              "title": "Homepage"
             }
           }
         ]
@@ -213,19 +213,16 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {
-                "file": "CALENDER/2026-02-03.md"
-              },
+              "state": {},
               "icon": "lucide-info",
-              "title": "File properties for 2026-02-03"
+              "title": "File properties"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 471.5,
-    "collapsed": true
+    "width": 471.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -256,10 +253,10 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "CALENDER/Heatmaps.md",
     "CALENDER/2026-02-03.md",
-    "CALENDER/CALENDAR.md",
     "Homepage.md",
+    "CALENDER/Heatmaps.md",
+    "CALENDER/CALENDAR.md",
     "Extras/Library.md",
     "TO-DO List.md",
     "EFFORTS/RV2.md",
