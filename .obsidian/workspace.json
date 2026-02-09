@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "EFFORTS/bare metal L1 latency test.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "bare metal L1 latency test"
             }
           },
           {
@@ -236,10 +236,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Homepage.md"
+                "file": "EFFORTS/bare metal L1 latency test.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Homepage"
+              "title": "File properties for bare metal L1 latency test"
             }
           }
         ]
@@ -277,14 +277,16 @@
   },
   "active": "3d374c6791a6ea49",
   "lastOpenFiles": [
+    "EFFORTS/RV2.md",
+    "EFFORTS/bare metal L1 latency test.md",
+    "EFFORTS/Rv2 Board CPU Details.md",
+    "EFFORTS/RISC-V.md",
+    "EFFORTS/Efforts.md",
+    "Homepage.md",
     "TO-DO List.md",
     "Status Kanban.md",
-    "Homepage.md",
-    "EFFORTS/Efforts.md",
-    "EFFORTS/RISC-V.md",
     "EFFORTS/Writing a Operating System.md",
     "EFFORTS/QEMU Setups.md",
-    "EFFORTS/RV2.md",
     "Buffer.md",
     "ATLAS/Shakti Sir Meeting Notes.md",
     "ATLAS/Atlas.md",
@@ -305,8 +307,6 @@
     "EFFORTS/NaviSim.md",
     "EFFORTS/Things to try out.md",
     "Extras/NotesByPrabin/EFFORTS/NaviSim.md",
-    "EFFORTS/Dissertation TO-Do Lists.md",
-    "EFFORTS/Benchmarking and Dissecting the Nvidia Hopper  GPU Architecture.md",
     "Extras/ATTACHMENTS/image-104.png",
     "Extras/ATTACHMENTS/image-103.png",
     "Extras/ATTACHMENTS/image-102.png",
