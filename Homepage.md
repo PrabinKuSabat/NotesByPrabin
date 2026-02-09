@@ -1,7 +1,5 @@
 # Contents
 
-# [[TO-DO List]]
-
 # [[ATLAS/Atlas|ATLAS]]
 
 > [!info]  
@@ -16,4 +14,7 @@
 
 # [[Prabins KB ~|Website Homepage]]
 
-[[Buffer]]  
+# [[TO-DO List]]
+
+# [[Status Kanban]]
+[[Buffer]]

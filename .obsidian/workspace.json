@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/RISC-V.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,29 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "RISC-V"
+              "title": "Homepage"
+            }
+          },
+          {
+            "id": "036811939daef59e",
+            "type": "leaf",
+            "state": {
+              "type": "kanban",
+              "state": {
+                "file": "Status Kanban.md",
+                "kanbanViewState": {
+                  "kanban-plugin": "board",
+                  "list-collapse": [
+                    false,
+                    false,
+                    false,
+                    false,
+                    false
+                  ]
+                }
+              },
+              "icon": "lucide-trello",
+              "title": "Status Kanban"
             }
           }
         ]
@@ -214,10 +236,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "EFFORTS/RISC-V.md"
+                "file": "Homepage.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for RISC-V"
+              "title": "File properties for Homepage"
             }
           }
         ]
@@ -255,22 +277,23 @@
   },
   "active": "3d374c6791a6ea49",
   "lastOpenFiles": [
+    "TO-DO List.md",
+    "Status Kanban.md",
+    "Homepage.md",
     "EFFORTS/Efforts.md",
     "EFFORTS/RISC-V.md",
+    "EFFORTS/Writing a Operating System.md",
+    "EFFORTS/QEMU Setups.md",
     "EFFORTS/RV2.md",
-    "Homepage.md",
     "Buffer.md",
     "ATLAS/Shakti Sir Meeting Notes.md",
     "ATLAS/Atlas.md",
-    "TO-DO List.md",
     "Notes jan 2.md",
     "CALENDER/2026-02-09.md",
     "CALENDER/CALENDAR.md",
     "CALENDER/2026-02-03.md",
     "CALENDER/Heatmaps.md",
     "Extras/Library.md",
-    "EFFORTS/QEMU Setups.md",
-    "EFFORTS/Writing a Operating System.md",
     "CALENDER/2026-01-28.md",
     "CALENDER/2026-01-23.md",
     "Extras/ATTACHMENTS/image-108.png",
@@ -284,7 +307,6 @@
     "Extras/NotesByPrabin/EFFORTS/NaviSim.md",
     "EFFORTS/Dissertation TO-Do Lists.md",
     "EFFORTS/Benchmarking and Dissecting the Nvidia Hopper  GPU Architecture.md",
-    "EFFORTS/POA By Naveen Bro.md",
     "Extras/ATTACHMENTS/image-104.png",
     "Extras/ATTACHMENTS/image-103.png",
     "Extras/ATTACHMENTS/image-102.png",
