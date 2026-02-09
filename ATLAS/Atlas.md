@@ -21,6 +21,7 @@ title: Architecture
 [[NVIDIA- Architectures]]
 [[Wafers]]
 [[Ada Lovelace ISA]]
+[[Shakti Sir Meeting Notes]]
 ```
 
 [[Movie Watch List]]
