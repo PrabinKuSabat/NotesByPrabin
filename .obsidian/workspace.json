@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "CALENDER/2026-02-09.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "2026-02-09"
             }
           }
         ]
@@ -213,9 +213,11 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {},
+              "state": {
+                "file": "CALENDER/2026-02-09.md"
+              },
               "icon": "lucide-info",
-              "title": "File properties"
+              "title": "File properties for 2026-02-09"
             }
           }
         ]
@@ -253,8 +255,9 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "CALENDER/2026-02-03.md",
     "Homepage.md",
+    "CALENDER/2026-02-09.md",
+    "CALENDER/2026-02-03.md",
     "CALENDER/Heatmaps.md",
     "CALENDER/CALENDAR.md",
     "Extras/Library.md",
@@ -282,7 +285,6 @@
     "Notes jan 2.md",
     "Untitled Kanban 1.md",
     "Excalidraw/Drawing 2025-12-26 20.15.13.excalidraw.md",
-    "Excalidraw/Accel-sim Walk Around.excalidraw.md",
     "Extras/ATTACHMENTS/image-104.png",
     "Extras/ATTACHMENTS/image-103.png",
     "Extras/ATTACHMENTS/image-102.png",
