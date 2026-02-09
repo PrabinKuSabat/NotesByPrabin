@@ -30,28 +30,6 @@
               "icon": "lucide-file",
               "title": "bare metal L1 latency test"
             }
-          },
-          {
-            "id": "036811939daef59e",
-            "type": "leaf",
-            "state": {
-              "type": "kanban",
-              "state": {
-                "file": "Status Kanban.md",
-                "kanbanViewState": {
-                  "kanban-plugin": "board",
-                  "list-collapse": [
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
-                  ]
-                }
-              },
-              "icon": "lucide-trello",
-              "title": "Status Kanban"
-            }
           }
         ]
       }
@@ -277,14 +255,14 @@
   },
   "active": "3d374c6791a6ea49",
   "lastOpenFiles": [
-    "EFFORTS/RV2.md",
+    "Status Kanban.md",
     "EFFORTS/bare metal L1 latency test.md",
+    "EFFORTS/RV2.md",
     "EFFORTS/Rv2 Board CPU Details.md",
     "EFFORTS/RISC-V.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
     "TO-DO List.md",
-    "Status Kanban.md",
     "EFFORTS/Writing a Operating System.md",
     "EFFORTS/QEMU Setups.md",
     "Buffer.md",
