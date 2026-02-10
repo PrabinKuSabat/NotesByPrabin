@@ -10,7 +10,7 @@ That's same question I was asked with by one of my juniors. See Docker and QEMU 
 
 ``` bash
 sudo apt update
-sudo apt install qemu-system-riscv64 build-essential bc bison flex debootstrap opensbi u-boot-qemu 
+sudo apt install qemu-system-riscv64 build-essential bc bison flex  libssl-dev gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu opensbi u-boot-qemu qemu-efi-riscv64
 ```
 
 # Hardware Definitions
