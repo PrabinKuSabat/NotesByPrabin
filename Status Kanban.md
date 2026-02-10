@@ -1,5 +1,6 @@
 ---
 kanban-plugin: board
+dg-publish: true
 ---
 
 # Cards

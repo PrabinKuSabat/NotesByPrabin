@@ -1,7 +1,7 @@
 ---
 excalidraw-plugin: parsed
 tags: excalidraw
-dg-publish: true
+dg-publish: false
 excalidraw-export-padding: "20"
 dg-show-local-graph: "false"
 dg-show-backlinks: "false"

@@ -8,12 +8,12 @@
         "type": "tabs",
         "children": [
           {
-            "id": "3d374c6791a6ea49",
+            "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/bare metal L1 latency test.md",
+                "file": "Prabin's KB ~/Prabins KB ~.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "bare metal L1 latency test"
+              "title": "Prabins KB ~"
             }
           }
         ]
@@ -214,10 +214,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "EFFORTS/bare metal L1 latency test.md"
+                "file": "Prabin's KB ~/Prabins KB ~.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for bare metal L1 latency test"
+              "title": "File properties for Prabins KB ~"
             }
           }
         ]
@@ -253,15 +253,18 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "3d374c6791a6ea49",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
     "Status Kanban.md",
+    "Prabin's KB ~/Prabins KB ~.md",
+    "Excalidraw/Dissertation Status.excalidraw.md",
+    "Homepage.md",
+    "Prabin's KB ~/Ada Lovelace GPU Architecture - Design Changes over Ampere.md",
     "EFFORTS/bare metal L1 latency test.md",
     "EFFORTS/RV2.md",
     "EFFORTS/Rv2 Board CPU Details.md",
     "EFFORTS/RISC-V.md",
     "EFFORTS/Efforts.md",
-    "Homepage.md",
     "TO-DO List.md",
     "EFFORTS/Writing a Operating System.md",
     "EFFORTS/QEMU Setups.md",
@@ -282,9 +285,6 @@
     "Extras/ATTACHMENTS/image-105.png",
     "EFFORTS/Online Courses.md",
     "CALENDER/2025-01-25.md",
-    "EFFORTS/NaviSim.md",
-    "EFFORTS/Things to try out.md",
-    "Extras/NotesByPrabin/EFFORTS/NaviSim.md",
     "Extras/ATTACHMENTS/image-104.png",
     "Extras/ATTACHMENTS/image-103.png",
     "Extras/ATTACHMENTS/image-102.png",
