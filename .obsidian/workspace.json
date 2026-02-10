@@ -11,24 +11,22 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "kanban",
               "state": {
-                "file": "Prabin's KB ~/Prabins KB ~.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
+                "file": "Status Kanban.md",
+                "kanbanViewState": {
+                  "kanban-plugin": "board",
+                  "list-collapse": [
+                    false,
+                    false,
+                    false,
+                    false,
+                    false
+                  ]
                 }
               },
-              "icon": "lucide-file",
-              "title": "Prabins KB ~"
+              "icon": "lucide-trello",
+              "title": "Status Kanban"
             }
           }
         ]
@@ -214,10 +212,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Prabin's KB ~/Prabins KB ~.md"
+                "file": "Status Kanban.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Prabins KB ~"
+              "title": "File properties for Status Kanban"
             }
           }
         ]
@@ -255,8 +253,8 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Status Kanban.md",
     "Prabin's KB ~/Prabins KB ~.md",
+    "Status Kanban.md",
     "Excalidraw/Dissertation Status.excalidraw.md",
     "Homepage.md",
     "Prabin's KB ~/Ada Lovelace GPU Architecture - Design Changes over Ampere.md",
