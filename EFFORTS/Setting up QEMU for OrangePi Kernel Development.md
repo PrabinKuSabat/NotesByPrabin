@@ -10,7 +10,7 @@ That's same question I was asked with by one of my juniors. See Docker and QEMU 
 
 ``` bash
 sudo apt update
-sudo apt install opensbi u-boot-qemu 
+sudo apt install qemu-system-riscv64 build-essential bc bison flex debootstrap opensbi u-boot-qemu 
 ```
 
 # Hardware Definitions
@@ -63,6 +63,35 @@ lowrisc-ibex          = LowRISC Ibex (small embedded core)
 max/max32             = Ventana Micro Veyron cores
 tt-ascalon/veyron-v1  = T-Head/Transwarp cores
 xiangshan-*           = Xiangshan open-source high-perf cores
+```
+
+# Kernel Aquisition
+
+```bash
+git clone https://github.com/orangepi-xunlong/linux-orangepi.git
+cd linux-orangepi
+git checkout orange-pi-6.6-ky
+```
+
+## Config generation
+
+```bash
+export ARCH=riscv 
+export CROSS_COMPILE=riscv64-linux-gnu-
+make distclean #removes any existing build artifacts
+make defconfig #Creates default .config
+```
+
+```bash
+# U can make use of this interactive menu to configure the kernel
+make menuconfig
+```
+
+## Compilation
+
+```bash
+make -j$(nproc) 
+# U should use a specific no. of cores ( < totall cores ) if u want to multi-task while the process is running.
 ```
 
 # Telenet Method
