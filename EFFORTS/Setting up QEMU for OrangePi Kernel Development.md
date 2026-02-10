@@ -73,21 +73,85 @@ cd linux-orangepi
 git checkout origin/orange-pi-6.6-ky
 ```
 
+# Extracting Kernel Configuration from Orange Pi RV2 Image
+
+## **Method 1: Mount the Image and Extract (Recommended - Fastest)**
+
+This method directly accesses the `/boot` directory inside your disk image file without needing to boot the system.  
+**Step 1: Find the image and mount it as a loopback device**
+
+```
+cd /home/prabinkumarsabat/Downloads/Orangepirv2_1.0.0_ubuntu_noble_server_linux6.6.63
+
+# Verify the image file exists
+ls -lh Orangepirv2_1.0.0_ubuntu_noble_server_linux6.6.63.img
+
+# Create a mount point
+mkdir -p ~/mnt_orange_pi
+
+# Mount the image (loopback mount)
+sudo mount -o loop Orangepirv2_1.0.0_ubuntu_noble_server_linux6.6.63.img ~/mnt_orange_pi
+```
+
+**Step 2: Verify the mount and explore contents**
+
+```
+# Check if mount was successful
+mount | grep "mnt_orange_pi"
+
+# List boot directory contents
+ls -la ~/mnt_orange_pi/boot/
+```
+
+Output:
+
+```
+# Check if mount was successful
+mount | grep "mnt_orange_pi"
+
+# List boot directory contents
+ls -la ~/mnt_orange_pi/boot/
+```
+
+**Step 3: Copy the kernel config to your working directory**
+
+```
+# Copy the config file
+sudo cp ~/mnt_orange_pi/boot/config-6.6.63-ky ~/linux-orangepi/.config
+
+# Fix permissions
+sudo chown $(whoami):$(whoami) ~/linux-orangepi/.config
+
+# Verify it was copied
+head -20 ~/linux-orangepi/.config
+```
+
+**Step 4: Unmount when done**
+
+```
+# Unmount the image
+sudo umount ~/mnt_orange_pi
+
+# Verify unmount
+mount | grep "mnt_orange_pi"  # Should return nothing
+```
+
 ## Config generation
 
 ```bash
-export ARCH=riscv 
+cd ~/linux-orangepi
+export ARCH=riscv
 export CROSS_COMPILE=riscv64-linux-gnu-
 make distclean #removes any existing build artifacts
-make x1_defconfig #Creates default .config
+make oldconfig #Creates default .config
 ```
 
-> [!info] Interactive config modification
+> [!info] Interactive config modification  
 > U can make use of this interactive menu to configure the kernel  
 > `make menuconfig`
 
-> [!abstract] Other configs
-> Use `ls -la arch/riscv/configs` to check all the available configs. 
+> [!abstract] Other configs  
+> Use `ls -la arch/riscv/configs` to check all the available configs.
 
 ## Compilation
 
@@ -95,6 +159,7 @@ make x1_defconfig #Creates default .config
 make -j$(nproc) 
 # U should use a specific no. of cores ( < totall cores ) if u want to multi-task while the process is running.
 ```
+
 
 # Telenet Method
 
