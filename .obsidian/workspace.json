@@ -11,22 +11,24 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "kanban",
+              "type": "markdown",
               "state": {
-                "file": "Status Kanban.md",
-                "kanbanViewState": {
-                  "kanban-plugin": "board",
-                  "list-collapse": [
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
-                  ]
+                "file": "Prabin's KB ~/Prabins KB ~.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
                 }
               },
-              "icon": "lucide-trello",
-              "title": "Status Kanban"
+              "icon": "lucide-file",
+              "title": "Prabins KB ~"
             }
           }
         ]
@@ -212,10 +214,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Status Kanban.md"
+                "file": "Prabin's KB ~/Prabins KB ~.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Status Kanban"
+              "title": "File properties for Prabins KB ~"
             }
           }
         ]
@@ -253,10 +255,13 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Prabin's KB ~/GPU Architectures and Whitepapers.md",
     "Prabin's KB ~/Prabins KB ~.md",
+    "Prabin's KB ~/Vast.AI.md",
+    "EFFORTS/AccelSim.md",
+    "Homepage.md",
     "Status Kanban.md",
     "Excalidraw/Dissertation Status.excalidraw.md",
-    "Homepage.md",
     "Prabin's KB ~/Ada Lovelace GPU Architecture - Design Changes over Ampere.md",
     "EFFORTS/bare metal L1 latency test.md",
     "EFFORTS/RV2.md",
@@ -276,13 +281,10 @@
     "CALENDER/Heatmaps.md",
     "Extras/Library.md",
     "CALENDER/2026-01-28.md",
-    "CALENDER/2026-01-23.md",
     "Extras/ATTACHMENTS/image-108.png",
     "Extras/ATTACHMENTS/image-107.png",
     "Extras/ATTACHMENTS/image-106.png",
     "Extras/ATTACHMENTS/image-105.png",
-    "EFFORTS/Online Courses.md",
-    "CALENDER/2025-01-25.md",
     "Extras/ATTACHMENTS/image-104.png",
     "Extras/ATTACHMENTS/image-103.png",
     "Extras/ATTACHMENTS/image-102.png",
