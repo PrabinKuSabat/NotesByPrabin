@@ -70,7 +70,7 @@ xiangshan-*           = Xiangshan open-source high-perf cores
 ```bash
 git clone https://github.com/orangepi-xunlong/linux-orangepi.git
 cd linux-orangepi
-git checkout orange-pi-6.6-ky
+git checkout origin/orange-pi-6.6-ky
 ```
 
 ## Config generation
@@ -79,13 +79,15 @@ git checkout orange-pi-6.6-ky
 export ARCH=riscv 
 export CROSS_COMPILE=riscv64-linux-gnu-
 make distclean #removes any existing build artifacts
-make orange-pi_rv2_defconfig #Creates default .config
+make x1_defconfig #Creates default .config
 ```
 
-```bash
-# U can make use of this interactive menu to configure the kernel
-make menuconfig
-```
+> [!info] Interactive config modification
+> U can make use of this interactive menu to configure the kernel  
+> `make menuconfig`
+
+> [!abstract] Other configs
+> Use `ls -la arch/riscv/configs` to check all the available configs. 
 
 ## Compilation
 
