@@ -1,3 +1,7 @@
+---
+dg-publish: true
+---
+
 # Why QEMU?
 
 Why not Docker!!  
@@ -159,7 +163,6 @@ make oldconfig #Creates default .config
 make -j$(nproc) 
 # U should use a specific no. of cores ( < totall cores ) if u want to multi-task while the process is running.
 ```
-
 
 # Telenet Method
 

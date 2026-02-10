@@ -1,5 +1,5 @@
 ---
-dg-publish: true
+dg-publish: false
 ---
 
 # Notes on the GPU-Simulator Accel-Sim
