@@ -142,7 +142,7 @@ mount | grep "mnt_orange_pi"  # Should return nothing
 cd ~/linux-orangepi
 export ARCH=riscv
 export CROSS_COMPILE=riscv64-linux-gnu-
-make distclean #removes any existing build artifacts
+make clean #removes any existing build artifacts
 make oldconfig #Creates default .config
 ```
 
