@@ -16,4 +16,4 @@
 
 # Notes
 
-[[QEMU Setups]]
+[[Setting up QEMU for OrangePi Kernel Development]]

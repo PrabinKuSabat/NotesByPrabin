@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Prabin's KB ~/Prabins KB ~.md",
+                "file": "EFFORTS/Setting up QEMU for OrangePi Kernel Development.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Prabins KB ~"
+              "title": "Setting up QEMU for OrangePi Kernel Development"
             }
           }
         ]
@@ -214,10 +214,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Prabin's KB ~/Prabins KB ~.md"
+                "file": "EFFORTS/Setting up QEMU for OrangePi Kernel Development.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Prabins KB ~"
+              "title": "File properties for Setting up QEMU for OrangePi Kernel Development"
             }
           }
         ]
@@ -255,22 +255,22 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Prabin's KB ~/GPU Architectures and Whitepapers.md",
+    "EFFORTS/Writing a Operating System.md",
+    "EFFORTS/RISC-V.md",
+    "EFFORTS/RV2.md",
+    "EFFORTS/Efforts.md",
+    "Homepage.md",
     "Prabin's KB ~/Prabins KB ~.md",
+    "Prabin's KB ~/GPU Architectures and Whitepapers.md",
     "Prabin's KB ~/Vast.AI.md",
     "EFFORTS/AccelSim.md",
-    "Homepage.md",
     "Status Kanban.md",
     "Excalidraw/Dissertation Status.excalidraw.md",
     "Prabin's KB ~/Ada Lovelace GPU Architecture - Design Changes over Ampere.md",
     "EFFORTS/bare metal L1 latency test.md",
-    "EFFORTS/RV2.md",
     "EFFORTS/Rv2 Board CPU Details.md",
-    "EFFORTS/RISC-V.md",
-    "EFFORTS/Efforts.md",
     "TO-DO List.md",
-    "EFFORTS/Writing a Operating System.md",
-    "EFFORTS/QEMU Setups.md",
+    "EFFORTS/Setting up QEMU for OrangePi Kernel Development.md",
     "Buffer.md",
     "ATLAS/Shakti Sir Meeting Notes.md",
     "ATLAS/Atlas.md",
