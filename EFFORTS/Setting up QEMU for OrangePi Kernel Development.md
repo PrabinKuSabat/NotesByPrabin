@@ -79,7 +79,6 @@ git checkout origin/orange-pi-6.6-ky
 
 # Extracting Kernel Configuration from Orange Pi RV2 Image
 
-## **Method 1: Mount the Image and Extract (Recommended - Fastest)**
 
 This method directly accesses the `/boot` directory inside your disk image file without needing to boot the system.  
 **Step 1: Find the image and mount it as a loopback device**
