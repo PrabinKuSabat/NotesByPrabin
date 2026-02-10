@@ -79,7 +79,7 @@ git checkout orange-pi-6.6-ky
 export ARCH=riscv 
 export CROSS_COMPILE=riscv64-linux-gnu-
 make distclean #removes any existing build artifacts
-make defconfig #Creates default .config
+make orange-pi_rv2_defconfig #Creates default .config
 ```
 
 ```bash
