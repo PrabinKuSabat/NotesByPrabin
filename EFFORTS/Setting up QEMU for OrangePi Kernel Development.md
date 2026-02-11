@@ -14,7 +14,7 @@ That's same question I was asked with by one of my juniors. See Docker and QEMU 
 
 ``` bash
 sudo apt update
-sudo apt install qemu-system-riscv64 build-essential bc bison flex  libssl-dev gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu opensbi u-boot-qemu qemu-efi-riscv64
+sudo apt install -y qemu-system-riscv64 build-essential bc bison flex  libssl-dev gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu opensbi u-boot-qemu qemu-efi-riscv64
 ```
 
 # Hardware Definitions
@@ -33,7 +33,7 @@ _Use `qemu-system-riscv64 -machine help` to see for yourself._
 | `microchip-icicle-kit`     | Microchip PolarFire Icicle Kit FPGA board             | FPGA dev board w/ RISC-V                                 |
 | `xiangshan-kunminghu`      | Xiangshan FPGA prototype (Chinese research)           | High-performance research CPU                            |
 | `amd-microblaze-v-generic` | AMD MicroBlaze-V softcore (not RISC-V)                | FPGA softcore CPU                                        |
-| `none`                     | Empty machine (no peripherals)                        | Testing bare CPU                                         |  
+| `none`                     | Empty machine (no peripherals)                        | Testing bare CPU                                         |
 
 QEMU can be designed to simulate entire boards/machines like the spike, sifive_u, sifive_e, shakti_c. But for the board which we have, i.e. OrangePi RV2, the in-built `virt` machine mode will work.
 
@@ -78,7 +78,6 @@ git checkout origin/orange-pi-6.6-ky
 ```
 
 # Extracting Kernel Configuration from Orange Pi RV2 Image
-
 
 This method directly accesses the `/boot` directory inside your disk image file without needing to boot the system.  
 **Step 1: Find the image and mount it as a loopback device**
@@ -162,6 +161,7 @@ make oldconfig #Creates default .config
 make -j$(nproc) 
 # U should use a specific no. of cores ( < totall cores ) if u want to multi-task while the process is running.
 ```
+
 
 # Telenet Method
 

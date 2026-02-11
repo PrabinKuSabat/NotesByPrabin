@@ -24,10 +24,8 @@ dg-home: true
 
 # Notes
 
-[[Setting up QEMU for OrangePi Kernel Development]]  
-[[AccelSim]]  
-[[Vast.AI]]  
-[[GPU Architectures and Whitepapers]]
+[[Project Setups]]  
+[[Research Notes]]
 
 ---
 
