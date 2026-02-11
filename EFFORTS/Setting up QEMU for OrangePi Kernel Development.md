@@ -77,27 +77,40 @@ cd linux-orangepi
 git checkout origin/orange-pi-6.6-ky
 ```
 
-# Extracting Kernel Configuration from Orange Pi RV2 Image
+## Extracting Kernel Configuration from Orange Pi RV2 Image
 
 This method directly accesses the `/boot` directory inside your disk image file without needing to boot the system.  
 **Step 1: Find the image and mount it as a loopback device**
 
-```
-cd /home/prabinkumarsabat/Downloads/Orangepirv2_1.0.0_ubuntu_noble_server_linux6.6.63
+```bash
+cd ~/Orangepirv2_1.0.0_ubuntu_noble_server_linux6.6.63
 
 # Verify the image file exists
 ls -lh Orangepirv2_1.0.0_ubuntu_noble_server_linux6.6.63.img
 
+# Setup loop device with partition scanning
+sudo losetup -fP Orangepirv2_1.0.0_ubuntu_noble_server_linux6.6.63.img
+
+# Find which loop device was assigned
+losetup -a | grep Orangepirv2
+
+# It will show something like: /dev/loop43: []: (/home/…/Orangepirv2_1.0.0_ubuntu_noble_server_linux6.6.63.img)
+# Note the loop device number (e.g., loop43)
+
+# List the partitions
+ls -l /dev/loop43*
+# You should see: /dev/loop43p1, /dev/loop43p2, etc.
+
 # Create a mount point
 mkdir -p ~/mnt_orange_pi
 
-# Mount the image (loopback mount)
-sudo mount -o loop Orangepirv2_1.0.0_ubuntu_noble_server_linux6.6.63.img ~/mnt_orange_pi
+# Mount the root partition (usually p2)
+sudo mount /dev/loop43p2 ~/mnt_orange_pi
 ```
 
 **Step 2: Verify the mount and explore contents**
 
-```
+```bash
 # Check if mount was successful
 mount | grep "mnt_orange_pi"
 
@@ -107,17 +120,17 @@ ls -la ~/mnt_orange_pi/boot/
 
 Output:
 
-```
-# Check if mount was successful
-mount | grep "mnt_orange_pi"
-
-# List boot directory contents
-ls -la ~/mnt_orange_pi/boot/
+```bash
+# You should see:
+# config-6.6.63-ky
+# vmlinuz-6.6.63-ky
+# initrd.img-6.6.63-ky
+# dtbs/
 ```
 
 **Step 3: Copy the kernel config to your working directory**
 
-```
+```bash
 # Copy the config file
 sudo cp ~/mnt_orange_pi/boot/config-6.6.63-ky ~/linux-orangepi/.config
 
@@ -126,16 +139,30 @@ sudo chown $(whoami):$(whoami) ~/linux-orangepi/.config
 
 # Verify it was copied
 head -20 ~/linux-orangepi/.config
+
+# Check that it's a valid kernel config 
+grep "CONFIG_RISCV=y" ~/riscv/linux-orangepi/.config #should be =y
+grep "CONFIG_KY_WATCHDOG" ~/riscv/linux-orangepi/.config #should be =y
+grep "Linux/riscv" ~/riscv/linux-orangepi/.config 
+#version should be 6.6.63 as the OrangePi kernel is 6.6.63.
+# Count enabled options 
+echo "Number of enabled config options:" 
+grep -c "^CONFIG_.*=y$" ~/riscv/linux-orangepi/.config
 ```
 
 **Step 4: Unmount when done**
 
-```
+```bash
 # Unmount the image
 sudo umount ~/mnt_orange_pi
 
+# Detach loop device (use the correct loop number from Step 3) 
+sudo losetup -d /dev/loop43
+
 # Verify unmount
 mount | grep "mnt_orange_pi"  # Should return nothing
+
+
 ```
 
 ## Config generation
@@ -144,9 +171,13 @@ mount | grep "mnt_orange_pi"  # Should return nothing
 cd ~/linux-orangepi
 export ARCH=riscv
 export CROSS_COMPILE=riscv64-linux-gnu-
+export LOCALVERSION=""
 make clean #removes any existing build artifacts
-make oldconfig #Creates default .config
+make olddefconfig # Update config for any new kernel options
 ```
+
+- You can disable `CONFIG_KY_WATCHDOG` since QEMU won't emulate this hardware
+- Enable `CONFIG_VIRTIO` options (should already be enabled)
 
 > [!info] Interactive config modification  
 > U can make use of this interactive menu to configure the kernel  
@@ -162,6 +193,64 @@ make -j$(nproc)
 # U should use a specific no. of cores ( < totall cores ) if u want to multi-task while the process is running.
 ```
 
+### Verify Kernel Image
+
+```bash
+# Check that kernel image was created successfully
+ls -lh arch/riscv/boot/Image
+
+# Expected output:
+# -rw-r--r-- 1 user user 18M Jan 27 15:30 arch/riscv/boot/Image
+
+# File size should be 15-25 MB typically
+file arch/riscv/boot/Image
+```
+
+## Root File System Extraction
+
+**Step 1: Find the sector stating location**
+
+```bash
+sudo fdisk -l Orangepirv2_1.0.0_ubuntu_noble_server_linux6.6.63.img
+```
+
+_Output Example :_
+
+> Disk Orangepirv2_1.0.0_ubuntu_noble_server_linux6.6.63.img: 2.21 GiB, 2373976064 bytes, 4636672 sectors  
+> Units: sectors of 1 * 512 = 512 bytes  
+> Sector size (logical/physical): 512 bytes / 512 bytes  
+> I/O size (minimum/optimal): 512 bytes / 512 bytes  
+> Disklabel type: dos  
+> Disk identifier: 0xbbaac27f
+>
+> _Device Boot Start End Sectors Size Id Type_ Orangepirv2_1.0.0_ubuntu_noble_server_linux6.6.63.img1 _**61440**_ 4636671 4575232 2.2G 83 Linux
+
+**Step 2 : Obtain the entire OS image with the rootFS inside**
+
+```
+cd ~/riscv
+
+# Copy the Orange Pi image to use as rootfs
+cp /home/prabinkumarsabat/Downloads/Orangepirv2_1.0.0_ubuntu_noble_server_linux6.6.63/Orangepirv2_1.0.0_ubuntu_noble_server_linux6.6.63.img ./rootfs.img
+
+# Optional: Expand the image for more space
+qemu-img resize -f raw rootfs.img +5G
+
+# Check the image
+ls -lh rootfs.img
+```
+
+**Step 3: Extract just the file-system**
+
+We assume the file-system is starting at sector 61440(value obtained in step 1).
+
+```
+cd ~/riscv
+
+# Calculate: 61440 sectors × 512 bytes = 31457280 bytes offset
+# Extract the partition to a separate file
+dd if=rootfs.img of=rootfs-partition.img bs=512 skip=61440
+```
 
 # Telenet Method
 
