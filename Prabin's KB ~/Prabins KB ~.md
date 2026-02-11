@@ -10,6 +10,8 @@ dg-home: true
 
 > [!important] What's New?
 
+1. [[RISC-V OS development]]
+
 ---
 
 > [!check] TO-DO Kanban Boards👇

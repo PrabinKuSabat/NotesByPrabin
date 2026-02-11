@@ -13,6 +13,30 @@
             "state": {
               "type": "markdown",
               "state": {
+                "file": "Prabin's KB ~/RISC-V OS development.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "RISC-V OS development"
+            }
+          },
+          {
+            "id": "378d73dd621e151e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
                 "file": "EFFORTS/Setting up QEMU for OrangePi Kernel Development.md",
                 "mode": "source",
                 "source": false,
@@ -214,10 +238,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "EFFORTS/Setting up QEMU for OrangePi Kernel Development.md"
+                "file": "Prabin's KB ~/RISC-V OS development.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Setting up QEMU for OrangePi Kernel Development"
+              "title": "File properties for RISC-V OS development"
             }
           }
         ]
@@ -255,10 +279,12 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Prabin's KB ~/Project Setups.md",
-    "Prabin's KB ~/Prabins KB ~.md",
-    "Prabin's KB ~/Research Notes.md",
     "EFFORTS/Setting up QEMU for OrangePi Kernel Development.md",
+    "Prabin's KB ~/RISC-V OS development.md",
+    "Untitled 2.md",
+    "Prabin's KB ~/Prabins KB ~.md",
+    "Prabin's KB ~/Project Setups.md",
+    "Prabin's KB ~/Research Notes.md",
     "Status Kanban.md",
     "Prabin's KB ~/Vast.AI.md",
     "Prabin's KB ~/GPU Architectures and Whitepapers.md",
@@ -279,8 +305,6 @@
     "Notes jan 2.md",
     "CALENDER/2026-02-09.md",
     "CALENDER/CALENDAR.md",
-    "CALENDER/2026-02-03.md",
-    "CALENDER/Heatmaps.md",
     "Extras/ATTACHMENTS/image-108.png",
     "Extras/ATTACHMENTS/image-107.png",
     "Extras/ATTACHMENTS/image-106.png",
