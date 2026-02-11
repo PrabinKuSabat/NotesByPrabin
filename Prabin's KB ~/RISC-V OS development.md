@@ -29,4 +29,4 @@ How can we reduce the friction between custom RISC-V hardware deployment and rig
 
 # FIRST : Setting up an Developer Ecosystem
 
-![[Setting up QEMU for OrangePi Kernel Development]]
+1.![[Setting up QEMU for OrangePi Kernel Development]]

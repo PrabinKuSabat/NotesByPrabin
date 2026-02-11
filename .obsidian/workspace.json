@@ -30,7 +30,13 @@
               "icon": "lucide-file",
               "title": "RISC-V OS development"
             }
-          },
+          }
+        ]
+      },
+      {
+        "id": "d5bf44edfdc040bd",
+        "type": "tabs",
+        "children": [
           {
             "id": "378d73dd621e151e",
             "type": "leaf",
@@ -55,8 +61,7 @@
               "title": "RISC-V OS development"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -249,7 +254,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 471.5
+    "width": 471.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
