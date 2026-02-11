@@ -260,7 +260,8 @@ cd ~/riscv
 dd if=rootfs.img of=rootfs-partition.img bs=512 skip=61440
 ```
 
-# Telenet Method
+# Working Commands
+## Telenet Method
 
 ```bash
 qemu-system-riscv64 \
@@ -279,7 +280,7 @@ VNC server running on 127.0.0.1:5900
 telnet 127.0.0.1 55555
 ```
 
-# GDB Method
+## GDB Method
 
 ```bash
 qemu-system-riscv64 \
@@ -293,9 +294,10 @@ qemu-system-riscv64 \
   -chardev stdio,id=console \
   -monitor telnet:127.0.0.1:55555,server,nowait \
   -gdb tcp::1234 -S
+```
 
-
-# Last Working Command
+# How to use!
+```
 qemu-system-riscv64 \
   -machine virt -cpu rv64 -m 4G -smp 2 \
   -kernel ~/riscv/linux-orangepi/arch/riscv/boot/Image \
@@ -309,6 +311,7 @@ qemu-system-riscv64 \
   -gdb tcp::1234 -S
 ```
 
+**It waits for you to connect using the GDB.** Only then the process starts.
 ```bash
 gdb-multiarch ~/riscv/linux-orangepi/vmlinux #to start gdb.
 target remote localhost:1234 #connect to the qemu.
