@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Setting up QEMU for OrangePi Kernel Development.md",
+                "file": "Prabin's KB ~/RISC-V OS development.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -52,10 +52,11 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Setting up QEMU for OrangePi Kernel Development"
+              "title": "RISC-V OS development"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -277,7 +278,7 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "378d73dd621e151e",
   "lastOpenFiles": [
     "EFFORTS/Setting up QEMU for OrangePi Kernel Development.md",
     "Prabin's KB ~/RISC-V OS development.md",

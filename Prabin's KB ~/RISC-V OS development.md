@@ -1,10 +1,14 @@
+---
+dg-publish: true
+---
+
 # Hardware Available
 
 Currently the hardware existing with me is a single board MPU by OrangePi, i.e. the [OrangePi RV2](http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-RV2.html). Which uses the KyX1 cpu. A 8-core RISC-V AI CPU with 2 TOPS of converged AI Power. It's based on RVA22s64 ISA with RVV1.0 RISC-V vector extension.
 
 # The Problem
 
-The rapid evolution of the RISC-V ecosystem has enabled organizations and research groups to design **highly customized processor architectures and SoCs.** However, there exists a significant gap between hardware design completion and systematic, *research-grade* performance validation. Current validation workflows often require extensive manual setup, kernel modification, toolchain configuration, benchmarking integration, and performance counter instrumentation. This process is *time-consuming, error-prone, and demands deep systems expertise.*
+The rapid evolution of the RISC-V ecosystem has enabled organizations and research groups to design **highly customized processor architectures and SoCs.** However, there exists a significant gap between hardware design completion and systematic, _research-grade_ performance validation. Current validation workflows often require extensive manual setup, kernel modification, toolchain configuration, benchmarking integration, and performance counter instrumentation. This process is _time-consuming, error-prone, and demands deep systems expertise._
 
 **There is a clear need for a lightweight, developer-centric operating system that enables rapid hardware performance validation with minimal setup overhead.** Such a system should:
 
@@ -20,4 +24,9 @@ The objective of SOS-V (Sai OS for RISC-V) is to design and develop a streamline
 **In essence, the problem we aim to solve is:**
 
 How can we reduce the friction between custom RISC-V hardware deployment and rigorous performance validation by building a lightweight, measurement-oriented operating system optimized for developer productivity?
- 
+
+# Steps
+
+# FIRST : Setting up an Developer Ecosystem
+
+![[Setting up QEMU for OrangePi Kernel Development]]
