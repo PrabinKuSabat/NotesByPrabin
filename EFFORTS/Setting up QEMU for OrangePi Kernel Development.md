@@ -174,6 +174,14 @@ export CROSS_COMPILE=riscv64-linux-gnu-
 export LOCALVERSION=""
 make clean #removes any existing build artifacts
 make olddefconfig # Update config for any new kernel options
+
+make menuconfig
+
+#Do the following in the interactive menu
+# Device Drivers -> Virtio drivers -> 
+# Select "Platform bus driver for memory mapped virtio devices" as <*> (built-in)
+# Save and exit
+
 ```
 
 - You can disable `CONFIG_KY_WATCHDOG` since QEMU won't emulate this hardware
