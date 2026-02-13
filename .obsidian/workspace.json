@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "ATLAS/13-02-2026.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "13-02-2026"
             }
           }
         ]
@@ -256,19 +256,23 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "ATLAS/Shakti Sir Meeting Notes.md",
+    "ATLAS/13-02-2026.md",
+    "ATLAS/Atlas.md",
     "Homepage.md",
+    "EFFORTS/Efforts.md",
+    "CALENDER/CALENDAR.md",
+    "Prabin's KB ~/Prabins KB ~.md",
     "CALENDER/2026-02-12.md",
     "Prabin's KB ~/RISC-V OS development.md",
     "EFFORTS/Setting up QEMU for OrangePi Kernel Development.md",
     "Untitled 2.md",
-    "Prabin's KB ~/Prabins KB ~.md",
     "Prabin's KB ~/Project Setups.md",
     "Prabin's KB ~/Research Notes.md",
     "Status Kanban.md",
     "Prabin's KB ~/Vast.AI.md",
     "Prabin's KB ~/GPU Architectures and Whitepapers.md",
     "EFFORTS/AccelSim.md",
-    "EFFORTS/Efforts.md",
     "EFFORTS/RISC-V.md",
     "EFFORTS/Writing a Operating System.md",
     "EFFORTS/RV2.md",
@@ -278,10 +282,6 @@
     "EFFORTS/Rv2 Board CPU Details.md",
     "TO-DO List.md",
     "Buffer.md",
-    "ATLAS/Shakti Sir Meeting Notes.md",
-    "ATLAS/Atlas.md",
-    "Notes jan 2.md",
-    "CALENDER/2026-02-09.md",
     "Extras/ATTACHMENTS/image-108.png",
     "Extras/ATTACHMENTS/image-107.png",
     "Extras/ATTACHMENTS/image-106.png",
