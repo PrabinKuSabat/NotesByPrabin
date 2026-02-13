@@ -584,17 +584,17 @@ The L2 caches (512KB per cluster) implement the **MOESI consistency protocol**.
 	- Price: $54.79 (4GB) / $68.52 (8GB) basic kit
 
 **Laptops:**  
-4. **DeepComputing DC-ROMA Laptop II**
-	- RISC-V laptop
+4. **DeepComputing DC-ROMA Laptop II**  
+	- RISC-V laptop  
 	- Mobile form factor
 
 **Tablets:**  
-5. **DeepComputing DC-ROMA PAD II**
-	- RISC-V tablet
+5. **DeepComputing DC-ROMA PAD II**  
+	- RISC-V tablet  
 	- PostmarketOS support (testing stage)
 
 **Development Systems:**  
-6. **SpaceMIT MUSE Book**
+6. **SpaceMIT MUSE Book**  
 	- Official development platform
 
 **Others:**  

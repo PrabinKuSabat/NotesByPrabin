@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/spacemit-k1-x60.md",
+                "file": "EFFORTS/RV2.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "spacemit-k1-x60"
+              "title": "RV2"
             }
           }
         ]
@@ -214,10 +214,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "EFFORTS/spacemit-k1-x60.md"
+                "file": "EFFORTS/RV2.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for spacemit-k1-x60"
+              "title": "File properties for RV2"
             }
           }
         ]
@@ -256,13 +256,13 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/spacemit-k1-x60.md",
     "EFFORTS/RV2.md",
     "EFFORTS/Rv2 Board CPU Details.md",
     "EFFORTS/RISC-V.md",
     "ATLAS/Atlas.md",
     "ATLAS/Shakti Sir Meeting Notes.md",
     "ATLAS/13-02-2026.md",
-    "EFFORTS/spacemit-k1-x60.md",
     "Homepage.md",
     "CALENDER/2026-01-23.md",
     "CALENDER/2026-01-28.md",
