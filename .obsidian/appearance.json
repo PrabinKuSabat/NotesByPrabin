@@ -1,13 +1,13 @@
 {
   "accentColor": "#09e8ec",
   "theme": "moonstone",
-  "cssTheme": "Things",
+  "cssTheme": "Blue Topaz",
   "nativeMenus": false,
   "translucency": false,
   "interfaceFontFamily": "Cascadia Code",
   "textFontFamily": "Book Antiqua",
   "monospaceFontFamily": "Comic Sans MS",
-  "baseFontSize": 17,
+  "baseFontSize": 14,
   "baseFontSizeAction": true,
   "showViewHeader": true,
   "enabledCssSnippets": [
