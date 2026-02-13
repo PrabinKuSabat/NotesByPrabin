@@ -214,10 +214,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "CALENDER/2026-02-12.md"
+                "file": "ATLAS/13-02-2026.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for 2026-02-12"
+              "title": "File properties for 13-02-2026"
             }
           }
         ]
@@ -257,9 +257,13 @@
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
     "ATLAS/Shakti Sir Meeting Notes.md",
-    "ATLAS/13-02-2026.md",
     "ATLAS/Atlas.md",
     "Homepage.md",
+    "CALENDER/2026-01-23.md",
+    "CALENDER/2026-01-28.md",
+    "Buffer.md",
+    "Notes jan 2.md",
+    "ATLAS/13-02-2026.md",
     "EFFORTS/Efforts.md",
     "CALENDER/CALENDAR.md",
     "Prabin's KB ~/Prabins KB ~.md",
@@ -278,10 +282,6 @@
     "EFFORTS/RV2.md",
     "Excalidraw/Dissertation Status.excalidraw.md",
     "Prabin's KB ~/Ada Lovelace GPU Architecture - Design Changes over Ampere.md",
-    "EFFORTS/bare metal L1 latency test.md",
-    "EFFORTS/Rv2 Board CPU Details.md",
-    "TO-DO List.md",
-    "Buffer.md",
     "Extras/ATTACHMENTS/image-108.png",
     "Extras/ATTACHMENTS/image-107.png",
     "Extras/ATTACHMENTS/image-106.png",
