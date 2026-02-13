@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ATLAS/13-02-2026.md",
+                "file": "EFFORTS/spacemit-k1-x60.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "13-02-2026"
+              "title": "spacemit-k1-x60"
             }
           }
         ]
@@ -214,10 +214,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "ATLAS/13-02-2026.md"
+                "file": "EFFORTS/spacemit-k1-x60.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for 13-02-2026"
+              "title": "File properties for spacemit-k1-x60"
             }
           }
         ]
@@ -256,14 +256,18 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "ATLAS/Shakti Sir Meeting Notes.md",
+    "EFFORTS/RV2.md",
+    "EFFORTS/Rv2 Board CPU Details.md",
+    "EFFORTS/RISC-V.md",
     "ATLAS/Atlas.md",
+    "ATLAS/Shakti Sir Meeting Notes.md",
+    "ATLAS/13-02-2026.md",
+    "EFFORTS/spacemit-k1-x60.md",
     "Homepage.md",
     "CALENDER/2026-01-23.md",
     "CALENDER/2026-01-28.md",
     "Buffer.md",
     "Notes jan 2.md",
-    "ATLAS/13-02-2026.md",
     "EFFORTS/Efforts.md",
     "CALENDER/CALENDAR.md",
     "Prabin's KB ~/Prabins KB ~.md",
@@ -277,11 +281,7 @@
     "Prabin's KB ~/Vast.AI.md",
     "Prabin's KB ~/GPU Architectures and Whitepapers.md",
     "EFFORTS/AccelSim.md",
-    "EFFORTS/RISC-V.md",
     "EFFORTS/Writing a Operating System.md",
-    "EFFORTS/RV2.md",
-    "Excalidraw/Dissertation Status.excalidraw.md",
-    "Prabin's KB ~/Ada Lovelace GPU Architecture - Design Changes over Ampere.md",
     "Extras/ATTACHMENTS/image-108.png",
     "Extras/ATTACHMENTS/image-107.png",
     "Extras/ATTACHMENTS/image-106.png",

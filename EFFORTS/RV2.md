@@ -1,3 +1,4 @@
 - [[Rv2 Board CPU Details]]
+- [[spacemit-k1-x60]]
 ---
 - [[bare metal L1 latency test]]
