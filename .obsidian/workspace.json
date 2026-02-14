@@ -11,24 +11,10 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "EFFORTS/Rv2 Board CPU Details.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Rv2 Board CPU Details"
+              "title": "New tab"
             }
           }
         ]
@@ -256,15 +242,15 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/RV2.md",
-    "EFFORTS/RISC-V.md",
-    "ATLAS/Shakti Sir Meeting Notes.md",
-    "Notes jan 2.md",
     "ATLAS/13-02-2026.md",
+    "ATLAS/Shakti Sir Meeting Notes.md",
+    "EFFORTS/RISC-V.md",
+    "EFFORTS/RV2.md",
+    "EFFORTS/Rv2 Board CPU Details.md",
+    "Notes jan 2.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
     "EFFORTS/spacemit-k1-x60.md",
-    "EFFORTS/Rv2 Board CPU Details.md",
     "ATLAS/Atlas.md",
     "CALENDER/2026-01-23.md",
     "CALENDER/2026-01-28.md",
