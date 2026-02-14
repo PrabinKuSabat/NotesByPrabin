@@ -11,10 +11,24 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "EFFORTS/Setting up QEMU for OrangePi Kernel Development.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Setting up QEMU for OrangePi Kernel Development"
             }
           }
         ]
@@ -242,14 +256,15 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "ATLAS/13-02-2026.md",
-    "ATLAS/Shakti Sir Meeting Notes.md",
+    "EFFORTS/Writing a Operating System.md",
     "EFFORTS/RISC-V.md",
     "EFFORTS/RV2.md",
-    "EFFORTS/Rv2 Board CPU Details.md",
-    "Notes jan 2.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
+    "ATLAS/13-02-2026.md",
+    "ATLAS/Shakti Sir Meeting Notes.md",
+    "EFFORTS/Rv2 Board CPU Details.md",
+    "Notes jan 2.md",
     "EFFORTS/spacemit-k1-x60.md",
     "ATLAS/Atlas.md",
     "CALENDER/2026-01-23.md",
@@ -267,7 +282,6 @@
     "Prabin's KB ~/Vast.AI.md",
     "Prabin's KB ~/GPU Architectures and Whitepapers.md",
     "EFFORTS/AccelSim.md",
-    "EFFORTS/Writing a Operating System.md",
     "Extras/ATTACHMENTS/image-108.png",
     "Extras/ATTACHMENTS/image-107.png",
     "Extras/ATTACHMENTS/image-106.png",
