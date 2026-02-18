@@ -30,6 +30,18 @@
               "icon": "lucide-file",
               "title": "14 - 02 - 2026 -- SOS-V"
             }
+          },
+          {
+            "id": "7239a97dae742514",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Excalidraw/User-Level OS Implementation - Idea Board.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "User-Level OS Implementation - Idea Board"
+            }
           }
         ]
       }
@@ -256,11 +268,14 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Excalidraw/User-Level OS Implementation - Idea Board.md",
+    "Excalidraw/Scripts/Downloaded/Auto Layout.svg",
+    "Excalidraw/Scripts/Downloaded/Auto Layout.md",
+    "ATLAS/14 - 02 - 2026 -- SOS-V.md",
+    "Homepage.md",
     "ATLAS/Shakti Sir Meeting Notes.md",
     "EFFORTS/RISC-V.md",
     "EFFORTS/Efforts.md",
-    "Homepage.md",
-    "ATLAS/14 - 02 - 2026 -- SOS-V.md",
     "ATLAS/Atlas.md",
     "EFFORTS/Setting up QEMU for OrangePi Kernel Development.md",
     "EFFORTS/Writing a Operating System.md",
@@ -279,9 +294,6 @@
     "Untitled 2.md",
     "Prabin's KB ~/Project Setups.md",
     "Prabin's KB ~/Research Notes.md",
-    "Status Kanban.md",
-    "Prabin's KB ~/Vast.AI.md",
-    "Prabin's KB ~/GPU Architectures and Whitepapers.md",
     "Extras/ATTACHMENTS/image-108.png",
     "Extras/ATTACHMENTS/image-107.png",
     "Extras/ATTACHMENTS/image-106.png",
@@ -291,7 +303,6 @@
     "Extras/ATTACHMENTS/image-102.png",
     "Extras/ATTACHMENTS/image-101.png",
     "Extras/ATTACHMENTS/image-99.png",
-    "Extras/ATTACHMENTS/image-97.png",
     "Extras/ATTACHMENTS/combined_RTX4090_no_skip_first2rows_v3.pdf",
     "Extras/ATTACHMENTS/Sample CSV.pdf",
     "Prabin's KB ~",
