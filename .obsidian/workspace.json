@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "EFFORTS/Installing Perf.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Installing Perf"
             }
           }
         ]
@@ -256,11 +256,12 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "ATLAS/Atlas.md",
-    "EFFORTS/RISC-V.md",
-    "Homepage.md",
-    "EFFORTS/Efforts.md",
     "EFFORTS/RV2.md",
+    "EFFORTS/Installing Perf.md",
+    "EFFORTS/RISC-V.md",
+    "EFFORTS/Efforts.md",
+    "Homepage.md",
+    "ATLAS/Atlas.md",
     "EFFORTS/Writing a Operating System.md",
     "EFFORTS/RISC-V Performance Counters on Orange Pi.md",
     "ATLAS/Shakti Sir Meeting Notes.md",
@@ -282,7 +283,6 @@
     "Prabin's KB ~/RISC-V OS development.md",
     "Untitled 2.md",
     "Prabin's KB ~/Project Setups.md",
-    "Prabin's KB ~/Research Notes.md",
     "Extras/ATTACHMENTS/image-108.png",
     "Extras/ATTACHMENTS/image-107.png",
     "Extras/ATTACHMENTS/image-106.png",
