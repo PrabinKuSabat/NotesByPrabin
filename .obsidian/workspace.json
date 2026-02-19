@@ -11,24 +11,10 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "EFFORTS/Installing Perf.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Installing Perf"
+              "title": "New tab"
             }
           }
         ]
@@ -257,6 +243,8 @@
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
     "EFFORTS/RV2.md",
+    "EFFORTS/Rv2 Board CPU Details.md",
+    "EFFORTS/bare metal L1 latency test.md",
     "EFFORTS/Installing Perf.md",
     "EFFORTS/RISC-V.md",
     "EFFORTS/Efforts.md",
@@ -271,7 +259,6 @@
     "Excalidraw/Scripts/Downloaded/Auto Layout.md",
     "EFFORTS/Setting up QEMU for OrangePi Kernel Development.md",
     "ATLAS/13-02-2026.md",
-    "EFFORTS/Rv2 Board CPU Details.md",
     "Notes jan 2.md",
     "EFFORTS/spacemit-k1-x60.md",
     "CALENDER/2026-01-23.md",
@@ -282,7 +269,6 @@
     "CALENDER/2026-02-12.md",
     "Prabin's KB ~/RISC-V OS development.md",
     "Untitled 2.md",
-    "Prabin's KB ~/Project Setups.md",
     "Extras/ATTACHMENTS/image-108.png",
     "Extras/ATTACHMENTS/image-107.png",
     "Extras/ATTACHMENTS/image-106.png",
