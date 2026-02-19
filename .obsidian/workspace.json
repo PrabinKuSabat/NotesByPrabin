@@ -30,18 +30,6 @@
               "icon": "lucide-file",
               "title": "14 - 02 - 2026 -- SOS-V"
             }
-          },
-          {
-            "id": "7239a97dae742514",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Excalidraw/User-Level OS Implementation - Idea Board.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "User-Level OS Implementation - Idea Board"
-            }
           }
         ]
       }
@@ -268,15 +256,15 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "ATLAS/Shakti Sir Meeting Notes.md",
+    "EFFORTS/RISC-V.md",
+    "ATLAS/Atlas.md",
+    "Homepage.md",
+    "ATLAS/14 - 02 - 2026 -- SOS-V.md",
     "Excalidraw/User-Level OS Implementation - Idea Board.md",
     "Excalidraw/Scripts/Downloaded/Auto Layout.svg",
     "Excalidraw/Scripts/Downloaded/Auto Layout.md",
-    "ATLAS/14 - 02 - 2026 -- SOS-V.md",
-    "Homepage.md",
-    "ATLAS/Shakti Sir Meeting Notes.md",
-    "EFFORTS/RISC-V.md",
     "EFFORTS/Efforts.md",
-    "ATLAS/Atlas.md",
     "EFFORTS/Setting up QEMU for OrangePi Kernel Development.md",
     "EFFORTS/Writing a Operating System.md",
     "EFFORTS/RV2.md",
