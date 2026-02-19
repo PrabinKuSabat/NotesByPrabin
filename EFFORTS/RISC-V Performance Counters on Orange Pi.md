@@ -160,7 +160,9 @@ On the Orange Pi RV2, the `rdcycle` instruction reads the 64-bit cycle counter. 
 
 With access to these two fundamental counters, an engineer can calculate the Instructions Per Cycle (IPC) for a specific workload.
 
-$$IPC = \frac{instret_{end} - instret_{start}}{cycle_{end} - cycle_{start}}$$
+$$
+IPC = \frac{instret_{end} - instret_{start}}{cycle_{end} - cycle_{start}}
+$$
 
 On the X60 core, an IPC close to 2.0 indicates that the dual-issue pipeline is fully utilized. An IPC below 1.0 suggests that the core is frequently stalled. To investigate the cause of these stalls, the engineer must use the programmable `hpmcounter` registers to track more specific events, such as cache misses or branch mispredictions.
 
