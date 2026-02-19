@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ATLAS/14 - 02 - 2026 -- SOS-V.md",
+                "file": "EFFORTS/RISC-V Performance Counters on Orange Pi.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "14 - 02 - 2026 -- SOS-V"
+              "title": "RISC-V Performance Counters on Orange Pi"
             }
           }
         ]
@@ -256,17 +256,18 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "ATLAS/Shakti Sir Meeting Notes.md",
+    "EFFORTS/Writing a Operating System.md",
+    "EFFORTS/RISC-V Performance Counters on Orange Pi.md",
     "EFFORTS/RISC-V.md",
+    "ATLAS/Shakti Sir Meeting Notes.md",
+    "ATLAS/14 - 02 - 2026 -- SOS-V.md",
     "ATLAS/Atlas.md",
     "Homepage.md",
-    "ATLAS/14 - 02 - 2026 -- SOS-V.md",
     "Excalidraw/User-Level OS Implementation - Idea Board.md",
     "Excalidraw/Scripts/Downloaded/Auto Layout.svg",
     "Excalidraw/Scripts/Downloaded/Auto Layout.md",
     "EFFORTS/Efforts.md",
     "EFFORTS/Setting up QEMU for OrangePi Kernel Development.md",
-    "EFFORTS/Writing a Operating System.md",
     "EFFORTS/RV2.md",
     "ATLAS/13-02-2026.md",
     "EFFORTS/Rv2 Board CPU Details.md",

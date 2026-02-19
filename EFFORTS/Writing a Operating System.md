@@ -16,4 +16,5 @@
 
 # Notes
 
-[[Setting up QEMU for OrangePi Kernel Development]]
+[[Setting up QEMU for OrangePi Kernel Development]]  
+[[RISC-V Performance Counters on Orange Pi]]
