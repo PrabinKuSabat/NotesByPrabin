@@ -22,9 +22,12 @@ curl -v \
 
 `sudo chmod +x /usr/local/bin/autologin.sh`
 
-Check Using : `curl -Ik https://www.google.com`  
-`sudo apt install aria2 -y`  
-`aria2c -x 16 -s 16 --check-certificate=false "https://www.kernel.org/pub/linux/kernel/v6.x/linux-6.6.tar.xz"`
+Check Using :
+```bash
+curl -Ik https://www.google.com  
+sudo apt install aria2 -y`  
+aria2c -x 16 -s 16 --check-certificate=false "https://www.kernel.org/pub/linux/kernel/v6.x/linux-6.6.tar.xz"
+```
 
 # Dependencies
 

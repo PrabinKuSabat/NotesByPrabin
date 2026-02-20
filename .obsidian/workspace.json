@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "EFFORTS/Installing Perf.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Installing Perf"
             }
           }
         ]
@@ -256,16 +256,16 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Homepage.md",
-    "ATLAS/Atlas.md",
-    "EFFORTS/RISC-V.md",
     "EFFORTS/RV2.md",
+    "EFFORTS/bare metal L1 latency test.md",
+    "EFFORTS/RISC-V.md",
+    "EFFORTS/Installing Perf.md",
+    "ATLAS/Atlas.md",
+    "Homepage.md",
     "EFFORTS/spacemit-k1-x60.md",
     "EFFORTS/Rv2 Board CPU Details.md",
     "EFFORTS/Writing a Operating System.md",
     "EFFORTS/RISC-V Performance Counters on Orange Pi.md",
-    "EFFORTS/bare metal L1 latency test.md",
-    "EFFORTS/Installing Perf.md",
     "EFFORTS/Efforts.md",
     "ATLAS/Shakti Sir Meeting Notes.md",
     "ATLAS/14 - 02 - 2026 -- SOS-V.md",
