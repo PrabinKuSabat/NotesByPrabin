@@ -23,6 +23,7 @@ curl -v \
 `sudo chmod +x /usr/local/bin/autologin.sh`
 
 Check Using :
+
 ```bash
 curl -Ik https://www.google.com  
 sudo apt install aria2 -y`  
