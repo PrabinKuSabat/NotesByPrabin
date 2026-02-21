@@ -1,17 +1,22 @@
 # Issue
-The kernel drivers stops all counters - including the `cycle` CSR  - when no perf events are actively tracking them. *The proof of the same has been given below* [[#Proof ->]].The hardware register is physically paused to save energy and thus results in a constant cycle number read over time.
+
+The kernel drivers stops all counters - including the `cycle` CSR - when no perf events are actively tracking them. _The proof of the same has been given below_ [[#Proof ->]].The hardware register is physically paused to save energy and thus results in a constant cycle number read over time.
 
 ## Why perf Works?
-Invoking `perf_event_open()` explicitly request the `PERF_COUNT_HW_CPU_CYCLES` hardware event. This action tells the kernel to issue an `SBI_EXT_PMU_COUNTER_START` command, which wakes up the **PMU** and allows the `cycle `register to increment. Consequently, allowing the `rdcycle` assembly to read a advancing value. 
+
+Invoking `perf_event_open()` explicitly request the `PERF_COUNT_HW_CPU_CYCLES` hardware event. This action tells the kernel to issue an `SBI_EXT_PMU_COUNTER_START` command, which wakes up the **PMU** and allows the `cycle `register to increment. Consequently, allowing the `rdcycle` assembly to read a advancing value.
 
 # Solutions
+
 ## 1. User-Space Dummy Perf Workaround
-The simplest solution is to keep the hardware counter active by opening a dummy `perf`event in user space right before invoking the custom system call / the assembly *rdcycle*.  
+
+The simplest solution is to keep the hardware counter active by opening a dummy `perf`event in user space right before invoking the custom system call / the assembly _rdcycle_.  
 
 ## 2. Internal Kernel Perf API
+
 Instead of relying on bare `rdcycle` assembly, you can programmatically create and read a performance counter entirely inside the kernel. By utilizing `perf_event_create_kernel_counter()`, you instruct the kernel to safely start the PMU hardware before executing your L1 warming and measurement loops. After the measurement completes, you can cleanly stop and release the counter using the provided perf event functions.
 
-## ## 3. Disable SBI PMU Configuration
+## 3. Disable SBI PMU Configuration
 
 If you prefer the hardware counters to free-run continuously from boot, you can disable the `CONFIG_RISCV_PMU_SBI` option in your Linux kernel configuration. Without the SBI PMU driver actively managing the counters, the kernel will not call `pmu_sbi_stop_all()`, allowing `rdcycle` to work at any time. This approach is often the most convenient for local hardware performance research where power savings are not a priority.
 
@@ -22,9 +27,8 @@ When Linux boots and sees no SBI PMU extension, it automatically falls back to t
 
 ## 5. Patching the Kernel's `pmu_sbi_stop_all` Function
 
-If you want to keep the modern SBI PMU for other perf events but explicitly prevent it from pausing the cycle counter, you can modify the kernel source. There is a known patch in the Linux kernel mailing list (proposed by hardware developers) that removes the fixed counters from the stop mask. 
+If you want to keep the modern SBI PMU for other perf events but explicitly prevent it from pausing the cycle counter, you can modify the kernel source. There is a known patch in the Linux kernel mailing list (proposed by hardware developers) that removes the fixed counters from the stop mask.  
 In `drivers/perf/riscv_pmu_sbi.c`, you can patch the `pmu_sbi_stop_all` function:
-
 
 ```c
 static inline void pmu_sbi_stop_all(struct riscv_pmu *pmu) {     
@@ -37,9 +41,10 @@ static inline void pmu_sbi_stop_all(struct riscv_pmu *pmu) {
 
 This forces the kernel to ignore the `cycle` register when putting the PMU to sleep.
 
-
 # Proof ->
-This simple program without the `perf_event_open()` reads the same `CSR` Values: 
+
+This simple program without the `perf_event_open()` reads the same `CSR` Values:
+
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -61,7 +66,8 @@ int main(){
 }
 ```
 
-**Gives : 
+**Gives :
+
 ```bash
 Cycles 0 :: 9223372036875522923
 Cycles 1 :: 9223372036875522923
@@ -71,6 +77,7 @@ Cycles 4 :: 9223372036875522923
 ```
 
 **Whereas the same code with** `perf_event_open()` :
+
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -107,7 +114,9 @@ int main(){
     return EXIT_SUCCESS;
 }
 ```
+
 **Gives** :
+
 ```bash
 Cycles 0 :: 9223372036854787000
 Cycles 1 :: 9223372036855117439
@@ -117,6 +126,7 @@ Cycles 4 :: 9223372036855165788
 ```
 
 **Similarly with the System Call latency test** :
+
 ```c
 #include <linux/kernel.h>
 #include <linux/syscalls.h>
@@ -227,7 +237,8 @@ SYSCALL_DEFINE1(riscv_read_mstatus, u64 __user *, out_cycles)
 }
 ```
 
-and when the above is called without the `perf` in ***user space gives you zero cycles***. But with `perf` :
+and when the above is called without the `perf` in _**user space gives you zero cycles**_. But with `perf` :
+
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -288,6 +299,7 @@ int main() {
 ```
 
 gives :
+
 ```
 Calling custom RISC-V syscall (Number: 264)…
 Success!
@@ -295,8 +307,5 @@ Total cycles for L1 memory operations: 3853814
 Total cycles per load 9
 Average cycles per pass: 38538
 ```
+
 ---
-
-
-
-

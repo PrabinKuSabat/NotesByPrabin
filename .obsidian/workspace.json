@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Enabling rdcycle read.md",
+                "file": "EFFORTS/Pointer chase based latency test for L1.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Enabling rdcycle read"
+              "title": "Pointer chase based latency test for L1"
             }
           }
         ]
@@ -256,15 +256,15 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/L1 Performance Tests.md",
     "EFFORTS/RV2.md",
     "EFFORTS/Enabling rdcycle read.md",
     "EFFORTS/RISC-V.md",
-    "EFFORTS/L1 Performance Tests.md",
+    "EFFORTS/Efforts.md",
+    "Homepage.md",
     "EFFORTS/Pointer chase based latency test for L1.md",
     "EFFORTS/Writing a Operating System.md",
     "EFFORTS/RISC-V Performance Counters on Orange Pi.md",
-    "EFFORTS/Efforts.md",
-    "Homepage.md",
     "ATLAS/20 -02 - 2026 -- CSRs.md",
     "ATLAS/Shakti Sir Meeting Notes.md",
     "EFFORTS/Installing Perf.md",
