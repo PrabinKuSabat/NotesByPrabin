@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ATLAS/20 -02 - 2026 -- CSRs.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "20 -02 - 2026 -- CSRs"
+              "title": "Homepage"
             }
           }
         ]
@@ -256,8 +256,8 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "ATLAS/Shakti Sir Meeting Notes.md",
     "ATLAS/20 -02 - 2026 -- CSRs.md",
+    "ATLAS/Shakti Sir Meeting Notes.md",
     "EFFORTS/RISC-V.md",
     "EFFORTS/RV2.md",
     "EFFORTS/Installing Perf.md",
