@@ -9,6 +9,33 @@ Invoking `perf_event_open()` explicitly request the `PERF_COUNT_HW_CPU_CYCLES` h
 The simplest solution is to keep the hardware counter active by opening a dummy `perf`event in user space right before invoking the custom system call / the assembly *rdcycle*.  
 
 ## Internal Kernel Perf API
+Instead of relying on bare `rdcycle` assembly, you can programmatically create and read a performance counter entirely inside the kernel. By utilizing `perf_event_create_kernel_counter()`, you instruct the kernel to safely start the PMU hardware before executing your L1 warming and measurement loops. After the measurement completes, you can cleanly stop and release the counter using the provided perf event functions.
+
+## ## Disable SBI PMU Configuration
+
+If you prefer the hardware counters to free-run continuously from boot, you can disable the `CONFIG_RISCV_PMU_SBI` option in your Linux kernel configuration. Without the SBI PMU driver actively managing the counters, the kernel will not call `pmu_sbi_stop_all()`, allowing `rdcycle` to work at any time. This approach is often the most convenient for local hardware performance research where power savings are not a priority.
+
+## 1. Remove the PMU Node from the Device Tree (DTB)
+
+The Linux kernel knows to use the SBI PMU extension because OpenSBI discovers the hardware PMU details via the Device Tree and exposes the extension to the OS. If you modify your board's `.dts` (Device Tree Source) file to remove the `pmu` node, OpenSBI will silently disable the PMU extension.  
+When Linux boots and sees no SBI PMU extension, it automatically falls back to the **Legacy PMU driver** (`CONFIG_RISCV_PMU_LEGACY`). The legacy driver has no power-management capabilities and simply reads the CSRs directly, meaning `mcountinhibit` is never invoked and `rdcycle` will run continuously.
+
+## 2. Patching the Kernel's `pmu_sbi_stop_all` Function
+
+If you want to keep the modern SBI PMU for other perf events but explicitly prevent it from pausing the cycle counter, you can modify the kernel source. There is a known patch in the Linux kernel mailing list (proposed by hardware developers) that removes the fixed counters from the stop mask. 
+In `drivers/perf/riscv_pmu_sbi.c`, you can patch the `pmu_sbi_stop_all` function:
+
+
+```c
+static inline void pmu_sbi_stop_all(struct riscv_pmu *pmu) {     
+
+	/* Keep fixed counters (CYCLE, TIME, INSTRET) running */    
+	pmu->cmask &= ~0x7;         
+	sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_STOP, …); 
+}
+```
+
+This forces the kernel to ignore the `cycle` register when putting the PMU to sleep.
 
 
 ## Proof ->
