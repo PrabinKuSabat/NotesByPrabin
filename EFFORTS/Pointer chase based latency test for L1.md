@@ -1,7 +1,11 @@
 # Goal
+
 To measure the no. of cycles it takes for a dependent load to complete.
+
 # Concept
-When we do  `while (1) pnt = *pnt` each `*pnt` access will have to wait for the previous load to get completed. Thus the ***LSU*** will have to wait for the previous load to get completed and then issue the next load with the procured address. 
+
+When we do `while (1) pnt = *pnt` each `*pnt` access will have to wait for the previous load to get completed. Thus the _**LSU**_ will have to wait for the previous load to get completed and then issue the next load with the procured address.
+
 # Code
 
 ```c
@@ -66,12 +70,13 @@ int main() {
     return 0;
 }
 ```
+
 **Explanations :**  
 
 # Hardware Outputs
+
 ```
 ./a.out
 Total Cycles: 20274670
 Cycles per load: 2.03
 ```
-
