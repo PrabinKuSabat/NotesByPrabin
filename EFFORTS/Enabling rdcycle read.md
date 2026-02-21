@@ -6,7 +6,10 @@ Invoking `perf_event_open()` explicitly request the `PERF_COUNT_HW_CPU_CYCLES` h
 
 # Solutions
 ## User-Space Dummy Perf Workaround
-The simplest solution is to keep the hardware counter active by opening a dummy `perf`event in user space right before invoking the custom system call / the assembly rdcycle.  
+The simplest solution is to keep the hardware counter active by opening a dummy `perf`event in user space right before invoking the custom system call / the assembly *rdcycle*.  
+
+## Internal Kernel Perf API
+
 
 ## Proof ->
 This simple program without the `perf_event_open()` reads the same `CSR` Values: 
