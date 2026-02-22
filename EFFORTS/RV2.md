@@ -12,3 +12,5 @@ All the tests related to performance or architecture will be documented here wit
 [[L1 Performance Tests]]
 - [[bare metal L1 latency test]]
 - [[Installing Perf]]
+
+[[List of all the tests]]

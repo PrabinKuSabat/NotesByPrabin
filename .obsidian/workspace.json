@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/RISC-V.md",
+                "file": "EFFORTS/List of all the tests.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "RISC-V"
+              "title": "List of all the tests"
             }
           }
         ]
@@ -257,8 +257,11 @@
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
     "EFFORTS/RV2.md",
-    "EFFORTS/Rv2 Board CPU Details.md",
+    "EFFORTS/List of all the tests.md",
+    "EFFORTS/L1 Performance Tests.md",
+    "EFFORTS/Pointer chase based latency test for L1.md",
     "EFFORTS/RISC-V.md",
+    "EFFORTS/Rv2 Board CPU Details.md",
     "ATLAS/Shakti Sir Meeting Notes.md",
     "ATLAS/22-02-26 Sunday.md",
     "EFFORTS/Efforts.md",
@@ -266,9 +269,7 @@
     "ATLAS/14 - 02 - 2026 -- SOS-V.md",
     "ATLAS/20 -02 - 2026 -- CSRs.md",
     "EFFORTS/Multi Counter Perf Based pointer chase latency test for L1.md",
-    "EFFORTS/L1 Performance Tests.md",
     "EFFORTS/Enabling rdcycle read.md",
-    "EFFORTS/Pointer chase based latency test for L1.md",
     "EFFORTS/Writing a Operating System.md",
     "EFFORTS/RISC-V Performance Counters on Orange Pi.md",
     "EFFORTS/Installing Perf.md",
@@ -282,7 +283,6 @@
     "ATLAS/13-02-2026.md",
     "Notes jan 2.md",
     "CALENDER/2026-01-23.md",
-    "CALENDER/2026-01-28.md",
     "Extras/ATTACHMENTS/image-108.png",
     "Extras/ATTACHMENTS/image-107.png",
     "Extras/ATTACHMENTS/image-106.png",
