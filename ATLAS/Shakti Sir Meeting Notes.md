@@ -1,6 +1,7 @@
 # Offline Meetings
 
 1. [[Notes jan 2]]
+2. [[22-02-26 Sunday]]
 
 # Online Meetings
 
