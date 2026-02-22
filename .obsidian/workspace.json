@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/List of all the tests.md",
+                "file": "ATLAS/14 - 02 - 2026 -- SOS-V.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "List of all the tests"
+              "title": "14 - 02 - 2026 -- SOS-V"
             }
           }
         ]
@@ -256,18 +256,19 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "ATLAS/Shakti Sir Meeting Notes.md",
+    "ATLAS/20 -02 - 2026 -- CSRs.md",
+    "Notes jan 2.md",
+    "EFFORTS/RISC-V.md",
     "EFFORTS/RV2.md",
     "EFFORTS/List of all the tests.md",
     "EFFORTS/L1 Performance Tests.md",
     "EFFORTS/Pointer chase based latency test for L1.md",
-    "EFFORTS/RISC-V.md",
     "EFFORTS/Rv2 Board CPU Details.md",
-    "ATLAS/Shakti Sir Meeting Notes.md",
     "ATLAS/22-02-26 Sunday.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
     "ATLAS/14 - 02 - 2026 -- SOS-V.md",
-    "ATLAS/20 -02 - 2026 -- CSRs.md",
     "EFFORTS/Multi Counter Perf Based pointer chase latency test for L1.md",
     "EFFORTS/Enabling rdcycle read.md",
     "EFFORTS/Writing a Operating System.md",
@@ -281,7 +282,6 @@
     "Excalidraw/Scripts/Downloaded/Auto Layout.md",
     "EFFORTS/Setting up QEMU for OrangePi Kernel Development.md",
     "ATLAS/13-02-2026.md",
-    "Notes jan 2.md",
     "CALENDER/2026-01-23.md",
     "Extras/ATTACHMENTS/image-108.png",
     "Extras/ATTACHMENTS/image-107.png",
