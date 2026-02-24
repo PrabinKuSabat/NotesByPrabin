@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "ATLAS/Basic Assembler Functions.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Basic Assembler Functions"
             }
           }
         ]
@@ -256,11 +256,11 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "ATLAS/Basic Assembler Functions.md",
     "ATLAS/System Programming.md",
-    "ATLAS/Machine Depedent Assembler Features.md",
     "ATLAS/Atlas.md",
     "Homepage.md",
+    "ATLAS/Basic Assembler Functions.md",
+    "ATLAS/Machine Depedent Assembler Features.md",
     "ATLAS/14 - 02 - 2026 -- SOS-V.md",
     "ATLAS/Shakti Sir Meeting Notes.md",
     "ATLAS/20 -02 - 2026 -- CSRs.md",

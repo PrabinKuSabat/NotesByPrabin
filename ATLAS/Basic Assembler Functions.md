@@ -136,3 +136,38 @@ The directives `RESB` (Reserve Byte) and `RESW` (Reserve Word) represent a uniqu
 |**RESB/RESW**|Increment LOCCTR only|No object code|
 
 These translations demonstrate how the assembler manages the transition from symbolic logic to the literal byte sequences required by the hardware.
+
+---
+
+Figure 2.2 in the sources is a comprehensive **assembly listing** of the `COPY` program introduced in Figure 2.1. It represents the final output of the assembly process, showing how the assembler has processed each line of the source code. [Beck, Section 2.1]
+
+### **Detailed Components of Figure 2.2**
+
+The listing is organized into several columns, each serving a specific purpose in the documentation of the program:
+
+- **Line Number:** Used for reference within the listing. [Beck, Fig 2.2]
+- **Address:** This column shows the hexadecimal address assigned to each instruction or data area. The assembler (during Pass 1) uses the **Location Counter (LOCCTR)** to determine these addresses, starting from the value specified in the `START` directive. [Beck, Section 2.1]
+- **Source Statement:** Contains the original **Label**, **Mnemonic**, and **Operand** provided by the programmer. [Beck, Fig 2.2]
+- **Object Code:** This is the most critical column, showing the machine-language translation (in hexadecimal) for each source line. This code is generated during Pass 2. [Beck, Section 2.1]
+
+---
+
+### **Explanation of Translations in Figure 2.2**
+
+The translations in the object code column follow specific rules based on the type of instruction or directive. The table below explains these translations in detail. [Beck, Section 2.1]
+
+|Line|Address|Mnemonic / Operand|Object Code|Translation Logic|
+|:--|:--|:--|:--|:--|
+|**5**|`1000`|`COPY START 1000`|_(None)_|**Directive:** No object code is generated for `START`. [Beck, Fig 2.2]|
+|**10**|`1000`|`FIRST STL RETADR`|**`141033`**|**Standard Instruction:** Opcode for `STL` is `14`. The address assigned to `RETADR` is `1033`. Result: `14` + `1033`. [Beck, Section 2.1]|
+|**15**|`1003`|`CLOOP JSUB RDREC`|**`481039`**|**Standard Instruction:** Opcode for `JSUB` is `48`. The address for `RDREC` is `1039`. Result: `48` + `1039`. [Beck, Fig 2.2]|
+|**160**|`1051`|`STCH BUFFER,X`|**`549039`**|**Indexed Addressing:** Opcode for `STCH` is `54`. `BUFFER` address is `1039`. The index bit adds `8000` hex to the address (`1039 + 8000 = 9039`). Result: `54` + `9039`. [Beck, Section 2.1]|
+|**250**|`105D`|`EOF BYTE C'EOF'`|**`454F46`**|**Data Generation (Char):** Converts characters 'E', 'O', and 'F' to their ASCII hex values: `45`, `4F`, and `46`. [Beck, Section 2.1]|
+|**255**|`1060`|`THREE WORD 3`|**`000003`**|**Data Generation (Word):** Converts the decimal integer `3` into a 3-byte hexadecimal word. [Beck, Section 2.1]|
+|**265**|`1066`|`RETADR RESW 1`|_(None)_|**Memory Reservation:** Reserves 3 bytes. No object code is generated; the loader handles this at run-time. [Beck, Section 2.1]|
+
+### **Unique Translation Highlights**
+
+- **Forward References:** Note how line 10 refers to `RETADR` at address `1033` before the symbol is defined later in line 265. The two-pass logic allows the assembler to handle this by defining the address in Pass 1 and inserting it into the object code in Pass 2. [Beck, Section 2.1]
+- **Gap Handling:** In lines like `RESB` (Reserve Byte), the address jumps significantly (e.g., from `1069` to `2069` for a 4096-byte buffer). The assembler simply increments the LOCCTR without placing any code in the object program. [Beck, Section 2.1, Fig 2.2]
+- **Subroutine Linkage:** The `RSUB` instruction (line 70) translates to `4C0000`. It does not require an operand because it simply jumps to the address stored in register L. [Beck, Section 2.1]
