@@ -87,46 +87,46 @@ The assembler output is a series of ASCII records [Beck, 2.1]:
 
 Figure 2.2 provides an **assembly listing** for the `COPY` program, showing the original source code alongside its translation into machine (object) code. The unique translations found in this figure can be categorized into four distinct types based on how the assembler processes the instructions and directives.
 
-### **1. Standard Instruction Translation**
+## **1. Standard Instruction Translation**
 
 Most lines in the figure represent standard machine instructions where a mnemonic is translated into an opcode and a symbolic operand is translated into a memory address.
 
 - **Mechanism:** The assembler looks up the mnemonic in **OPTAB** and the operand address in **SYMTAB**.
 - **Example (Line 10):** `1000 FIRST STL RETADR` translates to **`141033`**.
-    - The opcode for `STL` is `14`.
-    - The address assigned to the label `RETADR` (found later in the listing at line 265) is `1033`.
-    - The assembler combines them to form the 3-byte object code `141033`.
+	 - The opcode for `STL` is `14`.
+	 - The address assigned to the label `RETADR` (found later in the listing at line 265) is `1033`.
+	 - The assembler combines them to form the 3-byte object code `141033`.
 
-### **2. Indexed Addressing Translation**
+## **2. Indexed Addressing Translation**
 
 This unique translation occurs when the operand includes `,X`, signifying that the index register should be used for address calculation.
 
 - **Mechanism:** In the standard SIC architecture, indexed addressing is indicated by setting the **index bit (x)** to 1. This bit is the most significant bit of the 15-bit address field in the instruction.
 - **Example (Line 160):** `1051 LDCH BUFFER,X` translates to **`509039`**.
-    - The opcode for `LDCH` is `50`.
-    - The address for `BUFFER` is `1039`. In binary, this is `001 0000 0011 1001`.
-    - Setting the index bit (adding `8000` hex to the address) changes `1039` to `9039`.
-    - The final object code is `50` + `9039` = `509039`.
+	 - The opcode for `LDCH` is `50`.
+	 - The address for `BUFFER` is `1039`. In binary, this is `001 0000 0011 1001`.
+	 - Setting the index bit (adding `8000` hex to the address) changes `1039` to `9039`.
+	 - The final object code is `50` + `9039` = `509039`.
 
-### **3. Data Generation (Constants)**
+## **3. Data Generation (Constants)**
 
 The directives `BYTE` and `WORD` instruct the assembler to generate specific data values directly into the object program rather than translating a mnemonic.
 
 - **Character Constants (`BYTE C'…'`):**
-    - **Example (Line 250):** `105D EOF BYTE C'EOF'` translates to **`454F46`**. The assembler converts the characters 'E', 'O', and 'F' into their ASCII hexadecimal equivalents: `45`, `4F`, and `46`.
+	 - **Example (Line 250):** `105D EOF BYTE C'EOF'` translates to **`454F46`**. The assembler converts the characters 'E', 'O', and 'F' into their ASCII hexadecimal equivalents: `45`, `4F`, and `46`.
 - **Hexadecimal Constants (`BYTE X'…'`):**
-    - **Example (Line 255):** `1060 THREE BYTE X'000003'` translates to **`000003`**. The hex value is copied directly into the object code.
+	 - **Example (Line 255):** `1060 THREE BYTE X'000003'` translates to **`000003`**. The hex value is copied directly into the object code.
 - **Word Constants (`WORD`):**
-    - **Example (Line 260):** `1063 ZERO WORD 0` translates to **`000000`**. The decimal value `0` is converted into a 3-byte integer representation.
+	 - **Example (Line 260):** `1063 ZERO WORD 0` translates to **`000000`**. The decimal value `0` is converted into a 3-byte integer representation.
 
-### **4. Memory Reservation (No Translation)**
+## **4. Memory Reservation (No Translation)**
 
 The directives `RESB` (Reserve Byte) and `RESW` (Reserve Word) represent a unique case where **no object code is generated**.
 
 - **Mechanism:** These lines are assigned an address (stored in SYMTAB), but they do not result in any hex code in the object program. The assembler simply increments the **Location Counter (LOCCTR)** by the specified amount (e.g., 3 bytes for `RESW 1` or 4096 bytes for `RESB 4096`) to "skip" that space in memory.
 - **Example (Line 265):** `1066 RETADR RESW 1`. Note that the object code column for this line is **empty** because the loader will simply allocate this space at run-time.
 
-### **Summary of Figure 2.2 Object Code Structure**
+## **Summary of Figure 2.2 Object Code Structure**
 
 |Instruction Type|Translation Logic|Result Format|
 |:--|:--|:--|
