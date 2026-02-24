@@ -10,7 +10,8 @@
 > [[ATLAS/CPP|C++]]  
 > [[AI]]  
 > [[Design and Analysis of Algorithms]]  
-> [[Computer Networks]]
+> [[Computer Networks]]  
+> [[System Programming]]
 
 [[Inner Product Verification L2]]
 
