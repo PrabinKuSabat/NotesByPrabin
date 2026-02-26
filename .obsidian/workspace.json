@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "ATLAS/Basic Loader Functions.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Basic Loader Functions"
             }
           }
         ]
@@ -256,10 +256,12 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "ATLAS/System Programming.md",
+    "ATLAS/Machine Dependent Loader Features.md",
+    "ATLAS/Basic Loader Functions.md",
+    "ATLAS/Atlas.md",
     "Homepage.md",
     "ATLAS/Machine Depedent Assembler Features.md",
-    "ATLAS/System Programming.md",
-    "ATLAS/Atlas.md",
     "EFFORTS/Efforts.md",
     "ATLAS/Basic Assembler Functions.md",
     "ATLAS/14 - 02 - 2026 -- SOS-V.md",
@@ -280,9 +282,7 @@
     "EFFORTS/Installing Perf.md",
     "EFFORTS/bare metal L1 latency test.md",
     "EFFORTS/spacemit-k1-x60.md",
-    "Excalidraw/User-Level OS Implementation - Idea Board.md",
     "Excalidraw/Scripts/Downloaded/Auto Layout.svg",
-    "Excalidraw/Scripts/Downloaded/Auto Layout.md",
     "Extras/ATTACHMENTS/image-108.png",
     "Extras/ATTACHMENTS/image-107.png",
     "Extras/ATTACHMENTS/image-106.png",
