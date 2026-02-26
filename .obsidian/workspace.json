@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ATLAS/Basic Loader Functions.md",
+                "file": "ATLAS/Machine Dependent Loader Features.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Basic Loader Functions"
+              "title": "Machine Dependent Loader Features"
             }
           }
         ]
@@ -257,8 +257,8 @@
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
     "ATLAS/System Programming.md",
-    "ATLAS/Machine Dependent Loader Features.md",
     "ATLAS/Basic Loader Functions.md",
+    "ATLAS/Machine Dependent Loader Features.md",
     "ATLAS/Atlas.md",
     "Homepage.md",
     "ATLAS/Machine Depedent Assembler Features.md",
