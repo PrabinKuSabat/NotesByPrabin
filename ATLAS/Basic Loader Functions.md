@@ -50,7 +50,7 @@ In the SIC implementation, the bootstrap loader often reads from device 'F1'. It
 
 # 3.1.1
 
-Welcome to this advanced master-level session on systems architecture. Today, we are moving beyond the translation phase of the assembler to the critical execution phase: **Section 3.1.1, The Design of an Absolute Loader**. While modern operating systems rely on complex dynamic loaders, the **Absolute Loader** remains the foundational "primitive" that every systems engineer must master. It is the purest form of a loader because it performs no relocation and no linking; its sole responsibility is to take a specifically formatted object program and place it exactly where it was told to go.
+Today, we are moving beyond the translation phase of the assembler to the critical execution phase: **Section 3.1.1, The Design of an Absolute Loader**. While modern operating systems rely on complex dynamic loaders, the **Absolute Loader** remains the foundational "primitive" that every systems engineer must master. It is the purest form of a loader because it performs no relocation and no linking; its sole responsibility is to take a specifically formatted object program and place it exactly where it was told to go.
 
 ## I. Architectural Prerequisites: The Absolute Loader Philosophy
 
