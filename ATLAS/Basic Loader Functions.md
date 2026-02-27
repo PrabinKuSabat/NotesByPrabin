@@ -105,7 +105,7 @@ In **Figure 3.1**, you will notice that the object code is not one long, continu
 
 **Practical Insight:** This is a major optimization. By not generating object code for reserved space, the object file remains small. The absolute loader handles this naturally: because each Text record has its own starting address, the loader simply "jumps" over the reserved memory areas, leaving the previous contents of RAM (or garbage) in those spots. In secure systems, an industry engineer would modify the loader to "zero out" these gaps to prevent data leakage from previous processes, a detail often omitted in basic academic summaries.
 
-Finally, the **Hex-to-Binary conversion** is the most CPU-intensive part of this primitive loader. Every byte in memory represents two characters in the object file. For a 1MB program, the loader must perform over 2 million character-to-nibble conversions. In low-level roles, you might optimize this using a lookup table to ensure the boot process is as fast as possible.
+Finally, the **Hex-to-Binary conversion** is the most CPU-intensive part of this primitive loader. Every byte in memory represents two characters in the object file. For a 1MB program, the loader must perform over 2 million character-to-nibble conversions. <mark style="background: #FF5582A6;">In low-level roles, you might optimize this using a lookup table to ensure the boot process is as fast as possible.</mark>
 
 This concludes our exhaustive analysis of Section 3.1.1. You are now prepared to describe not just the format of the object program, but the internal logic and hardware implications of the absolute loading process.
 
