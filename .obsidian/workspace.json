@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "4509724f8bf84da7",
+        "id": "45df13b83d4758e3",
         "type": "tabs",
         "children": [
           {
-            "id": "e7a7b303c61786dc",
+            "id": "e774b9395f50496b",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/spacemit-k1-x60.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,65 +28,10 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "spacemit-k1-x60"
+              "title": "Homepage"
             }
           }
         ]
-      },
-      {
-        "id": "b962653cc65bb4cb",
-        "type": "split",
-        "children": [
-          {
-            "id": "45df13b83d4758e3",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "f0fa3a7f849dd9c2",
-                "type": "leaf",
-                "state": {
-                  "type": "release-notes",
-                  "state": {
-                    "currentVersion": "1.12.4"
-                  },
-                  "icon": "lucide-book-up",
-                  "title": "Release Notes 1.12.4"
-                }
-              }
-            ]
-          },
-          {
-            "id": "144d6ac82ee612bc",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "1b419c5ea06f091b",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "EFFORTS/CA Research.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": true,
-                    "backlinkOpts": {
-                      "collapseAll": false,
-                      "extraContext": false,
-                      "sortOrder": "alphabetical",
-                      "showSearch": false,
-                      "searchQuery": "",
-                      "backlinkCollapsed": false,
-                      "unlinkedCollapsed": true
-                    }
-                  },
-                  "icon": "lucide-file",
-                  "title": "CA Research"
-                }
-              }
-            ]
-          }
-        ],
-        "direction": "horizontal"
       }
     ],
     "direction": "vertical"
@@ -223,16 +168,6 @@
             }
           },
           {
-            "id": "1a664d19271f8831",
-            "type": "leaf",
-            "state": {
-              "type": "advanced-tables-toolbar",
-              "state": {},
-              "icon": "lucide-ghost",
-              "title": "advanced-tables-toolbar"
-            }
-          },
-          {
             "id": "450eaf829269d505",
             "type": "leaf",
             "state": {
@@ -257,7 +192,7 @@
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 4
       },
       {
         "id": "5be65b7a15dbdafe",
@@ -309,16 +244,18 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "1b419c5ea06f091b",
+  "active": "e774b9395f50496b",
   "lastOpenFiles": [
+    "Prabin's KB ~/Prabins KB ~.md",
+    "Extras/ATTACHMENTS/ChatGPT Image Mar 2, 2026, 11_27_38 AM.png",
+    "Homepage.md",
     "EFFORTS/spacemit-k1-x60.md",
+    "EFFORTS/CA Research.md",
     "EFFORTS/RISC-V.md",
     "EFFORTS/RV2.md",
     "EFFORTS/Enabling rdcycle read.md",
     "ATLAS/Atlas.md",
-    "Homepage.md",
     "EFFORTS/Efforts.md",
-    "EFFORTS/CA Research.md",
     "ATLAS/Shakti Sir Meeting Notes.md",
     "ATLAS/14 - 02 - 2026 -- SOS-V.md",
     "Excalidraw/User-Level OS Implementation - Idea Board.md",
@@ -336,7 +273,6 @@
     "EFFORTS/Pointer chase based latency test for L1.md",
     "EFFORTS/Rv2 Board CPU Details.md",
     "EFFORTS/Multi Counter Perf Based pointer chase latency test for L1.md",
-    "EFFORTS/Writing a Operating System.md",
     "Excalidraw/Scripts/Downloaded/Auto Layout.svg",
     "Extras/ATTACHMENTS/image-108.png",
     "Extras/ATTACHMENTS/image-107.png",
@@ -346,7 +282,6 @@
     "Extras/ATTACHMENTS/image-103.png",
     "Extras/ATTACHMENTS/image-102.png",
     "Extras/ATTACHMENTS/image-101.png",
-    "Extras/ATTACHMENTS/image-99.png",
     "Extras/ATTACHMENTS/combined_RTX4090_no_skip_first2rows_v3.pdf",
     "Extras/ATTACHMENTS/Sample CSV.pdf",
     "Prabin's KB ~",

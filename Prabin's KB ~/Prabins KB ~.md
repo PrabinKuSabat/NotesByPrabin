@@ -3,12 +3,15 @@ dg-publish: true
 dg-home: true
 ---
 
-![[image-96.jpeg|937x362]]  
-**Welcome to Prabin's Knowledge-Base!** 📚
+![[ChatGPT Image Mar 2, 2026, 11_27_38 AM.png|270x270]]
+
+# Systems Engineering Logbook — Kernel, Performance, and Architecture Experiments
+
+**Build. Measure. Prove.**
 
 ---
 
-> [!important] What's New?
+# 🔬 Current Focus
 
 1. [[RISC-V OS development]]
 
