@@ -65,6 +65,7 @@
     "dg-hide-in-graph": "text",
     "cssclass": "text",
     "excalidraw-export-internal-links": "checkbox",
-    "tasks": "checkbox"
+    "tasks": "checkbox",
+    "TQ_show_toolbar": "checkbox"
   }
 }

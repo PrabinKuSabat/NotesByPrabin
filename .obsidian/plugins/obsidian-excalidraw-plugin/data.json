@@ -42,6 +42,7 @@
   "isLeftHanded": true,
   "desktopUIMode": "compact",
   "tabletUIMode": "tray",
+  "phoneUIMode": "mobile",
   "iframeMatchExcalidrawTheme": true,
   "matchTheme": false,
   "matchThemeAlways": false,
@@ -75,6 +76,7 @@
   "focusOnFileTab": true,
   "openInMainWorkspace": true,
   "showLinkBrackets": true,
+  "syncElementLinkWithText": false,
   "allowCtrlClick": true,
   "forceWrap": false,
   "pageTransclusionCharLimit": 200,
@@ -233,7 +235,7 @@
       }
     }
   },
-  "previousRelease": "2.18.3",
+  "previousRelease": "2.20.6",
   "showReleaseNotes": true,
   "compareManifestToPluginVersion": true,
   "showNewVersionNotification": true,
@@ -248,6 +250,7 @@
     "Excalidraw/Scripts/Downloaded/Normalize Selected Arrows.md",
     "Excalidraw/Scripts/Downloaded/Mindmap Builder.md"
   ],
+  "sidepanelTabs": [],
   "customPens": [
     {
       "type": "default",

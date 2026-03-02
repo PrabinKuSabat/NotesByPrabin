@@ -43,7 +43,7 @@ This forces the kernel to ignore the `cycle` register when putting the PMU to 
 
 # Proof ->
 
-This simple program without the `perf_event_open()` reads the same `CSR` Values:
+This simple program without the `perf_event_open()` reads the same `CSR` **Values**:
 
 ```c
 #include <stdio.h>
