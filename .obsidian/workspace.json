@@ -43,25 +43,6 @@
               "title": "Release Notes 1.12.4"
             }
           }
-        ],
-        "currentTab": 1
-      },
-      {
-        "id": "bcf00b54c40e6c8a",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "6039393aa2f7c186",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Excalidraw/User-Level OS Implementation - Idea Board.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "User-Level OS Implementation - Idea Board"
-            }
-          }
         ]
       }
     ],
@@ -285,7 +266,7 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "f0fa3a7f849dd9c2",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
     "Excalidraw/User-Level OS Implementation - Idea Board.md",
     "Homepage.md",
