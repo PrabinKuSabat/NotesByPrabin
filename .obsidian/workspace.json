@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "45df13b83d4758e3",
+        "id": "4509724f8bf84da7",
         "type": "tabs",
         "children": [
           {
-            "id": "e774b9395f50496b",
+            "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Prabin's KB ~/Prabins KB ~.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Prabins KB ~"
+              "title": "Homepage"
             }
           }
         ]
@@ -204,10 +204,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Prabin's KB ~/Prabins KB ~.md"
+                "file": "Excalidraw/Dissertation Status.excalidraw.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Prabins KB ~"
+              "title": "File properties for Dissertation Status.excalidraw"
             }
           }
         ]
@@ -229,10 +229,8 @@
       "graph:Open graph view": false,
       "obsidian-kanban:Create new board": false,
       "obsidian-projects:Open projects": false,
-      "obsidian-book-search-plugin:Create new book note": false,
       "templater-obsidian:Templater": false,
       "obsidian-statusbar-pomo:Start pomodoro": false,
-      "table-editor-obsidian:Advanced Tables Toolbar": false,
       "obsidian-git:Open Git source control": false,
       "homepage:Open homepage": false,
       "pdf-plus:PDF++: Toggle auto-copy": false,
@@ -244,14 +242,16 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e774b9395f50496b",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Excalidraw/Dissertation Status.excalidraw.md",
+    "Prabin's KB ~/Prabins KB ~.md",
+    "Prabin's KB ~/Dissertation Status.md",
+    "Excalidraw/Dissertation Status.md",
     "Extras/ATTACHMENTS/9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f-2.png",
     "Extras/ATTACHMENTS/9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f-1.png",
     "Extras/ATTACHMENTS/ChatGPT Image Mar 2, 2026, 11_27_38 AM.png",
     "Extras/ATTACHMENTS/9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f.png",
-    "Excalidraw/Dissertation Status.excalidraw.md",
-    "Prabin's KB ~/Prabins KB ~.md",
     "Status Kanban.md",
     "Homepage.md",
     "EFFORTS/spacemit-k1-x60.md",
@@ -274,14 +274,12 @@
     "ATLAS/Basic Assembler Functions.md",
     "ATLAS/20 -02 - 2026 -- CSRs.md",
     "EFFORTS/List of all the tests.md",
-    "EFFORTS/L1 Performance Tests.md",
     "Excalidraw/Scripts/Downloaded/Auto Layout.svg",
     "Extras/ATTACHMENTS/image-108.png",
     "Extras/ATTACHMENTS/image-107.png",
     "Extras/ATTACHMENTS/image-106.png",
     "Extras/ATTACHMENTS/image-105.png",
     "Extras/ATTACHMENTS/image-104.png",
-    "Extras/ATTACHMENTS/image-103.png",
     "Extras/ATTACHMENTS/combined_RTX4090_no_skip_first2rows_v3.pdf",
     "Extras/ATTACHMENTS/Sample CSV.pdf",
     "Prabin's KB ~",
