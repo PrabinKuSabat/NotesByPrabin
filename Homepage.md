@@ -3,12 +3,13 @@
 # [[ATLAS/Atlas|ATLAS]]
 
 > [!info]  
-> `fas:HandPointUp` Contains all Subject related notes.
+> :FasHandPointer::  
+> Contains all Subject related notes.
 
 # [[EFFORTS/Efforts|EFFORTS]]
 
 > [!info]  
-> `fas:HandPointUp` contains all Project Notes.
+> :FasHandPointer: contains all Project Notes.
 
 # [[CALENDAR]]
 

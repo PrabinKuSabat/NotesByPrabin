@@ -39,7 +39,7 @@
   "height": "",
   "overrideObsidianFontSize": false,
   "dynamicStyling": "colorful",
-  "isLeftHanded": true,
+  "isLeftHanded": false,
   "desktopUIMode": "compact",
   "tabletUIMode": "tray",
   "phoneUIMode": "mobile",
@@ -113,7 +113,7 @@
   "library2": {
     "type": "excalidrawlib",
     "version": 2,
-    "source": "https://github.com/zsviczian/obsidian-excalidraw-plugin/releases/tag/2.18.3",
+    "source": "https://github.com/zsviczian/obsidian-excalidraw-plugin/releases/tag/2.20.6",
     "libraryItems": []
   },
   "imageElementNotice": true,

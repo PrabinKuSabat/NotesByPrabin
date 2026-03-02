@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "Prabin's KB ~/Prabins KB ~.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Prabins KB ~"
             }
           }
         ]
@@ -204,18 +204,17 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "EFFORTS/RV2.md"
+                "file": "Prabin's KB ~/Prabins KB ~.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for RV2"
+              "title": "File properties for Prabins KB ~"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 471.5,
-    "collapsed": true
+    "width": 471.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -246,9 +245,11 @@
   },
   "active": "e774b9395f50496b",
   "lastOpenFiles": [
+    "Excalidraw/Dissertation Status.excalidraw.md",
     "Prabin's KB ~/Prabins KB ~.md",
-    "Extras/ATTACHMENTS/ChatGPT Image Mar 2, 2026, 11_27_38 AM.png",
+    "Status Kanban.md",
     "Homepage.md",
+    "Extras/ATTACHMENTS/ChatGPT Image Mar 2, 2026, 11_27_38 AM.png",
     "EFFORTS/spacemit-k1-x60.md",
     "EFFORTS/CA Research.md",
     "EFFORTS/RISC-V.md",
@@ -271,8 +272,6 @@
     "EFFORTS/List of all the tests.md",
     "EFFORTS/L1 Performance Tests.md",
     "EFFORTS/Pointer chase based latency test for L1.md",
-    "EFFORTS/Rv2 Board CPU Details.md",
-    "EFFORTS/Multi Counter Perf Based pointer chase latency test for L1.md",
     "Excalidraw/Scripts/Downloaded/Auto Layout.svg",
     "Extras/ATTACHMENTS/image-108.png",
     "Extras/ATTACHMENTS/image-107.png",
