@@ -11,12 +11,24 @@
             "id": "e774b9395f50496b",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "Excalidraw/Dissertation Status.excalidraw.md"
+                "file": "Prabin's KB ~/Prabins KB ~.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "excalidraw-icon",
-              "title": "Dissertation Status.excalidraw"
+              "icon": "lucide-file",
+              "title": "Prabins KB ~"
             }
           }
         ]
@@ -192,10 +204,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Excalidraw/Dissertation Status.excalidraw.md"
+                "file": "Prabin's KB ~/Prabins KB ~.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Dissertation Status.excalidraw"
+              "title": "File properties for Prabins KB ~"
             }
           }
         ]
@@ -234,14 +246,12 @@
   },
   "active": "e774b9395f50496b",
   "lastOpenFiles": [
-    "Prabin's KB ~/Prabins KB ~.md",
-    "Excalidraw/Dissertation Status.excalidraw.md",
-    "Prabin's KB ~/Dissertation Status.md",
-    "Excalidraw/Dissertation Status.md",
     "Extras/ATTACHMENTS/9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f-2.png",
     "Extras/ATTACHMENTS/9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f-1.png",
     "Extras/ATTACHMENTS/ChatGPT Image Mar 2, 2026, 11_27_38 AM.png",
     "Extras/ATTACHMENTS/9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f.png",
+    "Excalidraw/Dissertation Status.excalidraw.md",
+    "Prabin's KB ~/Prabins KB ~.md",
     "Status Kanban.md",
     "Homepage.md",
     "EFFORTS/spacemit-k1-x60.md",
@@ -264,12 +274,14 @@
     "ATLAS/Basic Assembler Functions.md",
     "ATLAS/20 -02 - 2026 -- CSRs.md",
     "EFFORTS/List of all the tests.md",
+    "EFFORTS/L1 Performance Tests.md",
     "Excalidraw/Scripts/Downloaded/Auto Layout.svg",
     "Extras/ATTACHMENTS/image-108.png",
     "Extras/ATTACHMENTS/image-107.png",
     "Extras/ATTACHMENTS/image-106.png",
     "Extras/ATTACHMENTS/image-105.png",
     "Extras/ATTACHMENTS/image-104.png",
+    "Extras/ATTACHMENTS/image-103.png",
     "Extras/ATTACHMENTS/combined_RTX4090_no_skip_first2rows_v3.pdf",
     "Extras/ATTACHMENTS/Sample CSV.pdf",
     "Prabin's KB ~",
