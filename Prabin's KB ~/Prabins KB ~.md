@@ -2,6 +2,7 @@
 dg-publish: true
 dg-home: true
 ---
+
 ![[9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f-2.png]]# Systems Engineering Logbook — Kernel, Performance, and Architecture Experiments
 
 **Build. Measure. Prove.**
@@ -19,7 +20,7 @@ dg-home: true
 
 > [!check] TO-DO Kanban Boards👇
 
-[[Dissertation Status.excalidraw|Dissertation To-DO]]  
+[[Dissertation Status.excalidraw|Dissertation TO-DO]]  
 [[Status Kanban]]
 
 > [!info]  
@@ -35,7 +36,7 @@ dg-home: true
 ---
 
 ## 🙏 Acknowledgment  
-  
->  I am deeply grateful to **Dr. R. Raghunatha Sarma** (Dept. of Mathematics & CS, SSSIHL) for continuous guidance and support throughout this journey.
+
+> I am deeply grateful to **Dr. R. Raghunatha Sarma** (Dept. of Mathematics & CS, SSSIHL) for continuous guidance and support throughout this journey.
 
 ---
