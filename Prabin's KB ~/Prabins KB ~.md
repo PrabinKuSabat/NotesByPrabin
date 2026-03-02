@@ -2,9 +2,7 @@
 dg-publish: true
 dg-home: true
 ---
-
-![[9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f.png|528]]
-# Systems Engineering Logbook — Kernel, Performance, and Architecture Experiments
+![[9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f-2.png]]# Systems Engineering Logbook — Kernel, Performance, and Architecture Experiments
 
 **Build. Measure. Prove.**
 
