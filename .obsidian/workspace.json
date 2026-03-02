@@ -204,10 +204,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Excalidraw/Dissertation Status.excalidraw.md"
+                "file": "Homepage.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Dissertation Status.excalidraw"
+              "title": "File properties for Homepage"
             }
           }
         ]
@@ -244,8 +244,9 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Excalidraw/Dissertation Status.excalidraw.md",
+    "Homepage.md",
     "Prabin's KB ~/Prabins KB ~.md",
+    "Excalidraw/Dissertation Status.excalidraw.md",
     "Prabin's KB ~/Dissertation Status.md",
     "Excalidraw/Dissertation Status.md",
     "Extras/ATTACHMENTS/9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f-2.png",
@@ -253,7 +254,6 @@
     "Extras/ATTACHMENTS/ChatGPT Image Mar 2, 2026, 11_27_38 AM.png",
     "Extras/ATTACHMENTS/9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f.png",
     "Status Kanban.md",
-    "Homepage.md",
     "EFFORTS/spacemit-k1-x60.md",
     "EFFORTS/CA Research.md",
     "EFFORTS/RISC-V.md",

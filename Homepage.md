@@ -3,7 +3,7 @@
 # [[ATLAS/Atlas|ATLAS]]
 
 > [!info]  
-> :FasHandPointer::  
+> :FasHandPointer:  
 > Contains all Subject related notes.
 
 # [[EFFORTS/Efforts|EFFORTS]]
