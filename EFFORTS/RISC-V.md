@@ -2,11 +2,11 @@
 
 ## Things Regarding the OrangePi RV2
 
-The following note keeps track of all the things that are related to the OrangePi Board : [[RV2]].
+This note keeps track of all the things that are related to the OrangePi Board : [[RV2]].
 
 ## SOS - V
 
-The efforts put into this effort of making an OS for teaching and research purposes will be documented in this Notes and the notes within : [[Writing a Operating System]].
+The efforts put into this mission of making an OS for teaching and research purposes will be documented in this Notes and the notes within : [[Writing a Operating System]].
 
 ## Meeting Notes
 

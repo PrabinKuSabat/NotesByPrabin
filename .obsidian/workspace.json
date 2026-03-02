@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ATLAS/Basic Loader Functions.md",
+                "file": "ATLAS/14 - 02 - 2026 -- SOS-V.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,37 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Basic Loader Functions"
+              "title": "14 - 02 - 2026 -- SOS-V"
+            }
+          },
+          {
+            "id": "f0fa3a7f849dd9c2",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.12.4"
+              },
+              "icon": "lucide-book-up",
+              "title": "Release Notes 1.12.4"
+            }
+          }
+        ]
+      },
+      {
+        "id": "bcf00b54c40e6c8a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6039393aa2f7c186",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Excalidraw/User-Level OS Implementation - Idea Board.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "User-Level OS Implementation - Idea Board"
             }
           }
         ]
@@ -254,34 +284,34 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "6039393aa2f7c186",
   "lastOpenFiles": [
+    "Homepage.md",
+    "Excalidraw/User-Level OS Implementation - Idea Board.md",
+    "ATLAS/14 - 02 - 2026 -- SOS-V.md",
+    "ATLAS/Shakti Sir Meeting Notes.md",
+    "ATLAS/13-02-2026.md",
+    "ATLAS/22-02-26 Sunday.md",
+    "Notes jan 2.md",
+    "EFFORTS/RISC-V.md",
+    "ATLAS/Atlas.md",
+    "ATLAS/Basic Loader Functions.md",
     "ATLAS/System Programming.md",
     "ATLAS/Machine Dependent Loader Features.md",
-    "ATLAS/Basic Loader Functions.md",
-    "ATLAS/Atlas.md",
-    "Homepage.md",
     "ATLAS/Machine Depedent Assembler Features.md",
     "EFFORTS/Efforts.md",
     "ATLAS/Basic Assembler Functions.md",
-    "ATLAS/14 - 02 - 2026 -- SOS-V.md",
-    "ATLAS/Shakti Sir Meeting Notes.md",
     "ATLAS/20 -02 - 2026 -- CSRs.md",
-    "Notes jan 2.md",
-    "EFFORTS/RISC-V.md",
     "EFFORTS/RV2.md",
     "EFFORTS/List of all the tests.md",
     "EFFORTS/L1 Performance Tests.md",
     "EFFORTS/Pointer chase based latency test for L1.md",
     "EFFORTS/Rv2 Board CPU Details.md",
-    "ATLAS/22-02-26 Sunday.md",
     "EFFORTS/Multi Counter Perf Based pointer chase latency test for L1.md",
     "EFFORTS/Enabling rdcycle read.md",
     "EFFORTS/Writing a Operating System.md",
     "EFFORTS/RISC-V Performance Counters on Orange Pi.md",
     "EFFORTS/Installing Perf.md",
-    "EFFORTS/bare metal L1 latency test.md",
-    "EFFORTS/spacemit-k1-x60.md",
     "Excalidraw/Scripts/Downloaded/Auto Layout.svg",
     "Extras/ATTACHMENTS/image-108.png",
     "Extras/ATTACHMENTS/image-107.png",

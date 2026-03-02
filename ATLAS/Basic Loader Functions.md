@@ -115,11 +115,11 @@ This concludes our exhaustive analysis of Section 3.1.1. You are now prepared to
 
 Welcome to this specialized session on the "bare metal" foundations of computing. In the lifecycle of a system, there exists a critical moment known as the **Cold Start**. When a computer is first powered on, its main memory (RAM) is essentially a blank slate or filled with volatile "garbage" data. The hardware is hardwired to begin execution at a specific memory address (usually address 0), but there is no software yet residing there to manage the machine. This creates a logical paradox: if a **loader** is a program that brings other programs into memory, **who loads the loader?** The industry solution to this "catch-22" is the **Bootstrap Loader**.
 
-#### I. The Architectural Philosophy of the Bootstrap
+## I. The Architectural Philosophy of the Bootstrap
 
 From a systems architecture perspective, a bootstrap loader must be the most minimalist piece of software in existence. Because it often resides in a tiny **Read-Only Memory (ROM)** chip or is hardwired into a specific hardware buffer, every byte of its code is precious. Its sole, singular purpose is to read the **Operating System (OS) loader** from a fixed primary device (like a disk, tape, or flash module) and place it into memory. Once the OS loader is in place, the bootstrap loader executes a jump to that starting address, effectively "pulling the system up by its own bootstraps"—hence the term "booting."
 
-#### II. Technical Implementation: The SIC/XE Bootstrap Loader
+## II. Technical Implementation: The SIC/XE Bootstrap Loader
 
 In this section, we examine the specific SIC/XE implementation of a bootstrap loader, as codified in **Figure 3.3**. This program is designed to reside at address 0 and read an object program from device **F1**.,
 
@@ -137,8 +137,8 @@ In this section, we examine the specific SIC/XE implementation of a bootstrap lo
 **3. The Complexity of Hexadecimal Character Conversion** A vital technical detail for any systems engineer is the **ASCII-to-Binary conversion**. The object program on device `F1` is stored as ASCII characters (e.g., the hex byte `1A` is stored as the character '1' followed by 'A'). The bootstrap loader must convert these into actual numeric values.
 
 - **The GETC Subroutine:** This logic is responsible for reading one hex character and converting it to its 4-bit numeric value (a nibble).
-    - **The '0'-'9' Conversion:** It compares the character to ASCII `48` ('0'). By subtracting `48` from the ASCII value, '0'-'9' becomes the numeric `0-9`.
-    - **The 'A'-'F' Conversion:** If the value is greater than `9`, it indicates a letter. The code subtracts an additional `7` to map ASCII 'A' (which is 65) to the numeric `10`.
+	 - **The '0'-'9' Conversion:** It compares the character to ASCII `48` ('0'). By subtracting `48` from the ASCII value, '0'-'9' becomes the numeric `0-9`.
+	 - **The 'A'-'F' Conversion:** If the value is greater than `9`, it indicates a letter. The code subtracts an additional `7` to map ASCII 'A' (which is 65) to the numeric `10`.
 
 **4. Packing Nibbles into Bytes** Since memory is byte-addressable, and it takes two hex characters to make one byte, the loader must "pack" two 4-bit values into one 8-bit memory slot.
 
@@ -151,7 +151,7 @@ In this section, we examine the specific SIC/XE implementation of a bootstrap lo
 - **STCH 0, X:** This instruction stores the character at the address currently in **Register X**.
 - **TIXR T:** The loader then increments Register X and compares it to the limit to see if more data remains to be read.
 
-#### III. Decoding Figure 3.3: Code vs. Logic
+## III. Decoding Figure 3.3: Code vs. Logic
 
 The following table contrasts the binary-level fields mentioned in the text with the assembled logic we see in Figure 3.3.
 
@@ -164,7 +164,7 @@ The following table contrasts the binary-level fields mentioned in the text with
 |`SHIFTL A, 4`|Bit Manipulation|Constructing a byte from two separate 4-bit nibbles.|
 |`STCH 0, X`|RAM Write|The moment the code "lands" in executable memory.|
 
-#### IV. Final Execution and Control Transfer
+## IV. Final Execution and Control Transfer
 
 The textbook notes that once the bootstrap loader finishes reading the Text records, it does not simply stop. The very last step of a bootstrap is a **Jump instruction** to the starting address of the program it just loaded (Address 80 in this example). This is the "Handshake" where the bootstrap loader retires, and the actual Operating System takes control of the hardware.,
 
