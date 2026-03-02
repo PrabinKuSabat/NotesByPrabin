@@ -43,7 +43,8 @@
               "title": "Release Notes 1.12.4"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "bcf00b54c40e6c8a",
@@ -284,10 +285,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "6039393aa2f7c186",
+  "active": "f0fa3a7f849dd9c2",
   "lastOpenFiles": [
-    "Homepage.md",
     "Excalidraw/User-Level OS Implementation - Idea Board.md",
+    "Homepage.md",
     "ATLAS/14 - 02 - 2026 -- SOS-V.md",
     "ATLAS/Shakti Sir Meeting Notes.md",
     "ATLAS/13-02-2026.md",
