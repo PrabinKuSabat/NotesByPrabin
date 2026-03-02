@@ -214,7 +214,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 471.5
+    "width": 471.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -245,6 +246,7 @@
   },
   "active": "e774b9395f50496b",
   "lastOpenFiles": [
+    "Extras/ATTACHMENTS/9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f.png",
     "Excalidraw/Dissertation Status.excalidraw.md",
     "Prabin's KB ~/Prabins KB ~.md",
     "Status Kanban.md",
@@ -271,7 +273,6 @@
     "ATLAS/20 -02 - 2026 -- CSRs.md",
     "EFFORTS/List of all the tests.md",
     "EFFORTS/L1 Performance Tests.md",
-    "EFFORTS/Pointer chase based latency test for L1.md",
     "Excalidraw/Scripts/Downloaded/Auto Layout.svg",
     "Extras/ATTACHMENTS/image-108.png",
     "Extras/ATTACHMENTS/image-107.png",
