@@ -1,7 +1,7 @@
 {
   "lightStyle": "minimal-light-tonal",
   "darkStyle": "minimal-dark",
-  "lightScheme": "minimal-atom-light",
+  "lightScheme": "minimal-catppuccin-light",
   "darkScheme": "minimal-notion-dark",
   "editorFont": "",
   "lineHeight": 1.5,

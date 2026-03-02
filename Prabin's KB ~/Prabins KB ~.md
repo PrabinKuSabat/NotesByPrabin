@@ -4,6 +4,7 @@ dg-home: true
 ---
 
 ![[image-95.png]]
+
 # Systems Engineering Logbook — Kernel, Performance, and Architecture Experiments
 
 **Build. Measure. Prove.**
