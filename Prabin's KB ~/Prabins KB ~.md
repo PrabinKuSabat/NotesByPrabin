@@ -7,8 +7,6 @@ dg-home: true
 
 # Systems Engineering Logbook — Kernel, Performance, and Architecture Experiments
 
-**Build. Measure. Prove.**
-
 ---
 
 # 🔬 Current Focus
