@@ -11,10 +11,22 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "New tab"
+              "type": "kanban",
+              "state": {
+                "file": "Status Kanban.kanban.md",
+                "kanbanViewState": {
+                  "kanban-plugin": "board",
+                  "list-collapse": [
+                    false,
+                    false,
+                    false,
+                    false,
+                    false
+                  ]
+                }
+              },
+              "icon": "lucide-trello",
+              "title": "Status Kanban.kanban"
             }
           }
         ]
@@ -190,18 +202,17 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Homepage.md"
+                "file": "Status Kanban.kanban.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Homepage"
+              "title": "File properties for Status Kanban.kanban"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 471.5,
-    "collapsed": true
+    "width": 471.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -231,8 +242,9 @@
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
     "Prabin's KB ~/Prabins KB ~.md",
-    "Extras/ATTACHMENTS/image-97.png",
+    "Status Kanban.kanban.md",
     "Homepage.md",
+    "Extras/ATTACHMENTS/image-97.png",
     "Prabin's KB ~/RISC-V OS development.md",
     "Excalidraw/Dissertation Status.excalidraw.md",
     "Extras/ATTACHMENTS/image-95.png",
@@ -242,7 +254,6 @@
     "Extras/ATTACHMENTS/9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f-1.png",
     "Extras/ATTACHMENTS/ChatGPT Image Mar 2, 2026, 11_27_38 AM.png",
     "Extras/ATTACHMENTS/9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f.png",
-    "Status Kanban.md",
     "EFFORTS/spacemit-k1-x60.md",
     "EFFORTS/CA Research.md",
     "EFFORTS/RISC-V.md",

@@ -3,8 +3,8 @@ dg-publish: true
 dg-home: true
 ---
 
-
 ![[image-97.png]]
+
 # Systems Engineering Logbook — Kernel, Performance, and Architecture Experiments
 
 ---
@@ -21,7 +21,7 @@ dg-home: true
 > [!check] TO-DO Kanban Boards👇
 
 [[Dissertation Status.excalidraw|Dissertation To-DO]]  
-[[Status Kanban]]
+[[Status Kanban.kanban]]
 
 > [!info]  
 > The above Kanban board tracks both my completed tasks and my current work in progress.

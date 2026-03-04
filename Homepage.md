@@ -17,6 +17,6 @@
 
 # [[TO-DO List]]
 
-# [[Status Kanban]]
+# [[Status Kanban.kanban]]
 
 [[Buffer]]
