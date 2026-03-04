@@ -3,8 +3,8 @@ dg-publish: true
 dg-home: true
 ---
 
-![[image-95.png]]
 
+![[image-97.png]]
 # Systems Engineering Logbook — Kernel, Performance, and Architecture Experiments
 
 ---
