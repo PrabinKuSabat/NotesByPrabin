@@ -13,7 +13,7 @@
             "state": {
               "type": "kanban",
               "state": {
-                "file": "Status Kanban.kanban.md",
+                "file": "Kanban Boards/Status Kanban.kanban.md",
                 "kanbanViewState": {
                   "kanban-plugin": "board",
                   "list-collapse": [
@@ -202,7 +202,7 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Status Kanban.kanban.md"
+                "file": "Kanban Boards/Status Kanban.kanban.md"
               },
               "icon": "lucide-info",
               "title": "File properties for Status Kanban.kanban"
@@ -212,7 +212,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 471.5
+    "width": 471.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -241,8 +242,9 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Kanban Boards",
     "Prabin's KB ~/Prabins KB ~.md",
-    "Status Kanban.kanban.md",
+    "Kanban Boards/Status Kanban.kanban.md",
     "Homepage.md",
     "Extras/ATTACHMENTS/image-97.png",
     "Prabin's KB ~/RISC-V OS development.md",

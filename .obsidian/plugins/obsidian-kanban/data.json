@@ -1,6 +1,9 @@
 {
   "new-line-trigger": "shift-enter",
-  "new-note-folder": "Required/_KanbanNotes",
+  "new-note-folder": "Kanban Boards",
   "hide-tags-in-title": true,
-  "show-relative-date": true
+  "show-relative-date": true,
+  "full-list-lane-width": true,
+  "move-tags": true,
+  "tag-action": "kanban"
 }
