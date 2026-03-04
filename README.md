@@ -84,3 +84,16 @@ This vault is a **private personal knowledge base**. The majority of notes are n
 Maintained by [Prabin Kumar Sabat](https://prabins.vercel.app) · Powered by [Obsidian](https://obsidian.md)
 
 </div>
+
+---
+
+<div align="center">
+  <br/>
+  <a href="https://www.sssihl.edu.in" target="_blank" rel="noopener noreferrer">
+    <img src="assets/sssihl-logo.png" alt="Sri Sathya Sai Institute of Higher Learning" width="140" />
+    <br/>
+    <b>Sri Sathya Sai Institute of Higher Learning</b>
+  </a>
+  <br/>
+  <sub>Prasanthi Nilayam (Puttaparthi) — Department of Mathematics and Computer Science</sub>
+</div>
