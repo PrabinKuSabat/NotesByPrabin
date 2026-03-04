@@ -21,7 +21,7 @@ dg-home: true
 > [!check] TO-DO Kanban Boards👇
 
 [[Dissertation Status.excalidraw|Dissertation To-DO]]  
-[[Status Kanban.kanban|Status Kanban]] 
+[[Status Kanban.kanban|Status Kanban]]
 
 > [!info]  
 > The above Kanban board tracks both my completed tasks and my current work in progress.
