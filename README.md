@@ -88,6 +88,16 @@ Maintained by [Prabin Kumar Sabat](https://prabins.vercel.app) · Powered by [Ob
 ---
 
 <div align="center">
+
+📬 **Connect with me**
+
+[![Email](https://img.shields.io/badge/Email-prabinkusabat%40gmail.com-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:prabinkusabat@gmail.com) &nbsp; [![LinkedIn](https://img.shields.io/badge/LinkedIn-prabin--kumar--sabat-0077B5?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/prabin-kumar-sabat/) &nbsp; [![Instagram](https://img.shields.io/badge/Instagram-prabin.973-E4405F?style=flat-square&logo=instagram&logoColor=white)](https://www.instagram.com/prabin.973/)
+
+</div>
+
+---
+
+<div align="center">
   <br/>
   <a href="https://www.sssihl.edu.in" target="_blank" rel="noopener noreferrer">
     <img src="assets/sssihl-logo.png" alt="Sri Sathya Sai Institute of Higher Learning" width="140" />
