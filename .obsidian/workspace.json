@@ -11,22 +11,24 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "kanban",
+              "type": "markdown",
               "state": {
-                "file": "Kanban Boards/Status Kanban.kanban.md",
-                "kanbanViewState": {
-                  "kanban-plugin": "board",
-                  "list-collapse": [
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
-                  ]
+                "file": "Prabin's KB ~/Prabins KB ~.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
                 }
               },
-              "icon": "lucide-trello",
-              "title": "Status Kanban.kanban"
+              "icon": "lucide-file",
+              "title": "Prabins KB ~"
             }
           }
         ]
@@ -202,10 +204,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Kanban Boards/Status Kanban.kanban.md"
+                "file": "Prabin's KB ~/Prabins KB ~.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for Status Kanban.kanban"
+              "title": "File properties for Prabins KB ~"
             }
           }
         ]
@@ -242,9 +244,9 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Kanban Boards/Status Kanban.kanban.md",
     "Kanban Boards",
     "Prabin's KB ~/Prabins KB ~.md",
-    "Kanban Boards/Status Kanban.kanban.md",
     "Homepage.md",
     "Extras/ATTACHMENTS/image-97.png",
     "Prabin's KB ~/RISC-V OS development.md",
@@ -287,7 +289,6 @@
     "Untitled",
     "Bibliography/References.bib",
     "Bibliography",
-    "Extras/ATTACHMENTS/Book Covers",
     "EFFORTS/Untitled.canvas",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "EFFORTS/Binary Search.canvas",
