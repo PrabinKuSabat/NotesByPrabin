@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Prabin's KB ~/Prabins KB ~.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Prabins KB ~"
+              "title": "Homepage"
             }
           }
         ]
@@ -244,9 +244,9 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Prabin's KB ~/RISC-V OS development.md",
-    "Prabin's KB ~/Prabins KB ~.md",
     "Homepage.md",
+    "Prabin's KB ~/Prabins KB ~.md",
+    "Prabin's KB ~/RISC-V OS development.md",
     "Excalidraw/Dissertation Status.excalidraw.md",
     "Extras/ATTACHMENTS/image-95.png",
     "Prabin's KB ~/Dissertation Status.md",
