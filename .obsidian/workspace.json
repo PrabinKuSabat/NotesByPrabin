@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Prabin's KB ~/Prabins KB ~.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Prabins KB ~"
+              "title": "Homepage"
             }
           }
         ]
@@ -244,6 +244,8 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Homepage.md",
+    "Prabin's KB ~/Prabins KB ~.md",
     "webclips/README.md",
     "ZoteroExports/README.md",
     "README.md",
@@ -257,8 +259,6 @@
     "ATLAS/README.md",
     "Kanban Boards/Status Kanban.kanban.md",
     "Kanban Boards",
-    "Prabin's KB ~/Prabins KB ~.md",
-    "Homepage.md",
     "Extras/ATTACHMENTS/image-97.png",
     "Prabin's KB ~/RISC-V OS development.md",
     "Excalidraw/Dissertation Status.excalidraw.md",
