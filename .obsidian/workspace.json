@@ -35,11 +35,23 @@
             "id": "b654cde6912587d3",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "Excalidraw/Drawing 2026-03-06 14.26.25.excalidraw.md"
+                "file": "Excalidraw/Drawing 2026-03-06 14.26.25.excalidraw.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "excalidraw-icon",
+              "icon": "lucide-file",
               "title": "Drawing 2026-03-06 14.26.25.excalidraw"
             }
           }
@@ -255,12 +267,12 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "c847ceff63b2d98e",
+  "active": "b654cde6912587d3",
   "lastOpenFiles": [
-    "Excalidraw/Drawing 2026-03-06 14.26.25.excalidraw.md",
     "EFFORTS/Address Translation in Systems.md",
-    "EFFORTS/RISC-V.md",
     "Homepage.md",
+    "Excalidraw/Drawing 2026-03-06 14.26.25.excalidraw.md",
+    "EFFORTS/RISC-V.md",
     "Excalidraw/Drawing 2026-03-06 14.04.29.excalidraw.md",
     "Excalidraw/address_translation.excalidraw",
     "Excalidraw/address_translation.excalidraw.md",
