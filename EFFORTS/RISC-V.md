@@ -1,5 +1,9 @@
 # Notes
 
+## Architecture Related
+
+[[Address Translation in Systems]]
+
 ## Things Regarding the OrangePi RV2
 
 This note keeps track of all the things that are related to the OrangePi Board : [[RV2]].

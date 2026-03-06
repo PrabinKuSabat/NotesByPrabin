@@ -13,8 +13,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
-                "mode": "source",
+                "file": "EFFORTS/Address Translation in Systems.md",
+                "mode": "preview",
                 "source": false,
                 "backlinks": true,
                 "backlinkOpts": {
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Address Translation in Systems"
             }
           }
         ]
@@ -244,10 +244,13 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/RISC-V.md",
+    "EFFORTS/Address Translation in Systems.md",
+    "EFFORTS/Efforts.md",
+    "Homepage.md",
     "Kanban Boards/Status Kanban.kanban.md",
     "Prabin's KB ~/Prabins KB ~.md",
     "Excalidraw/Dissertation Status.excalidraw.md",
-    "Homepage.md",
     "webclips/README.md",
     "ZoteroExports/README.md",
     "README.md",
@@ -271,12 +274,9 @@
     "Extras/ATTACHMENTS/9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f.png",
     "EFFORTS/spacemit-k1-x60.md",
     "EFFORTS/CA Research.md",
-    "EFFORTS/RISC-V.md",
     "EFFORTS/RV2.md",
     "EFFORTS/Enabling rdcycle read.md",
     "ATLAS/Atlas.md",
-    "EFFORTS/Efforts.md",
-    "ATLAS/Shakti Sir Meeting Notes.md",
     "Excalidraw/Scripts/Downloaded/Auto Layout.svg",
     "Extras/ATTACHMENTS/image-108.png",
     "Extras/ATTACHMENTS/image-107.png",
