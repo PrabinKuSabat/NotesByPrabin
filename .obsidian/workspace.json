@@ -35,23 +35,11 @@
             "id": "b654cde6912587d3",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "Excalidraw/Drawing 2026-03-06 14.26.25.excalidraw.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
+                "file": "Excalidraw/Drawing 2026-03-06 14.26.25.excalidraw.md"
               },
-              "icon": "lucide-file",
+              "icon": "excalidraw-icon",
               "title": "Drawing 2026-03-06 14.26.25.excalidraw"
             }
           }
@@ -269,9 +257,9 @@
   },
   "active": "b654cde6912587d3",
   "lastOpenFiles": [
-    "EFFORTS/Address Translation in Systems.md",
     "Homepage.md",
     "Excalidraw/Drawing 2026-03-06 14.26.25.excalidraw.md",
+    "EFFORTS/Address Translation in Systems.md",
     "EFFORTS/RISC-V.md",
     "Excalidraw/Drawing 2026-03-06 14.04.29.excalidraw.md",
     "Excalidraw/address_translation.excalidraw",
