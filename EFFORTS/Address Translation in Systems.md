@@ -1,3 +1,9 @@
+---
+excalidraw-plugin: parsed
+tags:
+  - excalidraw
+---
+
 # Intro
 
 Address translation is the hardware+OS mechanism that maps the addresses a program uses (virtual/effective addresses) to the actual DRAM addresses (physical/real addresses) while enforcing protection and supporting features like per-process isolation, sharing, and virtualization.
