@@ -30,8 +30,21 @@
               "icon": "lucide-file",
               "title": "Address Translation in Systems"
             }
+          },
+          {
+            "id": "6dbaebb2364bc16d",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Excalidraw/Drawing 2026-03-06 14.04.29.excalidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Drawing 2026-03-06 14.04.29.excalidraw"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -242,10 +255,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "6dbaebb2364bc16d",
   "lastOpenFiles": [
-    "EFFORTS/RISC-V.md",
+    "Excalidraw/Drawing 2026-03-06 14.04.29.excalidraw.md",
     "EFFORTS/Address Translation in Systems.md",
+    "EFFORTS/RISC-V.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
     "Kanban Boards/Status Kanban.kanban.md",
@@ -276,7 +290,6 @@
     "EFFORTS/CA Research.md",
     "EFFORTS/RV2.md",
     "EFFORTS/Enabling rdcycle read.md",
-    "ATLAS/Atlas.md",
     "Excalidraw/Scripts/Downloaded/Auto Layout.svg",
     "Extras/ATTACHMENTS/image-108.png",
     "Extras/ATTACHMENTS/image-107.png",

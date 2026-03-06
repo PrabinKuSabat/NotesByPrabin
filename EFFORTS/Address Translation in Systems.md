@@ -17,7 +17,7 @@ Key properties architects care about:
 
 ## Core hardware pieces (MMU, pages, TLB)
 
-Most systems use paging: the VA is split into a virtual page number (VPN) and a page offset; translation replaces the VPN with a physical page number (PPN) and keeps the offset unchanged.
+Most systems use paging: the VA is split into a virtual page number (VPN) and a page offset; translation replaces the VPN with a physical page number (PPN) and keeps the offset unchanged.  
 Because consulting page tables in memory would add extra memory accesses, CPUs use a Translation Lookaside Buffer (TLB), which is a small cache of recent translations inside the CPU.​
 
 A typical load/store flow:
@@ -27,7 +27,7 @@ A typical load/store flow:
 
 ## Quantitative-approach performance topics (the “why” behind designs)
 
-The quantitative view is to treat translation as another cache hierarchy problem: TLB hit time, miss rate, and miss penalty dominate average cost when working sets are large or access patterns are random.
+The quantitative view is to treat translation as another cache hierarchy problem: TLB hit time, miss rate, and miss penalty dominate average cost when working sets are large or access patterns are random.  
 A major design point is _TLB and cache concurrency_: because the page offset is identical in VA and PA, a cache can be indexed using offset bits while translation is in progress, then the physical tag is checked after translation completes (a common “virtually indexed, physically tagged” style).​
 
 Architectural issues you should know cold (these drive real microarchitecture choices):
@@ -38,14 +38,14 @@ Architectural issues you should know cold (these drive real microarchitecture ch
 
 ## Protection, virtualization, and I/O translation
 
-Modern systems extend the same idea to devices: an IOMMU sits between DMA-capable devices and memory and translates device-issued I/O virtual addresses (IOVAs) to system physical addresses (SPAs), enforcing protection for DMA.
+Modern systems extend the same idea to devices: an IOMMU sits between DMA-capable devices and memory and translates device-issued I/O virtual addresses (IOVAs) to system physical addresses (SPAs), enforcing protection for DMA.  
 RISC-V’s IOMMU spec explicitly describes using a two-stage translation model (useful for virtualization), where either stage can be effectively disabled by selecting “Bare” mode for that stage (i.e., no translation/protection at that stage).​
 
 On the CPU side, RISC-V exposes control of supervisor-mode translation via the `satp` CSR (“Supervisor Address Translation and Protection”), and the spec notes that implementations may perform _implicit_ reads of CSRs—specifically, “all S-mode instruction fetches implicitly read the `satp` CSR,” which highlights how directly translation state impacts fetch/execute behavior.​
 
 ## Concrete ISA anchors (RISC-V and POWER)
 
-RISC-V: address translation behavior, the role of `satp`, and the broader privileged software stack model (U/S/M modes, traps on illegal accesses) are defined in the RISC-V Privileged Architecture specification.
+RISC-V: address translation behavior, the role of `satp`, and the broader privileged software stack model (U/S/M modes, traps on illegal accesses) are defined in the RISC-V Privileged Architecture specification.  
 POWER/OpenPOWER: the Power ISA is published as a multi-book specification by the OpenPOWER Foundation, and it is the authoritative reference set you’d use when comparing address-translation structures and behaviors across architectures.​
 
 If you tell me which “Quantitative Approach” edition you’re reading (4th/5th/6th) and which ISA you want to anchor on (RISC-V Sv39 vs POWER radix/hash, etc.), I can tailor the explanation to the exact chapter/section topics and use the matching spec terminology.
