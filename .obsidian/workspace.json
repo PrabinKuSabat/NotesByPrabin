@@ -11,10 +11,24 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "EFFORTS/Rv2 Board CPU Details.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Rv2 Board CPU Details"
             }
           }
         ]
@@ -230,12 +244,13 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "ATLAS/14 - 02 - 2026 -- SOS-V.md",
-    "ATLAS/Shakti Sir Meeting Notes.md",
-    "ATLAS/20 -02 - 2026 -- CSRs.md",
+    "EFFORTS/RV2.md",
     "EFFORTS/RISC-V.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
+    "ATLAS/14 - 02 - 2026 -- SOS-V.md",
+    "ATLAS/Shakti Sir Meeting Notes.md",
+    "ATLAS/20 -02 - 2026 -- CSRs.md",
     "Prabin's KB ~/Prabins KB ~.md",
     "Excalidraw/Drawing 2026-03-06 14.26.25.excalidraw.md",
     "EFFORTS/Address Translation in Systems.md",
@@ -259,7 +274,6 @@
     "Extras/ATTACHMENTS/image-97.png",
     "Prabin's KB ~/RISC-V OS development.md",
     "Extras/ATTACHMENTS/image-95.png",
-    "Prabin's KB ~/Dissertation Status.md",
     "Extras/ATTACHMENTS/9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f-2.png",
     "Extras/ATTACHMENTS/9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f-1.png",
     "Extras/ATTACHMENTS/ChatGPT Image Mar 2, 2026, 11_27_38 AM.png",

@@ -42,3 +42,7 @@
 3. memory :
 	- 24MB load : 91.4 cycles
 	- 20 MB load : 65.1 cycles / 42.4ns
+
+
+Is l1 pipelined?
+lmbench
