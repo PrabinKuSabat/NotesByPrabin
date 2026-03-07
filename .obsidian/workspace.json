@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Rv2 Board CPU Details.md",
+                "file": "ATLAS/14 - 02 - 2026 -- SOS-V.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Rv2 Board CPU Details"
+              "title": "14 - 02 - 2026 -- SOS-V"
             }
           }
         ]
@@ -244,12 +244,13 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/RV2.md",
+    "ATLAS/Shakti Sir Meeting Notes.md",
     "EFFORTS/RISC-V.md",
+    "EFFORTS/RV2.md",
+    "EFFORTS/Rv2 Board CPU Details.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
     "ATLAS/14 - 02 - 2026 -- SOS-V.md",
-    "ATLAS/Shakti Sir Meeting Notes.md",
     "ATLAS/20 -02 - 2026 -- CSRs.md",
     "Prabin's KB ~/Prabins KB ~.md",
     "Excalidraw/Drawing 2026-03-06 14.26.25.excalidraw.md",
@@ -272,7 +273,6 @@
     "ATLAS/README.md",
     "Kanban Boards",
     "Extras/ATTACHMENTS/image-97.png",
-    "Prabin's KB ~/RISC-V OS development.md",
     "Extras/ATTACHMENTS/image-95.png",
     "Extras/ATTACHMENTS/9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f-2.png",
     "Extras/ATTACHMENTS/9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f-1.png",
