@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ATLAS/07-03-202 -- UOS.md",
+                "file": "EFFORTS/Rv2 Board CPU Details.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "07-03-202 -- UOS"
+              "title": "Rv2 Board CPU Details"
             }
           }
         ]
@@ -244,14 +244,14 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/RV2.md",
+    "EFFORTS/RISC-V.md",
     "ATLAS/Shakti Sir Meeting Notes.md",
     "ATLAS/07-03-202 -- UOS.md",
-    "EFFORTS/RISC-V.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
     "Prabin's KB ~/Prabins KB ~.md",
     "ATLAS/14 - 02 - 2026 -- SOS-V.md",
-    "EFFORTS/RV2.md",
     "EFFORTS/Rv2 Board CPU Details.md",
     "ATLAS/20 -02 - 2026 -- CSRs.md",
     "Excalidraw/Drawing 2026-03-06 14.26.25.excalidraw.md",
