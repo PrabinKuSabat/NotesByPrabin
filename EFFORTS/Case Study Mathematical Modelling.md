@@ -1,7 +1,6 @@
 Before lrc we were talking about this :  
 Here is the complete verified analysis with all numbers from the CSVs.  
-  
-  
+
 Full Per-Benchmark Ratio Analysis  
 The four problem metrics broken down per benchmark :  
 L2 Write Hit Rate — Correl=nan, Err=90.73%  
@@ -22,8 +21,7 @@ Perfect shape but systematic under-count. Three distinct sub-problems:
 l1_lat/shared_bw/shared_lat → SIM=0, HW=124–220 — these are HW background/TLB noise, SIM=0 is likely correct  
 MaxIops_int32/l1_shared_bw → SIM ~0.55× HW — L1 over-hits in sim, fewer DRAM misses  
 l1_bw_* → SIM ~0.87–0.92× HW — sector granularity mismatch  
-  
-  
+
 Verified Fix Plan (with Assurance %)  
 Fix 1 — L2 Write Policy (Addresses L2 Write HitRate + Write Hits) — 92% assurance  
 Root cause: Ada Lovelace RTX 4090 has 72MB L2 in write-back mode. With such a large L2, every eviction write-back finds the dirty sector in L2 = 100% write hit rate. GPGPU-Sim's RTX4090 config likely inherited an older write policy that generates write misses.  
@@ -34,8 +32,7 @@ gpu-simulator/gpgpu-sim/configs/tested-cfgs/NVIDIA_GeForce_RTX_4090/gpgpusim.con
   
 The L2 config format is: cache_l2_cfg N:S:A:B:Wlat,E,wf:WP:Alat,E,bf where WP = write policy. It must be W (write-back) not T (write-through) or A (write-allocate-only). If the config has WP=T or a no-write-allocate policy, change to write-back and the L2 write hit rate will jump toward 100%.  
 Why 92% (not 100%): the absolute count of L2 write hits also depends on eviction pressure, which depends on L2 size modeling. If L2 size in config does not match the true 72MB, hit rate will improve but may not reach 100%.  
-  
-  
+
 Fix 2 — Shared Memory Bank Conflict Cycles (Addresses GPC Cycles 2.5–3× over) — 88% assurance  
 Root cause: Ada SM90 redesigned shared memory bank conflict handling. The RTX 4090 has dual warp schedulers per SM with improved replay reduction. The sim is adding ~2.5–3× more stall cycles per bank-conflicted warp than hardware actually does.  
 What to check:  
@@ -47,8 +44,7 @@ The key parameter is gpgpu_shmem_warp_parts — this controls how many sub-group
 If gpgpu_shmem_warp_parts 1 → try increasing to match Ampere baseline  
 Also verify gpgpu_shmem_access_latency — Ada SM90 is measured at ~19 cycles for conflict-free shared memory vs 23–26 cycles on older architectures. The sim may be using a too-high value.  
 Why 88%: bank conflict cycle modeling in GPGPU-Sim involves multiple interacting parameters; a single knob rarely fixes it perfectly.  
-  
-  
+
 Fix 3 — L1/Shared Memory Bandwidth & Latency (Addresses GPC Cycles 0.55–0.79× under) — 75% assurance  
 Root cause: l1_bw_32f (0.59×) and shared_bw (0.55×) run faster in sim than HW — meaning the sim completes memory ops with fewer stalls. Ada SM90 has a known quirk: the 32-bit L1 read path has reduced effective bandwidth vs 128-bit (32-byte transactions) due to sector-level tracking overhead. The sim models peak bandwidth regardless of access width.  
 What to check:  
@@ -60,8 +56,7 @@ gpgpu_l1_latency should be ~28–32 cycles for Ada (HW measured at 28–30 cycle
 If currently set to lower (e.g., 20 cycles), increasing it will raise l1_lat/shared_bw/l1_bw_32f cycle counts toward HW  
 For l1_bw_32f specifically, the 32-bit path issue: check if gpgpu_cache:dl1 line size is set to 128B. On Ada with 32B sectors, a 32f load fills 1 sector but the pipeline stall is per-transaction, not per-sector  
 Why 75%: latency tuning for Ada requires microbenchmark-driven iteration; a single value change rarely closes the full 40% gap without re-running benchmarks.  
-  
-  
+
 Fix 4 — DRAM Read Under-count (l1_bw_* at 0.87–0.92×) — 70% assurance  
 Root cause: The sim counts DRAM transactions at 32B sector granularity but may aggregate them differently from the HW NV performance counters. The l1_bw_32f ratio drops to 0.87 (not 0.92 like l1_bw_128) because 32-bit accesses generate more fragmented sector requests.  
 What to check:  
@@ -74,8 +69,7 @@ gpgpu_n_mem = 24 (384-bit bus = 12 x32b controllers × 2)
 gpgpu_dram_buswidth = 16 (16 bytes per controller per cycle)  
 gpgpu_dram_burst_length = 2 for GDDR6X  
 Why 70%: some of the DRAM under-count for latency benchmarks (l1_lat SIM=0 vs HW=196) is genuine HW background noise and cannot be fixed by config alone.  
-  
-  
+
 Summary Priority Table  
 PriorityFixProblemAssuranceEffort  
 1  
@@ -102,6 +96,7 @@ Recommended next step: Pull the RTX4090 gpgpusim.config and I'll audit it line-b
   
 Do you think this is still required?  
 Then plan out a implementation that we will run either together or in separate messages
+
 # Section 5: Scene Description and Variables**
 
 ## **Introduction to Section 5**
