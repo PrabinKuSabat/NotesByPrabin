@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Efforts.md",
+                "file": "EFFORTS/Case Study Mathematical Modelling.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Efforts"
+              "title": "Case Study Mathematical Modelling"
             }
           }
         ]
@@ -244,6 +244,9 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/SSSIHL.md",
+    "EFFORTS/Case Study Mathematical Modelling.md",
+    "EFFORTS/Efforts.md",
     "Homepage.md",
     "Prabin's KB ~/Prabins KB ~.md",
     "EFFORTS/Rv2 Board CPU Details.md",
@@ -251,7 +254,6 @@
     "EFFORTS/RISC-V.md",
     "ATLAS/Shakti Sir Meeting Notes.md",
     "ATLAS/07-03-202 -- UOS.md",
-    "EFFORTS/Efforts.md",
     "ATLAS/14 - 02 - 2026 -- SOS-V.md",
     "ATLAS/20 -02 - 2026 -- CSRs.md",
     "Excalidraw/Drawing 2026-03-06 14.26.25.excalidraw.md",
@@ -269,8 +271,6 @@
     "Extras/README.md",
     "Excalidraw/README.md",
     "EFFORTS/README.md",
-    "CALENDER/README.md",
-    "Bibliography/README.md",
     "Kanban Boards",
     "Extras/ATTACHMENTS/image-97.png",
     "Extras/ATTACHMENTS/image-95.png",
