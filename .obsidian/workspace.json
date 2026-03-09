@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "EFFORTS/Efforts.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Efforts"
             }
           }
         ]
@@ -245,13 +245,13 @@
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
     "Homepage.md",
+    "Prabin's KB ~/Prabins KB ~.md",
     "EFFORTS/Rv2 Board CPU Details.md",
     "EFFORTS/RV2.md",
     "EFFORTS/RISC-V.md",
     "ATLAS/Shakti Sir Meeting Notes.md",
     "ATLAS/07-03-202 -- UOS.md",
     "EFFORTS/Efforts.md",
-    "Prabin's KB ~/Prabins KB ~.md",
     "ATLAS/14 - 02 - 2026 -- SOS-V.md",
     "ATLAS/20 -02 - 2026 -- CSRs.md",
     "Excalidraw/Drawing 2026-03-06 14.26.25.excalidraw.md",

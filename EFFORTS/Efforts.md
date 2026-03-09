@@ -1,15 +1,15 @@
 # Efforts
 
-> [!note] `ris:Computer` Architecture  
+> [!note]  Architecture  
 > [[EFFORTS/CA Research|Research]]  
 > [[EFFORTS/CA Notes|Short Notes]]  
 > [[Dissertation]]  
 > [[RISC-V]]
 
-> [! important] coding `fas:Brain`  
+> [! important] coding   
 > [[EFFORTS/Leetcode]]  
 > [[EFFORTS/IBM Workshop]]  
 > [[JAVA Project]]
 
-> [! summary] Regular Works `fas:ListAlt`  
+> [! summary] Regular Works  
 > [[SSSIHL]]
