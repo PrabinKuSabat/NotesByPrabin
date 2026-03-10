@@ -99,5 +99,5 @@ Then plan out a implementation that we will run either together or in separate m
 
 # Section 5: Scene Description and Variables**
 
-[[Case Study - Mathematical Modelling Presentation Notes Section 5]]
-[[]]
+[[Case Study - Mathematical Modelling Presentation Notes Section 5]]  
+[[Case Study - Mathematical Modelling Presentation Notes Section 6]]
