@@ -55,5 +55,3 @@ Section 5 might seem like "just definitions," but it's actually doing critical c
 This section also establishes the computational cost model that will guide all design decisions. The O(NL) requirement immediately rules out certain approaches (like computing all pairwise light interactions) while making others attractive (like independent per-light summation). The energy conservation constraint kd,c + ks,c + ka,c ≤ 1 prevents physically impossible combinations of material parameters that would otherwise produce nonsensical results.
 
 Furthermore, Section 5 makes the connection between abstract mathematics and concrete implementation explicit. Every symbol you use in subsequent equations—ˆn, ˆl, ˆv, kd, ks, s, Ij—is defined here with precise types and domains. When you write down the Blinn-Phong equation in Section 7, you'll know exactly what each symbol means, what its type is, where it comes from, and what range of values it can take. This eliminates ambiguity and ensures your mathematical derivations can be directly translated into working code, as you'll see in the GLSL shader implementation in Section 8.4.
-
-
