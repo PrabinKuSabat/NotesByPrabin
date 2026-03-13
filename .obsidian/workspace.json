@@ -239,11 +239,13 @@
       "obsidian-custom-frames:Open Google Calendar": false,
       "obsidian-excalidraw-plugin:New drawing": false,
       "digitalgarden:Digital Garden Publication Center": false,
-      "periodic-notes:Open today": false
+      "periodic-notes:Open today": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Extras/ATTACHMENTS/&lt;system&gt;_You are an expert computer architec.md",
     "EFFORTS/SSSIHL.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
@@ -270,7 +272,6 @@
     "Kanban Boards/Status Kanban.kanban.md",
     "Excalidraw/Dissertation Status.excalidraw.md",
     "webclips/README.md",
-    "ZoteroExports/README.md",
     "Kanban Boards",
     "Extras/ATTACHMENTS/image-97.png",
     "Extras/ATTACHMENTS/image-95.png",
