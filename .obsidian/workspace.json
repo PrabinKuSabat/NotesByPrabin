@@ -11,24 +11,10 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "EFFORTS/PI Day Presentation.md",
-                "mode": "preview",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "PI Day Presentation"
+              "title": "New tab"
             }
           }
         ]
@@ -239,14 +225,14 @@
       "obsidian-custom-frames:Open Google Calendar": false,
       "obsidian-excalidraw-plugin:New drawing": false,
       "digitalgarden:Digital Garden Publication Center": false,
-      "periodic-notes:Open today": false,
-      "table-editor-obsidian:Advanced Tables Toolbar": false
+      "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "periodic-notes:Open today": false
     }
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/SSSIHL.md",
     "EFFORTS/PI Day Presentation.md",
+    "EFFORTS/SSSIHL.md",
     "Extras/ATTACHMENTS/&lt;system&gt;_You are an expert computer architec.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
