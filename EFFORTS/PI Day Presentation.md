@@ -1,3 +1,4 @@
+```text
 ## SECTION 1 — WHAT IS RISC-V? FOUNDATIONS OF THE ISA
 
 Begin with a complete conceptual foundation:
@@ -597,12 +598,13 @@ If this was delivered across multiple messages, compile a master index
 listing which message contained which sections.
 
 RISC-V is an open, modular instruction set architecture (ISA) designed as a clean, modern RISC ISA that scales from tiny microcontrollers to large servers, and it is now a central pillar of India’s semiconductor strategy. This chapter builds a rigorous foundation in the ISA itself, then connects it to hardware, ARM comparisons, and the Indian ecosystem.[^1][^2][^3]
+```
 
 ***
 
-## SECTION 1 — WHAT IS RISC-V? FOUNDATIONS OF THE ISA
+# SECTION 1 — WHAT IS RISC-V? FOUNDATIONS OF THE ISA
 
-### 1.1 What is an Instruction Set Architecture (ISA)?
+## 1.1 What is an Instruction Set Architecture (ISA)?
 
 An Instruction Set Architecture (ISA) is the abstract contract between software and processor hardware: it defines the instructions, registers, memory model, and visible state that compiled binaries can rely on. Compilers, operating systems, and applications target the ISA, not any particular microarchitecture, so any CPU that correctly implements the ISA can run the same binaries (modulo OS/ABI differences).[^2][^1]
 
@@ -617,7 +619,7 @@ In practice, the ISA specification is written text plus formal models that defin
 
 ***
 
-### 1.2 RISC Philosophy in Context
+## 1.2 RISC Philosophy in Context
 
 RISC (Reduced Instruction Set Computing) emerged in the 1980s from research at UC Berkeley and Stanford as a reaction against increasingly complex CISC ISAs such as VAX. Key empirical findings of that era:[^4][^2]
 
@@ -637,9 +639,9 @@ Many commercial RISC architectures—MIPS, SPARC, early ARM—took similar ideas
 
 ***
 
-### 1.3 What is RISC-V Specifically?
+## 1.3 What is RISC-V Specifically?
 
-RISC-V (“RISC Five”) is a modern RISC ISA created at UC Berkeley around 2010, led by Krste Asanović and David Patterson with key contributors Yunsup Lee, Andrew Waterman, and the Berkeley Architecture Research group. It is explicitly designed as the *fifth* major RISC from Berkeley after earlier experimental RISC projects, hence the “V”.[^4][^2]
+RISC-V (“RISC Five”) is a modern RISC ISA created at UC Berkeley around 2010, led by Krste Asanović and David Patterson with key contributors Yunsup Lee, Andrew Waterman, and the Berkeley Architecture Research group. It is explicitly designed as the _fifth_ major RISC from Berkeley after earlier experimental RISC projects, hence the “V”.[^4][^2]
 
 Core characteristics:
 
@@ -649,15 +651,15 @@ Core characteristics:
 - **Modular and extensible:** A small base ISA plus a large library of standardized extensions (M, A, F, D, C, V, K, etc.) and reserved opcode space for vendor-defined custom extensions.[^2][^4]
 - **Multiple word sizes:** Families RV32, RV64, and RV128 allow RISC-V to scale from microcontrollers to large memory servers within one architectural framework.[^2]
 
-Unlike ARM or x86, RISC-V’s *ISA* is open even though specific core implementations may be proprietary; this is analogous to how TCP/IP is open but individual NICs can be proprietary.[^3][^2]
+Unlike ARM or x86, RISC-V’s _ISA_ is open even though specific core implementations may be proprietary; this is analogous to how TCP/IP is open but individual NICs can be proprietary.[^3][^2]
 
 ***
 
-### 1.4 Modular Design Philosophy
+## 1.4 Modular Design Philosophy
 
 RISC-V is explicitly modular. Software sees a base ISA plus an ordered list of extensions encoded both textually (e.g., RV64IMAFDCV) and in the hardware-reported `misa` CSR.[^1][^2]
 
-#### Base ISAs
+### Base ISAs
 
 - **RV32I:** 32-bit base integer ISA with 32 general-purpose registers and 32-bit addresses.[^1]
 - **RV32E:** 32-bit embedded subset with only 16 integer registers (x0–x15) for very small microcontrollers.[^2]
@@ -665,8 +667,7 @@ RISC-V is explicitly modular. Software sees a base ISA plus an ordered list of e
 - **RV64E:** Embedded 64-bit variant with 16 integer registers (less common in practice).[^2]
 - **RV128I:** Architected but not yet commercially implemented; 128-bit registers and addresses for extreme-scale systems.[^2]
 
-
-#### Standard Extensions (selection)
+### Standard Extensions (selection)
 
 Common extension letters (each letter may bundle several “Z*” sub-extensions):[^4][^2]
 
@@ -683,11 +684,11 @@ Common extension letters (each letter may bundle several “Z*” sub-extensions
 
 Other important “Z*” extensions include Zicsr (CSR instructions) and Zifencei (instruction-fetch fence), which are foundational for privileged code and self-modifying code support.[^2]
 
-#### The “G” Shorthand
+### The “G” Shorthand
 
 Historically, **G** was used as a shorthand for the set `{I, M, A, F, D}`, i.e., a “general-purpose” profile capable of running full OSes like Linux: “RV64GC” meant RV64IMAFD with compressed. Newer profile specs move away from G in favor of explicit profile names (RVA22, RVA23), but the shorthand remains widely used in documentation and toolchains.[^4][^2]
 
-#### Ratified vs. Frozen vs. Draft
+### Ratified vs. Frozen vs. Draft
 
 RISC-V Intl lifecycle for extensions:[^2]
 
@@ -697,7 +698,7 @@ RISC-V Intl lifecycle for extensions:[^2]
 
 Many widely used extensions—M, A, F, D, C, V, K, B—are now ratified; some newer security and AI-related “Z*” extensions are frozen or draft.[^2]
 
-#### Privileged vs. Unprivileged ISA
+### Privileged vs. Unprivileged ISA
 
 The RISC-V spec is split into:
 
@@ -708,9 +709,9 @@ This separation allows microcontrollers to implement only the unprivileged spec 
 
 ***
 
-### 1.5 Why RISC-V When MIPS/ARM/SPARC Already Exist?
+## 1.5 Why RISC-V When MIPS/ARM/SPARC Already Exist?
 
-By 2010, several RISC ISAs existed, but each had obstacles that made them unsuitable as *open, long-term academic and industrial standards*:[^3][^2]
+By 2010, several RISC ISAs existed, but each had obstacles that made them unsuitable as _open, long-term academic and industrial standards_:[^3][^2]
 
 - **MIPS:** Originally an elegant RISC from Stanford, it later became encumbered by a complex licensing history and was controlled by various companies (SGI, Imagination, Wave Computing, etc.). License terms, fragmentation between MIPS32/MIPS64 and microMIPS/MIPS16, and uncertainties about future governance discouraged new adopters.[^3]
 - **ARM:** Ubiquitous in embedded and mobile, but the ISA is proprietary and licensed by ARM Holdings; implementers pay up-front license fees and per-core or per-chip royalties, and cannot legally define arbitrary custom opcode extensions in the ARM ISA space.[^3]
@@ -726,20 +727,19 @@ RISC-V’s answer:
 
 ***
 
-## SECTION 2 — RISC-V ISA: DEEP TECHNICAL DIVE (UNPRIVILEGED ISA)
+# SECTION 2 — RISC-V ISA: DEEP TECHNICAL DIVE (UNPRIVILEGED ISA)
 
 This section is structured to roughly mirror the official Unprivileged ISA Manual and give you a spec-level understanding of the core ISA.[^4][^2]
 
 ***
 
-### 2.1 Base Integer ISA — RV32I
+## 2.1 Base Integer ISA — RV32I
 
-#### Register File and ABI
+### Register File and ABI
 
 RV32I defines 32 general-purpose integer registers $x0$–$x31$, each 32 bits wide (XLEN = 32). Register x0 is hardwired to constant zero; writes to x0 are discarded, and reads always return 0.[^1][^2]
 
 The standard ABI assigns conventional roles and names:[^1][^2]
-
 
 | Register | ABI name | Purpose (typical) |
 | :-- | :-- | :-- |
@@ -756,7 +756,7 @@ The standard ABI assigns conventional roles and names:[^1][^2]
 
 This ABI is used by GCC/LLVM and the standard C libraries for RISC-V.[^4][^2]
 
-#### XLEN
+### XLEN
 
 XLEN is the native integer register width and address width of the ISA variant:
 
@@ -766,7 +766,7 @@ XLEN is the native integer register width and address width of the ISA variant:
 
 All integer registers, PC, and integer immediates are XLEN bits, and the unprivileged spec is parameterized by XLEN.[^1][^2]
 
-#### Instruction Length and Formats
+### Instruction Length and Formats
 
 In the base ISA, every instruction word is 32 bits, aligned on 32-bit boundaries (addresses divisible by 4). Instruction formats pack opcode, register indices, function subcodes, and immediates in fixed bit positions to simplify decode.[^5][^1]
 
@@ -779,8 +779,7 @@ The main 32‑bit formats are:
 - U-type: upper-immediate instructions (LUI, AUIPC)
 - J-type: JAL (jump and link)
 
-
-##### R-type
+#### R-type
 
 ```text
 31          25 24   20 19   15 14  12 11    7 6      0
@@ -796,7 +795,7 @@ Example: `ADD x3, x1, x2` (x3 = x1 + x2) has fields:[^5][^1]
 
 Encoded as 0x002081B3 (little-endian word in memory).[^5][^1]
 
-##### I-type
+#### I-type
 
 ```text
 31             20 19   15 14  12 11    7 6      0
@@ -813,7 +812,7 @@ Encoding: 0x00A30313.[^5][^1]
 
 Loads (`LB`, `LH`, `LW`), JALR, and system instructions (`ECALL`, `EBREAK`, CSR ops when Zicsr is present) also use I-type.[^1]
 
-##### S-type (Stores)
+#### S-type (Stores)
 
 ```text
 31      25 24   20 19   15 14  12 11      7 6      0
@@ -826,12 +825,12 @@ Stores split the 12-bit signed immediate between two fields that are concatenate
 - funct3 = 010₂ (word)
 - rs1 = 6 (base), rs2 = 5 (value)
 - imm = 8 (binary 000000001000₂)
-    - imm[11:5] = 0000000₂
-    - imm[4:0]  = 01000₂
+	 - imm[11:5] = 0000000₂
+	 - imm[4:0] = 01000₂
 
 Encoding: 0x00532323.[^5]
 
-##### B-type (Branches)
+#### B-type (Branches)
 
 ```text
 31      25 24   20 19   15 14  12 11      7 6      0
@@ -840,7 +839,7 @@ Encoding: 0x00532323.[^5]
 
 The 13-bit branch offset (multiple of 2 bytes) is spread across bits for efficient sign-extension, with bit 0 implicitly 0. Example: `BEQ x1, x2, offset` uses opcode 1100011₂ and funct3 000₂.[^5]
 
-##### U-type (LUI, AUIPC)
+#### U-type (LUI, AUIPC)
 
 ```text
 31                     12 11    7 6      0
@@ -852,8 +851,7 @@ The 20-bit immediate is placed in bits [31:12] and represents bits [31:12] of a 
 - `LUI rd, imm20`: rd = imm20 << 12
 - `AUIPC rd, imm20`: rd = PC + (imm20 << 12)[^6]
 
-
-##### J-type (JAL)
+#### J-type (JAL)
 
 ```text
 31        12 11    7 6      0
@@ -864,7 +862,7 @@ The 21-bit signed offset (multiple of 2 bytes) is reassembled from scattered bit
 
 Example: `JAL x1, offset` saves return address in x1 and jumps PC-relative.[^1]
 
-#### Example Encodings Summary
+### Example Encodings Summary
 
 - `ADD x3, x1, x2` → opcode 0x33, encoding 0x002081B3.[^5][^1]
 - `ADDI x5, x6, 10` → opcode 0x13, encoding 0x00A30313.[^5][^1]
@@ -873,8 +871,7 @@ Example: `JAL x1, offset` saves return address in x1 and jumps PC-relative.[^1]
 - `BEQ x1, x2, offset` → opcode 0x63; offset encoding follows B-type layout.[^5]
 - `JAL x1, offset` → opcode 0x6F; immediate per J-type format.[^5]
 
-
-#### Instruction Categories
+### Instruction Categories
 
 RV32I defines instructions in several functional groups:[^1][^2]
 
@@ -885,8 +882,7 @@ RV32I defines instructions in several functional groups:[^1][^2]
 - **System:** `ECALL`, `EBREAK`, plus CSR instructions via Zicsr (`CSRRW`, `CSRRS`, etc.).[^2]
 - **No dedicated flags register:** Instead of condition codes, branches compare register values directly (e.g., `BEQ x1, x2, label`) or rely on `SLT`/`SLTU`.[^1][^2]
 
-
-#### Notable Design Choices
+### Notable Design Choices
 
 - **No condition code flags:** Eliminates global status flags (NZCV) and associated hazards; comparisons produce boolean values in registers or are embedded within branch instructions.[^1][^2]
 - **PC-relative addressing:** `AUIPC` and branches make PC-relative code easy, improving position-independent code and linker relaxation.[^6]
@@ -895,45 +891,43 @@ RV32I defines instructions in several functional groups:[^1][^2]
 
 ***
 
-### 2.2 RV64I — 64-bit Base ISA
+## 2.2 RV64I — 64-bit Base ISA
 
 RV64I generalizes RV32I to 64-bit integer registers and addresses. Key implications:[^4][^2]
 
 - **Registers:** 32 general-purpose registers, each 64 bits (XLEN = 64).[^2]
 - **Address space:** 64-bit virtual and physical addresses (exact virtual address scheme governed by the privileged spec and `satp`/paging mode).[^2]
 
-
-#### Additional Instructions
+### Additional Instructions
 
 RV64I adds instructions that operate on 32-bit subwords but store sign-extended results in 64-bit registers:[^4][^2]
 
 - **Loads/stores:**
-    - `LWU rd, offset(rs1)`: Load 32-bit word and zero-extend to 64 bits.
-    - `LD rd, offset(rs1)`: Load 64-bit doubleword.
-    - `SD rs2, offset(rs1)`: Store 64-bit doubleword.
+	 - `LWU rd, offset(rs1)`: Load 32-bit word and zero-extend to 64 bits.
+	 - `LD rd, offset(rs1)`: Load 64-bit doubleword.
+	 - `SD rs2, offset(rs1)`: Store 64-bit doubleword.
 - **W-suffix arithmetic/logical:**
-    - `ADDIW rd, rs1, imm`: 32-bit add, then sign-extend result to 64 bits.
-    - `ADDW`, `SUBW`, `SLLW`, `SRLW`, `SRAW`, and immediate variants (`SLLIW`, `SRLIW`, `SRAIW`).[^2]
+	 - `ADDIW rd, rs1, imm`: 32-bit add, then sign-extend result to 64 bits.
+	 - `ADDW`, `SUBW`, `SLLW`, `SRLW`, `SRAW`, and immediate variants (`SLLIW`, `SRLIW`, `SRAIW`).[^2]
 
 The W-forms treat operands as 32-bit values (lower 32 bits of register), perform the operation in 32 bits, then sign-extend to 64 bits; this matches C’s int32 arithmetic semantics on a 64-bit platform.[^4][^2]
 
-#### Sign Extension and Memory Model Implications
+### Sign Extension and Memory Model Implications
 
 - **32→64-bit promotion:** Many instructions implicitly sign-extend their 32-bit results (e.g., `ADDW`); compilers must be aware when mixing 32-bit and 64-bit operations to avoid redundant `SEXT` or masking.[^2]
 - **Loads:**
-    - `LW`: sign-extends 32-bit word.
-    - `LWU`: zero-extends.
-    - `LD`: does not extend (already 64 bits).[^2]
+	 - `LW`: sign-extends 32-bit word.
+	 - `LWU`: zero-extends.
+	 - `LD`: does not extend (already 64 bits).[^2]
 - **Pointer size:** Pointers and `size_t` are typically 64-bit under the LP64D ABI (Linux RISC-V), impacting stack frame layout and struct alignment.[^4][^2]
 
 The semantics are chosen so that compiled 32-bit code ported to 64-bit RISC-V behaves naturally, similar to x86-64’s 32-bit register write semantics (zero-extend to 64 bits) but using sign-extension for W operations in line with C integer rules.[^2]
 
 ***
 
-### 2.3 Standard Extensions — Detailed Coverage
+## 2.3 Standard Extensions — Detailed Coverage
 
 The table below summarizes selected major extensions and their status:[^2]
-
 
 | Extension | Letter | Description | Status |
 | :-- | :-- | :-- | :-- |
@@ -950,77 +944,70 @@ The table below summarizes selected major extensions and their status:[^2]
 
 Below we give motivation, key operations, hardware implications, and use cases.
 
-#### M — Integer Multiply/Divide
+### M — Integer Multiply/Divide
 
 - **Motivation:** Many workloads (DSP, graphics, cryptography, general integer code) require fast multiplication and division; doing them in software on RV32I alone is slow.[^2]
 - **Key instructions:** `MUL`, `MULH`, `MULHSU`, `MULHU`, `DIV`, `DIVU`, `REM`, `REMU`.[^2]
 - **Hardware implications:** Adds a multiplier/divider unit, which can be implemented as a single-cycle or multi-cycle pipeline depending on area/power targets.
 - **Use cases:** Almost all general-purpose SoCs, MCUs with moderate performance needs, DSP tasks in embedded and communication stacks.
 
-
-#### A — Atomic Memory Operations
+### A — Atomic Memory Operations
 
 - **Motivation:** Provide portable primitives for lock-free synchronization and multi-core concurrency without relying on LL/SC quirks or non-standard instructions.[^2]
 - **Key instructions:**
-    - `LR.W` / `SC.W`, `LR.D` / `SC.D`: load-reserved and store-conditional.
-    - AMOs: `AMOADD`, `AMOSWAP`, `AMOAND`, `AMOOR`, `AMOXOR`, `AMOMIN`, `AMOMAX`, `AMOMINU`, `AMOMAXU`.[^2]
+	 - `LR.W` / `SC.W`, `LR.D` / `SC.D`: load-reserved and store-conditional.
+	 - AMOs: `AMOADD`, `AMOSWAP`, `AMOAND`, `AMOOR`, `AMOXOR`, `AMOMIN`, `AMOMAX`, `AMOMINU`, `AMOMAXU`.[^2]
 - **Hardware implications:** Reservation set or address tracking for LR/SC; atomic read-modify-write in memory subsystem; coherence protocol awareness for multi-core.[^2]
 - **Use cases:** OS kernels, concurrent data structures, lock-free queues, user-space atomics in C/C++ (`std::atomic`).
 
-
-#### F/D/Q — Floating-Point
+### F/D/Q — Floating-Point
 
 - **Motivation:** IEEE-754 floating point is fundamental for scientific computing, media processing, and ML workloads.[^2]
 - **Key instructions:**
-    - F: single-precision arithmetic (`FADD.S`, `FMUL.S`, `FDIV.S`, `FSQRT.S`), conversions, compares, fused multiply-add (`FMADD.S`).
-    - D: same set with `.D` suffix operating on 64-bit floats; requires F.[^2]
-    - Q: quad-precision operations; requires D.[^2]
+	 - F: single-precision arithmetic (`FADD.S`, `FMUL.S`, `FDIV.S`, `FSQRT.S`), conversions, compares, fused multiply-add (`FMADD.S`).
+	 - D: same set with `.D` suffix operating on 64-bit floats; requires F.[^2]
+	 - Q: quad-precision operations; requires D.[^2]
 - **Hardware implications:** Separate FP register file `f0`–`f31`, FP execution units (adder, multiplier, divider, sqrt, FMA), FP control/status register `fcsr`.[^2]
 - **Use cases:** HPC, multimedia, signal processing, ML inference and training (typically F and D; Q is niche for numerical analysis and high-precision finance).
 
-
-#### C — Compressed Instructions
+### C — Compressed Instructions
 
 - **Motivation:** Code size reduction improves I-cache and I-TLB hit rates and reduces memory bandwidth—critical for embedded systems and beneficial even for large cores.[^2]
 - **Key features:**
-    - 16-bit encodings for a subset of popular instructions (e.g., `C.ADDI`, `C.LW`, `C.SW`, `C.J`, `C.JAL`, `C.LI`, `C.LUI`, `C.ADD`, `C.MV`).[^2]
-    - Mixed 16/32-bit stream; decoder expands C instructions into canonical 32-bit internal form.
-- **Hardware implications:** Slightly more complex decode front-end to handle 16- and 32-bit instruction boundaries, but gains from reduced fetch bandwidth and code storage.[^2]
+	 - 16-bit encodings for a subset of popular instructions (e.g., `C.ADDI`, `C.LW`, `C.SW`, `C.J`, `C.JAL`, `C.LI`, `C.LUI`, `C.ADD`, `C.MV`).[^2]
+	 - Mixed 16/32-bit stream; decoder expands C instructions into canonical 32-bit internal form.
+- **Hardware implications:** Slightly more complex decode front-end to handle 16and 32-bit instruction boundaries, but gains from reduced fetch bandwidth and code storage.[^2]
 - **Use cases:** Almost all production RISC-V cores, from microcontrollers (firmware flash savings) to Linux SBCs (smaller binaries, energy savings).
 
-
-#### B — Bit Manipulation (Zba, Zbb, Zbc, Zbs)
+### B — Bit Manipulation (Zba, Zbb, Zbc, Zbs)
 
 - **Motivation:** Modern cryptography, graphics, and bit-level algorithms spend significant time doing shifts, masks, rotates, and logical combinations; specialized instructions can reduce instruction count and improve constant-time coding.[^2]
 - **Key operations:**
-    - Zba: address generation, add with shift (`SH1ADD`, `SH2ADD`, `SH3ADD`).
-    - Zbb: basic bit-manip (`ANDN`, `ORN`, `XORN`, `CLZ`, `CTZ`, `PCNT`, `MIN`, `MAX`).
-    - Zbc: carry-less operations for crypto (e.g., polynomial multiply).
-    - Zbs: single-bit set/clear/invert/extract (`BSET`, `BCLR`, `BINV`, `BEXT`).[^2]
+	 - Zba: address generation, add with shift (`SH1ADD`, `SH2ADD`, `SH3ADD`).
+	 - Zbb: basic bit-manip (`ANDN`, `ORN`, `XORN`, `CLZ`, `CTZ`, `PCNT`, `MIN`, `MAX`).
+	 - Zbc: carry-less operations for crypto (e.g., polynomial multiply).
+	 - Zbs: single-bit set/clear/invert/extract (`BSET`, `BCLR`, `BINV`, `BEXT`).[^2]
 - **Hardware implications:** Additional ALU sub-blocks for bit operations; usually modest area overhead.
 - **Use cases:** Cryptography libraries, bitset operations in databases, network stacks, and compression.
 
-
-#### V — Vector Extension (RVV 1.0)
+### V — Vector Extension (RVV 1.0)
 
 - **Motivation:** High-performance computing, media, and ML workloads benefit from SIMD/vectorization, but fixed-width SIMD (like SSE/NEON) ages poorly as vector widths grow; RVV’s scalable vectors abstract over physical width.[^2]
 - **Key concepts:** See Section 2.9; includes vector integer and FP arithmetic, loads/stores, reductions, permutations, and masks with dynamic `vsetvli` configuration.[^2]
 - **Hardware implications:** Vector register file `v0`–`v31`, vector ALUs, load/store units, and mask registers; area scales with maximum VLEN (e.g., 128, 256, 512 bits).[^2]
 - **Use cases:** HPC, signal processing, ML inference/training, graphics, and any throughput-oriented workloads.
 
-
-#### H — Hypervisor
+### H — Hypervisor
 
 - **Motivation:** Efficient virtualization of RISC-V systems for cloud and data-center use; support multiple guest OS instances with good performance isolation.[^2]
 - **Key features:**
-    - Additional privilege mode HS (host supervisor) and virtual equivalents VS/VU.
-    - Two-stage address translation via `hgatp` (host) and `vsatp` (guest).
-    - New CSRs for delegation and virtualization (e.g., `hstatus`, `hideleg`, `hvip`).[^2]
+	 - Additional privilege mode HS (host supervisor) and virtual equivalents VS/VU.
+	 - Two-stage address translation via `hgatp` (host) and `vsatp` (guest).
+	 - New CSRs for delegation and virtualization (e.g., `hstatus`, `hideleg`, `hvip`).[^2]
 - **Hardware implications:** TLB and MMU extended for nested page tables; additional privilege checks; interrupt virtualization logic.
 - **Use cases:** KVM-RISC-V in Linux, cloud hypervisors, container host kernels when combined with hardware VMs for isolation.
 
-
-#### K — Crypto Scalar Extensions
+### K — Crypto Scalar Extensions
 
 - **Motivation:** Hardware acceleration for common cryptographic primitives reduces latency and mitigates side-channel leakage relative to naive software loops.[^2]
 - **Key operations:** Sub-extensions Zkn (AES, SM4), Zks (SHA2, SM3), Zkr (entropy source), Zknd/Zkne (AES round functions, etc.).[^2]
@@ -1029,11 +1016,11 @@ Below we give motivation, key operations, hardware implications, and use cases.
 
 ***
 
-### 2.4 Control and Status Registers (CSRs)
+## 2.4 Control and Status Registers (CSRs)
 
 CSRs are special registers that control privileged behavior, expose performance counters, and hold exception/interrupt state. CSR access instructions are defined by the Zicsr extension and are required for any realistic system.[^2]
 
-#### CSR Access Instructions (Zicsr)
+### CSR Access Instructions (Zicsr)
 
 - `CSRRW rd, csr, rs1` — Atomic read/write CSR.
 - `CSRRS rd, csr, rs1` — Read and set bits.
@@ -1042,7 +1029,7 @@ CSRs are special registers that control privileged behavior, expose performance 
 
 These use the I-type format with the CSR address in bits [31:20] and funct3 differentiating the op.[^2]
 
-#### Key Machine-Mode CSRs
+### Key Machine-Mode CSRs
 
 Some of the most important CSRs (names and roles):[^2]
 
@@ -1059,7 +1046,7 @@ Some of the most important CSRs (names and roles):[^2]
 
 Supervisor and user modes have analogous CSRs (`sstatus`, `stvec`, `sepc`, `scause`, etc.).[^2]
 
-#### `misa` Layout and Extension Discovery
+### `misa` Layout and Extension Discovery
 
 `misa` is an XLEN-bit CSR; its high bits encode the base XLEN and lower bits encode which standard extensions are present:[^2]
 
@@ -1070,7 +1057,7 @@ Example: a system with RV64IMAFDCV might have the bits for I, M, A, F, D, C, V s
 
 ***
 
-### 2.5 Instruction Encoding Philosophy
+## 2.5 Instruction Encoding Philosophy
 
 The unprivileged spec documents several explicit encoding goals:[^1][^2]
 
@@ -1079,11 +1066,9 @@ The unprivileged spec documents several explicit encoding goals:[^1][^2]
 - **Opcode space partitioning:** 7-bit opcode field at [6:0] is partitioned into major opcode groups that leave room for future standard and custom extensions, and that are compatible with future 48/64-bit encodings.[^1][^2]
 - **Variable-length compatibility:** By requiring 16-bit alignment and reserving certain opcode patterns, the ISA supports mixing 16-bit C instructions with 32-bit base instructions, and leaves space for future 48/64-bit encodings while keeping decode relatively straightforward.[^2]
 
-
-#### Major Opcode Map (Simplified)
+### Major Opcode Map (Simplified)
 
 A simplified table of some major opcodes in RV32I/RV64I:[^1][^2]
-
 
 | Opcode (binary) | Hex | Mnemonic group | Example instructions |
 | :-- | :-- | :-- | :-- |
@@ -1105,7 +1090,7 @@ The “custom” major opcodes (e.g., 0x0B, 0x2B, 0x5B, 0x7B) are reserved for i
 
 ***
 
-### 2.6 Memory Model — RVWMO (RISC-V Weak Memory Ordering)
+## 2.6 Memory Model — RVWMO (RISC-V Weak Memory Ordering)
 
 RISC-V defines RVWMO, a weak memory ordering model designed to support high-performance, out-of-order multi-core hardware while still being amenable to formal reasoning. It is weaker than x86’s TSO but allows stronger ordering via fences and atomics.[^4][^2]
 
@@ -1115,15 +1100,14 @@ Key aspects:
 - **Per-location SC with atomics:** Atomic operations provide strong guarantees for synchronization variables, similar to C/C++ atomic semantics.[^2]
 - **FENCE instruction:** `FENCE [pred],[succ]` constrains memory and I/O ordering, ensuring that prior memory operations are globally visible before subsequent operations matching the mask.[^2]
 
-
-#### LR/SC and AMOs in the Memory Model
+### LR/SC and AMOs in the Memory Model
 
 - **LR/SC (Load-Reserved/Store-Conditional):** Provide a loop-based primitive for building locks and lock-free algorithms: `LR` reads a value and sets a reservation; `SC` attempts to store and succeeds only if no conflicting writes occurred.[^2]
 - **AMOs:** Single-instruction read-modify-write operations that are atomic with respect to other cores (e.g., `AMOADD.W`, `AMOSWAP.D`).[^2]
 
 These are integrated into RVWMO’s formal model so that properly synchronized code behaves as if memory were sequentially consistent for those synchronization operations.[^2]
 
-#### Comparison to x86 TSO and ARM
+### Comparison to x86 TSO and ARM
 
 - **x86 TSO:** Stronger; nearly all writes are observed in order, and many reorderings are forbidden, simplifying programmer reasoning but constraining microarchitectural optimizations.[^2]
 - **ARM (ARMv8/ARMv9):** Also weakly ordered, with explicit barriers (`DMB`, `DSB`, `ISB`) for ordering.[^2]
@@ -1131,11 +1115,11 @@ These are integrated into RVWMO’s formal model so that properly synchronized c
 
 ***
 
-### 2.7 Exception and Interrupt Handling (Unprivileged View)
+## 2.7 Exception and Interrupt Handling (Unprivileged View)
 
 The unprivileged spec relies on the privileged architecture for trap handling; here we summarise essentials relevant to ISA-level understanding.[^2]
 
-#### Privilege Levels
+### Privilege Levels
 
 RISC-V defines up to four privilege levels:[^2]
 
@@ -1146,15 +1130,14 @@ RISC-V defines up to four privilege levels:[^2]
 
 Many microcontrollers implement only M-mode; Linux-capable systems implement at least M and S, with optional U for user-space.[^2]
 
-#### Trap Causes
+### Trap Causes
 
 Traps (exceptions + interrupts) include:[^2]
 
 - **Synchronous exceptions:** Illegal instruction, instruction or data access fault, misaligned load/store/jump, breakpoint (`EBREAK`), environment calls (`ECALL`) from U/S/M, page faults (if virtual memory is enabled).
 - **Asynchronous interrupts:** Timer interrupts, software interrupts (IPIs), external device interrupts.[^2]
 
-
-#### Core Trap CSRs
+### Core Trap CSRs
 
 Trap handling is orchestrated via CSRs:[^2]
 
@@ -1170,7 +1153,7 @@ A typical trap flow in M-mode:
 3. Trap handler inspects `mcause`/`mtval`, services the trap, possibly adjusts `mepc`.
 4. `MRET` returns to `mepc` (or `mepc + 4` depending on semantics).[^2]
 
-#### ECALL as System Call Mechanism
+### ECALL as System Call Mechanism
 
 - **From U-mode:** `ECALL` raises an environment call exception; delegated via `medeleg` to S-mode, whose trap handler implements system calls (e.g., Linux’s `syscall` entry).[^2]
 - **From S-mode:** `ECALL` may trap to M-mode for hypervisor or firmware services, depending on delegation.[^2]
@@ -1179,35 +1162,34 @@ A typical trap flow in M-mode:
 
 ***
 
-### 2.8 Floating-Point Architecture
+## 2.8 Floating-Point Architecture
 
 When F/D/Q are present, RISC-V adds a separate FP register file and control/status mechanisms conforming to IEEE-754.[^2]
 
-#### FP Register File and NaN Boxing
+### FP Register File and NaN Boxing
 
-- **Registers:** `f0`–`f31`, each XLEN bits in RV32/RV64 (32 or 64 bits), but capable of holding narrower FP values using *NaN boxing*.[^2]
+- **Registers:** `f0`–`f31`, each XLEN bits in RV32/RV64 (32 or 64 bits), but capable of holding narrower FP values using _NaN boxing_.[^2]
 - **NaN boxing:** When a narrower FP value (e.g., 32-bit float) is stored in a wider register (e.g., 64-bit FP register under D), the upper bits are filled with a canonical NaN pattern so that operations treating it as a wider value still see a NaN if interpreted incorrectly.[^2]
 - **Register classes:** The ABI defines calling conventions for passing FP arguments and return values when FP is enabled (e.g., LP64D uses both x and f registers).[^4][^2]
 
-
-#### Rounding Modes and Exception Flags
+### Rounding Modes and Exception Flags
 
 - **Rounding modes:** Encoded in `frm` field of `fcsr` or in instructions:
-    - RNE (round to nearest, ties to even),
-    - RTZ (towards zero),
-    - RDN (towards −∞),
-    - RUP (towards +∞),
-    - RMM (round to nearest, ties to max magnitude).[^2]
+	 - RNE (round to nearest, ties to even),
+	 - RTZ (towards zero),
+	 - RDN (towards −∞),
+	 - RUP (towards +∞),
+	 - RMM (round to nearest, ties to max magnitude).[^2]
 - **Exception flags in `fflags` (part of `fcsr`):**
-    - NX (inexact),
-    - UF (underflow),
-    - OF (overflow),
-    - DZ (divide-by-zero),
-    - NV (invalid operation).[^2]
+	 - NX (inexact),
+	 - UF (underflow),
+	 - OF (overflow),
+	 - DZ (divide-by-zero),
+	 - NV (invalid operation).[^2]
 
 These flags are sticky and can be examined/cleared by software.
 
-#### Layering of F, D, Q
+### Layering of F, D, Q
 
 - F is the base floating-point extension.
 - D requires F and adds double-precision instructions and semantics.
@@ -1217,11 +1199,11 @@ This layering ensures incremental hardware complexity growth and consistent beha
 
 ***
 
-### 2.9 Vector Extension (RVV 1.0) — Overview
+## 2.9 Vector Extension (RVV 1.0) — Overview
 
 RVV 1.0 is a ratified scalable vector extension that decouples the number of architectural elements processed per instruction from the physical vector width, enabling portable high-performance code across implementations with different VLEN.[^2]
 
-#### Key Parameters and Registers
+### Key Parameters and Registers
 
 - **VLEN:** Hardware vector register width in bits (e.g., 128, 256, 512, 1024). Fixed per microarchitecture.[^2]
 - **ELEN:** Maximum element width supported (e.g., 32 or 64 bits).[^2]
@@ -1229,15 +1211,14 @@ RVV 1.0 is a ratified scalable vector extension that decouples the number of arc
 - **Vector register file:** `v0`–`v31`; each a vector of elements. Some are reserved for masks or special use.[^2]
 - **CSRs:** `vl` (current vector length in elements) and `vtype` (current vector type: SEW, LMUL, tail/mask policies).[^2]
 
-
-#### Vector Configuration — `vsetvli` / `vsetivli`
+### Vector Configuration — `vsetvli` / `vsetivli`
 
 - `vsetvli rd, rs1, imm`: Sets `vl` based on requested element width (SEW) and LMUL encoded in `imm`, and the available VLEN and ELEN; returns actual `vl` in `rd`.[^2]
 - `vsetivli rd, uimm, imm`: Same but with immediate element count.[^2]
 
 This dynamic configuration lets the same binary adapt to different vector lengths at runtime, unlike fixed-width SIMD where binaries must be recompiled per width.[^2]
 
-#### Categories of Vector Instructions
+### Categories of Vector Instructions
 
 RVV defines rich instruction categories:[^2]
 
@@ -1249,16 +1230,14 @@ RVV defines rich instruction categories:[^2]
 - **Vector loads/stores:** Unit-stride, strided, indexed, segmented variants.
 - **Masking:** Nearly all operations support masking, executing only on lanes where mask bit is 1.[^2]
 
-
-#### Why RVV is Architecturally Superior to Fixed-Width SIMD
+### Why RVV is Architecturally Superior to Fixed-Width SIMD
 
 - **Scalability:** The same program can scale from 128-bit to 1024-bit hardware without recompilation, merely by changing `vsetvli` behavior.[^2]
 - **Portability:** Compilers emit generic RVV code once; hardware vendors choose their preferred VLEN and microarchitectural tricks.
 - **Energy efficiency:** Hardware may trade off more lanes vs. frequency/voltage while preserving software semantics.
 - **Masking and tail handling:** Explicit mask and tail policies avoid the need for scalar epilogues in many vectorized loops.[^2]
 
-
-#### Example: Vector Dot Product in RVV Assembly
+### Example: Vector Dot Product in RVV Assembly
 
 Pseudocode to compute dot product of two float32 arrays `a` and `b` of length `n`:
 
@@ -1274,17 +1253,16 @@ Pseudocode to compute dot product of two float32 arrays `a` and `b` of length `n
     # Adjust a0, a1, a2 by vl and loop until a2 == 0
 ```
 
-The actual code would loop, updating `a0`, `a1`, and `a2` by `vl` (the number of elements processed) until the entire vector is consumed. The same code runs efficiently on any VLEN implementation because `vsetvli` chooses `vl` at runtime.
+The actual code would loop, updating `a0`, `a1`, and `a2` by `vl` (the number of elements processed) until the entire vector is consumed. The same code runs efficiently on any VLEN implementation because `vsetvli` chooses `vl` at runtime.  
 <span style="display:none">[^10][^11][^12][^13][^14][^15][^9]</span>
 
 RISC-V and ARM differ fundamentally in licensing, extensibility, and several ISA design choices, and RISC-V’s openness plus modular ISA make it particularly attractive for India’s academic and strategic needs. This continuation covers Sections 3–8 and the Quick Reference, starting now with a rigorous ARM comparison.[^1][^2]
 
-## SECTION 3 — RISC-V vs ARM: RIGOROUS SIDE-BY-SIDE COMPARISON
+# SECTION 3 — RISC-V vs ARM: RIGOROUS SIDE-BY-SIDE COMPARISON
 
-### 3.1 Licensing and Openness
+## 3.1 Licensing and Openness
 
 RISC-V and ARM sit at opposite ends of the licensing spectrum.
-
 
 | Attribute | RISC-V | ARM |
 | :-- | :-- | :-- |
@@ -1300,10 +1278,9 @@ RISC-V’s openness allows Indian institutes and startups to implement full Linu
 
 ***
 
-### 3.2 ISA Design: RISC-V vs ARMv8/AArch64 (ARMv9-compatible)
+## 3.2 ISA Design: RISC-V vs ARMv8/AArch64 (ARMv9-compatible)
 
 ARM’s modern 64-bit ISA (AArch64, used in ARMv8 and ARMv9) is also a RISC ISA but with some legacy baggage and different design trade-offs.[^4][^5]
-
 
 | Attribute | RISC-V (RV64G + V) | ARM (AArch64 / ARMv9-family) |
 | :-- | :-- | :-- |
@@ -1327,25 +1304,23 @@ Architecturally, both ISAs are clean RISC designs, but RISC-V emphasizes minimal
 
 ***
 
-### 3.3 Performance and Pipeline Design
+## 3.3 Performance and Pipeline Design
 
 Performance depends on microarchitecture, process node, and implementation details rather than just the ISA. As of 2024–2025, ARM has a more mature ecosystem of high-end cores, but RISC-V is catching up in mid-range out-of-order cores.[^6][^7]
 
-#### Representative ARM High-Performance Cores
+### Representative ARM High-Performance Cores
 
 - Cortex-A75/A76/A77, Cortex-A78, Cortex-X1/X2/X3, and ARMv9 cores like Cortex-X4 deliver double-digit SPECint2006/GHz scores and are used in smartphones and laptops.[^5]
 - These cores are deeply out-of-order, wide-issue (up to 6-wide decode/issue), and coupled with advanced prefetchers and large shared caches.[^5]
 
-
-#### Representative High-Performance RISC-V Cores
+### Representative High-Performance RISC-V Cores
 
 - **SiFive Performance P550:** 13-stage, triple-issue out-of-order RV64GBC core; SiFive reports ~8.65 SPECint2006/GHz, comparable to ARM Cortex-A75.[^8][^6]
 - **T-Head XuanTie C910:** 4-wide out-of-order RV64GCV core used in TH1520 SoC; benchmarked somewhat below Cortex-A73/A75 per SPEC CPU2017 data.[^7]
 - **SiFive P800/P870 series:** Newer cores targeting >18 SPECint2006/GHz (marketing numbers for P870), competing against newer ARM cores, though silicon and independent benchmarks are still emerging.[^9][^8]
 - **Academic cores:** BOOM (Berkeley Out-of-Order Machine) is a Chisel-based superscalar core that demonstrates high-IPC research pipelines but is not a commercial CPU.[^2]
 
-
-#### IPC Gap and Current Status
+### IPC Gap and Current Status
 
 Independent benchmarking of P550 and C910 shows them trailing well-established ARM cores such as Cortex-A73/A75 in single-thread SPEC CPU2017, largely due to more conservative microarchitectures and lower clocks. SiFive’s own numbers suggest P550 is roughly in the same ballpark as Cortex-A75 on a per-GHz basis, but ARM’s latest Cortex-X series cores are significantly ahead.[^8][^6][^7]
 
@@ -1356,10 +1331,9 @@ The most accurate statement today:
 
 ***
 
-### 3.4 Ecosystem and Software Support
+## 3.4 Ecosystem and Software Support
 
 From a software perspective, ARM has had decades of production deployment, while RISC-V is ~10 years old but advancing quickly.
-
 
 | Attribute | RISC-V | ARM |
 | :-- | :-- | :-- |
@@ -1376,30 +1350,28 @@ For teaching and research, mainline Linux, GCC/LLVM, QEMU, and Spike already giv
 
 ***
 
-### 3.5 Security Architecture Deep Comparison
+## 3.5 Security Architecture Deep Comparison
 
 Security features span from ISA attributes to system-on-chip integration. Here we focus on ISA-level and architectural support.
 
-#### Trusted Execution Environments
+### Trusted Execution Environments
 
 - **ARM TrustZone:** Splits the system into secure and non-secure worlds with separate address spaces and permissions mediated by the NS bit and TZASC; widely used in phones for DRM, payment, and key storage.[^5]
 - **RISC-V PMP + Keystone:** Physical Memory Protection (PMP) and extensions like Smepmp allow hardware-enforced memory isolation. Keystone TEE builds a secure enclave abstraction on top of PMP and RISC-V Linux.[^2]
 
 TrustZone is more tightly specified and widely deployed commercially today, whereas RISC-V TEEs are open and research-driven but rapidly maturing.
 
-#### Memory Safety
+### Memory Safety
 
 - **ARM MTE (Memory Tagging Extension):** Adds 4-bit tags to 16-byte granules in memory and matches them with pointer top-byte tags, catching spatial and temporal memory safety errors in hardware.[^5]
 - **RISC-V:** Ongoing work around pointer masking/tagging and capability-like features, but there is no ratified equivalent of MTE yet. Some proposals and vendor-specific implementations exist.[^2]
 
-
-#### Control-Flow Integrity (CFI)
+### Control-Flow Integrity (CFI)
 
 - **ARM PAC + BTI:** Pointer Authentication Codes cryptographically sign return addresses and function pointers, while BTI (Branch Target Identification) marks valid indirect branch targets, mitigating ROP/JOP attacks.[^5]
 - **RISC-V CFI proposals:** Extensions such as Zicfilp (landing pads for control-flow integrity) and Zicfiss (shadow stacks) have been proposed to strengthen RISC-V’s defenses against control-flow attacks, but deployment is early.[^2]
 
-
-#### Secure Boot
+### Secure Boot
 
 - **ARM ecosystem:** Many SoCs implement secure boot using ROM-based keys, TrustZone, and proprietary security controllers.
 - **RISC-V ecosystem:** OpenTitan (Google/lowRISC) is a notable open-source root-of-trust chip built around an RV32IMC Ibex core with a formally verified security-focused microarchitecture, demonstrating that high-assurance secure boot can be built around RISC-V.[^2]
@@ -1408,17 +1380,16 @@ Today, ARM offers more standardized and widely deployed security extensions (Tru
 
 ***
 
-### 3.6 Power Efficiency
+## 3.6 Power Efficiency
 
 Both ARM and RISC-V rely on RISC-style principles, so power efficiency mainly depends on microarchitecture and process node. However, ISA features like compressed instructions and vector design also play roles.
 
-#### Code Size and I-Cache
+### Code Size and I-Cache
 
 - **RISC-V C extension:** Typically achieves 20–30% code size reduction for typical embedded and OS workloads by compressing high-frequency patterns to 16 bits; this translates to fewer I-cache misses and reduced fetch energy.[^2]
 - **ARM Thumb-2 (AArch32):** Historically provided similar benefits, but AArch64 dropped Thumb in favor of fixed 32-bit encoding (though it gained SVE/SVE2 and other power-aware microarchitectural techniques).[^5]
 
-
-#### big.LITTLE vs Heterogeneous RISC-V
+### big.LITTLE vs Heterogeneous RISC-V
 
 - **ARM big.LITTLE / DynamIQ:** Pairs high-performance “big” cores (e.g., Cortex-A78/X1) with energy-efficient “LITTLE” cores (A55) in heterogeneous clusters under a shared coherence fabric.[^5]
 - **RISC-V:** The ISA places no constraints preventing similar heterogeneous topologies. Several vendors are already combining small and large RISC-V cores or pairing scalar cores with AI accelerators and NPUs on a single die (e.g., SpacemIT K1/X100 with NPUs).[^7]
@@ -1427,7 +1398,7 @@ In embedded MCUs, RISC-V cores (e.g., low-power RV32IMC cores like VexRiscv or I
 
 ***
 
-### 3.7 Unique Advantages of RISC-V Over ARM (Professor-Ready)
+## 3.7 Unique Advantages of RISC-V Over ARM (Professor-Ready)
 
 For an MTech course or research group, the following are robust arguments:
 
@@ -1442,9 +1413,9 @@ For professors, this means RISC-V can unify teaching (ISA, microarchitecture, OS
 
 ***
 
-## SECTION 4 — WHY RISC-V WHEN MIPS IS ALREADY A RISC ISA?
+# SECTION 4 — WHY RISC-V WHEN MIPS IS ALREADY A RISC ISA?
 
-### 4.1 Brief History of MIPS
+## 4.1 Brief History of MIPS
 
 MIPS (Microprocessor without Interlocked Pipeline Stages) originated at Stanford in the early 1980s as one of the foundational RISC designs. It introduced many classic RISC ideas—fixed-length instructions, load-store architecture, and relatively few addressing modes—and later evolved into commercial MIPS32 and MIPS64 ISAs used in SGI workstations, networking equipment, and embedded devices.[^2]
 
@@ -1452,7 +1423,7 @@ Through the 1990s and early 2000s, MIPS had a significant presence in consumer e
 
 ***
 
-### 4.2 MIPS Licensing Saga
+## 4.2 MIPS Licensing Saga
 
 MIPS’s ownership history is complex:[^11]
 
@@ -1465,20 +1436,20 @@ This turbulence and proprietary licensing discouraged new academic and industria
 
 ***
 
-### 4.3 MIPS Architectural Technical Debt
+## 4.3 MIPS Architectural Technical Debt
 
 Despite being RISC, MIPS carries some legacy baggage that RISC-V deliberately avoids:[^2]
 
 - **Branch delay slots:** Classic MIPS requires that the instruction following a branch is always executed (whether or not the branch is taken), complicating pipelines, compilers, and formal reasoning; later MIPS revisions tried to deprecate this, but it remains architectural baggage.
 - **ISA fragmentation:** MIPS16 and microMIPS were compressed encodings added later to reduce code size, resulting in multiple encodings and modes, complicating toolchains and debugging.
-- **Limited modular extension mechanism:** Extensions tend to be vendor- or generation-specific (e.g., MIPS DSP, MSA for SIMD) rather than a clean, modular, standard extension framework like RISC-V’s lettered + Z* scheme.
+- **Limited modular extension mechanism:** Extensions tend to be vendoror generation-specific (e.g., MIPS DSP, MSA for SIMD) rather than a clean, modular, standard extension framework like RISC-V’s lettered + Z* scheme.
 - **Governance:** There is no open non-profit body like RISC-V International overseeing the spec and ratifying extensions; decisions follow whichever company holds IP at the time.
 
 RISC-V explicitly learned from such pain points, particularly in removing delay slots and designing modular standard extensions from the outset.[^2]
 
 ***
 
-### 4.4 ARM vs MIPS in the Market
+## 4.4 ARM vs MIPS in the Market
 
 ARM beat MIPS in the embedded/mobile market for a combination of technical and business reasons:[^11]
 
@@ -1491,7 +1462,7 @@ By the time RISC-V appeared, MIPS’s ecosystem was already in decline, making R
 
 ***
 
-### 4.5 Why RISC-V Beats MIPS Today
+## 4.5 Why RISC-V Beats MIPS Today
 
 Key reasons RISC-V has effectively displaced MIPS as “the” open RISC ISA for research and new designs:[^11][^2]
 
@@ -1505,7 +1476,7 @@ For an MTech curriculum in 2026, choosing MIPS would mean fighting against the e
 
 ***
 
-### 4.6 Four-Way Comparison: RISC-V vs MIPS vs ARM vs x86
+## 4.6 Four-Way Comparison: RISC-V vs MIPS vs ARM vs x86
 
 | Attribute | RISC-V | MIPS | ARM (AArch64) | x86/x86-64 |
 | :-- | :-- | :-- | :-- | :-- |
@@ -1522,9 +1493,9 @@ This table motivates RISC-V as the natural choice for an open ISA focus in resea
 
 ***
 
-## SECTION 5 — INDIA’S RISC-V STRATEGIC LANDSCAPE
+# SECTION 5 — INDIA’S RISC-V STRATEGIC LANDSCAPE
 
-### 5.1 Policy and Government Programs
+## 5.1 Policy and Government Programs
 
 India has explicitly centered RISC-V in its semiconductor and digital sovereignty strategy.
 
@@ -1538,7 +1509,7 @@ Together, these programs signal a long-term national commitment to RISC-V-based 
 
 ***
 
-### 5.2 C-DAC VEGA and TEJAS Processors
+## 5.2 C-DAC VEGA and TEJAS Processors
 
 C-DAC (Centre for Development of Advanced Computing) leads VEGA, a family of RISC-V-based processors under MeitY funding.[^14][^10]
 
@@ -1550,7 +1521,7 @@ These platforms give Indian academia and startups a local, supported RISC-V opti
 
 ***
 
-### 5.3 IIT Madras — SHAKTI Processor Family
+## 5.3 IIT Madras — SHAKTI Processor Family
 
 The SHAKTI project at IIT Madras (RISE group) is India’s flagship academic RISC-V core family.[^13][^10]
 
@@ -1570,7 +1541,7 @@ SHAKTI’s open-source RTL and toolflows also serve as a reference for Indian MT
 
 ***
 
-### 5.4 DHRUV64 — India’s Milestone 64-bit Processor
+## 5.4 DHRUV64 — India’s Milestone 64-bit Processor
 
 Under DIR-V, MeitY has highlighted 64-bit RISC-V designs such as SHAKTI 64-bit cores and VEGA 64-bit processors fabricated at SCL. While individual chip names and branding evolve (e.g., DHRUV-class processors mentioned in policy documents and press coverage), the central point is:[^14][^10]
 
@@ -1580,7 +1551,7 @@ For teaching and research in India, this indicates that RISC-V projects can scal
 
 ***
 
-### 5.5 Mindgrove Technologies (IIT Madras Spinoff)
+## 5.5 Mindgrove Technologies (IIT Madras Spinoff)
 
 Mindgrove Technologies, a startup from IIT Madras, is building RISC-V-based secure IoT and vision chips and is an early DLI scheme beneficiary.[^3]
 
@@ -1591,13 +1562,13 @@ Mindgrove exemplifies the academia-to-startup pipeline around RISC-V that DIR-V 
 
 ***
 
-### 5.6 Vervesemi Microelectronics
+## 5.6 Vervesemi Microelectronics
 
 Vervesemi Microelectronics is among the first companies publicly highlighted as receiving DLI scheme support for RISC-V-based chip development, targeting embedded and IoT markets. Its product roadmap illustrates that India’s incentive schemes are yielding real commercial RISC-V designs, not just academic prototypes.[^3]
 
 ***
 
-### 5.7 Karnataka’s RISC-V AI PC Initiative
+## 5.7 Karnataka’s RISC-V AI PC Initiative
 
 State-level programs complement central initiatives. The Karnataka government has promoted affordable AI-enabled PCs for education and e-governance, with some pilot projects leveraging RISC-V-based platforms running Linux to reduce per-seat cost and avoid foreign ISA/IP lock-in. These deployments typically feature:[^3]
 
@@ -1609,7 +1580,7 @@ While volumes are modest today, they signal that RISC-V is entering end-user-vis
 
 ***
 
-### 5.8 India as a Global RISC-V Talent and Supply Hub
+## 5.8 India as a Global RISC-V Talent and Supply Hub
 
 DIR-V’s roadmap explicitly positions India as a global hub for RISC-V IP and SoC design.[^1][^3]
 
@@ -1621,9 +1592,9 @@ For professors and MTech students in India, this makes RISC-V not just academica
 
 ***
 
-## SECTION 6 — RISC-V HARDWARE ECOSYSTEM: BOARDS, CPUs, AND SUPPORT
+# SECTION 6 — RISC-V HARDWARE ECOSYSTEM: BOARDS, CPUs, AND SUPPORT
 
-### 6.1 Hardware Category Definitions
+## 6.1 Hardware Category Definitions
 
 Before listing boards, it is useful to classify them:
 
@@ -1634,10 +1605,9 @@ Before listing boards, it is useful to classify them:
 
 ***
 
-### 6.2 Notable RISC-V Boards (2025–2026)
+## 6.2 Notable RISC-V Boards (2025–2026)
 
 The RISC-V board ecosystem is evolving rapidly; below we summarize some representative high-end boards that are realistic for labs and advanced projects.
-
 
 | Board | CPU / SoC | Cores/Freq | Max RAM | RAM Type | GPU | PCIe | Availability in India |
 | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
@@ -1650,120 +1620,115 @@ The RISC-V board ecosystem is evolving rapidly; below we summarize some represen
 
 Below we elaborate per board (specs aggregated from vendor docs and community sources).[^16][^15][^7]
 
-#### Milk-V Pioneer (SG2042 mATX)
+### Milk-V Pioneer (SG2042 mATX)
 
 - **Primary use case:** RISC-V server experimentation, kernel/firmware development, high-core-count parallel workloads, discrete GPU experiments.[^15][^16]
 - **Linux support:** Mainline Linux patches exist; vendor images typically based on newer 5.x/6.x kernels with RISC-V and SG2042-specific patches.[^17][^18]
 - **Connectivity:**
-    - Multiple USB 3.x ports (on rear I/O).
-    - Dual GbE or faster Ethernet (varies by board revision); 10GbE via PCIe NIC.[^15]
-    - HDMI via discrete GPU (board itself does not include an integrated display output; uses GPU card or other PCIe graphics).[^15]
+	 - Multiple USB 3.x ports (on rear I/O).
+	 - Dual GbE or faster Ethernet (varies by board revision); 10GbE via PCIe NIC.[^15]
+	 - HDMI via discrete GPU (board itself does not include an integrated display output; uses GPU card or other PCIe graphics).[^15]
 - **Expansion:**
-    - 1× PCIe 4.0 x16 slot (CPU root complex) for GPUs.
-    - Additional x8 and x4 slots; M.2 NVMe support for PCIe SSDs.[^16][^15]
+	 - 1× PCIe 4.0 x16 slot (CPU root complex) for GPUs.
+	 - Additional x8 and x4 slots; M.2 NVMe support for PCIe SSDs.[^16][^15]
 - **Price \& procurement (India):** Roughly ₹1,00,000–₹1,70,000 depending on RAM and vendor; obtainable via Mouser India or import through global distributors.[^16]
 
-
-#### SiFive HiFive Premier P550 (EIC7700X)
+### SiFive HiFive Premier P550 (EIC7700X)
 
 - **Primary use case:** High-performance per-core RISC-V development, OS research, DDR5/memory-subsystem experiments, graphics driver work on Imagination AXM GPU.[^8][^6]
 - **Linux support:** Vendor images with 5.x/6.x kernels; support for DDR5, PCIe 3.0, and the on-board IMG AXM GPU driver under active development.[^6]
 - **Connectivity:**
-    - USB 3.2 Gen1 ports (Type-A/Type-C, depending on reference board).
-    - HDMI 2.0 for 4K60 output via the AXM GPU or display interface.[^8]
-    - GbE Ethernet onboard.[^8]
+	 - USB 3.2 Gen1 ports (Type-A/Type-C, depending on reference board).
+	 - HDMI 2.0 for 4K60 output via the AXM GPU or display interface.[^8]
+	 - GbE Ethernet onboard.[^8]
 - **Expansion:**
-    - DDR5 DIMM slots (up to 32 GB).
-    - M.2 slot for NVMe SSD (PCIe 3.0 x4).
-    - Possibly additional PCIe slot for external devices depending on carrier board design.[^6][^8]
+	 - DDR5 DIMM slots (up to 32 GB).
+	 - M.2 slot for NVMe SSD (PCIe 3.0 x4).
+	 - Possibly additional PCIe slot for external devices depending on carrier board design.[^6][^8]
 - **Price \& procurement (India):** Estimated ₹42,000–₹58,000 including taxes and shipping from SiFive’s global store; shipping to Indian universities is common for research collaborations.[^6][^8]
 
-
-#### Milk-V Jupiter (SpacemIT M1)
+### Milk-V Jupiter (SpacemIT M1)
 
 - **Primary use case:** Higher-end SBC/mini-PC form factor for desktop Linux, lightweight development, and GPU-accelerated workloads using the IMG BXE GPU.[^7]
 - **Linux support:** Vendor distributions with 5.x/6.x kernel, GPU drivers for Vulkan 1.2 and OpenGL ES 3.2.[^7]
 - **Connectivity:**
-    - USB 3.x ports, HDMI 2.0, Gigabit Ethernet.
-    - Onboard Wi-Fi/BT modules vary by SKU.
+	 - USB 3.x ports, HDMI 2.0, Gigabit Ethernet.
+	 - Onboard Wi-Fi/BT modules vary by SKU.
 - **Expansion:**
-    - PCIe 2.0 x4 via M.2 or edge connector (depends on revision), enabling NVMe SSD or low-end GPU.[^7]
+	 - PCIe 2.0 x4 via M.2 or edge connector (depends on revision), enabling NVMe SSD or low-end GPU.[^7]
 - **Price \& procurement (India):** Typically imported from Milk-V or international resellers; after customs, effective price may land in the ₹15,000–₹30,000 range depending on RAM and storage options.
 
-
-#### Banana Pi BPI-F3 (SpacemIT K1)
+### Banana Pi BPI-F3 (SpacemIT K1)
 
 - **Primary use case:** Mid-range RISC-V SBC with strong connectivity (CAN bus, MIPI) for robotics, automotive, and industrial control; also capable of desktop Linux and AI edge tasks via the integrated NPU.[^7]
 - **Linux support:** Vendor Debian/Ubuntu-based images with kernel support for CPU, LPDDR4, IMG GPU, and peripherals.[^7]
 - **Connectivity:**
-    - Gigabit Ethernet.
-    - USB 3.x, HDMI 2.0 for display.
-    - Optional Wi-Fi 6 / BT via M.2 Key E module.
-    - CAN FD controllers for automotive networks.[^7]
+	 - Gigabit Ethernet.
+	 - USB 3.x, HDMI 2.0 for display.
+	 - Optional Wi-Fi 6 / BT via M.2 Key E module.
+	 - CAN FD controllers for automotive networks.[^7]
 - **Expansion:**
-    - PCIe 2.x lanes exposed via M.2/mPCIe slots.
-    - 40-pin GPIO header with RPi-like pinout.
-    - MIPI CSI-2 for camera, MIPI DSI for display.[^7]
+	 - PCIe 2.x lanes exposed via M.2/mPCIe slots.
+	 - 40-pin GPIO header with RPi-like pinout.
+	 - MIPI CSI-2 for camera, MIPI DSI for display.[^7]
 - **Price \& procurement (India):** Commonly available on Robu.in and Amazon India in the ₹7,000–₹14,000 range depending on RAM and storage options.
 
-
-#### VisionFive 2 (StarFive JH7110)
+### VisionFive 2 (StarFive JH7110)
 
 - **Primary use case:** Entry-level RISC-V Linux SBC for experimentation, teaching OS/driver development, and hobbyist projects with GPIO.[^7]
 - **Linux support:** Official images based on Debian/Fedora with mainline-leaning kernels; GPU drivers for IMG BXE-4-32 support Vulkan 1.2 and OpenGL ES 3.2 on recent Mesa stacks.[^7]
 - **Connectivity:**
-    - USB 3.0 ports.
-    - HDMI 2.0 4K@60 display.
-    - Gigabit Ethernet.
-    - Optional Wi-Fi via M.2 or USB dongles.
+	 - USB 3.0 ports.
+	 - HDMI 2.0 4K@60 display.
+	 - Gigabit Ethernet.
+	 - Optional Wi-Fi via M.2 or USB dongles.
 - **Expansion:**
-    - PCIe 2.0 x1 slot for NVMe SSD or low-speed PCIe devices.
-    - 40-pin GPIO header with Raspberry Pi-compatible pinout.
-    - MIPI CSI-2 and DSI connectors for camera and display.
-    - Onboard eMMC 5.1 on some variants.[^7]
+	 - PCIe 2.0 x1 slot for NVMe SSD or low-speed PCIe devices.
+	 - 40-pin GPIO header with Raspberry Pi-compatible pinout.
+	 - MIPI CSI-2 and DSI connectors for camera and display.
+	 - Onboard eMMC 5.1 on some variants.[^7]
 - **Price \& procurement (India):** 4 GB models around ₹5,500–₹8,000, 8 GB models around ₹8,000–₹11,000 from Robu.in and Hubtronics.in.[^7]
 
-
-#### LicheePi 4A (TH1520)
+### LicheePi 4A (TH1520)
 
 - **Primary use case:** High-clock SBC/SoM with T-Head C910 cores and vector extension (pre-RVV1.0) aimed at desktop and AI edge workloads.[^7]
 - **Linux support:** Vendor distributions with TH1520-specific kernel and drivers; support for IMG BXE-2-32 GPU and hardware video decode.[^7]
 - **Connectivity:**
-    - USB, HDMI, Ethernet on reference carrier boards.
-    - Wi-Fi and BT via on-module radios.
+	 - USB, HDMI, Ethernet on reference carrier boards.
+	 - Wi-Fi and BT via on-module radios.
 - **Expansion:**
-    - M.2 for NVMe.
-    - GPIO and other headers depending on carrier.
+	 - M.2 for NVMe.
+	 - GPIO and other headers depending on carrier.
 - **Price \& procurement (India):** Via Mouser India and Chinese marketplaces (AliExpress); typical landed cost in the ₹12,000–₹18,000 range.
 
 ***
 
-### 6.3 Most Powerful RISC-V CPUs/SoCs (2025–2026 Snapshot)
+## 6.3 Most Powerful RISC-V CPUs/SoCs (2025–2026 Snapshot)
 
 ISA-level research often focuses on core microarchitectures. Representative high-performance RISC-V SoCs include:[^8][^6][^7]
 
 - **SOPHGO SG2042 (C920-based):**
-    - 64 out-of-order RV64GC cores with vector support (earlier RVV 0.7x drafts) on TSMC 6 nm.[^19][^15]
-    - 4-channel DDR4-3200 ECC up to 256 GB; multiple PCIe 4.0 lanes.
-    - Aimed at servers, edge compute, and AI acceleration when paired with GPUs/NPUs.
+	 - 64 out-of-order RV64GC cores with vector support (earlier RVV 0.7x drafts) on TSMC 6 nm.[^19][^15]
+	 - 4-channel DDR4-3200 ECC up to 256 GB; multiple PCIe 4.0 lanes.
+	 - Aimed at servers, edge compute, and AI acceleration when paired with GPUs/NPUs.
 - **SiFive P870 (core IP, not yet widely sampled on dev boards):**
-    - Part of SiFive Performance P800 family; marketing claims >18 SPECint2006/GHz and a 6-wide out-of-order pipeline at modern process nodes, targeting high-end application processors.[^9][^8]
+	 - Part of SiFive Performance P800 family; marketing claims >18 SPECint2006/GHz and a 6-wide out-of-order pipeline at modern process nodes, targeting high-end application processors.[^9][^8]
 - **SiFive P550 (EIC7700X SoC):**
-    - Quad-core cluster of P550 cores running around 1.4–1.8 GHz; SPECint2006 around 8.65/GHz according to SiFive, competitive with Cortex-A75-class ARM cores.[^6][^8]
+	 - Quad-core cluster of P550 cores running around 1.4–1.8 GHz; SPECint2006 around 8.65/GHz according to SiFive, competitive with Cortex-A75-class ARM cores.[^6][^8]
 - **SpacemIT X100 series:**
-    - 8-core RV64GCV with RVV 1.0 vectors and NPUs delivering multiple TOPS of AI inference; targeted at edge AI and automotive.[^7]
+	 - 8-core RV64GCV with RVV 1.0 vectors and NPUs delivering multiple TOPS of AI inference; targeted at edge AI and automotive.[^7]
 - **UltraRISC UR-DP1000 (announced IP):**
-    - Multicore out-of-order RV64GCBH core cluster targeting server and network workloads with hypervisor and vector support; third-party estimates around mid-teens SPECint/GHz.[^7]
+	 - Multicore out-of-order RV64GCBH core cluster targeting server and network workloads with hypervisor and vector support; third-party estimates around mid-teens SPECint/GHz.[^7]
 - **T-Head XuanTie C910 (TH1520):**
-    - 4-wide out-of-order core implementing RV64GCV; widely used in TH1520 SoCs (LicheePi 4A) and showing SPECint2017/GHz in the midrange compared to ARM v8 cores.[^7]
+	 - 4-wide out-of-order core implementing RV64GCV; widely used in TH1520 SoCs (LicheePi 4A) and showing SPECint2017/GHz in the midrange compared to ARM v8 cores.[^7]
 - **Esperanto ET-SoC-1:**
-    - 1,088 “ET-Minion” RISC-V cores plus a few big cores on TSMC 7 nm; designed for massively parallel AI inference with tens of TOPS aggregate throughput.[^7]
+	 - 1,088 “ET-Minion” RISC-V cores plus a few big cores on TSMC 7 nm; designed for massively parallel AI inference with tens of TOPS aggregate throughput.[^7]
 
 Academic labs can prototype similar microarchitectures on FPGA using BOOM and Rocket in Chipyard, then reason about performance using these commercial cores as real-world reference points.
 
 ***
 
-### 6.4 DDR Memory Support on RISC-V Boards
+## 6.4 DDR Memory Support on RISC-V Boards
 
 Memory subsystem research is a rich area for students; RISC-V boards now span DDR4, LPDDR4/4X, and DDR5.
 
@@ -1776,11 +1741,11 @@ For professors, DDR5-capable RISC-V platforms represent a frontier where ISA, me
 
 ***
 
-### 6.5 GPU Support on RISC-V Platforms
+## 6.5 GPU Support on RISC-V Platforms
 
 Graphics and GPGPU are key for desktop usability and AI workloads.
 
-#### A. Discrete GPUs via PCIe (Milk-V Pioneer)
+### A. Discrete GPUs via PCIe (Milk-V Pioneer)
 
 - **PCIe x16 Gen4 slot:** Allows standard desktop GPUs; community reports confirm AMD Radeon RX 580, RX 6600 and Intel Arc A380 working under Linux using open-source amdgpu and i915 drivers, respectively.[^18][^17]
 - **Display:** Once drivers are configured, the RISC-V system can render full Linux desktops using the discrete GPU with hardware acceleration.
@@ -1789,7 +1754,7 @@ Graphics and GPGPU are key for desktop usability and AI workloads.
 
 This makes Milk-V Pioneer an excellent research platform for studying GPU integration, driver portability, and heterogeneous compute on RISC-V.
 
-#### B. Integrated GPUs (Imagination Technologies)
+### B. Integrated GPUs (Imagination Technologies)
 
 Several RISC-V SoCs embed IMG GPUs:
 
@@ -1803,8 +1768,7 @@ These GPUs enable:
 - Video playback using hardware decode.
 - Light 3D graphics and basic ML/CV workloads via OpenCL/Vulkan compute.[^7]
 
-
-#### C. AI/ML-Specific Accelerators
+### C. AI/ML-Specific Accelerators
 
 - **SpacemIT K1/X100 SoCs:** Include on-die NPUs delivering multiple TOPS of INT8/INT4 operations for AI inference; RISC-V cores orchestrate workloads.[^7]
 - **Esperanto ET-SoC-1:** Eschews GPUs entirely in favor of thousands of RISC-V cores with vector-like extensions, acting as a “software-defined GPU” for AI inference.[^7]
@@ -1813,10 +1777,9 @@ These platforms provide testbeds for heterogeneous programming models, from CPU+
 
 ***
 
-### 6.6 Peripheral / Interface Support Overview
+## 6.6 Peripheral / Interface Support Overview
 
 A condensed mapping from interfaces to boards:
-
 
 | Interface | Representative Board | Notes |
 | :-- | :-- | :-- |
@@ -1840,10 +1803,9 @@ For lab work, this breadth of interfaces means RISC-V boards can support everyth
 
 ***
 
-### 6.7 Buying RISC-V Hardware in India — Practical Guide
+## 6.7 Buying RISC-V Hardware in India — Practical Guide
 
 Indicative availability and prices (which fluctuate with exchange rates and stock):
-
 
 | Board | Indian Retailer | Approx Price (INR) | Notes |
 | :-- | :-- | :-- | :-- |
@@ -1861,27 +1823,26 @@ For your context in Andhra Pradesh, shipping from Robu.in, Hubtronics.in, or Mou
 
 RISC-V adds a rich ecosystem of profiles, tools, open cores, and system-level features (PMP, hypervisor, debug) that make it ideal for advanced MTech-level work in architecture, OS, and verification, especially in India’s RISC-V-focused context.[^1][^2]
 
-## SECTION 7 — CRITICAL TECHNICAL KNOWLEDGE FOR MTECH/PROFESSORS
+# SECTION 7 — CRITICAL TECHNICAL KNOWLEDGE FOR MTECH/PROFESSORS
 
-### 7.1 ISA Naming Convention — Decoding Strings
+## 7.1 ISA Naming Convention — Decoding Strings
 
 RISC-V uses textual ISA strings to describe exactly which base ISA and extensions a binary targets.[^3][^2]
 
-- **General form:** `RV[XLEN][base][extensions...]`
-    - `RV32I`, `RV64I`, `RV32E`, `RV64G`, etc.
-    - Extensions are appended in canonical order (though compilers like LLVM accept relaxed ordering).[^3]
+- **General form:** `RV[XLEN][base][extensions…]`
+	 - `RV32I`, `RV64I`, `RV32E`, `RV64G`, etc.
+	 - Extensions are appended in canonical order (though compilers like LLVM accept relaxed ordering).[^3]
 - **Examples:**
-    - `RV32IMC`: 32-bit base integer, M (multiply/divide), C (compressed).
-    - `RV64GC`: 64-bit, with G = IMAFD plus typically Zicsr, Zifencei; C for compressed; a common Linux SBC configuration.[^4][^2]
-    - `RV64GCBHX`: 64-bit, G + C + B (bit-manip) + H (hypervisor) + X* (vendor custom extension set; X prefix indicates non-standard).[^2]
+	 - `RV32IMC`: 32-bit base integer, M (multiply/divide), C (compressed).
+	 - `RV64GC`: 64-bit, with G = IMAFD plus typically Zicsr, Zifencei; C for compressed; a common Linux SBC configuration.[^4][^2]
+	 - `RV64GCBHX`: 64-bit, G + C + B (bit-manip) + H (hypervisor) + X* (vendor custom extension set; X prefix indicates non-standard).[^2]
 
 Profiles introduce another layer:
 
 - **RVA22U64 / RVA22S64:** Application Profile 2022; user-mode and supervisor-mode, 64-bit. These describe a minimum required set of extensions for application processors.[^5]
 - **RVA23U64 / RVA23S64:** Updated 2023 profiles, adding more mandatory features such as vector and advanced floating-point in some cases.[^1]
 
-
-#### Discovering ISA at Runtime — `misa`
+### Discovering ISA at Runtime — `misa`
 
 At runtime, software can inspect the `misa` CSR:
 
@@ -1896,52 +1857,50 @@ Typical pattern in OS or runtime:
 
 ***
 
-### 7.2 RISC-V Profiles System
+## 7.2 RISC-V Profiles System
 
-Profiles define *bundles* of extensions that software can target, analogous to “ARMv8.2-A with SVE2” style feature baselines.[^5][^1]
+Profiles define _bundles_ of extensions that software can target, analogous to “ARMv8.2-A with SVE2” style feature baselines.[^5][^1]
 
-#### Motivation
+### Motivation
 
 - Avoids combinatorial explosion of ISA configurations.
 - Gives OS vendors (Linux distributions, Android) and language runtimes a stable baseline to compile against.
 - Allows hardware vendors some freedom beyond the baseline, while ensuring common ground.[^1]
 
-
-#### RVA22U64 / RVA22S64
+### RVA22U64 / RVA22S64
 
 From the RISC-V profiles repo (RVA22/RVA23):[^5][^1]
 
 - **Mandatory base:** RV64I, little-endian.
 - **Mandatory extensions in RVA22U64 (user-profile):**
-    - M (multiply/divide).
-    - A (atomics).
-    - F and D (single- and double-precision FP).
-    - C (compressed).
-    - Zicsr (CSR instructions).
-    - Zifencei (instruction-fetch fence).
-    - Zicntr (basic counters: `mcycle`, `minstret`).
-    - Bit-manip sub-extensions: Zba, Zbb, Zbs.
-    - Small-code and hint extensions: Zic64b, Zcmp, Zcb, Zihintpause.
-    - Paging and virtual memory helpers: Svnapot, Svpbmt, Svinval for RVA22S64.[^1][^5]
+	 - M (multiply/divide).
+	 - A (atomics).
+	 - F and D (singleand double-precision FP).
+	 - C (compressed).
+	 - Zicsr (CSR instructions).
+	 - Zifencei (instruction-fetch fence).
+	 - Zicntr (basic counters: `mcycle`, `minstret`).
+	 - Bit-manip sub-extensions: Zba, Zbb, Zbs.
+	 - Small-code and hint extensions: Zic64b, Zcmp, Zcb, Zihintpause.
+	 - Paging and virtual memory helpers: Svnapot, Svpbmt, Svinval for RVA22S64.[^1][^5]
 
 RVA22S64 adds supervisor-mode features, including SV39 or SV48 paging, and the above virtual-memory extensions.[^1]
 
-#### RVA23 Additions
+### RVA23 Additions
 
 RVA23 profiles (RVA23U64/RVA23S64) build on RVA22 and add:[^1]
 
 - Vector base:
-    - V (RVV 1.0 vector extension).
-    - Zvfhmin (half-precision FP minimal vector support).
+	 - V (RVV 1.0 vector extension).
+	 - Zvfhmin (half-precision FP minimal vector support).
 - Advanced floating point and atomics:
-    - Zfa (additional FP instructions).
-    - Zawrs (wait-on-reservation-set hint).
+	 - Zfa (additional FP instructions).
+	 - Zawrs (wait-on-reservation-set hint).
 - Control-flow and security:
-    - Zicond (conditional instructions).
+	 - Zicond (conditional instructions).
 - Additional performance monitoring requirements, and further clarifications on required privileged features.[^1]
 
-
-#### Why Profiles Matter for You
+### Why Profiles Matter for You
 
 - **For OS/kernel courses:** Profiles define what you can assume about a “standard RISC-V laptop/server core” across vendors.
 - **For compiler courses:** You can target `-march=rv64gc -mprofile=rva22u64` (when compilers add explicit profile support) instead of enumerating dozens of flags.
@@ -1949,34 +1908,31 @@ RVA23 profiles (RVA23U64/RVA23S64) build on RVA22 and add:[^1]
 
 ***
 
-### 7.3 Full Toolchain Stack
+## 7.3 Full Toolchain Stack
 
 A practical RISC-V curriculum should expose students to the full software and hardware toolchain.
 
-#### Compilers and Binutils
+### Compilers and Binutils
 
 - **GCC (riscv-gnu-toolchain):** Official RISC-V GCC toolchain supports bare-metal (`riscv64-unknown-elf-gcc`) and Linux (`riscv64-unknown-linux-gnu-gcc`) targets, hosted on GitHub and integrated into mainline GCC.[^3]
 - **LLVM/Clang:** Clang provides a `riscv32`/`riscv64` backend. Usage: `clang --target=riscv64-unknown-linux-gnu` with appropriate `-march`/`-mabi` flags.[^3]
 - **Binutils:** GNU assembler `as` and linker `ld` fully support RISC-V; `objdump` and `objcopy` can disassemble ELF binaries, inspect CSRs, and dump sections.[^3]
 
-
-#### Debugging and Simulation
+### Debugging and Simulation
 
 - **Spike:** The official RISC-V ISA reference simulator; faithfully models RV32/RV64 ISA plus some privileged features; often used as a golden reference.[^2]
 - **QEMU:** Provides user-mode (`qemu-riscv64`) and system-mode (`qemu-system-riscv64`) emulation for running Linux and other OSes under RISC-V.[^2]
 - **GDB:** `riscv64-unknown-elf-gdb` or `riscv64-linux-gnu-gdb` integrate with Spike, QEMU, and hardware via OpenOCD for debugging.[^3]
 
-
-#### Hardware Debug
+### Hardware Debug
 
 - **OpenOCD:** Supports the RISC-V Debug Spec (0.13.x). Used in combination with JTAG adapters (FTDI, Olimex, etc.) to debug RISC-V boards via the debug module (DM) and debug transport module (DTM).[^6]
 - **RISC-V Debug Spec 0.13.x:** Defines external debug mechanisms:
-    - DTM: JTAG-based interface.
-    - DM: On-chip debug module accessible over Debug Module Interface (DMI).
-    - Run-control, register and memory access, breakpoints, and triggers.[^7][^8]
+	 - DTM: JTAG-based interface.
+	 - DM: On-chip debug module accessible over Debug Module Interface (DMI).
+	 - Run-control, register and memory access, breakpoints, and triggers.[^7][^8]
 
-
-#### RTL and SoC Frameworks
+### RTL and SoC Frameworks
 
 - **Verilator:** Fast cycle-accurate simulation of Verilog/SystemVerilog; widely used with open RISC-V cores (Rocket, BOOM, PicoRV32).[^2]
 - **Chipyard:** A Chisel-based SoC generator from Berkeley that integrates Rocket, BOOM, CVA6, and infrastructure for caches, interconnects, and peripheral buses.[^2]
@@ -1986,7 +1942,7 @@ When designing an MTech lab, combining Spike/QEMU (ISA-level) with Verilator/Chi
 
 ***
 
-### 7.4 ABI and Calling Convention
+## 7.4 ABI and Calling Convention
 
 The standard Linux RISC-V ABI is LP64D for 64-bit with double-precision FP.[^9][^2]
 
@@ -1994,43 +1950,43 @@ Key aspects:
 
 - **Data model:** `long` and pointers are 64-bit; `int` is 32-bit; `double` is 64-bit in FP registers.[^9]
 - **Argument passing:**
-    - Integer and pointer arguments: first 8 go in `a0`–`a7` (x10–x17).[^9]
-    - Additional arguments spill to the stack.
-    - FP arguments (when using hard-float ABI) use `f0`–`f7` etc. according to the ABI.[^9]
+	 - Integer and pointer arguments: first 8 go in `a0`–`a7` (x10–x17).[^9]
+	 - Additional arguments spill to the stack.
+	 - FP arguments (when using hard-float ABI) use `f0`–`f7` etc. according to the ABI.[^9]
 - **Return values:**
-    - Primary result in `a0`, second result in `a1`. 128-bit returns can be split across `a0`/`a1`.[^9]
+	 - Primary result in `a0`, second result in `a1`. 128-bit returns can be split across `a0`/`a1`.[^9]
 - **Callee-saved registers:**
-    - `s0`–`s11` (x8–x9, x18–x27), `sp` (x2), and frame pointer (when used) must be preserved across calls.[^9]
+	 - `s0`–`s11` (x8–x9, x18–x27), `sp` (x2), and frame pointer (when used) must be preserved across calls.[^9]
 - **Caller-saved registers:**
-    - Temporaries `t0`–`t6` and argument registers `a0`–`a7` can be clobbered by called functions.[^9]
+	 - Temporaries `t0`–`t6` and argument registers `a0`–`a7` can be clobbered by called functions.[^9]
 - **Stack pointer alignment:** `sp` must be 16-byte aligned at function entry, to support vector instructions or FP spills with alignment requirements.[^9]
 - **Special registers:**
-    - Global pointer `gp` (x3): used to access small-data sections (`.sdata`) efficiently.
-    - Thread pointer `tp` (x4): used by TLS (Thread-Local Storage) mechanisms, similar to ARM’s TPIDRx and x86’s FS/GS bases.[^9]
+	 - Global pointer `gp` (x3): used to access small-data sections (`.sdata`) efficiently.
+	 - Thread pointer `tp` (x4): used by TLS (Thread-Local Storage) mechanisms, similar to ARM’s TPIDRx and x86’s FS/GS bases.[^9]
 
 Understanding this ABI is critical for writing assembly, compiler backends, and calling into RISC-V from other languages (e.g., Rust, Go).
 
 ***
 
-### 7.5 RISC-V in AI and Machine Learning
+## 7.5 RISC-V in AI and Machine Learning
 
 RISC-V is increasingly used in AI accelerators and ML-centric SoCs.
 
 - **RVV 1.0 for ML:** Vector extension supports `int8`, `int16`, `fp16`, `bf16`, and even smaller integer widths via data-type encodings and vector length configuration, enabling SIMD-like acceleration of convolutions and GEMMs.[^2]
 - **Vendor matrix extensions:**
-    - T-Head has proprietary matrix-multiply instructions (XTHEADMATRIX) in C910/C920 cores, though they are non-standard and accessed via custom intrinsics.[^10]
+	 - T-Head has proprietary matrix-multiply instructions (XTHEADMATRIX) in C910/C920 cores, though they are non-standard and accessed via custom intrinsics.[^10]
 - **Standard matrix extensions (in progress):**
-    - RISC-V Intl’s AI/ML and Vector TSCs are working on standard matrix extensions (often referred to informally as RV-MATRIX/IME), aiming to define portable, high-throughput matrix operations akin to Tensor Cores or AMX, but as of 2026 these are still in draft.[^2]
+	 - RISC-V Intl’s AI/ML and Vector TSCs are working on standard matrix extensions (often referred to informally as RV-MATRIX/IME), aiming to define portable, high-throughput matrix operations akin to Tensor Cores or AMX, but as of 2026 these are still in draft.[^2]
 - **Real-world chips:**
-    - Esperanto ET-SoC-1: 1,088 ET-Minion cores with vector-like extensions for large-scale inference.[^10]
-    - SpacemIT K1/X100: RISC-V cores with NPUs delivering ~2 TOPS or more at the edge.[^10]
-    - Future SiFive P670/P870 SoCs: Marketing material and roadmaps emphasize AI workloads, with INT8/FP16 acceleration and vector extensions as key selling points.[^11]
+	 - Esperanto ET-SoC-1: 1,088 ET-Minion cores with vector-like extensions for large-scale inference.[^10]
+	 - SpacemIT K1/X100: RISC-V cores with NPUs delivering ~2 TOPS or more at the edge.[^10]
+	 - Future SiFive P670/P870 SoCs: Marketing material and roadmaps emphasize AI workloads, with INT8/FP16 acceleration and vector extensions as key selling points.[^11]
 
 Compiler stacks like TVM, ONNX Runtime, and microTVM are gaining RISC-V backends, and several research compilers target RVV directly.[^2]
 
 ***
 
-### 7.6 Open-Source RTL Cores for Research
+## 7.6 Open-Source RTL Cores for Research
 
 Open RTL cores are critical for teaching microarchitecture and for research in verification and architecture.
 
@@ -2046,18 +2002,18 @@ For MTech theses, these cores allow modifications of pipelines, caches, branch p
 
 ***
 
-### 7.7 FPGA Prototyping Recommendations
+## 7.7 FPGA Prototyping Recommendations
 
 FPGA prototyping lets students move from simulation to real timing, I/O, and debug experiences.
 
 - **Budget (students/teaching labs):**
-    - **Digilent Arty A7-35T**: Artix-7 FPGA; can host PicoRV32 or VexRiscv-based SoCs; runs bare-metal firmware and simple RTOSes.[^2]
+	 - **Digilent Arty A7-35T**: Artix-7 FPGA; can host PicoRV32 or VexRiscv-based SoCs; runs bare-metal firmware and simple RTOSes.[^2]
 - **Mid-range (MTech labs):**
-    - **Digilent Nexys A7-100T**: Larger Artix-7 device; suitable for Rocket SoC or small multi-core systems; some groups run Linux on Rocket-based SoCs on this board.[^2]
+	 - **Digilent Nexys A7-100T**: Larger Artix-7 device; suitable for Rocket SoC or small multi-core systems; some groups run Linux on Rocket-based SoCs on this board.[^2]
 - **High-end (research groups):**
-    - **Xilinx ZCU104 / ZCU106**: Zynq UltraScale+ MPSoC boards; can host BOOM, CVA6, or complex multi-core Rocket systems; helpful for co-simulation with on-chip ARM cores.[^2]
+	 - **Xilinx ZCU104 / ZCU106**: Zynq UltraScale+ MPSoC boards; can host BOOM, CVA6, or complex multi-core Rocket systems; helpful for co-simulation with on-chip ARM cores.[^2]
 - **Cloud FPGA:**
-    - **AWS F1 instances**: Run FireSim/Chipyard RISC-V SoCs on Xilinx VU9P FPGAs, enabling large-scale experiments (many-core SoCs, data-center-scale simulation).[^2]
+	 - **AWS F1 instances**: Run FireSim/Chipyard RISC-V SoCs on Xilinx VU9P FPGAs, enabling large-scale experiments (many-core SoCs, data-center-scale simulation).[^2]
 
 Recommended tool stack:
 
@@ -2068,37 +2024,37 @@ Recommended tool stack:
 
 ***
 
-### 7.8 Physical Memory Protection (PMP)
+## 7.8 Physical Memory Protection (PMP)
 
 PMP is the RISC-V mechanism for controlling memory access rights at the physical address level.[^2]
 
 - **Purpose:** Allow M-mode firmware to restrict memory regions accessible to S-mode and U-mode, enforcing isolation between OS, enclaves, and user processes even in the absence of a full MMU.[^14][^2]
 - **Entries:** Typically up to 16 PMP entries (implementation-defined), each describing a region plus permissions.[^2]
 - **CSRs:**
-    - `pmpcfgN`: Configuration bytes (lock bit, R/W/X permissions, address-matching mode).
-    - `pmpaddrN`: Encodes region addresses for TOR (top-of-range), NA4 (4-byte), or NAPOT (naturally aligned power-of-two) modes.[^2]
+	 - `pmpcfgN`: Configuration bytes (lock bit, R/W/X permissions, address-matching mode).
+	 - `pmpaddrN`: Encodes region addresses for TOR (top-of-range), NA4 (4-byte), or NAPOT (naturally aligned power-of-two) modes.[^2]
 - **Smepmp extension:** Enhances PMP for security:
-    - Allows PMP to also constrain M-mode or adjust default executable/readable permissions.
-    - Ratified as “PMP enhancements for memory access and execution prevention (Smepmp)” and used by TEEs like Keystone to harden enclave isolation.[^15][^16]
+	 - Allows PMP to also constrain M-mode or adjust default executable/readable permissions.
+	 - Ratified as “PMP enhancements for memory access and execution prevention (Smepmp)” and used by TEEs like Keystone to harden enclave isolation.[^15][^16]
 
 Research shows practical attacks exploiting PMP misconfiguration and aliasing, motivating advanced work in verification and secure firmware design.[^17]
 
 ***
 
-### 7.9 Hypervisor Extension (H-Extension) In Depth
+## 7.9 Hypervisor Extension (H-Extension) In Depth
 
 The H-extension adds architectural support for efficient virtualization.[^2]
 
 - **New modes:**
-    - **HS-mode (Hypervisor Supervisor):** Host OS/hypervisor mode.
-    - **VS-mode/VU-mode:** Virtual supervisor/user modes for guest kernels and processes.[^2]
+	 - **HS-mode (Hypervisor Supervisor):** Host OS/hypervisor mode.
+	 - **VS-mode/VU-mode:** Virtual supervisor/user modes for guest kernels and processes.[^2]
 - **Two-stage translation:**
-    - Guest virtual address (GVA) → guest physical address (GPA) via `vsatp` and guest page tables.
-    - GPA → host physical address (HPA) via `hgatp` and hypervisor-controlled second-stage page tables.[^2]
+	 - Guest virtual address (GVA) → guest physical address (GPA) via `vsatp` and guest page tables.
+	 - GPA → host physical address (HPA) via `hgatp` and hypervisor-controlled second-stage page tables.[^2]
 - **New CSRs:**
-    - `hstatus`, `hedeleg`, `hideleg`, `hvip`, `hip`, `hie` for virtualization-specific status and interrupt delegation.
-    - `hgatp` for second-level address translation.
-    - `htval`, `htinst` for additional trap information.[^2]
+	 - `hstatus`, `hedeleg`, `hideleg`, `hvip`, `hip`, `hie` for virtualization-specific status and interrupt delegation.
+	 - `hgatp` for second-level address translation.
+	 - `htval`, `htinst` for additional trap information.[^2]
 
 With H-extension:
 
@@ -2109,31 +2065,31 @@ Hypervisor support is a necessary building block for RISC-V servers in cloud/dat
 
 ***
 
-### 7.10 RISC-V Debug Specification
+## 7.10 RISC-V Debug Specification
 
 The external debug spec (v0.13.x) standardizes how debuggers interact with RISC-V harts.[^8][^7]
 
 Key components:
 
 - **Debug Transport Module (DTM):**
-    - Usually JTAG-based (IEEE 1149.1).
-    - Exposes JTAG instructions such as `dtmcs` (control/status) and `dmi` (Debug Module Interface access) registers.[^8]
+	 - Usually JTAG-based (IEEE 1149.1).
+	 - Exposes JTAG instructions such as `dtmcs` (control/status) and `dmi` (Debug Module Interface access) registers.[^8]
 - **Debug Module (DM):**
-    - On-chip block that interfaces with one or more harts via DMI.
-    - Provides run-control (halt, resume, step), register access, memory access (System Bus Access, SBA), and triggers/breakpoints.[^7]
+	 - On-chip block that interfaces with one or more harts via DMI.
+	 - Provides run-control (halt, resume, step), register access, memory access (System Bus Access, SBA), and triggers/breakpoints.[^7]
 - **Harts:** Each hardware thread (core/SMT context) is a “hart”; the DM can manage many harts via addressing.[^7]
 - **Triggers:**
-    - `tselect`, `tdata1`, `tdata2`, `tdata3` CSRs allow hardware breakpoints and watchpoints.
-    - Up to 16 or more triggers, implementation dependent.[^7]
+	 - `tselect`, `tdata1`, `tdata2`, `tdata3` CSRs allow hardware breakpoints and watchpoints.
+	 - Up to 16 or more triggers, implementation dependent.[^7]
 - **Execution-based debug:** One method uses a program buffer in the DM to inject instructions into the core, minimizing core modifications; widely adopted in open-source debug systems.[^18]
 
 OpenOCD, GDB, and vendor-specific tools build on this spec, making hardware debug of RISC-V SoCs convergent across vendors.[^6]
 
 ***
 
-## SECTION 8 — WHY RISC-V IS UNIQUELY POSITIONED: THE COMPLETE ARGUMENT
+# SECTION 8 — WHY RISC-V IS UNIQUELY POSITIONED: THE COMPLETE ARGUMENT
 
-### 8.1 No Legacy Constraint
+## 8.1 No Legacy Constraint
 
 RISC-V was designed in the 2010s, long after the smartphone, GPU, and multicore revolutions. This timing allowed its designers to:[^2]
 
@@ -2145,54 +2101,54 @@ In contrast, x86-64 carries decades of legacy modes and instructions, and ARM mu
 
 ***
 
-### 8.2 Formal Specification and Verification
+## 8.2 Formal Specification and Verification
 
 RISC-V is the first widely adopted ISA with a full, public formal model.
 
 - **Sail model:** The official Sail specification describes RISC-V semantics in an executable, theorem-prover-friendly language and is hosted on GitHub (riscv/sail-riscv).[^2]
 - **Uses:**
-    - Serving as a reference interpreter.
-    - Generating test suites and fuzzers.
-    - Enabling formal ISA-level proofs (e.g., that an RTL implementation refines the Sail model).
+	 - Serving as a reference interpreter.
+	 - Generating test suites and fuzzers.
+	 - Enabling formal ISA-level proofs (e.g., that an RTL implementation refines the Sail model).
 - **Industry impact:** CPU vendors and verification tool providers can align properties and proofs around a single machine-readable specification, reducing ambiguities common in legacy ISAs.[^2]
 
 For academia, this creates an ideal environment for courses and research in formal methods, program logics, and hardware verification.
 
 ***
 
-### 8.3 Composable Modular Design
+## 8.3 Composable Modular Design
 
-RISC-V was built to be *composable* from day one.
+RISC-V was built to be _composable_ from day one.
 
 - **Pick only what you need:**
-    - Tiny MCUs: RV32E + M + C (16 registers, no virtual memory) for extreme area and power savings.
-    - General embedded/Linux SBCs: RV64GC with PMP or simple MMU.
-    - Servers and datacenter: RV64GC + A + H + V + B + K, plus advanced virtual memory and profiles (RVA23S64).[^1][^2]
+	 - Tiny MCUs: RV32E + M + C (16 registers, no virtual memory) for extreme area and power savings.
+	 - General embedded/Linux SBCs: RV64GC with PMP or simple MMU.
+	 - Servers and datacenter: RV64GC + A + H + V + B + K, plus advanced virtual memory and profiles (RVA23S64).[^1][^2]
 - **Custom opcode space:**
-    - Major opcodes 0x0B, 0x2B, 0x5B, 0x7B (and others) are reserved for custom extensions; standardization guarantees they will never be used by ratified instructions.[^2]
-    - Vendors can add domain-specific instructions (matrix multiply, DSP, crypto) into these slots without conflicting with future standard extensions.
-- **Extensible “Z*” naming:** Fine-grained sub-extensions (Zicsr, Zifencei, Zba, Zbb, Zbs, Zicond, Zfa, etc.) allow software and hardware to negotiate capabilities explicitly.[^4][^2]
+	 - Major opcodes 0x0B, 0x2B, 0x5B, 0x7B (and others) are reserved for custom extensions; standardization guarantees they will never be used by ratified instructions.[^2]
+	 - Vendors can add domain-specific instructions (matrix multiply, DSP, crypto) into these slots without conflicting with future standard extensions.
+- __Extensible “Z_” naming:_ming:_* Fine-grained sub-extensions (Zicsr, Zifencei, Zba, Zbb, Zbs, Zicond, Zfa, etc.) allow software and hardware to negotiate capabilities explicitly.[^4][^2]
 
 This modularity makes RISC-V more future-proof and adaptable than monolithic ISAs where extensions are bolted on piecemeal.
 
 ***
 
-### 8.4 Geopolitical and Strategic Significance
+## 8.4 Geopolitical and Strategic Significance
 
 Because the ISA specification itself is open and not controlled by a single country or corporation, RISC-V has outsized geopolitical importance.
 
 - **Export control:** Implementing the RISC-V ISA does not inherently require US or UK government permission, unlike licensing ARM cores or certain x86 IP.[^20][^21]
 - **National programs:**
-    - India’s DIR-V (with SHAKTI, VEGA, and commercial chips) explicitly aims at strategic autonomy for processors.[^22][^12]
-    - China has aggressive RISC-V initiatives, such as Alibaba T-Head’s C910/C920 and SOPHGO’s SG2042, for domestic cloud, AI, and edge products.[^21][^4]
-    - European projects (SiPearl, European Processor Initiative) and others examine RISC-V for future HPC and automotive platforms.[^4]
+	 - India’s DIR-V (with SHAKTI, VEGA, and commercial chips) explicitly aims at strategic autonomy for processors.[^22][^12]
+	 - China has aggressive RISC-V initiatives, such as Alibaba T-Head’s C910/C920 and SOPHGO’s SG2042, for domestic cloud, AI, and edge products.[^21][^4]
+	 - European projects (SiPearl, European Processor Initiative) and others examine RISC-V for future HPC and automotive platforms.[^4]
 - **ISA independence:** Even if a particular vendor disappears, the ISA itself remains implementable; another company or open community can continue development.
 
 For India specifically, this decouples core national infrastructure (defense, space, telecom, digital identity) from a single foreign IP provider.
 
 ***
 
-### 8.5 Academic-to-Production Continuity
+## 8.5 Academic-to-Production Continuity
 
 A powerful aspect of RISC-V is that the same ISA spans academic cores and cutting-edge commercial CPUs.
 
@@ -2204,7 +2160,7 @@ This continuity makes RISC-V uniquely attractive for designing long-lived curric
 
 ***
 
-### 8.6 Transparency and Community Governance
+## 8.6 Transparency and Community Governance
 
 RISC-V International operates with a level of openness unusual for ISA bodies.[^21][^2]
 
@@ -2221,9 +2177,9 @@ For professors and students, this means:
 
 ***
 
-## QUICK REFERENCE CARD
+# QUICK REFERENCE CARD
 
-### Base ISA Naming
+## Base ISA Naming
 
 | Symbol | Meaning |
 | :-- | :-- |
@@ -2236,7 +2192,7 @@ For professors and students, this means:
 | H | Hypervisor extension |
 | B | Bit-manip (Zba + Zbb + Zbs, etc.) |
 
-### Register ABI Quick Reference (Integer)
+## Register ABI Quick Reference (Integer)
 
 | Register | ABI Name | Role | Saved by |
 | :-- | :-- | :-- | :-- |
@@ -2251,7 +2207,7 @@ For professors and students, this means:
 | x18–x27 | s2–s11 | Saved registers | Callee |
 | x28–x31 | t3–t6 | Temporaries | Caller |
 
-### Privilege Modes
+## Privilege Modes
 
 | Mode | Level | Purpose |
 | :-- | :-- | :-- |
@@ -2262,7 +2218,7 @@ For professors and students, this means:
 | VS | H-ext | Guest supervisor (guest OS) |
 | VU | H-ext | Guest user (guest user-space) |
 
-### Top RISC-V Boards at a Glance (India-Focused)
+## Top RISC-V Boards at a Glance (India-Focused)
 
 | Board | Best For | Typical India Price (approx.) |
 | :-- | :-- | :-- |
