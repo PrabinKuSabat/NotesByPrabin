@@ -11,10 +11,24 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "ATLAS/Math Modellin.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Math Modellin"
             }
           }
         ]
@@ -231,10 +245,13 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "ATLAS/Atlas.md",
+    "ATLAS/Math Modellin.md",
+    "Homepage.md",
+    "EFFORTS/Efforts.md",
+    "Buffer.md",
     "EFFORTS/PI Day Presentation.md",
     "EFFORTS/SSSIHL.md",
-    "EFFORTS/Efforts.md",
-    "Homepage.md",
     "Extras/ATTACHMENTS/&lt;system&gt;_You are an expert computer architec.md",
     "EFFORTS/Case Study Mathematical Modelling.md",
     "EFFORTS/RISC-V.md",
@@ -255,9 +272,6 @@
     "Excalidraw/Drawing 2026-03-06 14.04.29.excalidraw.md",
     "Excalidraw/address_translation.excalidraw",
     "Excalidraw/address_translation.excalidraw.md",
-    "Kanban Boards/Status Kanban.kanban.md",
-    "Excalidraw/Dissertation Status.excalidraw.md",
-    "webclips/README.md",
     "Kanban Boards",
     "Extras/ATTACHMENTS/image-97.png",
     "Extras/ATTACHMENTS/image-95.png",

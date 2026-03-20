@@ -4,7 +4,8 @@
 
 > [! summary] `ris:Divide`Mathematics  
 > [[ATLAS/Linear Algebra|LA]]  
-> [[ATLAS/Real Analyis|RA]]
+> [[ATLAS/Real Analyis|RA]]  
+> [[Math Modellin]]
 
 > [!abstract] Computer Science  
 > [[ATLAS/CPP|C++]]  
