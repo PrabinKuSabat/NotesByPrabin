@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ATLAS/Math Modellin.md",
+                "file": "ATLAS/3-05-2026 - Intro.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,19 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Math Modellin"
+              "title": "3-05-2026 - Intro"
+            }
+          },
+          {
+            "id": "f8b6e8f9bcc9e4bf",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.12.7"
+              },
+              "icon": "lucide-book-up",
+              "title": "Release Notes 1.12.7"
             }
           }
         ]
@@ -245,16 +257,18 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "ATLAS/Atlas.md",
-    "ATLAS/Math Modellin.md",
-    "Homepage.md",
+    "ATLAS/Shakti Sir Meeting Notes.md",
+    "ATLAS/3-05-2026 - Intro.md",
+    "EFFORTS/RISC-V.md",
     "EFFORTS/Efforts.md",
+    "Homepage.md",
+    "ATLAS/Math Modellin.md",
+    "ATLAS/Atlas.md",
     "Buffer.md",
     "EFFORTS/PI Day Presentation.md",
     "EFFORTS/SSSIHL.md",
     "Extras/ATTACHMENTS/&lt;system&gt;_You are an expert computer architec.md",
     "EFFORTS/Case Study Mathematical Modelling.md",
-    "EFFORTS/RISC-V.md",
     "EFFORTS/Case Study - Mathematical Modelling Presentation Notes Section 6.md",
     "EFFORTS/Case Study - Mathematical Modelling Presentation Notes Section 7.md",
     "EFFORTS/Case Study - Mathematical Modelling Presentation Notes Section 5.md",
@@ -263,7 +277,6 @@
     "Prabin's KB ~/Prabins KB ~.md",
     "EFFORTS/Rv2 Board CPU Details.md",
     "EFFORTS/RV2.md",
-    "ATLAS/Shakti Sir Meeting Notes.md",
     "ATLAS/07-03-202 -- UOS.md",
     "ATLAS/14 - 02 - 2026 -- SOS-V.md",
     "ATLAS/20 -02 - 2026 -- CSRs.md",
@@ -271,7 +284,6 @@
     "EFFORTS/Address Translation in Systems.md",
     "Excalidraw/Drawing 2026-03-06 14.04.29.excalidraw.md",
     "Excalidraw/address_translation.excalidraw",
-    "Excalidraw/address_translation.excalidraw.md",
     "Kanban Boards",
     "Extras/ATTACHMENTS/image-97.png",
     "Extras/ATTACHMENTS/image-95.png",

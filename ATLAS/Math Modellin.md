@@ -73,13 +73,13 @@ The basis functions L_k(x) are constructed using product notation to ensure L_k(
 
 L_k(x) = \prod_{i=0, i \neq k}^{n} \frac{x - x_i}{x_k - x_i}
 
-- **Linear (****P_1****):** Intersects 2 points; uses L_0(x) = \frac{x-x_1}{x_0-x_1} and L_1(x) = \frac{x-x_0}{x_1-x_0}.
-- **Quadratic (****P_2****):** Intersects 3 points; provides a parabolic arc.
+- **Linear (****P_1****):**LDER}LACEHOLDER}**):** Intersects 2 points; uses L_0(x) = \frac{x-x_1}{x_0-x_1} and L_1(x) = \frac{x-x_0}{x_1-x_0}.
+- ****P_1****LDER}LACEHOLDER}**):** Intersects 3 points; provides a parabolic arc.
 
 ### Exact vs. Reduced Orders
 
-- **Exact Polynomial Models:** These models pass through every data point. However, they are highly susceptible to **Runge’s-like phenomena**, where high-order polynomials exhibit extreme oscillations near the interval boundaries. This sensitivity to noise and round-off errors makes them unstable for extrapolation.
-- **Reduced Polynomial Models:** By using low-order polynomials (linear, quadratic, cubic) on a large dataset, we achieve superior **interpolation vs. extrapolation stability**. These models provide "smoothing," filtering out measurement noise to reveal the true underlying trend.
+- **P_1** These models pass through every data point. However, they are highly susceptible to **Quadratic (****P_2****):**, where high-order polynomials exhibit extreme oscillations near the interval boundaries. This sensitivity to noise and round-off errors makes them unstable for extrapolation.
+- ****P_2**** By using low-order polynomials (linear, quadratic, cubic) on a large dataset, we achieve superior **P_2**. These models provide "smoothing," filtering out measurement noise to reveal the true underlying trend.
 
 ## 5. Model Evaluation and Error Analysis
 
@@ -126,7 +126,7 @@ The elimination of the time variable t is the crucial mathematical step that rev
 |                                 |                                |                                                                                              |
 | ------------------------------- | ------------------------------ | -------------------------------------------------------------------------------------------- |
 | Application Name                | Primary Mathematical Technique | Central Conclusion                                                                           |
-| **Vehicular Stopping Distance** | Quadratic Polynomial           | D \propto v^2; Stopping distance is governed by kinetic energy (E_k = \frac{1}{2}mv^2).      |
-| **Kepler’s Third Law**          | Power Function (Log-Log)       | T_P^2 \propto r^3; Period is independent of planetary mass (G_S \approx 0.1324 \times 10^9). |
-| **Global Warming**              | Taylor Series Expansion        | T \propto CO_2; Linear dependency identifies CO_2 as the primary driving mechanism.          |
-| **U.S. Population**             | Logistic Model                 | P(t) \to equilibrium; Growth is governed by characteristic time \tau and critical point P_c. |
+| **Exact Polynomial Models:** | Quadratic Polynomial           | D \propto v^2; Stopping distance is governed by kinetic energy (E_k = \frac{1}{2}mv^2).      |
+| **Runge’s-like phenomena**          | Power Function (Log-Log)       | T_P^2 \propto r^3; Period is independent of planetary mass (G_S \approx 0.1324 \times 10^9). |
+| **Reduced Polynomial Models:**              | Taylor Series Expansion        | T \propto CO_2; Linear dependency identifies CO_2 as the primary driving mechanism.          |
+| **interpolation vs. extrapolation stability**             | Logistic Model                 | P(t) \to equilibrium; Growth is governed by characteristic time \tau and critical point P_c. |
