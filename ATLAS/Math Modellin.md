@@ -123,10 +123,10 @@ The elimination of the time variable t is the crucial mathematical step that rev
 
 ## 7. Technical Summary of Applications
 
-|   |   |   |
-|---|---|---|
-|Application Name|Primary Mathematical Technique|Central Conclusion|
-|**Vehicular Stopping Distance**|Quadratic Polynomial|D \propto v^2; Stopping distance is governed by kinetic energy (E_k = \frac{1}{2}mv^2).|
-|**Kepler’s Third Law**|Power Function (Log-Log)|T_P^2 \propto r^3; Period is independent of planetary mass (G_S \approx 0.1324 \times 10^9).|
-|**Global Warming**|Taylor Series Expansion|T \propto CO_2; Linear dependency identifies CO_2 as the primary driving mechanism.|
-|**U.S. Population**|Logistic Model|P(t) \to equilibrium; Growth is governed by characteristic time \tau and critical point P_c.|
+|                                 |                                |                                                                                              |
+| ------------------------------- | ------------------------------ | -------------------------------------------------------------------------------------------- |
+| Application Name                | Primary Mathematical Technique | Central Conclusion                                                                           |
+| **Vehicular Stopping Distance** | Quadratic Polynomial           | D \propto v^2; Stopping distance is governed by kinetic energy (E_k = \frac{1}{2}mv^2).      |
+| **Kepler’s Third Law**          | Power Function (Log-Log)       | T_P^2 \propto r^3; Period is independent of planetary mass (G_S \approx 0.1324 \times 10^9). |
+| **Global Warming**              | Taylor Series Expansion        | T \propto CO_2; Linear dependency identifies CO_2 as the primary driving mechanism.          |
+| **U.S. Population**             | Logistic Model                 | P(t) \to equilibrium; Growth is governed by characteristic time \tau and critical point P_c. |
