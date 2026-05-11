@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ATLAS/3-05-2026 - Intro.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,19 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "3-05-2026 - Intro"
-            }
-          },
-          {
-            "id": "f8b6e8f9bcc9e4bf",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.12.7"
-              },
-              "icon": "lucide-book-up",
-              "title": "Release Notes 1.12.7"
+              "title": "Homepage"
             }
           }
         ]
@@ -257,8 +245,8 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "ATLAS/Shakti Sir Meeting Notes.md",
     "ATLAS/3-05-2026 - Intro.md",
+    "ATLAS/Shakti Sir Meeting Notes.md",
     "EFFORTS/RISC-V.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
