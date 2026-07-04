@@ -11,24 +11,10 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Homepage.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "New tab"
             }
           }
         ]
@@ -98,7 +84,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5
+    "width": 414.5,
+    "collapsed": true
   },
   "right": {
     "id": "43fc27400badb105",
@@ -244,8 +231,10 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Homepage.md",
+    "riscv_user_space_kernel_publishability_impact_assessment.md",
     "riscv_user_kernel_kernel_assisted_privileged_ops_report.md",
+    "hostel_menu_browser_app_package.zip",
+    "Homepage.md",
     "Untitled.base",
     "EFFORTS/Setting up QEMU for OrangePi Kernel Development.md",
     "EFFORTS/Writing a Operating System.md",
@@ -269,7 +258,6 @@
     "EFFORTS/Rv2 Board CPU Details.md",
     "EFFORTS/RV2.md",
     "ATLAS/07-03-202 -- UOS.md",
-    "ATLAS/14 - 02 - 2026 -- SOS-V.md",
     "Excalidraw/address_translation.excalidraw",
     "Kanban Boards",
     "Extras/ATTACHMENTS/image-97.png",
@@ -288,7 +276,6 @@
     "Excalidraw/Scripts/Downloaded",
     "Excalidraw/Scripts",
     "Excalidraw",
-    "Untitled",
     "EFFORTS/Untitled.canvas",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "EFFORTS/Binary Search.canvas",
