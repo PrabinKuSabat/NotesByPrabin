@@ -11,24 +11,10 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "riscv_user_kernel_kernel_assisted_privileged_ops_report.md",
-                "mode": "preview",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "riscv_user_kernel_kernel_assisted_privileged_ops_report"
+              "title": "New tab"
             }
           }
         ]
@@ -245,9 +231,9 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Untitled.base",
     "riscv_user_kernel_kernel_assisted_privileged_ops_report.md",
     "Homepage.md",
+    "Untitled.base",
     "EFFORTS/Setting up QEMU for OrangePi Kernel Development.md",
     "EFFORTS/Writing a Operating System.md",
     "EFFORTS/RISC-V.md",
