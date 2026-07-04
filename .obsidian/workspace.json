@@ -11,10 +11,24 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Homepage.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Homepage"
             }
           }
         ]
@@ -84,8 +98,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5,
-    "collapsed": true
+    "width": 414.5
   },
   "right": {
     "id": "43fc27400badb105",
@@ -231,8 +244,8 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "riscv_user_kernel_kernel_assisted_privileged_ops_report.md",
     "Homepage.md",
+    "riscv_user_kernel_kernel_assisted_privileged_ops_report.md",
     "Untitled.base",
     "EFFORTS/Setting up QEMU for OrangePi Kernel Development.md",
     "EFFORTS/Writing a Operating System.md",
