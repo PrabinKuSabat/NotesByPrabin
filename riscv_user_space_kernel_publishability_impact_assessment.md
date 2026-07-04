@@ -621,31 +621,31 @@ Possible later:
 
 | System / paper | Direct link | Relevance | Gap relative to your project |
 |---|---|---|---|
-| User-Mode Linux | https://www.kernel.org/doc/html/v6.6/virt/uml/user_mode_linux_howto_v2.html | Linux kernel as host process | Not a RISC-V supervisor-state mediation design |
-| User-Mode Linux paper | https://www.usenix.org/conference/als-01/user-mode-linux | Historical Linux-as-process research | Older, not RISC-V-focused |
-| Jeff Dike UML book PDF | https://ptgmedia.pearsoncmg.com/images/9780131865051/downloads/013865056_Dike_book.pdf | Practical UML engineering | Historical and x86-era |
-| L4Linux | https://l4linux.org/ | Linux as user-level app on L4Re | Microkernel substrate, not stock Linux host helper |
-| L4Linux overview | https://os.inf.tu-dresden.de/L4/LinuxOnL4/overview.shtml | Deprivileged Linux model | Uses L4 APIs, not your RISC-V ABI |
-| coLinux paper | https://www.kernel.org/doc/ols/2004/ols2004v1-pages-23-32.pdf | Cooperative guest Linux with host | Cautionary security/stability example |
-| Dune | https://www.usenix.org/conference/osdi12/technical-sessions/presentation/belay | Safe user-level privileged CPU access | Not a booted Linux guest kernel |
-| Dune PDF | https://www.usenix.org/system/files/conference/osdi12/osdi12-final-117.pdf | Key prior work | x86 virtualization hardware focus |
-| Unikernel Linux | https://arxiv.org/abs/2206.00789 | Linux linked with application | Opposite direction: app enters kernel world |
-| gVisor | https://gvisor.dev/docs/ | User-space application kernel | Reimplements Linux interface, does not boot Linux kernel |
-| gVisor security model | https://gvisor.dev/docs/architecture_guide/security/ | Sandboxing model | Useful comparison for security framing |
-| Drawbridge PDF | https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/asplos2011-drawbridge.pdf | Library OS with narrow host ABI | Not a Linux-kernel guest |
-| Graphene PDF | https://www.cs.unc.edu/~porter/pubs/tsai14graphene.pdf | Multiprocess library OS | Not a real Linux kernel boot |
-| RISC-V privileged ISA | https://docs.riscv.org/reference/isa/v20260120/priv/priv-index.html | Mandatory privilege semantics | Spec, not system |
-| RISC-V CSR privilege rules | https://docs.riscv.org/reference/isa/v20260120/priv/priv-csrs.html | CSR illegal-instruction behavior | Supports your trap/mediation rationale |
-| RISC-V hypervisor extension | https://docs.riscv.org/reference/isa/v20260120/priv/hypervisor.html | Guest OS virtualization model | Hardware virtualization baseline |
-| RISC-V virtualization paper | https://arxiv.org/abs/2103.14951 | RISC-V virtualization evaluation | Baseline for hardware-assisted path |
-| RISC-V hypervisor processor paper | https://arxiv.org/abs/2406.17796 | H-extension implementation | Shows hardware path reviewers will compare against |
-| KVM API docs | https://docs.kernel.org/virt/kvm/api.html | VM/VCPU fd-based ABI model | Useful ABI inspiration |
-| userfaultfd docs | https://docs.kernel.org/admin-guide/mm/userfaultfd.html | User-space page-fault handling | Useful future memory mechanism |
-| Linux RISC-V boot docs | https://docs.kernel.org/arch/riscv/boot.html | Kernel boot entry rules | Needed for baseline |
-| QEMU RISC-V virt docs | https://www.qemu.org/docs/master/system/riscv/virt.html | QEMU boot platform | Needed for baseline |
-| OpenSBI | https://github.com/riscv-software-src/opensbi | RISC-V firmware/SBI implementation | Reference for SBI behavior |
-| RISC-V SBI spec | https://github.com/riscv-non-isa/riscv-sbi-doc | SBI interface | Needed for mediation design |
-| OrangePi kernel repo | https://github.com/orangepi-xunlong/linux-orangepi | Your source base | Vendor-tree risk |
+| User-Mode Linux | <https://www.kernel.org/doc/html/v6.6/virt/uml/user_mode_linux_howto_v2.html> | Linux kernel as host process | Not a RISC-V supervisor-state mediation design |
+| User-Mode Linux paper | <https://www.usenix.org/conference/als-01/user-mode-linux> | Historical Linux-as-process research | Older, not RISC-V-focused |
+| Jeff Dike UML book PDF | <https://ptgmedia.pearsoncmg.com/images/9780131865051/downloads/013865056_Dike_book.pdf> | Practical UML engineering | Historical and x86-era |
+| L4Linux | <https://l4linux.org/> | Linux as user-level app on L4Re | Microkernel substrate, not stock Linux host helper |
+| L4Linux overview | <https://os.inf.tu-dresden.de/L4/LinuxOnL4/overview.shtml> | Deprivileged Linux model | Uses L4 APIs, not your RISC-V ABI |
+| coLinux paper | <https://www.kernel.org/doc/ols/2004/ols2004v1-pages-23-32.pdf> | Cooperative guest Linux with host | Cautionary security/stability example |
+| Dune | <https://www.usenix.org/conference/osdi12/technical-sessions/presentation/belay> | Safe user-level privileged CPU access | Not a booted Linux guest kernel |
+| Dune PDF | <https://www.usenix.org/system/files/conference/osdi12/osdi12-final-117.pdf> | Key prior work | x86 virtualization hardware focus |
+| Unikernel Linux | <https://arxiv.org/abs/2206.00789> | Linux linked with application | Opposite direction: app enters kernel world |
+| gVisor | <https://gvisor.dev/docs/> | User-space application kernel | Reimplements Linux interface, does not boot Linux kernel |
+| gVisor security model | <https://gvisor.dev/docs/architecture_guide/security/> | Sandboxing model | Useful comparison for security framing |
+| Drawbridge PDF | <https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/asplos2011-drawbridge.pdf> | Library OS with narrow host ABI | Not a Linux-kernel guest |
+| Graphene PDF | <https://www.cs.unc.edu/~porter/pubs/tsai14graphene.pdf> | Multiprocess library OS | Not a real Linux kernel boot |
+| RISC-V privileged ISA | <https://docs.riscv.org/reference/isa/v20260120/priv/priv-index.html> | Mandatory privilege semantics | Spec, not system |
+| RISC-V CSR privilege rules | <https://docs.riscv.org/reference/isa/v20260120/priv/priv-csrs.html> | CSR illegal-instruction behavior | Supports your trap/mediation rationale |
+| RISC-V hypervisor extension | <https://docs.riscv.org/reference/isa/v20260120/priv/hypervisor.html> | Guest OS virtualization model | Hardware virtualization baseline |
+| RISC-V virtualization paper | <https://arxiv.org/abs/2103.14951> | RISC-V virtualization evaluation | Baseline for hardware-assisted path |
+| RISC-V hypervisor processor paper | <https://arxiv.org/abs/2406.17796> | H-extension implementation | Shows hardware path reviewers will compare against |
+| KVM API docs | <https://docs.kernel.org/virt/kvm/api.html> | VM/VCPU fd-based ABI model | Useful ABI inspiration |
+| userfaultfd docs | <https://docs.kernel.org/admin-guide/mm/userfaultfd.html> | User-space page-fault handling | Useful future memory mechanism |
+| Linux RISC-V boot docs | <https://docs.kernel.org/arch/riscv/boot.html> | Kernel boot entry rules | Needed for baseline |
+| QEMU RISC-V virt docs | <https://www.qemu.org/docs/master/system/riscv/virt.html> | QEMU boot platform | Needed for baseline |
+| OpenSBI | <https://github.com/riscv-software-src/opensbi> | RISC-V firmware/SBI implementation | Reference for SBI behavior |
+| RISC-V SBI spec | <https://github.com/riscv-non-isa/riscv-sbi-doc> | SBI interface | Needed for mediation design |
+| OrangePi kernel repo | <https://github.com/orangepi-xunlong/linux-orangepi> | Your source base | Vendor-tree risk |
 
 ---
 
