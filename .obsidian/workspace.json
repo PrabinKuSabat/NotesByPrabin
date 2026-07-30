@@ -11,24 +11,10 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Homepage.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "New tab"
             }
           }
         ]
@@ -245,8 +231,8 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Homepage.md",
     "riscv_user_space_kernel_publishability_impact_assessment.md",
+    "Homepage.md",
     "riscv_user_kernel_kernel_assisted_privileged_ops_report.md",
     "hostel_menu_browser_app_package.zip",
     "Untitled.base",
