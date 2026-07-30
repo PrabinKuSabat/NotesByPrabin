@@ -437,13 +437,45 @@ function capitalizeMidSentence(ctx) {
   }
   return { ...ctx, content };
 }
+function isCJKContext(ch) {
+  const cat = classifyChar(ch);
+  if (cat === "chinese" /* Chinese */ || cat === "japanese" /* Japanese */ || cat === "korean" /* Korean */) {
+    return true;
+  }
+  if (ch.length > 0) {
+    const code = ch.charCodeAt(0);
+    if (code >= 12288 && code <= 12351 || code >= 65281 && code <= 65295 || code >= 65306 && code <= 65312 || code >= 65339 && code <= 65344 || code >= 65371 && code <= 65376 || code >= 65504 && code <= 65510 || code >= 65072 && code <= 65103) {
+      return true;
+    }
+  }
+  return false;
+}
 function findTokenBounds(content, pos) {
+  pos = Math.max(0, Math.min(pos, content.length));
+  let refIdx = pos > 0 ? pos - 1 : 0;
+  if (refIdx >= content.length)
+    refIdx = content.length - 1;
+  if (refIdx < 0)
+    return [0, 0];
+  const refIsCJK = isCJKContext(content.charAt(refIdx));
   let left = pos;
   while (left > 0 && !/[\s\0]/.test(content.charAt(left - 1))) {
+    const ch = content.charAt(left - 1);
+    const isCJK = isCJKContext(ch);
+    if (!isCJK && !/\w/.test(ch))
+      break;
+    if (isCJK !== refIsCJK)
+      break;
     left--;
   }
   let right = pos;
   while (right < content.length && !/[\s\0]/.test(content.charAt(right))) {
+    const ch = content.charAt(right);
+    const isCJK = isCJKContext(ch);
+    if (!isCJK && !/\w/.test(ch))
+      break;
+    if (isCJK !== refIsCJK)
+      break;
     right++;
   }
   return [left, right];
@@ -467,12 +499,111 @@ function collectAllBoundaries(content, languagePairs, customCategories) {
   }
   return positions;
 }
+var FORMATTING_CHARS_RE = /[*_~`^]/;
+function isFormattingChar(ch) {
+  return FORMATTING_CHARS_RE.test(ch);
+}
+function collectFormattingSeparatedBoundaries(content, languagePairs, customCategories) {
+  const positions = /* @__PURE__ */ new Set();
+  if (!FORMATTING_CHARS_RE.test(content))
+    return positions;
+  const pairTests = [];
+  for (const pair of languagePairs) {
+    const classA = resolveCharClass(pair.a, customCategories);
+    const classB = resolveCharClass(pair.b, customCategories);
+    if (!classA || !classB)
+      continue;
+    const regA = new RegExp(`^[${classA}]$`);
+    const regB = new RegExp(`^[${classB}]$`);
+    pairTests.push({
+      test(a, b) {
+        return regA.test(a) && regB.test(b) || regA.test(b) && regB.test(a);
+      }
+    });
+  }
+  if (pairTests.length === 0)
+    return positions;
+  const len = content.length;
+  let i = 0;
+  while (i < len) {
+    if (!isFormattingChar(content[i])) {
+      i++;
+      continue;
+    }
+    let blockStart = i;
+    while (blockStart > 0 && isFormattingChar(content[blockStart - 1])) {
+      blockStart--;
+    }
+    let blockEnd = i;
+    while (blockEnd < len - 1 && isFormattingChar(content[blockEnd + 1])) {
+      blockEnd++;
+    }
+    i = blockEnd + 1;
+    let leftIdx = blockStart - 1;
+    while (leftIdx >= 0 && (isFormattingChar(content[leftIdx]) || content[leftIdx] === "\0")) {
+      leftIdx--;
+    }
+    if (leftIdx < 0)
+      continue;
+    let rightIdx = blockEnd + 1;
+    while (rightIdx < len && (isFormattingChar(content[rightIdx]) || content[rightIdx] === "\0")) {
+      rightIdx++;
+    }
+    if (rightIdx >= len)
+      continue;
+    const leftChar = content[leftIdx];
+    const rightChar = content[rightIdx];
+    let pairMatched = false;
+    for (const pt of pairTests) {
+      if (pt.test(leftChar, rightChar)) {
+        pairMatched = true;
+        break;
+      }
+    }
+    if (!pairMatched)
+      continue;
+    const fmtChar = content[blockStart];
+    let matchedLeftDist = -1;
+    let matchedRightDist = -1;
+    for (let j = blockStart - 1; j >= 0; j--) {
+      if (content[j] === fmtChar) {
+        matchedLeftDist = blockStart - j;
+        break;
+      }
+      if (/[\s\0]/.test(content[j]))
+        break;
+    }
+    for (let j = blockEnd + 1; j < len; j++) {
+      if (content[j] === fmtChar) {
+        matchedRightDist = j - blockEnd;
+        break;
+      }
+      if (/[\s\0]/.test(content[j]))
+        break;
+    }
+    if (matchedLeftDist >= 0 && (matchedRightDist < 0 || matchedLeftDist <= matchedRightDist)) {
+      positions.add(blockEnd + 1);
+    } else if (matchedRightDist >= 0) {
+      positions.add(blockStart);
+    } else {
+      if (isCJKContext(leftChar))
+        positions.add(blockStart);
+      if (isCJKContext(rightChar))
+        positions.add(blockEnd + 1);
+    }
+  }
+  return positions;
+}
 function applyLanguagePairSpacing(ctx, languagePairs, prefixDict, customCategories, debug) {
   let { content, curCh, prevCh, offset } = ctx;
   if (!isParamDefined(prevCh))
     return ctx;
   const cursorInContent = curCh - offset;
   const allBoundaries = collectAllBoundaries(content, languagePairs, customCategories);
+  const fmtBoundaries = collectFormattingSeparatedBoundaries(content, languagePairs, customCategories);
+  for (const pos of fmtBoundaries) {
+    allBoundaries.add(pos);
+  }
   if (allBoundaries.size === 0)
     return ctx;
   let [tokLeft, tokRight] = findTokenBounds(content, cursorInContent);
@@ -523,7 +654,7 @@ function applyLanguagePairSpacing(ctx, languagePairs, prefixDict, customCategori
     const inCursorToken = pos >= tokLeft && pos < tokRight;
     if (inCursorToken) {
       const posInToken = pos - tokLeft;
-      if (posInToken < protectedUpTo) {
+      if (posInToken > 0 && posInToken < protectedUpTo) {
         continue;
       }
       if (pos >= prevChInContent && pos < cursorInContent || prefixDictExpired) {
@@ -554,13 +685,15 @@ function applyLanguagePairSpacing(ctx, languagePairs, prefixDict, customCategori
   return { ...ctx, content, curCh };
 }
 function detectBoundarySpaceState(content, leftSymbols, rightSymbols) {
-  const builtInSymbols = "\u3010\u3011\uFF08\uFF09\u300A\u300B\uFF0C\u3002\u3001\uFF1F\uFF1A\uFF1B\u2018\u2019\u201C\u201D\u300C\u300E\u300F\u300D\uFF01";
-  const escapedLeft = escapeForCharClass(leftSymbols + builtInSymbols);
-  const escapedRight = escapeForCharClass(rightSymbols + builtInSymbols);
+  const builtInBothSymbols = `"'`;
+  const builtInLeftSoftSymbols = `\u3010\u3011\uFF08\uFF09\u300A\u300B\uFF0C\u3002\u3001\uFF1F\uFF1A\uFF1B\u2018\u2019\u201C\u201D\u300C\u300E\u300F\u300D\uFF01${builtInBothSymbols}[({`;
+  const builtInRightSoftSymbols = `\u3010\u3011\uFF08\uFF09\u300A\u300B\uFF0C\u3002\u3001\uFF1F\uFF1A\uFF1B\u2018\u2019\u201C\u201D\u300C\u300E\u300F\u300D\uFF01${builtInBothSymbols},.?!:;])}`;
+  const escapedStart = escapeForCharClass(rightSymbols + builtInRightSoftSymbols);
+  const escapedEnd = escapeForCharClass(leftSymbols + builtInLeftSoftSymbols);
   const regStrictSpaceStart = /^\0?\s/;
   const regStrictSpaceEnd = /\s\0?$/;
-  const regStartWithSpace = new RegExp(`^\\0?[\\s${escapedLeft}]`);
-  const regEndWithSpace = new RegExp(`[\\s${escapedRight}]\\0?$`);
+  const regStartWithSpace = new RegExp(`^\\0?[\\s${escapedStart}]`);
+  const regEndWithSpace = new RegExp(`[\\s${escapedEnd}]\\0?$`);
   let start = 0 /* none */;
   let end = 0 /* none */;
   if (regStartWithSpace.test(content) || content.startsWith("<br>")) {
@@ -1098,6 +1231,15 @@ function splitTextWithLinkAndUserDefined(text, regExps) {
   retArray = retArray.sort((a, b) => a.begin - b.begin);
   return retArray;
 }
+function isCursorInUserDefinedRegexBlock(lineText, column, regExps) {
+  const parts = splitTextWithLinkAndUserDefined(lineText, regExps);
+  for (const part of parts) {
+    if (part.type === "user-defined" /* user */ && column >= part.begin && column < part.end) {
+      return true;
+    }
+  }
+  return false;
+}
 function str2SpaceState(s) {
   switch (s) {
     case "+":
@@ -1252,7 +1394,8 @@ var DEFAULT_SETTINGS = {
   InlineLinkSpaceMode: 1 /* soft */,
   InlineLinkSmartSpace: true,
   UserDefinedRegSwitch: true,
-  UserDefinedRegExp: "{{.*?}}|++\n<.*?>|--\n\\[\\!.*?\\][-+]{0,1}|-+\n(file:///|https?://|ftp://|obsidian://|zotero://|www.)[^\\s\uFF08\uFF09\u300A\u300B\u3002,\uFF0C\uFF01\uFF1F;\uFF1B\uFF1A\u201C\u201D\u2018\u2019\\)\\(\\[\\]\\{\\}']+|--\n\n[a-zA-Z0-9_\\-.]+@[a-zA-Z0-9_\\-.]+|++\n(?<!#)#[\\u4e00-\\u9fa5\\w-\\/]+|++",
+  UserDefinedRegExp: "{{.*?}}|++\n<.*?>|--\n\\[\\!.*?\\][-+]{0,1}|-+\n(file:///|https?://|ftp://|obsidian://|zotero://|www.)[^\\s\uFF08\uFF09\u300A\u300B\u3002,\uFF0C\uFF01\uFF1F;\uFF1B\uFF1A\u201C\u201D\u2018\u2019\\)\\(\\[\\]\\{\\}']+|--\n\n[a-zA-Z0-9_\\-.]+@[a-zA-Z0-9_\\-.]+|++\n// Tags in Obsidian//(?<!#)#[\\u4e00-\\u9fa5\\w-\\/]+|++",
+  UserRulesRespectUserDefinedRegexBlocks: false,
   debug: false,
   StrictModeEnter: false,
   StrictLineMode: "enter_twice" /* EnterTwice */,
@@ -1261,7 +1404,8 @@ var DEFAULT_SETTINGS = {
   FixMacOSContextMenu: false,
   TryFixMSIME: false,
   CollapsePersistentEnter: false,
-  deletedBuiltinRuleIds: []
+  deletedBuiltinRuleIds: [],
+  rulesStoragePath: ""
 };
 
 // src/settings/easy_typing_settings_tab.ts
@@ -1307,9 +1451,9 @@ var locale = {
     },
     softSpaceSymbols: {
       leftName: "Custom Extra Left Soft Space Symbols",
-      leftDesc: "Common full-width punctuations are built-in. Add extra symbols here (like -).",
+      leftDesc: `Common full-width punctuation, quotes (' ") and opening brackets ([ ( {) are built in. Add extra left-side symbols here (such as -).`,
       rightName: "Custom Extra Right Soft Space Symbols",
-      rightDesc: "Common full-width punctuations are built-in. Add extra symbols here (like -)."
+      rightDesc: `Common full-width punctuation, quotes (' "), closing brackets (] ) }) and half-width punctuation (. , ? ! : ;) are built in. Add extra right-side symbols here (such as -).`
     },
     customScriptCategories: {
       name: "Custom Script Categories",
@@ -1339,7 +1483,11 @@ var locale = {
     },
     userDefinedRegexp: {
       name: "User-defined Regular Expression, one expression per line",
-      desc: "User-defined regular expression, matched to the content is not formatted, one expression per line, do not feel free to add spaces at the end of the line.The end of each line of three characters fixed as | and two space strategy symbols, space strategy symbols for - = +, respectively, on behalf of not requiring spaces (-), soft spaces (=), strict spaces (+).These two space strategy symbols are the space strategy for the left and right sides of the matching block respectively"
+      desc: "User-defined regular expression, matched to the content is not formatted, one expression per line, do not feel free to add spaces at the end of the line.The end of each line of three characters fixed as | and two space strategy symbols, space strategy symbols for - = +, respectively, on behalf of not requiring spaces (-), soft spaces (=), strict spaces (+).These two space strategy symbols are the space strategy for the left and right sides of the matching block respectively. Lines starting with // are treated as comments"
+    },
+    userRulesRespectUserDefinedRegexBlocks: {
+      name: "User rules respect custom regex blocks",
+      desc: "When enabled, text matched by custom regex blocks will not trigger auto user rules."
     },
     excludeFoldersFiles: {
       name: "Exclude Folders/Files",
@@ -1368,6 +1516,14 @@ var locale = {
     printDebugInfo: {
       name: "Print debug info in console",
       desc: "Print debug information in the console."
+    },
+    rulesStoragePath: {
+      name: "Rules Storage Path",
+      desc: "Set the storage path for rule files (relative to vault root). Select default to store in the plugin directory",
+      defaultOption: "Default (plugin directory)",
+      migrateButton: "Migrate",
+      migrateDesc: "Migrate rule files from the previously loaded path to the current path",
+      migrateSuccess: "Rule files migrated successfully"
     },
     selectionReplaceRule: {
       name: "Selection Replace Rule",
@@ -1403,22 +1559,29 @@ var locale = {
       fieldTrigger: "Match Before Cursor",
       fieldTriggerSelectKey: "Trigger Key",
       fieldTriggerRight: "Match After Cursor",
+      hintTriggerEscape: "\\\\: backslash, \\n: newline, \\t: tab",
       fieldReplacement: "Replacement",
       fieldReplacementDescSelectKey: "${SEL}: selected text, ${0:${SEL}}: select the text.",
       fieldReplacementDescInputDelete: "[[0]]: 0th left capture group, [[R1]]: 1st right capture group.",
-      fieldIsRegex: "Is Regex",
+      fieldIsRegex: "Use Regex Matching",
       fieldTriggerMode: "Trigger Mode",
       fieldScope: "Scope",
       fieldScopeLanguage: "Language (optional)",
+      fieldRegexFlags: "Regex Flags",
+      fieldRegexFlagsDesc: "Supports i / m / u only, e.g. im",
       fieldPriority: "Priority",
       fieldPriorityDesc: "Lower number = higher priority, default 100",
       fieldDescription: "Description",
       buttonSave: "Save",
       invalidRegex: "Invalid regex",
-      fieldIsFunction: "Is Function",
+      fieldIsFunction: "Use Function Replacement",
       functionHintInputDelete: "Args: leftMatches (string[]), rightMatches (string[]). Return string or undefined to skip.",
       functionHintSelectKey: "Args: selectionText (string), key (string). Return string or undefined to skip.",
-      functionPlaceholder: "// Example:\nconst d = new Date();\nreturn d.toISOString().slice(0,10) + '$0';"
+      hintTabstop: "$0: cursor position, $1/$2: Tab jump positions, ${1:text}: jump and select text.",
+      functionPlaceholder: "// Example:\nconst d = new Date();\nreturn d.toISOString().slice(0,10) + '$0';",
+      groupMatch: "Match",
+      groupReplacement: "Replacement",
+      groupOther: "Other"
     },
     ruleType: {
       input: "Input",
@@ -1456,10 +1619,6 @@ var locale = {
     aboutRegexp: {
       header: "For knowledge about regular expressions, see ",
       text: "Yifeng Nguyen: A Concise Tutorial on Regular Expressions"
-    },
-    instructionsRegexp: {
-      header: "Instructions and examples for using regular expression rules: ",
-      text: "Customizing Regular Expression Rules"
     },
     customizeSelectionRule: "Customize Selection Replace Rule",
     customizeDeleteRule: "Customize Delete Rule",
@@ -1600,9 +1759,9 @@ var locale2 = {
     },
     softSpaceSymbols: {
       leftName: "\u81EA\u5B9A\u4E49\u5DE6\u4FA7\u8F6F\u7A7A\u683C\u989D\u5916\u7B26\u53F7",
-      leftDesc: "\u5E38\u89C1\u7684\u5168\u89D2\u6807\u70B9\u5DF2\u5185\u7F6E\u652F\u6301\u3002\u5728\u6B64\u6DFB\u52A0\u989D\u5916\u7684\u7B26\u53F7\uFF08\u5982-\uFF09",
+      leftDesc: `\u5E38\u89C1\u7684\u5168\u89D2\u6807\u70B9\u3001\u82F1\u6587\u5F15\u53F7\uFF08' "\uFF09\u548C\u5DE6\u62EC\u53F7\uFF08[ ( {\uFF09\u5DF2\u5185\u7F6E\u652F\u6301\u3002\u5728\u6B64\u6DFB\u52A0\u989D\u5916\u7684\u5DE6\u4FA7\u7B26\u53F7\uFF08\u5982 -\uFF09`,
       rightName: "\u81EA\u5B9A\u4E49\u53F3\u4FA7\u8F6F\u7A7A\u683C\u989D\u5916\u7B26\u53F7",
-      rightDesc: "\u5E38\u89C1\u7684\u5168\u89D2\u6807\u70B9\u5DF2\u5185\u7F6E\u652F\u6301\u3002\u5728\u6B64\u6DFB\u52A0\u989D\u5916\u7684\u7B26\u53F7\uFF08\u5982-\uFF09"
+      rightDesc: `\u5E38\u89C1\u7684\u5168\u89D2\u6807\u70B9\u3001\u82F1\u6587\u5F15\u53F7\uFF08' "\uFF09\u3001\u53F3\u62EC\u53F7\uFF08] ) }\uFF09\u4EE5\u53CA\u82F1\u6587\u534A\u89D2\u6807\u70B9\uFF08. , ? ! : ;\uFF09\u5DF2\u5185\u7F6E\u4E3A\u53F3\u8F6F\u7A7A\u683C\u7B26\u53F7\u3002\u5728\u6B64\u6DFB\u52A0\u989D\u5916\u7684\u53F3\u4FA7\u7B26\u53F7\uFF08\u5982 -\uFF09`
     },
     customScriptCategories: {
       name: "\u81EA\u5B9A\u4E49\u8BED\u8A00/\u7B26\u53F7\u96C6",
@@ -1632,7 +1791,11 @@ var locale2 = {
     },
     userDefinedRegexp: {
       name: "\u7528\u6237\u5B9A\u4E49\u7684\u6B63\u5219\u8868\u8FBE\u5F0F",
-      desc: "\u7528\u6237\u81EA\u5B9A\u4E49\u6B63\u5219\u8868\u8FBE\u5F0F\uFF0C\u5339\u914D\u5230\u7684\u5185\u5BB9\u4E0D\u8FDB\u884C\u683C\u5F0F\u5316\uFF0C\u6BCF\u884C\u4E00\u4E2A\u8868\u8FBE\u5F0F\uFF0C\u884C\u5C3E\u4E0D\u8981\u968F\u610F\u52A0\u7A7A\u683C\u3002\u6BCF\u884C\u672B\u5C3E3\u4E2A\u5B57\u7B26\u7684\u56FA\u5B9A\u4E3A|\u548C\u4E24\u4E2A\u7A7A\u683C\u7B56\u7565\u7B26\u53F7\uFF0C\u7A7A\u683C\u7B56\u7565\u7B26\u53F7\u4E3A-=+\uFF0C\u5206\u522B\u4EE3\u8868\u4E0D\u8981\u6C42\u7A7A\u683C(-)\uFF0C\u8F6F\u7A7A\u683C(=)\uFF0C\u4E25\u683C\u7A7A\u683C(+)\u3002\u8FD9\u4E24\u4E2A\u7A7A\u683C\u7B56\u7565\u7B26\u53F7\u5206\u522B\u4E3A\u5339\u914D\u533A\u5757\u7684\u5DE6\u53F3\u4E24\u8FB9\u7684\u7A7A\u683C\u7B56\u7565"
+      desc: "\u7528\u6237\u81EA\u5B9A\u4E49\u6B63\u5219\u8868\u8FBE\u5F0F\uFF0C\u5339\u914D\u5230\u7684\u5185\u5BB9\u4E0D\u8FDB\u884C\u683C\u5F0F\u5316\uFF0C\u6BCF\u884C\u4E00\u4E2A\u8868\u8FBE\u5F0F\uFF0C\u884C\u5C3E\u4E0D\u8981\u968F\u610F\u52A0\u7A7A\u683C\u3002\u6BCF\u884C\u672B\u5C3E3\u4E2A\u5B57\u7B26\u7684\u56FA\u5B9A\u4E3A|\u548C\u4E24\u4E2A\u7A7A\u683C\u7B56\u7565\u7B26\u53F7\uFF0C\u7A7A\u683C\u7B56\u7565\u7B26\u53F7\u4E3A-=+\uFF0C\u5206\u522B\u4EE3\u8868\u4E0D\u8981\u6C42\u7A7A\u683C(-)\uFF0C\u8F6F\u7A7A\u683C(=)\uFF0C\u4E25\u683C\u7A7A\u683C(+)\u3002\u8FD9\u4E24\u4E2A\u7A7A\u683C\u7B56\u7565\u7B26\u53F7\u5206\u522B\u4E3A\u5339\u914D\u533A\u5757\u7684\u5DE6\u53F3\u4E24\u8FB9\u7684\u7A7A\u683C\u7B56\u7565\u3002\u4EE5 // \u5F00\u5934\u7684\u884C\u4F5C\u4E3A\u6CE8\u91CA"
+    },
+    userRulesRespectUserDefinedRegexBlocks: {
+      name: "\u81EA\u5B9A\u4E49\u6B63\u5219\u533A\u5757\u540C\u65F6\u963B\u6B62\u7528\u6237\u89C4\u5219",
+      desc: "\u542F\u7528\u540E\uFF0C\u547D\u4E2D\u81EA\u5B9A\u4E49\u6B63\u5219\u533A\u5757\u7684\u6587\u672C\u5C06\u4E0D\u4F1A\u89E6\u53D1\u81EA\u52A8\u7528\u6237\u89C4\u5219\u3002"
     },
     excludeFoldersFiles: {
       name: "\u6392\u9664\u6587\u4EF6\u5939/\u6587\u4EF6",
@@ -1661,6 +1824,14 @@ var locale2 = {
     printDebugInfo: {
       name: "\u5728\u63A7\u5236\u53F0\u8F93\u51FA\u8C03\u8BD5\u4FE1\u606F",
       desc: "\u5728\u63A7\u5236\u53F0\u8F93\u51FA\u8C03\u8BD5\u4FE1\u606F"
+    },
+    rulesStoragePath: {
+      name: "\u89C4\u5219\u6587\u4EF6\u5B58\u50A8\u8DEF\u5F84",
+      desc: "\u8BBE\u7F6E\u89C4\u5219\u6587\u4EF6\u7684\u5B58\u50A8\u8DEF\u5F84\uFF08\u76F8\u5BF9\u4E8E\u5E93\u6839\u76EE\u5F55\uFF09\uFF0C\u9009\u62E9\u9ED8\u8BA4\u5219\u5B58\u50A8\u5728\u63D2\u4EF6\u76EE\u5F55\u5185",
+      defaultOption: "\u9ED8\u8BA4\uFF08\u63D2\u4EF6\u76EE\u5F55\uFF09",
+      migrateButton: "\u8FC1\u79FB",
+      migrateDesc: "\u5C06\u89C4\u5219\u6587\u4EF6\u4ECE\u4E0A\u6B21\u52A0\u8F7D\u7684\u8DEF\u5F84\u8FC1\u79FB\u5230\u5F53\u524D\u8BBE\u7F6E\u7684\u8DEF\u5F84",
+      migrateSuccess: "\u89C4\u5219\u6587\u4EF6\u8FC1\u79FB\u6210\u529F"
     },
     selectionReplaceRule: {
       name: "\u9009\u4E2D\u66FF\u6362\u89C4\u5219",
@@ -1696,22 +1867,29 @@ var locale2 = {
       fieldTrigger: "\u5149\u6807\u524D\u5339\u914D",
       fieldTriggerSelectKey: "\u89E6\u53D1\u6309\u952E\u5B57\u7B26",
       fieldTriggerRight: "\u5149\u6807\u540E\u5339\u914D",
+      hintTriggerEscape: "\\\\\uFF1A\u53CD\u659C\u6760\uFF0C\\n\uFF1A\u6362\u884C\uFF0C\\t\uFF1A\u5236\u8868\u7B26",
       fieldReplacement: "\u66FF\u6362\u5185\u5BB9",
       fieldReplacementDescSelectKey: "${SEL}\uFF1A\u9009\u4E2D\u7684\u6587\u672C\u5185\u5BB9\uFF0C${0:${SEL}}\uFF1A\u5149\u6807\u7EE7\u7EED\u9009\u4E2D\u3002",
       fieldReplacementDescInputDelete: "[[0]]\uFF1A\u5DE6\u4FA7\u7B2C0\u6355\u83B7\u7EC4\uFF0C[[R1]]\uFF1A\u53F3\u4FA7\u7B2C1\u6355\u83B7\u7EC4\u3002",
-      fieldIsRegex: "\u6B63\u5219\u8868\u8FBE\u5F0F",
+      fieldIsRegex: "\u4F7F\u7528\u6B63\u5219\u8868\u8FBE\u5F0F\u5339\u914D",
       fieldTriggerMode: "\u89E6\u53D1\u65B9\u5F0F",
       fieldScope: "\u4F5C\u7528\u57DF",
       fieldScopeLanguage: "\u8BED\u8A00\uFF08\u53EF\u9009\uFF09",
+      fieldRegexFlags: "\u6B63\u5219\u6807\u5FD7",
+      fieldRegexFlagsDesc: "\u4EC5\u652F\u6301 i / m / u\uFF0C\u4F8B\u5982 im",
       fieldPriority: "\u4F18\u5148\u7EA7",
       fieldPriorityDesc: "\u6570\u503C\u8D8A\u5C0F\uFF0C\u4F18\u5148\u7EA7\u8D8A\u9AD8\uFF0C\u9ED8\u8BA4 100",
       fieldDescription: "\u63CF\u8FF0",
       buttonSave: "\u4FDD\u5B58",
       invalidRegex: "\u6B63\u5219\u8868\u8FBE\u5F0F\u65E0\u6548",
-      fieldIsFunction: "\u51FD\u6570\u5F0F\u66FF\u6362",
+      fieldIsFunction: "\u4F7F\u7528\u51FD\u6570\u5F0F\u66FF\u6362",
       functionHintInputDelete: "\u53C2\u6570\uFF1AleftMatches (string[])\u3001rightMatches (string[])\u3002\u8FD4\u56DE\u5B57\u7B26\u4E32\u6216 undefined \u8DF3\u8FC7\u3002",
       functionHintSelectKey: "\u53C2\u6570\uFF1AselectionText (string)\u3001key (string)\u3002\u8FD4\u56DE\u5B57\u7B26\u4E32\u6216 undefined \u8DF3\u8FC7\u3002",
-      functionPlaceholder: "// \u793A\u4F8B\uFF1A\nconst d = new Date();\nreturn d.toISOString().slice(0,10) + '$0';"
+      hintTabstop: "$0\uFF1A\u5149\u6807\u4F4D\u7F6E\uFF0C$1/$2\uFF1A\u6309 Tab \u8DF3\u8F6C\u7684\u4F4D\u7F6E\uFF0C${1:text}\uFF1A\u8DF3\u8F6C\u5E76\u9009\u4E2D text\u3002",
+      functionPlaceholder: "// \u793A\u4F8B\uFF1A\nconst d = new Date();\nreturn d.toISOString().slice(0,10) + '$0';",
+      groupMatch: "\u5339\u914D\u6761\u4EF6",
+      groupReplacement: "\u66FF\u6362",
+      groupOther: "\u5176\u4ED6"
     },
     ruleType: {
       input: "\u8F93\u5165",
@@ -1749,10 +1927,6 @@ var locale2 = {
     aboutRegexp: {
       header: "\u6B63\u5219\u8868\u8FBE\u5F0F\u76F8\u5173\u77E5\u8BC6\uFF0C\u89C1 ",
       text: "\u300A\u962E\u4E00\u5CF0\uFF1A\u6B63\u5219\u8868\u8FBE\u5F0F\u7B80\u660E\u6559\u7A0B\u300B"
-    },
-    instructionsRegexp: {
-      header: "\u6B63\u5219\u8868\u8FBE\u5F0F\u89C4\u5219\u4F7F\u7528\u8BF4\u660E\u4E0E\u793A\u4F8B\uFF1A ",
-      text: "\u81EA\u5B9A\u4E49\u6B63\u5219\u8868\u8FBE\u5F0F\u89C4\u5219"
     },
     customizeSelectionRule: "\u81EA\u5B9A\u4E49\u9009\u4E2D\u6587\u672C\u7F16\u8F91\u589E\u5F3A\u89C4\u5219",
     customizeDeleteRule: "\u81EA\u5B9A\u4E49\u5220\u9664\u7F16\u8F91\u589E\u5F3A\u89C4\u5219",
@@ -1893,9 +2067,9 @@ var locale3 = {
     },
     softSpaceSymbols: {
       leftName: "\u81EA\u5B9A\u7FA9\u5DE6\u5074\u8EDF\u7A7A\u683C\u984D\u5916\u7B26\u865F",
-      leftDesc: "\u5E38\u898B\u7684\u5168\u89D2\u6A19\u9EDE\u5DF2\u5167\u7F6E\u652F\u6301\u3002\u5728\u6B64\u6DFB\u52A0\u984D\u5916\u7684\u7B26\u865F\uFF08\u5982-\uFF09",
+      leftDesc: `\u5E38\u898B\u7684\u5168\u89D2\u6A19\u9EDE\u3001\u82F1\u6587\u5F15\u865F\uFF08' "\uFF09\u548C\u5DE6\u62EC\u865F\uFF08[ ( {\uFF09\u5DF2\u5167\u7F6E\u652F\u6301\u3002\u5728\u6B64\u6DFB\u52A0\u984D\u5916\u7684\u5DE6\u5074\u7B26\u865F\uFF08\u5982 -\uFF09`,
       rightName: "\u81EA\u5B9A\u7FA9\u53F3\u5074\u8EDF\u7A7A\u683C\u984D\u5916\u7B26\u865F",
-      rightDesc: "\u5E38\u898B\u7684\u5168\u89D2\u6A19\u9EDE\u5DF2\u5167\u7F6E\u652F\u6301\u3002\u5728\u6B64\u6DFB\u52A0\u984D\u5916\u7684\u7B26\u865F\uFF08\u5982-\uFF09"
+      rightDesc: `\u5E38\u898B\u7684\u5168\u89D2\u6A19\u9EDE\u3001\u82F1\u6587\u5F15\u865F\uFF08' "\uFF09\u3001\u53F3\u62EC\u865F\uFF08] ) }\uFF09\u4EE5\u53CA\u82F1\u6587\u534A\u89D2\u6A19\u9EDE\uFF08. , ? ! : ;\uFF09\u5DF2\u5167\u7F6E\u70BA\u53F3\u5074\u8EDF\u7A7A\u683C\u7B26\u865F\u3002\u5728\u6B64\u6DFB\u52A0\u984D\u5916\u7684\u53F3\u5074\u7B26\u865F\uFF08\u5982 -\uFF09`
     },
     customScriptCategories: {
       name: "\u81EA\u5B9A\u7FA9\u8A9E\u8A00/\u7B26\u865F\u96C6",
@@ -1929,7 +2103,11 @@ var locale3 = {
     },
     userDefinedRegexp: {
       name: "\u7528\u6236\u5B9A\u7FA9\u7684\u6B63\u5247\u8868\u9054\u5F0F",
-      desc: "\u7528\u6236\u81EA\u5B9A\u7FA9\u6B63\u5247\u8868\u9054\u5F0F\uFF0C\u5339\u914D\u5230\u7684\u5167\u5BB9\u4E0D\u9032\u884C\u683C\u5F0F\u5316\uFF0C\u6BCF\u884C\u4E00\u500B\u8868\u9054\u5F0F\uFF0C\u884C\u5C3E\u4E0D\u8981\u96A8\u610F\u52A0\u7A7A\u683C\u3002\u6BCF\u884C\u672B\u5C3E3\u500B\u5B57\u7B26\u7684\u56FA\u5B9A\u70BA|\u548C\u5169\u500B\u7A7A\u683C\u7B56\u7565\u7B26\u865F\uFF0C\u7A7A\u683C\u7B56\u7565\u7B26\u865F\u70BA-=+\uFF0C\u5206\u5225\u4EE3\u8868\u4E0D\u8981\u6C42\u7A7A\u683C(-)\uFF0C\u8EDF\u7A7A\u683C(=)\uFF0C\u56B4\u683C\u7A7A\u683C(+)\u3002\u9019\u5169\u500B\u7A7A\u683C\u7B56\u7565\u7B26\u865F\u5206\u5225\u70BA\u5339\u914D\u5340\u584A\u7684\u5DE6\u53F3\u5169\u908A\u7684\u7A7A\u683C\u7B56\u7565"
+      desc: "\u7528\u6236\u81EA\u5B9A\u7FA9\u6B63\u5247\u8868\u9054\u5F0F\uFF0C\u5339\u914D\u5230\u7684\u5167\u5BB9\u4E0D\u9032\u884C\u683C\u5F0F\u5316\uFF0C\u6BCF\u884C\u4E00\u500B\u8868\u9054\u5F0F\uFF0C\u884C\u5C3E\u4E0D\u8981\u96A8\u610F\u52A0\u7A7A\u683C\u3002\u6BCF\u884C\u672B\u5C3E3\u500B\u5B57\u7B26\u7684\u56FA\u5B9A\u70BA|\u548C\u5169\u500B\u7A7A\u683C\u7B56\u7565\u7B26\u865F\uFF0C\u7A7A\u683C\u7B56\u7565\u7B26\u865F\u70BA-=+\uFF0C\u5206\u5225\u4EE3\u8868\u4E0D\u8981\u6C42\u7A7A\u683C(-)\uFF0C\u8EDF\u7A7A\u683C(=)\uFF0C\u56B4\u683C\u7A7A\u683C(+)\u3002\u9019\u5169\u500B\u7A7A\u683C\u7B56\u7565\u7B26\u865F\u5206\u5225\u70BA\u5339\u914D\u5340\u584A\u7684\u5DE6\u53F3\u5169\u908A\u7684\u7A7A\u683C\u7B56\u7565\u3002\u4EE5 // \u958B\u982D\u7684\u884C\u4F5C\u70BA\u8A3B\u91CB"
+    },
+    userRulesRespectUserDefinedRegexBlocks: {
+      name: "\u81EA\u5B9A\u7FA9\u6B63\u5247\u5340\u584A\u540C\u6642\u963B\u6B62\u7528\u6236\u898F\u5247",
+      desc: "\u555F\u7528\u5F8C\uFF0C\u547D\u4E2D\u81EA\u5B9A\u7FA9\u6B63\u5247\u5340\u584A\u7684\u6587\u672C\u5C07\u4E0D\u6703\u89F8\u767C\u81EA\u52D5\u7528\u6236\u898F\u5247\u3002"
     },
     excludeFoldersFiles: {
       name: "\u6392\u9664\u6587\u4EF6\u593E/\u6587\u4EF6",
@@ -1958,6 +2136,14 @@ var locale3 = {
     printDebugInfo: {
       name: "\u5728\u63A7\u5236\u53F0\u8F38\u51FA\u8ABF\u8A66\u8CC7\u8A0A",
       desc: "\u5728\u63A7\u5236\u53F0\u8F38\u51FA\u8ABF\u8A66\u8CC7\u8A0A"
+    },
+    rulesStoragePath: {
+      name: "\u898F\u5247\u6A94\u6848\u5132\u5B58\u8DEF\u5F91",
+      desc: "\u8A2D\u5B9A\u898F\u5247\u6A94\u6848\u7684\u5132\u5B58\u8DEF\u5F91\uFF08\u76F8\u5C0D\u65BC\u5EAB\u6839\u76EE\u9304\uFF09\uFF0C\u9078\u64C7\u9810\u8A2D\u5247\u5132\u5B58\u5728\u5916\u639B\u76EE\u9304\u5167",
+      defaultOption: "\u9810\u8A2D\uFF08\u5916\u639B\u76EE\u9304\uFF09",
+      migrateButton: "\u9077\u79FB",
+      migrateDesc: "\u5C07\u898F\u5247\u6A94\u6848\u5F9E\u4E0A\u6B21\u8F09\u5165\u7684\u8DEF\u5F91\u9077\u79FB\u5230\u7576\u524D\u8A2D\u5B9A\u7684\u8DEF\u5F91",
+      migrateSuccess: "\u898F\u5247\u6A94\u6848\u9077\u79FB\u6210\u529F"
     },
     selectionReplaceRule: {
       name: "\u9078\u4E2D\u66FF\u63DB\u898F\u5247",
@@ -1993,22 +2179,29 @@ var locale3 = {
       fieldTrigger: "\u6E38\u6A19\u524D\u5339\u914D",
       fieldTriggerSelectKey: "\u89F8\u767C\u6309\u9375\u5B57\u7B26",
       fieldTriggerRight: "\u6E38\u6A19\u5F8C\u5339\u914D",
+      hintTriggerEscape: "\\\\\uFF1A\u53CD\u659C\u7DDA\uFF0C\\n\uFF1A\u63DB\u884C\uFF0C\\t\uFF1A\u5236\u8868\u7B26",
       fieldReplacement: "\u66FF\u63DB\u5167\u5BB9",
       fieldReplacementDescSelectKey: "${SEL}\uFF1A\u9078\u4E2D\u7684\u6587\u672C\u5167\u5BB9\uFF0C${0:${SEL}}\uFF1A\u6E38\u6A19\u7E7C\u7E8C\u9078\u4E2D\u3002",
       fieldReplacementDescInputDelete: "[[0]]\uFF1A\u5DE6\u5074\u7B2C0\u6355\u7372\u7D44\uFF0C[[R1]]\uFF1A\u53F3\u5074\u7B2C1\u6355\u7372\u7D44\u3002",
-      fieldIsRegex: "\u6B63\u5247\u8868\u9054\u5F0F",
+      fieldIsRegex: "\u4F7F\u7528\u6B63\u5247\u8868\u9054\u5F0F\u5339\u914D",
       fieldTriggerMode: "\u89F8\u767C\u65B9\u5F0F",
       fieldScope: "\u4F5C\u7528\u57DF",
       fieldScopeLanguage: "\u8A9E\u8A00\uFF08\u53EF\u9078\uFF09",
+      fieldRegexFlags: "\u6B63\u5247\u6A19\u8A8C",
+      fieldRegexFlagsDesc: "\u50C5\u652F\u63F4 i / m / u\uFF0C\u4F8B\u5982 im",
       fieldPriority: "\u512A\u5148\u7D1A",
       fieldPriorityDesc: "\u6578\u503C\u8D8A\u5C0F\uFF0C\u512A\u5148\u7D1A\u8D8A\u9AD8\uFF0C\u9810\u8A2D 100",
       fieldDescription: "\u63CF\u8FF0",
       buttonSave: "\u5132\u5B58",
       invalidRegex: "\u6B63\u898F\u8868\u9054\u5F0F\u7121\u6548",
-      fieldIsFunction: "\u51FD\u5F0F\u66FF\u63DB",
+      fieldIsFunction: "\u4F7F\u7528\u51FD\u5F0F\u66FF\u63DB",
       functionHintInputDelete: "\u53C3\u6578\uFF1AleftMatches (string[])\u3001rightMatches (string[])\u3002\u56DE\u50B3\u5B57\u4E32\u6216 undefined \u8DF3\u904E\u3002",
       functionHintSelectKey: "\u53C3\u6578\uFF1AselectionText (string)\u3001key (string)\u3002\u56DE\u50B3\u5B57\u4E32\u6216 undefined \u8DF3\u904E\u3002",
-      functionPlaceholder: "// \u7BC4\u4F8B\uFF1A\nconst d = new Date();\nreturn d.toISOString().slice(0,10) + '$0';"
+      hintTabstop: "$0\uFF1A\u6E38\u6A19\u4F4D\u7F6E\uFF0C$1/$2\uFF1A\u6309 Tab \u8DF3\u8F49\u7684\u4F4D\u7F6E\uFF0C${1:text}\uFF1A\u8DF3\u8F49\u4E26\u9078\u4E2D text\u3002",
+      functionPlaceholder: "// \u7BC4\u4F8B\uFF1A\nconst d = new Date();\nreturn d.toISOString().slice(0,10) + '$0';",
+      groupMatch: "\u5339\u914D\u689D\u4EF6",
+      groupReplacement: "\u66FF\u63DB",
+      groupOther: "\u5176\u4ED6"
     },
     ruleType: {
       input: "\u8F38\u5165",
@@ -2046,10 +2239,6 @@ var locale3 = {
     aboutRegexp: {
       header: "\u6B63\u5247\u8868\u9054\u5F0F\u76F8\u95DC\u77E5\u8B58\uFF0C\u898B ",
       text: "\u300A\u962E\u4E00\u5CF0\uFF1A\u6B63\u5247\u8868\u9054\u5F0F\u7C21\u660E\u6559\u7A0B\u300B"
-    },
-    instructionsRegexp: {
-      header: "\u6B63\u5247\u8868\u9054\u5F0F\u898F\u5247\u4F7F\u7528\u8AAA\u660E\u8207\u793A\u4F8B\uFF1A ",
-      text: "\u81EA\u5B9A\u7FA9\u6B63\u5247\u8868\u9054\u5F0F\u898F\u5247"
     },
     customizeSelectionRule: "\u81EA\u5B9A\u7FA9\u9078\u4E2D\u6587\u672C\u7DE8\u8F2F\u589E\u5F3A\u898F\u5247",
     customizeDeleteRule: "\u81EA\u5B9A\u7FA9\u522A\u9664\u7DE8\u8F2F\u589E\u5F3A\u898F\u5247",
@@ -2190,9 +2379,9 @@ var locale4 = {
     },
     softSpaceSymbols: {
       leftName: "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u0434\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u0441\u0438\u043C\u0432\u043E\u043B\u044B \u043C\u044F\u0433\u043A\u043E\u0433\u043E \u043F\u0440\u043E\u0431\u0435\u043B\u0430 \u0441\u043B\u0435\u0432\u0430",
-      leftDesc: "\u041E\u0431\u0449\u0435\u043F\u0440\u0438\u043D\u044F\u0442\u044B\u0435 \u043F\u043E\u043B\u043D\u043E\u0448\u0438\u0440\u0438\u043D\u043D\u044B\u0435 \u0437\u043D\u0430\u043A\u0438 \u043F\u0440\u0435\u043F\u0438\u043D\u0430\u043D\u0438\u044F \u0432\u0441\u0442\u0440\u043E\u0435\u043D\u044B. \u0414\u043E\u0431\u0430\u0432\u044C\u0442\u0435 \u0434\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u0441\u0438\u043C\u0432\u043E\u043B\u044B \u0437\u0434\u0435\u0441\u044C (\u043D\u0430\u043F\u0440\u0438\u043C\u0435\u0440, -).",
+      leftDesc: `\u041E\u0431\u0449\u0435\u043F\u0440\u0438\u043D\u044F\u0442\u044B\u0435 \u043F\u043E\u043B\u043D\u043E\u0448\u0438\u0440\u0438\u043D\u043D\u044B\u0435 \u0437\u043D\u0430\u043A\u0438 \u043F\u0440\u0435\u043F\u0438\u043D\u0430\u043D\u0438\u044F, \u0430\u043D\u0433\u043B\u0438\u0439\u0441\u043A\u0438\u0435 \u043A\u0430\u0432\u044B\u0447\u043A\u0438 (' "), \u0430 \u0442\u0430\u043A\u0436\u0435 \u043E\u0442\u043A\u0440\u044B\u0432\u0430\u044E\u0449\u0438\u0435 \u0441\u043A\u043E\u0431\u043A\u0438 ([ ( {) \u0443\u0436\u0435 \u0432\u0441\u0442\u0440\u043E\u0435\u043D\u044B. \u0414\u043E\u0431\u0430\u0432\u044C\u0442\u0435 \u0437\u0434\u0435\u0441\u044C \u0434\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u0441\u0438\u043C\u0432\u043E\u043B\u044B \u0434\u043B\u044F \u043B\u0435\u0432\u043E\u0439 \u0441\u0442\u043E\u0440\u043E\u043D\u044B (\u043D\u0430\u043F\u0440\u0438\u043C\u0435\u0440, -).`,
       rightName: "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u0434\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u0441\u0438\u043C\u0432\u043E\u043B\u044B \u043C\u044F\u0433\u043A\u043E\u0433\u043E \u043F\u0440\u043E\u0431\u0435\u043B\u0430 \u0441\u043F\u0440\u0430\u0432\u0430",
-      rightDesc: "\u041E\u0431\u0449\u0435\u043F\u0440\u0438\u043D\u044F\u0442\u044B\u0435 \u043F\u043E\u043B\u043D\u043E\u0448\u0438\u0440\u0438\u043D\u043D\u044B\u0435 \u0437\u043D\u0430\u043A\u0438 \u043F\u0440\u0435\u043F\u0438\u043D\u0430\u043D\u0438\u044F \u0432\u0441\u0442\u0440\u043E\u0435\u043D\u044B. \u0414\u043E\u0431\u0430\u0432\u044C\u0442\u0435 \u0434\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u0441\u0438\u043C\u0432\u043E\u043B\u044B \u0437\u0434\u0435\u0441\u044C (\u043D\u0430\u043F\u0440\u0438\u043C\u0435\u0440, -)."
+      rightDesc: `\u041E\u0431\u0449\u0435\u043F\u0440\u0438\u043D\u044F\u0442\u044B\u0435 \u043F\u043E\u043B\u043D\u043E\u0448\u0438\u0440\u0438\u043D\u043D\u044B\u0435 \u0437\u043D\u0430\u043A\u0438 \u043F\u0440\u0435\u043F\u0438\u043D\u0430\u043D\u0438\u044F, \u0430\u043D\u0433\u043B\u0438\u0439\u0441\u043A\u0438\u0435 \u043A\u0430\u0432\u044B\u0447\u043A\u0438 (' "), \u0437\u0430\u043A\u0440\u044B\u0432\u0430\u044E\u0449\u0438\u0435 \u0441\u043A\u043E\u0431\u043A\u0438 (] ) }), \u0430 \u0442\u0430\u043A\u0436\u0435 \u0430\u043D\u0433\u043B\u0438\u0439\u0441\u043A\u0430\u044F \u043F\u043E\u043B\u0443\u0448\u0438\u0440\u0438\u043D\u043D\u0430\u044F \u043F\u0443\u043D\u043A\u0442\u0443\u0430\u0446\u0438\u044F (. , ? ! : ;) \u0443\u0436\u0435 \u0432\u0441\u0442\u0440\u043E\u0435\u043D\u044B \u043A\u0430\u043A \u0441\u0438\u043C\u0432\u043E\u043B\u044B \u043F\u0440\u0430\u0432\u043E\u0433\u043E \u043C\u044F\u0433\u043A\u043E\u0433\u043E \u043F\u0440\u043E\u0431\u0435\u043B\u0430. \u0414\u043E\u0431\u0430\u0432\u044C\u0442\u0435 \u0437\u0434\u0435\u0441\u044C \u0434\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u0441\u0438\u043C\u0432\u043E\u043B\u044B \u0434\u043B\u044F \u043F\u0440\u0430\u0432\u043E\u0439 \u0441\u0442\u043E\u0440\u043E\u043D\u044B (\u043D\u0430\u043F\u0440\u0438\u043C\u0435\u0440, -).`
     },
     customScriptCategories: {
       name: "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u0438 \u0441\u043A\u0440\u0438\u043F\u0442\u043E\u0432",
@@ -2226,7 +2415,11 @@ var locale4 = {
     },
     userDefinedRegexp: {
       name: "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u043E\u0435 \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u043E\u0435 \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u0435, \u043E\u0434\u043D\u043E \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u0435 \u043D\u0430 \u0441\u0442\u0440\u043E\u043A\u0443",
-      desc: "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u043E\u0435 \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u043E\u0435 \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u0435, \u0441\u043E\u0432\u043F\u0430\u0434\u0430\u044E\u0449\u0435\u0435 \u0441 \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u043C\u044B\u043C, \u043D\u0435 \u0444\u043E\u0440\u043C\u0430\u0442\u0438\u0440\u0443\u0435\u0442\u0441\u044F, \u043E\u0434\u043D\u043E \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u0435 \u043D\u0430 \u0441\u0442\u0440\u043E\u043A\u0443, \u043D\u0435 \u0434\u043E\u0431\u0430\u0432\u043B\u044F\u0439\u0442\u0435 \u043F\u0440\u043E\u0431\u0435\u043B\u044B \u0432 \u043A\u043E\u043D\u0446\u0435 \u0441\u0442\u0440\u043E\u043A\u0438.\u041A\u043E\u043D\u0435\u0446 \u043A\u0430\u0436\u0434\u043E\u0439 \u0441\u0442\u0440\u043E\u043A\u0438 \u0444\u0438\u043A\u0441\u0438\u0440\u043E\u0432\u0430\u043D \u0442\u0440\u0435\u043C\u044F \u0441\u0438\u043C\u0432\u043E\u043B\u0430\u043C\u0438: | \u0438 \u0434\u0432\u0443\u043C\u044F \u0441\u0438\u043C\u0432\u043E\u043B\u0430\u043C\u0438 \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0438 \u043F\u0440\u043E\u0431\u0435\u043B\u043E\u0432, \u0441\u0438\u043C\u0432\u043E\u043B\u044B \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0438 \u043F\u0440\u043E\u0431\u0435\u043B\u043E\u0432 - \u044D\u0442\u043E - = +, \u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u0441\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0435\u043D\u043D\u043E \u043E\u0431\u043E\u0437\u043D\u0430\u0447\u0430\u044E\u0442 \u043E\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0438\u0435 \u0442\u0440\u0435\u0431\u043E\u0432\u0430\u043D\u0438\u044F \u043F\u0440\u043E\u0431\u0435\u043B\u043E\u0432 (-), \u043C\u044F\u0433\u043A\u0438\u0435 \u043F\u0440\u043E\u0431\u0435\u043B\u044B (=), \u0441\u0442\u0440\u043E\u0433\u0438\u0435 \u043F\u0440\u043E\u0431\u0435\u043B\u044B (+).\u042D\u0442\u0438 \u0434\u0432\u0430 \u0441\u0438\u043C\u0432\u043E\u043B\u0430 \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0438 \u043F\u0440\u043E\u0431\u0435\u043B\u043E\u0432 \u044F\u0432\u043B\u044F\u044E\u0442\u0441\u044F \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0435\u0439 \u043F\u0440\u043E\u0431\u0435\u043B\u043E\u0432 \u0434\u043B\u044F \u043B\u0435\u0432\u043E\u0439 \u0438 \u043F\u0440\u0430\u0432\u043E\u0439 \u0441\u0442\u043E\u0440\u043E\u043D \u0441\u043E\u0432\u043F\u0430\u0434\u0430\u044E\u0449\u0435\u0433\u043E \u0431\u043B\u043E\u043A\u0430 \u0441\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0435\u043D\u043D\u043E"
+      desc: "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u043E\u0435 \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u043E\u0435 \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u0435, \u0441\u043E\u0432\u043F\u0430\u0434\u0430\u044E\u0449\u0435\u0435 \u0441 \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u043C\u044B\u043C, \u043D\u0435 \u0444\u043E\u0440\u043C\u0430\u0442\u0438\u0440\u0443\u0435\u0442\u0441\u044F, \u043E\u0434\u043D\u043E \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u0435 \u043D\u0430 \u0441\u0442\u0440\u043E\u043A\u0443, \u043D\u0435 \u0434\u043E\u0431\u0430\u0432\u043B\u044F\u0439\u0442\u0435 \u043F\u0440\u043E\u0431\u0435\u043B\u044B \u0432 \u043A\u043E\u043D\u0446\u0435 \u0441\u0442\u0440\u043E\u043A\u0438.\u041A\u043E\u043D\u0435\u0446 \u043A\u0430\u0436\u0434\u043E\u0439 \u0441\u0442\u0440\u043E\u043A\u0438 \u0444\u0438\u043A\u0441\u0438\u0440\u043E\u0432\u0430\u043D \u0442\u0440\u0435\u043C\u044F \u0441\u0438\u043C\u0432\u043E\u043B\u0430\u043C\u0438: | \u0438 \u0434\u0432\u0443\u043C\u044F \u0441\u0438\u043C\u0432\u043E\u043B\u0430\u043C\u0438 \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0438 \u043F\u0440\u043E\u0431\u0435\u043B\u043E\u0432, \u0441\u0438\u043C\u0432\u043E\u043B\u044B \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0438 \u043F\u0440\u043E\u0431\u0435\u043B\u043E\u0432 - \u044D\u0442\u043E - = +, \u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u0441\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0435\u043D\u043D\u043E \u043E\u0431\u043E\u0437\u043D\u0430\u0447\u0430\u044E\u0442 \u043E\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0438\u0435 \u0442\u0440\u0435\u0431\u043E\u0432\u0430\u043D\u0438\u044F \u043F\u0440\u043E\u0431\u0435\u043B\u043E\u0432 (-), \u043C\u044F\u0433\u043A\u0438\u0435 \u043F\u0440\u043E\u0431\u0435\u043B\u044B (=), \u0441\u0442\u0440\u043E\u0433\u0438\u0435 \u043F\u0440\u043E\u0431\u0435\u043B\u044B (+).\u042D\u0442\u0438 \u0434\u0432\u0430 \u0441\u0438\u043C\u0432\u043E\u043B\u0430 \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0438 \u043F\u0440\u043E\u0431\u0435\u043B\u043E\u0432 \u044F\u0432\u043B\u044F\u044E\u0442\u0441\u044F \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0435\u0439 \u043F\u0440\u043E\u0431\u0435\u043B\u043E\u0432 \u0434\u043B\u044F \u043B\u0435\u0432\u043E\u0439 \u0438 \u043F\u0440\u0430\u0432\u043E\u0439 \u0441\u0442\u043E\u0440\u043E\u043D \u0441\u043E\u0432\u043F\u0430\u0434\u0430\u044E\u0449\u0435\u0433\u043E \u0431\u043B\u043E\u043A\u0430 \u0441\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0435\u043D\u043D\u043E. \u0421\u0442\u0440\u043E\u043A\u0438, \u043D\u0430\u0447\u0438\u043D\u0430\u044E\u0449\u0438\u0435\u0441\u044F \u0441 //, \u043E\u0431\u0440\u0430\u0431\u0430\u0442\u044B\u0432\u0430\u044E\u0442\u0441\u044F \u043A\u0430\u043A \u043A\u043E\u043C\u043C\u0435\u043D\u0442\u0430\u0440\u0438\u0438"
+    },
+    userRulesRespectUserDefinedRegexBlocks: {
+      name: "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u043F\u0440\u0430\u0432\u0438\u043B\u0430 \u0443\u0432\u0430\u0436\u0430\u044E\u0442 \u0431\u043B\u043E\u043A\u0438 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0445 \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u044B\u0445 \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u0439",
+      desc: "\u041F\u0440\u0438 \u0432\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0438 \u0442\u0435\u043A\u0441\u0442, \u0441\u043E\u0432\u043F\u0430\u0434\u0430\u044E\u0449\u0438\u0439 \u0441 \u0431\u043B\u043E\u043A\u0430\u043C\u0438 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0445 \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u044B\u0445 \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u0439, \u043D\u0435 \u0431\u0443\u0434\u0435\u0442 \u0437\u0430\u043F\u0443\u0441\u043A\u0430\u0442\u044C \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0435 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u043F\u0440\u0430\u0432\u0438\u043B\u0430."
     },
     excludeFoldersFiles: {
       name: "\u0418\u0441\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u043F\u0430\u043F\u043A\u0438/\u0444\u0430\u0439\u043B\u044B",
@@ -2255,6 +2448,14 @@ var locale4 = {
     printDebugInfo: {
       name: "\u0412\u044B\u0432\u043E\u0434 \u043E\u0442\u043B\u0430\u0434\u043E\u0447\u043D\u043E\u0439 \u0438\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u0438 \u0432 \u043A\u043E\u043D\u0441\u043E\u043B\u044C",
       desc: "\u0412\u044B\u0432\u043E\u0434 \u043E\u0442\u043B\u0430\u0434\u043E\u0447\u043D\u043E\u0439 \u0438\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u0438 \u0432 \u043A\u043E\u043D\u0441\u043E\u043B\u044C."
+    },
+    rulesStoragePath: {
+      name: "\u041F\u0443\u0442\u044C \u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F \u0444\u0430\u0439\u043B\u043E\u0432 \u043F\u0440\u0430\u0432\u0438\u043B",
+      desc: "\u0423\u043A\u0430\u0436\u0438\u0442\u0435 \u043F\u0443\u0442\u044C \u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F \u0444\u0430\u0439\u043B\u043E\u0432 \u043F\u0440\u0430\u0432\u0438\u043B (\u043E\u0442\u043D\u043E\u0441\u0438\u0442\u0435\u043B\u044C\u043D\u043E \u043A\u043E\u0440\u043D\u044F \u0445\u0440\u0430\u043D\u0438\u043B\u0438\u0449\u0430). \u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435 \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E \u0434\u043B\u044F \u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F \u0432 \u043A\u0430\u0442\u0430\u043B\u043E\u0433\u0435 \u043F\u043B\u0430\u0433\u0438\u043D\u0430",
+      defaultOption: "\u041F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E (\u043A\u0430\u0442\u0430\u043B\u043E\u0433 \u043F\u043B\u0430\u0433\u0438\u043D\u0430)",
+      migrateButton: "\u041F\u0435\u0440\u0435\u043D\u0435\u0441\u0442\u0438",
+      migrateDesc: "\u041F\u0435\u0440\u0435\u043D\u0435\u0441\u0442\u0438 \u0444\u0430\u0439\u043B\u044B \u043F\u0440\u0430\u0432\u0438\u043B \u0438\u0437 \u0440\u0430\u043D\u0435\u0435 \u0437\u0430\u0433\u0440\u0443\u0436\u0435\u043D\u043D\u043E\u0433\u043E \u043F\u0443\u0442\u0438 \u0432 \u0442\u0435\u043A\u0443\u0449\u0438\u0439",
+      migrateSuccess: "\u0424\u0430\u0439\u043B\u044B \u043F\u0440\u0430\u0432\u0438\u043B \u0443\u0441\u043F\u0435\u0448\u043D\u043E \u043F\u0435\u0440\u0435\u043D\u0435\u0441\u0435\u043D\u044B"
     },
     selectionReplaceRule: {
       name: "\u041F\u0440\u0430\u0432\u0438\u043B\u043E \u0437\u0430\u043C\u0435\u043D\u044B \u0432\u044B\u0434\u0435\u043B\u0435\u043D\u043D\u043E\u0433\u043E \u0442\u0435\u043A\u0441\u0442\u0430",
@@ -2290,22 +2491,29 @@ var locale4 = {
       fieldTrigger: "\u0421\u043E\u0432\u043F\u0430\u0434\u0435\u043D\u0438\u0435 \u043F\u0435\u0440\u0435\u0434 \u043A\u0443\u0440\u0441\u043E\u0440\u043E\u043C",
       fieldTriggerSelectKey: "\u0421\u0438\u043C\u0432\u043E\u043B \u0437\u0430\u043F\u0443\u0441\u043A\u0430",
       fieldTriggerRight: "\u0421\u043E\u0432\u043F\u0430\u0434\u0435\u043D\u0438\u0435 \u043F\u043E\u0441\u043B\u0435 \u043A\u0443\u0440\u0441\u043E\u0440\u0430",
+      hintTriggerEscape: "\\\\: \u043E\u0431\u0440\u0430\u0442\u043D\u0430\u044F \u043A\u043E\u0441\u0430\u044F \u0447\u0435\u0440\u0442\u0430, \\n: \u043D\u043E\u0432\u0430\u044F \u0441\u0442\u0440\u043E\u043A\u0430, \\t: \u0442\u0430\u0431\u0443\u043B\u044F\u0446\u0438\u044F",
       fieldReplacement: "\u0417\u0430\u043C\u0435\u043D\u0430",
       fieldReplacementDescSelectKey: "${SEL}: \u0432\u044B\u0434\u0435\u043B\u0435\u043D\u043D\u044B\u0439 \u0442\u0435\u043A\u0441\u0442, ${0:${SEL}}: \u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u0442\u0435\u043A\u0441\u0442 \u0432\u044B\u0434\u0435\u043B\u0435\u043D\u043D\u044B\u043C.",
       fieldReplacementDescInputDelete: "[[0]]: 0-\u044F \u043B\u0435\u0432\u0430\u044F \u0433\u0440\u0443\u043F\u043F\u0430 \u0437\u0430\u0445\u0432\u0430\u0442\u0430, [[R1]]: 1-\u044F \u043F\u0440\u0430\u0432\u0430\u044F \u0433\u0440\u0443\u043F\u043F\u0430 \u0437\u0430\u0445\u0432\u0430\u0442\u0430.",
-      fieldIsRegex: "\u0420\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u043E\u0435 \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u0435",
+      fieldIsRegex: "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u044B\u0435 \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
       fieldTriggerMode: "\u0420\u0435\u0436\u0438\u043C \u0437\u0430\u043F\u0443\u0441\u043A\u0430",
       fieldScope: "\u041E\u0431\u043B\u0430\u0441\u0442\u044C",
       fieldScopeLanguage: "\u042F\u0437\u044B\u043A (\u043D\u0435\u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E)",
+      fieldRegexFlags: "\u0424\u043B\u0430\u0433\u0438 regex",
+      fieldRegexFlagsDesc: "\u041F\u043E\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u044E\u0442\u0441\u044F \u0442\u043E\u043B\u044C\u043A\u043E i / m / u, \u043D\u0430\u043F\u0440\u0438\u043C\u0435\u0440 im",
       fieldPriority: "\u041F\u0440\u0438\u043E\u0440\u0438\u0442\u0435\u0442",
       fieldPriorityDesc: "\u0427\u0435\u043C \u043C\u0435\u043D\u044C\u0448\u0435 \u0447\u0438\u0441\u043B\u043E, \u0442\u0435\u043C \u0432\u044B\u0448\u0435 \u043F\u0440\u0438\u043E\u0440\u0438\u0442\u0435\u0442, \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E 100",
       fieldDescription: "\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435",
       buttonSave: "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C",
       invalidRegex: "\u041D\u0435\u0434\u043E\u043F\u0443\u0441\u0442\u0438\u043C\u043E\u0435 \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u043E\u0435 \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u0435",
-      fieldIsFunction: "\u0424\u0443\u043D\u043A\u0446\u0438\u044F",
+      fieldIsFunction: "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C \u0444\u0443\u043D\u043A\u0446\u0438\u044E \u0437\u0430\u043C\u0435\u043D\u044B",
       functionHintInputDelete: "\u0410\u0440\u0433\u0443\u043C\u0435\u043D\u0442\u044B: leftMatches (string[]), rightMatches (string[]). \u0412\u0435\u0440\u043D\u0438\u0442\u0435 \u0441\u0442\u0440\u043E\u043A\u0443 \u0438\u043B\u0438 undefined \u0434\u043B\u044F \u043F\u0440\u043E\u043F\u0443\u0441\u043A\u0430.",
       functionHintSelectKey: "\u0410\u0440\u0433\u0443\u043C\u0435\u043D\u0442\u044B: selectionText (string), key (string). \u0412\u0435\u0440\u043D\u0438\u0442\u0435 \u0441\u0442\u0440\u043E\u043A\u0443 \u0438\u043B\u0438 undefined \u0434\u043B\u044F \u043F\u0440\u043E\u043F\u0443\u0441\u043A\u0430.",
-      functionPlaceholder: "// \u041F\u0440\u0438\u043C\u0435\u0440:\nconst d = new Date();\nreturn d.toISOString().slice(0,10) + '$0';"
+      hintTabstop: "$0: \u043F\u043E\u0437\u0438\u0446\u0438\u044F \u043A\u0443\u0440\u0441\u043E\u0440\u0430, $1/$2: \u043F\u043E\u0437\u0438\u0446\u0438\u0438 \u043F\u0435\u0440\u0435\u0445\u043E\u0434\u0430 Tab, ${1:text}: \u043F\u0435\u0440\u0435\u0439\u0442\u0438 \u0438 \u0432\u044B\u0434\u0435\u043B\u0438\u0442\u044C text.",
+      functionPlaceholder: "// \u041F\u0440\u0438\u043C\u0435\u0440:\nconst d = new Date();\nreturn d.toISOString().slice(0,10) + '$0';",
+      groupMatch: "\u0423\u0441\u043B\u043E\u0432\u0438\u044F \u0441\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0438\u044F",
+      groupReplacement: "\u0417\u0430\u043C\u0435\u043D\u0430",
+      groupOther: "\u041F\u0440\u043E\u0447\u0435\u0435"
     },
     ruleType: {
       input: "\u0412\u0432\u043E\u0434",
@@ -2343,10 +2551,6 @@ var locale4 = {
     aboutRegexp: {
       header: "\u0414\u043B\u044F \u0438\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u0438 \u043E \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u044B\u0445 \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u044F\u0445 \u0441\u043C. ",
       text: "Yifeng Nguyen: \u041A\u0440\u0430\u0442\u043A\u043E\u0435 \u0440\u0443\u043A\u043E\u0432\u043E\u0434\u0441\u0442\u0432\u043E \u043F\u043E \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u044B\u043C \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u044F\u043C"
-    },
-    instructionsRegexp: {
-      header: "\u0418\u043D\u0441\u0442\u0440\u0443\u043A\u0446\u0438\u0438 \u0438 \u043F\u0440\u0438\u043C\u0435\u0440\u044B \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u044F \u043F\u0440\u0430\u0432\u0438\u043B \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u044B\u0445 \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u0439: ",
-      text: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0430 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0445 \u043F\u0440\u0430\u0432\u0438\u043B \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u044B\u0445 \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u0439"
     },
     customizeSelectionRule: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0430 \u043F\u0440\u0430\u0432\u0438\u043B\u0430 \u0437\u0430\u043C\u0435\u043D\u044B \u0432\u044B\u0434\u0435\u043B\u0435\u043D\u043D\u043E\u0433\u043E \u0442\u0435\u043A\u0441\u0442\u0430",
     customizeDeleteRule: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0430 \u043F\u0440\u0430\u0432\u0438\u043B\u0430 \u0443\u0434\u0430\u043B\u0435\u043D\u0438\u044F",
@@ -2473,6 +2677,10 @@ var locale5 = {
       name: "\u5165\u529B\u6642\u306E\u81EA\u52D5\u66F8\u5F0F\u8A2D\u5B9A",
       desc: "\u30C9\u30AD\u30E5\u30E1\u30F3\u30C8\u7DE8\u96C6\u4E2D\u306E\u30C6\u30AD\u30B9\u30C8\u81EA\u52D5\u66F8\u5F0F\u8A2D\u5B9A\u3092\u5207\u308A\u66FF\u3048\u307E\u3059\u3002"
     },
+    autoFormatPaste: {
+      name: "\u8CBC\u308A\u4ED8\u3051\u6642\u306E\u81EA\u52D5\u66F8\u5F0F\u8A2D\u5B9A",
+      desc: "\u8CBC\u308A\u4ED8\u3051\u6642\u306E\u81EA\u52D5\u66F8\u5F0F\u8A2D\u5B9A\u3092\u5207\u308A\u66FF\u3048\u307E\u3059\u3002CMD/CTRL+SHIFT+V\uFF08\u66F8\u5F0F\u306A\u3057\u8CBC\u308A\u4ED8\u3051\uFF09\u3067\u306F\u30C8\u30EA\u30AC\u30FC\u3055\u308C\u307E\u305B\u3093\u3002"
+    },
     languagePairSpacing: {
       name: "\u8A00\u8A9E\u30DA\u30A2\u30B9\u30DA\u30FC\u30B7\u30F3\u30B0",
       desc: "\u7570\u306A\u308B\u8A00\u8A9E/\u8A18\u53F7\u30DA\u30A2\u9593\u306E\u81EA\u52D5\u30B9\u30DA\u30FC\u30B7\u30F3\u30B0\u30EB\u30FC\u30EB\u3092\u5B9A\u7FA9\u3057\u307E\u3059\u3002"
@@ -2483,9 +2691,9 @@ var locale5 = {
     },
     softSpaceSymbols: {
       leftName: "\u30AB\u30B9\u30BF\u30E0\u5DE6\u5074\u30BD\u30D5\u30C8\u30B9\u30DA\u30FC\u30B9\u8A18\u53F7",
-      leftDesc: "\u4E00\u822C\u7684\u306A\u5168\u89D2\u53E5\u8AAD\u70B9\u306F\u5185\u8535\u3055\u308C\u3066\u3044\u307E\u3059\u3002\u3053\u3053\u306B\u8FFD\u52A0\u306E\u8A18\u53F7\u3092\u8FFD\u52A0\u3057\u3066\u304F\u3060\u3055\u3044\uFF08\u4F8B\uFF1A-\uFF09\u3002",
+      leftDesc: `\u4E00\u822C\u7684\u306A\u5168\u89D2\u53E5\u8AAD\u70B9\u3001\u82F1\u8A9E\u306E\u5F15\u7528\u7B26\uFF08' "\uFF09\u3001\u304A\u3088\u3073\u958B\u304D\u62EC\u5F27\uFF08[ ( {\uFF09\u306F\u5185\u8535\u3055\u308C\u3066\u3044\u307E\u3059\u3002\u3053\u3053\u306B\u8FFD\u52A0\u306E\u5DE6\u5074\u8A18\u53F7\u3092\u8FFD\u52A0\u3057\u3066\u304F\u3060\u3055\u3044\uFF08\u4F8B\uFF1A-\uFF09\u3002`,
       rightName: "\u30AB\u30B9\u30BF\u30E0\u53F3\u5074\u30BD\u30D5\u30C8\u30B9\u30DA\u30FC\u30B9\u8A18\u53F7",
-      rightDesc: "\u4E00\u822C\u7684\u306A\u5168\u89D2\u53E5\u8AAD\u70B9\u306F\u5185\u8535\u3055\u308C\u3066\u3044\u307E\u3059\u3002\u3053\u3053\u306B\u8FFD\u52A0\u306E\u8A18\u53F7\u3092\u8FFD\u52A0\u3057\u3066\u304F\u3060\u3055\u3044\uFF08\u4F8B\uFF1A-\uFF09\u3002"
+      rightDesc: `\u4E00\u822C\u7684\u306A\u5168\u89D2\u53E5\u8AAD\u70B9\u3001\u82F1\u8A9E\u306E\u5F15\u7528\u7B26\uFF08' "\uFF09\u3001\u9589\u3058\u62EC\u5F27\uFF08] ) }\uFF09\u3001\u304A\u3088\u3073\u82F1\u8A9E\u306E\u534A\u89D2\u53E5\u8AAD\u70B9\uFF08. , ? ! : ;\uFF09\u306F\u53F3\u5074\u30BD\u30D5\u30C8\u30B9\u30DA\u30FC\u30B9\u8A18\u53F7\u3068\u3057\u3066\u5185\u8535\u3055\u308C\u3066\u3044\u307E\u3059\u3002\u3053\u3053\u306B\u8FFD\u52A0\u306E\u53F3\u5074\u8A18\u53F7\u3092\u8FFD\u52A0\u3057\u3066\u304F\u3060\u3055\u3044\uFF08\u4F8B\uFF1A-\uFF09\u3002`
     },
     customScriptCategories: {
       name: "\u30AB\u30B9\u30BF\u30E0\u6587\u5B57\u30AB\u30C6\u30B4\u30EA",
@@ -2515,7 +2723,11 @@ var locale5 = {
     },
     userDefinedRegexp: {
       name: "\u30E6\u30FC\u30B6\u30FC\u5B9A\u7FA9\u6B63\u898F\u8868\u73FE\uFF081\u884C\u306B1\u3064\uFF09",
-      desc: "\u30E6\u30FC\u30B6\u30FC\u5B9A\u7FA9\u306E\u6B63\u898F\u8868\u73FE\u3067\u3001\u30DE\u30C3\u30C1\u3057\u305F\u30B3\u30F3\u30C6\u30F3\u30C4\u306F\u66F8\u5F0F\u8A2D\u5B9A\u3055\u308C\u307E\u305B\u3093\u30021\u884C\u306B1\u3064\u306E\u5F0F\u3092\u8A18\u8FF0\u3057\u3001\u884C\u672B\u306B\u30B9\u30DA\u30FC\u30B9\u3092\u8FFD\u52A0\u3057\u306A\u3044\u3067\u304F\u3060\u3055\u3044\u3002\u5404\u884C\u306E\u672B\u5C3E3\u6587\u5B57\u306F | \u30682\u3064\u306E\u30B9\u30DA\u30FC\u30B7\u30F3\u30B0\u6226\u7565\u8A18\u53F7\u3067\u56FA\u5B9A\u3055\u308C\u307E\u3059\u3002\u30B9\u30DA\u30FC\u30B7\u30F3\u30B0\u6226\u7565\u8A18\u53F7\u306F - = + \u3067\u3001\u305D\u308C\u305E\u308C\u30B9\u30DA\u30FC\u30B9\u4E0D\u8981(-)\u3001\u30BD\u30D5\u30C8\u30B9\u30DA\u30FC\u30B9(=)\u3001\u53B3\u5BC6\u30B9\u30DA\u30FC\u30B9(+)\u3092\u610F\u5473\u3057\u307E\u3059\u3002\u3053\u308C\u30892\u3064\u306E\u30B9\u30DA\u30FC\u30B7\u30F3\u30B0\u6226\u7565\u8A18\u53F7\u306F\u3001\u30DE\u30C3\u30C1\u30D6\u30ED\u30C3\u30AF\u306E\u5DE6\u53F3\u306E\u30B9\u30DA\u30FC\u30B7\u30F3\u30B0\u6226\u7565\u3067\u3059\u3002"
+      desc: "\u30E6\u30FC\u30B6\u30FC\u5B9A\u7FA9\u306E\u6B63\u898F\u8868\u73FE\u3067\u3001\u30DE\u30C3\u30C1\u3057\u305F\u30B3\u30F3\u30C6\u30F3\u30C4\u306F\u66F8\u5F0F\u8A2D\u5B9A\u3055\u308C\u307E\u305B\u3093\u30021\u884C\u306B1\u3064\u306E\u5F0F\u3092\u8A18\u8FF0\u3057\u3001\u884C\u672B\u306B\u30B9\u30DA\u30FC\u30B9\u3092\u8FFD\u52A0\u3057\u306A\u3044\u3067\u304F\u3060\u3055\u3044\u3002\u5404\u884C\u306E\u672B\u5C3E3\u6587\u5B57\u306F | \u30682\u3064\u306E\u30B9\u30DA\u30FC\u30B7\u30F3\u30B0\u6226\u7565\u8A18\u53F7\u3067\u56FA\u5B9A\u3055\u308C\u307E\u3059\u3002\u30B9\u30DA\u30FC\u30B7\u30F3\u30B0\u6226\u7565\u8A18\u53F7\u306F - = + \u3067\u3001\u305D\u308C\u305E\u308C\u30B9\u30DA\u30FC\u30B9\u4E0D\u8981(-)\u3001\u30BD\u30D5\u30C8\u30B9\u30DA\u30FC\u30B9(=)\u3001\u53B3\u5BC6\u30B9\u30DA\u30FC\u30B9(+)\u3092\u610F\u5473\u3057\u307E\u3059\u3002\u3053\u308C\u30892\u3064\u306E\u30B9\u30DA\u30FC\u30B7\u30F3\u30B0\u6226\u7565\u8A18\u53F7\u306F\u3001\u30DE\u30C3\u30C1\u30D6\u30ED\u30C3\u30AF\u306E\u5DE6\u53F3\u306E\u30B9\u30DA\u30FC\u30B7\u30F3\u30B0\u6226\u7565\u3067\u3059\u3002// \u3067\u59CB\u307E\u308B\u884C\u306F\u30B3\u30E1\u30F3\u30C8\u3068\u3057\u3066\u6271\u308F\u308C\u307E\u3059\u3002"
+    },
+    userRulesRespectUserDefinedRegexBlocks: {
+      name: "\u30E6\u30FC\u30B6\u30FC\u30EB\u30FC\u30EB\u306F\u30AB\u30B9\u30BF\u30E0\u6B63\u898F\u8868\u73FE\u30D6\u30ED\u30C3\u30AF\u3092\u5C0A\u91CD",
+      desc: "\u6709\u52B9\u6642\u3001\u30AB\u30B9\u30BF\u30E0\u6B63\u898F\u8868\u73FE\u30D6\u30ED\u30C3\u30AF\u306B\u30DE\u30C3\u30C1\u3057\u305F\u30C6\u30AD\u30B9\u30C8\u306F\u81EA\u52D5\u30E6\u30FC\u30B6\u30FC\u30EB\u30FC\u30EB\u3092\u30C8\u30EA\u30AC\u30FC\u3057\u307E\u305B\u3093\u3002"
     },
     excludeFoldersFiles: {
       name: "\u9664\u5916\u30D5\u30A9\u30EB\u30C0/\u30D5\u30A1\u30A4\u30EB",
@@ -2544,6 +2756,14 @@ var locale5 = {
     printDebugInfo: {
       name: "\u30B3\u30F3\u30BD\u30FC\u30EB\u306B\u30C7\u30D0\u30C3\u30B0\u60C5\u5831\u3092\u51FA\u529B",
       desc: "\u30B3\u30F3\u30BD\u30FC\u30EB\u306B\u30C7\u30D0\u30C3\u30B0\u60C5\u5831\u3092\u51FA\u529B\u3057\u307E\u3059\u3002"
+    },
+    rulesStoragePath: {
+      name: "\u30EB\u30FC\u30EB\u30D5\u30A1\u30A4\u30EB\u306E\u4FDD\u5B58\u30D1\u30B9",
+      desc: "\u30EB\u30FC\u30EB\u30D5\u30A1\u30A4\u30EB\u306E\u4FDD\u5B58\u30D1\u30B9\u3092\u8A2D\u5B9A\u3057\u307E\u3059\uFF08\u30DC\u30EB\u30C8\u30EB\u30FC\u30C8\u304B\u3089\u306E\u76F8\u5BFE\u30D1\u30B9\uFF09\u3002\u30C7\u30D5\u30A9\u30EB\u30C8\u3092\u9078\u629E\u3059\u308B\u3068\u30D7\u30E9\u30B0\u30A4\u30F3\u30C7\u30A3\u30EC\u30AF\u30C8\u30EA\u306B\u4FDD\u5B58\u3055\u308C\u307E\u3059",
+      defaultOption: "\u30C7\u30D5\u30A9\u30EB\u30C8\uFF08\u30D7\u30E9\u30B0\u30A4\u30F3\u30C7\u30A3\u30EC\u30AF\u30C8\u30EA\uFF09",
+      migrateButton: "\u79FB\u884C",
+      migrateDesc: "\u524D\u56DE\u8AAD\u307F\u8FBC\u3093\u3060\u30D1\u30B9\u304B\u3089\u73FE\u5728\u306E\u30D1\u30B9\u306B\u30EB\u30FC\u30EB\u30D5\u30A1\u30A4\u30EB\u3092\u79FB\u884C\u3057\u307E\u3059",
+      migrateSuccess: "\u30EB\u30FC\u30EB\u30D5\u30A1\u30A4\u30EB\u306E\u79FB\u884C\u304C\u5B8C\u4E86\u3057\u307E\u3057\u305F"
     },
     selectionReplaceRule: {
       name: "\u9078\u629E\u7F6E\u63DB\u30EB\u30FC\u30EB",
@@ -2579,22 +2799,29 @@ var locale5 = {
       fieldTrigger: "\u30AB\u30FC\u30BD\u30EB\u524D\u30DE\u30C3\u30C1",
       fieldTriggerSelectKey: "\u30C8\u30EA\u30AC\u30FC\u30AD\u30FC",
       fieldTriggerRight: "\u30AB\u30FC\u30BD\u30EB\u5F8C\u30DE\u30C3\u30C1",
+      hintTriggerEscape: "\\\\: \u30D0\u30C3\u30AF\u30B9\u30E9\u30C3\u30B7\u30E5\u3001\\n: \u6539\u884C\u3001\\t: \u30BF\u30D6",
       fieldReplacement: "\u7F6E\u63DB\u5185\u5BB9",
       fieldReplacementDescSelectKey: "${SEL}: \u9078\u629E\u3055\u308C\u305F\u30C6\u30AD\u30B9\u30C8\u3001${0:${SEL}}: \u30C6\u30AD\u30B9\u30C8\u3092\u9078\u629E\u3057\u307E\u3059\u3002",
       fieldReplacementDescInputDelete: "[[0]]: \u5DE6\u5074\u7B2C0\u30AD\u30E3\u30D7\u30C1\u30E3\u30B0\u30EB\u30FC\u30D7\u3001[[R1]]: \u53F3\u5074\u7B2C1\u30AD\u30E3\u30D7\u30C1\u30E3\u30B0\u30EB\u30FC\u30D7\u3002",
-      fieldIsRegex: "\u6B63\u898F\u8868\u73FE",
+      fieldIsRegex: "\u6B63\u898F\u8868\u73FE\u3067\u30DE\u30C3\u30C1",
       fieldTriggerMode: "\u30C8\u30EA\u30AC\u30FC\u65B9\u5F0F",
       fieldScope: "\u30B9\u30B3\u30FC\u30D7",
       fieldScopeLanguage: "\u8A00\u8A9E\uFF08\u4EFB\u610F\uFF09",
+      fieldRegexFlags: "\u6B63\u898F\u8868\u73FE\u30D5\u30E9\u30B0",
+      fieldRegexFlagsDesc: "i / m / u \u306E\u307F\u5BFE\u5FDC\u3002\u4F8B: im",
       fieldPriority: "\u512A\u5148\u5EA6",
       fieldPriorityDesc: "\u6570\u5024\u304C\u5C0F\u3055\u3044\u307B\u3069\u512A\u5148\u5EA6\u304C\u9AD8\u3044\u3001\u30C7\u30D5\u30A9\u30EB\u30C8100",
       fieldDescription: "\u8AAC\u660E",
       buttonSave: "\u4FDD\u5B58",
       invalidRegex: "\u7121\u52B9\u306A\u6B63\u898F\u8868\u73FE",
-      fieldIsFunction: "\u95A2\u6570\u7F6E\u63DB",
+      fieldIsFunction: "\u95A2\u6570\u3067\u7F6E\u63DB",
       functionHintInputDelete: "\u5F15\u6570: leftMatches (string[])\u3001rightMatches (string[])\u3002\u6587\u5B57\u5217\u307E\u305F\u306F undefined \u3092\u8FD4\u3057\u3066\u30B9\u30AD\u30C3\u30D7\u3002",
       functionHintSelectKey: "\u5F15\u6570: selectionText (string)\u3001key (string)\u3002\u6587\u5B57\u5217\u307E\u305F\u306F undefined \u3092\u8FD4\u3057\u3066\u30B9\u30AD\u30C3\u30D7\u3002",
-      functionPlaceholder: "// \u4F8B:\nconst d = new Date();\nreturn d.toISOString().slice(0,10) + '$0';"
+      hintTabstop: "$0: \u30AB\u30FC\u30BD\u30EB\u4F4D\u7F6E\u3001$1/$2: Tab \u30B8\u30E3\u30F3\u30D7\u4F4D\u7F6E\u3001${1:text}: \u30B8\u30E3\u30F3\u30D7\u3057\u3066 text \u3092\u9078\u629E\u3002",
+      functionPlaceholder: "// \u4F8B:\nconst d = new Date();\nreturn d.toISOString().slice(0,10) + '$0';",
+      groupMatch: "\u30DE\u30C3\u30C1\u6761\u4EF6",
+      groupReplacement: "\u7F6E\u63DB",
+      groupOther: "\u305D\u306E\u4ED6"
     },
     ruleType: {
       input: "\u5165\u529B",
@@ -2632,10 +2859,6 @@ var locale5 = {
     aboutRegexp: {
       header: "\u6B63\u898F\u8868\u73FE\u306B\u3064\u3044\u3066\u306E\u8A73\u7D30\u306F\u4EE5\u4E0B\u3092\u53C2\u7167\u3057\u3066\u304F\u3060\u3055\u3044\uFF1A",
       text: "\u6B63\u898F\u8868\u73FE\u306E\u7C21\u6F54\u306A\u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB"
-    },
-    instructionsRegexp: {
-      header: "\u6B63\u898F\u8868\u73FE\u30EB\u30FC\u30EB\u306E\u4F7F\u7528\u65B9\u6CD5\u3068\u4F8B\uFF1A",
-      text: "\u6B63\u898F\u8868\u73FE\u30EB\u30FC\u30EB\u306E\u30AB\u30B9\u30BF\u30DE\u30A4\u30BA"
     },
     customizeSelectionRule: "\u9078\u629E\u7F6E\u63DB\u30EB\u30FC\u30EB\u306E\u30AB\u30B9\u30BF\u30DE\u30A4\u30BA",
     customizeDeleteRule: "\u524A\u9664\u30EB\u30FC\u30EB\u306E\u30AB\u30B9\u30BF\u30DE\u30A4\u30BA",
@@ -2762,6 +2985,10 @@ var locale6 = {
       name: "\uC785\uB825 \uC2DC \uC790\uB3D9 \uC11C\uC2DD",
       desc: "\uBB38\uC11C \uD3B8\uC9D1 \uC911 \uD14D\uC2A4\uD2B8 \uC790\uB3D9 \uC11C\uC2DD \uC9C0\uC815\uC744 \uCF1C\uAC70\uB098 \uB055\uB2C8\uB2E4."
     },
+    autoFormatPaste: {
+      name: "\uBD99\uC5EC\uB123\uAE30 \uC2DC \uC790\uB3D9 \uC11C\uC2DD",
+      desc: "\uBD99\uC5EC\uB123\uAE30 \uC2DC \uC790\uB3D9 \uC11C\uC2DD\uC744 \uCF1C\uAC70\uB098 \uB055\uB2C8\uB2E4. CMD/CTRL+SHIFT+V(\uC11C\uC2DD \uC5C6\uC774 \uBD99\uC5EC\uB123\uAE30)\uC5D0\uC11C\uB294 \uC791\uB3D9\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
+    },
     languagePairSpacing: {
       name: "\uC5B8\uC5B4 \uC30D \uAC04\uACA9",
       desc: "\uC11C\uB85C \uB2E4\uB978 \uC5B8\uC5B4/\uAE30\uD638 \uC30D \uC0AC\uC774\uC758 \uC790\uB3D9 \uAC04\uACA9 \uADDC\uCE59\uC744 \uC815\uC758\uD569\uB2C8\uB2E4."
@@ -2772,9 +2999,9 @@ var locale6 = {
     },
     softSpaceSymbols: {
       leftName: "\uC0AC\uC6A9\uC790 \uC815\uC758 \uC67C\uCABD \uC18C\uD504\uD2B8 \uC2A4\uD398\uC774\uC2A4 \uAE30\uD638",
-      leftDesc: "\uC77C\uBC18\uC801\uC778 \uC804\uAC01 \uBB38\uC7A5\uBD80\uD638\uB294 \uB0B4\uC7A5\uB418\uC5B4 \uC788\uC2B5\uB2C8\uB2E4. \uC5EC\uAE30\uC5D0 \uCD94\uAC00 \uAE30\uD638\uB97C \uCD94\uAC00\uD558\uC138\uC694 (\uC608: -).",
+      leftDesc: `\uC77C\uBC18\uC801\uC778 \uC804\uAC01 \uBB38\uC7A5\uBD80\uD638, \uC601\uBB38 \uC778\uC6A9\uBD80\uD638(' "), \uC5EC\uB294 \uAD04\uD638([ ( {)\uAC00 \uB0B4\uC7A5\uB418\uC5B4 \uC788\uC2B5\uB2C8\uB2E4. \uC5EC\uAE30\uC5D0 \uCD94\uAC00 \uC67C\uCABD \uAE30\uD638\uB97C \uCD94\uAC00\uD558\uC138\uC694 (\uC608: -).`,
       rightName: "\uC0AC\uC6A9\uC790 \uC815\uC758 \uC624\uB978\uCABD \uC18C\uD504\uD2B8 \uC2A4\uD398\uC774\uC2A4 \uAE30\uD638",
-      rightDesc: "\uC77C\uBC18\uC801\uC778 \uC804\uAC01 \uBB38\uC7A5\uBD80\uD638\uB294 \uB0B4\uC7A5\uB418\uC5B4 \uC788\uC2B5\uB2C8\uB2E4. \uC5EC\uAE30\uC5D0 \uCD94\uAC00 \uAE30\uD638\uB97C \uCD94\uAC00\uD558\uC138\uC694 (\uC608: -)."
+      rightDesc: `\uC77C\uBC18\uC801\uC778 \uC804\uAC01 \uBB38\uC7A5\uBD80\uD638, \uC601\uBB38 \uC778\uC6A9\uBD80\uD638(' "), \uB2EB\uB294 \uAD04\uD638(] ) }), \uADF8\uB9AC\uACE0 \uC601\uBB38 \uBC18\uAC01 \uBB38\uC7A5\uBD80\uD638(. , ? ! : ;)\uAC00 \uC624\uB978\uCABD \uC18C\uD504\uD2B8 \uC2A4\uD398\uC774\uC2A4 \uAE30\uD638\uB85C \uB0B4\uC7A5\uB418\uC5B4 \uC788\uC2B5\uB2C8\uB2E4. \uC5EC\uAE30\uC5D0 \uCD94\uAC00 \uC624\uB978\uCABD \uAE30\uD638\uB97C \uCD94\uAC00\uD558\uC138\uC694 (\uC608: -).`
     },
     customScriptCategories: {
       name: "\uC0AC\uC6A9\uC790 \uC815\uC758 \uBB38\uC790 \uBC94\uC8FC",
@@ -2804,7 +3031,11 @@ var locale6 = {
     },
     userDefinedRegexp: {
       name: "\uC0AC\uC6A9\uC790 \uC815\uC758 \uC815\uADDC\uC2DD, \uD55C \uC904\uC5D0 \uD558\uB098\uC529",
-      desc: "\uC0AC\uC6A9\uC790 \uC815\uC758 \uC815\uADDC\uC2DD\uC73C\uB85C \uB9E4\uCE6D\uB41C \uCF58\uD150\uCE20\uB294 \uC11C\uC2DD\uC774 \uC801\uC6A9\uB418\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. \uD55C \uC904\uC5D0 \uD558\uB098\uC529 \uC791\uC131\uD558\uBA70, \uC904 \uB05D\uC5D0 \uACF5\uBC31\uC744 \uCD94\uAC00\uD558\uC9C0 \uB9C8\uC138\uC694.\uAC01 \uC904\uC758 \uB9C8\uC9C0\uB9C9 3\uC790\uB294 |\uC640 \uB450 \uAC1C\uC758 \uAC04\uACA9 \uC804\uB7B5 \uAE30\uD638\uB85C \uACE0\uC815\uB429\uB2C8\uB2E4. \uAC04\uACA9 \uC804\uB7B5 \uAE30\uD638\uB294 - = +\uC774\uBA70, \uAC01\uAC01 \uAC04\uACA9 \uBD88\uD544\uC694(-), \uC18C\uD504\uD2B8 \uC2A4\uD398\uC774\uC2A4(=), \uC5C4\uACA9\uD55C \uC2A4\uD398\uC774\uC2A4(+)\uB97C \uC758\uBBF8\uD569\uB2C8\uB2E4.\uC774 \uB450 \uAC04\uACA9 \uC804\uB7B5 \uAE30\uD638\uB294 \uB9E4\uCE6D \uBE14\uB85D\uC758 \uC67C\uCABD\uACFC \uC624\uB978\uCABD\uC758 \uAC04\uACA9 \uC804\uB7B5\uC785\uB2C8\uB2E4."
+      desc: "\uC0AC\uC6A9\uC790 \uC815\uC758 \uC815\uADDC\uC2DD\uC73C\uB85C \uB9E4\uCE6D\uB41C \uCF58\uD150\uCE20\uB294 \uC11C\uC2DD\uC774 \uC801\uC6A9\uB418\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. \uD55C \uC904\uC5D0 \uD558\uB098\uC529 \uC791\uC131\uD558\uBA70, \uC904 \uB05D\uC5D0 \uACF5\uBC31\uC744 \uCD94\uAC00\uD558\uC9C0 \uB9C8\uC138\uC694.\uAC01 \uC904\uC758 \uB9C8\uC9C0\uB9C9 3\uC790\uB294 |\uC640 \uB450 \uAC1C\uC758 \uAC04\uACA9 \uC804\uB7B5 \uAE30\uD638\uB85C \uACE0\uC815\uB429\uB2C8\uB2E4. \uAC04\uACA9 \uC804\uB7B5 \uAE30\uD638\uB294 - = +\uC774\uBA70, \uAC01\uAC01 \uAC04\uACA9 \uBD88\uD544\uC694(-), \uC18C\uD504\uD2B8\uC6E8\uC5B4 \uC2A4\uD398\uC774\uC2A4(=), \uC5C4\uACA9\uD55C \uC2A4\uD398\uC774\uC2A4(+)\uB97C \uC758\uBBF8\uD569\uB2C8\uB2E4.\uC774 \uB450 \uAC04\uACA9 \uC804\uB7B5 \uAE30\uD638\uB294 \uB9E4\uCE6D \uBE14\uB85D\uC758 \uC67C\uCABD\uACFC \uC624\uB978\uCABD\uC758 \uAC04\uACA9 \uC804\uB7B5\uC785\uB2C8\uB2E4. // \uB85C \uC2DC\uC791\uD558\uB294 \uC904\uC740 \uC8FC\uC11D\uC73C\uB85C \uCC98\uB9AC\uB429\uB2C8\uB2E4."
+    },
+    userRulesRespectUserDefinedRegexBlocks: {
+      name: "\uC0AC\uC6A9\uC790 \uADDC\uCE59\uC774 \uCEE4\uC2A4\uD140 \uC815\uADDC\uC2DD \uBE14\uB85D\uC744 \uC900\uC218",
+      desc: "\uD65C\uC131\uD654 \uC2DC \uCEE4\uC2A4\uD140 \uC815\uADDC\uC2DD \uBE14\uB85D\uC5D0 \uB9E4\uCE6D\uB41C \uD14D\uC2A4\uD2B8\uB294 \uC790\uB3D9 \uC0AC\uC6A9\uC790 \uADDC\uCE59\uC744 \uD2B8\uB9AC\uAC70\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
     },
     excludeFoldersFiles: {
       name: "\uC81C\uC678 \uD3F4\uB354/\uD30C\uC77C",
@@ -2833,6 +3064,14 @@ var locale6 = {
     printDebugInfo: {
       name: "\uCF58\uC194\uC5D0 \uB514\uBC84\uADF8 \uC815\uBCF4 \uCD9C\uB825",
       desc: "\uCF58\uC194\uC5D0 \uB514\uBC84\uADF8 \uC815\uBCF4\uB97C \uCD9C\uB825\uD569\uB2C8\uB2E4."
+    },
+    rulesStoragePath: {
+      name: "\uADDC\uCE59 \uD30C\uC77C \uC800\uC7A5 \uACBD\uB85C",
+      desc: "\uADDC\uCE59 \uD30C\uC77C\uC758 \uC800\uC7A5 \uACBD\uB85C\uB97C \uC124\uC815\uD569\uB2C8\uB2E4 (\uBCFC\uD2B8 \uB8E8\uD2B8 \uAE30\uC900 \uC0C1\uB300 \uACBD\uB85C). \uAE30\uBCF8\uAC12\uC744 \uC120\uD0DD\uD558\uBA74 \uD50C\uB7EC\uADF8\uC778 \uB514\uB809\uD130\uB9AC\uC5D0 \uC800\uC7A5\uB429\uB2C8\uB2E4",
+      defaultOption: "\uAE30\uBCF8\uAC12 (\uD50C\uB7EC\uADF8\uC778 \uB514\uB809\uD130\uB9AC)",
+      migrateButton: "\uB9C8\uC774\uADF8\uB808\uC774\uC158",
+      migrateDesc: "\uC774\uC804\uC5D0 \uB85C\uB4DC\uD55C \uACBD\uB85C\uC5D0\uC11C \uD604\uC7AC \uACBD\uB85C\uB85C \uADDC\uCE59 \uD30C\uC77C\uC744 \uB9C8\uC774\uADF8\uB808\uC774\uC158\uD569\uB2C8\uB2E4",
+      migrateSuccess: "\uADDC\uCE59 \uD30C\uC77C\uC774 \uC131\uACF5\uC801\uC73C\uB85C \uB9C8\uC774\uADF8\uB808\uC774\uC158\uB418\uC5C8\uC2B5\uB2C8\uB2E4"
     },
     selectionReplaceRule: {
       name: "\uC120\uD0DD \uB300\uCCB4 \uADDC\uCE59",
@@ -2868,22 +3107,29 @@ var locale6 = {
       fieldTrigger: "\uCEE4\uC11C \uC55E \uB9E4\uCE6D",
       fieldTriggerSelectKey: "\uD2B8\uB9AC\uAC70 \uD0A4",
       fieldTriggerRight: "\uCEE4\uC11C \uB4A4 \uB9E4\uCE6D",
+      hintTriggerEscape: "\\\\: \uBC31\uC2AC\uB798\uC2DC, \\n: \uC904\uBC14\uAFC8, \\t: \uD0ED",
       fieldReplacement: "\uB300\uCCB4 \uB0B4\uC6A9",
       fieldReplacementDescSelectKey: "${SEL}: \uC120\uD0DD\uB41C \uD14D\uC2A4\uD2B8, ${0:${SEL}}: \uD14D\uC2A4\uD2B8\uB97C \uC120\uD0DD\uD569\uB2C8\uB2E4.",
       fieldReplacementDescInputDelete: "[[0]]: \uC67C\uCABD 0\uBC88\uC9F8 \uCEA1\uCC98 \uADF8\uB8F9, [[R1]]: \uC624\uB978\uCABD 1\uBC88\uC9F8 \uCEA1\uCC98 \uADF8\uB8F9.",
-      fieldIsRegex: "\uC815\uADDC\uC2DD \uC0AC\uC6A9",
+      fieldIsRegex: "\uC815\uADDC\uC2DD\uC73C\uB85C \uB9E4\uCE6D",
       fieldTriggerMode: "\uD2B8\uB9AC\uAC70 \uBC29\uC2DD",
       fieldScope: "\uBC94\uC704",
       fieldScopeLanguage: "\uC5B8\uC5B4 (\uC120\uD0DD\uC0AC\uD56D)",
+      fieldRegexFlags: "\uC815\uADDC\uC2DD \uD50C\uB798\uADF8",
+      fieldRegexFlagsDesc: "i / m / u \uB9CC \uC9C0\uC6D0, \uC608: im",
       fieldPriority: "\uC6B0\uC120\uC21C\uC704",
       fieldPriorityDesc: "\uC22B\uC790\uAC00 \uC791\uC744\uC218\uB85D \uC6B0\uC120\uC21C\uC704\uAC00 \uB192\uC74C, \uAE30\uBCF8\uAC12 100",
       fieldDescription: "\uC124\uBA85",
       buttonSave: "\uC800\uC7A5",
       invalidRegex: "\uC720\uD6A8\uD558\uC9C0 \uC54A\uC740 \uC815\uADDC\uC2DD",
-      fieldIsFunction: "\uD568\uC218 \uB300\uCCB4",
+      fieldIsFunction: "\uD568\uC218\uB85C \uB300\uCCB4",
       functionHintInputDelete: "\uC778\uC218: leftMatches (string[]), rightMatches (string[]). \uBB38\uC790\uC5F4 \uB610\uB294 undefined\uB97C \uBC18\uD658\uD558\uC5EC \uAC74\uB108\uB701\uB2C8\uB2E4.",
       functionHintSelectKey: "\uC778\uC218: selectionText (string), key (string). \uBB38\uC790\uC5F4 \uB610\uB294 undefined\uB97C \uBC18\uD658\uD558\uC5EC \uAC74\uB108\uB701\uB2C8\uB2E4.",
-      functionPlaceholder: "// \uC608\uC2DC:\nconst d = new Date();\nreturn d.toISOString().slice(0,10) + '$0';"
+      hintTabstop: "$0: \uCEE4\uC11C \uC704\uCE58, $1/$2: Tab \uC810\uD504 \uC704\uCE58, ${1:text}: \uC810\uD504 \uD6C4 text \uC120\uD0DD.",
+      functionPlaceholder: "// \uC608\uC2DC:\nconst d = new Date();\nreturn d.toISOString().slice(0,10) + '$0';",
+      groupMatch: "\uB9E4\uCE6D \uC870\uAC74",
+      groupReplacement: "\uB300\uCCB4",
+      groupOther: "\uAE30\uD0C0"
     },
     ruleType: {
       input: "\uC785\uB825",
@@ -2921,10 +3167,6 @@ var locale6 = {
     aboutRegexp: {
       header: "\uC815\uADDC\uC2DD\uC5D0 \uB300\uD55C \uC790\uC138\uD55C \uB0B4\uC6A9\uC740 \uB2E4\uC74C\uC744 \uCC38\uC870\uD558\uC138\uC694: ",
       text: "\uC815\uADDC\uC2DD \uAC04\uACB0 \uD29C\uD1A0\uB9AC\uC5BC"
-    },
-    instructionsRegexp: {
-      header: "\uC815\uADDC\uC2DD \uADDC\uCE59 \uC0AC\uC6A9 \uC548\uB0B4 \uBC0F \uC608\uC2DC: ",
-      text: "\uC815\uADDC\uC2DD \uADDC\uCE59 \uC0AC\uC6A9\uC790 \uC815\uC758"
     },
     customizeSelectionRule: "\uC120\uD0DD \uB300\uCCB4 \uADDC\uCE59 \uC0AC\uC6A9\uC790 \uC815\uC758",
     customizeDeleteRule: "\uC0AD\uC81C \uADDC\uCE59 \uC0AC\uC6A9\uC790 \uC815\uC758",
@@ -3079,31 +3321,40 @@ var RuleEngine = class {
     }
     return { type, triggerMode, isRegex, isFunctionReplacement, scope };
   }
+  static normalizeRegexFlags(flags = "") {
+    const normalized = flags.toLowerCase().replace(/[^imu]/g, "");
+    return Array.from(new Set(normalized.split(""))).sort((a, b) => "imu".indexOf(a) - "imu".indexOf(b)).join("");
+  }
   static validateRegex(rule) {
     var _a;
     const opts = RuleEngine.parseOptions(rule.options);
     if (!opts.isRegex)
       return null;
+    const regexFlags = RuleEngine.normalizeRegexFlags(rule.regex_flags);
     const leftPattern = rule.trigger;
     const rightPattern = (_a = rule.trigger_right) != null ? _a : "";
     if (leftPattern) {
       try {
-        new RegExp("(?:" + leftPattern + ")$");
+        new RegExp("(?:" + leftPattern + ")", regexFlags);
       } catch (e) {
         return `trigger: ${e.message}`;
       }
     }
     if (rightPattern) {
       try {
-        new RegExp("^(?:" + rightPattern + ")");
+        new RegExp("(?:" + rightPattern + ")", regexFlags);
       } catch (e) {
         return `trigger_right: ${e.message}`;
       }
     }
     return null;
   }
-  static escapeText(text) {
-    return text.replace(/\n/g, "\\n").replace(/\t/g, "\\t").replace(/\r/g, "\\r");
+  static escapeText(text, preserveBackslashes = false) {
+    let result = text;
+    if (!preserveBackslashes) {
+      result = result.replace(/\\/g, "\\\\");
+    }
+    return result.replace(/\n/g, "\\n").replace(/\t/g, "\\t").replace(/\r/g, "\\r");
   }
   static unescapeText(text) {
     let result = "";
@@ -3174,6 +3425,7 @@ var RuleEngine = class {
         triggerKeys: RuleEngine.parseSelectKeyRuleTriggerKeys(simple.trigger),
         scope: opts.scope,
         scopeLanguage: simple.scope_language,
+        regexFlags: void 0,
         priority: (_e = simple.priority) != null ? _e : 100,
         match: { left: "", right: "", isRegex: false },
         replacement
@@ -3188,6 +3440,7 @@ var RuleEngine = class {
       triggerKeys: void 0,
       scope: opts.scope,
       scopeLanguage: simple.scope_language,
+      regexFlags: opts.isRegex ? RuleEngine.normalizeRegexFlags(simple.regex_flags) : void 0,
       priority: (_h = simple.priority) != null ? _h : 100,
       match: {
         left: simple.trigger,
@@ -3240,7 +3493,7 @@ var RuleEngine = class {
     const existing = this.rulesById.get(id);
     if (!existing)
       return false;
-    if (patch.match !== void 0 || patch.type !== void 0) {
+    if (patch.match !== void 0 || patch.type !== void 0 || patch.regexFlags !== void 0) {
       this.regexCache.delete(id);
     }
     const priorityChanged = patch.priority !== void 0 && patch.priority !== existing.priority;
@@ -3283,10 +3536,11 @@ var RuleEngine = class {
       return existing;
     const leftPattern = rule.match.isRegex ? rule.match.left : escapeRegex(rule.match.left);
     const rightPattern = rule.match.isRegex ? rule.match.right : escapeRegex(rule.match.right);
+    const regexFlags = rule.match.isRegex ? RuleEngine.normalizeRegexFlags(rule.regexFlags) : "";
     try {
       const cached2 = {
-        left: leftPattern ? new RegExp("(?:" + leftPattern + ")$") : null,
-        right: rightPattern ? new RegExp("^(?:" + rightPattern + ")") : null
+        left: leftPattern ? new RegExp("(?:" + leftPattern + ")(?![\\s\\S])", regexFlags) : null,
+        right: rightPattern ? new RegExp("(?:" + rightPattern + ")", regexFlags) : null
       };
       this.regexCache.set(rule.id, cached2);
       return cached2;
@@ -3319,7 +3573,7 @@ var RuleEngine = class {
   findMatchingBrace(text, openIdx) {
     let depth = 1;
     for (let i = openIdx + 1; i < text.length; i++) {
-      if (text[i] === "{" && i > 0 && text[i - 1] === "$")
+      if (text[i] === "{")
         depth++;
       else if (text[i] === "}") {
         depth--;
@@ -3409,7 +3663,7 @@ var RuleEngine = class {
         continue;
       if (ctx.scopeHint !== "all" /* All */ && !rule.scope.includes("all" /* All */) && !rule.scope.includes(ctx.scopeHint))
         continue;
-      if (rule.scopeLanguage && ctx.scopeLanguage !== rule.scopeLanguage)
+      if (rule.scopeLanguage && ctx.scopeHint === "code" /* Code */ && rule.scope.includes("code" /* Code */) && ctx.scopeLanguage !== rule.scopeLanguage)
         continue;
       switch (ctx.kind) {
         case "selectKey" /* SelectKey */: {
@@ -3445,8 +3699,8 @@ var RuleEngine = class {
       return null;
     const leftRegex = cached2.left;
     const rightRegex = cached2.right;
-    const leftMatch = leftRegex ? leftDoc.match(leftRegex) : [""];
-    const rightMatch = rightRegex ? rightDoc.match(rightRegex) : [""];
+    const leftMatch = leftRegex ? leftRegex.exec(leftDoc) : [""];
+    const rightMatch = rightRegex ? this.matchAtStart(rightDoc, rightRegex) : [""];
     if (!leftMatch || !rightMatch)
       return null;
     const matchFrom = from - leftMatch[0].length;
@@ -3456,6 +3710,13 @@ var RuleEngine = class {
       rightMatches: [...rightMatch],
       matchRange: { from: matchFrom, to: matchTo }
     }, ctx);
+  }
+  matchAtStart(doc, regex) {
+    regex.lastIndex = 0;
+    const match = regex.exec(doc);
+    if (!match || match.index !== 0)
+      return null;
+    return match;
   }
   applySelectKeyRule(rule, ctx) {
     const selectionText = ctx.docText.slice(ctx.selection.from, ctx.selection.to);
@@ -3566,6 +3827,7 @@ var DEFAULT_BUILTIN_RULES = [
     replacement: "const m={',':'\uFF0C','.':'\u3002','?':'\uFF1F','!':'\uFF01',':':'\uFF1A',';':'\uFF1B','(':'\uFF08$0\uFF09'}; return leftMatches[1] + m[leftMatches[2]];",
     options: "rF",
     priority: 15,
+    enabled: false,
     description: "CJK\u5B57\u7B26\u540E\u534A\u89D2\u6807\u70B9\u8F6C\u5168\u89D2"
   },
   {
@@ -3798,12 +4060,13 @@ var RuleEditModal = class extends import_obsidian4.Modal {
     this.triggerRight = "";
     this.replacement = "";
     this.isRegex = false;
-    this.ruleScope = "all" /* All */;
+    this.regexFlags = "";
     this.scopeLanguage = "";
     this.priority = 100;
     this.description = "";
     this.enabled = true;
     this.isFunction = false;
+    this.ruleScopes = ["all" /* All */];
     this.cmEditor = null;
     this.mode = mode;
     this.initial = initial;
@@ -3814,14 +4077,16 @@ var RuleEditModal = class extends import_obsidian4.Modal {
       this.triggerMode = opts.triggerMode;
       this.isRegex = opts.isRegex;
       this.isFunction = opts.isFunctionReplacement;
-      this.ruleScope = opts.scope[0] || "all" /* All */;
+      this.ruleScopes = opts.scope.length > 0 ? [...opts.scope] : ["all" /* All */];
     }
     if (initial.trigger !== void 0)
-      this.trigger = RuleEngine.escapeText(initial.trigger);
+      this.trigger = RuleEngine.escapeText(initial.trigger, this.isRegex);
     if (initial.trigger_right !== void 0)
-      this.triggerRight = RuleEngine.escapeText(initial.trigger_right);
+      this.triggerRight = RuleEngine.escapeText(initial.trigger_right, this.isRegex);
     if (typeof initial.replacement === "string")
       this.replacement = initial.replacement;
+    if (initial.regex_flags !== void 0)
+      this.regexFlags = RuleEngine.normalizeRegexFlags(initial.regex_flags);
     if (initial.priority !== void 0)
       this.priority = initial.priority;
     if (initial.description !== void 0)
@@ -3833,93 +4098,157 @@ var RuleEditModal = class extends import_obsidian4.Modal {
   }
   onOpen() {
     const { contentEl } = this;
+    this.modalEl.addClass("et-rule-edit-modal");
+    contentEl.addClass("et-rule-edit-modal-content");
     const locale7 = getLocale();
     const title = this.mode === "create" ? locale7.settings.ruleEditModal.addTitle : locale7.settings.ruleEditModal.editTitle;
-    contentEl.createEl("h2", { text: title });
-    new import_obsidian4.Setting(contentEl).setName(locale7.settings.ruleEditModal.fieldType).addDropdown((dropdown) => {
-      dropdown.addOption("input" /* Input */, locale7.dropdownOptions.ruleTypeInput);
-      dropdown.addOption("delete" /* Delete */, locale7.dropdownOptions.ruleTypeDelete);
-      dropdown.addOption("selectKey" /* SelectKey */, locale7.dropdownOptions.ruleTypeSelectKey);
-      dropdown.setValue(this.ruleType);
-      dropdown.onChange((v) => {
-        this.ruleType = v;
+    const headerEl = contentEl.createDiv({ cls: "et-rule-edit-header" });
+    const titleEl = headerEl.createEl("h2", { text: title, cls: "et-rule-edit-title" });
+    const pillBar = contentEl.createDiv({ cls: "et-pill-bar" });
+    const typeSection = pillBar.createDiv({ cls: "et-pill-section" });
+    typeSection.createEl("span", {
+      cls: "et-pill-group-label",
+      text: locale7.settings.ruleEditModal.fieldType
+    });
+    const typeOptions = typeSection.createDiv({ cls: "et-pill-options" });
+    const typePills = [
+      { value: "input" /* Input */, label: locale7.dropdownOptions.ruleTypeInput },
+      { value: "delete" /* Delete */, label: locale7.dropdownOptions.ruleTypeDelete },
+      { value: "selectKey" /* SelectKey */, label: locale7.dropdownOptions.ruleTypeSelectKey }
+    ];
+    for (const { value, label } of typePills) {
+      const pill = typeOptions.createEl("button", {
+        cls: `et-pill${this.ruleType === value ? " et-pill-active" : ""}`,
+        text: label
+      });
+      pill.dataset.pillGroup = "ruleType";
+      pill.dataset.pillValue = value;
+      pill.addEventListener("click", () => {
+        this.ruleType = value;
         this.refreshVisibility(contentEl);
       });
+    }
+    const triggerModeSection = pillBar.createDiv({ cls: "et-pill-section" });
+    triggerModeSection.dataset.field = "triggerModeSection";
+    const triggerModeLabel = triggerModeSection.createEl("span", {
+      cls: "et-pill-group-label",
+      text: locale7.settings.ruleEditModal.fieldTriggerMode
     });
-    const triggerModeSetting = new import_obsidian4.Setting(contentEl).setName(locale7.settings.ruleEditModal.fieldTriggerMode).addDropdown((dropdown) => {
-      dropdown.addOption("auto" /* Auto */, locale7.dropdownOptions.triggerModeAuto);
-      dropdown.addOption("tab" /* Tab */, locale7.dropdownOptions.triggerModeTab);
-      dropdown.setValue(this.triggerMode);
-      dropdown.onChange((v) => this.triggerMode = v);
+    triggerModeLabel.dataset.field = "triggerModeLabel";
+    const triggerModeOptions = triggerModeSection.createDiv({ cls: "et-pill-options" });
+    const triggerModePills = [
+      { value: "auto" /* Auto */, label: locale7.dropdownOptions.triggerModeAuto },
+      { value: "tab" /* Tab */, label: locale7.dropdownOptions.triggerModeTab }
+    ];
+    for (const { value, label } of triggerModePills) {
+      const pill = triggerModeOptions.createEl("button", {
+        cls: `et-pill${this.triggerMode === value ? " et-pill-active" : ""}`,
+        text: label
+      });
+      pill.dataset.pillGroup = "triggerMode";
+      pill.dataset.pillValue = value;
+      pill.addEventListener("click", () => {
+        this.triggerMode = value;
+        this.refreshVisibility(contentEl);
+      });
+    }
+    const matchGroup = contentEl.createDiv({ cls: "et-modal-group" });
+    const matchHeader = matchGroup.createDiv({ cls: "et-modal-group-header" });
+    matchHeader.createEl("span", { cls: "et-modal-group-title", text: locale7.settings.ruleEditModal.groupMatch });
+    const regexChip = matchHeader.createEl("button", {
+      cls: `et-pill-chip${this.isRegex ? " et-pill-chip-active" : ""}`,
+      text: locale7.settings.ruleEditModal.fieldIsRegex
     });
-    triggerModeSetting.settingEl.dataset.field = "triggerMode";
-    const triggerSetting = new import_obsidian4.Setting(contentEl).setName(locale7.settings.ruleEditModal.fieldTrigger).addText((text) => {
+    regexChip.dataset.field = "isRegexChip";
+    regexChip.addEventListener("click", () => {
+      this.isRegex = !this.isRegex;
+      this.refreshVisibility(contentEl);
+    });
+    const triggerSetting = new import_obsidian4.Setting(matchGroup).setName(locale7.settings.ruleEditModal.fieldTrigger).setDesc("").addText((text) => {
       text.setValue(this.trigger);
       text.onChange((v) => this.trigger = v);
     });
     triggerSetting.settingEl.dataset.field = "trigger";
-    const triggerRightSetting = new import_obsidian4.Setting(contentEl).setName(locale7.settings.ruleEditModal.fieldTriggerRight).addText((text) => {
+    const triggerRightSetting = new import_obsidian4.Setting(matchGroup).setName(locale7.settings.ruleEditModal.fieldTriggerRight).addText((text) => {
       text.setValue(this.triggerRight);
       text.onChange((v) => this.triggerRight = v);
     });
     triggerRightSetting.settingEl.dataset.field = "triggerRight";
-    const replacementSetting = new import_obsidian4.Setting(contentEl).setName(locale7.settings.ruleEditModal.fieldReplacement).setDesc("");
-    replacementSetting.settingEl.setAttribute("style", "display: grid; grid-template-columns: 1fr;");
+    const regexFlagsSetting = new import_obsidian4.Setting(matchGroup).setName(locale7.settings.ruleEditModal.fieldRegexFlags).setDesc(locale7.settings.ruleEditModal.fieldRegexFlagsDesc).addText((text) => {
+      text.setPlaceholder("imu");
+      text.setValue(this.regexFlags);
+      text.onChange((v) => this.regexFlags = RuleEngine.normalizeRegexFlags(v));
+    });
+    regexFlagsSetting.settingEl.dataset.field = "regexFlags";
+    const replacementGroup = contentEl.createDiv({ cls: "et-modal-group" });
+    const replHeader = replacementGroup.createDiv({ cls: "et-modal-group-header" });
+    replHeader.createEl("span", { cls: "et-modal-group-title", text: locale7.settings.ruleEditModal.groupReplacement });
+    const fnChip = replHeader.createEl("button", {
+      cls: `et-pill-chip${this.isFunction ? " et-pill-chip-active" : ""}`,
+      text: locale7.settings.ruleEditModal.fieldIsFunction
+    });
+    fnChip.dataset.field = "isFunctionChip";
+    fnChip.addEventListener("click", () => {
+      this.isFunction = !this.isFunction;
+      this.refreshVisibility(contentEl);
+    });
+    const replacementSetting = new import_obsidian4.Setting(replacementGroup);
+    replacementSetting.settingEl.addClass("et-replacement-setting");
     replacementSetting.settingEl.dataset.field = "replacementTextarea";
     const replacementArea = new import_obsidian4.TextAreaComponent(replacementSetting.controlEl);
-    replacementArea.inputEl.setAttribute("style", "width: 100%; min-height: 60px;");
+    replacementArea.inputEl.addClass("et-replacement-textarea");
+    replacementArea.inputEl.setAttribute("aria-label", locale7.settings.ruleEditModal.fieldReplacement);
     replacementArea.setValue(this.replacement);
     replacementArea.onChange((v) => this.replacement = v);
-    const editorWrapper = contentEl.createDiv();
-    editorWrapper.dataset.field = "fnEditor";
-    editorWrapper.createEl("label", {
-      text: locale7.settings.ruleEditModal.fieldReplacement,
-      cls: "et-fn-editor-label"
+    const replacementHint = replacementGroup.createEl("div", {
+      cls: "setting-item-description et-replacement-hint",
+      text: ""
     });
+    replacementHint.dataset.field = "replacementHint";
+    const editorWrapper = replacementGroup.createDiv();
+    editorWrapper.dataset.field = "fnEditor";
     const editorContainer = editorWrapper.createDiv({ cls: "et-fn-editor-container" });
+    editorContainer.setAttribute("aria-label", locale7.settings.ruleEditModal.fieldReplacement);
     this.cmEditor = createJSEditorView(editorContainer, this.replacement, (value) => {
       this.replacement = value;
     });
-    const fnHint = contentEl.createEl("div", {
-      cls: "setting-item-description",
+    const fnHint = replacementGroup.createEl("div", {
+      cls: "setting-item-description et-fn-hint",
       text: ""
     });
     fnHint.dataset.field = "fnHint";
-    fnHint.style.marginTop = "6px";
-    fnHint.style.marginBottom = "10px";
-    fnHint.style.fontSize = "12px";
-    fnHint.style.fontFamily = "var(--font-monospace)";
-    const isRegexSetting = new import_obsidian4.Setting(contentEl).setName(locale7.settings.ruleEditModal.fieldIsRegex).addToggle((toggle) => {
-      toggle.setValue(this.isRegex);
-      toggle.onChange((v) => this.isRegex = v);
-    });
-    isRegexSetting.settingEl.dataset.field = "isRegex";
-    const fnSetting = new import_obsidian4.Setting(contentEl).setName(locale7.settings.ruleEditModal.fieldIsFunction).addToggle((toggle) => {
-      toggle.setValue(this.isFunction);
-      toggle.onChange((v) => {
-        this.isFunction = v;
+    const otherGroup = contentEl.createDiv({ cls: "et-modal-group" });
+    const otherHeader = otherGroup.createDiv({ cls: "et-modal-group-header" });
+    otherHeader.createEl("span", { cls: "et-modal-group-title", text: locale7.settings.ruleEditModal.groupOther });
+    const scopeSetting = new import_obsidian4.Setting(otherGroup).setName(locale7.settings.ruleEditModal.fieldScope);
+    scopeSetting.settingEl.dataset.field = "scopeSetting";
+    scopeSetting.settingEl.addClass("et-scope-setting");
+    const scopeControls = scopeSetting.controlEl.createDiv({ cls: "et-scope-options" });
+    const scopeOptions = [
+      { value: "all" /* All */, label: locale7.dropdownOptions.scopeAll },
+      { value: "text" /* Text */, label: locale7.dropdownOptions.scopeText },
+      { value: "formula" /* Formula */, label: locale7.dropdownOptions.scopeFormula },
+      { value: "code" /* Code */, label: locale7.dropdownOptions.scopeCode }
+    ];
+    for (const { value, label } of scopeOptions) {
+      const chip = scopeControls.createEl("button", {
+        cls: `et-pill-chip${this.ruleScopes.includes(value) ? " et-pill-chip-active" : ""}`,
+        text: label,
+        attr: { type: "button" }
+      });
+      chip.dataset.scopeValue = value;
+      chip.addEventListener("click", () => {
+        this.toggleRuleScope(value);
         this.refreshVisibility(contentEl);
       });
-    });
-    fnSetting.settingEl.dataset.field = "isFunction";
-    new import_obsidian4.Setting(contentEl).setName(locale7.settings.ruleEditModal.fieldScope).addDropdown((dropdown) => {
-      dropdown.addOption("all" /* All */, locale7.dropdownOptions.scopeAll);
-      dropdown.addOption("text" /* Text */, locale7.dropdownOptions.scopeText);
-      dropdown.addOption("formula" /* Formula */, locale7.dropdownOptions.scopeFormula);
-      dropdown.addOption("code" /* Code */, locale7.dropdownOptions.scopeCode);
-      dropdown.setValue(this.ruleScope);
-      dropdown.onChange((v) => {
-        this.ruleScope = v;
-        this.refreshVisibility(contentEl);
-      });
-    });
-    const scopeLangSetting = new import_obsidian4.Setting(contentEl).setName(locale7.settings.ruleEditModal.fieldScopeLanguage).addText((text) => {
+    }
+    const scopeLangSetting = new import_obsidian4.Setting(otherGroup).setName(locale7.settings.ruleEditModal.fieldScopeLanguage).addText((text) => {
       text.setPlaceholder("e.g. python, javascript");
       text.setValue(this.scopeLanguage);
       text.onChange((v) => this.scopeLanguage = v.trim().toLowerCase());
     });
     scopeLangSetting.settingEl.dataset.field = "scopeLanguage";
-    new import_obsidian4.Setting(contentEl).setName(locale7.settings.ruleEditModal.fieldPriority).setDesc(locale7.settings.ruleEditModal.fieldPriorityDesc).addText((text) => {
+    new import_obsidian4.Setting(otherGroup).setName(locale7.settings.ruleEditModal.fieldPriority).setDesc(locale7.settings.ruleEditModal.fieldPriorityDesc).addText((text) => {
       text.setValue(String(this.priority));
       text.inputEl.type = "number";
       text.onChange((v) => {
@@ -3928,29 +4257,51 @@ var RuleEditModal = class extends import_obsidian4.Modal {
           this.priority = n;
       });
     });
-    new import_obsidian4.Setting(contentEl).setName(locale7.settings.ruleEditModal.fieldDescription).addText((text) => {
+    new import_obsidian4.Setting(otherGroup).setName(locale7.settings.ruleEditModal.fieldDescription).addText((text) => {
       text.setValue(this.description);
       text.onChange((v) => this.description = v);
     });
-    new import_obsidian4.Setting(contentEl).addButton((btn) => {
-      btn.setButtonText(locale7.settings.ruleEditModal.buttonSave).setCta().onClick(() => {
-        const rule = this.buildSimpleRule();
-        const regexError = RuleEngine.validateRegex(rule);
-        if (regexError) {
-          new import_obsidian4.Notice(`[EasyTyping] ${locale7.settings.ruleEditModal.invalidRegex}: ${regexError}`);
-          return;
-        }
-        this.close();
-        this.onSubmit(rule);
-      });
+    const footerEl = contentEl.createDiv({ cls: "et-rule-edit-footer" });
+    const saveButton = footerEl.createEl("button", {
+      cls: "mod-cta et-rule-edit-save",
+      text: locale7.settings.ruleEditModal.buttonSave
+    });
+    saveButton.addEventListener("click", () => {
+      const rule = this.buildSimpleRule();
+      const regexError = RuleEngine.validateRegex(rule);
+      if (regexError) {
+        new import_obsidian4.Notice(`[EasyTyping] ${locale7.settings.ruleEditModal.invalidRegex}: ${regexError}`);
+        return;
+      }
+      this.close();
+      this.onSubmit(rule);
     });
     this.refreshVisibility(contentEl);
+    this.setInitialFocus(contentEl, titleEl);
+  }
+  setInitialFocus(contentEl, titleEl) {
+    window.requestAnimationFrame(() => {
+      if (this.mode === "create") {
+        const triggerInput = contentEl.querySelector('[data-field="trigger"] input');
+        if (!triggerInput)
+          return;
+        triggerInput.focus();
+        triggerInput.setSelectionRange(triggerInput.value.length, triggerInput.value.length);
+        return;
+      }
+      titleEl.tabIndex = -1;
+      titleEl.focus();
+    });
   }
   refreshVisibility(contentEl) {
     const locale7 = getLocale();
     const triggerRightEl = contentEl.querySelector('[data-field="triggerRight"]');
     if (triggerRightEl) {
-      triggerRightEl.style.display = this.ruleType === "selectKey" /* SelectKey */ ? "none" : "";
+      triggerRightEl.classList.toggle("et-hidden", this.ruleType === "selectKey" /* SelectKey */);
+    }
+    const regexFlagsEl = contentEl.querySelector('[data-field="regexFlags"]');
+    if (regexFlagsEl) {
+      regexFlagsEl.classList.toggle("et-hidden", this.ruleType === "selectKey" /* SelectKey */ || !this.isRegex);
     }
     const triggerEl = contentEl.querySelector('[data-field="trigger"]');
     if (triggerEl) {
@@ -3958,33 +4309,63 @@ var RuleEditModal = class extends import_obsidian4.Modal {
       if (nameEl) {
         nameEl.textContent = this.ruleType === "selectKey" /* SelectKey */ ? locale7.settings.ruleEditModal.fieldTriggerSelectKey : locale7.settings.ruleEditModal.fieldTrigger;
       }
-    }
-    const isRegexEl = contentEl.querySelector('[data-field="isRegex"]');
-    if (isRegexEl) {
-      isRegexEl.style.display = this.ruleType === "selectKey" /* SelectKey */ ? "none" : "";
-    }
-    const triggerModeEl = contentEl.querySelector('[data-field="triggerMode"]');
-    if (triggerModeEl) {
-      triggerModeEl.style.display = this.ruleType === "input" /* Input */ ? "" : "none";
-    }
-    const replacementSettingEl = contentEl.querySelector('[data-field="replacementTextarea"]');
-    if (replacementSettingEl) {
-      const descEl = replacementSettingEl.querySelector(".setting-item-description");
+      const descEl = triggerEl.querySelector(".setting-item-description");
       if (descEl) {
-        descEl.textContent = this.ruleType === "selectKey" /* SelectKey */ ? locale7.settings.ruleEditModal.fieldReplacementDescSelectKey : locale7.settings.ruleEditModal.fieldReplacementDescInputDelete;
+        descEl.textContent = this.isRegex ? "" : locale7.settings.ruleEditModal.hintTriggerEscape;
       }
+    }
+    contentEl.querySelectorAll('[data-pill-group="ruleType"]').forEach((el) => {
+      el.classList.toggle("et-pill-active", el.dataset.pillValue === this.ruleType);
+    });
+    const triggerModeSection = contentEl.querySelector('[data-field="triggerModeSection"]');
+    if (triggerModeSection)
+      triggerModeSection.classList.toggle("et-hidden", this.ruleType !== "input" /* Input */);
+    contentEl.querySelectorAll('[data-pill-group="triggerMode"]').forEach((el) => {
+      const htmlEl = el;
+      htmlEl.classList.toggle("et-hidden", this.ruleType !== "input" /* Input */);
+      htmlEl.classList.toggle("et-pill-active", htmlEl.dataset.pillValue === this.triggerMode);
+    });
+    const regexChip = contentEl.querySelector('[data-field="isRegexChip"]');
+    if (regexChip) {
+      regexChip.classList.toggle("et-pill-chip-active", this.isRegex);
+      regexChip.classList.toggle("et-hidden", this.ruleType === "selectKey" /* SelectKey */);
+    }
+    const fnChip = contentEl.querySelector('[data-field="isFunctionChip"]');
+    if (fnChip)
+      fnChip.classList.toggle("et-pill-chip-active", this.isFunction);
+    const replacementHintEl = contentEl.querySelector('[data-field="replacementHint"]');
+    if (replacementHintEl) {
+      const parts = [];
+      if (this.ruleType === "selectKey" /* SelectKey */) {
+        parts.push(locale7.settings.ruleEditModal.fieldReplacementDescSelectKey);
+      } else if (this.isRegex) {
+        parts.push(locale7.settings.ruleEditModal.fieldReplacementDescInputDelete);
+      }
+      parts.push(locale7.settings.ruleEditModal.hintTabstop);
+      replacementHintEl.textContent = parts.join("\n");
+      replacementHintEl.classList.toggle("et-hidden", this.isFunction);
     }
     const fnHint = contentEl.querySelector('[data-field="fnHint"]');
     if (fnHint) {
-      fnHint.style.display = this.isFunction ? "" : "none";
-      fnHint.textContent = this.ruleType === "selectKey" /* SelectKey */ ? locale7.settings.ruleEditModal.functionHintSelectKey : locale7.settings.ruleEditModal.functionHintInputDelete;
+      fnHint.classList.toggle("et-hidden", !this.isFunction);
+      const parts = [];
+      if (this.ruleType === "selectKey" /* SelectKey */) {
+        parts.push(locale7.settings.ruleEditModal.functionHintSelectKey);
+      } else {
+        parts.push(locale7.settings.ruleEditModal.functionHintInputDelete);
+        if (this.isRegex) {
+          parts.push(locale7.settings.ruleEditModal.fieldReplacementDescInputDelete);
+        }
+      }
+      parts.push(locale7.settings.ruleEditModal.hintTabstop);
+      fnHint.textContent = parts.join("\n");
     }
     const textareaSetting = contentEl.querySelector('[data-field="replacementTextarea"]');
     const editorSetting = contentEl.querySelector('[data-field="fnEditor"]');
     if (textareaSetting && editorSetting) {
+      textareaSetting.classList.toggle("et-hidden", this.isFunction);
+      editorSetting.classList.toggle("et-hidden", !this.isFunction);
       if (this.isFunction) {
-        textareaSetting.style.display = "none";
-        editorSetting.style.display = "";
         if (this.cmEditor) {
           const current = this.cmEditor.state.doc.toString();
           if (current !== this.replacement) {
@@ -3994,8 +4375,6 @@ var RuleEditModal = class extends import_obsidian4.Modal {
           }
         }
       } else {
-        textareaSetting.style.display = "";
-        editorSetting.style.display = "none";
         const textarea = textareaSetting.querySelector("textarea");
         if (textarea && textarea.value !== this.replacement) {
           textarea.value = this.replacement;
@@ -4004,8 +4383,12 @@ var RuleEditModal = class extends import_obsidian4.Modal {
     }
     const scopeLangEl = contentEl.querySelector('[data-field="scopeLanguage"]');
     if (scopeLangEl) {
-      scopeLangEl.style.display = this.ruleScope === "code" /* Code */ ? "" : "none";
+      scopeLangEl.classList.toggle("et-hidden", !this.ruleScopes.includes("code" /* Code */));
     }
+    contentEl.querySelectorAll("[data-scope-value]").forEach((el) => {
+      const htmlEl = el;
+      htmlEl.classList.toggle("et-pill-chip-active", this.ruleScopes.includes(htmlEl.dataset.scopeValue));
+    });
   }
   buildSimpleRule() {
     let options = "";
@@ -4019,22 +4402,41 @@ var RuleEditModal = class extends import_obsidian4.Modal {
       options += "r";
     if (this.isFunction)
       options += "F";
-    if (this.ruleScope === "text" /* Text */)
-      options += "t";
-    else if (this.ruleScope === "formula" /* Formula */)
-      options += "f";
-    else if (this.ruleScope === "code" /* Code */)
-      options += "c";
+    const normalizedScopes = this.getNormalizedRuleScopes();
+    if (!normalizedScopes.includes("all" /* All */)) {
+      if (normalizedScopes.includes("text" /* Text */))
+        options += "t";
+      if (normalizedScopes.includes("formula" /* Formula */))
+        options += "f";
+      if (normalizedScopes.includes("code" /* Code */))
+        options += "c";
+    }
     return {
-      trigger: RuleEngine.unescapeText(this.trigger),
-      trigger_right: RuleEngine.unescapeText(this.triggerRight) || void 0,
+      trigger: this.isRegex ? this.trigger : RuleEngine.unescapeText(this.trigger),
+      trigger_right: (this.isRegex ? this.triggerRight : RuleEngine.unescapeText(this.triggerRight)) || void 0,
       replacement: this.replacement,
       options: options || void 0,
       priority: this.priority,
       description: this.description || void 0,
       enabled: this.enabled,
-      scope_language: this.ruleScope === "code" /* Code */ && this.scopeLanguage ? this.scopeLanguage : void 0
+      scope_language: normalizedScopes.includes("code" /* Code */) && this.scopeLanguage ? this.scopeLanguage : void 0,
+      regex_flags: this.isRegex ? RuleEngine.normalizeRegexFlags(this.regexFlags) || void 0 : void 0
     };
+  }
+  toggleRuleScope(scope) {
+    if (scope === "all" /* All */) {
+      this.ruleScopes = ["all" /* All */];
+      return;
+    }
+    const nextScopes = this.ruleScopes.filter((item) => item !== "all" /* All */);
+    const hasScope = nextScopes.includes(scope);
+    this.ruleScopes = hasScope ? nextScopes.filter((item) => item !== scope) : [...nextScopes, scope];
+    if (this.ruleScopes.length === 0) {
+      this.ruleScopes = ["all" /* All */];
+    }
+  }
+  getNormalizedRuleScopes() {
+    return this.ruleScopes.length > 0 ? this.ruleScopes : ["all" /* All */];
   }
   onClose() {
     if (this.cmEditor) {
@@ -4047,11 +4449,27 @@ var RuleEditModal = class extends import_obsidian4.Modal {
 
 // src/settings/easy_typing_settings_tab.ts
 var import_sprintf_js = __toESM(require_sprintf());
-function setAttributes(element, attributes) {
-  for (let key in attributes) {
-    element.setAttribute(key, attributes[key]);
+var DEFAULT_PATH_VALUE = "";
+var FolderSuggest = class extends import_obsidian5.AbstractInputSuggest {
+  constructor(app, inputEl, defaultLabel, onSelect) {
+    super(app, inputEl);
+    this.defaultLabel = defaultLabel;
+    this.onSelectCb = onSelect;
   }
-}
+  getSuggestions(query) {
+    const lowerQuery = query.toLowerCase();
+    const folders = this.app.vault.getAllFolders().map((f) => f.path).filter((p) => p.toLowerCase().includes(lowerQuery));
+    return [DEFAULT_PATH_VALUE, ...folders];
+  }
+  renderSuggestion(path, el) {
+    el.setText(path || this.defaultLabel);
+  }
+  selectSuggestion(path, _evt) {
+    this.setValue(path);
+    this.close();
+    this.onSelectCb(path);
+  }
+};
 var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
   constructor(app, plugin) {
     super(app, plugin);
@@ -4063,13 +4481,22 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
     const { containerEl } = this;
     const locale7 = getLocale();
     containerEl.empty();
-    containerEl.createEl("h1", { text: locale7.headers.main });
-    containerEl.createEl("p", { text: locale7.headers.githubDetail }).createEl("a", {
+    const shellEl = containerEl.createDiv({ cls: "et-settings-shell" });
+    const heroEl = shellEl.createDiv({ cls: "et-settings-hero" });
+    const heroMainEl = heroEl.createDiv({ cls: "et-settings-hero-main" });
+    heroMainEl.createEl("h1", { text: locale7.headers.main });
+    const heroMetaEl = heroMainEl.createDiv({ cls: "et-settings-hero-meta" });
+    heroMetaEl.createSpan({ text: locale7.headers.githubDetail, cls: "et-settings-hero-label" });
+    heroMetaEl.createEl("a", {
       text: "easy-typing-obsidian",
-      href: "https://github.com/Yaozhuwa/easy-typing-obsidian"
+      href: "https://github.com/Yaozhuwa/easy-typing-obsidian",
+      cls: "et-settings-hero-link"
     });
-    const navEl = containerEl.createEl("nav", { cls: "et-settings-nav" });
-    const contentEl = containerEl.createEl("div", { cls: "et-settings-content" });
+    const navEl = shellEl.createEl("nav", {
+      cls: "et-settings-nav",
+      attr: { role: "tablist", "aria-orientation": "horizontal" }
+    });
+    const contentEl = shellEl.createEl("div", { cls: "et-settings-content" });
     const tabs = [
       { id: "edit-enhance", label: locale7.headers.tabs.editEnhance },
       { id: "auto-format", label: locale7.headers.tabs.autoFormat },
@@ -4079,23 +4506,78 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
     ];
     const tabPanels = {};
     const tabButtons = [];
+    const activateTab = (tabId, focusButton = false) => {
+      this.activeTab = tabId;
+      tabs.forEach((tab, index) => {
+        const button = tabButtons[index];
+        const panel = tabPanels[tab.id];
+        const isActive = tab.id === tabId;
+        button.toggleClass("et-settings-tab-active", isActive);
+        button.setAttribute("aria-selected", isActive ? "true" : "false");
+        button.tabIndex = isActive ? 0 : -1;
+        panel.toggleClass("et-settings-tab-hidden", !isActive);
+        panel.setAttribute("aria-hidden", isActive ? "false" : "true");
+        if (focusButton && isActive) {
+          button.focus();
+        }
+      });
+    };
     tabs.forEach((tab) => {
       const isActive = tab.id === this.activeTab;
+      const buttonId = `easy-typing-settings-tab-${tab.id}`;
+      const panelId = `easy-typing-settings-panel-${tab.id}`;
       const btn = navEl.createEl("button", {
-        text: tab.label,
-        cls: `et-settings-tab-btn ${isActive ? "et-settings-tab-active" : ""}`
+        cls: `et-settings-tab-btn ${isActive ? "et-settings-tab-active" : ""}`,
+        attr: {
+          id: buttonId,
+          role: "tab",
+          type: "button",
+          "aria-selected": isActive ? "true" : "false",
+          "aria-controls": panelId
+        }
       });
+      btn.tabIndex = isActive ? 0 : -1;
+      btn.setText(tab.label);
       tabButtons.push(btn);
-      const panel = contentEl.createEl("div", {
-        cls: `et-settings-tab-panel ${isActive ? "" : "et-settings-tab-hidden"}`
+      const panel = contentEl.createEl("section", {
+        cls: `et-settings-tab-panel ${isActive ? "" : "et-settings-tab-hidden"}`,
+        attr: {
+          id: panelId,
+          role: "tabpanel",
+          "data-tab-id": tab.id,
+          "aria-labelledby": buttonId,
+          "aria-hidden": isActive ? "false" : "true"
+        }
       });
       tabPanels[tab.id] = panel;
       btn.addEventListener("click", () => {
-        this.activeTab = tab.id;
-        tabButtons.forEach((b) => b.removeClass("et-settings-tab-active"));
-        Object.values(tabPanels).forEach((p) => p.addClass("et-settings-tab-hidden"));
-        btn.addClass("et-settings-tab-active");
-        panel.removeClass("et-settings-tab-hidden");
+        activateTab(tab.id);
+      });
+      btn.addEventListener("keydown", (evt) => {
+        const currentIndex = tabs.findIndex((item) => item.id === tab.id);
+        if (currentIndex === -1)
+          return;
+        let targetIndex = null;
+        switch (evt.key) {
+          case "ArrowRight":
+          case "ArrowDown":
+            targetIndex = (currentIndex + 1) % tabs.length;
+            break;
+          case "ArrowLeft":
+          case "ArrowUp":
+            targetIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+            break;
+          case "Home":
+            targetIndex = 0;
+            break;
+          case "End":
+            targetIndex = tabs.length - 1;
+            break;
+        }
+        if (targetIndex !== null) {
+          evt.preventDefault();
+          activateTab(tabs[targetIndex].id, true);
+        }
       });
     });
     this.buildEditEnhanceTab(tabPanels["edit-enhance"]);
@@ -4104,33 +4586,60 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
     this.buildUserRulesSection(tabPanels["user-rules"]);
     this.buildOtherTab(tabPanels["other"]);
   }
+  createSection(container, title, description, actionsBuilder, extraCls = "") {
+    const sectionEl = container.createDiv({ cls: `et-settings-section ${extraCls}`.trim() });
+    if (title || description || actionsBuilder) {
+      const headerEl = sectionEl.createDiv({ cls: "et-settings-section-header" });
+      const headingEl = headerEl.createDiv({ cls: "et-settings-section-heading" });
+      if (title) {
+        headingEl.createEl("h3", { text: title });
+      }
+      if (description) {
+        headingEl.createDiv({ text: description, cls: "et-settings-section-desc setting-item-description" });
+      }
+      if (actionsBuilder) {
+        const actionsEl = headerEl.createDiv({ cls: "et-settings-section-actions" });
+        actionsBuilder(actionsEl);
+      }
+    }
+    const bodyEl = sectionEl.createDiv({ cls: "et-settings-section-body" });
+    return { sectionEl, bodyEl };
+  }
+  setInteractiveDisabled(element, disabled) {
+    element.toggleClass("et-settings-disabled", disabled);
+    element.setAttribute("aria-disabled", disabled ? "true" : "false");
+    element.querySelectorAll("button, input, textarea, select").forEach((node) => {
+      node.disabled = disabled;
+    });
+  }
   buildEditEnhanceTab(el) {
     const locale7 = getLocale();
-    new import_obsidian5.Setting(el).setName(locale7.settings.codeblockEdit.name).setDesc(locale7.settings.codeblockEdit.desc).addToggle((toggle) => {
+    const section = this.createSection(el, locale7.headers.enhancedEditing);
+    new import_obsidian5.Setting(section.bodyEl).setName(locale7.settings.codeblockEdit.name).setDesc(locale7.settings.codeblockEdit.desc).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.BetterCodeEdit).onChange(async (value) => {
         this.plugin.settings.BetterCodeEdit = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian5.Setting(el).setName(locale7.settings.backspaceEdit.name).setDesc(locale7.settings.backspaceEdit.desc).addToggle((toggle) => {
+    new import_obsidian5.Setting(section.bodyEl).setName(locale7.settings.backspaceEdit.name).setDesc(locale7.settings.backspaceEdit.desc).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.BetterBackspace).onChange(async (value) => {
         this.plugin.settings.BetterBackspace = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian5.Setting(el).setName(locale7.settings.tabOut.name).setDesc(locale7.settings.tabOut.desc).addToggle((toggle) => {
+    new import_obsidian5.Setting(section.bodyEl).setName(locale7.settings.tabOut.name).setDesc(locale7.settings.tabOut.desc).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.Tabout).onChange(async (value) => {
         this.plugin.settings.Tabout = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian5.Setting(el).setName(locale7.settings.enhanceModA.name).setDesc(locale7.settings.enhanceModA.desc).addToggle((toggle) => {
+    new import_obsidian5.Setting(section.bodyEl).setName(locale7.settings.enhanceModA.name).setDesc(locale7.settings.enhanceModA.desc).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.EnhanceModA).onChange(async (value) => {
         this.plugin.settings.EnhanceModA = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian5.Setting(el).setName(locale7.settings.smartPaste.name).setDesc(locale7.settings.smartPaste.desc).addToggle((toggle) => {
+    new import_obsidian5.Setting(section.bodyEl).setName(locale7.settings.smartPaste.name).setDesc(locale7.settings.smartPaste.desc).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.SmartPaste).onChange(async (value) => {
         this.plugin.settings.SmartPaste = value;
         await this.plugin.saveSettings();
@@ -4139,29 +4648,30 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
   }
   buildAutoFormatTab(el) {
     const locale7 = getLocale();
-    const masterSwitch = new import_obsidian5.Setting(el).setName(locale7.settings.autoFormatting.name).setDesc(locale7.settings.autoFormatting.desc).addToggle((toggle) => {
+    const overviewSection = this.createSection(el, locale7.headers.autoformatSetting);
+    new import_obsidian5.Setting(overviewSection.bodyEl).setName(locale7.settings.autoFormatting.name).setDesc(locale7.settings.autoFormatting.desc).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.AutoFormat).onChange(async (value) => {
         this.plugin.settings.AutoFormat = value;
         await this.plugin.saveSettings();
+        syncAutoFormatState(value);
       });
     });
-    new import_obsidian5.Setting(el).setName(locale7.settings.autoFormatPaste.name).setDesc(locale7.settings.autoFormatPaste.desc).addToggle((toggle) => {
+    const pasteSetting = new import_obsidian5.Setting(overviewSection.bodyEl).setName(locale7.settings.autoFormatPaste.name).setDesc(locale7.settings.autoFormatPaste.desc).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.AutoFormatPaste).onChange(async (value) => {
         this.plugin.settings.AutoFormatPaste = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian5.Setting(el).setName(locale7.settings.capitalizeFirstLetter.name).setDesc(locale7.settings.capitalizeFirstLetter.desc).addToggle((toggle) => {
+    const autoCapitalSetting = new import_obsidian5.Setting(overviewSection.bodyEl).setName(locale7.settings.capitalizeFirstLetter.name).setDesc(locale7.settings.capitalizeFirstLetter.desc).addToggle((toggle) => {
       toggle.setTooltip(locale7.toolTip.switch);
       toggle.setValue(this.plugin.settings.AutoCapital).onChange(async (value) => {
         this.plugin.settings.AutoCapital = value;
         await this.plugin.saveSettings();
       });
     });
-    el.createEl("h3", { text: locale7.headers.languagePairSection });
-    el.createEl("p", { text: locale7.settings.languagePairSpacing.desc, cls: "setting-item-description" });
-    const scriptListContainer = el.createDiv({ cls: "et-custom-scripts", attr: { style: "margin-bottom: 15px;" } });
-    const capsuleContainer = el.createDiv({ cls: "et-lang-pair-capsules" });
+    const languageSection = this.createSection(el, locale7.headers.languagePairSection, locale7.settings.languagePairSpacing.desc);
+    const scriptListContainer = languageSection.bodyEl.createDiv({ cls: "et-custom-scripts" });
+    const capsuleContainer = languageSection.bodyEl.createDiv({ cls: "et-lang-pair-capsules" });
     const renderCapsules = () => {
       capsuleContainer.empty();
       for (let idx = 0; idx < this.plugin.settings.languagePairs.length; idx++) {
@@ -4170,7 +4680,14 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
         const labelA = locale7.scriptCategoryLabels[pair.a] || pair.a;
         const labelB = locale7.scriptCategoryLabels[pair.b] || pair.b;
         capsule.createSpan({ text: `${labelA} \u2194 ${labelB}` });
-        const removeBtn = capsule.createSpan({ cls: "et-capsule-remove", text: "\xD7" });
+        const removeBtn = capsule.createEl("button", {
+          cls: "et-capsule-remove",
+          text: "\xD7",
+          attr: {
+            type: "button",
+            "aria-label": locale7.toolTip.removeRule
+          }
+        });
         removeBtn.addEventListener("click", async () => {
           this.plugin.settings.languagePairs.splice(idx, 1);
           await this.plugin.saveSettings();
@@ -4197,7 +4714,8 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
     };
     renderScripts();
     renderCapsules();
-    const addScriptRow = new import_obsidian5.Setting(el);
+    const addScriptRow = new import_obsidian5.Setting(languageSection.bodyEl);
+    addScriptRow.settingEl.addClass("et-inline-form-setting");
     let newScriptName = "";
     let newScriptPattern = "";
     addScriptRow.setName(locale7.headers.customScriptSection).addText((text) => {
@@ -4226,11 +4744,12 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
         this.display();
       });
     });
-    const addRow = el.createDiv({ cls: "et-pair-selector-row" });
+    const addRow = languageSection.bodyEl.createDiv({ cls: "et-pair-selector-row" });
     const allCategories = this.getAllScriptCategories();
     let selectedA = allCategories[0] || "";
     let selectedB = allCategories[1] || "";
     const selectorSetting = new import_obsidian5.Setting(addRow);
+    selectorSetting.settingEl.addClass("et-inline-form-setting");
     selectorSetting.setName(locale7.headers.addLanguagePair).addDropdown((dd) => {
       for (const cat of allCategories) {
         dd.addOption(cat, locale7.scriptCategoryLabels[cat] || cat);
@@ -4259,11 +4778,10 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
         renderCapsules();
       });
     });
-    el.createEl("h3", { text: locale7.headers.detailedSetting });
-    const introDiv = el.createDiv({ cls: "et-space-strategy-intro setting-item-description" });
-    introDiv.setAttribute("style", "white-space: pre-wrap; margin-bottom: 20px;");
+    const detailSection = this.createSection(el, locale7.headers.detailedSetting);
+    const introDiv = detailSection.bodyEl.createDiv({ cls: "et-settings-note et-space-strategy-intro setting-item-description" });
     introDiv.innerText = locale7.headers.spaceStrategyIntro || "\u7A7A\u683C\u7B56\u7565\u8BF4\u660E\uFF1A\n\u65E0\u8981\u6C42\uFF1A\u5BF9\u76F8\u5173\u533A\u5757\u4E0E\u5DE6\u53F3\u6587\u672C\u6CA1\u6709\u7A7A\u683C\u8981\u6C42\u3002\n\u8F6F\u7A7A\u683C\uFF1A\u53EA\u8981\u6C42\u6709\u8F6F\u7A7A\u683C\u3002\n\u4E25\u683C\u7A7A\u683C\uFF1A\u4E25\u683C\u6DFB\u52A0\u771F\u5B9E\u7A7A\u683C\u3002";
-    new import_obsidian5.Setting(el).setName(locale7.settings.spaceStrategyInlineCode.name).setDesc(locale7.settings.spaceStrategyInlineCode.desc).addDropdown((dropdown) => {
+    new import_obsidian5.Setting(detailSection.bodyEl).setName(locale7.settings.spaceStrategyInlineCode.name).setDesc(locale7.settings.spaceStrategyInlineCode.desc).addDropdown((dropdown) => {
       dropdown.addOption(String(0 /* none */), locale7.dropdownOptions.noRequire);
       dropdown.addOption(String(1 /* soft */), locale7.dropdownOptions.softSpace);
       dropdown.addOption(String(2 /* strict */), locale7.dropdownOptions.strictSpace);
@@ -4273,7 +4791,7 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian5.Setting(el).setName(locale7.settings.spaceStrategyInlineFormula.name).setDesc(locale7.settings.spaceStrategyInlineFormula.desc).addDropdown((dropdown) => {
+    new import_obsidian5.Setting(detailSection.bodyEl).setName(locale7.settings.spaceStrategyInlineFormula.name).setDesc(locale7.settings.spaceStrategyInlineFormula.desc).addDropdown((dropdown) => {
       dropdown.addOption(String(0 /* none */), locale7.dropdownOptions.noRequire);
       dropdown.addOption(String(1 /* soft */), locale7.dropdownOptions.softSpace);
       dropdown.addOption(String(2 /* strict */), locale7.dropdownOptions.strictSpace);
@@ -4283,7 +4801,7 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian5.Setting(el).setName(locale7.settings.spaceStrategyLinkText.name).setDesc(locale7.settings.spaceStrategyLinkText.desc).addDropdown((dropdown) => {
+    new import_obsidian5.Setting(detailSection.bodyEl).setName(locale7.settings.spaceStrategyLinkText.name).setDesc(locale7.settings.spaceStrategyLinkText.desc).addDropdown((dropdown) => {
       dropdown.addOption("dummy", locale7.dropdownOptions.dummy);
       dropdown.addOption("smart", locale7.dropdownOptions.smart);
       dropdown.setValue(this.plugin.settings.InlineLinkSmartSpace ? "smart" : "dummy");
@@ -4301,60 +4819,84 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian5.Setting(el).setName(locale7.settings.softSpaceSymbols.leftName).setDesc(locale7.settings.softSpaceSymbols.leftDesc).addText((text) => {
+    new import_obsidian5.Setting(detailSection.bodyEl).setName(locale7.settings.softSpaceSymbols.leftName).setDesc(locale7.settings.softSpaceSymbols.leftDesc).addText((text) => {
       text.setValue(this.plugin.settings.SoftSpaceLeftSymbols).onChange(async (value) => {
         this.plugin.settings.SoftSpaceLeftSymbols = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian5.Setting(el).setName(locale7.settings.softSpaceSymbols.rightName).setDesc(locale7.settings.softSpaceSymbols.rightDesc).addText((text) => {
+    new import_obsidian5.Setting(detailSection.bodyEl).setName(locale7.settings.softSpaceSymbols.rightName).setDesc(locale7.settings.softSpaceSymbols.rightDesc).addText((text) => {
       text.setValue(this.plugin.settings.SoftSpaceRightSymbols).onChange(async (value) => {
         this.plugin.settings.SoftSpaceRightSymbols = value;
         await this.plugin.saveSettings();
       });
     });
-    el.createEl("h3", { text: locale7.headers.prefixDictSection });
-    const prefixSetting = new import_obsidian5.Setting(el);
-    prefixSetting.settingEl.setAttribute("style", "display: grid; grid-template-columns: 1fr;");
-    prefixSetting.setName(locale7.settings.prefixDictionary.name).setDesc(locale7.settings.prefixDictionary.desc);
+    const prefixSection = this.createSection(el, locale7.headers.prefixDictSection, locale7.settings.prefixDictionary.desc);
+    const prefixSetting = new import_obsidian5.Setting(prefixSection.bodyEl);
+    prefixSetting.settingEl.addClass("et-setting-full-width");
     const prefixArea = new import_obsidian5.TextAreaComponent(prefixSetting.controlEl);
-    setAttributes(prefixArea.inputEl, { style: "margin-top: 8px; width: 100%; height: 12vh;" });
+    prefixArea.inputEl.addClass("et-settings-textarea", "et-settings-textarea-compact");
     prefixArea.setValue(this.plugin.settings.PrefixDictionary).onChange(async (value) => {
       this.plugin.settings.PrefixDictionary = value;
       this.plugin.saveSettings();
     });
-    el.createEl("h3", { text: locale7.headers.customRegexpBlock });
-    const regexInfoDiv = el.createDiv({ cls: "setting-item-description" });
-    regexInfoDiv.style.marginBottom = "10px";
+    const regexSection = this.createSection(el, locale7.headers.customRegexpBlock);
+    const regexInfoDiv = regexSection.bodyEl.createDiv({ cls: "setting-item-description et-settings-section-desc" });
     regexInfoDiv.appendChild(createFragment((frag) => {
       frag.appendText(locale7.headers.aboutRegexp.header);
-      const a1 = frag.createEl("a", { text: locale7.headers.aboutRegexp.text, href: "https://javascript.ruanyifeng.com/stdlib/regexp.html#" });
-      frag.createEl("br");
-      frag.appendText(locale7.headers.instructionsRegexp.header);
-      const a2 = frag.createEl("a", { text: locale7.headers.instructionsRegexp.text, href: "https://github.com/Yaozhuwa/easy-typing-obsidian/blob/master/UserDefinedRegExp.md" });
+      frag.createEl("a", { text: locale7.headers.aboutRegexp.text, href: "https://javascript.ruanyifeng.com/stdlib/regexp.html#" });
     }));
-    new import_obsidian5.Setting(el).setName(locale7.settings.userDefinedRegexpSwitch.name).setDesc(locale7.settings.userDefinedRegexpSwitch.desc).addToggle((toggle) => {
+    const regSwitchSetting = new import_obsidian5.Setting(regexSection.bodyEl).setName(locale7.settings.userDefinedRegexpSwitch.name).setDesc(locale7.settings.userDefinedRegexpSwitch.desc).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.UserDefinedRegSwitch).onChange(async (value) => {
         this.plugin.settings.UserDefinedRegSwitch = value;
         await this.plugin.saveSettings();
+        syncRegexContentState();
       });
     });
-    const regContentAreaSetting = new import_obsidian5.Setting(el);
-    regContentAreaSetting.settingEl.setAttribute("style", "display: grid; grid-template-columns: 1fr;");
+    const regContentAreaSetting = new import_obsidian5.Setting(regexSection.bodyEl);
+    regContentAreaSetting.settingEl.addClass("et-setting-full-width");
     regContentAreaSetting.setName(locale7.settings.userDefinedRegexp.name).setDesc(locale7.settings.userDefinedRegexp.desc);
     const regContentArea = new import_obsidian5.TextAreaComponent(regContentAreaSetting.controlEl);
-    setAttributes(regContentArea.inputEl, {
-      style: "margin-top: 12px; width: 100%;  height: 30vh;"
-    });
+    regContentArea.inputEl.addClass("et-settings-textarea", "et-settings-textarea-tall");
     regContentArea.setValue(this.plugin.settings.UserDefinedRegExp).onChange(async (value) => {
       this.plugin.settings.UserDefinedRegExp = value;
       this.plugin.saveSettings();
     });
-    el.createEl("h3", { text: locale7.headers.excludeFoldersFiles });
-    new import_obsidian5.Setting(el).setName(locale7.settings.excludeFoldersFiles.name).setDesc(locale7.settings.excludeFoldersFiles.desc).addTextArea((text) => text.setValue(this.plugin.settings.ExcludeFiles).onChange(async (value) => {
-      this.plugin.settings.ExcludeFiles = value;
-      this.plugin.saveSettings();
-    }));
+    new import_obsidian5.Setting(regexSection.bodyEl).setName(locale7.settings.userRulesRespectUserDefinedRegexBlocks.name).setDesc(locale7.settings.userRulesRespectUserDefinedRegexBlocks.desc).addToggle((toggle) => {
+      toggle.setValue(this.plugin.settings.UserRulesRespectUserDefinedRegexBlocks).onChange(async (value) => {
+        this.plugin.settings.UserRulesRespectUserDefinedRegexBlocks = value;
+        await this.plugin.saveSettings();
+      });
+    });
+    const excludeSection = this.createSection(el, locale7.headers.excludeFoldersFiles, locale7.settings.excludeFoldersFiles.desc);
+    const excludeSetting = new import_obsidian5.Setting(excludeSection.bodyEl);
+    excludeSetting.settingEl.addClass("et-setting-full-width");
+    excludeSetting.addTextArea((text) => {
+      text.setValue(this.plugin.settings.ExcludeFiles);
+      text.inputEl.addClass("et-settings-textarea");
+      text.onChange(async (value) => {
+        this.plugin.settings.ExcludeFiles = value;
+        this.plugin.saveSettings();
+      });
+    });
+    const advancedSections = [
+      languageSection.sectionEl,
+      detailSection.sectionEl,
+      prefixSection.sectionEl,
+      regexSection.sectionEl,
+      excludeSection.sectionEl
+    ];
+    const syncRegexContentState = () => {
+      this.setInteractiveDisabled(regContentAreaSetting.settingEl, !this.plugin.settings.AutoFormat || !this.plugin.settings.UserDefinedRegSwitch);
+    };
+    const syncAutoFormatState = (enabled) => {
+      this.setInteractiveDisabled(pasteSetting.settingEl, !enabled);
+      this.setInteractiveDisabled(autoCapitalSetting.settingEl, !enabled);
+      advancedSections.forEach((sectionEl) => this.setInteractiveDisabled(sectionEl, !enabled));
+      this.setInteractiveDisabled(regSwitchSetting.settingEl, !enabled);
+      syncRegexContentState();
+    };
+    syncAutoFormatState(this.plugin.settings.AutoFormat);
   }
   getAllScriptCategories() {
     const builtin = [
@@ -4371,25 +4913,23 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
   }
   buildBuiltinRulesSection(el) {
     const locale7 = getLocale();
-    const headerEl = el.createDiv({ cls: "setting-item" });
-    const infoEl = headerEl.createDiv({ cls: "setting-item-info" });
-    infoEl.createEl("h3", { text: locale7.headers.builtinRulesSection });
-    const controlEl = headerEl.createDiv({ cls: "setting-item-control" });
-    const resetBtn = controlEl.createEl("button", {
-      text: locale7.toolTip.resetAllRules,
-      cls: "et-reset-btn"
-    });
-    resetBtn.addEventListener("click", async () => {
-      await this.plugin.ruleManager.resetAllBuiltinRules();
-      new import_obsidian5.Notice(locale7.toolTip.resetSuccess);
-      this.display();
-    });
+    const section = this.createSection(el, locale7.headers.builtinRulesSection, void 0, (actionsEl) => {
+      const resetBtn = actionsEl.createEl("button", {
+        text: locale7.toolTip.resetAllRules,
+        cls: "et-reset-btn et-section-action-btn"
+      });
+      resetBtn.addEventListener("click", async () => {
+        await this.plugin.ruleManager.resetAllBuiltinRules();
+        new import_obsidian5.Notice(locale7.toolTip.resetSuccess);
+        this.display();
+      });
+    }, "et-builtin-rules-section");
     for (const rule of this.plugin.ruleManager.cachedBuiltinRules) {
-      this.buildRuleItem(el, rule, true);
+      this.buildRuleItem(section.bodyEl, rule, true);
     }
     const deletedIds = this.plugin.settings.deletedBuiltinRuleIds || [];
     if (deletedIds.length > 0) {
-      const details = el.createEl("details", { cls: "et-deleted-rules" });
+      const details = section.bodyEl.createEl("details", { cls: "et-deleted-rules" });
       details.createEl("summary", { text: `${locale7.headers.deletedRulesSection} (${deletedIds.length})` });
       for (const id of deletedIds) {
         const defaultRule = DEFAULT_BUILTIN_RULES.find((r) => r.id === id);
@@ -4398,7 +4938,7 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
         const opts = RuleEngine.parseOptions(defaultRule.options);
         const typeLabel = this.getRuleTypeLabel(opts.type);
         const typeCls = this.getRuleTypeCls(opts.type);
-        const preview = defaultRule.id && locale7.builtinRuleDescriptions[defaultRule.id] || defaultRule.description || `${RuleEngine.escapeText(defaultRule.trigger)} \u2192 ${typeof defaultRule.replacement === "string" ? defaultRule.replacement : "(fn)"}`;
+        const preview = defaultRule.id && locale7.builtinRuleDescriptions[defaultRule.id] || defaultRule.description || `${RuleEngine.escapeText(defaultRule.trigger, opts.isRegex)} \u2192 ${typeof defaultRule.replacement === "string" ? defaultRule.replacement : "(fn)"}`;
         new import_obsidian5.Setting(details).setName(createFragment((f) => {
           f.createSpan({ cls: `et-rule-type-tag ${typeCls}`, text: typeLabel });
           f.createSpan({ text: preview });
@@ -4413,79 +4953,80 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
   }
   buildUserRulesSection(el) {
     const locale7 = getLocale();
-    const headerEl = el.createDiv({ cls: "setting-item" });
-    const infoEl = headerEl.createDiv({ cls: "setting-item-info" });
-    infoEl.createEl("h3", { text: locale7.headers.userRulesSection });
-    const controlEl = headerEl.createDiv({ cls: "setting-item-control" });
-    const addBtn = controlEl.createEl("button", { text: "+" });
-    addBtn.addEventListener("click", () => {
-      new RuleEditModal(this.app, "create", {}, async (rule) => {
-        await this.plugin.ruleManager.addUserRule(rule);
-        this.display();
-      }).open();
-    });
-    const exportBtn = controlEl.createEl("button", { cls: "clickable-icon" });
-    exportBtn.setAttribute("aria-label", locale7.toolTip.exportRules);
-    (0, import_obsidian5.setIcon)(exportBtn, "arrow-up-from-line");
-    exportBtn.addEventListener("click", () => {
-      const rules = this.plugin.ruleManager.cachedUserRules;
-      if (rules.length === 0) {
-        new import_obsidian5.Notice(locale7.toolTip.noRulesToExport);
-        return;
-      }
-      const json = JSON.stringify(rules, null, 2);
-      const blob = new Blob([json], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "easy-typing-user-rules.json";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    });
-    const importBtn = controlEl.createEl("button", { cls: "clickable-icon" });
-    importBtn.setAttribute("aria-label", locale7.toolTip.importRules);
-    (0, import_obsidian5.setIcon)(importBtn, "arrow-down-to-line");
-    importBtn.addEventListener("click", () => {
-      const input = document.createElement("input");
-      input.type = "file";
-      input.accept = ".json";
-      input.style.display = "none";
-      input.addEventListener("change", async () => {
-        var _a;
-        const file = (_a = input.files) == null ? void 0 : _a[0];
-        if (!file)
-          return;
-        try {
-          const text = await file.text();
-          let parsed;
-          try {
-            parsed = JSON.parse(text);
-          } catch (e) {
-            new import_obsidian5.Notice(`[EasyTyping] ${locale7.toolTip.importInvalidJson}`);
-            return;
-          }
-          if (!Array.isArray(parsed) || parsed.length === 0) {
-            new import_obsidian5.Notice(`[EasyTyping] ${locale7.toolTip.importNoRules}`);
-            return;
-          }
-          const { imported, skipped } = await this.plugin.ruleManager.importUserRules(parsed);
-          if (imported === 0 && skipped > 0) {
-            new import_obsidian5.Notice(`[EasyTyping] ${locale7.toolTip.importNoRules}`);
-          } else {
-            new import_obsidian5.Notice(`[EasyTyping] ${(0, import_sprintf_js.sprintf)(locale7.toolTip.importSuccess, imported, skipped)}`);
-          }
-          this.display();
-        } finally {
-          input.remove();
-        }
+    const section = this.createSection(el, locale7.headers.userRulesSection, void 0, (actionsEl) => {
+      const addBtn = actionsEl.createEl("button", {
+        text: "+",
+        cls: "mod-cta et-section-action-btn"
       });
-      document.body.appendChild(input);
-      input.click();
-    });
+      addBtn.addEventListener("click", () => {
+        new RuleEditModal(this.app, "create", {}, async (rule) => {
+          await this.plugin.ruleManager.addUserRule(rule);
+          this.display();
+        }).open();
+      });
+      const exportBtn = actionsEl.createEl("button", { cls: "clickable-icon et-section-icon-btn" });
+      exportBtn.setAttribute("aria-label", locale7.toolTip.exportRules);
+      (0, import_obsidian5.setIcon)(exportBtn, "arrow-up-from-line");
+      exportBtn.addEventListener("click", () => {
+        const rules = this.plugin.ruleManager.cachedUserRules;
+        if (rules.length === 0) {
+          new import_obsidian5.Notice(locale7.toolTip.noRulesToExport);
+          return;
+        }
+        const json = JSON.stringify(rules, null, 2);
+        const blob = new Blob([json], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "easy-typing-user-rules.json";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      });
+      const importBtn = actionsEl.createEl("button", { cls: "clickable-icon et-section-icon-btn" });
+      importBtn.setAttribute("aria-label", locale7.toolTip.importRules);
+      (0, import_obsidian5.setIcon)(importBtn, "arrow-down-to-line");
+      importBtn.addEventListener("click", () => {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = ".json";
+        input.style.display = "none";
+        input.addEventListener("change", async () => {
+          var _a;
+          const file = (_a = input.files) == null ? void 0 : _a[0];
+          if (!file)
+            return;
+          try {
+            const text = await file.text();
+            let parsed;
+            try {
+              parsed = JSON.parse(text);
+            } catch (e) {
+              new import_obsidian5.Notice(`[EasyTyping] ${locale7.toolTip.importInvalidJson}`);
+              return;
+            }
+            if (!Array.isArray(parsed) || parsed.length === 0) {
+              new import_obsidian5.Notice(`[EasyTyping] ${locale7.toolTip.importNoRules}`);
+              return;
+            }
+            const { imported, skipped } = await this.plugin.ruleManager.importUserRules(parsed);
+            if (imported === 0 && skipped > 0) {
+              new import_obsidian5.Notice(`[EasyTyping] ${locale7.toolTip.importNoRules}`);
+            } else {
+              new import_obsidian5.Notice(`[EasyTyping] ${(0, import_sprintf_js.sprintf)(locale7.toolTip.importSuccess, imported, skipped)}`);
+            }
+            this.display();
+          } finally {
+            input.remove();
+          }
+        });
+        document.body.appendChild(input);
+        input.click();
+      });
+    }, "et-user-rules-section");
     this.plugin.ruleManager.cachedUserRules.forEach((rule, index) => {
-      this.buildRuleItem(el, rule, false, index);
+      this.buildRuleItem(section.bodyEl, rule, false, index);
     });
   }
   buildRuleItem(container, rule, isBuiltin, ruleIndex) {
@@ -4496,20 +5037,20 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
     const enabled = rule.enabled !== false;
     const isTab = opts.triggerMode === "tab" /* Tab */;
     const isFn = opts.isFunctionReplacement;
+    const scopeBadges = this.getRuleScopeBadges(opts.scope, rule.scope_language, locale7);
     let preview;
-    const localeDesc = rule.id ? locale7.builtinRuleDescriptions[rule.id] : void 0;
-    if (localeDesc) {
-      preview = localeDesc;
-    } else if (rule.description) {
+    if (rule.description) {
       preview = rule.description;
     } else {
       const repl = typeof rule.replacement === "string" ? rule.replacement : "(fn)";
-      preview = `${RuleEngine.escapeText(rule.trigger)}${rule.trigger_right ? " \u2026 " + RuleEngine.escapeText(rule.trigger_right) : ""} \u2192 ${repl}`;
+      const renderMatch = (text) => RuleEngine.escapeText(text, opts.isRegex);
+      preview = `${renderMatch(rule.trigger)}${rule.trigger_right ? " \u2026 " + renderMatch(rule.trigger_right) : ""} \u2192 ${repl}`;
     }
-    if (preview.length > 60)
-      preview = preview.substring(0, 57) + "...";
     const setting = new import_obsidian5.Setting(container).setClass("et-rule-item").setName(createFragment((f) => {
       f.createSpan({ cls: `et-rule-type-tag ${typeCls}`, text: typeLabel });
+      scopeBadges.forEach((badge) => {
+        f.createSpan({ cls: `et-rule-scope-tag ${badge.cls}`, text: badge.text });
+      });
       if (opts.type === "input" /* Input */) {
         const modeTag = f.createSpan({
           cls: `et-rule-trigger-mode ${isTab ? "et-trigger-mode-tab" : "et-trigger-mode-auto"}`,
@@ -4526,7 +5067,7 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
       if (isFn) {
         f.createSpan({ cls: "et-rule-type-tag et-rule-type-fn", text: "Fn" });
       }
-      f.createSpan({ text: preview });
+      f.createSpan({ cls: "et-rule-preview-text", text: preview });
     })).addToggle((toggle) => {
       toggle.setValue(enabled).setTooltip(locale7.toolTip.enableRule).onChange(async (value) => {
         setting.settingEl.style.opacity = value ? "" : "0.5";
@@ -4632,6 +5173,22 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
       });
     }
   }
+  getRuleScopeBadges(scopes, scopeLanguage, locale7 = getLocale()) {
+    const badges = [];
+    if (scopes.includes("code" /* Code */)) {
+      badges.push({
+        text: `<${scopeLanguage || locale7.dropdownOptions.scopeCode}>`,
+        cls: "et-rule-scope-code"
+      });
+    }
+    if (scopes.includes("formula" /* Formula */)) {
+      badges.push({
+        text: "\u0192x",
+        cls: "et-rule-scope-formula"
+      });
+    }
+    return badges;
+  }
   getRuleTypeLabel(type) {
     const locale7 = getLocale();
     switch (type) {
@@ -4655,8 +5212,8 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
   }
   buildOtherTab(el) {
     const locale7 = getLocale();
-    el.createEl("h3", { text: locale7.headers.experimentalFeatures });
-    new import_obsidian5.Setting(el).setName(locale7.settings.strictLineBreaks.name).setDesc(locale7.settings.strictLineBreaks.desc).addDropdown((dropdown) => {
+    const experimentalSection = this.createSection(el, locale7.headers.experimentalFeatures);
+    new import_obsidian5.Setting(experimentalSection.bodyEl).setName(locale7.settings.strictLineBreaks.name).setDesc(locale7.settings.strictLineBreaks.desc).addDropdown((dropdown) => {
       dropdown.addOption("enter_twice" /* EnterTwice */, locale7.dropdownOptions.enterTwice);
       dropdown.addOption("two_space" /* TwoSpace */, locale7.dropdownOptions.twoSpace);
       dropdown.addOption("mix_mode" /* Mix */, locale7.dropdownOptions.mixMode);
@@ -4671,25 +5228,44 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian5.Setting(el).setName(locale7.settings.collapsePersistentEnter.name).setDesc(locale7.settings.collapsePersistentEnter.desc).addToggle((toggle) => {
+    new import_obsidian5.Setting(experimentalSection.bodyEl).setName(locale7.settings.collapsePersistentEnter.name).setDesc(locale7.settings.collapsePersistentEnter.desc).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.CollapsePersistentEnter).onChange(async (value) => {
         this.plugin.settings.CollapsePersistentEnter = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian5.Setting(el).setName(locale7.settings.fixMicrosoftIME.name).setDesc(locale7.settings.fixMicrosoftIME.desc).addToggle((toggle) => {
+    new import_obsidian5.Setting(experimentalSection.bodyEl).setName(locale7.settings.fixMicrosoftIME.name).setDesc(locale7.settings.fixMicrosoftIME.desc).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.TryFixMSIME).onChange(async (value) => {
         this.plugin.settings.TryFixMSIME = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian5.Setting(el).setName(locale7.settings.fixMacOSContextMenu.name).setDesc(locale7.settings.fixMacOSContextMenu.desc).addToggle((toggle) => {
+    new import_obsidian5.Setting(experimentalSection.bodyEl).setName(locale7.settings.fixMacOSContextMenu.name).setDesc(locale7.settings.fixMacOSContextMenu.desc).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.FixMacOSContextMenu).onChange(async (value) => {
         this.plugin.settings.FixMacOSContextMenu = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian5.Setting(el).setName(locale7.settings.printDebugInfo.name).setDesc(locale7.settings.printDebugInfo.desc).addToggle((toggle) => {
+    const miscSection = this.createSection(el);
+    new import_obsidian5.Setting(miscSection.bodyEl).setName(locale7.settings.rulesStoragePath.name).setDesc(locale7.settings.rulesStoragePath.desc).addText((text) => {
+      text.setPlaceholder(locale7.settings.rulesStoragePath.defaultOption).setValue(this.plugin.settings.rulesStoragePath);
+      new FolderSuggest(this.app, text.inputEl, locale7.settings.rulesStoragePath.defaultOption, async (path) => {
+        this.plugin.settings.rulesStoragePath = path;
+        await this.plugin.saveSettings();
+        await this.plugin.ruleManager.initRuleEngine();
+        this.display();
+      });
+    }).addButton((btn) => {
+      btn.setButtonText(locale7.settings.rulesStoragePath.migrateButton).setTooltip(locale7.settings.rulesStoragePath.migrateDesc).onClick(async () => {
+        const oldPath = this.plugin.ruleManager.previousStoragePath;
+        const newPath = this.plugin.settings.rulesStoragePath;
+        await this.plugin.ruleManager.migrateRulesFiles(oldPath, newPath);
+        await this.plugin.ruleManager.initRuleEngine();
+        new import_obsidian5.Notice(locale7.settings.rulesStoragePath.migrateSuccess);
+        this.display();
+      });
+    });
+    new import_obsidian5.Setting(miscSection.bodyEl).setName(locale7.settings.printDebugInfo.name).setDesc(locale7.settings.printDebugInfo.desc).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.debug).onChange(async (value) => {
         this.plugin.settings.debug = value;
         setDebug(value);
@@ -4794,11 +5370,30 @@ var RuleManager = class {
     this.savePluginSettings = savePluginSettings;
     this.cachedBuiltinRules = [];
     this.cachedUserRules = [];
+    this.previousStoragePath = "";
     this.BUILTIN_RULES_FILE = "builtin-rules.json";
     this.USER_RULES_FILE = "user-rules.json";
+    this.previousStoragePath = settings.rulesStoragePath;
+  }
+  getLocalizedBuiltinRules(rules = DEFAULT_BUILTIN_RULES) {
+    const localeDescMap = getLocale().builtinRuleDescriptions;
+    return rules.map((rule) => {
+      var _a;
+      return {
+        ...rule,
+        description: (_a = localeDescMap[rule.id]) != null ? _a : rule.description
+      };
+    });
+  }
+  getImportDedupKey(rule) {
+    var _a, _b;
+    const isRegex = ((_a = rule.options) != null ? _a : "").includes("r");
+    const normalizedFlags = isRegex ? RuleEngine.normalizeRegexFlags(rule.regex_flags) : "";
+    return `${rule.trigger}\0${(_b = rule.trigger_right) != null ? _b : ""}\0${isRegex}\0${normalizedFlags}`;
   }
   pluginPath(filename) {
-    return `${this.manifest.dir}/${filename}`;
+    const base = this.settings.rulesStoragePath ? this.settings.rulesStoragePath : this.manifest.dir;
+    return `${base}/${filename}`;
   }
   async loadRulesFile(filename) {
     const path = this.pluginPath(filename);
@@ -4820,14 +5415,17 @@ var RuleManager = class {
     const newRules = DEFAULT_BUILTIN_RULES.filter((r) => !existingIds.has(r.id) && !deletedIds.has(r.id));
     if (newRules.length === 0)
       return;
-    await this.saveRulesFile(this.BUILTIN_RULES_FILE, [...currentRules, ...newRules]);
+    await this.saveRulesFile(this.BUILTIN_RULES_FILE, [...currentRules, ...this.getLocalizedBuiltinRules(newRules)]);
   }
   async initRuleEngine() {
     this.ruleEngine = new RuleEngine();
+    if (this.settings.rulesStoragePath) {
+      await this.app.vault.adapter.mkdir(this.settings.rulesStoragePath);
+    }
     const builtinPath = this.pluginPath(this.BUILTIN_RULES_FILE);
     const userPath = this.pluginPath(this.USER_RULES_FILE);
     if (!await this.app.vault.adapter.exists(builtinPath)) {
-      await this.saveRulesFile(this.BUILTIN_RULES_FILE, DEFAULT_BUILTIN_RULES);
+      await this.saveRulesFile(this.BUILTIN_RULES_FILE, this.getLocalizedBuiltinRules());
     } else {
       await this.mergeBuiltinRules();
     }
@@ -4851,14 +5449,15 @@ var RuleManager = class {
     const defaultRule = DEFAULT_BUILTIN_RULES.find((r) => r.id === id);
     if (!defaultRule)
       return;
-    this.ruleEngine.addSimpleRule(defaultRule);
-    this.cachedBuiltinRules.push(defaultRule);
+    const localizedRule = this.getLocalizedBuiltinRules([defaultRule])[0];
+    this.ruleEngine.addSimpleRule(localizedRule);
+    this.cachedBuiltinRules.push(localizedRule);
     await this.saveRulesFile(this.BUILTIN_RULES_FILE, this.cachedBuiltinRules);
     this.settings.deletedBuiltinRuleIds = this.settings.deletedBuiltinRuleIds.filter((i) => i !== id);
     await this.savePluginSettings();
   }
   async resetAllBuiltinRules() {
-    this.cachedBuiltinRules = [...DEFAULT_BUILTIN_RULES];
+    this.cachedBuiltinRules = this.getLocalizedBuiltinRules();
     await this.saveRulesFile(this.BUILTIN_RULES_FILE, this.cachedBuiltinRules);
     this.settings.deletedBuiltinRuleIds = [];
     await this.savePluginSettings();
@@ -4873,12 +5472,8 @@ var RuleManager = class {
     return id;
   }
   async importUserRules(incoming) {
-    var _a, _b, _c;
-    const existingSet = new Set(this.cachedUserRules.map((r) => {
-      var _a2, _b2;
-      const isRegex = ((_a2 = r.options) != null ? _a2 : "").includes("r");
-      return `${r.trigger}\0${(_b2 = r.trigger_right) != null ? _b2 : ""}\0${isRegex}`;
-    }));
+    var _a;
+    const existingSet = new Set(this.cachedUserRules.map((r) => this.getImportDedupKey(r)));
     let imported = 0;
     let skipped = 0;
     for (const rule of incoming) {
@@ -4886,8 +5481,7 @@ var RuleManager = class {
         skipped++;
         continue;
       }
-      const isRegex = ((_a = rule.options) != null ? _a : "").includes("r");
-      const key = `${rule.trigger}\0${(_b = rule.trigger_right) != null ? _b : ""}\0${isRegex}`;
+      const key = this.getImportDedupKey(rule);
       if (existingSet.has(key)) {
         skipped++;
         continue;
@@ -4895,7 +5489,7 @@ var RuleManager = class {
       existingSet.add(key);
       const id = `user-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
       rule.id = id;
-      rule.enabled = (_c = rule.enabled) != null ? _c : true;
+      rule.enabled = (_a = rule.enabled) != null ? _a : true;
       this.cachedUserRules.push(rule);
       this.ruleEngine.addSimpleRule(rule);
       imported++;
@@ -4966,6 +5560,24 @@ var RuleManager = class {
     rule.options = opts || void 0;
     await this.saveRulesFile(file, cache);
     this.ruleEngine.updateRule(id, { triggerMode: tabMode ? "tab" /* Tab */ : "auto" /* Auto */ });
+  }
+  async migrateRulesFiles(oldPath, newPath) {
+    const oldBase = oldPath || this.manifest.dir;
+    const newBase = newPath || this.manifest.dir;
+    if (oldBase === newBase)
+      return;
+    if (newPath) {
+      await this.app.vault.adapter.mkdir(newPath);
+    }
+    for (const filename of [this.BUILTIN_RULES_FILE, this.USER_RULES_FILE]) {
+      const src = `${oldBase}/${filename}`;
+      try {
+        const content = await this.app.vault.adapter.read(src);
+        await this.app.vault.adapter.write(`${newBase}/${filename}`, content);
+      } catch (e) {
+      }
+    }
+    this.previousStoragePath = newPath;
   }
 };
 
@@ -5451,7 +6063,16 @@ function deleteBlankLines(ctx, editor) {
   const RE_QUOTE = /^\s*>/;
   const RE_BLOCKID = /\s\^[\w-]+\s*$/;
   const RE_HR = /^\s*(?:---+|\*\*\*+|___+)\s*$/;
-  const needsTrailingBlank = (text) => RE_LIST.test(text) || RE_QUOTE.test(text) || RE_BLOCKID.test(text);
+  const getTrailingBlankType = (text) => {
+    if (RE_LIST.test(text))
+      return "list";
+    if (RE_QUOTE.test(text))
+      return "quote";
+    if (RE_BLOCKID.test(text))
+      return "blockid";
+    return null;
+  };
+  const needsTrailingBlank = (text) => getTrailingBlankType(text) !== null;
   let start_line = 1;
   let end_line = doc.lines;
   let line_num = doc.lines;
@@ -5470,11 +6091,14 @@ function deleteBlankLines(ctx, editor) {
   }
   let delete_index = [];
   let remain_next_blank = false;
+  let remain_next_blank_type = null;
   let consecutiveBlanks = 0;
   if (start_line != 1) {
     const prevText = doc.line(start_line - 1).text;
-    if (needsTrailingBlank(prevText)) {
+    const prevType = getTrailingBlankType(prevText);
+    if (prevType) {
       remain_next_blank = true;
+      remain_next_blank_type = prevType;
     }
   }
   if (end_line != line_num && !RE_BLANK.test(doc.line(end_line + 1).text)) {
@@ -5486,18 +6110,19 @@ function deleteBlankLines(ctx, editor) {
     if (RE_BLANK.test(text)) {
       consecutiveBlanks++;
       if (remain_next_blank) {
-        let nextNonBlankIsBlock = false;
+        let nextNonBlankType = null;
         for (let j = i + 1; j <= end_line; j++) {
           const jText = doc.line(j).text;
           if (!RE_BLANK.test(jText)) {
-            nextNonBlankIsBlock = needsTrailingBlank(jText);
+            nextNonBlankType = getTrailingBlankType(jText);
             break;
           }
         }
-        if (nextNonBlankIsBlock) {
+        if (remain_next_blank_type && nextNonBlankType === remain_next_blank_type) {
           delete_index.push(i);
         }
         remain_next_blank = false;
+        remain_next_blank_type = null;
         continue;
       }
       if (strictLineBreaks && consecutiveBlanks === 1) {
@@ -5511,8 +6136,10 @@ function deleteBlankLines(ctx, editor) {
       delete_index.pop();
     } else if (needsTrailingBlank(text)) {
       remain_next_blank = true;
+      remain_next_blank_type = getTrailingBlankType(text);
     } else {
       remain_next_blank = false;
+      remain_next_blank_type = null;
     }
   }
   let newContent = "";
@@ -5691,7 +6318,7 @@ var CursorWidget = class extends import_view3.WidgetType {
 
 // src/rule_processor.ts
 function triggerCvtRule(ctx, view, cursor_pos, changeType = "input.type") {
-  var _a;
+  var _a, _b, _c;
   const inputScope = detectRuleScope(view.state, cursor_pos);
   const cvtCtx = {
     kind: "input" /* Input */,
@@ -5703,6 +6330,14 @@ function triggerCvtRule(ctx, view, cursor_pos, changeType = "input.type") {
     scopeLanguage: inputScope.language,
     debug: (_a = ctx.settings) == null ? void 0 : _a.debug
   };
+  if (((_b = ctx.settings) == null ? void 0 : _b.UserDefinedRegSwitch) && ((_c = ctx.settings) == null ? void 0 : _c.UserRulesRespectUserDefinedRegexBlocks)) {
+    const line = view.state.doc.lineAt(cursor_pos);
+    const column = cursor_pos - line.from;
+    const checkColumn = changeType.startsWith("input") ? Math.max(0, column - 1) : column;
+    if (isCursorInUserDefinedRegexBlock(line.text, checkColumn, ctx.settings.UserDefinedRegExp)) {
+      return false;
+    }
+  }
   const cvtResult = ctx.ruleEngine.process(cvtCtx);
   if (cvtResult) {
     const tabstopGroups = tabstopSpecsToTabstopGroups(cvtResult.tabstops);
@@ -6267,6 +6902,15 @@ function goNewLineAfterCurLine(ctx, view) {
   const selection = state.selection.main;
   const line = doc.lineAt(selection.head);
   const lineContent = line.text;
+  if (/^\s*$/.test(lineContent)) {
+    const insertStr2 = "\n";
+    view.dispatch({
+      changes: { from: line.to, insert: insertStr2 },
+      selection: { anchor: line.to + insertStr2.length },
+      userEvent: "EasyTyping.goNewLineAfterCurLine"
+    });
+    return true;
+  }
   const listMatch = lineContent.match(/^(\s*)([-*+] \[.\]|[-*+]|\d+\.)\s/);
   const quoteMatch = lineContent.match(/^(\s*)(>+ ?)/);
   let changes;
@@ -6284,8 +6928,36 @@ function goNewLineAfterCurLine(ctx, view) {
   } else if (quoteMatch) {
     prefix = quoteMatch[1] + quoteMatch[2];
   }
-  changes = [{ from: line.to, insert: "\n" + prefix }];
-  newCursorPos = line.to + 1 + prefix.length;
+  const strictLineBreaks = ctx.app.vault.config.strictLineBreaks || false;
+  let useStrictBreak = ctx.settings.StrictModeEnter && strictLineBreaks;
+  if (useStrictBreak) {
+    const lineType = getPosLineType2(state, line.from);
+    if (lineType === "codeblock" /* codeblock */ || lineType === "formula" /* formula */ || lineType === "code_block_start" /* code_start */ || lineType === "code_block_end" /* code_end */) {
+      useStrictBreak = false;
+    }
+  }
+  let insertStr;
+  if (!useStrictBreak) {
+    insertStr = "\n" + prefix;
+  } else {
+    const mode = ctx.settings.StrictLineMode;
+    const spaceStr = lineContent.endsWith("  ") ? "" : "  ";
+    if (listMatch) {
+      insertStr = "\n" + prefix;
+    } else if (mode === "two_space" /* TwoSpace */) {
+      insertStr = spaceStr + "\n" + prefix;
+    } else if (quoteMatch) {
+      if (mode === "enter_twice" /* EnterTwice */) {
+        insertStr = "\n" + prefix + "\n" + prefix;
+      } else {
+        insertStr = spaceStr + "\n" + prefix;
+      }
+    } else {
+      insertStr = "\n\n" + prefix;
+    }
+  }
+  changes = [{ from: line.to, insert: insertStr }];
+  newCursorPos = line.to + insertStr.length;
   const tr = state.update({
     changes,
     selection: { anchor: newCursorPos, head: newCursorPos },
@@ -6371,14 +7043,22 @@ function createTransactionFilter(ctx) {
           const tabstopGroups = tabstopSpecsToTabstopGroups(selResult.tabstops);
           if (tabstopGroups.length > 0) {
             changes.push({
-              changes: { from: selResult.matchRange.from, to: selResult.matchRange.to, insert: selResult.newText },
+              changes: {
+                from: selResult.matchRange.from,
+                to: selResult.matchRange.to,
+                insert: selResult.newText
+              },
               selection: tabstopGroups[0].toEditorSelection(),
               effects: [addTabstopsEffect.of(tabstopGroups)],
               userEvent: "EasyTyping.change"
             });
           } else {
             changes.push({
-              changes: { from: selResult.matchRange.from, to: selResult.matchRange.to, insert: selResult.newText },
+              changes: {
+                from: selResult.matchRange.from,
+                to: selResult.matchRange.to,
+                insert: selResult.newText
+              },
               selection: { anchor: selResult.cursor },
               userEvent: "EasyTyping.change"
             });
@@ -6496,12 +7176,26 @@ function createTransactionFilter(ctx) {
         if (list_code_indent !== 0) {
           print("list_code, indent: ", list_code_indent);
           if (toA == cur_line.from + list_code_indent) {
-            changes.push({ changes: { from: tr.startState.doc.line(line_number - 1).to, to: toA, insert: "" }, userEvent: "EasyTyping.change" });
+            changes.push({
+              changes: {
+                from: tr.startState.doc.line(line_number - 1).to,
+                to: toA,
+                insert: ""
+              },
+              userEvent: "EasyTyping.change"
+            });
             tr = tr.startState.update(...changes);
             return tr;
           }
           if (fromA >= cur_line.from && fromA < cur_line.from + list_code_indent && toA > cur_line.from + list_code_indent) {
-            changes.push({ changes: { from: cur_line.from + list_code_indent, to: toA, insert: "" }, userEvent: "EasyTyping.change" });
+            changes.push({
+              changes: {
+                from: cur_line.from + list_code_indent,
+                to: toA,
+                insert: ""
+              },
+              userEvent: "EasyTyping.change"
+            });
             tr = tr.startState.update(...changes);
             return tr;
           }
@@ -6524,14 +7218,22 @@ function createTransactionFilter(ctx) {
           const tabstopGroups = tabstopSpecsToTabstopGroups(delResult.tabstops);
           if (tabstopGroups.length > 0) {
             changes.push({
-              changes: { from: delResult.matchRange.from, to: delResult.matchRange.to, insert: delResult.newText },
+              changes: {
+                from: delResult.matchRange.from,
+                to: delResult.matchRange.to,
+                insert: delResult.newText
+              },
               selection: tabstopGroups[0].toEditorSelection(),
               effects: [addTabstopsEffect.of(tabstopGroups)],
               userEvent: "EasyTyping.change"
             });
           } else {
             changes.push({
-              changes: { from: delResult.matchRange.from, to: delResult.matchRange.to, insert: delResult.newText },
+              changes: {
+                from: delResult.matchRange.from,
+                to: delResult.matchRange.to,
+                insert: delResult.newText
+              },
               selection: { anchor: delResult.cursor },
               userEvent: "EasyTyping.change"
             });
@@ -6548,20 +7250,23 @@ function tryProcessInput(ctx, update, changeFrom, cursorPos, changeType = "input
   const lineType = getPosLineType(update.view.state, cursorPos);
   if (lineType === "table" /* table */)
     return false;
-  if (triggerCvtRule(ctx, update.view, cursorPos))
+  if (!changeType.includes("paste") && changeType !== "unknown" && !ctx.pasteDetected && triggerCvtRule(ctx, update.view, cursorPos, changeType))
     return true;
   if (!ctx.settings.AutoFormat || isCurrentFileExclude(ctx))
     return false;
   if (lineType !== "text" /* text */)
     return false;
-  if (changeType.contains("paste"))
+  if (changeType.includes("paste") || changeType === "unknown" || ctx.pasteDetected)
     return false;
   const insertedStr = update.view.state.doc.sliceString(changeFrom, cursorPos);
   const changes = ctx.Formater.formatLineOfDoc(update.state, ctx.settings, changeFrom, cursorPos, insertedStr);
   if (changes) {
     const allSpecs = changes[0];
     if (allSpecs.length > 0) {
-      allSpecs[allSpecs.length - 1] = { ...allSpecs[allSpecs.length - 1], ...changes[1] };
+      allSpecs[allSpecs.length - 1] = {
+        ...allSpecs[allSpecs.length - 1],
+        ...changes[1]
+      };
     }
     update.view.dispatch(...allSpecs);
     return true;
@@ -6601,7 +7306,7 @@ function createViewUpdatePlugin(ctx) {
     if (ctx.compose_need_handle) {
       ctx.compose_need_handle = false;
       const cursor2 = update.view.state.selection.asSingle().main;
-      if (cursor2.head === cursor2.anchor) {
+      if (cursor2.head === cursor2.anchor && cursor2.anchor > ctx.compose_begin_pos) {
         if (tryProcessInput(ctx, update, ctx.compose_begin_pos, cursor2.anchor))
           return;
       }
@@ -6633,8 +7338,13 @@ function createViewUpdatePlugin(ctx) {
       if (tryProcessInput(ctx, update, fromB, cursor.anchor, changeType))
         return;
     }
+    const isPaste = changeType.contains("paste") || ctx.pasteDetected;
+    const isFormattedPaste = isPaste && !ctx.plainPasteInProgress;
+    const isPlainPaste = isPaste && ctx.plainPasteInProgress;
+    if (isPlainPaste)
+      ctx.plainPasteInProgress = false;
     const isExcludeFile = isCurrentFileExclude(ctx);
-    if (ctx.settings.AutoFormat && ctx.settings.AutoFormatPaste && !isExcludeFile && changeType === "paste" && !import_obsidian8.Platform.isIosApp) {
+    if (ctx.settings.AutoFormat && ctx.settings.AutoFormatPaste && !isExcludeFile && isFormattedPaste && !import_obsidian8.Platform.isIosApp) {
       let updateLineStart = update.state.doc.lineAt(fromB).number;
       let updateLineEnd = update.state.doc.lineAt(toB).number;
       if (updateLineStart === updateLineEnd && getPosLineType(update.view.state, toB) === "text" /* text */) {
@@ -6668,6 +7378,7 @@ function createViewUpdatePlugin(ctx) {
 var EasyTypingPlugin = class extends import_obsidian9.Plugin {
   constructor() {
     super(...arguments);
+    this.pasteTimerId = null;
     this.getDefaultIndentChar = () => {
       let useTab = this.app.vault.config.useTab === void 0 ? true : false;
       let tabSize = this.app.vault.config.tabSize == void 0 ? 4 : this.app.vault.config.tabSize;
@@ -6721,6 +7432,8 @@ var EasyTypingPlugin = class extends import_obsidian9.Plugin {
     this.compose_need_handle = false;
     this.Formater = new LineFormater();
     this.onFormatArticle = false;
+    this.plainPasteInProgress = false;
+    this.pasteDetected = false;
     if (!this.settings) {
       console.error("EasyTyping: Settings not loaded properly, using defaults");
       this.settings = Object.assign({}, DEFAULT_SETTINGS);
@@ -6732,6 +7445,20 @@ var EasyTypingPlugin = class extends import_obsidian9.Plugin {
       tabstopsStateField.extension
     ]);
     this.registerEditorExtension(import_state6.Prec.highest(import_view5.keymap.of([
+      {
+        key: "Mod-v",
+        run: () => {
+          this.markPaste(false);
+          return false;
+        }
+      },
+      {
+        key: "Mod-Shift-v",
+        run: () => {
+          this.markPaste(true);
+          return false;
+        }
+      },
       {
         key: "Tab",
         run: (v) => handleTabDown(this, v)
@@ -6858,7 +7585,21 @@ var EasyTypingPlugin = class extends import_obsidian9.Plugin {
     console.log("Easy Typing Plugin loaded.");
   }
   onunload() {
+    if (this.pasteTimerId)
+      clearTimeout(this.pasteTimerId);
     console.log("Easy Typing Plugin unloaded.");
+  }
+  markPaste(plain) {
+    this.pasteDetected = true;
+    if (plain)
+      this.plainPasteInProgress = true;
+    if (this.pasteTimerId)
+      clearTimeout(this.pasteTimerId);
+    this.pasteTimerId = setTimeout(() => {
+      this.pasteDetected = false;
+      this.plainPasteInProgress = false;
+      this.pasteTimerId = null;
+    }, 500);
   }
   isCurrentFileExclude() {
     return isCurrentFileExclude(this);
@@ -6876,6 +7617,5 @@ var EasyTypingPlugin = class extends import_obsidian9.Plugin {
     await this.saveData(this.settings);
   }
 };
-
 
 /* nosourcemap */

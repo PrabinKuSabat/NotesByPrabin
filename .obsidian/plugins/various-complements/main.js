@@ -816,6 +816,11 @@ function isEOTinCodeBlock(text2) {
   }
   return inCodeBlock;
 }
+function isInsideInlineCode(lineUntilCursor) {
+  var _a, _b;
+  const backquotes = (_b = (_a = lineUntilCursor.match(/`/g)) == null ? void 0 : _a.length) != null ? _b : 0;
+  return backquotes % 2 === 1;
+}
 
 // src/app-helper.ts
 var AppHelper = class {
@@ -834,8 +839,11 @@ var AppHelper = class {
   async loadJson(path2) {
     return JSON.parse(await this.loadFile(path2));
   }
-  async saveJson(path2, data) {
-    await this.unsafeApp.vault.adapter.write(path2, JSON.stringify(data));
+  async saveJson(path2, data, space2) {
+    await this.unsafeApp.vault.adapter.write(
+      path2,
+      JSON.stringify(data, null, space2)
+    );
   }
   equalsAsEditorPosition(one, other) {
     return one.line === other.line && one.ch === other.ch;
@@ -975,6 +983,9 @@ var AppHelper = class {
   inCodeBlock(editor) {
     return isEOTinCodeBlock(this.getContentUntilCursor(editor));
   }
+  inInlineCode(editor) {
+    return isInsideInlineCode(this.getCurrentLineUntilCursor(editor));
+  }
   searchPhantomLinks() {
     return Object.entries(this.unsafeApp.metadataCache.unresolvedLinks).flatMap(
       ([path2, obj]) => Object.keys(obj).map((link) => ({ path: path2, link }))
@@ -1058,6 +1069,29 @@ var AppHelper = class {
       return true;
     }
     return !!((_c = (_b = cm5or6 == null ? void 0 : cm5or6.display) == null ? void 0 : _b.input) == null ? void 0 : _c.composing);
+  }
+  /**
+   * Unsafe method
+   */
+  getVisibleLineRange() {
+    var _a;
+    const markdownView = this.unsafeApp.workspace.getActiveViewOfType(import_obsidian.MarkdownView);
+    if (!markdownView) {
+      return null;
+    }
+    const cm = markdownView.editor.cm;
+    if (!(cm == null ? void 0 : cm.visibleRanges) || !((_a = cm == null ? void 0 : cm.state) == null ? void 0 : _a.doc)) {
+      return null;
+    }
+    const visibleRanges = cm.visibleRanges;
+    if (visibleRanges.length === 0) {
+      return null;
+    }
+    const first = visibleRanges[0];
+    const last = visibleRanges[visibleRanges.length - 1];
+    const fromLine = cm.state.doc.lineAt(first.from).number - 1;
+    const toLine = cm.state.doc.lineAt(last.to).number - 1;
+    return { from: fromLine, to: toLine };
   }
   isMobile() {
     return this.unsafeApp.isMobile;
@@ -1343,10 +1377,14 @@ function suggestWords(indexedWords, query, maxNum, option = {}) {
     frontMatter,
     selectionHistoryStorage,
     providerMinChars,
-    globalMinChar
+    globalMinChar,
+    excludeInternalLink
   } = option;
   const queryStartWithUpper = capitalizeFirstLetter(query) === query;
   const shouldIncludeProvider = (providerType) => {
+    if (excludeInternalLink && providerType === "internalLink") {
+      return false;
+    }
     if (!providerMinChars) {
       return true;
     }
@@ -1514,10 +1552,14 @@ function suggestWordsByPartialMatch(indexedWords, query, maxNum, option = {}) {
     frontMatter,
     selectionHistoryStorage,
     providerMinChars,
-    globalMinChar
+    globalMinChar,
+    excludeInternalLink
   } = option;
   const queryStartWithUpper = capitalizeFirstLetter(query) === query;
   const shouldIncludeProvider = (providerType) => {
+    if (excludeInternalLink && providerType === "internalLink") {
+      return false;
+    }
     if (!providerMinChars) {
       return true;
     }
@@ -1774,6 +1816,8 @@ var DEFAULT_SETTINGS = {
   excludeInternalLinkPathGlobPatterns: [],
   excludeSelfInternalLink: false,
   excludeExistingInActiveFileInternalLinks: false,
+  excludeUnresolvedInternalLinks: false,
+  excludeInternalLinksInCode: false,
   updateInternalLinksOnSave: true,
   insertAliasTransformedFromDisplayedInternalLink: {
     enabled: false,
@@ -1794,6 +1838,7 @@ var DEFAULT_SETTINGS = {
   intelligentSuggestionPrioritization: {
     enabled: true,
     historyFilePath: "",
+    prettyPrintHistoryFile: false,
     maxDaysToKeepHistory: 30,
     maxNumberOfHistoryToKeep: 0
   },
@@ -2682,6 +2727,34 @@ var VariousComplementsSettingTab = class extends import_obsidian3.PluginSettingT
         }
       );
       addFilterableSetting(
+        "Exclude unresolved internal links",
+        "Exclude internal links that point to non-existing files (phantom links) from the suggestions.",
+        (setting) => {
+          setting.addToggle((tc) => {
+            tc.setValue(
+              this.plugin.settings.excludeUnresolvedInternalLinks
+            ).onChange(async (value) => {
+              this.plugin.settings.excludeUnresolvedInternalLinks = value;
+              await this.plugin.saveSettings({ internalLink: true });
+            });
+          });
+        }
+      );
+      addFilterableSetting(
+        "Exclude internal links in code",
+        "Exclude internal link suggestions when the cursor is inside a code block or inline code. Unlike the 'Disable suggestions in the Code block' option, this targets only internal link suggestions and also applies to inline code.",
+        (setting) => {
+          setting.addToggle((tc) => {
+            tc.setValue(
+              this.plugin.settings.excludeInternalLinksInCode
+            ).onChange(async (value) => {
+              this.plugin.settings.excludeInternalLinksInCode = value;
+              await this.plugin.saveSettings();
+            });
+          });
+        }
+      );
+      addFilterableSetting(
         "Insert an alias that is transformed from the displayed internal link",
         null,
         (setting) => {
@@ -2889,6 +2962,20 @@ var VariousComplementsSettingTab = class extends import_obsidian3.PluginSettingT
             }).setValue(
               this.plugin.settings.intelligentSuggestionPrioritization.historyFilePath
             );
+          });
+        }
+      );
+      addFilterableSetting(
+        "Pretty-print history file",
+        "Save the history file with indentation to make Git diffs smaller.",
+        (setting) => {
+          setting.addToggle((tc) => {
+            tc.setValue(
+              this.plugin.settings.intelligentSuggestionPrioritization.prettyPrintHistoryFile
+            ).onChange(async (value) => {
+              this.plugin.settings.intelligentSuggestionPrioritization.prettyPrintHistoryFile = value;
+              await this.plugin.saveSettings();
+            });
           });
         }
       );
@@ -5010,7 +5097,7 @@ var InternalLinkWordProvider = class {
         ];
       }
     });
-    const unresolvedInternalLinkWords = this.appHelper.searchPhantomLinks().map(({ path: path2, link }) => {
+    const unresolvedInternalLinkWords = option.excludeUnresolvedLinks ? [] : this.appHelper.searchPhantomLinks().map(({ path: path2, link }) => {
       return {
         value: link,
         type: "internalLink",
@@ -7245,6 +7332,7 @@ var AutoCompleteSuggest = class _AutoCompleteSuggest extends import_obsidian7.Ed
     this.previousLinksCacheInActiveFile = /* @__PURE__ */ new Set();
     this.keymapEventHandler = [];
     this.spareEditorSuggestContext = null;
+    this.predictableCycleState = null;
     this.appHelper = new AppHelper(app);
     this.statusBar = statusBar;
   }
@@ -7310,6 +7398,7 @@ var AutoCompleteSuggest = class _AutoCompleteSuggest extends import_obsidian7.Ed
     ins.activeLeafChangeRef = app.workspace.on(
       "active-leaf-change",
       async (_) => {
+        ins.predictableCycleState = null;
         await ins.refreshCurrentFileTokens();
         ins.refreshInternalLinkTokens();
         ins.updateFrontMatterToken();
@@ -7345,31 +7434,75 @@ var AutoCompleteSuggest = class _AutoCompleteSuggest extends import_obsidian7.Ed
       return;
     }
     const cursor = editor.getCursor();
+    if (this.predictableCycleState) {
+      const state = this.predictableCycleState;
+      const currentCandidate = state.candidates[state.currentIndex];
+      const expectedCh = state.replacementStartCh + currentCandidate.length;
+      if (cursor.line === state.line && cursor.ch === expectedCh) {
+        state.currentIndex = (state.currentIndex + 1) % state.candidates.length;
+        const nextCandidate = state.candidates[state.currentIndex];
+        editor.replaceRange(
+          nextCandidate,
+          { line: state.line, ch: state.replacementStartCh },
+          cursor
+        );
+        this.close();
+        this.debounceClose();
+        return;
+      }
+      this.predictableCycleState = null;
+    }
     const currentToken = this.tokenizer.tokenize(editor.getLine(cursor.line).slice(0, cursor.ch)).last();
     if (!currentToken) {
       return;
     }
-    let suggestion = this.tokenizer.tokenize(
-      editor.getRange({ line: Math.max(cursor.line - 50, 0), ch: 0 }, cursor)
-    ).reverse().slice(1).find((x) => x.startsWith(currentToken));
-    if (!suggestion) {
-      suggestion = this.tokenizer.tokenize(
-        editor.getRange(cursor, {
-          line: Math.min(cursor.line + 50, editor.lineCount() - 1),
-          ch: 0
-        })
-      ).find((x) => x.startsWith(currentToken));
-    }
-    if (!suggestion) {
+    const candidates = this.collectPredictableCandidates(
+      editor,
+      cursor,
+      currentToken
+    );
+    if (candidates.length <= 1) {
       return;
     }
+    const replacementStartCh = cursor.ch - currentToken.length;
+    this.predictableCycleState = {
+      originalToken: currentToken,
+      replacementStartCh,
+      line: cursor.line,
+      candidates,
+      currentIndex: 0
+    };
+    const suggestion = candidates[0];
     editor.replaceRange(
       suggestion,
-      { line: cursor.line, ch: cursor.ch - currentToken.length },
-      { line: cursor.line, ch: cursor.ch }
+      { line: cursor.line, ch: replacementStartCh },
+      cursor
     );
     this.close();
     this.debounceClose();
+  }
+  collectPredictableCandidates(editor, cursor, originalToken) {
+    var _a, _b;
+    const seen = /* @__PURE__ */ new Set();
+    const candidates = [];
+    const addIfNew = (token) => {
+      if (token.startsWith(originalToken) && token !== originalToken && !seen.has(token)) {
+        seen.add(token);
+        candidates.push(token);
+      }
+    };
+    const visibleRange = this.appHelper.getVisibleLineRange();
+    const rangeStart = (_a = visibleRange == null ? void 0 : visibleRange.from) != null ? _a : Math.max(cursor.line - 50, 0);
+    const rangeEnd = (_b = visibleRange == null ? void 0 : visibleRange.to) != null ? _b : Math.min(cursor.line + 50, editor.lineCount() - 1);
+    const textAbove = editor.getRange({ line: rangeStart, ch: 0 }, cursor);
+    this.tokenizer.tokenize(textAbove).reverse().slice(1).forEach(addIfNew);
+    const textBelow = editor.getRange(cursor, {
+      line: rangeEnd,
+      ch: editor.getLine(rangeEnd).length
+    });
+    this.tokenizer.tokenize(textBelow).forEach(addIfNew);
+    candidates.push(originalToken);
+    return candidates;
   }
   unregister() {
     this.app.vault.offref(this.modifyEventRef);
@@ -7472,6 +7605,7 @@ var AutoCompleteSuggest = class _AutoCompleteSuggest extends import_obsidian7.Ed
         const matchStrategy = MatchStrategy.fromName(
           parsedQuery.completionMode
         );
+        const excludeInternalLinkInCode = this.settings.excludeInternalLinksInCode && this.completionMode === this.matchStrategy.name && (this.appHelper.inInlineCode(context.editor) || this.appHelper.inCodeBlock(context.editor));
         let words = parsedQuery.queries.filter(
           (x, i, xs) => parsedQuery.currentFrontMatter || this.settings.minNumberOfWordsTriggeredPhrase + i - 1 < xs.length && x.word.length >= this.minNumberTriggered && !x.word.endsWith(" ")
         ).map((q) => {
@@ -7492,7 +7626,8 @@ var AutoCompleteSuggest = class _AutoCompleteSuggest extends import_obsidian7.Ed
                 customDictionary: this.settings.customDictionaryMinNumberOfCharactersForTrigger,
                 internalLink: this.settings.internalLinkMinNumberOfCharactersForTrigger
               },
-              globalMinChar: this.settings.minNumberOfCharactersTriggered || this.tokenizerStrategy.triggerThreshold
+              globalMinChar: this.settings.minNumberOfCharactersTriggered || this.tokenizerStrategy.triggerThreshold,
+              excludeInternalLink: excludeInternalLinkInCode
             }
           ).map((word) => ({ ...word, offset: q.offset }));
         }).flat().sort((a, b) => Number(a.fuzzy) - Number(b.fuzzy));
@@ -7735,7 +7870,8 @@ var AutoCompleteSuggest = class _AutoCompleteSuggest extends import_obsidian7.Ed
       makeSynonymAboutEmoji: this.settings.matchingWithoutEmoji,
       makeSynonymAboutAccentsDiacritics: this.settings.treatAccentDiacriticsAsAlphabeticCharacters,
       frontMatterKeyForExclusion: this.settings.frontMatterKeyForExclusionInternalLink,
-      tagsForExclusion: this.settings.tagsForExclusionInternalLink
+      tagsForExclusion: this.settings.tagsForExclusionInternalLink,
+      excludeUnresolvedLinks: this.settings.excludeUnresolvedInternalLinks
     });
     this.statusBar.setInternalLinkIndexed(
       this.internalLinkWordProvider.wordCount
@@ -10288,7 +10424,8 @@ var VariousComponents = class extends import_obsidian9.Plugin {
         (0, import_obsidian9.normalizePath)(
           this.settings.intelligentSuggestionPrioritization.historyFilePath || DEFAULT_HISTORIES_PATH
         ),
-        (_b = (_a = this.suggester.selectionHistoryStorage) == null ? void 0 : _a.data) != null ? _b : {}
+        (_b = (_a = this.suggester.selectionHistoryStorage) == null ? void 0 : _a.data) != null ? _b : {},
+        this.settings.intelligentSuggestionPrioritization.prettyPrintHistoryFile ? 2 : void 0
       );
     }, 5e3);
     this.suggester = await AutoCompleteSuggest.new(
