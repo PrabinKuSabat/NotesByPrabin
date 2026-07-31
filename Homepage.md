@@ -2,14 +2,11 @@
 
 # [[ATLAS/Atlas|ATLAS]]
 
-> [!info]  
-> :FasHandPointer:  
-> Contains all Subject related notes.
+:FasHandPointer: Contains all Subject related notes.
 
 # [[EFFORTS/Efforts|EFFORTS]]
 
-> [!info]  
-> :FasHandPointer: contains all Project Notes.
+:FasHandPointer: Contains all Project Notes.
 
 # [[CALENDAR/Calendar|CALENDAR]]
 
