@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CALENDER/2026-07-30.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "2026-07-30"
+              "title": "Homepage"
             }
           }
         ]
@@ -245,8 +245,8 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Homepage.md",
     "CALENDER/2026-07-30.md",
+    "Homepage.md",
     "Prabin's KB ~/Prabins KB ~.md",
     "riscv_user_space_kernel_publishability_impact_assessment.md",
     "riscv_user_kernel_kernel_assisted_privileged_ops_report.md",
