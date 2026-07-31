@@ -22,6 +22,8 @@ The efforts put into this mission of making an OS for teaching and research purp
 
 ## Native Minimal Kernel
 
+[[The Problem Statement and metrics to check]]
+
 ## User-space kernel design notes
 
 - [[RISC-V User-Space Kernel Design]]

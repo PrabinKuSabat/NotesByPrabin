@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/Efforts.md",
+                "file": "EFFORTS/The Problem Statement and metrics to check.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Efforts"
+              "title": "The Problem Statement and metrics to check"
             }
           }
         ]
@@ -247,16 +247,17 @@
   },
   "active": "fea2f06782ea282d",
   "lastOpenFiles": [
-    "EFFORTS/SSSIHL.md",
+    "EFFORTS/RISC-V.md",
+    "EFFORTS/The Problem Statement and metrics to check.md",
     "EFFORTS/Efforts.md",
+    "Homepage.md",
+    "Buffer.md",
+    "EFFORTS/SSSIHL.md",
     "EFFORTS/PMAT-303 LeetCode Assignment.md",
     "EFFORTS/JAVA Project.md",
     "EFFORTS/IBM Workshop.md",
     "EFFORTS/Leetcode.md",
-    "Homepage.md",
     "ATLAS/Atlas.md",
-    "Buffer.md",
-    "EFFORTS/RISC-V.md",
     "EFFORTS/RISC-V User-Space Kernel Design.md",
     "EFFORTS/Writing a Operating System.md",
     "EFFORTS/AccelSim.md",
@@ -273,7 +274,6 @@
     "Extras/Archives/Extras-Excalidraw-legacy-2026-07-31.tar.gz",
     "Excalidraw/Questions on TPU.excalidraw.md",
     "CALENDAR/README.md",
-    "CALENDAR/L40 pricing @vast.ai.md",
     "CALENDAR",
     "Extras/Archives/NotesByPrabin-legacy-snapshot-2026-07-31.tar.gz",
     "Extras/Archives",
