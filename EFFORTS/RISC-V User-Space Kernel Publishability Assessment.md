@@ -1,5 +1,7 @@
 # Publishability and Impact Assessment for a RISC-V User-Space Kernel Project
 
+Related: [[EFFORTS/RISC-V]], [[Prabin's KB ~/RISC-V OS development]], [[EFFORTS/RISC-V User-Space Kernel Design]]
+
 ## Executive summary
 
 Your project has a credible research core, but **only if you frame it as a new RISC-V privilege-mediation substrate and not merely as “boot Linux in user space.”**

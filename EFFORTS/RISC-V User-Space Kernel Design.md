@@ -1,5 +1,7 @@
 # Building a RISC-V User-Space Linux Kernel With Kernel-Assisted Privileged Operations
 
+Related: [[EFFORTS/RISC-V]], [[Prabin's KB ~/RISC-V OS development]], [[EFFORTS/Setting up QEMU for OrangePi Kernel Development]]
+
 ## Executive summary
 
 What you want is feasible, but only under a very specific interpretation of “privileged instructions execute in kernel mode.” A RISC‑V Linux kernel binary running as a normal Linux user process will execute all ordinary unprivileged RISC‑V instructions natively on the host core, because the guest kernel process is itself just a RISC‑V userspace program. However, any supervisor-only CSR access or supervisor-only instruction executed in U-mode will trap as an illegal instruction, and stock Linux on RISC‑V turns such user-mode illegal-instruction traps into `SIGILL` for the process rather than “executing the instruction on its behalf.”

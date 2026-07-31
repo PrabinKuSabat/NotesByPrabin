@@ -12,6 +12,11 @@ This note keeps track of all the things that are related to the OrangePi Board :
 
 The efforts put into this mission of making an OS for teaching and research purposes will be documented in this Notes and the notes within : [[Writing a Operating System]].
 
+## User-space kernel design notes
+
+- [[EFFORTS/RISC-V User-Space Kernel Design]]
+- [[EFFORTS/RISC-V User-Space Kernel Publishability Assessment]]
+
 ## Meeting Notes
 
 The wonderful efforts and dedication from an inspiring teacher will always be required in every stage of the life. To preserve the teachings, all the meeting notes will be archived here : [[Shakti Sir Meeting Notes]].

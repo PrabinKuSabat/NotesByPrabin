@@ -11,12 +11,12 @@
 > [!info]  
 > :FasHandPointer: contains all Project Notes.
 
-# [[CALENDAR]]
+# [[CALENDER/CALENDAR|CALENDAR]]
 
-# [[Prabins KB ~|Website Homepage]]
+# [[Prabin's KB ~/Prabins KB ~|Website Homepage]]
 
 # [[TO-DO List]]
 
-# [[Status Kanban.kanban]]
+# [[Kanban Boards/Status Kanban.kanban|Status Kanban]]
 
 [[Buffer]]

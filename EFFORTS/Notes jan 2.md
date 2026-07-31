@@ -1,3 +1,7 @@
+# Notes jan 2
+
+Related: [[ATLAS/Shakti Sir Meeting Notes]], [[EFFORTS/GPU_Microbenchmark]], [[EFFORTS/L1 Performance Tests]]
+
 - l1, l2 and dram latency mesaurement.  
   find some benchmark
 - l2 latency btwn core clusters(4cores)
@@ -11,7 +15,7 @@
 - Reduce bus width to 8byte instead of 32byte to save power if edge computer.
 - shutdown pages in dram to save energy.
 - 32kb 8 ways, line: 64 bytes
-- ![[image-104.png]]
+- ![[Extras/ATTACHMENTS/image-104.png]]
 - quad word (highest),word(32 bit), double word
 - all cache lines same for all level of caches 64bytes.
 - mainframe cache line is 256byte

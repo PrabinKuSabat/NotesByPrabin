@@ -1,3 +1,7 @@
+# Correlation Outputs RTX4090
+
+Related: [[EFFORTS/Dissertation]], [[EFFORTS/Accel-Sim Findings]], [[EFFORTS/Case Study Mathematical Modelling]]
+
 Plotting NVIDIA GeForce RTX 4090 : [GPC Cycles]  
 RTX4090-SASS (10 apps, 193 kernels (6 < 1% Err, 31 under, 156 over)) [Correl=0.9718 Err=12.53%] :: 0 high error points dropped from Err calc. 0 dropped for HW too low (>0)  
 Per-App :: RTX4090-SASS (10 apps (0 < 1% Err, 3 under, 7 over, 4 < 10% Err)) [Correl=0.9991 Err=13.59% Agg_Err=11.07% RPD=12.68%,NMSE=0.23]
