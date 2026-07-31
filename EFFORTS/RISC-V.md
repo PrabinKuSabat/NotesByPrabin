@@ -20,11 +20,13 @@ This note keeps track of all the things that are related to the OrangePi Board :
 
 The efforts put into this mission of making an OS for teaching and research purposes will be documented in this Notes and the notes within : [[Writing a Operating System]].
 
+## Native Minimal Kernel
+
 ## User-space kernel design notes
 
-- [[EFFORTS/RISC-V User-Space Kernel Design]]
-- [[EFFORTS/RISC-V User-Space Kernel Publishability Assessment]]
-- [[EFFORTS/RISC-V Questions]]
+- [[RISC-V User-Space Kernel Design]]
+- [[RISC-V User-Space Kernel Publishability Assessment]]
+- [[RISC-V Questions]]
 
 ## Meeting Notes
 

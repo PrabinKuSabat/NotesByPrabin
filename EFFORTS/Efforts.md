@@ -15,14 +15,15 @@ updated: 2026-07-31
 > [[RISC-V]]
 
 > [!example] Current focus
-> [[EFFORTS/AccelSim]]  
-> [[EFFORTS/GPU_Microbenchmark]]  
-> [[Prabin's KB ~/RISC-V OS development]]  
-> [[Prabin's KB ~/Project Setups]]
+> [[AccelSim]]  
+> [[GPU_Microbenchmark]]  
+> [[RISC-V OS development]]  
+> [[Project Setups]]  
+> [[RISC-V]]
 
 > [! important] coding  
-> [[EFFORTS/Leetcode]]  
-> [[EFFORTS/IBM Workshop]]  
+> [[Leetcode]]  
+> [[IBM Workshop]]  
 > [[JAVA Project]]
 
 > [! summary] Regular Works  

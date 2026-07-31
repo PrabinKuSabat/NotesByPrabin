@@ -33,8 +33,8 @@ How can we reduce the friction between custom RISC-V hardware deployment and rig
 
 # Related notes
 
-1. [[EFFORTS/RISC-V User-Space Kernel Design]]
-2. [[EFFORTS/RISC-V User-Space Kernel Publishability Assessment]]
+1. [[RISC-V User-Space Kernel Design]]
+2. [[RISC-V User-Space Kernel Publishability Assessment]]
 
 # Steps
 
