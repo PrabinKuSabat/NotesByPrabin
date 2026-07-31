@@ -51,7 +51,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "byModifiedTime",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -245,8 +247,8 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "CALENDER/2026-07-30.md",
     "Homepage.md",
+    "CALENDER/2026-07-30.md",
     "Prabin's KB ~/Prabins KB ~.md",
     "riscv_user_space_kernel_publishability_impact_assessment.md",
     "riscv_user_kernel_kernel_assisted_privileged_ops_report.md",
