@@ -1,4 +1,8 @@
 ---
+tags:
+  - daily-note
+created: <% tp.date.now("YYYY-MM-DD") %>
+updated: <% tp.date.now("YYYY-MM-DD") %>
 Suprabhatam: false
 Jogging: 
 Mandir: 

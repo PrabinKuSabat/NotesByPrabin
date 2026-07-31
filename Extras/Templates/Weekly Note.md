@@ -1,3 +1,11 @@
+---
+tags:
+  - weekly-note
+status: active
+created: <% tp.date.now("YYYY-MM-DD") %>
+updated: <% tp.date.now("YYYY-MM-DD") %>
+---
+
 # 1% `ris:ArrowRightUp`??
 
 ---

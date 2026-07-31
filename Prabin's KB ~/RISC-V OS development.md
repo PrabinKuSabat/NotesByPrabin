@@ -1,5 +1,11 @@
 ---
 dg-publish: true
+status: active
+tags:
+  - risc-v
+  - os
+  - systems
+updated: 2026-07-31
 ---
 
 # Hardware Available

@@ -61,7 +61,7 @@ L1 and L2 caches are crossbar connected.
 
 - Though it provides low latency and high-throughput
 - the design struggles to scale with the increase in the no. of CUs.  
-![[Pasted image 20240912204038.png]]
+![[Extras/ATTACHMENTS/Pasted image 20240912204038.png]]
 
 ## Compute Unit
 
@@ -80,7 +80,7 @@ L1 and L2 caches are crossbar connected.
 	- responsible for executing vectorized floating-point instruction for 10 out 40 wavefronts
 	- contains 16 single-precision ALUs
 	- => 64-work-item wavefront takes 4 cycles to finish  
-![[Pasted image 20240912203931.png|Architecture of a GCN3 Compute Unit]]
+![[Extras/ATTACHMENTS/Pasted image 20240912203931.png|Architecture of a GCN3 Compute Unit]]
 
 ## Cache `fas:ShippingFast`
 
@@ -102,7 +102,7 @@ L1 and L2 caches are crossbar connected.
 ## RDNA Architecture (Radeon DNA)
 
 Designed to replace GCN for better scalability.  
-![[Pasted image 20240916145837.png]]
+![[Extras/ATTACHMENTS/Pasted image 20240916145837.png]]
 
 ### Major Changes
 
@@ -136,13 +136,13 @@ Designed to replace GCN for better scalability.
 	- 2x cache line size ( 64B `rir:ArrowRightS` 128B)  
 	  => unique single-precision numbers for all 32 work-items.
 
-![[Pasted image 20240916145901.png]]  
+![[Extras/ATTACHMENTS/Pasted image 20240916145901.png]]  
 
 ---
 
 Comparing cache latencies between the GCN and RDNA GPUs, while running the pointer chasing microbenchmark. The results suggest that, other than the publicly announced changes in the specifications (e.g., cache sizes), AMD has made many unannounced design improvements (e.g., reducing cache latencies).
 
-![[Pasted image 20240912203601.png]]
+![[Extras/ATTACHMENTS/Pasted image 20240912203601.png]]
 
 ---
 

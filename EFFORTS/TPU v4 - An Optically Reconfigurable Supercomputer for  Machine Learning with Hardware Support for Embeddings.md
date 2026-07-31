@@ -36,5 +36,5 @@ Total Palomar OCS used : 48
 - Each OCS is 128 ports => Total ports = 128 x 48.
 - Total Cables from 64 blocks = 64 x 48 x 2 = 128 x 48  
 
-![[Pasted image 20250122214445.png#+grid |fig 2]]  
-![[Pasted image 20250122214510.png#+grid|Fig: 1]]
+![[Extras/ATTACHMENTS/Pasted image 20250122214445.png#+grid |fig 2]]  
+![[Extras/ATTACHMENTS/Pasted image 20250122214510.png#+grid|Fig: 1]]

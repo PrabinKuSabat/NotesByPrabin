@@ -7,7 +7,7 @@ Amdahl's Law is named after Gene Amdahl, who presented the concept in 1967 at th
 
 The central idea of Amdahl's Law is that the speed of a task is limited by the portion of the task that remains non-parallelizable.​
 
-![[Pasted image 20241209185953.png]]
+![[Extras/ATTACHMENTS/Pasted image 20241209185953.png]]
 
 S : Theoretical Speedup of the system  
 p : portion of the task that can be parallelized  
@@ -22,11 +22,11 @@ Gustafson's Law is an important principle in parallel computing that addresses t
 
 It suggests wiith more computing power, scientists and engineers can tackle larger and more complex problems, maximizing the potential of parallel processing.  
 
-![[Pasted image 20241209201857.png]]
+![[Extras/ATTACHMENTS/Pasted image 20241209201857.png]]
 
 S : scaling speedup  
 N : Number of Processors  
 s : the fraction of serial workload  
 P : the fraction of the parallel workload that is able to utilize the processors.
 
-![[Pasted image 20241209202233.png]]
+![[Extras/ATTACHMENTS/Pasted image 20241209202233.png]]

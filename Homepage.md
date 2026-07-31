@@ -11,7 +11,7 @@
 > [!info]  
 > :FasHandPointer: contains all Project Notes.
 
-# [[CALENDER/CALENDAR|CALENDAR]]
+# [[CALENDAR/Calendar|CALENDAR]]
 
 # [[Prabin's KB ~/Prabins KB ~|Website Homepage]]
 

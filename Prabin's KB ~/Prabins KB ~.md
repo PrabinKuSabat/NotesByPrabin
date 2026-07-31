@@ -1,9 +1,14 @@
 ---
 dg-publish: true
 dg-home: true
+status: active
+tags:
+  - homepage
+  - research
+updated: 2026-07-31
 ---
 
-![[image-97.png]]
+![[Extras/ATTACHMENTS/image-97.png]]
 
 # Systems Engineering Logbook — Kernel, Performance, and Architecture Experiments
 

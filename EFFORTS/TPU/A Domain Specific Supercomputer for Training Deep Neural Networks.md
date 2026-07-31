@@ -100,7 +100,7 @@ A separate Infiniband switch(used in CPU clusters) connecting 64 hosts(each with
 >
 > Allowed TPU to achive 96-99% of perfect linear scaleup.
 
-![[Pasted image 20250118183302.png#center|FIgure 1: 2D-Torus Topology | 750]]
+![[Extras/ATTACHMENTS/Pasted image 20250118183302.png#center|FIgure 1: 2D-Torus Topology | 750]]
 
 ### Designing Supercomputer Node
 
@@ -125,7 +125,7 @@ Batch size of <mark style="background: #ABF7F7A6;">256 - 8,192</mark> scale perf
 
 ## Floor Plan of TPUv2
 
-![[Pasted image 20250120202022.png#center|Picture 2 : Floor Plan of TPUv2]]
+![[Extras/ATTACHMENTS/Pasted image 20250120202022.png#center|Picture 2 : Floor Plan of TPUv2]]
 
 **Major blocks of a Tensor Core**:
 1. ICI (Inter-Core Interconnect)
@@ -242,7 +242,7 @@ As: 8<sup>2</sup> / 11<sup>2</sup> = 0.5.
 | 32MiB scratchpad memories, software controlled.                 | 6 MiB cache and 7.5 MiB scratchpad memory controlled by software.                                                                                              | Storage                    |
 | Use DMA controllers for DRAM accesses.                          | Uses coalescing hardware.                                                                                                                                      | Memory Access              |
 
-![[Pasted image 20250121162527.png#center |Figure 3 : Adjusted Comparison of GPU and TPU]]  
+![[Extras/ATTACHMENTS/Pasted image 20250121162527.png#center |Figure 3 : Adjusted Comparison of GPU and TPU]]  
 **From the figure** :
 - GPUs have 2x the die size.
 - 1.3x-1.6x power consumption.
@@ -262,7 +262,7 @@ title: Thottethodi and Vijaykumar35 concluded that when compared to TPUs:
 # Performance Evaluation
 
 - 96-99% of <mark style="background: #08BFFF99;">perfect linear speedup</mark> upto 1024 chips.  
-![[Pasted image 20250121185022.png#center|Figure 4 : TPUv3 vs Volta]]  
+![[Extras/ATTACHMENTS/Pasted image 20250121185022.png#center|Figure 4 : TPUv3 vs Volta]]  
 **Google's workloads :**
 1. MLP0 : Unpublished
 2. MLP1 : RankBrain <mark style="background: #CACFD9A6;">(Only Articles available, yet to go through!)</mark>

@@ -1,2 +1,0 @@
-![[CALENDER/Heatmaps|Heatmaps]]  
-[[Library]]

@@ -14,7 +14,7 @@ Miscellaneous files, temporary notes, and anything that doesn't yet have a clear
 
 This folder should be reviewed periodically. Notes here are in one of two states:
 
-1. **Waiting to be processed** — move to `ATLAS/`, `EFFORTS/`, `Bibliography/`, or `CALENDER/`
+1. **Waiting to be processed** — move to `ATLAS/`, `EFFORTS/`, `Bibliography/`, or `CALENDAR/`
 2. **Genuinely miscellaneous** — keep here or delete if no longer useful
 
 > 🗂️ A clean Extras folder is a sign of a well-maintained vault. When in doubt, file it here first, process it later.

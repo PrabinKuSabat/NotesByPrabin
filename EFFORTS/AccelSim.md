@@ -1,5 +1,11 @@
 ---
 dg-publish: false
+status: active
+tags:
+  - accel-sim
+  - gpu
+  - simulator
+updated: 2026-07-31
 ---
 
 # Notes on the GPU-Simulator Accel-Sim

@@ -26,7 +26,7 @@ Selected notes marked with `dg-publish: true` are automatically published to the
 NotesByPrabin/
 ├── ATLAS/            # Maps of Content (MOC) — index notes linking ideas together
 ├── Bibliography/     # Reference notes, summaries, and source annotations
-├── CALENDER/         # Daily notes, journals, and time-based records
+├── CALENDAR/         # Daily notes, journals, and time-based records
 ├── EFFORTS/          # Active projects, goals, and ongoing work
 ├── Excalidraw/       # Visual diagrams, mind maps, and sketches
 ├── Extras/           # Miscellaneous notes and temporary files

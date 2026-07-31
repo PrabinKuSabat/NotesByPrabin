@@ -1,3 +1,12 @@
+---
+status: active
+tags:
+  - dissertation
+  - gpu
+  - accel-sim
+updated: 2026-07-31
+---
+
 [[Online Courses]]  
 [[Books to Complete]]  
 [[POA By Naveen Bro]]  

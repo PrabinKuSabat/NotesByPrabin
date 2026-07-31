@@ -1,3 +1,11 @@
+---
+tags:
+  - atlas
+  - moc
+status: active
+updated: 2026-07-31
+---
+
 # Atlas
 
 ## Subjects
@@ -23,7 +31,22 @@ title: Architecture
 [[NVIDIA- Architectures]]
 [[Wafers]]
 [[Ada Lovelace ISA]]
-[[RISC-V]]
+[[EFFORTS/RISC-V|RISC-V]]
 ```
 
 [[Movie Watch List]]
+
+## Current research maps
+
+- [[EFFORTS/Dissertation]]
+- [[EFFORTS/AccelSim]]
+- [[EFFORTS/GPU_Microbenchmark]]
+- [[EFFORTS/CA Research]]
+- [[Prabin's KB ~/GPU Architectures and Whitepapers]]
+
+## Systems and OS work
+
+- [[Prabin's KB ~/RISC-V OS development]]
+- [[EFFORTS/RISC-V User-Space Kernel Design]]
+- [[EFFORTS/RISC-V User-Space Kernel Publishability Assessment]]
+- [[ATLAS/Branch Predictors]]

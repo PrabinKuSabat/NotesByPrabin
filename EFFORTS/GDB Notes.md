@@ -26,9 +26,9 @@
   set history filename /.gdb_history
 - list  
   lists 10 lines from current point of exec
-- ![[image-99.png]]
-- ![[image-101.png]]
-- ![[image-102.png]]
+- ![[Extras/ATTACHMENTS/image-99.png]]
+- ![[Extras/ATTACHMENTS/image-101.png]]
+- ![[Extras/ATTACHMENTS/image-102.png]]
 
 # Source : Write your own OS
 
@@ -39,7 +39,7 @@
   creates a checkpoint at the current position of execution or pc.
 - restart <checkpoint_id> will restart from that checkpoint
 - info threads
-- ![[image-103.png]]symbol-file _extracted-debug-file-name_
+- ![[Extras/ATTACHMENTS/image-103.png]]symbol-file _extracted-debug-file-name_
 - gdbserver _adress:port_, _program-name_
 - target remote _adress:port_
 - actions

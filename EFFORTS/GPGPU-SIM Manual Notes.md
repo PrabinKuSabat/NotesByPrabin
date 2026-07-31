@@ -5,7 +5,7 @@ Aim : To provide a substrate for acrch. research rather than to exactly model an
 # Top Level Org
 
 - SIMT cores connected via on-chip connection network to G-Ram.  
-![[image-96.png]]
+![[Extras/ATTACHMENTS/image-96.png]]
 
 # Clock Domains
 
@@ -24,11 +24,11 @@ Aim : To provide a substrate for acrch. research rather than to exactly model an
 `response FIFO` holds the packet ejected from ICNet before direction to SIMT C Inst Cache or memory pipeline(LDST unit).  
 ICNet request can be made by each SIMT core by it's own `injection port`.  
 But `injection port buffer is shared`.  
-![[image-98.png]]
+![[Extras/ATTACHMENTS/image-98.png]]
 
 # SIMT C
 
-![[image-100.png]]
+![[Extras/ATTACHMENTS/image-100.png]]
 
 ## Fetch and Decode
 

@@ -1,3 +1,11 @@
+---
+status: active
+tags:
+  - risc-v
+  - systems
+updated: 2026-07-31
+---
+
 # Notes
 
 ## Architecture Related
@@ -16,6 +24,7 @@ The efforts put into this mission of making an OS for teaching and research purp
 
 - [[EFFORTS/RISC-V User-Space Kernel Design]]
 - [[EFFORTS/RISC-V User-Space Kernel Publishability Assessment]]
+- [[EFFORTS/RISC-V Questions]]
 
 ## Meeting Notes
 

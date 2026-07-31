@@ -23,8 +23,8 @@ dg-publish: true
 > 3. RTX2060
 > 4. QV100
 
-![[image-93.png|990x281]]  
-![[image-94.png|871x389]]
+![[Extras/ATTACHMENTS/image-93.png|990x281]]  
+![[Extras/ATTACHMENTS/image-94.png|871x389]]
 
 > [!warning] Disclaimer  
 > Please refer to the original paper for more clarity.
