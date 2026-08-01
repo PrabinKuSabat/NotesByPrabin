@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EFFORTS/The Problem Statement and metrics to check.md",
+                "file": "OrangePi_RV2_Config_Audit.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "The Problem Statement and metrics to check"
+              "title": "OrangePi_RV2_Config_Audit"
             }
           }
         ]
@@ -247,8 +247,10 @@
   },
   "active": "fea2f06782ea282d",
   "lastOpenFiles": [
-    "EFFORTS/RISC-V.md",
     "EFFORTS/The Problem Statement and metrics to check.md",
+    "OrangePi_RV2_Config_Audit.md",
+    "Untitled",
+    "EFFORTS/RISC-V.md",
     "EFFORTS/Efforts.md",
     "Homepage.md",
     "Buffer.md",
@@ -273,7 +275,6 @@
     "ATLAS/Branch Predictors.md",
     "Extras/Archives/Extras-Excalidraw-legacy-2026-07-31.tar.gz",
     "Excalidraw/Questions on TPU.excalidraw.md",
-    "CALENDAR/README.md",
     "CALENDAR",
     "Extras/Archives/NotesByPrabin-legacy-snapshot-2026-07-31.tar.gz",
     "Extras/Archives",
@@ -292,7 +293,6 @@
     "Extras/ATTACHMENTS/image-108.png",
     "Extras/ATTACHMENTS/image-107.png",
     "Extras/ATTACHMENTS/image-106.png",
-    "Extras/ATTACHMENTS/combined_RTX4090_no_skip_first2rows_v3.pdf",
     "EFFORTS/Untitled.canvas",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "EFFORTS/Binary Search.canvas",
