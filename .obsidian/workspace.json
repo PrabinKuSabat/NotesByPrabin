@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "f359e91f5caec34d",
+        "id": "4509724f8bf84da7",
         "type": "tabs",
         "children": [
           {
-            "id": "fea2f06782ea282d",
+            "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "OrangePi_RV2_Config_Audit.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "OrangePi_RV2_Config_Audit"
+              "title": "Homepage"
             }
           }
         ]
@@ -245,10 +245,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "fea2f06782ea282d",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "EFFORTS/The Problem Statement and metrics to check.md",
     "OrangePi_RV2_Config_Audit.md",
+    "EFFORTS/The Problem Statement and metrics to check.md",
     "Untitled",
     "EFFORTS/RISC-V.md",
     "EFFORTS/Efforts.md",
