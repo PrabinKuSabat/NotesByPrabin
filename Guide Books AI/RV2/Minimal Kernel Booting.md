@@ -17,7 +17,7 @@ sudo apt install -y \
     git curl build-essential bc bison flex \
     libssl-dev libelf-dev libncurses-dev dwarves \
     cpio rsync file device-tree-compiler sparse \
-    qemu-system-misc \
+    qemu-system-riscv \
     gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu \
     libc6-dev-riscv64-cross
 ```
@@ -45,7 +45,7 @@ Ubuntu packages `qemu-system-misc` and `dt-schema` are documented in the [Ubuntu
 Use the known Linux 6.6.63 RV2 commit, not the moving branch head:
 
 ```bash
-export RV2_WORK="$PWD/rv2-minimal"
+export RV2_WORK="$PWD"
 export RV2_PIN="ae9e974d3e19f460b6397bfe8f0f1417a073ce05"
 export KERNEL_SRC="$RV2_WORK/src/linux-orangepi"
 export ARCH=riscv
