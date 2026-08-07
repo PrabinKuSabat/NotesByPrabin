@@ -7,6 +7,7 @@ tags:
 updated: 2026-07-31
 ---
 
+$1  
 [[Online Courses]]  
 [[Books to Complete]]  
 [[POA By Naveen Bro]]  
@@ -23,5 +24,5 @@ updated: 2026-07-31
 
 # Things to Do
 
-- [x] Read GPGPU-Sim mainpage ✅ 2026-01-23
+- [x] Read GPGPU-Sim mainpage ✅ 2026-01-23  
   [GPGPU-Sim 3.x Manual](http://gpgpu-sim.org/manual/index.php/Main_Page)

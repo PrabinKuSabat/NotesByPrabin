@@ -1,0 +1,236 @@
+{
+  "main": {
+    "id": "91a73fd777c61d92",
+    "type": "split",
+    "children": [
+      {
+        "id": "d2300b2a612da596",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ab7ea9684be15dac",
+            "type": "leaf",
+            "state": {
+              "type": "kanban",
+              "state": {
+                "file": "Untitled Kanban.md",
+                "kanbanViewState": {
+                  "kanban-plugin": "board",
+                  "list-collapse": [
+                    true,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false
+                  ]
+                }
+              },
+              "icon": "lucide-trello",
+              "title": "Untitled Kanban"
+            }
+          },
+          {
+            "id": "07d0e8ef7b3533d8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "QEMU/QEMU_Complete_Reference_Book_11.0.3.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "QEMU_Complete_Reference_Book_11.0.3"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "eb04d1587d6426ab",
+    "type": "split",
+    "children": [
+      {
+        "id": "b25c51888661f91e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "05c2187ae0baeac0",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "aeec2760d30410f4",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "tag:#do",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "f56807953001ac1f",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "4fcc36761d0db2ce",
+    "type": "split",
+    "children": [
+      {
+        "id": "b34d01fc32a38880",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "4e3b41ad9740a994",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "QEMU_Complete_Reference_Book_11.0.3.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "135c808918a8dc93",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "QEMU_Complete_Reference_Book_11.0.3.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "7dbf3f0a0481e18f",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "fd7f3a0ac72559a2",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "c2ce7f00a5c6b703",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "QEMU_Complete_Reference_Book_11.0.3.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false,
+      "obsidian-kanban:Create new board": false
+    }
+  },
+  "active": "05c2187ae0baeac0",
+  "lastOpenFiles": [
+    "QEMU/QEMU_Complete_Reference_Book_11.0.3.md",
+    "Minimal Kernel Booting.md",
+    "Untitled Kanban.md",
+    "Seminar/Wayfinder_Seminar_Notes.md",
+    "Question banks/Chapter_2_Question_Paper.md",
+    "Question banks/Chapter_1_Question_Paper.md",
+    "Question banks",
+    "Wayfinder_Seminar_Notes.md",
+    "Chapter_1_Question_Paper.md",
+    "Chapter_2_Question_Paper.md",
+    "Seminar",
+    "RV2",
+    "QEMU",
+    "RV2/OrangePi_RV2_Config_Audit.md"
+  ]
+}

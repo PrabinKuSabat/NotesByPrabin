@@ -113,7 +113,7 @@
   "addDummyTextElement": false,
   "zoteroCompatibility": false,
   "fieldSuggester": true,
-  "enableOnloadScripts": false,
+  "enableOnloadScripts": true,
   "enableCommandLinks": false,
   "compatibilityMode": false,
   "drawingOpenCount": 0,
@@ -121,7 +121,7 @@
   "library2": {
     "type": "excalidrawlib",
     "version": 2,
-    "source": "https://github.com/zsviczian/obsidian-excalidraw-plugin/releases/tag/2.20.6",
+    "source": "https://github.com/zsviczian/obsidian-excalidraw-plugin/releases/tag/2.25.2",
     "libraryItems": []
   },
   "imageElementNotice": true,

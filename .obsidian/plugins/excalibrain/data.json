@@ -91,7 +91,7 @@
   "toggleEmbedTogglesAutoOpen": true,
   "showInferredNodes": true,
   "showAttachments": true,
-  "showURLNodes": true,
+  "showURLNodes": false,
   "showVirtualNodes": true,
   "showFolderNodes": false,
   "showTagNodes": false,
@@ -184,7 +184,11 @@
   },
   "hierarchyLinkStyles": {},
   "navigationHistory": [
-    "EFFORTS/Dissertation.md"
+    "EFFORTS/Dissertation.md",
+    "EFFORTS/Accel-Sim Findings.md",
+    "EFFORTS/Correlation Outputs RTX4090.md",
+    "EFFORTS/Case Study Mathematical Modelling.md",
+    "EFFORTS/Case Study - Mathematical Modelling Presentation Notes Section 6.md"
   ],
   "allowOntologySuggester": true,
   "ontologySuggesterParentTrigger": "::p",

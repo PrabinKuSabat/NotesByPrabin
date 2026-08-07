@@ -1,5 +1,3 @@
-# Contents
-
 # [[ATLAS/Atlas|ATLAS]]
 
 :FasHandPointer: Contains all Subject related notes.
