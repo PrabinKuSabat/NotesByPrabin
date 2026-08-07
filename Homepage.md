@@ -1,10 +1,6 @@
 # [[ATLAS/Atlas|ATLAS]]
 
-:FasHandPointer: Contains all Subject related notes.
-
 # [[EFFORTS/Efforts|EFFORTS]]
-
-:FasHandPointer: Contains all Project Notes.
 
 # [[CALENDAR/Calendar|CALENDAR]]
 
@@ -14,4 +10,4 @@
 
 # [[Kanban Boards/Status Kanban.kanban|Status Kanban]]
 
-[[Buffer]]
+# [[Buffer]]

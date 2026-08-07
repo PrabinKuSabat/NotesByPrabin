@@ -205,18 +205,17 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "CALENDER/2026-07-30.md"
+                "file": "Homepage.md"
               },
               "icon": "lucide-info",
-              "title": "File properties for 2026-07-30"
+              "title": "File properties"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 471.5,
-    "collapsed": true
+    "width": 471.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -246,10 +245,12 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/Efforts.md",
+    "Homepage.md",
+    "CALENDAR/Calendar.md",
+    "TO-DO List.md",
     "Kanban Boards/Status Kanban.kanban.md",
     "Prabin's KB ~/Prabins KB ~.md",
-    "Homepage.md",
-    "EFFORTS/Efforts.md",
     "ATLAS/Atlas.md",
     "Guide Books AI/Seminar/Wayfinder_Seminar_Notes.md",
     "Guide Books AI/RV2/OrangePi_RV2_Config_Audit.md",
@@ -266,7 +267,6 @@
     "excalibrain.md",
     "EFFORTS/Accel-Sim Findings.md",
     "EFFORTS/Dissertation.md",
-    "TO-DO List.md",
     "Buffer.md",
     "ZoteroExports/Comment Technical report. First Edition. April 18th, 2018. 66 pages.md",
     "webclips/README.md",
@@ -278,7 +278,6 @@
     "EFFORTS/RISC-V.md",
     "EFFORTS/SSSIHL.md",
     "EFFORTS/PMAT-303 LeetCode Assignment.md",
-    "EFFORTS/JAVA Project.md",
     "Extras/Archives/Extras-Excalidraw-legacy-2026-07-31.tar.gz",
     "CALENDAR",
     "Extras/Archives/NotesByPrabin-legacy-snapshot-2026-07-31.tar.gz",
