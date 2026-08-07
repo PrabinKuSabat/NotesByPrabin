@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "Guide Books AI/RV2/Minimal Kernel Booting.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,17 +28,17 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "Minimal Kernel Booting"
             }
           },
           {
-            "id": "bb1d63490da8026a",
+            "id": "b605e3757a99872a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Minimal Kernel Booting.md",
-                "mode": "preview",
+                "file": "Guide Books AI/RV2/Prompt and Context Engineering.md",
+                "mode": "source",
                 "source": false,
                 "backlinks": true,
                 "backlinkOpts": {
@@ -52,7 +52,34 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Minimal Kernel Booting"
+              "title": "Prompt and Context Engineering"
+            }
+          },
+          {
+            "id": "bb1d63490da8026a",
+            "type": "leaf",
+            "state": {
+              "type": "kanban",
+              "state": {
+                "file": "Kanban Boards/M. Tech. Work List.md",
+                "kanbanViewState": {
+                  "kanban-plugin": "board",
+                  "list-collapse": [
+                    true,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false
+                  ]
+                }
+              },
+              "icon": "lucide-trello",
+              "title": "M. Tech. Work List"
             }
           }
         ],
@@ -231,7 +258,7 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Minimal Kernel Booting.md"
+                "file": "Guide Books AI/RV2/Prompt and Context Engineering.md"
               },
               "icon": "lucide-info",
               "title": "File properties"
@@ -270,10 +297,13 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "bb1d63490da8026a",
+  "active": "b605e3757a99872a",
   "lastOpenFiles": [
+    "Guide Books AI/RV2/Minimal Kernel Booting.md",
+    "Guide Books AI/RV2/Prompt and Context Engineering.md",
+    "Guide Books AI/AI Suggest Skill Mastering Courses",
+    "Kanban Boards/M. Tech. Work List.md",
     "Homepage.md",
-    "Minimal Kernel Booting.md",
     "EFFORTS/Efforts.md",
     "CALENDAR/Calendar.md",
     "TO-DO List.md",
@@ -285,7 +315,6 @@
     "Guide Books AI/Question banks/Chapter_2_Question_Paper.md",
     "Guide Books AI/Question banks/Chapter_1_Question_Paper.md",
     "Guide Books AI/QEMU/QEMU_Complete_Reference_Book_11.0.3.md",
-    "Kanban Boards/Untitled Kanban.md",
     "Guide Books AI/Seminar",
     "Guide Books AI/RV2",
     "Guide Books AI/Question banks",
@@ -302,9 +331,7 @@
     "Bibliography/README.md",
     "OrangePi_RV2_Config_Audit.md",
     "EFFORTS/The Problem Statement and metrics to check.md",
-    "Untitled",
     "EFFORTS/RISC-V.md",
-    "EFFORTS/SSSIHL.md",
     "Extras/Archives/Extras-Excalidraw-legacy-2026-07-31.tar.gz",
     "CALENDAR",
     "Extras/Archives/NotesByPrabin-legacy-snapshot-2026-07-31.tar.gz",
