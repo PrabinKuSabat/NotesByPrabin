@@ -16,10 +16,16 @@ sudo apt update
 sudo apt install -y \
     git curl build-essential bc bison flex \
     libssl-dev libelf-dev libncurses-dev dwarves \
-    cpio rsync file device-tree-compiler dt-schema sparse \
+    cpio rsync file device-tree-compiler sparse \
     qemu-system-misc \
     gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu \
     libc6-dev-riscv64-cross
+```
+
+Then install Device Tree schema support:
+
+```python3
+pip3 install --user dtschema
 ```
 
 Verify them:

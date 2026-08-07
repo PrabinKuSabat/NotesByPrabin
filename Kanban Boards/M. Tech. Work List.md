@@ -9,6 +9,7 @@ kanban-plugin: board
 
 # Today
 
+- [ ] Linkedin Post 🔁 every week on Saturday
 - [ ] Leet code 1 problem. 🔁 every day
 
 # MTCS - 101
