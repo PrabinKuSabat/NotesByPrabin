@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "fc2e9e9c76688849",
+        "id": "4509724f8bf84da7",
         "type": "tabs",
         "children": [
           {
-            "id": "dd202051d2d71fb1",
+            "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -245,8 +245,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "dd202051d2d71fb1",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "ATLAS/Atlas.md",
+    "Homepage.md",
     "Guide Books AI/Seminar/Wayfinder_Seminar_Notes.md",
     "Guide Books AI/RV2/OrangePi_RV2_Config_Audit.md",
     "Guide Books AI/Question banks/Chapter_2_Question_Paper.md",
@@ -259,7 +261,6 @@
     "Guide Books AI/QEMU",
     "Guide Books AI",
     "Untitled.base",
-    "Homepage.md",
     "excalibrain.md",
     "EFFORTS/Accel-Sim Findings.md",
     "EFFORTS/Dissertation.md",
@@ -279,7 +280,6 @@
     "EFFORTS/PMAT-303 LeetCode Assignment.md",
     "EFFORTS/JAVA Project.md",
     "EFFORTS/IBM Workshop.md",
-    "EFFORTS/Leetcode.md",
     "Extras/Archives/Extras-Excalidraw-legacy-2026-07-31.tar.gz",
     "CALENDAR",
     "Extras/Archives/NotesByPrabin-legacy-snapshot-2026-07-31.tar.gz",
