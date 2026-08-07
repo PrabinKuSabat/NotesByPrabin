@@ -30,8 +30,33 @@
               "icon": "lucide-file",
               "title": "Homepage"
             }
+          },
+          {
+            "id": "bb1d63490da8026a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Minimal Kernel Booting.md",
+                "mode": "preview",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Minimal Kernel Booting"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -100,7 +125,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5
+    "width": 414.5,
+    "collapsed": true
   },
   "right": {
     "id": "43fc27400badb105",
@@ -205,7 +231,7 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Homepage.md"
+                "file": "Minimal Kernel Booting.md"
               },
               "icon": "lucide-info",
               "title": "File properties"
@@ -215,7 +241,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 471.5
+    "width": 471.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -243,10 +270,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "bb1d63490da8026a",
   "lastOpenFiles": [
-    "EFFORTS/Efforts.md",
     "Homepage.md",
+    "Minimal Kernel Booting.md",
+    "EFFORTS/Efforts.md",
     "CALENDAR/Calendar.md",
     "TO-DO List.md",
     "Kanban Boards/Status Kanban.kanban.md",
@@ -277,7 +305,6 @@
     "Untitled",
     "EFFORTS/RISC-V.md",
     "EFFORTS/SSSIHL.md",
-    "EFFORTS/PMAT-303 LeetCode Assignment.md",
     "Extras/Archives/Extras-Excalidraw-legacy-2026-07-31.tar.gz",
     "CALENDAR",
     "Extras/Archives/NotesByPrabin-legacy-snapshot-2026-07-31.tar.gz",
