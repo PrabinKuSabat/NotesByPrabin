@@ -1,6 +1,6 @@
-# AI Prompt & Context Engineering Curriculum
+y# AI Prompt & Context Engineering Curriculum
 
-## Goal
+# Goal
 
 Become effective at using modern AI systems for:
 
@@ -481,7 +481,7 @@ Create these notes:
 # What I Would NOT Spend Much Time On
 
 * [ ] Do not memorize hundreds of "magic prompts"
-* [ ] Do not collect prompts beginning with `Act as an expert...`
+* [ ] Do not collect prompts beginning with `Act as an expert…`
 * [ ] Do not spend weeks watching introductory prompt-engineering videos
 * [ ] Do not assume longer prompts are automatically better
 * [ ] Do not put every available document into the context

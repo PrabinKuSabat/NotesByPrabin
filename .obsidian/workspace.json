@@ -83,7 +83,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -258,7 +258,7 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Guide Books AI/RV2/Prompt and Context Engineering.md"
+                "file": "Kanban Boards/M. Tech. Work List.md"
               },
               "icon": "lucide-info",
               "title": "File properties"
@@ -297,10 +297,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "b605e3757a99872a",
+  "active": "bb1d63490da8026a",
   "lastOpenFiles": [
-    "Guide Books AI/RV2/Minimal Kernel Booting.md",
     "Guide Books AI/RV2/Prompt and Context Engineering.md",
+    "Guide Books AI/RV2/Minimal Kernel Booting.md",
     "Guide Books AI/AI Suggest Skill Mastering Courses",
     "Kanban Boards/M. Tech. Work List.md",
     "Homepage.md",
