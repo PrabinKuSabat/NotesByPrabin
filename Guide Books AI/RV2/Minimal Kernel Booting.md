@@ -326,13 +326,15 @@ CONFIG_MAGIC_SYSRQ=y
 CONFIG_SLUB_DEBUG=y
 EOF
 ```
-
+	
 Create the M0 pruning and hardware fragment:
 
 ```bash
 tee "$RV2_WORK/configs/m0.fragment" >/dev/null <<'EOF'
 
 # CONFIG_POWERVR_ROGUE is not set
+# CONFIG_TYPEC is not set
+# CONFIG_TYPEC_HUSB239 is not set
 
 # CONFIG_COMPILE_TEST is not set
 # CONFIG_MODULES is not set
@@ -395,6 +397,10 @@ CONFIG_MMP_PDMA_KY_X1=y
 CONFIG_KY_X1_DMA_RANGE=y
 CONFIG_CMA=y
 CONFIG_DMA_CMA=y
+
+CONFIG_CPU_PM=y
+
+
 EOF
 ```
 
@@ -426,8 +432,12 @@ build_profile()
         -j"$(nproc)" Image
 }
 
+rm -rf "$RV2_WORK/out/baseline"
+
 build_profile baseline \
     "$RV2_WORK/configs/qualification.fragment"
+
+rm -rf "$RV2_WORK/out/m0"
 
 build_profile m0 \
     "$RV2_WORK/configs/m0.fragment" \
@@ -477,7 +487,18 @@ for symbol in "${required_y[@]}"; do
     }
 done
 
-required_n=(COMPILE_TEST MODULES BLOCK NET PCI MTD SERIAL_8250)
+required_n=(
+    COMPILE_TEST
+    MODULES
+    BLOCK
+    NET
+    PCI
+    MTD
+    SERIAL_8250
+    POWERVR_ROGUE
+    TYPEC
+    TYPEC_HUSB239
+)
 
 for symbol in "${required_n[@]}"; do
     grep -qx "# CONFIG_${symbol} is not set" "$CFG" || {
