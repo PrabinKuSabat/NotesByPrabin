@@ -411,6 +411,30 @@ grep -E '^CONFIG_|^# CONFIG_.* is not set' \
     uniq -d
 ```
 
+# 11  Kernel  Panic Because of zcb extension not enabled 
+```shell
+[    6.679968] status: 8000000200004620 badaddr: 000000000000819c cause: 0000000000000002
+[    6.682251] Kernel panic - not syncing: Attempted to kill init! exitcode=0x00000004
+[    6.683132] CPU: 4 PID: 1 Comm: init Not tainted 6.6.63+ #1
+[    6.683614] Hardware name: riscv-virtio,qemu (DT)
+[    6.684083] Call Trace:
+[    6.684393] [<ffffffff800069d6>] dump_backtrace+0x1c/0x24
+[    6.685673] [<ffffffff811238ae>] show_stack+0x2e/0x38
+[    6.686255] [<ffffffff8113c882>] dump_stack_lvl+0x50/0x72
+[    6.686750] [<ffffffff8113c8b8>] dump_stack+0x14/0x1c
+[    6.687253] [<ffffffff81123bf0>] panic+0x112/0x2ba
+[    6.687819] [<ffffffff80023926>] do_exit+0x8a0/0x8a6
+[    6.688385] [<ffffffff80023ac8>] do_group_exit+0x1e/0x94
+[    6.688929] [<ffffffff80032022>] get_signal+0x886/0x934
+[    6.689425] [<ffffffff800050b2>] arch_do_signal_or_restart+0x2c/0x5ca
+[    6.690095] [<ffffffff800c0e96>] exit_to_user_mode_prepare+0x196/0x2c6
+[    6.690748] [<ffffffff8113dec8>] irqentry_exit_to_user_mode+0x14/0x34
+[    6.691297] [<ffffffff8113cc1c>] do_trap_insn_illegal+0x76/0x172
+[    6.691904] [<ffffffff8114a856>] ret_from_exception+0x0/0x6e
+[    6.692704] SMP: stopping secondary CPUs
+QEMU GATE FAIL: fatal diagnostic found
+```
+
 ---
 
 | Finding                     | Cause                                           | M0 decision                  |
