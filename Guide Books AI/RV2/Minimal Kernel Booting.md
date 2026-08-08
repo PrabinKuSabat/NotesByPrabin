@@ -6,6 +6,9 @@ Mr. Prabin, use a two-profile qualification workflow:
 Do not put either image on the board until the configuration audit, RV2 DTB audit, strict QEMU test, and an intentional negative test all behave correctly.
 
 A key repository finding changes our earlier console plan: the Ky PXA driver requires `!SERIAL_8250 || COMPILE_TEST`. Therefore, enabling QEMU’s 8250 console while disabling `COMPILE_TEST` can silently remove the hardware console driver. Use `hvc0` through VirtIO in QEMU and keep the PXA `ttyS0` driver for hardware. See the exact vendor [serial Kconfig](https://github.com/orangepi-xunlong/linux-orangepi/blob/ae9e974d3e19f460b6397bfe8f0f1417a073ce05/drivers/tty/serial/Kconfig).
+
+[[Installation Findings Noted]]
+
 # 1. Install the host tools
 
 These package names apply to Ubuntu 24.04:
@@ -73,6 +76,20 @@ Do not start from `tinyconfig`. Start from the vendor seed and prune it, because
 # 3. Build a static BusyBox initramfs
 
 BusyBox 1.38.0 is available from the [official BusyBox download site](https://busybox.net/downloads/).
+
+Details :
+
+```text
+BusyBox version : 1.38.0
+Release date    : 2026-05-13
+Source          : vda-linux/busybox_mirror
+Pinned commit   : fc71374dfccd46448c62947269a35f1420d7ee28
+Architecture    : RISC-V 64
+Linking         : static
+Config          : busybox-1.38.0-riscv64.config
+```
+
+Installation code :
 
 ```bash
 set -e
@@ -326,7 +343,7 @@ CONFIG_MAGIC_SYSRQ=y
 CONFIG_SLUB_DEBUG=y
 EOF
 ```
-	
+
 Create the M0 pruning and hardware fragment:
 
 ```bash
@@ -335,6 +352,7 @@ tee "$RV2_WORK/configs/m0.fragment" >/dev/null <<'EOF'
 # CONFIG_POWERVR_ROGUE is not set
 # CONFIG_TYPEC is not set
 # CONFIG_TYPEC_HUSB239 is not set
+# CONFIG_CHARGER_SGM415XX is not set
 
 # CONFIG_COMPILE_TEST is not set
 # CONFIG_MODULES is not set
@@ -385,7 +403,6 @@ CONFIG_KY_X1_CCU=y
 CONFIG_RESET_CONTROLLER=y
 CONFIG_RESET_X1_KY=y
 CONFIG_PM=y
-CONFIG_SUSPEND=y
 CONFIG_KY_PM_DOMAINS=y
 CONFIG_PINCTRL=y
 CONFIG_PINCTRL_SINGLE=y
@@ -399,6 +416,9 @@ CONFIG_CMA=y
 CONFIG_DMA_CMA=y
 
 CONFIG_CPU_PM=y
+CONFIG_CPU_IDLE=y
+CONFIG_SUSPEND=y
+
 
 
 EOF
@@ -469,7 +489,7 @@ required_y=(
     SERIAL_PXA SERIAL_PXA_KY_X1 SERIAL_PXA_CONSOLE
     VIRTIO_MENU VIRTIO_MMIO VIRTIO_CONSOLE HVC_DRIVER
     KY_X1_CCU RESET_CONTROLLER RESET_X1_KY
-    PM PM_SLEEP SUSPEND KY_PM_DOMAINS
+    PM KY_PM_DOMAINS
     PINCTRL PINCTRL_SINGLE
     DMADEVICES MMP_PDMA_DRIVER MMP_PDMA_KY_X1
     KY_X1_DMA_RANGE CMA DMA_CMA
@@ -478,6 +498,8 @@ required_y=(
     DETECT_HUNG_TASK BOOTPARAM_HUNG_TASK_PANIC
     WQ_WATCHDOG PROVE_LOCKING DEBUG_ATOMIC_SLEEP
     DEBUG_WX MAGIC_SYSRQ SLUB_DEBUG
+    
+    CPU_PM CPU_IDLE PM_SLEEP SUSPEND
 )
 
 for symbol in "${required_y[@]}"; do
@@ -498,6 +520,8 @@ required_n=(
     POWERVR_ROGUE
     TYPEC
     TYPEC_HUSB239
+    REGULATOR
+    CHARGER_SGM415XX
 )
 
 for symbol in "${required_n[@]}"; do

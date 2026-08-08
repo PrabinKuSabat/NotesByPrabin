@@ -6,9 +6,10 @@
       {
         "id": "4509724f8bf84da7",
         "type": "tabs",
+        "dimension": 66.19537275064268,
         "children": [
           {
-            "id": "e7a7b303c61786dc",
+            "id": "beaf4446e1d5dcdb",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -29,6 +30,37 @@
               },
               "icon": "lucide-file",
               "title": "Minimal Kernel Booting"
+            }
+          }
+        ]
+      },
+      {
+        "id": "fad518d3db1d33d1",
+        "type": "tabs",
+        "dimension": 33.804627249357324,
+        "children": [
+          {
+            "id": "e7a7b303c61786dc",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Guide Books AI/RV2/Installation Findings Noted.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Installation Findings Noted"
             }
           }
         ]
@@ -247,9 +279,10 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Guide Books AI/RV2/Minimal Kernel Booting.md",
+    "Guide Books AI/RV2/Installation Findings Noted.md",
     "Homepage.md",
     "Kanban Boards/M. Tech. Work List.md",
-    "Guide Books AI/RV2/Minimal Kernel Booting.md",
     "Guide Books AI/RV2/Prompt and Context Engineering.md",
     "Guide Books AI/RV2/repeatable kernel build function.md",
     "Guide Books AI/RV2/Creating a reproducible initramfs.md",
@@ -279,7 +312,6 @@
     "webclips/README.md",
     "webclips/WEB Gmail - NVIDIA Tensor Core Evolution From Volta To Blackwell.md",
     "Bibliography/README.md",
-    "OrangePi_RV2_Config_Audit.md",
     "Extras/Archives/Extras-Excalidraw-legacy-2026-07-31.tar.gz",
     "CALENDAR",
     "Extras/Archives/NotesByPrabin-legacy-snapshot-2026-07-31.tar.gz",
