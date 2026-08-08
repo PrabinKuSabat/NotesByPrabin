@@ -47,7 +47,7 @@ Ubuntu packages `qemu-system-misc` and `dt-schema` are documented in the [Ubuntu
 Use the known Linux 6.6.63 RV2 commit, not the moving branch head:
 
 ```bash
-export RV2_WORK="$PWD"
+export RV2_WORK="$HOME/MinimalKernelBuilding/rv2"
 export RV2_PIN="ae9e974d3e19f460b6397bfe8f0f1417a073ce05"
 export KERNEL_SRC="$RV2_WORK/src/linux-orangepi"
 export ARCH=riscv
@@ -379,7 +379,6 @@ tee "$RV2_WORK/configs/m0.fragment" >/dev/null <<'EOF'
 # CONFIG_IIO is not set
 # CONFIG_PWM is not set
 # CONFIG_CPU_FREQ is not set
-# CONFIG_CPU_IDLE is not set
 # CONFIG_NAMESPACES is not set
 # CONFIG_CGROUPS is not set
 # CONFIG_SECURITY is not set
@@ -443,14 +442,23 @@ build_profile()
     "$KERNEL_SRC/scripts/kconfig/merge_config.sh" \
         -m -O "$output" \
         "$KERNEL_SRC/arch/riscv/configs/x1_defconfig" \
-        "$@"
+        "$@" || return 1
 
     KCONFIG_WARN_UNKNOWN_SYMBOLS=1 KCONFIG_WERROR=1 \
-        make -C "$KERNEL_SRC" O="$output" olddefconfig
+        make -C "$KERNEL_SRC" O="$output" olddefconfig \
+        || return 1
 
     make -C "$KERNEL_SRC" O="$output" \
-        -j"$(nproc)" Image
+        -j"$(nproc)" Image \
+        || return 1
 }
+
+# checks if you have the same symbol defined more than once
+grep -E '^CONFIG_|^# CONFIG_.* is not set' \
+    "$RV2_WORK/configs/m0.fragment" |
+    sed -E 's/^# //; s/(=| is not set).*//' |
+    sort |
+    uniq -d
 
 rm -rf "$RV2_WORK/out/baseline"
 
@@ -525,24 +533,33 @@ required_n=(
 )
 
 for symbol in "${required_n[@]}"; do
-    grep -qx "# CONFIG_${symbol} is not set" "$CFG" || {
-        echo "CONFIG GATE FAIL: CONFIG_${symbol} is not disabled"
+    if grep -Eq "^CONFIG_${symbol}=(y|m)$" "$CFG"; then
+        echo "CONFIG GATE FAIL: CONFIG_${symbol} is enabled"
         config_failed=1
-    }
+    fi
 done
 
-grep -qx 'CONFIG_NR_CPUS=8' "$CFG" || config_failed=1
+grep -qx 'CONFIG_NR_CPUS=8' "$CFG" || {
+    echo "CONFIG GATE FAIL: CONFIG_NR_CPUS is not 8"
+    config_failed=1
+}
 
 if grep -q '=m$' "$CFG"; then
     echo "CONFIG GATE FAIL: modules remain"
     config_failed=1
 fi
 
-test "$config_failed" -eq 0 || exit 1
+if [ "$config_failed" -ne 0 ]; then
+    echo
+    echo "CONFIG GATE FAILED"
+else
+    echo
+    echo "CONFIG GATE PASSED"
+    echo "built-ins: $(grep -c '=y$' "$CFG")"
 
-echo "built-ins: $(grep -c '=y$' "$CFG")"
-stat -c 'Image bytes: %s' \
-    "$RV2_WORK/out/m0/arch/riscv/boot/Image"
+    stat -c 'Image bytes: %s' \
+        "$RV2_WORK/out/m0/arch/riscv/boot/Image"
+fi
 ```
 
 This specifically catches the dangerous case where Kconfig accepts the file but silently drops the Ky UART, clock, reset, power-domain or DMA driver.

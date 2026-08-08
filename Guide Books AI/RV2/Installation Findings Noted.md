@@ -400,6 +400,19 @@ that satisfies the defined functional contract
 
 That is a much stronger definition for the project.
 
+# 10 Check no symbol is defined twice
+
+```bash
+# checks if you have the same symbol defined more than once
+grep -E '^CONFIG_|^# CONFIG_.* is not set' \
+    "$RV2_WORK/configs/m0.fragment" |
+    sed -E 's/^# //; s/(=| is not set).*//' |
+    sort |
+    uniq -d
+```
+
+---
+
 | Finding                     | Cause                                           | M0 decision                  |
 | --------------------------- | ----------------------------------------------- | ---------------------------- |
 | FocalTech firmware missing  | unnecessary touchscreen enabled                 | disable `TOUCHSCREEN_FTS`    |
