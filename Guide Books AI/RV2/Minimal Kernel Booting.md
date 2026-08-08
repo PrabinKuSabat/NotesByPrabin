@@ -496,6 +496,8 @@ stat -c 'Image bytes: %s' \
 
 This specifically catches the dangerous case where Kconfig accepts the file but silently drops the Ky UART, clock, reset, power-domain or DMA driver.
 
+Understand more about this section here : [[repeatable kernel build function]] .
+
 # 7. Audit the actual RV2 DTB
 
 ```bash

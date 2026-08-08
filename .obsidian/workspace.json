@@ -32,6 +32,30 @@
             }
           },
           {
+            "id": "31b8df53feb2cd0e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Guide Books AI/RV2/repeatable kernel build function.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "repeatable kernel build function"
+            }
+          },
+          {
             "id": "b605e3757a99872a",
             "type": "leaf",
             "state": {
@@ -82,7 +106,8 @@
               "title": "M. Tech. Work List"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -257,7 +282,7 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Guide Books AI/RV2/Minimal Kernel Booting.md"
+                "file": "Guide Books AI/RV2/repeatable kernel build function.md"
               },
               "icon": "lucide-info",
               "title": "File properties"
@@ -296,10 +321,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "31b8df53feb2cd0e",
   "lastOpenFiles": [
-    "Guide Books AI/RV2/Creating a reproducible initramfs.md",
+    "Guide Books AI/RV2/repeatable kernel build function.md",
     "Guide Books AI/RV2/Minimal Kernel Booting.md",
+    "Guide Books AI/RV2/Creating a reproducible initramfs.md",
     "Guide Books AI/RV2/Prompt and Context Engineering.md",
     "Kanban Boards/M. Tech. Work List.md",
     "Guide Books AI/AI Suggest Skill Mastering Courses",
@@ -330,7 +356,6 @@
     "webclips/WEB Gmail - NVIDIA Tensor Core Evolution From Volta To Blackwell.md",
     "Bibliography/README.md",
     "OrangePi_RV2_Config_Audit.md",
-    "EFFORTS/The Problem Statement and metrics to check.md",
     "Extras/Archives/Extras-Excalidraw-legacy-2026-07-31.tar.gz",
     "CALENDAR",
     "Extras/Archives/NotesByPrabin-legacy-snapshot-2026-07-31.tar.gz",
