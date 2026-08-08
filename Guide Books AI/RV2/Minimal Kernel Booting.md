@@ -6,7 +6,6 @@ Mr. Prabin, use a two-profile qualification workflow:
 Do not put either image on the board until the configuration audit, RV2 DTB audit, strict QEMU test, and an intentional negative test all behave correctly.
 
 A key repository finding changes our earlier console plan: the Ky PXA driver requires `!SERIAL_8250 || COMPILE_TEST`. Therefore, enabling QEMU’s 8250 console while disabling `COMPILE_TEST` can silently remove the hardware console driver. Use `hvc0` through VirtIO in QEMU and keep the PXA `ttyS0` driver for hardware. See the exact vendor [serial Kconfig](https://github.com/orangepi-xunlong/linux-orangepi/blob/ae9e974d3e19f460b6397bfe8f0f1417a073ce05/drivers/tty/serial/Kconfig).
-
 # 1. Install the host tools
 
 These package names apply to Ubuntu 24.04:
@@ -332,6 +331,9 @@ Create the M0 pruning and hardware fragment:
 
 ```bash
 tee "$RV2_WORK/configs/m0.fragment" >/dev/null <<'EOF'
+
+# CONFIG_POWERVR_ROGUE is not set
+
 # CONFIG_COMPILE_TEST is not set
 # CONFIG_MODULES is not set
 # CONFIG_BLOCK is not set
