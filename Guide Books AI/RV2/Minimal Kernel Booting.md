@@ -73,30 +73,68 @@ Do not start from `tinyconfig`. Start from the vendor seed and prune it, because
 
 # 3. Build a static BusyBox initramfs
 
-BusyBox 1.37.0 is available from the [official BusyBox download site](https://busybox.net/downloads/).
+BusyBox 1.38.0 is available from the [official BusyBox download site](https://busybox.net/downloads/).
 
 ```bash
+set -e
+
 cd "$RV2_WORK/src"
 
-curl --fail --location --remote-name \
-    https://busybox.net/downloads/busybox-1.37.0.tar.bz2
+# Clone the maintainer's GitHub mirror
+git clone https://github.com/vda-linux/busybox_mirror.git busybox
 
-tar -xjf busybox-1.37.0.tar.bz2
-cd busybox-1.37.0
+cd busybox
 
+# Make absolutely sure the source is pinned to BusyBox 1.38.0
+git checkout --detach fc71374dfccd46448c62947269a35f1420d7ee28
+
+# Confirm pinned source revision
+test "$(git rev-parse HEAD)" = \
+"fc71374dfccd46448c62947269a35f1420d7ee28"
+
+# Clean previous build products
 make distclean
-make ARCH=riscv CROSS_COMPILE="$CROSS_COMPILE" defconfig
 
-sed -i \
-    's/^# CONFIG_STATIC is not set$/CONFIG_STATIC=y/' \
-    .config
+make ARCH=riscv \
+     CROSS_COMPILE="$CROSS_COMPILE" \
+     defconfig
 
+sed -i 's/^# CONFIG_STATIC is not set$/CONFIG_STATIC=y/' .config
+sed -i 's/^CONFIG_TC=y$/# CONFIG_TC is not set/' .config
+
+mkdir -p "$RV2_WORK/configs"
+
+cp .config \
+   "$RV2_WORK/configs/busybox-1.38.0-riscv64.config"
+
+sha256sum \
+   "$RV2_WORK/configs/busybox-1.38.0-riscv64.config"
+   
+
+git rev-parse HEAD \
+> "$RV2_WORK/configs/busybox-1.38.0.commit"
+
+# Restore OUR locked BusyBox configuration
+cp "$RV2_WORK/configs/busybox-1.38.0-riscv64.config" .config
+
+# Verify static linking is enabled
 grep -qx 'CONFIG_STATIC=y' .config
 
-make ARCH=riscv CROSS_COMPILE="$CROSS_COMPILE" olddefconfig
-make ARCH=riscv CROSS_COMPILE="$CROSS_COMPILE" -j"$(nproc)"
-make ARCH=riscv CROSS_COMPILE="$CROSS_COMPILE" \
-    CONFIG_PREFIX="$RV2_WORK/rootfs" install
+# Build for RISC-V
+make ARCH=riscv \
+     CROSS_COMPILE="$CROSS_COMPILE" \
+     -j"$(nproc)"
+
+# Install into the root filesystem
+rm -rf "$RV2_WORK/rootfs"
+
+make ARCH=riscv \
+     CROSS_COMPILE="$CROSS_COMPILE" \
+     CONFIG_PREFIX="$RV2_WORK/rootfs" \
+     install
+     
+file "$RV2_WORK/rootfs/bin/busybox"
+ls -l "$RV2_WORK/rootfs/bin/sh"
 ```
 
 Create the qualification `/init`:
