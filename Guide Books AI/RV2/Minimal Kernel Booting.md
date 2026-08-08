@@ -261,7 +261,7 @@ for app in sh mount awk grep find wc dd sleep taskset poweroff; do
 done
 ```
 
-Package it reproducibly:
+Package it reproducibly :
 
 ```bash
 find "$RV2_WORK/rootfs" \
@@ -277,6 +277,8 @@ find "$RV2_WORK/rootfs" \
 
 gzip -t "$RV2_WORK/artifacts/rootfs.cpio.gz"
 ```
+
+Read more : [[Creating a reproducible initramfs]].
 
 # 4. Create the qualification configuration
 
