@@ -286,6 +286,8 @@ Create `qualification.fragment`:
 
 ```bash
 tee "$RV2_WORK/configs/qualification.fragment" >/dev/null <<'EOF'
+# CONFIG_TOUCHSCREEN_FTS is not set
+
 CONFIG_PRINTK=y
 CONFIG_TTY=y
 CONFIG_BLK_DEV_INITRD=y
