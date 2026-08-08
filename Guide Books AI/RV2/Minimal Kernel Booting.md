@@ -356,7 +356,6 @@ tee "$RV2_WORK/configs/m0.fragment" >/dev/null <<'EOF'
 # CONFIG_PWM is not set
 # CONFIG_CPU_FREQ is not set
 # CONFIG_CPU_IDLE is not set
-# CONFIG_SUSPEND is not set
 # CONFIG_NAMESPACES is not set
 # CONFIG_CGROUPS is not set
 # CONFIG_SECURITY is not set
@@ -380,6 +379,7 @@ CONFIG_KY_X1_CCU=y
 CONFIG_RESET_CONTROLLER=y
 CONFIG_RESET_X1_KY=y
 CONFIG_PM=y
+CONFIG_SUSPEND=y
 CONFIG_KY_PM_DOMAINS=y
 CONFIG_PINCTRL=y
 CONFIG_PINCTRL_SINGLE=y
@@ -435,6 +435,8 @@ make -C "$KERNEL_SRC" O="$RV2_WORK/out/m0" \
 
 The baseline is a control experiment. If it fails QEMU, do not start pruning investigations. If baseline passes but M0 fails, the fault is almost certainly in the pruning/configuration delta.
 
+Understand more about this section here : [[repeatable kernel build function]] .
+
 # 6. Make configuration closure a hard gate
 
 ```bash
@@ -453,7 +455,7 @@ required_y=(
     SERIAL_PXA SERIAL_PXA_KY_X1 SERIAL_PXA_CONSOLE
     VIRTIO_MENU VIRTIO_MMIO VIRTIO_CONSOLE HVC_DRIVER
     KY_X1_CCU RESET_CONTROLLER RESET_X1_KY
-    PM KY_PM_DOMAINS
+    PM PM_SLEEP SUSPEND KY_PM_DOMAINS
     PINCTRL PINCTRL_SINGLE
     DMADEVICES MMP_PDMA_DRIVER MMP_PDMA_KY_X1
     KY_X1_DMA_RANGE CMA DMA_CMA
@@ -495,8 +497,6 @@ stat -c 'Image bytes: %s' \
 ```
 
 This specifically catches the dangerous case where Kconfig accepts the file but silently drops the Ky UART, clock, reset, power-domain or DMA driver.
-
-Understand more about this section here : [[repeatable kernel build function]] .
 
 # 7. Audit the actual RV2 DTB
 
