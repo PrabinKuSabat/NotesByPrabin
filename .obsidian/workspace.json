@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Guide Books AI/RV2/Minimal Kernel Booting.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,62 +28,10 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Minimal Kernel Booting"
-            }
-          },
-          {
-            "id": "b605e3757a99872a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Guide Books AI/RV2/Prompt and Context Engineering.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Prompt and Context Engineering"
-            }
-          },
-          {
-            "id": "bb1d63490da8026a",
-            "type": "leaf",
-            "state": {
-              "type": "kanban",
-              "state": {
-                "file": "Kanban Boards/M. Tech. Work List.md",
-                "kanbanViewState": {
-                  "kanban-plugin": "board",
-                  "list-collapse": [
-                    true,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
-                  ]
-                }
-              },
-              "icon": "lucide-trello",
-              "title": "M. Tech. Work List"
+              "title": "Homepage"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -297,11 +245,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "bb1d63490da8026a",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Kanban Boards/M. Tech. Work List.md",
     "Guide Books AI/RV2/Minimal Kernel Booting.md",
     "Guide Books AI/RV2/Prompt and Context Engineering.md",
-    "Kanban Boards/M. Tech. Work List.md",
     "Guide Books AI/RV2/repeatable kernel build function.md",
     "Guide Books AI/RV2/Creating a reproducible initramfs.md",
     "Guide Books AI/AI Suggest Skill Mastering Courses",
