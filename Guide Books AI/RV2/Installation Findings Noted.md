@@ -411,7 +411,8 @@ grep -E '^CONFIG_|^# CONFIG_.* is not set' \
     uniq -d
 ```
 
-# 11  Kernel  Panic Because of zcb extension not enabled 
+# 11 Kernel Panic Because of zcb extension not enabled
+
 ```shell
 [    6.679968] status: 8000000200004620 badaddr: 000000000000819c cause: 0000000000000002
 [    6.682251] Kernel panic - not syncing: Attempted to kill init! exitcode=0x00000004
