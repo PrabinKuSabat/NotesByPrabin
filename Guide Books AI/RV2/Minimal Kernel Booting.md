@@ -91,6 +91,7 @@ Config          : busybox-1.38.0-riscv64.config
 
 Installation code :
 
+If you'r using Ubuntu 26.+ 
 ```bash
 set -e
 
@@ -152,6 +153,7 @@ make ARCH=riscv \
 file "$RV2_WORK/rootfs/bin/busybox"
 ls -l "$RV2_WORK/rootfs/bin/sh"
 ```
+
 
 Create the qualification `/init`:
 

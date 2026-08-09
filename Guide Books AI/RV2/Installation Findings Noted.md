@@ -411,7 +411,7 @@ grep -E '^CONFIG_|^# CONFIG_.* is not set' \
     uniq -d
 ```
 
-# 11 Kernel Panic Because of zcb extension not enabled
+# 11. Kernel Panic Because of zcb extension not enabled
 
 ```shell
 [    6.679968] status: 8000000200004620 badaddr: 000000000000819c cause: 0000000000000002
@@ -435,6 +435,10 @@ grep -E '^CONFIG_|^# CONFIG_.* is not set' \
 [    6.692704] SMP: stopping secondary CPUs
 QEMU GATE FAIL: fatal diagnostic found
 ```
+
+ So Ubuntu 26.04 RISC-V libraries may already contain RVA23/Zcb code. Adding `-march=…` only controls newly compiled BusyBox source; it cannot change instructions already present in static `libc.a`, startup objects, or `libgcc.a`.
+
+Canonical made RVA23 the Ubuntu RISC-V baseline starting with 25.10, while 24.04 retains compatibility with older hardware.
 
 ---
 
