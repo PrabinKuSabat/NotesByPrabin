@@ -724,12 +724,14 @@ chmod 0755 "$RV2_WORK/scripts/run-qemu-gate.sh"
 
 QEMU `virt` supplies a generated DTB, generic harts, PLIC, CLINT, UART and VirtIO-MMIO devices, and supports direct `-kernel` boot through its default OpenSBI firmware. [QEMU `virt` documentation](https://www.qemu.org/docs/master/system/riscv/virt.html) The VirtIO console syntax is documented in the [QEMU invocation manual](https://www.qemu.org/docs/master/system/qemu-manpage.html).
 
-If you'r using the Build System for Ubuntu 26 use this instead : 
+If you'r using the Build System for Ubuntu 26 use this instead :
+
 ```shell
 "$RV2_WORK/artifacts/rootfs-rv2-busybox-1.38.0.cpio.gz" \
 #instead of 
 "$RV2_WORK/artifacts/rootfs.cpio.gz" \
 ```
+
 Run the control first:
 
 ```bash
