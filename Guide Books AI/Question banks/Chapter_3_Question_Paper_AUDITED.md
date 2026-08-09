@@ -8,6 +8,8 @@
 **Difficulty:** Medium or High only  
 **Solutions / answer key:** Not included
 
+> **Audit status (2026-08-09):** The incomplete option set in Week 4 Q7 has been restored from the indexed GATE CSE 2003 source. Chapter-3 PYQs duplicated in the older Chapter-4 draft are retained here as their canonical placement.
+
 > **Question-counting rule:** One source question/exercise is one question even if it contains multiple subparts. Book exercises are never split.
 >
 > **Chapter boundary:** The GATE portion is restricted to pipelining, hazards, forwarding, instruction dependencies, ILP, compiler scheduling/register pressure, branch handling, and related execution-unit scheduling. Cache-only questions are not used here.
@@ -1061,17 +1063,18 @@ How much time is required to process **1000 data items**?
 
 ### Q7. [GATE CSE 2003 • Q10] — Medium
 
-A pipelined CPU contains a **single ALU**. Consider these situations:
+For a pipelined CPU with a **single ALU**, consider the following situations:
 
-1. Instruction \(j+1\) needs a result produced by instruction \(j\).
-2. Instruction \(j\) is a conditional branch.
-3. Instructions \(j\) and \(j+1\) both need the ALU during the same cycle.
+I. Instruction \(j+1\) uses the result produced by instruction \(j\) as an operand.  
+II. A conditional jump instruction is executed.  
+III. Instructions \(j\) and \(j+1\) require the ALU at the same time.
 
-For each situation, decide whether it represents a **pipeline hazard**, and classify the hazard as data, control, or structural where applicable.
+Which of the above can cause a pipeline hazard?
 
-Select the option in the source paper that gives the correct set/classification.
-
----
+1. I and II only
+2. II and III only
+3. III only
+4. I, II and III
 
 ### Q8. [GATE CSE 2001 • Q12] — High
 
@@ -1092,7 +1095,7 @@ I3: sw  r2,100(r1)     ; M[r1+100] = r2
 I4: sub r3,r4,r2       ; r3 = r4 - r2
 ```
 
-Answer the complete source question:
+For the instruction sequence above:
 
 1. List all data dependencies among the instructions.
 2. Identify which of those dependencies create pipeline hazards in this five-stage pipeline.

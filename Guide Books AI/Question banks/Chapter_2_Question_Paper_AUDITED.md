@@ -6,7 +6,9 @@
 **Format:** 4 weeks × 15 questions = 60 questions  
 **Weekly split:** Questions 1–10 = GATE CSE previous-year questions; Questions 11–15 = complete textbook exercises for class discussion  
 **Difficulty:** Medium or High only  
-**Solutions / answer key:** Not included  
+**Solutions / answer key:** Not included
+
+> **Audit status (2026-08-09):** Content retained. Chapter 2 is the canonical placement for cache, DRAM, virtual-memory, and TLB PYQs; duplicates formerly present in Chapter 6 have been removed from Chapter 6.  
 
 > **Question-counting rule:** One source question/exercise is treated as exactly one question even when it contains several subparts. No textbook exercise has been split.
 >

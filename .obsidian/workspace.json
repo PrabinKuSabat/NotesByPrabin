@@ -41,7 +41,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Guide Books AI/RV2/Compiling RVA22 compilent BusyBox in Ubuntu 26.md",
+                "file": "Guide Books AI/RV2/Minimal Kernel Booting.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -56,11 +56,10 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Compiling RVA22 compilent BusyBox in Ubuntu 26"
+              "title": "Minimal Kernel Booting"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
         "id": "fad518d3db1d33d1",
@@ -305,11 +304,17 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "771e0618725818fe",
+  "active": "beaf4446e1d5dcdb",
   "lastOpenFiles": [
+    "Guide Books AI/Question banks/Chapter_2_Question_Paper_AUDITED.md",
+    "Guide Books AI/Question banks/Chapter_3_Question_Paper_AUDITED.md",
+    "Guide Books AI/Question banks/Chapter_4_Question_Paper_AUDITED.md",
+    "Guide Books AI/Question banks/Chapter_5_Question_Paper_AUDITED.md",
+    "Guide Books AI/Question banks/Chapter_6_Question_Paper_AUDITED.md",
+    "Guide Books AI/Question banks/Chapter_7_Question_Paper_AUDITED.md",
     "Guide Books AI/RV2/Minimal Kernel Booting.md",
-    "Kanban Boards/M. Tech. Work List.md",
     "Guide Books AI/RV2/Compiling RVA22 compilent BusyBox in Ubuntu 26.md",
+    "Kanban Boards/M. Tech. Work List.md",
     "Guide Books AI/RV2/Installation Findings Noted.md",
     "Guide Books AI/Question banks/Chapter_3_Question_Paper.md",
     "Guide Books AI/Question banks/Chapter_4_Question_Paper.md",
@@ -328,18 +333,12 @@
     "Prabin's KB ~/Prabins KB ~.md",
     "ATLAS/Atlas.md",
     "Guide Books AI/Seminar/Wayfinder_Seminar_Notes.md",
-    "Guide Books AI/RV2/OrangePi_RV2_Config_Audit.md",
-    "Guide Books AI/Question banks/Chapter_2_Question_Paper.md",
-    "Guide Books AI/Question banks/Chapter_1_Question_Paper.md",
-    "Guide Books AI/QEMU/QEMU_Complete_Reference_Book_11.0.3.md",
     "Guide Books AI/Seminar",
     "Guide Books AI/RV2",
     "Guide Books AI/Question banks",
     "Guide Books AI/QEMU",
     "Guide Books AI",
     "Untitled.base",
-    "excalibrain.md",
-    "EFFORTS/Accel-Sim Findings.md",
     "Extras/Archives/Extras-Excalidraw-legacy-2026-07-31.tar.gz",
     "CALENDAR",
     "Extras/Archives/NotesByPrabin-legacy-snapshot-2026-07-31.tar.gz",

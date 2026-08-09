@@ -4,15 +4,15 @@
 
 **Primary text:** John L. Hennessy, David A. Patterson, and Christos Kozyrakis, *Computer Architecture: A Quantitative Approach*, 7th Edition, Chapter 4  
 **Format:** 4 weeks × 15 questions = 60 questions  
-**Weekly split:** Questions 1–10 = verified national-level previous-year questions; Questions 11–15 = class-discussion questions drawn primarily from the textbook  
+**Weekly split:** Questions 1–10 = verified national-level previous-year questions under the Chapter-4 exception below; Questions 11–15 = class-discussion questions drawn primarily from the textbook  
 **Difficulty:** Medium or High only  
 **Solutions / answer key:** Not included  
 
 > **Question-counting rule:** One source question/exercise is treated as exactly one question even when it contains several subparts. No textbook exercise has been split.
 >
-> **Chapter-4 source rule:** GATE CSE contains too few genuine vector/SIMD/GPU questions to supply forty chapter-specific PYQs. For this chapter only, the PYQ pool is therefore broadened to verified national-level examinations such as UGC-NET CSE, ISRO CSE, UPSC/NCRB and closely related national examinations, while retaining GATE questions where the overlap is direct.
+> **Chapter-4 source rule — audited exception:** GATE CSE does not contain forty genuine vector/SIMD/GPU questions. To preserve chapter relevance, Questions 1–10 may therefore use GATE CSE plus verified national-level CSE/architecture/HPC examinations (UGC-NET, ISRO, UPSC/NCRB, etc.). The final selection is restricted to vector/SIMD/GPU concepts, quantitative parallelism, parallel-programming prerequisites, FFT/matrix parallelism, or compiler transformations that directly enable DLP. Organizer-designed extensions are labelled explicitly and do **not** count as PYQs.
 >
-> **Wording note:** PYQs are faithfully reformatted/paraphrased from the cited source pages so that the paper is self-contained; numerical data, code, alternatives, and the assessed concept are preserved. No solution is included.
+> **Wording note:** PYQs are self-contained source-preserving reformulations with their alternatives/data included. Any task that materially extends a PYQ is labelled `ORGANIZER EXTENSION` rather than being presented as part of the original examination question. No solution is included.
 >
 > **Figures:** No external image asset is required. The one precedence-graph PYQ is represented textually by its dependency levels.
 >
@@ -224,30 +224,31 @@ Rearrange the vector instructions into legal **convoys** so that independent ope
 
 ---
 
-### Q15. [UGC-NET CSE December 2019 • Part 2 • Q75] — CLASS DISCUSSION — High
+### Q15. [ORGANIZER EXTENSION • Recursive Matrix Transpose on SIMD/GPU] — CLASS DISCUSSION — High
 
-A multithreaded matrix-transpose procedure recursively partitions an \(N\times N\) input matrix and output matrix into four \((N/2)\times(N/2)\) submatrices and **spawns four recursive transpose calls**. The base case copies one element.
+A recursive matrix-transpose algorithm partitions an \(N\times N\) matrix into four \((N/2)\times(N/2)\) submatrices until the base case copies one element.
 
-Determine the asymptotic parallelism \(T_1/T_\infty\).
+Design a data-parallel implementation and analyze:
 
-1. \(\Theta(N^2/\log N)\)  
-2. \(\Theta(N/\log N)\)  
-3. \(\Theta(\log N/N^2)\)  
-4. \(\Theta(\log N/N)\)
-
----
+**(a)** total work \(T_1\) and critical-path/span \(T_\infty\);  
+**(b)** a blocked/tiled layout suitable for SIMD or GPU execution;  
+**(c)** global-memory coalescing for the source and destination matrices;  
+**(d)** whether shared/local memory should be used to transpose each tile;  
+**(e)** synchronization requirements within and across tiles; and  
+**(f)** the tile-size trade-off among occupancy, local storage, and memory-transaction efficiency.
 
 # Week 2 — Vector Pipelines, GPU Execution, Reductions, and Parallel Programming Models
 
 ## National-Level Previous-Year Questions — Questions 1–10
 
-### Q1. [UPSC/NCRB 2022 • DPA • Q33] — Medium
+### Q1. [UGC-NET CSE December 2019 • Part 2 • Q42] — Medium
 
-When optimizing a parallel program, which profiling approach is the most appropriate strategy for identifying the regions where optimization effort can produce the greatest performance benefit?
+The time complexity of multiplying two degree-\(n\) polynomials using the **Fast Fourier Transform (FFT)** method is:
 
-Select the option in the source question that correctly prioritizes **measured execution hot spots/bottlenecks rather than unmeasured intuition**.
-
----
+1. \(\Theta(n\log n)\)
+2. \(\Theta(n^2)\)
+3. \(\Theta(n)\)
+4. \(\Theta(\log n)\)
 
 ### Q2. [UPSC/NCRB 2022 • DPA • Q34] — Medium
 
@@ -433,20 +434,16 @@ Complete every source subpart:
 
 ---
 
-### Q15. [UGC-NET CSE June 2023 • Part 2 • Q67] — CLASS DISCUSSION — High
+### Q15. [ORGANIZER EXTENSION • FFT Mapping to SIMD/GPU] — CLASS DISCUSSION — High
 
-Match the algorithms with their asymptotic complexities:
+Consider an \(n\)-point radix-2 FFT.
 
-| List I | List II |
-|---|---|
-| A. Parallel FFT | I. \(\Theta(n^2)\) |
-| B. Iterative FFT | II. \(\Theta(n)\) |
-| C. Evaluate a polynomial at \(n\) points using Horner's method | III. \(\Theta(\log n)\) |
-| D. Multiply two polynomials already represented in point-value form | IV. \(\Theta(n\log n)\) |
-
-Choose the correct matching from the source alternatives.
-
----
+**(a)** Derive the total work and the number of butterfly stages.  
+**(b)** Identify which butterflies can execute in parallel in each stage.  
+**(c)** Propose a SIMD/GPU thread/lane mapping for one stage.  
+**(d)** Analyze memory-access stride and coalescing as the stage number changes.  
+**(e)** State where synchronization is required between stages.  
+**(f)** Discuss when a shared/local-memory transpose or Stockham-style data reordering is preferable to a direct in-place mapping.
 
 # Week 3 — Loop-Level Parallelism, Dependence Analysis, Roofline, and GPU Throughput
 
@@ -523,32 +520,16 @@ Choose the source alternative that correctly captures the principal compiler-des
 
 ---
 
-### Q5. [GATE CSE 2013 • Q48] — High
+### Q5. [UGC-NET CSE December 2019 • Part 2 • Q75] — High
 
-A target processor has only **two registers** available for the following code. The compiler may perform **code motion**, but no other semantic change.
+A multithreaded matrix-transpose procedure recursively partitions an \(N\times N\) input matrix and output matrix into four \((N/2)\times(N/2)\) submatrices and spawns four recursive transpose calls. The base case copies one element.
 
-```c
-c = a + b;
-d = c * a;
-e = c + a;
-x = c * c;
+What is the asymptotic parallelism \(T_1/T_\infty\)?
 
-if (x > a)
-    y = a * a;
-else {
-    d = d * d;
-    e = e * e;
-}
-```
-
-Determine the minimum number of values that must be spilled to memory.
-
-1. 0  
-2. 1  
-3. 2  
-4. 3
-
----
+1. \(\Theta(N^2/\log N)\)
+2. \(\Theta(N/\log N)\)
+3. \(\Theta(\log N/N^2)\)
+4. \(\Theta(\log N/N)\)
 
 ### Q6. [GATE CSE 2012 • Q20] — Medium
 
@@ -708,19 +689,19 @@ determine the dependence between S1 and S2, decide whether the loop is parallel,
 
 ---
 
-### Q15. [UGC-NET CSE January 2025 • Part 2 • Q68] — CLASS DISCUSSION — Medium
+### Q15. [ORGANIZER EXTENSION • Compiler Transformations for DLP] — CLASS DISCUSSION — High
 
-The following optimization activities are listed:
+For a loop nest intended for vector/SIMD or GPU execution, analyze how each of the following transformations can change data-level parallelism and memory behavior:
 
-I. Algebraic simplification  
-II. Use of machine idioms  
-III. Redundant-instruction elimination  
-IV. Flow-of-control optimization  
-V. Improved target code
+- loop fusion/fission,
+- loop interchange,
+- unrolling,
+- strength reduction,
+- scalar expansion / variable renaming,
+- predication / if-conversion,
+- structure-of-arrays versus array-of-structures layout.
 
-Choose the source alternative that places these steps in the correct optimization sequence.
-
----
+Construct one short loop example in which at least **three** of these transformations are applied. For every transformation, identify the dependence condition that makes it legal and the architectural benefit or possible regression it creates.
 
 # Week 4 — GPU Utilization, Parallel Execution Costs, and Throughput-Oriented Scheduling
 
@@ -778,73 +759,65 @@ For class use, justify the selected metric in terms of the amount of work and av
 
 ### Q5. [UGC-NET CSE October 2022 • Part 1 • Q59] — Medium
 
-Match the concepts:
+Match **List I** with **List II**.
 
 | List I | List II |
 |---|---|
 | A. Least Frequently Used | I. Memory distributed among processors |
 | B. Critical Section | II. A cache/page replacement policy |
-| C. Loosely coupled multiprocessor | III. Region requiring mutually exclusive access to a shared resource |
-| D. Distributed operating-system organization | IV. OS routines/resources distributed across the system |
+| C. Loosely coupled multiprocessor | III. Program region requiring mutually exclusive access to a shared resource |
+| D. Distributed operating-system organization | IV. Operating-system routines/resources distributed across the system |
 
-Choose the correct matching from the source alternatives.
+Choose the correct matching:
 
----
+1. A-III, B-II, C-IV, D-I
+2. A-I, B-II, C-III, D-IV
+3. A-II, B-III, C-I, D-IV
+4. A-II, B-I, C-III, D-IV
 
-### Q6. [GATE CSE 2015 • Set 3 • Q51] — High
+### Q6. [UGC-NET CSE December 2012 • Part 3 • Q49] — Medium
 
-A pipelined functional unit has the reservation table:
+Let \(f\) be the fraction of execution time that is parallelizable, and let \(P\) be the number of processors. Which expression gives the speedup \(S_P\) relative to sequential execution?
 
-| Stage | t1 | t2 | t3 | t4 | t5 |
-|---|:---:|:---:|:---:|:---:|:---:|
-| S1 | X |  |  |  | X |
-| S2 |  | X |  | X |  |
-| S3 |  |  | X |  |  |
+1. \(\dfrac{1}{1-f-f/P}\)
+2. \(\dfrac{P}{P-f(P+1)}\)
+3. \(\dfrac{1}{1-f+f/P}\)
+4. \(\dfrac{P}{P+f(P-1)}\)
 
-Determine the **minimum average latency (MAL)** between successive initiations that can be sustained without a forbidden collision.
+### Q7. [UGC-NET CSE June 2023 • Part 2 • Q67] — High
 
----
+Match **List I** with **List II**.
 
-### Q7. [GATE CSE 2016 • Set 2 • Q30] — High
+| List I | List II |
+|---|---|
+| A. Parallel FFT | I. \(\Theta(n^2)\) |
+| B. Iterative FFT | II. \(\Theta(n)\) |
+| C. Evaluate a polynomial at \(n\) points using Horner's method | III. \(\Theta(\log n)\) |
+| D. Multiply two polynomials already represented in point-value form | IV. \(\Theta(n\log n)\) |
 
-Two operation types are available:
+Choose the correct matching:
 
-- \(F\): 5 ns on an \(F\)-unit;
-- \(G\): 3 ns on a \(G\)-unit.
+1. A-III, B-I, C-II, D-III
+2. A-II, B-I, C-III, D-IV
+3. A-III, B-IV, C-I, D-II
+4. A-II, B-III, C-IV, D-I
 
-There are **two F-units** and **two G-units**. Ignore communication and scheduling overhead.
+### Q8. [UGC-NET CSE January 2025 • Part 2 • Q68] — Medium
 
-The system must compute:
+Regarding code optimization, consider these activities:
 
-\[
-F(G(X_i)),\qquad i=1,\ldots,10.
-\]
+I. Algebraic simplification  
+II. Use of machine idioms  
+III. Redundant-instruction elimination  
+IV. Flow-of-control optimization  
+V. Improved target code
 
-Determine the **minimum total completion time**.
+Choose the correct sequence:
 
----
-
-### Q8. [GATE CSE 2015 • Set 3 • Q47] — High
-
-Consider:
-
-```text
-I1: ADD R1, R2, R3
-I2: MUL R7, R1, R3
-I3: SUB R4, R1, R5
-I4: ADD R3, R2, R4
-I5: MUL R7, R8, R9
-```
-
-Evaluate:
-
-- **S1:** I2 and I5 have an antidependence.
-- **S2:** I2 and I4 have an antidependence.
-- **S3:** An antidependence necessarily causes a pipeline stall even when register renaming is available.
-
-Determine which statements are correct.
-
----
+1. I, III, II, IV, V
+2. II, III, IV, I, V
+3. III, IV, I, II, V
+4. IV, II, I, III, V
 
 ### Q9. [UGC-NET CSE June 2015 • Part 2 • Q46] — Medium
 
@@ -919,51 +892,50 @@ Complete all source tasks:
 
 ---
 
-### Q14. [GATE CSE 2018 • Q50] — CLASS DISCUSSION — High
+### Q14. [ORGANIZER EXTENSION • Vector Pipeline Initiation Interval] — CLASS DISCUSSION — High
 
-A RISC processor has stages:
+A vector processor has a maximum vector length of 64 and the following pipelined units:
 
-```text
-IF → ID → OF → PO → WB
-```
+- 2 load/store pipelines, initiation interval 1 cycle;
+- 2 vector multiply pipelines, latency 8 cycles, initiation interval 1 cycle;
+- 1 vector add pipeline, latency 5 cycles, initiation interval 1 cycle.
 
-IF, ID, OF, and WB take one cycle. For a stream of **100 instructions**, the PO stage requires:
+For the vector operation
 
-- 3 cycles for 40 instructions;
-- 2 cycles for 35 instructions;
-- 1 cycle for 25 instructions.
+\[
+Z[i]=A[i]\times B[i]+C[i]\times D[i],\qquad i=0,\ldots,63,
+\]
 
-Assume no data or control hazards.
+assume chaining is supported.
 
-Determine the total number of clock cycles required. Then state how the same structural-throughput reasoning applies to a vector/SIMD functional pipeline whose initiation rate is lower than its operation latency.
+**(a)** Construct legal convoys.  
+**(b)** Determine the minimum number of chimes.  
+**(c)** Distinguish operation latency from initiation interval and show which one determines steady-state throughput.  
+**(d)** Recalculate the schedule if the single add pipeline has initiation interval 2 cycles.  
+**(e)** Identify the resource bottleneck in both cases.
 
----
+### Q15. [ORGANIZER EXTENSION • GPU Occupancy and Latency Hiding] — CLASS DISCUSSION — High
 
-### Q15. [GATE CSE 2017 • Set 1 • Q50] — CLASS DISCUSSION — High
+A GPU SM supports at most:
 
-Processor \(NP\) has stage delays:
+- 2048 resident threads,
+- 64 resident warps,
+- 65,536 registers,
+- 96 KiB shared memory.
 
-| Stage | Delay |
-|---|---:|
-| IF | 5 ns |
-| ID | 4 ns |
-| OF | 20 ns |
-| EX | 10 ns |
-| WB | 3 ns |
+A kernel uses blocks of **256 threads**, **48 registers/thread**, and **24 KiB shared memory/block**. Warp size is 32.
 
-Every interstage register adds **2 ns**.
+**(a)** Determine the maximum resident blocks per SM imposed independently by threads, warps, registers, and shared memory.  
+**(b)** Determine the actual resident blocks, resident warps, resident threads, and occupancy.  
+**(c)** Identify the limiting resource.  
+**(d)** Repeat if the kernel is optimized to **32 registers/thread** and **16 KiB shared memory/block**.  
+**(e)** Explain why higher occupancy can improve latency hiding but does not guarantee higher performance.
 
-Processor \(EP\) splits the 20 ns OF stage into **12 ns** and **8 ns** stages, leaving the other logic unchanged.
-
-For **20 independent instructions** with no hazards, determine the speedup of \(EP\) over \(NP\). Relate the result to the design trade-off between deeper pipelining and lane throughput in data-parallel processors.
-
----
-
-# Organizer Source Ledger
+# Organizer Source Ledger — Audited
 
 ## Textbook source
 
-John L. Hennessy, David A. Patterson, and Christos Kozyrakis, *Computer Architecture: A Quantitative Approach*, 7th Edition, Chapter 4, **Data-Level Parallelism in Vector, SIMD, and GPU Architectures**, Case Study and Exercises by Jason D. Bakos, pp. 369–375.
+Hennessy, Patterson, and Kozyrakis, *Computer Architecture: A Quantitative Approach*, 7th Edition, Chapter 4, **Data-Level Parallelism in Vector, SIMD, and GPU Architectures**, pp. 369–375.
 
 ### Selected textbook exercises
 
@@ -975,7 +947,7 @@ John L. Hennessy, David A. Patterson, and Christos Kozyrakis, *Computer Architec
 | W1-Q14 | 4.6 | 370 | Vector convoys |
 | W2-Q11 | 4.7 | 370 | Chimes and cycles/FLOP |
 | W2-Q12 | 4.9 | 370–371 | Complex-vector strip mining and vector timing |
-| W2-Q13 | 4.10 | 371 | Vector vs host+GPU execution time |
+| W2-Q13 | 4.10 | 371 | Vector versus host+GPU execution time |
 | W2-Q14 | 4.11 | 371–372 | Parallel reductions |
 | W3-Q11 | 4.12 | 372–373 | Arithmetic intensity and Roofline |
 | W3-Q12 | 4.13 | 373–374 | Effective GPU throughput |
@@ -983,68 +955,20 @@ John L. Hennessy, David A. Patterson, and Christos Kozyrakis, *Computer Architec
 | W3-Q14 | 4.15 | 374 | Loop-carried/name dependences |
 | W4-Q11 | 4.16 | 374 | GPU utilization limits |
 | W4-Q12 | 4.17 | 374 | Peak throughput and bandwidth |
-| W4-Q13 | 4.18 | 374–375 | CUDA profiling and coalescing |
+| W4-Q13 | 4.18 | 374–375 | CUDA profiling/coalescing |
 
-## National-level PYQ source links
+## Replacement / repaired PYQ sources
 
-The links below are retained for organizer verification. They point to indexed copies/discussions of the source examination questions; the paper above does **not** include their solutions.
+- UGC-NET CSE Dec 2019 P2 Q42 — https://gateoverflow.in/360791/ugc-net-cse-december-2019-part-2-question-42
+- UGC-NET CSE Dec 2019 P2 Q75 — indexed under the same UGC-NET 2019 archive.
+- UGC-NET CSE June 2023 P2 Q67 — https://gateoverflow.in/407901/ugc-net-cse-june-2023-part-2-67
+- UGC-NET CSE Jan 2025 P2 Q68 — https://gateoverflow.in/485921/ugc-net-cse-january-2025-part-2-question-68
+- UGC-NET CSE Dec 2012 P3 Q49 — https://gateoverflow.in/57719/ugc-net-cse-december-2012-part-3-question-49
+- UGC-NET CSE Oct 2022 P1 Q59 — https://gateoverflow.in/386098/ugc-net-cse-october-2022-part-1-question-59
 
-| Source | Link |
-|---|---|
-| UGC-NET Aug 2024 P2 Q40 | https://gateoverflow.in/485411/ugc-net-cse-august-2024-part-2-question-40 |
-| UGC-NET Aug 2024 P2 Q38 | https://gateoverflow.in/485413/ugc-net-cse-august-2024-part-2-question-38 |
-| ISRO CSE 2018 Q71 | https://gateoverflow.in/213517/isro-cse-2018-question-71 |
-| UGC-NET Jun 2012 P3 Q5 | https://gateoverflow.in/44498/ugc-net-cse-june-2012-part-3-question-5 |
-| UGC-NET Nov 2017 P2 Q50 | https://gateoverflow.in/166284/ugc-net-cse-november-2017-part-2-question-50 |
-| UGC-NET Dec 2007 P2 Q46 | https://gateoverflow.in/questions?sort=hot&start=22520 |
-| ISRO CSE 2011 Q10 | https://gateoverflow.in/52258/isro-cse-2011-question-10 |
-| ISRO CSE 2008 Q42 | https://gateoverflow.in/49969/isro-cse-2008-question-42 |
-| UGC-NET Oct 2020 P2 Q75 | https://gateoverflow.in/349598/ugc-net-cse-october-2020-part-2-question-75 |
-| UGC-NET Jun 2008 P2 Q46 | https://gateoverflow.in/418291/ugc-net-cse-june-2008-part-2-question-46 |
-| UPSC/NCRB 2022 DPA Q33 | https://gateoverflow.in/492860/upsc-ncrb-2022-dpa-question-33 |
-| UPSC/NCRB 2022 DPA Q34 | https://gateoverflow.in/492859/upsc-ncrb-2022-dpa-question-34 |
-| UPSC/NCRB 2022 DPA Q35 | https://gateoverflow.in/492858/upsc-ncrb-2022-dpa-question-35 |
-| UPSC/NCRB 2022 DPA Q36 | https://gateoverflow.in/492857/upsc-ncrb-2022-dpa-question-36 |
-| UPSC/NCRB 2022 DPA Q37 | https://gateoverflow.in/492856/upsc-ncrb-2022-dpa-question-37 |
-| UPSC/NCRB 2022 DPA Q38 | https://gateoverflow.in/492855/upsc-ncrb-2022-dpa-question-38 |
-| UPSC/NCRB 2022 DPA Q39 | https://gateoverflow.in/492854/upsc-ncrb-2022-dpa-question-39 |
-| UPSC/NCRB 2022 DPA Q40 | https://gateoverflow.in/492853/upsc-ncrb-2022-dpa-question-40 |
-| UGC-NET Oct 2020 P2 Q44 | https://gateoverflow.in/349629/ugc-net-cse-october-2020-part-2-question-44 |
-| UGC-NET Dec 2014 P3 Q75 | https://gateoverflow.in/61536/ugc-net-cse-december-2014-part-3-question-75 |
-| UGC-NET Dec 2019 P2 Q75 | https://gateoverflow.in/360758/ugc-net-cse-december-2019-part-2-question-75 |
-| UGC-NET Jun 2023 P2 Q67 | https://gateoverflow.in/407901/ugc-net-cse-june-2023-part-2-67 |
-| GATE CSE 2006 Q60 | https://gateoverflow.in/1838/gate-cse-2006-question-60 |
-| GATE CSE 2006 Q55 | https://gateoverflow.in/1833/gate-cse-2006-question-55 |
-| GATE CSE 2014 Set 1 Q17 | https://gateoverflow.in/1784/gate-cse-2014-set-1-question-17 |
-| GATE CSE 2008 Q12 | https://gateoverflow.in/410/gate-cse-2008-question-12 |
-| GATE CSE 2013 Q48 | https://gateoverflow.in/1556/gate-cse-2013-question-48 |
-| GATE CSE 2012 Q20 | https://gateoverflow.in/52/gate-cse-2012-question-20-isro2016-23 |
-| UGC-NET Jul 2016 P2 Q33 | https://gateoverflow.in/63445/ugc-net-cse-july-2016-part-2-question-33 |
-| UGC-NET Dec 2015 P2 Q41 | https://gateoverflow.in/62317/ugc-net-cse-december-2015-part-2-question-41 |
-| UGC-NET Aug 2016 P2 Q33 | https://gateoverflow.in/70296/ugc-net-cse-august-2016-part-2-question-33 |
-| ISRO CSE 2020 Q42 | https://gateoverflow.in/331453/isro-cse-2020-question-42 |
-| UGC-NET Jan 2025 P2 Q68 | https://gateoverflow.in/485921/ugc-net-cse-january-2025-part-2-question-68 |
-| ISRO CSE 2011 Q3 | https://gateoverflow.in/50567/isro-cse-2011-question-3 |
-| UGC-NET Oct 2020 P2 Q7 | https://gateoverflow.in/349666/ugc-net-cse-october-2020-part-2-question-7 |
-| ISRO CSE 2016 Q19 | https://gateoverflow.in/55465/isro-cse-2016-question-19 |
-| UGC-NET Dec 2004 P2 Q48 | https://gateoverflow.in/tag/ugcnetcse-dec2004-paper2 |
-| UGC-NET Oct 2022 P1 Q59 | https://gateoverflow.in/386098/ugc-net-cse-october-2022-part-1-question-59 |
-| GATE CSE 2015 Set 3 Q51 | https://gateoverflow.in/questions?search=GATE+CSE+2015+Set+3+Q51 |
-| GATE CSE 2016 Set 2 Q30 | https://gateoverflow.in/questions?search=GATE+CSE+2016+Set+2+Q30 |
-| GATE CSE 2015 Set 3 Q47 | https://gateoverflow.in/questions?search=GATE+CSE+2015+Set+3+Q47 |
-| UGC-NET Jun 2015 P2 Q46 | https://gateoverflow.in/61088/ugc-net-cse-june-2015-part-2-question-46 |
-| UGC-NET Jul 2016 P2 Q48 | https://gateoverflow.in/63507/ugc-net-cse-july-2016-part-2-question-48 |
-| GATE CSE 2018 Q50 | https://gateoverflow.in/questions?search=GATE+CSE+2018+Q50 |
-| GATE CSE 2017 Set 1 Q50 | https://gateoverflow.in/questions?search=GATE+CSE+2017+Set+1+Q50 |
+## Audit notes
 
----
-
-## Organizer verification summary
-
-- Total questions: **60**
-- Weeks: **4**
-- Questions per week: **15**
-- Textbook exercises selected: **15**
-- One textbook exercise number is never split into multiple paper questions.
-- No answer key or solution is included.
-- No external image asset is required.
+- GATE CSE questions duplicated from Chapter 3 were removed from Chapter 4.
+- Incomplete source-option questions were either repaired or replaced.
+- Organizer-designed architectural extensions are explicitly labelled and are not counted as PYQs.
+- The documented national-level-exam exception is retained because forcing forty GATE CSE questions would materially reduce Chapter-4 relevance.

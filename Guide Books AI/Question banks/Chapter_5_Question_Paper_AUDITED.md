@@ -6,7 +6,9 @@
 **Format:** 4 weeks × 15 questions = 60 questions  
 **Weekly split:** Questions 1–10 = GATE CSE previous-year questions; Questions 11–15 = complete textbook exercises for class discussion  
 **Difficulty:** Medium or High only  
-**Solutions / answer key:** Not included  
+**Solutions / answer key:** Not included
+
+> **Audit status (2026-08-09):** The duplicate 2024 core-count PYQ has been removed from Chapter 5 because Chapter 1 is frozen and remains its canonical placement. The unusual `m[(i+1) mod 4]` expression in GATE CSE 2000 Q1.21 has been rechecked and is retained because that is how the indexed source states the question.  
 
 > **Question-counting rule:** One source question/exercise is treated as exactly one question even when it contains several subparts. No source exercise has been split.
 >
@@ -984,7 +986,7 @@ V(m(i+1) mod 4);
 V(mi);
 ```
 
-with the indexing expression shown as in the source question.
+> **Source-transcription note:** the `mod 4` indexing above is intentional; it matches the indexed GATE source.
 
 Which of the following phenomena can the program exhibit?
 
@@ -1186,18 +1188,14 @@ Illustrate how the encoding works and analyze the resulting storage/message trad
 
 ## GATE CSE Questions — Questions 1–10
 
-### Q1. [GATE CSE 2024 • Set 1 • Q45] — High
+### Q1. [GATE CSE 2026 • Set 1 • Master Q29 / CS Q19] — Medium
 
-A program takes **100 ns** on a single core running at **2 GHz**.
+With respect to deadlocks in an operating system, which of the following statements are **FALSE**? **Select all that apply.**
 
-Exactly **90%** of the original execution time is perfectly parallelizable. When the program is run on `n` cores:
-
-- the parallelizable portion is divided equally among the `n` cores;
-- using every core beyond the first introduces an additional **10 ns** of total parallelization/coordination overhead.
-
-Determine the number of cores that minimizes the total execution time.
-
----
+1. Banker's algorithm is used to prevent deadlocks.
+2. Deadlock formation can be prevented by disallowing the hold-and-wait condition.
+3. In a resource-allocation graph, an assignment edge is directed from a process to a resource.
+4. A safe state guarantees that all processes can finish without formation of a deadlock.
 
 ### Q2. [GATE CSE 2016 • Set 2 • Q49] — Medium
 
@@ -1712,7 +1710,7 @@ The links below are organizer references to GateOverflow's indexed copies/discus
 
 | Question | Source | Indexed source |
 |---|---|---|
-| W4-Q1 | GATE CSE 2024 Set 1 Q45 | https://gateoverflow.in/422797/gate-cse-2024-set-1-question-45 |
+| W4-Q1 | GATE CSE 2026 Set 1 Master Q29 / CS Q19 | https://gateoverflow.in/523061/gate-cse-2026-set-1-question-19 |
 | W4-Q2 | GATE CSE 2016 Set 2 Q49 | https://gateoverflow.in/39576/gate-cse-2016-set-2-question-49 |
 | W4-Q3 | GATE CSE 1999 Q20(a) | https://gateoverflow.in/1519/gate-cse-1999-question-20-a |
 | W4-Q4 | GATE CSE 1996 Q2.19 | https://gateoverflow.in/2748/gate-cse-1996-question-2-19 |
