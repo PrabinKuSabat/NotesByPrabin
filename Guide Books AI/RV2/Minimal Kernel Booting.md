@@ -91,7 +91,10 @@ Config          : busybox-1.38.0-riscv64.config
 
 Installation code :
 
-If you'r using Ubuntu 26.+ 
+If you'r using Ubuntu 26.+ you will have to use docker to compile the BusyBox source. Because Ubuntu 26.04 RISC-V libraries may already contain RVA23/Zcb code. Adding `-march=…` only controls newly compiled BusyBox source; it cannot change instructions already present in static `libc.a`, startup objects, or `libgcc.a`. Canonical made RVA23 the Ubuntu RISC-V baseline starting with 25.10, while 24.04 retains compatibility with older hardware.
+
+Follow these procedure if your using Ubuntu 26 : [[Compiling RVA22 compilent BusyBox in Ubuntu 26]].
+
 ```bash
 set -e
 
@@ -153,7 +156,6 @@ make ARCH=riscv \
 file "$RV2_WORK/rootfs/bin/busybox"
 ls -l "$RV2_WORK/rootfs/bin/sh"
 ```
-
 
 Create the qualification `/init`:
 
@@ -722,6 +724,12 @@ chmod 0755 "$RV2_WORK/scripts/run-qemu-gate.sh"
 
 QEMU `virt` supplies a generated DTB, generic harts, PLIC, CLINT, UART and VirtIO-MMIO devices, and supports direct `-kernel` boot through its default OpenSBI firmware. [QEMU `virt` documentation](https://www.qemu.org/docs/master/system/riscv/virt.html) The VirtIO console syntax is documented in the [QEMU invocation manual](https://www.qemu.org/docs/master/system/qemu-manpage.html).
 
+If you'r using the Build System for Ubuntu 26 use this instead : 
+```shell
+"$RV2_WORK/artifacts/rootfs-rv2-busybox-1.38.0.cpio.gz" \
+#instead of 
+"$RV2_WORK/artifacts/rootfs.cpio.gz" \
+```
 Run the control first:
 
 ```bash
