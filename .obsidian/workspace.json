@@ -6,90 +6,6 @@
       {
         "id": "4509724f8bf84da7",
         "type": "tabs",
-        "dimension": 66.19537275064268,
-        "children": [
-          {
-            "id": "beaf4446e1d5dcdb",
-            "type": "leaf",
-            "state": {
-              "type": "kanban",
-              "state": {
-                "file": "Kanban Boards/M. Tech. Work List.md",
-                "kanbanViewState": {
-                  "kanban-plugin": "board",
-                  "list-collapse": [
-                    true,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
-                  ]
-                }
-              },
-              "icon": "lucide-trello",
-              "title": "M. Tech. Work List"
-            }
-          },
-          {
-            "id": "5346cf88508e7cab",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Prabin's KB ~/Prabins KB ~.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Prabins KB ~"
-            }
-          },
-          {
-            "id": "771e0618725818fe",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Guide Books AI/RV2/Minimal Kernel Booting.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Minimal Kernel Booting"
-            }
-          }
-        ],
-        "currentTab": 1
-      },
-      {
-        "id": "fad518d3db1d33d1",
-        "type": "tabs",
-        "dimension": 33.804627249357324,
         "children": [
           {
             "id": "e7a7b303c61786dc",
@@ -97,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Guide Books AI/RV2/Installation Findings Noted.md",
+                "file": "Homepage.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -112,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Installation Findings Noted"
+              "title": "Homepage"
             }
           }
         ]
@@ -329,11 +245,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "5346cf88508e7cab",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Prabin's KB ~/Prabins KB ~.md",
     "Prabin's KB ~/RISC-V OS development.md",
     "EFFORTS/Setting up QEMU for OrangePi Kernel Development.md",
-    "Prabin's KB ~/Prabins KB ~.md",
     "Homepage.md",
     "ATLAS/Atlas.md",
     "EFFORTS/Efforts.md",
