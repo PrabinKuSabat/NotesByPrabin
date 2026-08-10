@@ -36,6 +36,30 @@
             }
           },
           {
+            "id": "5346cf88508e7cab",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Prabin's KB ~/Prabins KB ~.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Prabins KB ~"
+            }
+          },
+          {
             "id": "771e0618725818fe",
             "type": "leaf",
             "state": {
@@ -59,7 +83,8 @@
               "title": "Minimal Kernel Booting"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "fad518d3db1d33d1",
@@ -304,8 +329,19 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "beaf4446e1d5dcdb",
+  "active": "5346cf88508e7cab",
   "lastOpenFiles": [
+    "Prabin's KB ~/RISC-V OS development.md",
+    "EFFORTS/Setting up QEMU for OrangePi Kernel Development.md",
+    "Prabin's KB ~/Prabins KB ~.md",
+    "Homepage.md",
+    "ATLAS/Atlas.md",
+    "EFFORTS/Efforts.md",
+    "EFFORTS/RISC-V.md",
+    "EFFORTS/RV2.md",
+    "EFFORTS/spacemit-k1-x60.md",
+    "EFFORTS/Rv2 Board CPU Details.md",
+    "Kanban Boards/M. Tech. Work List.md",
     "Guide Books AI/Question banks/Chapter_2_Question_Paper_AUDITED.md",
     "Guide Books AI/Question banks/Chapter_3_Question_Paper_AUDITED.md",
     "Guide Books AI/Question banks/Chapter_4_Question_Paper_AUDITED.md",
@@ -314,25 +350,14 @@
     "Guide Books AI/Question banks/Chapter_7_Question_Paper_AUDITED.md",
     "Guide Books AI/RV2/Minimal Kernel Booting.md",
     "Guide Books AI/RV2/Compiling RVA22 compilent BusyBox in Ubuntu 26.md",
-    "Kanban Boards/M. Tech. Work List.md",
     "Guide Books AI/RV2/Installation Findings Noted.md",
     "Guide Books AI/Question banks/Chapter_3_Question_Paper.md",
     "Guide Books AI/Question banks/Chapter_4_Question_Paper.md",
     "Guide Books AI/Question banks/Chapter_7_Question_Paper.md",
     "Guide Books AI/Question banks/Chapter_6_Question_Paper.md",
     "Guide Books AI/Question banks/Chapter_5_Question_Paper.md",
-    "Homepage.md",
     "Guide Books AI/RV2/Prompt and Context Engineering.md",
-    "Guide Books AI/RV2/repeatable kernel build function.md",
-    "Guide Books AI/RV2/Creating a reproducible initramfs.md",
     "Guide Books AI/AI Suggest Skill Mastering Courses",
-    "EFFORTS/Efforts.md",
-    "CALENDAR/Calendar.md",
-    "TO-DO List.md",
-    "Kanban Boards/Status Kanban.kanban.md",
-    "Prabin's KB ~/Prabins KB ~.md",
-    "ATLAS/Atlas.md",
-    "Guide Books AI/Seminar/Wayfinder_Seminar_Notes.md",
     "Guide Books AI/Seminar",
     "Guide Books AI/RV2",
     "Guide Books AI/Question banks",
