@@ -11,27 +11,24 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "kanban",
+              "type": "markdown",
               "state": {
-                "file": "Kanban Boards/M. Tech. Work List.md",
-                "kanbanViewState": {
-                  "kanban-plugin": "board",
-                  "list-collapse": [
-                    true,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
-                  ]
+                "file": "Guide Books AI/Minimal Kernel/Native_Minimal_Kernel_Complete_Learning_Handbook.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
                 }
               },
-              "icon": "lucide-trello",
-              "title": "M. Tech. Work List"
+              "icon": "lucide-file",
+              "title": "Native_Minimal_Kernel_Complete_Learning_Handbook"
             }
           }
         ]
@@ -250,6 +247,10 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Kanban Boards/M. Tech. Work List.md",
+    "Guide Books AI/Minimal Kernel/Native_Minimal_Kernel_Complete_Learning_Handbook.md",
+    "Guide Books AI/Minimal Kernel",
+    "Guide Books AI/RV2/Native_Minimal_Kernel_Complete_Learning_Handbook.md",
     "Homepage.md",
     "Prabin's KB ~/Prabins KB ~.md",
     "Prabin's KB ~/RISC-V OS development.md",
@@ -260,7 +261,6 @@
     "EFFORTS/RV2.md",
     "EFFORTS/spacemit-k1-x60.md",
     "EFFORTS/Rv2 Board CPU Details.md",
-    "Kanban Boards/M. Tech. Work List.md",
     "Guide Books AI/Question banks/Chapter_2_Question_Paper_AUDITED.md",
     "Guide Books AI/Question banks/Chapter_3_Question_Paper_AUDITED.md",
     "Guide Books AI/Question banks/Chapter_4_Question_Paper_AUDITED.md",
@@ -274,8 +274,6 @@
     "Guide Books AI/Question banks/Chapter_4_Question_Paper.md",
     "Guide Books AI/Question banks/Chapter_7_Question_Paper.md",
     "Guide Books AI/Question banks/Chapter_6_Question_Paper.md",
-    "Guide Books AI/Question banks/Chapter_5_Question_Paper.md",
-    "Guide Books AI/RV2/Prompt and Context Engineering.md",
     "Guide Books AI/AI Suggest Skill Mastering Courses",
     "Guide Books AI/Seminar",
     "Guide Books AI/RV2",
@@ -285,7 +283,6 @@
     "Untitled.base",
     "Extras/Archives/Extras-Excalidraw-legacy-2026-07-31.tar.gz",
     "CALENDAR",
-    "Extras/Archives/NotesByPrabin-legacy-snapshot-2026-07-31.tar.gz",
     "Extras/ATTACHMENTS/image-97.png",
     "Extras/ATTACHMENTS/image-95.png",
     "Extras/ATTACHMENTS/9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f-2.png",
