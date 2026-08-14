@@ -3,7 +3,7 @@
 ## Self-contained paper notes and final-seminar presentation plan
 
 **Status:** Draft for Mr. Prabin's confirmation. No slide deck should be created until these notes are approved.  
-**Paper:** Alexander Jung et al., *Wayfinder: Automated Operating System Specialization*  
+**Paper:** Alexander Jung et al., _Wayfinder: Automated Operating System Specialization_  
 **Venue:** 21st European Conference on Computer Systems (EuroSys 2026), ACM, pp. 710–727  
 **DOI:** [10.1145/3767295.3803589](https://doi.org/10.1145/3767295.3803589)  
 **Open paper:** [arXiv HTML](https://arxiv.org/html/2603.23425) · [PDF](https://arxiv.org/pdf/2603.23425)  
@@ -111,7 +111,7 @@ This distinction is important in the seminar:
 | Nginx | Network-intensive web server; benchmarked with `wrk`; objective is higher requests/s |
 | Redis | Primarily single-threaded key-value store; benchmarked with `redis-benchmark`; objective is higher requests/s |
 | SQLite | Embedded database; the experiment issues many inserts; objective is lower microseconds per operation |
-| NAS Parallel Benchmarks (NPB) | CPU- and memory-intensive scientific kernels; objective is higher million operations/s |
+| NAS Parallel Benchmarks (NPB) | CPUand memory-intensive scientific kernels; objective is higher million operations/s |
 | QEMU/KVM | VM/emulation environment used to isolate candidate OS images; KVM accelerates same-ISA virtualization |
 | Lupine Linux | The default/general-purpose-specialized Linux baseline used in Table 2, not a stock distribution kernel in every possible sense |
 | Unikraft | A configurable micro-library OS / unikernel SDK for building single-purpose images; see the [Unikraft paper](https://arxiv.org/abs/2104.12721) |
@@ -267,20 +267,20 @@ If the search always chooses the highest predicted performance, it can become tr
 
 The combined loss is presented as:
 
-\[
-\mathcal{L}=L_{\mathrm{CCE}}+L_{\mathrm{Reg}}+L_{\mathrm{Cham}}.
+\[  
+\mathcal{L}=L_{\mathrm{CCE}}+L_{\mathrm{Reg}}+L_{\mathrm{Cham}}.  
 \]
 
 The paper's dissimilarity term is:
 
-\[
-\mathrm{ds}(\mathbf{x},X)=1-\frac{1}{1+\lVert \mathbf{x}-X\rVert_2^2}.
+\[  
+\mathrm{ds}(\mathbf{x},X)=1-\frac{1}{1+\lVert \mathbf{x}-X\rVert_2^2}.  
 \]
 
 Its reported exploration score combines dissimilarity and uncertainty with \(\alpha=0.5\):
 
-\[
-\mathrm{sf}(\mathbf{x},X)=\alpha\,\mathrm{ds}(\mathbf{x},X)+(1-\alpha)F^u(\mathbf{x}).
+\[  
+\mathrm{sf}(\mathbf{x},X)=\alpha\,\mathrm{ds}(\mathbf{x},X)+(1-\alpha)F^u(\mathbf{x}).  
 \]
 
 Do not spend more than one minute deriving these equations in the seminar. Explain what each term accomplishes. Also note that the prose describes the overall candidate policy as using predicted performance, crash likelihood, uncertainty, and dissimilarity, while the displayed scoring equation explicitly contains only dissimilarity and uncertainty. Treat the candidate-ranking process as a pipeline rather than claiming that Equation 3 alone contains every signal.
@@ -887,7 +887,7 @@ Explain that the transferred knowledge concerns parameter importance, value patt
 
 **On slide**
 
-- Fix security- and reliability-critical parameters
+- Fix securityand reliability-critical parameters
 - Add application and device functional tests
 - Validate the final configuration outside the tuning benchmark
 - Rerun after material workload or hardware changes
@@ -998,7 +998,7 @@ Use these as three separate generalization claims: another OS, another objective
 | Strengths | Limitations |
 |---|---|
 | End-to-end and failure-aware | Linux 4.19 and primarily one x86 host |
-| Multiple OSes and two metrics | Workload- and hardware-specific results |
+| Multiple OSes and two metrics | Workloadand hardware-specific results |
 | Open artifact and reproducible loop | Baseline comparisons are fragmented |
 | Negative results reveal scope | No direct security-objective evaluation |
 
@@ -1241,7 +1241,7 @@ When reproducing a paper figure, preserve its caption meaning, axes, units, “h
 
 Please confirm or change the following:
 
-1. **Paper:** *Wayfinder: Automated Operating System Specialization*.
+1. **Paper:** _Wayfinder: Automated Operating System Specialization_.
 2. **Seminar timing:** 60 minutes total — 40-minute presentation and approximately 20 minutes for questions/discussion.
 3. **Main narrative:** motivation → Wayfinder loop → DeepTune → evaluation → critique → Orange Pi RV2 extension.
 4. **Technical depth:** DeepTune intuition in the main deck; equations and detailed inconsistencies in backup slides.

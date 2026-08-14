@@ -5,6 +5,8 @@ kanban-plugin: board
 # Done
 
 **Complete**
+- [x] Leet Code Randomize ✅ 2026-08-14
+- [x] Implement the hat problem #done ✅ 2026-08-14
 - [x] Submit paper to sir. #do ✅ 2026-08-07
 
 # Today
@@ -14,13 +16,13 @@ kanban-plugin: board
 
 # MTCS - 101
 
-- [ ] Leet Code Randomize
-- [ ] Implement the hat problem #do
+- [ ] Recheck the Assignment 4 Submission
 - [ ] read chapter till whatever is completed. #do
 - [ ] Recheck the 3 Assignments, Check if they are complete.
 
 # MTCS-102
 
+- [ ] Make a presentation the Research paper.
 - [ ] Finish Writing the Research Paper Summary
 - [ ] CE 2 : The optimization technique implementations.
 - [ ] CE 3
@@ -61,6 +63,7 @@ kanban-plugin: board
 
 # CAB Works to do
 
+- [ ] Make the first 10 questions ready with solutions attached with it.
 - [ ] First Gate Assignments
 	- [x] Get Solutions and Make pdf for the first week from chapter 1. ✅ 2026-08-09
 	- [ ] Make poster 📅 2026-08-09

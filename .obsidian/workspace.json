@@ -4,62 +4,101 @@
     "type": "split",
     "children": [
       {
-        "id": "4509724f8bf84da7",
-        "type": "tabs",
+        "id": "e781e3d72ed3a297",
+        "type": "split",
         "children": [
           {
-            "id": "e7a7b303c61786dc",
-            "type": "leaf",
-            "state": {
-              "type": "kanban",
-              "state": {
-                "file": "Kanban Boards/M. Tech. Work List.md",
-                "kanbanViewState": {
-                  "kanban-plugin": "board",
-                  "list-collapse": [
-                    true,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
-                  ]
+            "id": "4509724f8bf84da7",
+            "type": "tabs",
+            "dimension": 63.66307541625857,
+            "children": [
+              {
+                "id": "cd6e133f3c263779",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "Guide Books AI/Seminar/Wayfinder_Seminar_Notes.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Wayfinder_Seminar_Notes"
                 }
               },
-              "icon": "lucide-trello",
-              "title": "M. Tech. Work List"
-            }
+              {
+                "id": "20b30ff03a0b0c95",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "Guide Books AI/Minimal Kernel/Native_Minimal_Kernel_Complete_Learning_Handbook.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Native_Minimal_Kernel_Complete_Learning_Handbook"
+                }
+              }
+            ],
+            "currentTab": 1
           },
           {
-            "id": "20b30ff03a0b0c95",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Guide Books AI/Minimal Kernel/Native_Minimal_Kernel_Complete_Learning_Handbook.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
+            "id": "0ae0ca1b3e1066c2",
+            "type": "tabs",
+            "dimension": 36.33692458374143,
+            "children": [
+              {
+                "id": "9f24d9563b077a73",
+                "type": "leaf",
+                "state": {
+                  "type": "kanban",
+                  "state": {
+                    "file": "Kanban Boards/M. Tech. Work List.md",
+                    "kanbanViewState": {
+                      "kanban-plugin": "board",
+                      "list-collapse": [
+                        true,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false
+                      ]
+                    }
+                  },
+                  "icon": "lucide-trello",
+                  "title": "M. Tech. Work List"
                 }
-              },
-              "icon": "lucide-file",
-              "title": "Native_Minimal_Kernel_Complete_Learning_Handbook"
-            }
+              }
+            ]
           }
         ],
-        "currentTab": 1
+        "direction": "horizontal"
       }
     ],
     "direction": "vertical"
@@ -109,27 +148,19 @@
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {},
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
               "icon": "lucide-bookmark",
               "title": "Bookmarks"
-            }
-          },
-          {
-            "id": "0c3b46ad5abe31b8",
-            "type": "leaf",
-            "state": {
-              "type": "mk-path-view",
-              "state": {},
-              "icon": "lucide-ghost",
-              "title": "mk-path-view"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 414.5,
-    "collapsed": true
+    "width": 414.5
   },
   "right": {
     "id": "43fc27400badb105",
@@ -234,7 +265,7 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Kanban Boards/M. Tech. Work List.md"
+                "file": "Guide Books AI/Minimal Kernel/Native_Minimal_Kernel_Complete_Learning_Handbook.md"
               },
               "icon": "lucide-info",
               "title": "File properties"
@@ -276,7 +307,9 @@
   "active": "20b30ff03a0b0c95",
   "lastOpenFiles": [
     "Kanban Boards/M. Tech. Work List.md",
+    "Guide Books AI/Seminar/Wayfinder_Seminar_Notes.md",
     "Guide Books AI/Minimal Kernel/Native_Minimal_Kernel_Complete_Learning_Handbook.md",
+    "Guide Books AI/AI Suggest Skill Mastering Courses/Prompt and Context Engineering.md",
     "Guide Books AI/Minimal Kernel",
     "Guide Books AI/RV2/Native_Minimal_Kernel_Complete_Learning_Handbook.md",
     "Homepage.md",
@@ -300,8 +333,6 @@
     "Guide Books AI/RV2/Installation Findings Noted.md",
     "Guide Books AI/Question banks/Chapter_3_Question_Paper.md",
     "Guide Books AI/Question banks/Chapter_4_Question_Paper.md",
-    "Guide Books AI/Question banks/Chapter_7_Question_Paper.md",
-    "Guide Books AI/Question banks/Chapter_6_Question_Paper.md",
     "Guide Books AI/AI Suggest Skill Mastering Courses",
     "Guide Books AI/Seminar",
     "Guide Books AI/RV2",
