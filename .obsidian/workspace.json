@@ -33,8 +33,33 @@
               "icon": "lucide-trello",
               "title": "M. Tech. Work List"
             }
+          },
+          {
+            "id": "20b30ff03a0b0c95",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Guide Books AI/Minimal Kernel/Native_Minimal_Kernel_Complete_Learning_Handbook.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Native_Minimal_Kernel_Complete_Learning_Handbook"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -248,10 +273,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "20b30ff03a0b0c95",
   "lastOpenFiles": [
-    "Guide Books AI/Minimal Kernel/Native_Minimal_Kernel_Complete_Learning_Handbook.md",
     "Kanban Boards/M. Tech. Work List.md",
+    "Guide Books AI/Minimal Kernel/Native_Minimal_Kernel_Complete_Learning_Handbook.md",
     "Guide Books AI/Minimal Kernel",
     "Guide Books AI/RV2/Native_Minimal_Kernel_Complete_Learning_Handbook.md",
     "Homepage.md",
