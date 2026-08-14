@@ -159,5 +159,6 @@
   "things-style@@fancy-code": true,
   "minimal-advanced@@animations": "fast-animations",
   "blue-topaz-theme@@bt-colorful-titlebar": false,
-  "blue-topaz-theme@@tab-head-style": "underline-tab-style"
+  "blue-topaz-theme@@tab-head-style": "transparent-tab-style",
+  "blue-topaz-theme@@hide-titlebar-close-btn": false
 }

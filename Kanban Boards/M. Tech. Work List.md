@@ -7,6 +7,7 @@ kanban-plugin: board
 ## Done
 
 **Complete**
+- [x] Check the Hardware ✅ 2026-08-14
 - [x] Leet Code Randomize ✅ 2026-08-14
 - [x] Implement the hat problem #done ✅ 2026-08-14
 - [x] Submit paper to sir. #do ✅ 2026-08-07
@@ -61,7 +62,6 @@ kanban-plugin: board
 
 ## Extra Work
 
-- [ ] Check the Hardware
 - [ ] PKB
 	- [ ] Update the pk_base content.
 	- [ ] Update the PK_base colors and look.
