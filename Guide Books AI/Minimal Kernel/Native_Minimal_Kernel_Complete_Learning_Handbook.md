@@ -307,7 +307,7 @@ Line-by-line reasoning:
 - `--filter=blob:none` reduces the initial transfer while Git fetches file contents as needed.
 - `--single-branch` avoids unrelated branch history.
 - `switch --detach` makes the working tree point directly at the commit rather than at a moving branch.
-- `test ... = "$RV2_PIN"` converts source identity into a hard gate.
+- `test … = "$RV2_PIN"` converts source identity into a hard gate.
 - The Makefile query records the kernel release family independently of the Git commit.
 
 Why a commit hash matters: a branch name is mutable. If the branch later changes, two builds made from “the same branch” can contain different source. A commit ID makes the source input repeatable.
@@ -389,7 +389,7 @@ Important details:
 - `CONFIG_STATIC=y` removes the runtime dependency on a dynamic loader and libraries.
 - `CONFIG_TC` was disabled because the traffic-control applet caused a build problem or was unnecessary for the current minimal userspace contract.
 - Saving the BusyBox `.config` and commit makes the userspace build reproducible.
-- `CONFIG_PREFIX=... install` creates BusyBox plus its applet symlinks inside the future root filesystem.
+- `CONFIG_PREFIX=… install` creates BusyBox plus its applet symlinks inside the future root filesystem.
 
 ### 5.3 Static and architecture verification
 
@@ -1224,7 +1224,7 @@ echo "QEMU GATE PASS: $label"
 | `panic_on_warn=1` | Convert kernel warnings into panics during qualification. |
 | `oops=panic` | Convert an Oops into a panic. |
 | `-nodefaults`, `-nic none` | Avoid unrelated default devices and networking. |
-| `-serial file:...` | Save the early emulated serial stream. |
+| `-serial file:…` | Save the early emulated serial stream. |
 | VirtIO chardev/device lines | Provide `hvc0` on standard output. |
 | `-no-reboot` | Prevent QEMU from hiding a panic by rebooting. |
 
@@ -2126,7 +2126,7 @@ removes the `phandle` property from the loaded DTB copy. It does not edit the fi
 booti ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r}
 ```
 
-hands a flat Linux Image, ramdisk image, and FDT to the RISC-V Linux boot path. A normal handoff prints `Starting kernel ...` and ordinarily does not return.
+hands a flat Linux Image, ramdisk image, and FDT to the RISC-V Linux boot path. A normal handoff prints `Starting kernel …` and ordinarily does not return.
 
 ### 14.9 Provenance and manifest
 
@@ -2275,7 +2275,7 @@ Approximate reset interval: immediate
 Evidence interpretation:
 
 - no custom-script banner means revision-2 U-Boot did not reach the external script;
-- no `Starting kernel ...` means the Linux handoff was not observed;
+- no `Starting kernel …` means the Linux handoff was not observed;
 - therefore this boot did not test the `m0` kernel;
 - the result was a **pre-Linux removable-media/boot-chain failure**.
 
@@ -2762,7 +2762,7 @@ Possible boundaries include:
 
 1. U-Boot did not discover `boot.scr`;
 2. the script ran but could not load one artifact;
-3. `booti` failed before printing `Starting kernel ...`;
+3. `booti` failed before printing `Starting kernel …`;
 4. Linux started but the early console was unavailable;
 5. Linux panicked and stopped because `panic=0`;
 6. `/init` ran but one of its mounts/checks failed;
@@ -3847,8 +3847,8 @@ The correct procedure is:
 |---|---|
 | No `RV2 m0 pstore/UART diagnostic script v4` | U-Boot did not discover the external script. |
 | v4 banner, then a load error | Filesystem path or payload-loading failure. |
-| All loads verified, but no `Starting kernel ...` | FDT/initramfs/`booti` handoff failure. |
-| `Starting kernel ...`, then silence | Very-early kernel hang or console configuration problem. |
+| All loads verified, but no `Starting kernel …` | FDT/initramfs/`booti` handoff failure. |
+| `Starting kernel …`, then silence | Very-early kernel hang or console configuration problem. |
 | Kernel panic/Oops | The primary live failure is visible; ramoops may also preserve it. |
 | `M0_V4_INIT_START` | Kernel reached external PID 1. |
 | `pstore_mounted=no` | pstore filesystem unavailable. |
@@ -3856,7 +3856,7 @@ The correct procedure is:
 | `M0_V4_PSTORE_READY` | pstore and pmsg are usable. |
 | `RV2_HW_GATE_START` | physical board checks began. |
 | `RV2_HW_GATE_PASS` | identity, CPU, online mask, RAM, and log checks passed. |
-| `m0-drm-beacon: ...` error | Linux reached the beacon; DRM/KMS is the remaining failure. |
+| `m0-drm-beacon: …` error | Linux reached the beacon; DRM/KMS is the remaining failure. |
 | `M0_DRM_BEACON_GREEN` plus green display | complete selected native qualification pass. |
 
 ### 23.4 Why no deliberate panic should happen first
@@ -3878,14 +3878,14 @@ The retention experiment should be performed later, with its own hypothesis, res
 |---:|---|---|---|
 | 1 | Defined a native minimal-kernel and later latency-measurement goal | Completed | Project scope and qualification contract |
 | 2 | Selected vendor `x1_defconfig` as the seed | Completed | Board support is pruned from a known RV2 base, not rebuilt from `tinyconfig` |
-| 3 | Pinned vendor commit `ae9e...ce05` | Completed | Repeatable source identity |
-| 4 | Built static BusyBox 1.38.0 from commit `fc713...e28` | Completed | Self-contained RISC-V initramfs userspace |
+| 3 | Pinned vendor commit `ae9e…ce05` | Completed | Repeatable source identity |
+| 4 | Built static BusyBox 1.38.0 from commit `fc713…e28` | Completed | Self-contained RISC-V initramfs userspace |
 | 5 | Created generic QEMU qualification `/init` | Completed | Machine-readable topology, timer, process, memory and diagnostic gates |
 | 6 | Created qualification and `m0` fragments | Completed/evolved | Explicit boot/debug and pruning intent |
 | 7 | Built baseline and `m0` out of tree | Completed | Original RISC-V Image produced |
 | 8 | Ran configuration/DTB closure checks | Performed as part of the build workflow | Critical final settings and board description were audited |
 | 9 | QEMU-smoke-tested `m0` | Performed | Generic OpenSBI/Linux progress, not physical-board proof |
-| 10 | Pinned original Image hash | Completed | `4f145f...3239` is the immutable baseline identity |
+| 10 | Pinned original Image hash | Completed | `4f145f…3239` is the immutable baseline identity |
 | 11 | Audited native rootfs and display source | Completed | Static userspace and DRM UAPI/build prerequisites inspected |
 | 12 | Built hardware gate and static DRM beacon | Completed | Green/red/indeterminate screen protocol packaged |
 | 13 | Captured proven vendor DTB | Completed | Native test tied to known-good DTB identity |
@@ -4360,7 +4360,7 @@ The revision-2 writer created ext4 at sector 2048, or 1 MiB. The known-good medi
 
 ### 27.15 Why was that not a kernel failure?
 
-The custom U-Boot script marker and `Starting kernel ...` were both absent. Linux was not observed to be attempted. The failure occurred before the kernel handoff.
+The custom U-Boot script marker and `Starting kernel …` were both absent. Linux was not observed to be attempted. The failure occurred before the kernel handoff.
 
 ### 27.16 Why did revision-2 verification pass?
 
