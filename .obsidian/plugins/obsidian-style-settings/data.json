@@ -157,5 +157,7 @@
   "blue-topaz-theme@@font-family-change-to-default": false,
   "Blue-Topaz-Codebox-Highlight@@remove-language-type": true,
   "things-style@@fancy-code": true,
-  "minimal-advanced@@animations": "fast-animations"
+  "minimal-advanced@@animations": "fast-animations",
+  "blue-topaz-theme@@bt-colorful-titlebar": false,
+  "blue-topaz-theme@@tab-head-style": "underline-tab-style"
 }

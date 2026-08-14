@@ -10,7 +10,7 @@
           {
             "id": "4509724f8bf84da7",
             "type": "tabs",
-            "dimension": 63.66307541625857,
+            "dimension": 58.961802154750245,
             "children": [
               {
                 "id": "cd6e133f3c263779",
@@ -61,12 +61,13 @@
                 }
               }
             ],
-            "currentTab": 1
+            "currentTab": 1,
+            "stacked": true
           },
           {
             "id": "0ae0ca1b3e1066c2",
             "type": "tabs",
-            "dimension": 36.33692458374143,
+            "dimension": 41.038197845249755,
             "children": [
               {
                 "id": "9f24d9563b077a73",
@@ -95,7 +96,8 @@
                   "title": "M. Tech. Work List"
                 }
               }
-            ]
+            ],
+            "stacked": true
           }
         ],
         "direction": "horizontal"
@@ -155,12 +157,23 @@
               "icon": "lucide-bookmark",
               "title": "Bookmarks"
             }
+          },
+          {
+            "id": "4166ecd02512571d",
+            "type": "leaf",
+            "state": {
+              "type": "vertical-tabs",
+              "state": {},
+              "icon": "vertical-tabs",
+              "title": "Vertical tabs"
+            }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 414.5
+    "width": 414.5,
+    "collapsed": true
   },
   "right": {
     "id": "43fc27400badb105",
@@ -265,7 +278,7 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Guide Books AI/Minimal Kernel/Native_Minimal_Kernel_Complete_Learning_Handbook.md"
+                "file": "Kanban Boards/M. Tech. Work List.md"
               },
               "icon": "lucide-info",
               "title": "File properties"
@@ -304,11 +317,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "20b30ff03a0b0c95",
+  "active": "9f24d9563b077a73",
   "lastOpenFiles": [
+    "Guide Books AI/Minimal Kernel/Native_Minimal_Kernel_Complete_Learning_Handbook.md",
     "Kanban Boards/M. Tech. Work List.md",
     "Guide Books AI/Seminar/Wayfinder_Seminar_Notes.md",
-    "Guide Books AI/Minimal Kernel/Native_Minimal_Kernel_Complete_Learning_Handbook.md",
     "Guide Books AI/AI Suggest Skill Mastering Courses/Prompt and Context Engineering.md",
     "Guide Books AI/Minimal Kernel",
     "Guide Books AI/RV2/Native_Minimal_Kernel_Complete_Learning_Handbook.md",
