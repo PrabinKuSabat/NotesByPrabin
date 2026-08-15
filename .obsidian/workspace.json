@@ -89,7 +89,7 @@
                 "state": {
                   "type": "markdown",
                   "state": {
-                    "file": "Guide Books AI/Minimal Kernel/Native_Minimal_Kernel_Complete_Learning_Handbook.md",
+                    "file": "Guide Books AI/Question banks/GATE_CSE_Master_Question_Bank_770.md",
                     "mode": "preview",
                     "source": false,
                     "backlinks": true,
@@ -104,7 +104,7 @@
                     }
                   },
                   "icon": "lucide-file",
-                  "title": "Native_Minimal_Kernel_Complete_Learning_Handbook"
+                  "title": "GATE_CSE_Master_Question_Bank_770"
                 }
               }
             ]
@@ -288,7 +288,7 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Guide Books AI/Minimal Kernel/Native_Minimal_Kernel_Complete_Learning_Handbook.md"
+                "file": "Guide Books AI/Question banks/GATE_CSE_Master_Question_Bank_770.md"
               },
               "icon": "lucide-info",
               "title": "File properties"
@@ -329,9 +329,10 @@
   },
   "active": "8d4f137db74f3aab",
   "lastOpenFiles": [
+    "Guide Books AI/Minimal Kernel/Native_Minimal_Kernel_Complete_Learning_Handbook.md",
+    "Guide Books AI/Question banks/GATE_CSE_Master_Question_Bank_770.md",
     "Kanban Boards/M. Tech. Work List.md",
     "Guide Books AI/Seminar/Wayfinder_Seminar_Notes.md",
-    "Guide Books AI/Minimal Kernel/Native_Minimal_Kernel_Complete_Learning_Handbook.md",
     "Guide Books AI/AI Suggest Skill Mastering Courses/Prompt and Context Engineering.md",
     "Guide Books AI/Minimal Kernel",
     "Guide Books AI/RV2/Native_Minimal_Kernel_Complete_Learning_Handbook.md",
@@ -355,7 +356,6 @@
     "Guide Books AI/RV2/Compiling RVA22 compilent BusyBox in Ubuntu 26.md",
     "Guide Books AI/RV2/Installation Findings Noted.md",
     "Guide Books AI/Question banks/Chapter_3_Question_Paper.md",
-    "Guide Books AI/Question banks/Chapter_4_Question_Paper.md",
     "Guide Books AI/AI Suggest Skill Mastering Courses",
     "Guide Books AI/Seminar",
     "Guide Books AI/RV2",

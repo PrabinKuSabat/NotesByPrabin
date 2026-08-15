@@ -6,7 +6,7 @@
     "markdown"
   ],
   "sidebarExcludeSelf": true,
-  "trimTabNames": true,
+  "trimTabNames": false,
   "showMoreButtons": false,
   "useTabEditing": true,
   "zenMode": false,
@@ -33,7 +33,7 @@
   "backgroundMode": false,
   "scrollableTabs": true,
   "scrollableTabsMinWidth": 100,
-  "autoHideHorizontalTabs": false,
+  "autoHideHorizontalTabs": true,
   "disableOnThisDevice": false,
   "allowWorkspaceSplitOnPhone": false,
   "enableUpdateCheck": true,
