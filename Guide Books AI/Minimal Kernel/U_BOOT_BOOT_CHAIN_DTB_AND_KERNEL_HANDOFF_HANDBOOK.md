@@ -6,7 +6,7 @@
 **Primary target:** 64-bit RISC-V Linux systems, with cross-architecture comparisons  
 **Concrete project context:** Orange Pi RV2, 4 GiB, vendor Linux 6.6.63-ky, U-Boot 2022.10ky, OpenSBI dynamic firmware  
 **Audience:** senior firmware, platform, kernel, virtualization, performance, reliability, and security engineers
-
+ 
 ---
 
 ## Source/version matrix
@@ -461,9 +461,9 @@ Architecture and xPL flows may differ. Inspect:
 | Earliest CPU entry | <code>arch/&lt;arch&gt;/cpu/&lt;soc&gt;/start.S</code>, architecture start code |
 | Init sequence arrays | <code>common/board_f.c</code>, <code>common/board_r.c</code> |
 | Board hooks | <code>board/&lt;vendor&gt;/&lt;board&gt;/</code> |
-| SoC clocks/DRAM/pins | <code>arch/&lt;arch&gt;/mach-*</code>, drivers, vendor board code |
+| SoC clocks/DRAM/pins | <code>arch/&lt;arch&gt;/mach-_</code>, drivers, vendor board code |
 | Link layout | architecture and board linker scripts |
-| SPL build | <code>common/spl/</code>, <code>CONFIG_SPL_*</code> |
+| SPL build | <code>common/spl/</code>, <code>CONFIG_SPL__</code> |
 
 ## 3.3 Global data, relocation, and memory reservations
 
@@ -931,7 +931,7 @@ With <code>CONFIG_OF_CONTROL</code>, current U-Boot supports several modes descr
 
 An external DTB may be substituted at build time using <code>EXT_DTB</code>. U-Boot-specific adjustments commonly live in a <code>*-u-boot.dtsi</code> so the base hardware description can remain aligned with the OS tree. Space-constrained SPL builds may use generated platform data (<code>OF_PLATDATA</code>) rather than a full live DT.
 
-The **flat blob** is the serialized FDT buffer. U-Boot’s optional **live tree** is an in-memory node/property representation used by supporting code; edits must use the correct API and be synchronized/flattened for the consumer. Vendor-era configurations may use names such as <code>CONFIG_OF_PRIOR_STAGE</code>; current trees also describe board- or bloblist-supplied modes. Confirm exact Kconfig symbols in the selected release. <code>fdt_addr</code>, <code>fdt_addr_r</code>, and <code>fdtcontroladdr</code> are not synonyms: scripts/platforms may use <code>fdt_addr</code> for a current blob, <code>fdt_addr_r</code> as a relocatable-load convention, and <code>fdtcontroladdr</code> for U-Boot’s control tree.
+The **flat blob** is the serialized FDT buffer. U-Boot’s optional **live tree** is an in-memory node/property representation used by supporting code; edits must use the correct API and be synchronized/flattened for the consumer. Vendor-era configurations may use names such as <code>CONFIG_OF_PRIOR_STAGE</code>; current trees also describe boardor bloblist-supplied modes. Confirm exact Kconfig symbols in the selected release. <code>fdt_addr</code>, <code>fdt_addr_r</code>, and <code>fdtcontroladdr</code> are not synonyms: scripts/platforms may use <code>fdt_addr</code> for a current blob, <code>fdt_addr_r</code> as a relocatable-load convention, and <code>fdtcontroladdr</code> for U-Boot’s control tree.
 
 ## 5.4 Where an OS DTB comes from
 
@@ -1333,7 +1333,7 @@ diff -u baseline.sorted.dts candidate-01.roundtrip.dts | less
 sha256sum candidate-01.dtb
 ~~~
 
-5. If source and bindings are available, run:
+1. If source and bindings are available, run:
 
 ~~~bash
 # Context: matching Linux kernel source tree.
@@ -1341,10 +1341,10 @@ make ARCH=riscv CROSS_COMPILE=riscv64-linux-gnu- \
   dtbs_check W=1 DT_SCHEMA_FILES='path/to/relevant-schema.yaml'
 ~~~
 
-6. Load the candidate at a new filename; do not overwrite the baseline.
-7. At U-Boot, use <code>fdt addr</code>, <code>fdt header</code>, <code>fdt print /chosen</code>, and <code>fdt print /memory...</code>.
-8. Boot once, capture the complete UART log, and update the manifest.
-9. If it fails, restore the previous candidate and change one dependency group.
+1. Load the candidate at a new filename; do not overwrite the baseline.
+2. At U-Boot, use <code>fdt addr</code>, <code>fdt header</code>, <code>fdt print /chosen</code>, and <code>fdt print /memory…</code>.
+3. Boot once, capture the complete UART log, and update the manifest.
+4. If it fails, restore the previous candidate and change one dependency group.
 
 ## 6.6 RV2 properties that must be learned, not guessed
 
@@ -2105,7 +2105,7 @@ Use the board documentation for the exact flashable artifact. <code>u-boot</code
 | <code>&lt;board&gt;-u-boot.dtsi</code> | U-Boot/xPL-specific tweaks |
 | <code>board/&lt;vendor&gt;/&lt;board&gt;/</code> | Board hooks, detection, late initialization |
 | <code>include/configs/&lt;board&gt;.h</code> | Legacy constants still needed by the platform |
-| <code>board/.../&lt;board&gt;.env</code> | Text default environment |
+| <code>board/…/&lt;board&gt;.env</code> | Text default environment |
 | Kconfig/Makefile entries | Build selection |
 | binman/ITS description | Packaged boot image layout |
 | board documentation | Build, media offsets, UART, boot, recovery |
@@ -2266,9 +2266,9 @@ An upstream-quality port:
 - Vendor firmware banners/anchors include <code>U-Boot SPL 2022.10ky</code>, OpenSBI <code>fw_dynamic</code>, <code>U-Boot 2022.10ky</code>, and <code>u-boot.itb</code>/<code>u-boot-opensbi.itb</code> integration.
 - The initramfs is intended to contain statically linked BusyBox 1.38.0 with <code>/init</code>.
 - Recorded full values are available for only some hashes in abbreviated project context:
-  - Linux Image: <code>4f145f27...a8b3239</code>
-  - initramfs: <code>541234bd...2f5ad7f66f2cf1e</code>
-  - vendor DTB: <code>05eeb6e9...bfa21d617</code>
+  - Linux Image: <code>4f145f27…a8b3239</code>
+  - initramfs: <code>541234bd…2f5ad7f66f2cf1e</code>
+  - vendor DTB: <code>05eeb6e9…bfa21d617</code>
 - Kernel configuration observations include <code>CONFIG_SERIAL_EARLYCON=y</code>, <code># CONFIG_PSTORE is not set</code>, and <code># CONFIG_WATCHDOG is not set</code>.
 
 Abbreviated hashes are identifiers for discussion, not verification material. Reacquire the complete values.
@@ -2301,8 +2301,8 @@ flowchart LR
 
 At 512 bytes/sector:
 
-\[
-61{,}440 \times 512 = 31{,}457{,}280\ \text{bytes} = 30\ \text{MiB}
+\[  
+61{,}440 \times 512 = 31{,}457{,}280\ \text{bytes} = 30\ \text{MiB}  
 \]
 
 The earlier 1 MiB filesystem start overlapped raw firmware. The reset loop was therefore consistent with corrupted early boot material. Restoring the first 30 MiB removed that symptom. The raw region must remain byte-identical in revision-3 experiments unless an explicitly reviewed firmware test is the goal.
@@ -2322,7 +2322,7 @@ sha256sum rv2-r3-first-30MiB.bin
 
 The meta-riscv build recipe independently supports the vendor U-Boot branch/commit and OpenSBI/FIT integration. A public boot log from another RV2 unit shows SPL FIT verification of OpenSBI, U-Boot, and FDT and a 115200 serial console, but that log concerns another physical unit/RAM variant and is **external corroboration**, not evidence for the current 4 GiB board. See [public RV2 boot log](https://dmesgd.nycbug.org/dmesgd?do=view&id=8920).
 
-The exact vendor Linux commit in the project record was not independently resolved to a public first-party repository during this report. Treat <code>ae9e974d...</code> as a **project-record pin** until the repository URL and object are captured. A secondary public article corroborates the value but is not the authority.
+The exact vendor Linux commit in the project record was not independently resolved to a public first-party repository during this report. Treat <code>ae9e974d…</code> as a **project-record pin** until the repository URL and object are captured. A secondary public article corroborates the value but is not the authority.
 
 ## 9.5 Current failure boundary
 
@@ -2383,8 +2383,8 @@ Fill only from target evidence:
 
 For every pair, prove:
 
-\[
-[start_1,end_1) \cap [start_2,end_2) = \varnothing
+\[  
+[start_1,end_1) \cap [start_2,end_2) = \varnothing  
 \]
 
 Also prove each end calculation does not wrap, every range lies inside accessible RAM, the kernel entry lies in its destination, and the DTB capacity—not merely totalsize—fits runtime edits.
@@ -2430,7 +2430,7 @@ Use interactively first; do not save it to the persistent environment until prov
 => booti ${kernel_addr_r} ${ramdisk_addr_r}:${r3_initrd_size} ${fdt_addr_r}
 ~~~
 
-The exact memory node may be named <code>/memory@...</code>, so use <code>fdt print /</code> to find it. Whether <code>initrd.img</code> or <code>uInitrd</code> belongs with <code>booti</code> depends on the vendor script and enabled U-Boot path; inspect with <code>file</code>, <code>dumpimage -l</code>, and the shipping command rather than naming convention.
+The exact memory node may be named <code>/memory@…</code>, so use <code>fdt print /</code> to find it. Whether <code>initrd.img</code> or <code>uInitrd</code> belongs with <code>booti</code> depends on the vendor script and enabled U-Boot path; inspect with <code>file</code>, <code>dumpimage -l</code>, and the shipping command rather than naming convention.
 
 ## 9.10 Validate the initramfs independently
 
@@ -2560,13 +2560,13 @@ Perform every addition with overflow checking. Remember that a compressed kernel
 Useful kernel configuration/command-line tools, subject to driver support:
 
 - <code>CONFIG_SERIAL_EARLYCON=y</code>;
-- correct <code>earlycon=...</code> derived from binding/platform, not guessed;
-- <code>console=...</code> for the normal driver;
+- correct <code>earlycon=…</code> derived from binding/platform, not guessed;
+- <code>console=…</code> for the normal driver;
 - <code>ignore_loglevel</code>;
 - <code>loglevel=8</code>;
 - <code>initcall_debug</code>;
 - <code>early_ioremap_debug</code> for specific mapping problems;
-- <code>panic=...</code> and <code>panic_on_warn</code> only when recovery behavior is planned;
+- <code>panic=…</code> and <code>panic_on_warn</code> only when recovery behavior is planned;
 - <code>init=/bin/sh</code> or <code>rdinit=/bin/sh</code> to isolate user space;
 - <code>nokaslr</code> during address-sensitive debugging when supported/appropriate;
 - <code>maxcpus=1</code> to isolate secondary-hart issues;
@@ -3352,7 +3352,7 @@ Use <code>fdtdump</code>/<code>fdtget</code> on a known DTB node rather than rel
 
 **Objective:** learn a complete generated tree and version dependence.
 
-**Steps:** run QEMU with <code>-machine virt,dumpdtb=...</code>, decompile with <code>dtc -s</code>, identify memory, CPUs, interrupt controllers, UART, virtio, chosen, and reserved memory. Repeat with different <code>-m</code>, <code>-smp</code>, and one extra device.  
+**Steps:** run QEMU with <code>-machine virt,dumpdtb=…</code>, decompile with <code>dtc -s</code>, identify memory, CPUs, interrupt controllers, UART, virtio, chosen, and reserved memory. Repeat with different <code>-m</code>, <code>-smp</code>, and one extra device.  
 **Evidence:** normalized diffs and command lines.  
 **Pass:** explain every changed property.
 
