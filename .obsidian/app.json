@@ -20,6 +20,6 @@
   "userIgnoreFilters": [
     "ATTACHMENTS/"
   ],
-  "showInlineTitle": false,
+  "showInlineTitle": true,
   "promptDelete": false
 }

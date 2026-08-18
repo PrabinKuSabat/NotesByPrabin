@@ -384,7 +384,7 @@ For FW_DYNAMIC, the prior stage passes <code>a0=hartid</code>, <code>a1=FDT</cod
 | Software reset/SBI SRST | platform-defined reset type/reason | log requested type and actual hardware effect |
 | kexec | almost all firmware and DRAM state persists | Linux must quiesce devices; not a firmware reset |
 
-On multi-hart systems, a ROM may release one or all harts. Firmware needs a rendezvous/lottery or hardware policy, per-hart stacks/scratch, and a clear rule for non-boot harts. Modern RISC-V Linux prefers ordered boot: one hart enters the kernel and starts others through SBI HSM. Random/spin-wait entry is a compatibility path and complicates memory/fence reasoning.
+On multi-hart systems, a ROM may release one or all harts. Firmware needs a rendezvous/lottery or hardware policy, per-hart stacks/scratch, and a clear rule for non-boot harts. Modern RISC-V <mark style="background: #08BFFF99;">Linux prefers ordered boot: one hart enters the kernel and starts others through SBI HSM.</mark> Random/spin-wait entry is a compatibility path and complicates memory/fence reasoning.
 
 ## 2.8 How to recover the real chain
 
