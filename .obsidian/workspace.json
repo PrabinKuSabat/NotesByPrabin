@@ -30,8 +30,36 @@
               "icon": "lucide-file",
               "title": "U_BOOT_BOOT_CHAIN_DTB_AND_KERNEL_HANDOFF_HANDBOOK"
             }
+          },
+          {
+            "id": "82837d7abb650dc7",
+            "type": "leaf",
+            "state": {
+              "type": "kanban",
+              "state": {
+                "file": "Kanban Boards/M. Tech. Work List.md",
+                "kanbanViewState": {
+                  "kanban-plugin": "board",
+                  "list-collapse": [
+                    true,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false
+                  ]
+                }
+              },
+              "icon": "lucide-trello",
+              "title": "M. Tech. Work List"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -248,10 +276,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "79afb666bf985d40",
+  "active": "82837d7abb650dc7",
   "lastOpenFiles": [
-    "Buffer.md",
     "Guide Books AI/Minimal Kernel/U_BOOT_BOOT_CHAIN_DTB_AND_KERNEL_HANDOFF_HANDBOOK.md",
+    "Buffer.md",
     "Guide Books AI/Seminar/Wayfinder_Seminar_Notes.md",
     "EFFORTS/RISC-V.md",
     "EFFORTS/Efforts.md",
