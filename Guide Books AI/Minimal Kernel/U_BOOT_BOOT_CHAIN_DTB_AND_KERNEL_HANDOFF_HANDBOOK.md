@@ -591,16 +591,16 @@ Host tools run on the build machine and are not U-Boot target code. A generated 
 
 ## 3.8 Artifacts and phase distinctions
 
-| Artifact | Meaning; verify per board |
-|---|---|
-| <code>spl/u-boot-spl</code> / <code>u-boot-spl.bin</code> | SPL ELF/raw output |
-| <code>u-boot</code> | U-Boot proper ELF with symbols |
-| <code>u-boot.bin</code> | flat proper binary, composition depends on build |
-| <code>u-boot-nodtb.bin</code> | proper binary without separate control DTB |
-| <code>u-boot.dtb</code> | control DTB |
-| <code>u-boot-dtb.bin</code> | concatenated proper binary/control DT in older/common flows |
-| <code>u-boot.itb</code> | FIT packaging, often proper plus DT(s)/firmware |
-| binman platform image | ROM/flash-ready composition with offsets/padding/firmware |
+| Artifact                                                  | Meaning; verify per board                                   |
+| --------------------------------------------------------- | ----------------------------------------------------------- |
+| <code>spl/u-boot-spl</code> / <code>u-boot-spl.bin</code> | SPL ELF/raw output                                          |
+| <code>u-boot</code>                                       | U-Boot proper ELF with symbols                              |
+| <code>u-boot.bin</code>                                   | flat proper binary, composition depends on build            |
+| <code>u-boot-nodtb.bin</code>                             | proper binary without separate control DTB                  |
+| <code>u-boot.dtb</code>                                   | control DTB                                                 |
+| <code>u-boot-dtb.bin</code>                               | concatenated proper binary/control DT in older/common flows |
+| <code>u-boot.itb</code>                                   | FIT packaging, often proper plus DT(s)/firmware             |
+| binman platform image                                     | ROM/flash-ready composition with offsets/padding/firmware   |
 
 Early malloc may be a tiny pre-relocation allocator; normal malloc is established later in DRAM. Pre-relocation drivers must be explicitly retained/configured and cannot assume the full runtime. Exception vectors, cache/MMU enablement, and debug UART timing are architecture/board specific: read the exact map/start code before placing breakpoints.
 

@@ -8,30 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "79afb666bf985d40",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Guide Books AI/Minimal Kernel/U_BOOT_BOOT_CHAIN_DTB_AND_KERNEL_HANDOFF_HANDBOOK.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "U_BOOT_BOOT_CHAIN_DTB_AND_KERNEL_HANDOFF_HANDBOOK"
-            }
-          },
-          {
             "id": "82837d7abb650dc7",
             "type": "leaf",
             "state": {
@@ -56,6 +32,30 @@
               },
               "icon": "lucide-trello",
               "title": "M. Tech. Work List"
+            }
+          },
+          {
+            "id": "4ee9793f6f457fa8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Guide Books AI/Minimal Kernel/U_BOOT_BOOT_CHAIN_DTB_AND_KERNEL_HANDOFF_HANDBOOK.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "U_BOOT_BOOT_CHAIN_DTB_AND_KERNEL_HANDOFF_HANDBOOK"
             }
           }
         ],
@@ -276,8 +276,9 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "82837d7abb650dc7",
+  "active": "4ee9793f6f457fa8",
   "lastOpenFiles": [
+    "Kanban Boards/M. Tech. Work List.md",
     "Guide Books AI/Minimal Kernel/U_BOOT_BOOT_CHAIN_DTB_AND_KERNEL_HANDOFF_HANDBOOK.md",
     "Buffer.md",
     "Guide Books AI/Seminar/Wayfinder_Seminar_Notes.md",
@@ -286,7 +287,6 @@
     "Homepage.md",
     "Guide Books AI/Question banks/GATE_CSE_Master_Question_Bank_770.md",
     "Guide Books AI/Minimal Kernel/Native_Minimal_Kernel_Complete_Learning_Handbook.md",
-    "Kanban Boards/M. Tech. Work List.md",
     "Guide Books AI/AI Suggest Skill Mastering Courses/Prompt and Context Engineering.md",
     "Guide Books AI/Minimal Kernel",
     "Guide Books AI/RV2/Native_Minimal_Kernel_Complete_Learning_Handbook.md",
