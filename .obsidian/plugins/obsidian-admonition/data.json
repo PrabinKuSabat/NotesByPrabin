@@ -2,23 +2,22 @@
   "userAdmonitions": {},
   "syntaxHighlight": false,
   "copyButton": true,
-  "version": "11.0.0",
+  "version": "12.0.5",
   "autoCollapse": true,
   "defaultCollapseType": "open",
   "injectColor": true,
   "parseTitles": true,
   "dropShadow": false,
   "hideEmpty": true,
+  "icons": [],
+  "rpgDownloadedOnce": false,
+  "useSnippet": true,
+  "snippetPath": "custom-admonitions.c5575a",
   "open": {
     "admonitions": true,
     "icons": true,
     "other": true,
     "advanced": false
   },
-  "icons": [],
-  "useFontAwesome": true,
-  "rpgDownloadedOnce": false,
-  "msDocConverted": false,
-  "useSnippet": true,
-  "snippetPath": "custom-admonitions.c5575a"
+  "useFontAwesome": false
 }
