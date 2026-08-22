@@ -4,17 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "4509724f8bf84da7",
+        "id": "0c0053ae7dbb5e3f",
         "type": "tabs",
         "children": [
           {
-            "id": "e7a7b303c61786dc",
+            "id": "4b41d1ca56b22479",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
-                "mode": "source",
+                "file": "Guide Books AI/Minimal Kernel/orange-pi-rv2-uboot-handbook.md",
+                "mode": "preview",
                 "source": false,
                 "backlinks": true,
                 "backlinkOpts": {
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "orange-pi-rv2-uboot-handbook"
             }
           }
         ]
@@ -99,8 +99,7 @@
               "title": "Vertical tabs"
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "horizontal",
@@ -249,12 +248,13 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "4b41d1ca56b22479",
   "lastOpenFiles": [
-    "Guide Books AI/Minimal Kernel/U_BOOT_FROM_ZERO_BEGINNERS_HANDBOOK.md",
-    "Guide Books AI/Minimal Kernel/Native_Minimal_Kernel_Complete_Learning_Handbook.md",
     "Homepage.md",
     "Guide Books AI/Minimal Kernel/U_BOOT_BOOT_CHAIN_DTB_AND_KERNEL_HANDOFF_HANDBOOK.md",
+    "Guide Books AI/Minimal Kernel/orange-pi-rv2-uboot-handbook.md",
+    "Guide Books AI/Minimal Kernel/U_BOOT_FROM_ZERO_BEGINNERS_HANDBOOK.md",
+    "Guide Books AI/Minimal Kernel/Native_Minimal_Kernel_Complete_Learning_Handbook.md",
     "Kanban Boards/M. Tech. Work List.md",
     "Buffer.md",
     "Guide Books AI/Seminar/Wayfinder_Seminar_Notes.md",
@@ -277,7 +277,6 @@
     "Guide Books AI/Question banks/Chapter_5_Question_Paper_AUDITED.md",
     "Guide Books AI/Question banks/Chapter_6_Question_Paper_AUDITED.md",
     "Guide Books AI/Question banks/Chapter_7_Question_Paper_AUDITED.md",
-    "Guide Books AI/RV2/Minimal Kernel Booting.md",
     "Guide Books AI/AI Suggest Skill Mastering Courses",
     "Guide Books AI/Seminar",
     "Guide Books AI/RV2",
