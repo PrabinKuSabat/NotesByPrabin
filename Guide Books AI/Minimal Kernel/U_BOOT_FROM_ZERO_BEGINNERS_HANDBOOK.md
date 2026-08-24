@@ -486,7 +486,7 @@ After success, the file’s bytes are in RAM at 0x90000000. U-Boot commonly upda
 
 ## 7.4 Network loading
 
-TFTP or HTTP can accelerate development because storage media need not be rewritten for every test. It adds dependencies: link state, MAC configuration, IP addressing, server paths, firewalls, and network drivers.
+TFTP or HTTP can accelerate development because <mark style="background: #08BFFF99;">storage media need not be rewritten for every test.</mark> It adds dependencies: link state, MAC configuration, IP addressing, server paths, firewalls, and network drivers.
 
 Use network loading only after the console, RAM, and network device are independently known to work. Keep a local recovery path.
 
