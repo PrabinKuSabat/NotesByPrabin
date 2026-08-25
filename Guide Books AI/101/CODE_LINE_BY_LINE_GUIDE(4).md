@@ -929,10 +929,13 @@ a[greater+1 .. high]      > pivot
 
 Initially:
 
+
+```
 - `< pivot` region empty,
 - `== pivot` region empty,
 - entire subarray unknown,
 - `> pivot` region empty.
+```
 
 So the invariant is true.
 
@@ -1037,7 +1040,7 @@ This is a classic viva question.
 
 ---
 
-## Lines 48–50 — `== pivot` case
+## Lines 48–50 — == pivot case
 
 ```cpp
 48: } else {
@@ -1095,9 +1098,11 @@ L25–L27 establish four regions, with only the unknown region nonempty.
 
 Three cases:
 
+```
 - `< pivot`: L32–L38,
 - `> pivot`: L42–L47,
 - `== pivot`: L48–L50.
+```
 
 Each preserves the four-region invariant.
 
