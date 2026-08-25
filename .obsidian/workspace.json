@@ -13,8 +13,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Guide Books AI/Minimal Kernel/U_BOOT_FROM_ZERO_BEGINNERS_HANDBOOK.md",
-                "mode": "source",
+                "file": "Guide Books AI/101/CODE_LINE_BY_LINE_GUIDE(4).md",
+                "mode": "preview",
                 "source": false,
                 "backlinks": true,
                 "backlinkOpts": {
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "U_BOOT_FROM_ZERO_BEGINNERS_HANDBOOK"
+              "title": "CODE_LINE_BY_LINE_GUIDE(4)"
             }
           }
         ]
@@ -103,8 +103,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5,
-    "collapsed": true
+    "width": 414.5
   },
   "right": {
     "id": "43fc27400badb105",
@@ -250,10 +249,17 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Guide Books AI/101/CODE_LINE_BY_LINE_GUIDE(5).md",
+    "Guide Books AI/101/CODE_LINE_BY_LINE_GUIDE(4).md",
+    "Guide Books AI/101/CODE_LINE_BY_LINE_GUIDE(3).md",
+    "Guide Books AI/101/CODE_LINE_BY_LINE_GUIDE(2).md",
+    "Guide Books AI/101/CODE_LINE_BY_LINE_GUIDE(1).md",
+    "Guide Books AI/101/CODE_LINE_BY_LINE_GUIDE.md",
+    "Guide Books AI/Minimal Kernel/U_BOOT_FROM_ZERO_BEGINNERS_HANDBOOK.md",
+    "Guide Books AI/101",
     "Guide Books AI/Minimal Kernel/U_BOOT_BOOT_CHAIN_DTB_AND_KERNEL_HANDOFF_HANDBOOK.md",
     "Guide Books AI/Minimal Kernel/orange-pi-rv2-uboot-handbook.md",
     "Homepage.md",
-    "Guide Books AI/Minimal Kernel/U_BOOT_FROM_ZERO_BEGINNERS_HANDBOOK.md",
     "Guide Books AI/Minimal Kernel/Native_Minimal_Kernel_Complete_Learning_Handbook.md",
     "Kanban Boards/M. Tech. Work List.md",
     "Buffer.md",
@@ -271,12 +277,6 @@
     "EFFORTS/RV2.md",
     "EFFORTS/spacemit-k1-x60.md",
     "EFFORTS/Rv2 Board CPU Details.md",
-    "Guide Books AI/Question banks/Chapter_2_Question_Paper_AUDITED.md",
-    "Guide Books AI/Question banks/Chapter_3_Question_Paper_AUDITED.md",
-    "Guide Books AI/Question banks/Chapter_4_Question_Paper_AUDITED.md",
-    "Guide Books AI/Question banks/Chapter_5_Question_Paper_AUDITED.md",
-    "Guide Books AI/Question banks/Chapter_6_Question_Paper_AUDITED.md",
-    "Guide Books AI/Question banks/Chapter_7_Question_Paper_AUDITED.md",
     "Guide Books AI/AI Suggest Skill Mastering Courses",
     "Guide Books AI/Seminar",
     "Guide Books AI/RV2",
@@ -285,7 +285,6 @@
     "Guide Books AI",
     "Untitled.base",
     "Extras/Archives/Extras-Excalidraw-legacy-2026-07-31.tar.gz",
-    "CALENDAR",
     "Extras/ATTACHMENTS/image-97.png",
     "Extras/ATTACHMENTS/image-95.png",
     "Extras/ATTACHMENTS/9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f-2.png",
