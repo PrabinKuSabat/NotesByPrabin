@@ -13,8 +13,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Guide Books AI/101/CODE_LINE_BY_LINE_GUIDE(4).md",
-                "mode": "preview",
+                "file": "Homepage.md",
+                "mode": "source",
                 "source": false,
                 "backlinks": true,
                 "backlinkOpts": {
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "CODE_LINE_BY_LINE_GUIDE(4)"
+              "title": "Homepage"
             }
           }
         ]
@@ -99,7 +99,8 @@
               "title": "Vertical tabs"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -250,10 +251,10 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Guide Books AI/101/CODE_LINE_BY_LINE_GUIDE(2).md",
+    "Guide Books AI/101/CODE_LINE_BY_LINE_GUIDE(3).md",
     "Guide Books AI/101/CODE_LINE_BY_LINE_GUIDE(5).md",
     "Guide Books AI/101/CODE_LINE_BY_LINE_GUIDE(4).md",
-    "Guide Books AI/101/CODE_LINE_BY_LINE_GUIDE(3).md",
-    "Guide Books AI/101/CODE_LINE_BY_LINE_GUIDE(2).md",
     "Guide Books AI/101/CODE_LINE_BY_LINE_GUIDE(1).md",
     "Guide Books AI/101/CODE_LINE_BY_LINE_GUIDE.md",
     "Guide Books AI/Minimal Kernel/U_BOOT_FROM_ZERO_BEGINNERS_HANDBOOK.md",
