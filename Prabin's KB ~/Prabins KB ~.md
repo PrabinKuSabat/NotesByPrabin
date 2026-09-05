@@ -8,7 +8,6 @@ tags:
 updated: 2026-07-31
 ---
 
-$1
 ![[Extras/ATTACHMENTS/image-97.png]]
 
 # Systems Engineering Logbook — Kernel, Performance, and Architecture Experiments

@@ -1,10 +1,10 @@
 {
   "accentColor": "#09e8ec",
   "theme": "obsidian",
-  "cssTheme": "Things",
+  "cssTheme": "Prism",
   "nativeMenus": false,
   "translucency": false,
-  "interfaceFontFamily": "Cascadia Code",
+  "interfaceFontFamily": "Liberation Mono",
   "textFontFamily": "Book Antiqua",
   "monospaceFontFamily": "Comic Sans MS",
   "baseFontSize": 16,

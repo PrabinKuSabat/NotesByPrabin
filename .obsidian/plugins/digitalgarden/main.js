@@ -369,7 +369,7 @@ var require_lodash = __commonJS({
     };
     var freeGlobal = typeof global == "object" && global && global.Object === Object && global;
     var freeSelf = typeof self == "object" && self && self.Object === Object && self;
-    var root15 = freeGlobal || freeSelf || Function("return this")();
+    var root18 = freeGlobal || freeSelf || Function("return this")();
     function basePropertyOf(object) {
       return function(key2) {
         return object == null ? void 0 : object[key2];
@@ -378,7 +378,7 @@ var require_lodash = __commonJS({
     var deburrLetter = basePropertyOf(deburredLetters);
     var objectProto = Object.prototype;
     var objectToString = objectProto.toString;
-    var Symbol2 = root15.Symbol;
+    var Symbol2 = root18.Symbol;
     var symbolProto = Symbol2 ? Symbol2.prototype : void 0;
     var symbolToString = symbolProto ? symbolProto.toString : void 0;
     function baseToString(value) {
@@ -1258,7 +1258,7 @@ var require_slugify = __commonJS({
       const escapedSeparator = escapeStringRegexp(separator);
       return string.replace(new RegExp(`${escapedSeparator}{2,}`, "g"), separator).replace(new RegExp(`^${escapedSeparator}|${escapedSeparator}$`, "g"), "");
     };
-    var slugify3 = (string, options) => {
+    var slugify4 = (string, options) => {
       if (typeof string !== "string") {
         throw new TypeError(`Expected a string, got \`${typeof string}\``);
       }
@@ -1296,7 +1296,7 @@ var require_slugify = __commonJS({
     var counter = () => {
       const occurrences = /* @__PURE__ */ new Map();
       const countable = (string, options) => {
-        string = slugify3(string, options);
+        string = slugify4(string, options);
         if (!string) {
           return "";
         }
@@ -1315,7 +1315,7 @@ var require_slugify = __commonJS({
       };
       return countable;
     };
-    module2.exports = slugify3;
+    module2.exports = slugify4;
     module2.exports.counter = counter;
   }
 });
@@ -1323,13 +1323,13 @@ var require_slugify = __commonJS({
 // node_modules/crypto-js/core.js
 var require_core = __commonJS({
   "node_modules/crypto-js/core.js"(exports, module2) {
-    (function(root15, factory2) {
+    (function(root18, factory2) {
       if (typeof exports === "object") {
         module2.exports = exports = factory2();
       } else if (typeof define === "function" && define.amd) {
         define([], factory2);
       } else {
-        root15.CryptoJS = factory2();
+        root18.CryptoJS = factory2();
       }
     })(exports, function() {
       var CryptoJS = CryptoJS || (function(Math2, undefined2) {
@@ -1931,13 +1931,13 @@ var require_core = __commonJS({
 // node_modules/crypto-js/sha1.js
 var require_sha1 = __commonJS({
   "node_modules/crypto-js/sha1.js"(exports, module2) {
-    (function(root15, factory2) {
+    (function(root18, factory2) {
       if (typeof exports === "object") {
         module2.exports = exports = factory2(require_core());
       } else if (typeof define === "function" && define.amd) {
         define(["./core"], factory2);
       } else {
-        factory2(root15.CryptoJS);
+        factory2(root18.CryptoJS);
       }
     })(exports, function(CryptoJS) {
       (function() {
@@ -2022,13 +2022,13 @@ var require_sha1 = __commonJS({
 // node_modules/crypto-js/enc-latin1.js
 var require_enc_latin1 = __commonJS({
   "node_modules/crypto-js/enc-latin1.js"(exports, module2) {
-    (function(root15, factory2) {
+    (function(root18, factory2) {
       if (typeof exports === "object") {
         module2.exports = exports = factory2(require_core());
       } else if (typeof define === "function" && define.amd) {
         define(["./core"], factory2);
       } else {
-        factory2(root15.CryptoJS);
+        factory2(root18.CryptoJS);
       }
     })(exports, function(CryptoJS) {
       return CryptoJS.enc.Latin1;
@@ -2041,8 +2041,8 @@ var require_logger = __commonJS({
   "node_modules/js-logger/src/logger.js"(exports, module2) {
     (function(global2) {
       "use strict";
-      var Logger13 = {};
-      Logger13.VERSION = "1.6.1";
+      var Logger16 = {};
+      Logger16.VERSION = "1.6.1";
       var logHandler;
       var contextualLoggersByNameMap = {};
       var bind2 = function(scope, func) {
@@ -2064,13 +2064,13 @@ var require_logger = __commonJS({
       var defineLogLevel = function(value, name) {
         return { value, name };
       };
-      Logger13.TRACE = defineLogLevel(1, "TRACE");
-      Logger13.DEBUG = defineLogLevel(2, "DEBUG");
-      Logger13.INFO = defineLogLevel(3, "INFO");
-      Logger13.TIME = defineLogLevel(4, "TIME");
-      Logger13.WARN = defineLogLevel(5, "WARN");
-      Logger13.ERROR = defineLogLevel(8, "ERROR");
-      Logger13.OFF = defineLogLevel(99, "OFF");
+      Logger16.TRACE = defineLogLevel(1, "TRACE");
+      Logger16.DEBUG = defineLogLevel(2, "DEBUG");
+      Logger16.INFO = defineLogLevel(3, "INFO");
+      Logger16.TIME = defineLogLevel(4, "TIME");
+      Logger16.WARN = defineLogLevel(5, "WARN");
+      Logger16.ERROR = defineLogLevel(8, "ERROR");
+      Logger16.OFF = defineLogLevel(99, "OFF");
       var ContextualLogger = function(defaultContext) {
         this.context = defaultContext;
         this.setLevel(defaultContext.filterLevel);
@@ -2093,28 +2093,28 @@ var require_logger = __commonJS({
           return lvl.value >= filterLevel.value;
         },
         trace: function() {
-          this.invoke(Logger13.TRACE, arguments);
+          this.invoke(Logger16.TRACE, arguments);
         },
         debug: function() {
-          this.invoke(Logger13.DEBUG, arguments);
+          this.invoke(Logger16.DEBUG, arguments);
         },
         info: function() {
-          this.invoke(Logger13.INFO, arguments);
+          this.invoke(Logger16.INFO, arguments);
         },
         warn: function() {
-          this.invoke(Logger13.WARN, arguments);
+          this.invoke(Logger16.WARN, arguments);
         },
         error: function() {
-          this.invoke(Logger13.ERROR, arguments);
+          this.invoke(Logger16.ERROR, arguments);
         },
         time: function(label) {
           if (typeof label === "string" && label.length > 0) {
-            this.invoke(Logger13.TIME, [label, "start"]);
+            this.invoke(Logger16.TIME, [label, "start"]);
           }
         },
         timeEnd: function(label) {
           if (typeof label === "string" && label.length > 0) {
-            this.invoke(Logger13.TIME, [label, "end"]);
+            this.invoke(Logger16.TIME, [label, "end"]);
           }
         },
         // Invokes the logger callback if it's not being filtered.
@@ -2124,9 +2124,9 @@ var require_logger = __commonJS({
           }
         }
       };
-      var globalLogger = new ContextualLogger({ filterLevel: Logger13.OFF });
+      var globalLogger = new ContextualLogger({ filterLevel: Logger16.OFF });
       (function() {
-        var L = Logger13;
+        var L = Logger16;
         L.enabledFor = bind2(globalLogger, globalLogger.enabledFor);
         L.trace = bind2(globalLogger, globalLogger.trace);
         L.debug = bind2(globalLogger, globalLogger.debug);
@@ -2137,10 +2137,10 @@ var require_logger = __commonJS({
         L.error = bind2(globalLogger, globalLogger.error);
         L.log = L.info;
       })();
-      Logger13.setHandler = function(func) {
+      Logger16.setHandler = function(func) {
         logHandler = func;
       };
-      Logger13.setLevel = function(level) {
+      Logger16.setLevel = function(level) {
         globalLogger.setLevel(level);
         for (var key2 in contextualLoggersByNameMap) {
           if (contextualLoggersByNameMap.hasOwnProperty(key2)) {
@@ -2148,17 +2148,17 @@ var require_logger = __commonJS({
           }
         }
       };
-      Logger13.getLevel = function() {
+      Logger16.getLevel = function() {
         return globalLogger.getLevel();
       };
-      Logger13.get = function(name) {
+      Logger16.get = function(name) {
         return contextualLoggersByNameMap[name] || (contextualLoggersByNameMap[name] = new ContextualLogger(merge3({ name }, globalLogger.context)));
       };
-      Logger13.createDefaultHandler = function(options) {
+      Logger16.createDefaultHandler = function(options) {
         options = options || {};
-        options.formatter = options.formatter || function defaultMessageFormatter(messages, context) {
-          if (context.name) {
-            messages.unshift("[" + context.name + "]");
+        options.formatter = options.formatter || function defaultMessageFormatter(messages, context2) {
+          if (context2.name) {
+            messages.unshift("[" + context2.name + "]");
           }
         };
         var timerStartTimeByLabelMap = {};
@@ -2169,12 +2169,12 @@ var require_logger = __commonJS({
           return function() {
           };
         }
-        return function(messages, context) {
+        return function(messages, context2) {
           messages = Array.prototype.slice.call(messages);
           var hdlr = console.log;
           var timerLabel;
-          if (context.level === Logger13.TIME) {
-            timerLabel = (context.name ? "[" + context.name + "] " : "") + messages[0];
+          if (context2.level === Logger16.TIME) {
+            timerLabel = (context2.name ? "[" + context2.name + "] " : "") + messages[0];
             if (messages[1] === "start") {
               if (console.time) {
                 console.time(timerLabel);
@@ -2189,38 +2189,38 @@ var require_logger = __commonJS({
               }
             }
           } else {
-            if (context.level === Logger13.WARN && console.warn) {
+            if (context2.level === Logger16.WARN && console.warn) {
               hdlr = console.warn;
-            } else if (context.level === Logger13.ERROR && console.error) {
+            } else if (context2.level === Logger16.ERROR && console.error) {
               hdlr = console.error;
-            } else if (context.level === Logger13.INFO && console.info) {
+            } else if (context2.level === Logger16.INFO && console.info) {
               hdlr = console.info;
-            } else if (context.level === Logger13.DEBUG && console.debug) {
+            } else if (context2.level === Logger16.DEBUG && console.debug) {
               hdlr = console.debug;
-            } else if (context.level === Logger13.TRACE && console.trace) {
+            } else if (context2.level === Logger16.TRACE && console.trace) {
               hdlr = console.trace;
             }
-            options.formatter(messages, context);
+            options.formatter(messages, context2);
             invokeConsoleMethod(hdlr, messages);
           }
         };
       };
-      Logger13.useDefaults = function(options) {
-        Logger13.setLevel(options && options.defaultLevel || Logger13.DEBUG);
-        Logger13.setHandler(Logger13.createDefaultHandler(options));
+      Logger16.useDefaults = function(options) {
+        Logger16.setLevel(options && options.defaultLevel || Logger16.DEBUG);
+        Logger16.setHandler(Logger16.createDefaultHandler(options));
       };
-      Logger13.setDefaults = Logger13.useDefaults;
+      Logger16.setDefaults = Logger16.useDefaults;
       if (typeof define === "function" && define.amd) {
-        define(Logger13);
+        define(Logger16);
       } else if (typeof module2 !== "undefined" && module2.exports) {
-        module2.exports = Logger13;
+        module2.exports = Logger16;
       } else {
-        Logger13._prevLogger = global2.Logger;
-        Logger13.noConflict = function() {
-          global2.Logger = Logger13._prevLogger;
-          return Logger13;
+        Logger16._prevLogger = global2.Logger;
+        Logger16.noConflict = function() {
+          global2.Logger = Logger16._prevLogger;
+          return Logger16;
         };
-        global2.Logger = Logger13;
+        global2.Logger = Logger16;
       }
     })(exports);
   }
@@ -10425,17 +10425,17 @@ var generateGardenSnapshot_exports = {};
 __export(generateGardenSnapshot_exports, {
   generateGardenSnapshot: () => generateGardenSnapshot
 });
-var import_obsidian22, import_promises2, SNAPSHOT_PATH, generateGardenSnapshot;
+var import_obsidian28, import_promises2, SNAPSHOT_PATH, generateGardenSnapshot;
 var init_generateGardenSnapshot = __esm({
   "src/test/snapshot/generateGardenSnapshot.ts"() {
     "use strict";
-    import_obsidian22 = require("obsidian");
+    import_obsidian28 = require("obsidian");
     import_promises2 = __toESM(require("fs/promises"));
     SNAPSHOT_PATH = "src/test/snapshot/snapshot.md";
     generateGardenSnapshot = (settings, publisher) => __async(null, null, function* () {
       const devPluginPath = settings.devPluginPath;
       if (!devPluginPath) {
-        new import_obsidian22.Notice("devPluginPath missing, run generateGardenSettings.mjs");
+        new import_obsidian28.Notice("devPluginPath missing, run generateGardenSettings.mjs");
         return;
       }
       const marked = yield publisher.getFilesMarkedForPublishing();
@@ -10457,11 +10457,11 @@ var init_generateGardenSnapshot = __esm({
       }
       fileString += "==========\n";
       const fullSnapshotPath = `${devPluginPath}/${SNAPSHOT_PATH}`;
-      if (import_obsidian22.Platform.isDesktop) {
+      if (import_obsidian28.Platform.isDesktop) {
         yield import_promises2.default.writeFile(fullSnapshotPath, fileString);
       }
-      new import_obsidian22.Notice(`Snapshot written to ${fullSnapshotPath}`);
-      new import_obsidian22.Notice(`Check snapshot to make sure nothing has accidentally changed`);
+      new import_obsidian28.Notice(`Snapshot written to ${fullSnapshotPath}`);
+      new import_obsidian28.Notice(`Check snapshot to make sure nothing has accidentally changed`);
     });
   }
 });
@@ -10472,10 +10472,10 @@ __export(main_exports, {
   default: () => DigitalGarden
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian23 = require("obsidian");
+var import_obsidian29 = require("obsidian");
 
 // src/publisher/Publisher.ts
-var import_obsidian6 = require("obsidian");
+var import_obsidian7 = require("obsidian");
 
 // node_modules/js-base64/base64.mjs
 var version = "3.7.5";
@@ -10703,9 +10703,6 @@ function getGardenPathForNote(vaultPath, rules) {
   }
   return vaultPath;
 }
-function escapeRegExp(string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
 function fixSvgForXmlSerializer(svgElement) {
   var _a6;
   const styles = svgElement.getElementsByTagName("style");
@@ -10790,6 +10787,7 @@ function extractResponseData(error) {
 // src/publisher/paths.ts
 var NOTE_PATH_BASE = "src/site/notes/";
 var IMAGE_PATH_BASE = "src/site/img/user/";
+var GARDEN_PLUGINS_PATH_BASE = "src/plugins/";
 function normalizeContentBaseDir(base) {
   const stripped = (base != null ? base : "").trim().replace(/^\/+/, "").replace(/\/+$/, "");
   if (stripped === "") {
@@ -10821,6 +10819,12 @@ function sitePath(settings, sub) {
 }
 function envPath(settings) {
   return `${contentBaseDir(settings)}.env`;
+}
+function gardenPluginsPathBase(settings) {
+  return `${contentBaseDir(settings)}${GARDEN_PLUGINS_PATH_BASE}`;
+}
+function gardenPluginsRegistryPath(settings) {
+  return `${gardenPluginsPathBase(settings)}plugins.json`;
 }
 
 // src/repositoryConnection/RepositoryConnection.ts
@@ -10884,10 +10888,13 @@ var RepositoryConnection = class {
       );
       try {
         const response = yield this.octokit.request(
-          "GET /repos/{owner}/{repo}/contents/{path}",
+          `GET /repos/{owner}/{repo}/contents/{path}?cacheBust=${Date.now()}`,
           __spreadProps(__spreadValues({}, this.getBasePayload()), {
             path: path2,
-            ref: branch2
+            ref: branch2,
+            headers: {
+              "If-None-Match": ""
+            }
           })
         );
         if (response.status === 200 && !Array.isArray(response.data) && response.data.type === "file") {
@@ -10897,6 +10904,27 @@ var RepositoryConnection = class {
         throw new Error(
           `Could not get file ${path2} from repository ${this.getRepositoryName()}`
         );
+      }
+    });
+  }
+  /**
+   * Get a blob's base64 content by sha (from a tree listing). Unlike the
+   * contents API, this works for files larger than 1 MB.
+   */
+  getBlob(fileSha) {
+    return __async(this, null, function* () {
+      try {
+        const response = yield this.octokit.request(
+          "GET /repos/{owner}/{repo}/git/blobs/{file_sha}",
+          __spreadProps(__spreadValues({}, this.getBasePayload()), {
+            file_sha: fileSha
+          })
+        );
+        if (response.status === 200) {
+          return response.data.content;
+        }
+      } catch (error) {
+        logger.error(error);
       }
     });
   }
@@ -11051,7 +11079,7 @@ var RepositoryConnection = class {
     });
   }
   updateFiles(_0) {
-    return __async(this, arguments, function* (files, remoteImageHashes = {}) {
+    return __async(this, arguments, function* (files, remoteImageHashes = {}, onProgress) {
       const latestCommit = yield this.getLatestCommit();
       if (!latestCommit) {
         logger.error("Could not get latest commit");
@@ -11064,6 +11092,12 @@ var RepositoryConnection = class {
       const latestCommitSha = latestCommit.sha;
       const baseTreeSha = latestCommit.commit.tree.sha;
       const normalizePath = (path2) => path2.startsWith("/") ? path2.slice(1) : path2;
+      let totalSteps = 0;
+      let stepsDone = 0;
+      const reportUpload = (path2) => {
+        stepsDone += 1;
+        onProgress == null ? void 0 : onProgress(stepsDone, totalSteps, `Uploaded ${path2}`);
+      };
       const treePromises = files.map((file) => __async(this, null, function* () {
         const [text2, _] = file.compiledFile;
         try {
@@ -11074,6 +11108,7 @@ var RepositoryConnection = class {
               encoding: "utf-8"
             })
           );
+          reportUpload(file.getPath());
           return {
             path: `${this.contentBase}${NOTE_PATH_BASE2}${normalizePath(
               file.getPath()
@@ -11085,6 +11120,7 @@ var RepositoryConnection = class {
         } catch (error) {
           throwIfLimitError(error);
           logger.error(error);
+          reportUpload(file.getPath());
         }
       }));
       const allImages = files.flatMap((x) => x.compiledFile[1].images);
@@ -11106,6 +11142,7 @@ var RepositoryConnection = class {
               encoding: "base64"
             })
           );
+          reportUpload(asset.path);
           return {
             path: `${this.contentBase}${IMAGE_PATH_BASE2}${normalizePath(
               asset.path
@@ -11117,10 +11154,14 @@ var RepositoryConnection = class {
         } catch (error) {
           throwIfLimitError(error);
           logger.error(error);
+          reportUpload(asset.path);
         }
       }));
       treePromises.push(...treeAssetPromises);
+      totalSteps = files.length + imagesToUpload.length + 1;
+      onProgress == null ? void 0 : onProgress(0, totalSteps, "Uploading files\u2026");
       const treeList = yield Promise.all(treePromises);
+      onProgress == null ? void 0 : onProgress(totalSteps - 1, totalSteps, "Creating commit\u2026");
       const tree = treeList.filter((x) => x !== void 0);
       const newTree = yield this.octokit.request(
         "POST /repos/{owner}/{repo}/git/trees",
@@ -11136,6 +11177,80 @@ var RepositoryConnection = class {
           message: commitMessage,
           tree: newTree.data.sha,
           parents: [latestCommitSha]
+        })
+      );
+      const defaultBranch = (yield repoDataPromise).data.default_branch;
+      yield this.octokit.request(
+        "PATCH /repos/{owner}/{repo}/git/refs/heads/{branch}",
+        __spreadProps(__spreadValues({}, this.getBasePayload()), {
+          branch: defaultBranch,
+          sha: newCommit.data.sha
+        })
+      );
+      onProgress == null ? void 0 : onProgress(totalSteps, totalSteps, "Published");
+    });
+  }
+  /**
+   * Commit a set of raw file additions/updates and deletions as one atomic
+   * commit on the default branch (blobs → tree → commit → ref, the same
+   * flow as {@link updateFiles}). Used by the garden plugin installer so an
+   * install, update, or uninstall is always a single commit. Paths are full
+   * repo paths; addition content is base64. Throws on failure — callers
+   * surface the error to the user.
+   */
+  commitChanges(_0) {
+    return __async(this, arguments, function* ({
+      additions = [],
+      deletions = [],
+      message
+    }) {
+      if (additions.length === 0 && deletions.length === 0) {
+        return;
+      }
+      const latestCommit = yield this.getLatestCommit();
+      if (!latestCommit) {
+        throw new Error("Could not get latest commit");
+      }
+      const repoDataPromise = this.octokit.request(
+        "GET /repos/{owner}/{repo}",
+        __spreadValues({}, this.getBasePayload())
+      );
+      const additionEntries = yield Promise.all(
+        additions.map((file) => __async(this, null, function* () {
+          const blob = yield this.octokit.request(
+            "POST /repos/{owner}/{repo}/git/blobs",
+            __spreadProps(__spreadValues({}, this.getBasePayload()), {
+              content: file.content,
+              encoding: "base64"
+            })
+          );
+          return {
+            path: file.path,
+            mode: "100644",
+            type: "blob",
+            sha: blob.data.sha
+          };
+        }))
+      );
+      const deletionEntries = deletions.map((path2) => ({
+        path: path2,
+        mode: "100644",
+        type: "blob",
+        sha: null
+      }));
+      const newTree = yield this.octokit.request(
+        "POST /repos/{owner}/{repo}/git/trees",
+        __spreadProps(__spreadValues({}, this.getBasePayload()), {
+          base_tree: latestCommit.commit.tree.sha,
+          tree: [...additionEntries, ...deletionEntries]
+        })
+      );
+      const newCommit = yield this.octokit.request(
+        "POST /repos/{owner}/{repo}/git/commits",
+        __spreadProps(__spreadValues({}, this.getBasePayload()), {
+          message,
+          tree: newTree.data.sha,
+          parents: [latestCommit.sha]
         })
       );
       const defaultBranch = (yield repoDataPromise).data.default_branch;
@@ -11574,8 +11689,8 @@ function isDefined(value) {
 function isKeyOperator(operator) {
   return operator === ";" || operator === "&" || operator === "?";
 }
-function getValues(context, operator, key2, modifier) {
-  var value = context[key2], result = [];
+function getValues(context2, operator, key2, modifier) {
+  var value = context2[key2], result = [];
   if (isDefined(value) && value !== "") {
     if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
       value = value.toString();
@@ -11639,7 +11754,7 @@ function parseUrl(template) {
     expand: expand.bind(null, template)
   };
 }
-function expand(template, context) {
+function expand(template, context2) {
   var operators = ["+", "#", ".", "/", ";", "?", "&"];
   template = template.replace(
     /\{([^\{\}]+)\}|([^\{\}]+)/g,
@@ -11653,7 +11768,7 @@ function expand(template, context) {
         }
         expression.split(/,/g).forEach(function(variable) {
           var tmp = /([^:\*]*)(?::(\d+)|(\*))?/.exec(variable);
-          values.push(getValues(context, operator, tmp[1], tmp[2] || tmp[3]));
+          values.push(getValues(context2, operator, tmp[1], tmp[2] || tmp[3]));
         });
         if (operator && operator !== "+") {
           var separator = ",";
@@ -12279,12 +12394,36 @@ var Octokit = (_a = class {
 var import_js_logger3 = __toESM(require_logger());
 var oktokitLogger = import_js_logger3.default.get("octokit");
 var PublishPlatformConnectionFactory = class {
-  static createBaseGardenConnection() {
+  static createBaseGardenConnection(token) {
+    return this.createGitHubConnection("oleeskild", "digitalgarden", token);
+  }
+  /**
+   * Connection to an arbitrary public GitHub repo. Pass the user's token
+   * when available: authenticated requests get 5,000 req/h instead of the
+   * 60 req/h per-IP unauthenticated limit, which template updates (one
+   * request per changed file) can exhaust.
+   */
+  static createGitHubConnection(userName, pageName, token) {
     return {
-      octoKit: new Octokit({ log: oktokitLogger }),
-      userName: "oleeskild",
-      pageName: "digitalgarden"
+      octoKit: new Octokit({
+        auth: token || void 0,
+        log: oktokitLogger
+      }),
+      userName,
+      pageName
     };
+  }
+  /**
+   * The user's GitHub token, when it can be used against github.com.
+   * Only self-hosted setups are known to hold a valid GitHub token —
+   * a Forestry user's stored token may be stale, and sending an invalid
+   * token turns rate limiting into hard 401s.
+   */
+  static githubTokenFor(settings) {
+    if (settings.publishPlatform !== "SelfHosted" /* SelfHosted */) {
+      return void 0;
+    }
+    return settings.githubToken || void 0;
   }
   static createPublishPlatformConnection(settings) {
     return __async(this, null, function* () {
@@ -12328,7 +12467,7 @@ function generateEnvValues(settings) {
   if (settings.gardenBaseUrl && !settings.gardenBaseUrl.startsWith("ghp_") && !settings.gardenBaseUrl.startsWith("github_pat") && settings.gardenBaseUrl.includes(".")) {
     gardenBaseUrl = settings.gardenBaseUrl;
   }
-  const envValues = __spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadValues({
+  const envValues = __spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadValues(__spreadProps(__spreadValues({
     SITE_NAME_HEADER: settings.siteName,
     SITE_MAIN_LANGUAGE: settings.mainLanguage,
     SITE_BASE_URL: gardenBaseUrl,
@@ -12339,11 +12478,14 @@ function generateEnvValues(settings) {
     NOTE_ICON_TITLE: settings.showNoteIconOnTitle,
     NOTE_ICON_FILETREE: settings.showNoteIconInFileTree,
     NOTE_ICON_INTERNAL_LINKS: settings.showNoteIconOnInternalLink,
-    NOTE_ICON_BACK_LINKS: settings.showNoteIconOnBackLink,
+    NOTE_ICON_BACK_LINKS: settings.showNoteIconOnBackLink
+  }, settings.logoHeight && {
+    LOGO_HEIGHT: settings.logoHeight
+  }), {
     STYLE_SETTINGS_CSS: settings.styleSettingsCss,
     STYLE_SETTINGS_BODY_CLASSES: settings.styleSettingsBodyClasses,
     USE_FULL_RESOLUTION_IMAGES: settings.useFullResolutionImages
-  }, ((_a6 = settings.uiStrings) == null ? void 0 : _a6.backlinkHeader) && {
+  }), ((_a6 = settings.uiStrings) == null ? void 0 : _a6.backlinkHeader) && {
     UI_BACKLINK_HEADER: settings.uiStrings.backlinkHeader
   }), ((_b3 = settings.uiStrings) == null ? void 0 : _b3.noBacklinksMessage) && {
     UI_NO_BACKLINKS_MESSAGE: settings.uiStrings.noBacklinksMessage
@@ -12394,7 +12536,9 @@ var DigitalGardenSiteManager = class {
     this.metadataCache = metadataCache;
     this.rewriteRules = getRewriteRules(settings.pathRewriteRules);
     this.baseGardenConnection = new RepositoryConnection(
-      PublishPlatformConnectionFactory.createBaseGardenConnection()
+      PublishPlatformConnectionFactory.createBaseGardenConnection(
+        PublishPlatformConnectionFactory.githubTokenFor(settings)
+      )
     );
     this.userGardenConnection = null;
     this.templateUpdater = null;
@@ -12422,10 +12566,25 @@ var DigitalGardenSiteManager = class {
       return this.userGardenConnection;
     });
   }
-  updateEnv() {
+  /**
+   * Writes plugin settings to the garden's .env file.
+   *
+   * @param touchedKeys When provided, only these env keys are written (or
+   * removed, if the local settings no longer produce a value for them).
+   * All other keys keep their current remote values, so applying a single
+   * setting can't clobber settings changed elsewhere. When omitted, all
+   * generated keys are synced (full-sync behavior, e.g. initial setup).
+   */
+  updateEnv(touchedKeys) {
     return __async(this, null, function* () {
       var _a6;
-      const keysToSet = generateEnvValues(this.settings);
+      const generatedValues = generateEnvValues(this.settings);
+      const touched = touchedKeys ? new Set(touchedKeys) : null;
+      const keysToSet = touched ? Object.fromEntries(
+        Object.entries(generatedValues).filter(
+          ([key2]) => touched.has(key2)
+        )
+      ) : generatedValues;
       const currentFile = yield (yield this.getUserGardenConnection()).getFile(envPath(this.settings));
       const decodedCurrentFile = gBase64.decode((_a6 = currentFile == null ? void 0 : currentFile.content) != null ? _a6 : "");
       const existingSettings = {};
@@ -12438,6 +12597,13 @@ var DigitalGardenSiteManager = class {
         }
       }
       const mergedSettings = __spreadValues(__spreadValues({}, existingSettings), keysToSet);
+      if (touched) {
+        for (const key2 of touched) {
+          if (!(key2 in generatedValues)) {
+            delete mergedSettings[key2];
+          }
+        }
+      }
       const envSettings = serializeEnvValues(mergedSettings);
       const base64Settings = gBase64.encode(envSettings);
       if (decodedCurrentFile === envSettings) {
@@ -12523,7 +12689,10 @@ var DigitalGardenSiteManager = class {
 };
 
 // src/compiler/GardenPageCompiler.ts
-var import_obsidian5 = require("obsidian");
+var import_obsidian6 = require("obsidian");
+
+// src/compiler/ExcalidrawCompiler.ts
+var import_obsidian3 = require("obsidian");
 
 // src/ui/suggest/constants.ts
 var seedling = `<g style="pointer-events:all"><title style="pointer-events: none" opacity="0.33">Layer 1</title><g id="hair" style="pointer-events: none" opacity="0.33"></g><g id="skin" style="pointer-events: none" opacity="0.33"></g><g id="skin-shadow" style="pointer-events: none" opacity="0.33"></g><g id="line"><path fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" d="M47.71119,35.9247" id="svg_3"></path><polyline fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" points="49.813106536865234,93.05191133916378 49.813106536865234,69.57996462285519 40.03312683105469,26.548054680228233 " id="svg_4"></polyline><line x1="49.81311" x2="59.59309" y1="69.57996" y2="50.02" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" id="svg_5"></line><path fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M27.99666,14.21103C35.9517,16.94766 39.92393,26.36911 39.92393,26.36911S30.99696,31.3526 23.04075,28.61655S11.11348,16.45847 11.11348,16.45847S20.04456,11.4789 27.99666,14.21103z" id="svg_6"></path><path fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M76.46266698455811,45.61669603088379 C84.67706698455811,47.43146603088379 89.6945869845581,56.34024603088379 89.6945869845581,56.34024603088379 S81.3917769845581,62.30603603088379 73.17639698455811,60.492046030883785 S59.94447698455811,49.768496030883796 59.94447698455811,49.768496030883796 S68.2515869845581,43.80622603088379 76.46266698455811,45.61669603088379 z" id="svg_7"></path></g></g>`;
@@ -12532,45 +12701,182 @@ var excalidraw = (excaliDrawJson, drawingId) => `<div id="${drawingId}"></div><s
 
 // src/compiler/ExcalidrawCompiler.ts
 var import_lz_string = __toESM(require_lz_string());
+var import_slugify2 = __toESM(require_slugify());
+var import_js_logger5 = __toESM(require_logger());
+var getExcalidrawAutomate = () => window.ExcalidrawAutomate;
+var isExcalidrawFile = (file, metadataCache) => {
+  var _a6, _b3;
+  return file.name.endsWith(".excalidraw.md") || file.extension === "md" && !!((_b3 = (_a6 = metadataCache.getFileCache(file)) == null ? void 0 : _a6.frontmatter) == null ? void 0 : _b3["excalidraw-plugin"]);
+};
+var EMBED_SIZE_REGEX = /^(\d+%|\d+)(?:x(\d+))?$/;
 var ExcalidrawCompiler = class {
-  constructor(vault) {
+  constructor(vault, settings, metadataCache) {
     this.compileMarkdown = ({
       includeExcaliDrawJs,
       idAppendage = "",
-      includeFrontMatter = true
-    }) => (file) => (fileText) => {
-      if (!file.file.name.endsWith(".excalidraw.md")) {
+      includeFrontMatter = true,
+      size
+    }) => (file) => (fileText) => __async(this, null, function* () {
+      var _a6, _b3;
+      const isDrawing = file.file.name.endsWith(".excalidraw.md") || !!((_b3 = (_a6 = file.getMetadata()) == null ? void 0 : _a6.frontmatter) == null ? void 0 : _b3["excalidraw-plugin"]);
+      if (!isDrawing) {
         throw new Error("File is not an excalidraw file");
       }
-      const isCompressed = fileText.includes("```compressed-json");
-      const startString = isCompressed ? "```compressed-json" : "```json";
-      const start2 = fileText.indexOf(startString) + startString.length;
-      const end2 = fileText.lastIndexOf("```");
-      const excaliDrawJson = JSON.parse(
-        isCompressed ? import_lz_string.default.decompressFromBase64(
-          fileText.slice(start2, end2).replace(/[\n\r]/g, "")
-        ) : fileText.slice(start2, end2)
-      );
-      const drawingId = file.file.name.split(" ").join("_").replace(".", "") + idAppendage;
-      let excaliDrawCode = "";
-      if (includeExcaliDrawJs) {
-        excaliDrawCode += excaliDrawBundle;
+      const frontmatter = includeFrontMatter ? file.getCompiledFrontmatter() : "";
+      const svg = this.settings.excalidrawSvgExportEnabled ? yield this.compileToSvg(file, size) : null;
+      if (svg !== null) {
+        return `${frontmatter}${svg}`;
       }
-      if (excaliDrawJson.appState) {
-        excaliDrawJson.appState.zoom = { value: 1 };
+      return `${frontmatter}${this.compileToInteractiveViewer(
+        file,
+        fileText,
+        includeExcaliDrawJs,
+        idAppendage
+      )}`;
+    });
+    /**
+     * Exports the drawing to a static SVG through ExcalidrawAutomate.
+     * Returns null when the Excalidraw plugin is unavailable or the export
+     * fails, in which case the legacy interactive viewer is used instead.
+     */
+    this.compileToSvg = (file, size) => __async(this, null, function* () {
+      const ea = getExcalidrawAutomate();
+      if (!ea) {
+        import_js_logger5.default.warn(
+          "ExcalidrawAutomate not found, falling back to interactive excalidraw viewer. Is the Excalidraw plugin enabled?"
+        );
+        return null;
       }
-      excaliDrawCode += excalidraw(
-        JSON.stringify(excaliDrawJson),
-        drawingId
-      );
-      return `${includeFrontMatter ? file.getCompiledFrontmatter() : ""}${excaliDrawCode}`;
-    };
+      try {
+        ea.reset();
+        const svg = yield ea.createSVG(
+          file.getPath(),
+          // Embed fonts so the hand-drawn typeface survives on the
+          // published site, where Virgil is not loaded
+          true,
+          // Export the light theme with background: the published page
+          // shows a static image, and the light canvas stays readable
+          // on both site themes
+          { withBackground: true, withTheme: true },
+          ea.getEmbeddedFilesLoader(false),
+          "light"
+        );
+        this.applyEmbedSize(svg, size);
+        this.rewriteSvgLinks(svg, file);
+        fixSvgForXmlSerializer(svg);
+        const serialized = new XMLSerializer().serializeToString(svg);
+        return `<div class="excalidraw-svg">${serialized.replace(
+          /[\t\n\r]/g,
+          ""
+        )}</div>`;
+      } catch (error) {
+        import_js_logger5.default.error(
+          `Failed to export excalidraw file ${file.getPath()} to SVG, falling back to interactive viewer`,
+          error
+        );
+        return null;
+      }
+    });
     this.vault = vault;
+    this.settings = settings;
+    this.metadataCache = metadataCache;
+    this.rewriteRules = getRewriteRules(settings.pathRewriteRules);
+  }
+  /**
+   * Scales the drawing to its embed size while keeping the intrinsic
+   * width/height attributes for the aspect ratio.
+   */
+  applyEmbedSize(svg, size) {
+    svg.style.maxWidth = "100%";
+    svg.style.height = "auto";
+    const sizeMatch = size ? EMBED_SIZE_REGEX.exec(size) : null;
+    if (!sizeMatch) {
+      return;
+    }
+    const [, width, height] = sizeMatch;
+    svg.style.width = width.endsWith("%") ? width : `${width}px`;
+    if (height) {
+      svg.style.height = `${height}px`;
+    }
+  }
+  /**
+   * Element links come out of the export as raw wikilink hrefs, e.g.
+   * href="[[Note#Header|alias]]". Rewrite them to garden URLs; links to
+   * unresolvable or unpublished notes are dropped so the published SVG
+   * holds no dead vault references. External links are left untouched.
+   */
+  rewriteSvgLinks(svg, file) {
+    const XLINK_NS = "http://www.w3.org/1999/xlink";
+    svg.querySelectorAll("a").forEach((anchor) => {
+      var _a6;
+      const href = (_a6 = anchor.getAttribute("href")) != null ? _a6 : anchor.getAttributeNS(XLINK_NS, "href");
+      const wikilinkMatch = href && /^\[\[(.+?)\]\]$/.exec(href.trim());
+      if (!wikilinkMatch) {
+        return;
+      }
+      const gardenUrl = this.resolveGardenUrl(wikilinkMatch[1], file);
+      anchor.removeAttributeNS(XLINK_NS, "href");
+      if (gardenUrl) {
+        anchor.setAttribute("href", gardenUrl);
+        anchor.querySelectorAll("iframe").forEach((frame) => {
+          if (frame.getAttribute("src") === "about:blank") {
+            frame.setAttribute("src", gardenUrl);
+            frame.setAttribute("class", "excalidraw-embedded-note");
+          }
+        });
+      } else {
+        anchor.removeAttribute("href");
+      }
+    });
+  }
+  resolveGardenUrl(wikilink, file) {
+    var _a6;
+    const targetWithRef = wikilink.split("|")[0].trim();
+    const [target, ref] = targetWithRef.split("#");
+    const sectionId = ref ? `#${(0, import_slugify2.default)(ref)}` : "";
+    const linkedFile = target === "" ? file.file : this.metadataCache.getFirstLinkpathDest(
+      (0, import_obsidian3.getLinkpath)(target),
+      file.getPath()
+    );
+    if (!linkedFile || linkedFile.extension !== "md") {
+      return null;
+    }
+    const frontmatter = (_a6 = this.metadataCache.getFileCache(linkedFile)) == null ? void 0 : _a6.frontmatter;
+    if (!(frontmatter == null ? void 0 : frontmatter["dg-publish"])) {
+      return null;
+    }
+    const permalink = frontmatter["dg-permalink"];
+    const gardenPath = permalink ? sanitizePermalink(permalink) : `/${generateUrlPath(
+      getGardenPathForNote(linkedFile.path, this.rewriteRules),
+      this.settings.slugifyEnabled
+    )}`;
+    return `${gardenPath}${sectionId}`;
+  }
+  compileToInteractiveViewer(file, fileText, includeExcaliDrawJs, idAppendage) {
+    const isCompressed = fileText.includes("```compressed-json");
+    const startString = isCompressed ? "```compressed-json" : "```json";
+    const start2 = fileText.indexOf(startString) + startString.length;
+    const end2 = fileText.lastIndexOf("```");
+    const excaliDrawJson = JSON.parse(
+      isCompressed ? import_lz_string.default.decompressFromBase64(
+        fileText.slice(start2, end2).replace(/[\n\r]/g, "")
+      ) : fileText.slice(start2, end2)
+    );
+    const drawingId = file.file.name.split(" ").join("_").replace(".", "") + idAppendage;
+    let excaliDrawCode = "";
+    if (includeExcaliDrawJs) {
+      excaliDrawCode += excaliDrawBundle;
+    }
+    if (excaliDrawJson.appState) {
+      excaliDrawJson.appState.zoom = { value: 1 };
+    }
+    excaliDrawCode += excalidraw(JSON.stringify(excaliDrawJson), drawingId);
+    return excaliDrawCode;
   }
 };
 
 // src/compiler/GardenPageCompiler.ts
-var import_slugify2 = __toESM(require_slugify());
+var import_slugify3 = __toESM(require_slugify());
 
 // src/utils/markdown.ts
 var seperateHashesFromHeader = (rawHeading) => {
@@ -12590,182 +12896,501 @@ var fixMarkdownHeaderSyntax = (rawHeading) => {
   return `${hashes} ${title}`;
 };
 
-// src/utils/regexes.ts
-var FRONTMATTER_REGEX = /^\s*?---[\r\n]([\s\S]*?)[\r\n]---/g;
-var BLOCKREF_REGEX = /(\^\w+([\r\n]|$))/g;
-var CODE_FENCE_REGEX = /`(.*?)`/g;
-var CODEBLOCK_REGEX = /```.*?[\r\n][\s\S]+?```/g;
-var EXCALIDRAW_REGEX = /:\[\[(\d*?,\d*?)\],.*?\]\]/g;
-var TRANSCLUDED_SVG_REGEX = /!\[\[(.*?)(\.(svg))\\?\|(.*?)\]\]|!\[\[(.*?)(\.(svg))\]\]/g;
-var PDF_REGEX = /!\[(.*?)\]\((.*?)(\.pdf)\)/g;
-var TRANSCLUDED_PDF_REGEX = /!\[\[(.*?)(\.pdf)\\?\|(.*?)\]\]|!\[\[(.*?)(\.pdf)\]\]/g;
-
 // src/compiler/GardenPageCompiler.ts
-var import_js_logger6 = __toESM(require_logger());
+var import_js_logger7 = __toESM(require_logger());
 
 // src/compiler/DataviewCompiler.ts
-var import_obsidian3 = require("obsidian");
+var import_obsidian4 = require("obsidian");
 var import_obsidian_dataview = __toESM(require_lib());
-var import_js_logger5 = __toESM(require_logger());
+var import_js_logger6 = __toESM(require_logger());
+
+// src/compiler/ast/parseMarkdown.ts
+var FRONTMATTER_PATTERN = /^\s*?---[\r\n][\s\S]*?[\r\n]---/;
+var CLOSING_FENCE_PATTERN = /^([ \t>]*)(`{3,}|~{3,})[ \t]*$/;
+var BLOCK_ID_CHAR = /[\w-]/;
+var WIKILINK_PIPE = /\\?\|/;
+var isNewline = (char) => char === "\n" || char === "\r";
+var matchFrontmatter = (text2) => {
+  const match2 = FRONTMATTER_PATTERN.exec(text2);
+  if (!match2) {
+    return null;
+  }
+  const source2 = match2[0];
+  const bodyStart = source2.indexOf("---") + 4;
+  return {
+    type: "frontmatter",
+    start: 0,
+    end: source2.length,
+    source: source2,
+    body: source2.slice(bodyStart, source2.length - 4)
+  };
+};
+var matchCodeFence = (text2, pos) => {
+  const fenceChar = text2[pos];
+  let run3 = 0;
+  while (text2[pos + run3] === fenceChar) run3++;
+  if (run3 < 3) {
+    return null;
+  }
+  const lineStart = text2.lastIndexOf("\n", pos - 1) + 1;
+  const linePrefix = text2.slice(lineStart, pos);
+  if (!/^[ \t>]*$/.test(linePrefix)) {
+    return null;
+  }
+  let openLineEnd = text2.indexOf("\n", pos + run3);
+  if (openLineEnd === -1) {
+    openLineEnd = text2.length;
+  }
+  const infoRaw = text2.slice(pos + run3, openLineEnd);
+  if (fenceChar === "`" && infoRaw.includes("`")) {
+    return null;
+  }
+  const insideBlockquote = linePrefix.includes(">");
+  const makeNode = (end2, body, closed) => ({
+    type: "codeblock",
+    start: pos,
+    end: end2,
+    source: text2.slice(pos, end2),
+    info: infoRaw.trim(),
+    body,
+    cleanBody: insideBlockquote ? body.split("\n").map((line) => line.replace(/^[ \t]*(?:>[ \t]?)+/, "")).join("\n") : body,
+    linePrefix: insideBlockquote ? linePrefix : "",
+    closed
+  });
+  let searchPos = openLineEnd + 1;
+  while (searchPos <= text2.length) {
+    let lineEnd = text2.indexOf("\n", searchPos);
+    if (lineEnd === -1) {
+      lineEnd = text2.length;
+    }
+    const closing = CLOSING_FENCE_PATTERN.exec(
+      text2.slice(searchPos, lineEnd)
+    );
+    if (closing && closing[2][0] === fenceChar && closing[2].length >= run3) {
+      const fenceIdx = searchPos + closing[1].length;
+      return makeNode(
+        fenceIdx + closing[2].length,
+        text2.slice(openLineEnd + 1, fenceIdx),
+        true
+      );
+    }
+    if (lineEnd === text2.length) {
+      break;
+    }
+    searchPos = lineEnd + 1;
+  }
+  return makeNode(
+    text2.length,
+    openLineEnd >= text2.length ? "" : text2.slice(openLineEnd + 1),
+    false
+  );
+};
+var matchInlineCode = (text2, pos) => {
+  let run3 = 0;
+  while (text2[pos + run3] === "`") run3++;
+  let lineEnd = text2.indexOf("\n", pos);
+  if (lineEnd === -1) {
+    lineEnd = text2.length;
+  }
+  const delimiter = "`".repeat(run3);
+  let search = pos + run3;
+  while (search < lineEnd) {
+    const idx = text2.indexOf(delimiter, search);
+    if (idx === -1 || idx >= lineEnd) {
+      return null;
+    }
+    let closeRun = 0;
+    while (text2[idx + closeRun] === "`") closeRun++;
+    if (closeRun === run3) {
+      return {
+        type: "inlinecode",
+        start: pos,
+        end: idx + run3,
+        source: text2.slice(pos, idx + run3),
+        body: text2.slice(pos + run3, idx)
+      };
+    }
+    search = idx + closeRun;
+  }
+  return null;
+};
+var matchComment = (text2, pos) => {
+  if (!text2.startsWith("%%", pos)) {
+    return null;
+  }
+  const close = text2.indexOf("%%", pos + 3);
+  if (close === -1) {
+    return null;
+  }
+  return {
+    type: "comment",
+    start: pos,
+    end: close + 2,
+    source: text2.slice(pos, close + 2),
+    body: text2.slice(pos + 2, close)
+  };
+};
+var matchRawHtml = (text2, lowerText, pos) => {
+  for (const tag2 of ["script", "style"]) {
+    if (!lowerText.startsWith(`<${tag2}`, pos)) {
+      continue;
+    }
+    const afterTag = text2[pos + 1 + tag2.length];
+    if (afterTag !== ">" && !/\s/.test(afterTag != null ? afterTag : "")) {
+      continue;
+    }
+    const closeIdx = lowerText.indexOf(`</${tag2}`, pos);
+    if (closeIdx === -1) {
+      return null;
+    }
+    const closeEnd = text2.indexOf(">", closeIdx);
+    if (closeEnd === -1) {
+      return null;
+    }
+    return {
+      type: "rawhtml",
+      start: pos,
+      end: closeEnd + 1,
+      source: text2.slice(pos, closeEnd + 1),
+      tag: tag2
+    };
+  }
+  return null;
+};
+var matchWikilink = (text2, pos, embed) => {
+  const open = embed ? "![[" : "[[";
+  if (!text2.startsWith(open, pos)) {
+    return null;
+  }
+  const innerStart = pos + open.length;
+  const close = text2.indexOf("]]", innerStart);
+  if (close === -1 || close === innerStart) {
+    return null;
+  }
+  const newline = text2.indexOf("\n", innerStart);
+  if (newline !== -1 && newline < close) {
+    return null;
+  }
+  const inner = text2.slice(innerStart, close);
+  const parts = inner.split(WIKILINK_PIPE);
+  const targetWithRef = parts[0];
+  const hashIdx = targetWithRef.indexOf("#");
+  return {
+    type: "wikilink",
+    start: pos,
+    end: close + 2,
+    source: text2.slice(pos, close + 2),
+    embed,
+    inner,
+    parts,
+    targetWithRef,
+    linkpath: hashIdx === -1 ? targetWithRef : targetWithRef.slice(0, hashIdx),
+    ref: hashIdx === -1 ? "" : targetWithRef.slice(hashIdx)
+  };
+};
+var matchMarkdownLink = (text2, pos, embed) => {
+  const bracket = embed ? pos + 1 : pos;
+  if (text2[bracket] !== "[") {
+    return null;
+  }
+  const labelStart = bracket + 1;
+  let labelEnd = labelStart;
+  while (labelEnd < text2.length) {
+    const char = text2[labelEnd];
+    if (char === "]") {
+      break;
+    }
+    if (char === "\n") {
+      return null;
+    }
+    labelEnd++;
+  }
+  if (labelEnd >= text2.length || text2[labelEnd + 1] !== "(") {
+    return null;
+  }
+  const destStart = labelEnd + 2;
+  let destEnd = destStart;
+  while (destEnd < text2.length) {
+    const char = text2[destEnd];
+    if (char === ")") {
+      break;
+    }
+    if (char === "\n") {
+      return null;
+    }
+    destEnd++;
+  }
+  if (destEnd >= text2.length) {
+    return null;
+  }
+  const destination = text2.slice(destStart, destEnd);
+  if (destination.includes("`")) {
+    return null;
+  }
+  return {
+    type: "mdlink",
+    start: pos,
+    end: destEnd + 1,
+    source: text2.slice(pos, destEnd + 1),
+    embed,
+    label: text2.slice(labelStart, labelEnd),
+    destination
+  };
+};
+var matchBlockId = (text2, pos, minStart) => {
+  if (pos - 1 < minStart) {
+    return null;
+  }
+  const prev = text2[pos - 1];
+  let idEnd = pos + 1;
+  while (idEnd < text2.length && BLOCK_ID_CHAR.test(text2[idEnd])) idEnd++;
+  if (idEnd === pos + 1) {
+    return null;
+  }
+  const id = text2.slice(pos + 1, idEnd);
+  const after = text2[idEnd];
+  if (isNewline(prev) && isNewline(after)) {
+    return {
+      type: "blockid",
+      start: pos - 1,
+      end: idEnd + 1,
+      source: text2.slice(pos - 1, idEnd + 1),
+      id,
+      ownLine: true
+    };
+  }
+  if (prev === " " && (after === void 0 || isNewline(after))) {
+    return {
+      type: "blockid",
+      start: pos - 1,
+      end: idEnd,
+      source: text2.slice(pos - 1, idEnd),
+      id,
+      ownLine: false
+    };
+  }
+  return null;
+};
+var parseMarkdown = (text2) => {
+  var _a6, _b3, _c2;
+  const nodes = [];
+  const lowerText = text2.toLowerCase();
+  let pos = 0;
+  let textStart = 0;
+  const pushText = (upTo) => {
+    if (upTo > textStart) {
+      nodes.push({
+        type: "text",
+        start: textStart,
+        end: upTo,
+        source: text2.slice(textStart, upTo)
+      });
+    }
+  };
+  const frontmatter = matchFrontmatter(text2);
+  if (frontmatter) {
+    nodes.push(frontmatter);
+    pos = frontmatter.end;
+    textStart = pos;
+  }
+  while (pos < text2.length) {
+    let node = null;
+    switch (text2[pos]) {
+      case "`":
+        node = (_a6 = matchCodeFence(text2, pos)) != null ? _a6 : matchInlineCode(text2, pos);
+        break;
+      case "~":
+        node = matchCodeFence(text2, pos);
+        break;
+      case "%":
+        node = matchComment(text2, pos);
+        break;
+      case "!":
+        node = (_b3 = matchWikilink(text2, pos, true)) != null ? _b3 : matchMarkdownLink(text2, pos, true);
+        break;
+      case "[":
+        node = (_c2 = matchWikilink(text2, pos, false)) != null ? _c2 : matchMarkdownLink(text2, pos, false);
+        break;
+      case "^":
+        node = matchBlockId(text2, pos, textStart);
+        break;
+      case "<":
+        node = matchRawHtml(text2, lowerText, pos);
+        break;
+    }
+    if (node) {
+      pushText(node.start);
+      nodes.push(node);
+      pos = node.end;
+      textStart = pos;
+    } else {
+      pos++;
+    }
+  }
+  pushText(text2.length);
+  return nodes;
+};
+
+// src/compiler/ast/transform.ts
+var transformMarkdown = (text2, visit) => __async(null, null, function* () {
+  const output = [];
+  for (const node of parseMarkdown(text2)) {
+    const replacement = yield visit(node);
+    output.push(
+      typeof replacement === "string" ? replacement : node.source
+    );
+  }
+  return output.join("");
+});
+var transformMarkdownSync = (text2, visit) => {
+  const output = [];
+  for (const node of parseMarkdown(text2)) {
+    const replacement = visit(node);
+    output.push(
+      typeof replacement === "string" ? replacement : node.source
+    );
+  }
+  return output.join("");
+};
+
+// src/compiler/DataviewCompiler.ts
 var DataviewCompiler = class {
   constructor() {
     this.compile = (file) => (text2) => __async(this, null, function* () {
-      var _a6, _b3, _c2;
-      let replacedText = text2;
-      const dataViewRegex = new RegExp("```\\s*dataview\\s(.+?)```", "gms");
       const dvApi = (0, import_obsidian_dataview.getAPI)();
-      if (!dvApi) return replacedText;
-      const matches2 = text2.matchAll(dataViewRegex);
-      const dataviewJsPrefix = dvApi.settings.dataviewJsKeyword;
-      const dataViewJsRegex = new RegExp(
-        "```\\s*" + escapeRegExp(dataviewJsPrefix) + "\\s(.+?)```",
-        "gsm"
-      );
-      const dataviewJsMatches = text2.matchAll(dataViewJsRegex);
+      if (!dvApi) return text2;
+      const dataviewJsKeyword = dvApi.settings.dataviewJsKeyword;
       const inlineQueryPrefix = dvApi.settings.inlineQueryPrefix;
-      const inlineDataViewRegex = new RegExp(
-        "`" + escapeRegExp(inlineQueryPrefix) + "(.+?)`",
-        "gsm"
-      );
-      const inlineMatches = text2.matchAll(inlineDataViewRegex);
       const inlineJsQueryPrefix = dvApi.settings.inlineJsQueryPrefix;
-      const inlineJsDataViewRegex = new RegExp(
-        "`" + escapeRegExp(inlineJsQueryPrefix) + "(.+?)`",
-        "gsm"
-      );
-      const inlineJsMatches = text2.matchAll(inlineJsDataViewRegex);
-      if (!matches2 && !inlineMatches && !dataviewJsMatches && !inlineJsMatches) {
-        return text2;
-      }
-      for (const queryBlock of matches2) {
-        try {
-          const block2 = queryBlock[0];
-          const query = queryBlock[1];
-          const { isInsideCallout, finalQuery } = this.sanitizeQuery(query);
-          let markdown = yield dvApi.tryQueryMarkdown(
-            finalQuery,
-            file.getPath()
-          );
-          if (isInsideCallout) {
-            markdown = this.surroundWithCalloutBlock(markdown);
+      return yield transformMarkdown(text2, (node) => __async(this, null, function* () {
+        if (node.type === "codeblock") {
+          if (node.info === "dataview") {
+            return this.compileDataviewBlock(node, file, dvApi);
           }
-          replacedText = replacedText.replace(
-            block2,
-            `${markdown}
-{ .block-language-dataview}`
-          );
-        } catch (e) {
-          console.log(e);
-          new import_obsidian3.Notice(
-            "Unable to render dataview query. Please update the dataview plugin to the latest version."
-          );
-          return queryBlock[0];
-        }
-      }
-      for (const queryBlock of dataviewJsMatches) {
-        try {
-          const block2 = queryBlock[0];
-          const query = queryBlock[1];
-          const div = createEl("div");
-          const component2 = new import_obsidian3.Component();
-          component2.load();
-          yield dvApi.executeJs(query, div, component2, file.getPath());
-          let counter = 0;
-          while (!div.querySelector("[data-tag-name]") && counter < 100) {
-            yield delay(5);
-            counter++;
+          if (dataviewJsKeyword && node.info === dataviewJsKeyword) {
+            return this.compileDataviewJsBlock(node, file, dvApi);
           }
-          replacedText = replacedText.replace(block2, (_a6 = div.innerHTML) != null ? _a6 : "");
-        } catch (e) {
-          console.log(e);
-          new import_obsidian3.Notice(
-            "Unable to render dataviewjs query. Please update the dataview plugin to the latest version."
-          );
-          return queryBlock[0];
+          return;
         }
-      }
-      for (const inlineQuery of inlineMatches) {
-        try {
-          const code = inlineQuery[0];
-          const query = inlineQuery[1];
-          const dataviewResult = dvApi.tryEvaluate(query.trim(), {
-            this: (_b3 = dvApi.page(file.getPath())) != null ? _b3 : {}
-          });
-          if (dataviewResult) {
-            replacedText = replacedText.replace(
-              code,
-              (_c2 = dataviewResult.toString()) != null ? _c2 : ""
+        if (node.type === "inlinecode") {
+          if (inlineQueryPrefix && node.body.startsWith(inlineQueryPrefix)) {
+            return this.compileInlineQuery(
+              node.body.slice(inlineQueryPrefix.length),
+              file,
+              dvApi
             );
           }
-        } catch (e) {
-          console.log(e);
-          new import_obsidian3.Notice(
-            "Unable to render inline dataview query. Please update the dataview plugin to the latest version."
-          );
-          return inlineQuery[0];
-        }
-      }
-      for (const inlineJsQuery of inlineJsMatches) {
-        try {
-          const code = inlineJsQuery[0];
-          const query = inlineJsQuery[1];
-          let result = "";
-          result = tryDVEvaluate(query, file, dvApi);
-          if (!result) {
-            result = tryEval(query);
+          if (inlineJsQueryPrefix && node.body.startsWith(inlineJsQueryPrefix)) {
+            return this.compileInlineJsQuery(
+              node.body.slice(inlineJsQueryPrefix.length),
+              file,
+              dvApi
+            );
           }
-          if (!result) {
-            result = yield tryExecuteJs(query, file, dvApi);
-          }
-          replacedText = replacedText.replace(
-            code,
-            result != null ? result : "Unable to render query"
-          );
-        } catch (e) {
-          import_js_logger5.default.error(e);
-          new import_obsidian3.Notice(
-            "Unable to render inline dataviewjs query. Please update the dataview plugin to the latest version."
-          );
-          return inlineJsQuery[0];
         }
+        return;
+      }));
+    });
+  }
+  compileDataviewBlock(node, file, dvApi) {
+    return __async(this, null, function* () {
+      try {
+        let markdown = yield dvApi.tryQueryMarkdown(
+          node.cleanBody,
+          file.getPath()
+        );
+        if (node.linePrefix) {
+          markdown = this.surroundWithCalloutBlock(
+            markdown,
+            node.linePrefix
+          );
+        }
+        return `${markdown}
+{ .block-language-dataview}`;
+      } catch (e) {
+        console.log(e);
+        new import_obsidian4.Notice(
+          "Unable to render dataview query. Please update the dataview plugin to the latest version."
+        );
+        return void 0;
       }
-      return replacedText;
+    });
+  }
+  compileDataviewJsBlock(node, file, dvApi) {
+    return __async(this, null, function* () {
+      var _a6;
+      try {
+        const div = createEl("div");
+        const component2 = new import_obsidian4.Component();
+        component2.load();
+        yield dvApi.executeJs(
+          node.cleanBody,
+          div,
+          component2,
+          file.getPath()
+        );
+        let counter = 0;
+        while (!div.querySelector("[data-tag-name]") && counter < 100) {
+          yield delay(5);
+          counter++;
+        }
+        return (_a6 = div.innerHTML) != null ? _a6 : "";
+      } catch (e) {
+        console.log(e);
+        new import_obsidian4.Notice(
+          "Unable to render dataviewjs query. Please update the dataview plugin to the latest version."
+        );
+        return void 0;
+      }
+    });
+  }
+  compileInlineQuery(query, file, dvApi) {
+    var _a6, _b3;
+    try {
+      const dataviewResult = dvApi.tryEvaluate(query.trim(), {
+        this: (_a6 = dvApi.page(file.getPath())) != null ? _a6 : {}
+      });
+      if (dataviewResult) {
+        return (_b3 = dataviewResult.toString()) != null ? _b3 : "";
+      }
+      return void 0;
+    } catch (e) {
+      console.log(e);
+      new import_obsidian4.Notice(
+        "Unable to render inline dataview query. Please update the dataview plugin to the latest version."
+      );
+      return void 0;
+    }
+  }
+  compileInlineJsQuery(query, file, dvApi) {
+    return __async(this, null, function* () {
+      try {
+        let result = "";
+        result = tryDVEvaluate(query, file, dvApi);
+        if (!result) {
+          result = tryEval(query);
+        }
+        if (!result) {
+          result = yield tryExecuteJs(query, file, dvApi);
+        }
+        return String(result != null ? result : "Unable to render query");
+      } catch (e) {
+        import_js_logger6.default.error(e);
+        new import_obsidian4.Notice(
+          "Unable to render inline dataviewjs query. Please update the dataview plugin to the latest version."
+        );
+        return void 0;
+      }
     });
   }
   /**
-   * Splits input in lines.
-   * Prepends the callout/quote sign to each line,
-   * returns all the lines as a single string
-   *
+   * Put rendered markdown back inside the callout the query came from:
+   * every line after the first gets the callout's own prefix (which may
+   * be nested, e.g. "> > "). The first line continues the "> " that
+   * survives in front of the replaced code block.
    */
-  surroundWithCalloutBlock(input) {
-    const tmp = input.split("\n");
-    return " " + tmp.join("\n> ");
-  }
-  /**
-   * Checks if a query is inside a callout block.
-   * Removes the callout symbols and re-join sanitized parts.
-   * Also returns the boolean that indicates if the query was inside a callout.
-   * @param query
-   * @returns
-   */
-  sanitizeQuery(query) {
-    let isInsideCallout = false;
-    const parts = query.split("\n");
-    const sanitized = [];
-    for (const part of parts) {
-      if (part.startsWith(">")) {
-        isInsideCallout = true;
-        sanitized.push(part.substring(1).trim());
-      } else {
-        sanitized.push(part);
-      }
-    }
-    let finalQuery = query;
-    if (isInsideCallout) {
-      finalQuery = sanitized.join("\n");
-    }
-    return { isInsideCallout, finalQuery };
+  surroundWithCalloutBlock(input, linePrefix) {
+    return " " + input.split("\n").join("\n" + linePrefix);
   }
 };
 function tryDVEvaluate(query, file, dvApi) {
@@ -12777,7 +13402,7 @@ function tryDVEvaluate(query, file, dvApi) {
     });
     result = (_b3 = dataviewResult == null ? void 0 : dataviewResult.toString()) != null ? _b3 : "";
   } catch (e) {
-    import_js_logger5.default.warn("dvapi.tryEvaluate did not yield any result", e);
+    import_js_logger6.default.warn("dvapi.tryEvaluate did not yield any result", e);
   }
   return result;
 }
@@ -12789,14 +13414,14 @@ function tryEval(query) {
       window.DataviewAPI
     );
   } catch (e) {
-    import_js_logger5.default.warn("eval did not yield any result", e);
+    import_js_logger6.default.warn("eval did not yield any result", e);
   }
   return result;
 }
 function tryExecuteJs(query, file, dvApi) {
   return __async(this, null, function* () {
     const div = createEl("div");
-    const component2 = new import_obsidian3.Component();
+    const component2 = new import_obsidian4.Component();
     component2.load();
     yield dvApi.executeJs(query, div, component2, file.getPath());
     let counter = 0;
@@ -12814,7 +13439,7 @@ function delay(milliseconds) {
 }
 
 // src/compiler/CanvasCompiler.ts
-var import_obsidian4 = require("obsidian");
+var import_obsidian5 = require("obsidian");
 
 // src/compiler/frontmatterLinks.ts
 var FRONTMATTER_IMAGE_EXTENSIONS = /\.(png|jpg|jpeg|gif|webp|svg)$/i;
@@ -13251,7 +13876,7 @@ var CanvasCompiler = class {
       const isPdf = /\.pdf$/i.test(node.file);
       if (isPdf) {
         const linkedFile = this.metadataCache.getFirstLinkpathDest(
-          (0, import_obsidian4.getLinkpath)(node.file),
+          (0, import_obsidian5.getLinkpath)(node.file),
           file.getPath()
         );
         if (linkedFile) {
@@ -13290,7 +13915,7 @@ var CanvasCompiler = class {
       const isImage = /\.(png|jpg|jpeg|gif|webp|svg)$/i.test(node.file);
       if (isImage) {
         const linkedFile = this.metadataCache.getFirstLinkpathDest(
-          (0, import_obsidian4.getLinkpath)(node.file),
+          (0, import_obsidian5.getLinkpath)(node.file),
           file.getPath()
         );
         if (linkedFile) {
@@ -13391,7 +14016,7 @@ var CanvasCompiler = class {
       let backgroundStyle = "";
       if (node.background) {
         const linkedFile = this.metadataCache.getFirstLinkpathDest(
-          (0, import_obsidian4.getLinkpath)(node.background),
+          (0, import_obsidian5.getLinkpath)(node.background),
           file.getPath()
         );
         if (linkedFile) {
@@ -13542,7 +14167,7 @@ var CanvasCompiler = class {
     var _a6, _b3;
     const rewriteRules = getRewriteRules(this.settings.pathRewriteRules);
     const linkedFile = this.metadataCache.getFirstLinkpathDest(
-      (0, import_obsidian4.getLinkpath)(filePath),
+      (0, import_obsidian5.getLinkpath)(filePath),
       sourceFile.getPath()
     );
     if (!linkedFile) {
@@ -19610,44 +20235,34 @@ var CompiledPublishFile = class extends PublishFile {
 
 // src/compiler/replaceBlockIDs.ts
 function replaceBlockIDs(markdown) {
-  const block_pattern = / \^([\w\d-]+)/g;
-  const complex_block_pattern = /[\r\n]\^([\w\d-]+)[\r\n]/g;
-  const codeBlockPattern = /```[\s\S]*?```/g;
-  const codeBlocks = [];
-  markdown = markdown.replace(codeBlockPattern, (match2) => {
-    codeBlocks.push(match2);
-    return `{{CODE_BLOCK_${codeBlocks.length - 1}}}`;
-  });
-  markdown = markdown.replace(
-    complex_block_pattern,
-    (_match, $1) => {
-      return `{ #${$1}}
-
-`;
+  return transformMarkdownSync(markdown, (node) => {
+    if (node.type !== "blockid") {
+      return;
     }
-  );
-  markdown = markdown.replace(block_pattern, (_match, $1) => {
-    return `
-{ #${$1}}
+    return node.ownLine ? `{ #${node.id}}
+
+` : `
+{ #${node.id}}
 `;
   });
-  codeBlocks.forEach((block2, index3) => {
-    markdown = markdown.replace(`{{CODE_BLOCK_${index3}}}`, block2);
-  });
-  return markdown;
 }
 
 // src/compiler/GardenPageCompiler.ts
 var PDF_MAX_SIZE_BYTES = 20 * 1024 * 1024;
 var PDF_IFRAME_HEIGHT = "900px";
 var PDF_IFRAME_STYLE = "border:1px solid #ccc;";
+var IMAGE_EXTENSIONS = [".png", ".jpg", ".jpeg", ".gif", ".webp"];
+var LINKED_ASSET_EXTENSIONS = [...IMAGE_EXTENSIONS, ".svg", ".pdf"];
+var NOTE_LINK_DESTINATION = /^\s*([^)\s]+?\.(?:md|markdown|canvas))((?:#[^)\s]*)?)\s*$/i;
+var YOUTUBE_URL_REGEX = /^https?:\/\/(?:www\.)?(?:youtube\.com|youtu\.be)\S+$/;
+var hasExtension = (target, extensions) => extensions.some((extension) => target.endsWith(extension));
 function selectBaseView(baseFileText, viewName, baseFileName) {
   if (!viewName) {
     return baseFileText;
   }
   const baseFileLabel = baseFileName != null ? baseFileName : "Base file";
   try {
-    const parsedBase = (0, import_obsidian5.parseYaml)(baseFileText);
+    const parsedBase = (0, import_obsidian6.parseYaml)(baseFileText);
     if (!parsedBase || typeof parsedBase !== "object" || !Array.isArray(parsedBase.views)) {
       return baseFileText;
     }
@@ -19655,16 +20270,16 @@ function selectBaseView(baseFileText, viewName, baseFileName) {
       (view) => (view == null ? void 0 : view.name) === viewName
     );
     if (!selectedView) {
-      import_js_logger6.default.warn(
+      import_js_logger7.default.warn(
         `Base view "${viewName}" not found in ${baseFileLabel}. Embedding all views.`
       );
       return baseFileText;
     }
-    return (0, import_obsidian5.stringifyYaml)(__spreadProps(__spreadValues({}, parsedBase), {
+    return (0, import_obsidian6.stringifyYaml)(__spreadProps(__spreadValues({}, parsedBase), {
       views: [selectedView]
     }));
   } catch (error) {
-    import_js_logger6.default.warn(
+    import_js_logger7.default.warn(
       `Failed to parse ${baseFileLabel} while selecting view "${viewName}". Embedding all views.`,
       error
     );
@@ -19684,15 +20299,6 @@ var GardenPageCompiler = class {
       }
       return (_a6 = this.metadataCache.getFirstLinkpathDest(linkPath, sourcePath)) != null ? _a6 : null;
     };
-    this.extractWikilinkTarget = (wikilink) => {
-      const start2 = wikilink.indexOf("[[") + 2;
-      const end2 = wikilink.indexOf("]]");
-      if (start2 < 2 || end2 < 0) {
-        return "";
-      }
-      const [name] = wikilink.substring(start2, end2).split("|");
-      return (0, import_obsidian5.getLinkpath)(name);
-    };
     this.runCompilerSteps = (file, compilerSteps) => (text2) => __async(null, null, function* () {
       return yield compilerSteps.reduce(
         (previousStep, compilerStep) => __async(null, null, function* () {
@@ -19710,10 +20316,10 @@ var GardenPageCompiler = class {
             filter2.replace
           );
         } catch (e) {
-          import_js_logger6.default.error(
+          import_js_logger7.default.error(
             `Invalid regex: ${filter2.pattern} ${filter2.flags}`
           );
-          new import_obsidian5.Notice(
+          new import_obsidian6.Notice(
             `Your custom filters contains an invalid regex: ${filter2.pattern}. Skipping it.`
           );
         }
@@ -19724,108 +20330,76 @@ var GardenPageCompiler = class {
       return replaceBlockIDs(text2);
     };
     this.removeObsidianComments = () => (text2) => {
-      const obsidianCommentsRegex = new RegExp("%%.+?%%", "gms");
-      const obsidianCommentsMatches = text2.match(obsidianCommentsRegex);
-      const codeBlocks = text2.match(CODEBLOCK_REGEX) || [];
-      const codeFences = text2.match(CODE_FENCE_REGEX) || [];
-      const excalidraw2 = text2.match(EXCALIDRAW_REGEX) || [];
-      const matchesToSkip = [...codeBlocks, ...codeFences, ...excalidraw2];
-      if (!obsidianCommentsMatches) return text2;
-      for (const commentMatch of obsidianCommentsMatches) {
-        if (matchesToSkip.findIndex((x) => x.contains(commentMatch)) > -1) {
-          continue;
-        }
-        text2 = text2.replace(commentMatch, "");
-      }
-      return text2;
+      return transformMarkdownSync(
+        text2,
+        (node) => node.type === "comment" ? "" : void 0
+      );
     };
     this.convertFrontMatter = (file) => (text2) => {
       const compiledFrontmatter = file.getCompiledFrontmatter();
-      return text2.replace(FRONTMATTER_REGEX, () => compiledFrontmatter);
+      return transformMarkdownSync(
+        text2,
+        (node) => node.type === "frontmatter" ? compiledFrontmatter : void 0
+      );
     };
     this.convertDataViews = (file) => (text2) => __async(null, null, function* () {
       const dataviewCompiler = new DataviewCompiler();
       return yield dataviewCompiler.compile(file)(text2);
     });
-    this.stripAwayCodeFencesAndFrontmatter = () => (text2) => {
-      let textToBeProcessed = text2;
-      textToBeProcessed = textToBeProcessed.replace(EXCALIDRAW_REGEX, "");
-      textToBeProcessed = textToBeProcessed.replace(CODEBLOCK_REGEX, "");
-      textToBeProcessed = textToBeProcessed.replace(CODE_FENCE_REGEX, "");
-      textToBeProcessed = textToBeProcessed.replace(FRONTMATTER_REGEX, "");
-      return textToBeProcessed;
-    };
     this.convertLinksToFullPath = (file) => (text2) => __async(this, null, function* () {
-      let convertedText = text2;
-      const textToBeProcessed = yield this.stripAwayCodeFencesAndFrontmatter(file)(text2);
-      const linkedFileRegex = /\[\[(.+?)\]\]/g;
-      const linkedFileMatches = textToBeProcessed.match(linkedFileRegex);
-      if (linkedFileMatches) {
-        for (const linkMatch of linkedFileMatches) {
-          try {
-            const textInsideBrackets = linkMatch.substring(
-              linkMatch.indexOf("[") + 2,
-              linkMatch.lastIndexOf("]") - 1
-            );
-            let [linkedFileName, linkDisplayName] = textInsideBrackets.split("|");
-            if (linkedFileName.endsWith("\\")) {
-              linkedFileName = linkedFileName.substring(
-                0,
-                linkedFileName.length - 1
-              );
-            }
-            linkDisplayName = linkDisplayName || linkedFileName;
-            let headerPath = "";
-            if (linkedFileName.includes("#")) {
-              const headerSplit = linkedFileName.split("#");
-              linkedFileName = headerSplit[0];
-              headerPath = headerSplit.length > 1 ? `#${headerSplit[1]}` : "";
-            }
-            if (linkedFileName === "" && headerPath !== "") {
-              const currentFilePath = file.getPath();
-              const currentExtensionlessPath = currentFilePath.substring(
-                0,
-                currentFilePath.lastIndexOf(".")
-              );
-              convertedText = convertedText.replaceAll(
-                linkMatch,
-                `[[${currentExtensionlessPath}${headerPath}\\|${linkDisplayName}]]`
-              );
-              continue;
-            }
-            const fullLinkedFilePath = (0, import_obsidian5.getLinkpath)(linkedFileName);
-            if (fullLinkedFilePath === "") {
-              continue;
-            }
-            const linkedFile = this.metadataCache.getFirstLinkpathDest(
-              fullLinkedFilePath,
-              file.getPath()
-            );
-            if (!linkedFile) {
-              convertedText = convertedText.replaceAll(
-                linkMatch,
-                `[[${linkedFileName}${headerPath}\\|${linkDisplayName}]]`
-              );
-              continue;
-            }
-            if (linkedFile.extension === "md" || linkedFile.extension === "canvas") {
-              const extensionlessPath = linkedFile.path.substring(
-                0,
-                linkedFile.path.lastIndexOf(".")
-              );
-              const linkPath = linkedFile.extension === "canvas" ? `${extensionlessPath}.canvas` : extensionlessPath;
-              convertedText = convertedText.replaceAll(
-                linkMatch,
-                `[[${linkPath}${headerPath}\\|${linkDisplayName}]]`
-              );
-            }
-          } catch (e) {
-            console.log(e);
-            continue;
-          }
+      return yield transformMarkdown(text2, (node) => {
+        if (node.type !== "wikilink") {
+          return;
         }
-      }
-      return convertedText;
+        const embedPrefix = node.embed ? "!" : "";
+        try {
+          let linkedFileName = node.targetWithRef;
+          if (linkedFileName.endsWith("\\")) {
+            linkedFileName = linkedFileName.substring(
+              0,
+              linkedFileName.length - 1
+            );
+          }
+          const linkDisplayName = node.parts[1] || linkedFileName;
+          let headerPath = "";
+          if (linkedFileName.includes("#")) {
+            const headerSplit = linkedFileName.split("#");
+            linkedFileName = headerSplit[0];
+            headerPath = headerSplit.length > 1 ? `#${headerSplit[1]}` : "";
+          }
+          if (linkedFileName === "" && headerPath !== "") {
+            const currentFilePath = file.getPath();
+            const currentExtensionlessPath = currentFilePath.substring(
+              0,
+              currentFilePath.lastIndexOf(".")
+            );
+            return `${embedPrefix}[[${currentExtensionlessPath}${headerPath}\\|${linkDisplayName}]]`;
+          }
+          const fullLinkedFilePath = (0, import_obsidian6.getLinkpath)(linkedFileName);
+          if (fullLinkedFilePath === "") {
+            return;
+          }
+          const linkedFile = this.metadataCache.getFirstLinkpathDest(
+            fullLinkedFilePath,
+            file.getPath()
+          );
+          if (!linkedFile) {
+            return `${embedPrefix}[[${linkedFileName}${headerPath}\\|${linkDisplayName}]]`;
+          }
+          if (linkedFile.extension === "md" || linkedFile.extension === "canvas") {
+            const extensionlessPath = linkedFile.path.substring(
+              0,
+              linkedFile.path.lastIndexOf(".")
+            );
+            const linkPath = linkedFile.extension === "canvas" ? `${extensionlessPath}.canvas` : extensionlessPath;
+            return `${embedPrefix}[[${linkPath}${headerPath}\\|${linkDisplayName}]]`;
+          }
+          return;
+        } catch (e) {
+          console.log(e);
+          return;
+        }
+      });
     });
     /**
      * Converts markdown-style links to vault files (e.g. [X](../a/b.md),
@@ -19835,9 +20409,6 @@ var GardenPageCompiler = class {
      * under the site's trailing-slash URLs and stay invisible to the graph.
      */
     this.convertMarkdownLinksToFullPath = (file) => (text2) => __async(this, null, function* () {
-      let convertedText = text2;
-      const textToBeProcessed = yield this.stripAwayCodeFencesAndFrontmatter(file)(text2);
-      const markdownLinkRegex = new RegExp("(?<!!)\\[([^[\\]]*)\\]\\(\\s*([^)\\s]+?\\.(?:md|markdown|canvas))((?:#[^)\\s]*)?)\\s*\\)", "gi");
       const decode2 = (value) => {
         try {
           return decodeURIComponent(value);
@@ -19860,12 +20431,21 @@ var GardenPageCompiler = class {
         }
         return segments.join("/");
       };
-      let match2;
-      while (match2 = markdownLinkRegex.exec(textToBeProcessed)) {
+      return yield transformMarkdown(text2, (node) => {
+        if (node.type !== "mdlink" || node.embed) {
+          return;
+        }
+        const destinationMatch = NOTE_LINK_DESTINATION.exec(
+          node.destination
+        );
+        if (!destinationMatch) {
+          return;
+        }
         try {
-          const [fullMatch, displayText, rawTarget, rawFragment] = match2;
+          const [, rawTarget, rawFragment] = destinationMatch;
+          const displayText = node.label;
           if (/^[a-z][a-z0-9+.-]*:/i.test(rawTarget)) {
-            continue;
+            return;
           }
           const target = decode2(rawTarget);
           const isExplicitRelative = target.startsWith("./") || target.startsWith("../");
@@ -19881,7 +20461,7 @@ var GardenPageCompiler = class {
             if (linkedFile) break;
           }
           if (!linkedFile || linkedFile.extension !== "md" && linkedFile.extension !== "canvas") {
-            continue;
+            return;
           }
           const extensionlessPath = linkedFile.path.substring(
             0,
@@ -19892,45 +20472,34 @@ var GardenPageCompiler = class {
           const linkDisplayName = displayText || extensionlessPath.substring(
             extensionlessPath.lastIndexOf("/") + 1
           );
-          convertedText = convertedText.replaceAll(
-            fullMatch,
-            `[[${linkPath}${headerPath}\\|${linkDisplayName}]]`
-          );
+          return `[[${linkPath}${headerPath}\\|${linkDisplayName}]]`;
         } catch (e) {
           console.log(e);
-          continue;
+          return;
         }
-      }
-      return convertedText;
+      });
     });
     this.createTranscludedText = (currentDepth) => (file) => (text2) => __async(this, null, function* () {
-      var _a6, _b3, _c2;
       if (currentDepth >= 4) {
         return text2;
       }
       const { notes: publishedFiles } = yield this.getFilesMarkedForPublishing();
-      let transcludedText = text2;
-      const transcludedRegex = /!\[\[(.+?)\]\]/g;
-      const transclusionMatches = text2.match(transcludedRegex);
       let numberOfExcaliDraws = 0;
-      for (const transclusionMatch of transclusionMatches != null ? transclusionMatches : []) {
+      return yield transformMarkdown(text2, (node) => __async(this, null, function* () {
+        var _a6, _b3, _c2;
+        if (node.type !== "wikilink" || !node.embed) {
+          return;
+        }
         try {
-          const [transclusionFileName, headerName] = transclusionMatch.substring(
-            transclusionMatch.indexOf("[") + 2,
-            transclusionMatch.indexOf("]")
-          ).split("|");
+          const transclusionFileName = node.targetWithRef;
+          const headerName = node.parts[1];
           const youtubeId = this.extractYouTubeId(transclusionFileName);
           if (youtubeId) {
-            const youtubeEmbed = `<div class="youtube-embed"><iframe src="https://www.youtube.com/embed/${youtubeId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
-            transcludedText = transcludedText.replace(
-              transclusionMatch,
-              youtubeEmbed
-            );
-            continue;
+            return `<div class="youtube-embed"><iframe src="https://www.youtube.com/embed/${youtubeId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
           }
-          const transclusionFilePath = (0, import_obsidian5.getLinkpath)(transclusionFileName);
+          const transclusionFilePath = (0, import_obsidian6.getLinkpath)(transclusionFileName);
           if (transclusionFilePath === "") {
-            continue;
+            return;
           }
           const linkedFile = this.metadataCache.getFirstLinkpathDest(
             transclusionFilePath,
@@ -19940,7 +20509,7 @@ var GardenPageCompiler = class {
             console.error(
               `can't find transcluded file ${transclusionFilePath}`
             );
-            continue;
+            return;
           }
           const publishLinkedFile = new PublishFile({
             file: linkedFile,
@@ -19950,122 +20519,114 @@ var GardenPageCompiler = class {
             settings: this.settings
           });
           let sectionID = "";
-          if (linkedFile.name.endsWith(".excalidraw.md")) {
+          if (isExcalidrawFile(linkedFile, this.metadataCache)) {
             numberOfExcaliDraws++;
             const isFirstDrawing = numberOfExcaliDraws === 1;
-            const fileText = yield publishLinkedFile.cachedRead();
-            const excaliDrawCode = yield this.excalidrawCompiler.compileMarkdown({
+            const fileText2 = yield publishLinkedFile.cachedRead();
+            return yield this.excalidrawCompiler.compileMarkdown({
               includeExcaliDrawJs: isFirstDrawing,
               idAppendage: `${numberOfExcaliDraws}`,
-              includeFrontMatter: false
-            })(publishLinkedFile)(fileText);
-            transcludedText = transcludedText.replace(
-              transclusionMatch,
-              excaliDrawCode
-            );
-          } else if (linkedFile.extension === "base") {
+              includeFrontMatter: false,
+              size: node.parts[1]
+            })(publishLinkedFile)(fileText2);
+          }
+          if (linkedFile.extension === "base") {
             const baseFileText = yield this.vault.read(linkedFile);
-            const baseCodeBlock = createBaseCodeBlock(
+            return createBaseCodeBlock(
               baseFileText,
               transclusionFileName
             );
-            transcludedText = transcludedText.replace(
-              transclusionMatch,
-              baseCodeBlock
+          }
+          if (linkedFile.extension !== "md") {
+            return;
+          }
+          let fileText = yield publishLinkedFile.cachedRead();
+          const metadata = publishLinkedFile.getMetadata();
+          if (transclusionFileName.includes("#^")) {
+            const refBlock = transclusionFileName.split("#^")[1];
+            sectionID = `#${(0, import_slugify3.default)(refBlock)}`;
+            const blockInFile = publishLinkedFile.getBlock(refBlock);
+            if (blockInFile) {
+              fileText = fileText.split("\n").slice(
+                blockInFile.position.start.line,
+                blockInFile.position.end.line + 1
+              ).join("\n").replace(`^${refBlock}`, "");
+            }
+          } else if (transclusionFileName.includes("#")) {
+            const refHeader = transclusionFileName.split("#")[1];
+            const headerSlug = (0, import_slugify3.default)(refHeader);
+            const headerInFile = (_a6 = metadata == null ? void 0 : metadata.headings) == null ? void 0 : _a6.find(
+              (header2) => (0, import_slugify3.default)(header2.heading) === headerSlug
             );
-          } else if (linkedFile.extension === "md") {
-            let fileText = yield publishLinkedFile.cachedRead();
-            const metadata = publishLinkedFile.getMetadata();
-            if (transclusionFileName.includes("#^")) {
-              const refBlock = transclusionFileName.split("#^")[1];
-              sectionID = `#${(0, import_slugify2.default)(refBlock)}`;
-              const blockInFile = publishLinkedFile.getBlock(refBlock);
-              if (blockInFile) {
-                fileText = fileText.split("\n").slice(
-                  blockInFile.position.start.line,
-                  blockInFile.position.end.line + 1
-                ).join("\n").replace(`^${refBlock}`, "");
-              }
-            } else if (transclusionFileName.includes("#")) {
-              const refHeader = transclusionFileName.split("#")[1];
-              const headerSlug = (0, import_slugify2.default)(refHeader);
-              const headerInFile = (_a6 = metadata == null ? void 0 : metadata.headings) == null ? void 0 : _a6.find(
-                (header2) => (0, import_slugify2.default)(header2.heading) === headerSlug
+            sectionID = `#${(0, import_slugify3.default)(refHeader)}`;
+            if (headerInFile && (metadata == null ? void 0 : metadata.headings)) {
+              const headerPosition = metadata.headings.indexOf(headerInFile);
+              const cutTo = metadata.headings.slice(headerPosition + 1).find(
+                (header2) => header2.level <= headerInFile.level
               );
-              sectionID = `#${(0, import_slugify2.default)(refHeader)}`;
-              if (headerInFile && (metadata == null ? void 0 : metadata.headings)) {
-                const headerPosition = metadata.headings.indexOf(headerInFile);
-                const cutTo = metadata.headings.slice(headerPosition + 1).find(
-                  (header2) => header2.level <= headerInFile.level
-                );
-                if (cutTo) {
-                  const cutToLine = (_c2 = (_b3 = cutTo == null ? void 0 : cutTo.position) == null ? void 0 : _b3.start) == null ? void 0 : _c2.line;
-                  fileText = fileText.split("\n").slice(
-                    headerInFile.position.start.line,
-                    cutToLine
-                  ).join("\n");
-                } else {
-                  fileText = fileText.split("\n").slice(headerInFile.position.start.line).join("\n");
-                }
+              if (cutTo) {
+                const cutToLine = (_c2 = (_b3 = cutTo == null ? void 0 : cutTo.position) == null ? void 0 : _b3.start) == null ? void 0 : _c2.line;
+                fileText = fileText.split("\n").slice(
+                  headerInFile.position.start.line,
+                  cutToLine
+                ).join("\n");
+              } else {
+                fileText = fileText.split("\n").slice(headerInFile.position.start.line).join("\n");
               }
             }
-            fileText = fileText.replace(FRONTMATTER_REGEX, "");
-            fileText = yield this.convertCustomFilters(publishLinkedFile)(
-              fileText
-            );
-            fileText = fileText.replace(BLOCKREF_REGEX, "");
-            const header = this.generateTransclusionHeader(
-              headerName,
-              linkedFile
-            );
-            const headerSection = header ? `<div class="markdown-embed-title">
+          }
+          fileText = transformMarkdownSync(
+            fileText,
+            (inner) => inner.type === "frontmatter" || inner.type === "blockid" ? "" : void 0
+          );
+          fileText = yield this.convertCustomFilters(publishLinkedFile)(
+            fileText
+          );
+          const header = this.generateTransclusionHeader(
+            headerName,
+            linkedFile
+          );
+          const headerSection = header ? `<div class="markdown-embed-title">
 
 ${header}
 
 </div>
 ` : "";
-            let embedded_link = "";
-            const publishedFilesContainsLinkedFile = publishedFiles.find(
-              (f) => f.getPath() == linkedFile.path
-            );
-            if (publishedFilesContainsLinkedFile) {
-              const permalink = (metadata == null ? void 0 : metadata.frontmatter) && metadata.frontmatter["dg-permalink"];
-              const gardenPath = permalink ? sanitizePermalink(permalink) : `/${generateUrlPath(
-                getGardenPathForNote(
-                  linkedFile.path,
-                  this.rewriteRules
-                ),
-                this.settings.slugifyEnabled
-              )}`;
-              embedded_link = `<a class="markdown-embed-link" href="${gardenPath}${sectionID}" aria-label="Open link"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a>`;
-            }
-            fileText = `
+          let embedded_link = "";
+          const publishedFilesContainsLinkedFile = publishedFiles.find(
+            (f) => f.getPath() == linkedFile.path
+          );
+          if (publishedFilesContainsLinkedFile) {
+            const permalink = (metadata == null ? void 0 : metadata.frontmatter) && metadata.frontmatter["dg-permalink"];
+            const gardenPath = permalink ? sanitizePermalink(permalink) : `/${generateUrlPath(
+              getGardenPathForNote(
+                linkedFile.path,
+                this.rewriteRules
+              ),
+              this.settings.slugifyEnabled
+            )}`;
+            embedded_link = `<a class="markdown-embed-link" href="${gardenPath}${sectionID}" aria-label="Open link"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a>`;
+          }
+          fileText = `
 <div class="transclusion internal-embed is-loaded">${embedded_link}<div class="markdown-embed">
 
 ${headerSection}
 
 ` + fileText + "\n\n</div></div>\n";
-            if (fileText.match(transcludedRegex)) {
-              fileText = yield this.createTranscludedText(
-                currentDepth + 1
-              )(publishLinkedFile)(fileText);
-            }
-            const withDvCompiledText = yield this.runCompilerSteps(
-              publishLinkedFile,
-              [this.convertDataViews]
-            )(fileText);
-            fileText = withDvCompiledText;
-            transcludedText = transcludedText.replace(
-              transclusionMatch,
-              () => fileText
-            );
+          if (fileText.includes("![[")) {
+            fileText = yield this.createTranscludedText(
+              currentDepth + 1
+            )(publishLinkedFile)(fileText);
           }
+          fileText = yield this.runCompilerSteps(publishLinkedFile, [
+            this.convertDataViews
+          ])(fileText);
+          return fileText;
         } catch (error) {
           console.error(error);
-          continue;
+          return;
         }
-      }
-      return transcludedText;
+      }));
     });
     this.createSvgEmbeds = (file) => (text2) => __async(this, null, function* () {
       function setWidth(svgText, size) {
@@ -20077,140 +20638,93 @@ ${headerSection}
         const svgSerializer = new XMLSerializer();
         return svgSerializer.serializeToString(svgDoc);
       }
-      const transcludedSvgs = text2.match(TRANSCLUDED_SVG_REGEX);
-      if (transcludedSvgs) {
-        for (const svg of transcludedSvgs) {
+      const readSvg = (imagePath, size) => __async(this, null, function* () {
+        if (imagePath === "") {
+          return null;
+        }
+        const linkedFile = this.metadataCache.getFirstLinkpathDest(
+          imagePath,
+          file.getPath()
+        );
+        if (!linkedFile) {
+          return null;
+        }
+        let svgText = yield this.vault.read(linkedFile);
+        if (svgText && size) {
+          svgText = setWidth(svgText, size);
+        }
+        return svgText;
+      });
+      return yield transformMarkdown(text2, (node) => __async(this, null, function* () {
+        if (node.type === "wikilink" && node.embed && node.targetWithRef.endsWith(".svg")) {
           try {
-            const [imageName, size] = svg.substring(svg.indexOf("[") + 2, svg.indexOf("]")).split(/\\?\|/);
-            const imagePath = (0, import_obsidian5.getLinkpath)(imageName);
-            if (imagePath === "") {
-              continue;
+            const [imageName, size] = node.parts;
+            let svgText = yield readSvg((0, import_obsidian6.getLinkpath)(imageName), size);
+            if (!svgText) {
+              return;
             }
-            const linkedFile = this.metadataCache.getFirstLinkpathDest(
-              imagePath,
-              file.getPath()
-            );
-            if (!linkedFile) {
-              continue;
-            }
-            let svgText = yield this.vault.read(linkedFile);
-            if (svgText && size) {
-              svgText = setWidth(svgText, size);
-            }
-            if (svgText) {
-              svgText = svgText.replace(/[\t\n\r]/g, "");
-            }
-            text2 = text2.replace(svg, svgText);
+            svgText = svgText.replace(/[\t\n\r]/g, "");
+            return svgText;
           } catch (e) {
-            continue;
+            return;
           }
         }
-      }
-      const linkedSvgRegex = /!\[(.*?)\]\((.*?)(\.(svg))\)/g;
-      const linkedSvgMatches = text2.match(linkedSvgRegex);
-      if (linkedSvgMatches) {
-        for (const svg of linkedSvgMatches) {
+        if (node.type === "mdlink" && node.embed && node.destination.endsWith(".svg")) {
           try {
-            const [_imageName, size] = svg.substring(svg.indexOf("[") + 2, svg.indexOf("]")).split(/\\?\|/);
-            const pathStart = svg.lastIndexOf("(") + 1;
-            const pathEnd = svg.lastIndexOf(")");
-            const imagePath = svg.substring(pathStart, pathEnd);
+            const imagePath = node.destination;
             if (imagePath.startsWith("http")) {
-              continue;
+              return;
             }
-            if (imagePath === "") {
-              continue;
-            }
-            const linkedFile = this.metadataCache.getFirstLinkpathDest(
-              imagePath,
-              file.getPath()
-            );
-            if (!linkedFile) {
-              continue;
-            }
-            let svgText = yield this.vault.read(linkedFile);
-            if (svgText && size) {
-              svgText = setWidth(svgText, size);
-            }
-            text2 = text2.replace(svg, svgText);
+            const size = node.label.split(/\\?\|/)[1];
+            const svgText = yield readSvg(imagePath, size);
+            return svgText != null ? svgText : void 0;
           } catch (e) {
-            continue;
+            return;
           }
         }
-      }
-      return text2;
+        return;
+      }));
     });
     this.extractImageLinks = (file) => __async(this, null, function* () {
-      var _a6;
       const text2 = yield file.cachedRead();
       const assets = [];
-      const transcludedImageRegex = /!\[\[(.*?)(\.(png|jpg|jpeg|gif|webp|pdf))\\?\|(.*?)\]\]|!\[\[(.*?)(\.(png|jpg|jpeg|gif|webp|pdf))\]\]/g;
-      const transcludedImageMatches = text2.match(transcludedImageRegex);
-      if (transcludedImageMatches) {
-        for (let i = 0; i < transcludedImageMatches.length; i++) {
-          try {
-            const imageMatch = transcludedImageMatches[i];
-            const [imageName, _] = imageMatch.substring(
-              imageMatch.indexOf("[") + 2,
-              imageMatch.indexOf("]")
-            ).split(/\\?\|/);
-            const imagePath = (0, import_obsidian5.getLinkpath)(imageName);
-            const linkedFile = this.resolveLinkedFile(
-              imagePath,
-              file.getPath()
-            );
-            if (!linkedFile) {
-              continue;
-            }
-            assets.push(linkedFile.path);
-          } catch (e) {
-            continue;
-          }
-        }
-      }
-      const imageRegex = /!\[(.*?)\]\((.*?)(\.(png|jpg|jpeg|gif|webp|pdf))\)/g;
-      const imageMatches = text2.match(imageRegex);
-      if (imageMatches) {
-        for (let i = 0; i < imageMatches.length; i++) {
-          try {
-            const imageMatch = imageMatches[i];
-            const pathStart = imageMatch.lastIndexOf("(") + 1;
-            const pathEnd = imageMatch.lastIndexOf(")");
-            const imagePath = imageMatch.substring(pathStart, pathEnd);
-            if (imagePath.startsWith("http")) {
-              continue;
-            }
-            const decodedImagePath = decodeURI(imagePath);
-            const linkedFile = this.resolveLinkedFile(
-              decodedImagePath,
-              file.getPath()
-            );
-            if (!linkedFile) {
-              continue;
-            }
-            assets.push(linkedFile.path);
-          } catch (e) {
-            continue;
-          }
-        }
-      }
-      const linkedImageRegex = /\[\[(.*?)(\.(png|jpg|jpeg|gif|webp|svg|pdf))(.*?)\]\]/g;
-      const linkedImageMatches = text2.matchAll(linkedImageRegex);
-      for (const match2 of linkedImageMatches) {
+      for (const node of parseMarkdown(text2)) {
         try {
-          const matchIndex = (_a6 = match2.index) != null ? _a6 : -1;
-          if (matchIndex > 0 && text2[matchIndex - 1] === "!") {
+          if (node.type === "wikilink" && node.embed && hasExtension(node.targetWithRef, [
+            ...IMAGE_EXTENSIONS,
+            ".pdf"
+          ])) {
+            const linkedFile = this.resolveLinkedFile(
+              (0, import_obsidian6.getLinkpath)(node.parts[0]),
+              file.getPath()
+            );
+            if (linkedFile) {
+              assets.push(linkedFile.path);
+            }
             continue;
           }
-          const imagePath = this.extractWikilinkTarget(match2[0]);
-          const linkedFile = this.resolveLinkedFile(
-            imagePath,
-            file.getPath()
-          );
-          if (!linkedFile) {
+          if (node.type === "mdlink" && node.embed && hasExtension(node.destination, [
+            ...IMAGE_EXTENSIONS,
+            ".pdf"
+          ]) && !node.destination.startsWith("http")) {
+            const linkedFile = this.resolveLinkedFile(
+              decodeURI(node.destination),
+              file.getPath()
+            );
+            if (linkedFile) {
+              assets.push(linkedFile.path);
+            }
             continue;
           }
-          assets.push(linkedFile.path);
+          if (node.type === "wikilink" && !node.embed && hasExtension(node.linkpath, LINKED_ASSET_EXTENSIONS)) {
+            const linkedFile = this.resolveLinkedFile(
+              (0, import_obsidian6.getLinkpath)(node.linkpath),
+              file.getPath()
+            );
+            if (linkedFile) {
+              assets.push(linkedFile.path);
+            }
+          }
         } catch (e) {
           continue;
         }
@@ -20224,187 +20738,19 @@ ${headerSection}
       return assets;
     });
     this.convertEmbeddedAssets = (file) => (text2) => __async(this, null, function* () {
-      var _a6;
       const filePath = file.getPath();
       const assets = [];
-      const frontmatterBlock = text2.match(
-        /^\s*?---[\r\n][\s\S]*?[\r\n]---/
-      );
-      const frontmatter = frontmatterBlock ? frontmatterBlock[0] : "";
-      text2 = text2.slice(frontmatter.length);
-      let imageText = text2;
-      const transcludedImageRegex = /!\[\[(.*?)(\.(png|jpg|jpeg|gif|webp))\\?\|(.*?)\]\]|!\[\[(.*?)(\.(png|jpg|jpeg|gif|webp))\]\]/g;
-      const transcludedImageMatches = text2.match(transcludedImageRegex);
-      if (transcludedImageMatches) {
-        for (let i = 0; i < transcludedImageMatches.length; i++) {
-          try {
-            const imageMatch = transcludedImageMatches[i];
-            const [imageName, ...metaDataAndSize] = imageMatch.substring(
-              imageMatch.indexOf("[") + 2,
-              imageMatch.indexOf("]")
-            ).split(/\\?\|/);
-            const lastValue = metaDataAndSize[metaDataAndSize.length - 1];
-            const hasSeveralValues = metaDataAndSize.length > 0;
-            const lastValueIsSize = hasSeveralValues && !isNaN(parseInt(lastValue));
-            const lastValueIsMetaData = !lastValueIsSize && hasSeveralValues;
-            const size = lastValueIsSize ? lastValue : null;
-            let metaData = "";
-            const metaDataIsMiddleValues = metaDataAndSize.length > 1;
-            if (metaDataIsMiddleValues) {
-              metaData = metaDataAndSize.slice(0, metaDataAndSize.length - 1).join(" ");
-            }
-            if (lastValueIsMetaData) {
-              metaData = `${lastValue}`;
-            }
-            const imagePath = (0, import_obsidian5.getLinkpath)(imageName);
-            const linkedFile = this.resolveLinkedFile(
-              imagePath,
-              filePath
-            );
-            if (!linkedFile) {
-              continue;
-            }
-            const image = yield this.vault.readBinary(linkedFile);
-            const imageBase64 = (0, import_obsidian5.arrayBufferToBase64)(image);
-            const cmsImgPath = `/img/user/${linkedFile.path}`;
-            let name = "";
-            if (metaData && size) {
-              name = `${imageName}\\|${metaData}\\|${size}`;
-            } else if (size) {
-              name = `${imageName}\\|${size}`;
-            } else if (metaData && metaData !== "") {
-              name = `${imageName}\\|${metaData}`;
-            } else {
-              name = imageName;
-            }
-            const imageMarkdown = `![${name}](${encodeURI(
-              cmsImgPath
-            )})`;
-            assets.push({
-              path: cmsImgPath,
-              content: imageBase64,
-              localHash: generateBlobHashFromBase64(imageBase64)
-            });
-            imageText = imageText.replace(
-              imageMatch,
-              imageMarkdown
-            );
-          } catch (e) {
-            continue;
-          }
-        }
-      }
-      const youtubeRegex = /!\[([^\]]*)\]\((https?:\/\/(?:www\.)?(?:youtube\.com|youtu\.be)[^)]+)\)/g;
-      const youtubeMatches = text2.match(youtubeRegex);
-      if (youtubeMatches) {
-        for (let i = 0; i < youtubeMatches.length; i++) {
-          const youtubeMatch = youtubeMatches[i];
-          const urlStart = youtubeMatch.lastIndexOf("(") + 1;
-          const urlEnd = youtubeMatch.lastIndexOf(")");
-          const url = youtubeMatch.substring(urlStart, urlEnd);
-          const youtubeId = this.extractYouTubeId(url);
-          if (youtubeId) {
-            const youtubeEmbed = `<div class="youtube-embed"><iframe src="https://www.youtube.com/embed/${youtubeId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
-            imageText = imageText.replace(
-              youtubeMatch,
-              youtubeEmbed
-            );
-          }
-        }
-      }
-      const imageRegex = /!\[(.*?)\]\((.*?)(\.(png|jpg|jpeg|gif|webp))\)/g;
-      const imageMatches = text2.match(imageRegex);
-      if (imageMatches) {
-        for (let i = 0; i < imageMatches.length; i++) {
-          try {
-            const imageMatch = imageMatches[i];
-            const nameStart = imageMatch.indexOf("[") + 1;
-            const nameEnd = imageMatch.indexOf("]");
-            const imageName = imageMatch.substring(
-              nameStart,
-              nameEnd
-            );
-            const pathStart = imageMatch.lastIndexOf("(") + 1;
-            const pathEnd = imageMatch.lastIndexOf(")");
-            const imagePath = imageMatch.substring(
-              pathStart,
-              pathEnd
-            );
-            if (imagePath.startsWith("http")) {
-              continue;
-            }
-            const decodedImagePath = decodeURI(imagePath);
-            const linkedFile = this.resolveLinkedFile(
-              decodedImagePath,
-              filePath
-            );
-            if (!linkedFile) {
-              continue;
-            }
-            const image = yield this.vault.readBinary(linkedFile);
-            const imageBase64 = (0, import_obsidian5.arrayBufferToBase64)(image);
-            const cmsImgPath = `/img/user/${linkedFile.path}`;
-            const imageMarkdown = `![${imageName}](${encodeURI(
-              cmsImgPath
-            )})`;
-            assets.push({
-              path: cmsImgPath,
-              content: imageBase64,
-              localHash: generateBlobHashFromBase64(imageBase64)
-            });
-            imageText = imageText.replace(
-              imageMatch,
-              imageMarkdown
-            );
-          } catch (e) {
-            import_js_logger6.default.warn("Error processing image link:", e);
-            continue;
-          }
-        }
-      }
-      const linkedImageRegex = /\[\[(.*?)(\.(png|jpg|jpeg|gif|webp|svg|pdf))(.*?)\]\]/g;
-      const linkedImageMatches = text2.matchAll(linkedImageRegex);
-      for (const match2 of linkedImageMatches) {
-        try {
-          const matchIndex = (_a6 = match2.index) != null ? _a6 : -1;
-          if (matchIndex > 0 && text2[matchIndex - 1] === "!") {
-            continue;
-          }
-          const rawMatch = match2[0];
-          const textInsideBrackets = rawMatch.substring(
-            rawMatch.indexOf("[[") + 2,
-            rawMatch.lastIndexOf("]]")
-          );
-          const pipeIndex = textInsideBrackets.indexOf("|");
-          let linkedFileName = pipeIndex === -1 ? textInsideBrackets : textInsideBrackets.substring(0, pipeIndex);
-          const linkDisplayName = pipeIndex === -1 ? linkedFileName : textInsideBrackets.substring(pipeIndex + 1);
-          if (linkedFileName.endsWith("\\")) {
-            linkedFileName = linkedFileName.substring(
-              0,
-              linkedFileName.length - 1
-            );
-          }
-          const fullLinkedFilePath = (0, import_obsidian5.getLinkpath)(linkedFileName);
-          if (fullLinkedFilePath === "") {
-            continue;
-          }
-          const linkedFile = this.resolveLinkedFile(
-            fullLinkedFilePath,
-            filePath
-          );
-          if (!linkedFile) {
-            continue;
-          }
-          const cmsImgPath = `/img/user/${linkedFile.path}`;
-          const imageMarkdown = `[${linkDisplayName}](${encodeURI(
-            cmsImgPath
-          )})`;
-          imageText = imageText.replace(rawMatch, imageMarkdown);
-        } catch (e) {
-          import_js_logger6.default.warn("Error processing linked image:", e);
-          continue;
-        }
-      }
+      const readAsset = (linkedFile) => __async(this, null, function* () {
+        const binary = yield this.vault.readBinary(linkedFile);
+        const base64 = (0, import_obsidian6.arrayBufferToBase64)(binary);
+        const cmsPath = `/img/user/${linkedFile.path}`;
+        assets.push({
+          path: cmsPath,
+          content: base64,
+          localHash: generateBlobHashFromBase64(base64)
+        });
+        return cmsPath;
+      });
       const generatePdfIframe = (src, title) => {
         return `<iframe src="${encodeURI(
           src
@@ -20414,177 +20760,216 @@ ${headerSection}
         const display = displayText ? `|${displayText}` : metadataParts.length > 0 ? "|" + metadataParts.join("|") : "";
         return `[[${name}${display}]]`;
       };
-      const transcludedPdfMatches = text2.match(TRANSCLUDED_PDF_REGEX);
-      if (transcludedPdfMatches) {
-        for (const pdfMatch of transcludedPdfMatches) {
-          try {
-            const [pdfNameFromFile, ...metadataParts] = pdfMatch.substring(
-              pdfMatch.indexOf("[") + 2,
-              pdfMatch.indexOf("]")
-            ).split("|");
-            const altText = metadataParts.join("|") || pdfNameFromFile;
-            const pdfPath = (0, import_obsidian5.getLinkpath)(pdfNameFromFile);
-            if (pdfPath === "") {
-              imageText = imageText.replace(
-                pdfMatch,
-                buildWikilinkFallback(
-                  pdfNameFromFile,
-                  metadataParts
-                )
-              );
-              continue;
-            }
-            const linkedFile = this.metadataCache.getFirstLinkpathDest(
+      const convertEmbeddedImageWikilink = (node) => __async(this, null, function* () {
+        try {
+          const [imageName, ...metaDataAndSize] = node.parts;
+          const lastValue = metaDataAndSize[metaDataAndSize.length - 1];
+          const hasSeveralValues = metaDataAndSize.length > 0;
+          const lastValueIsSize = hasSeveralValues && !isNaN(parseInt(lastValue));
+          const lastValueIsMetaData = !lastValueIsSize && hasSeveralValues;
+          const size = lastValueIsSize ? lastValue : null;
+          let metaData = "";
+          const metaDataIsMiddleValues = metaDataAndSize.length > 1;
+          if (metaDataIsMiddleValues) {
+            metaData = metaDataAndSize.slice(0, metaDataAndSize.length - 1).join(" ");
+          }
+          if (lastValueIsMetaData) {
+            metaData = `${lastValue}`;
+          }
+          const linkedFile = this.resolveLinkedFile(
+            (0, import_obsidian6.getLinkpath)(imageName),
+            filePath
+          );
+          if (!linkedFile) {
+            return;
+          }
+          const cmsImgPath = yield readAsset(linkedFile);
+          let name = "";
+          if (metaData && size) {
+            name = `${imageName}\\|${metaData}\\|${size}`;
+          } else if (size) {
+            name = `${imageName}\\|${size}`;
+          } else if (metaData && metaData !== "") {
+            name = `${imageName}\\|${metaData}`;
+          } else {
+            name = imageName;
+          }
+          return `![${name}](${encodeURI(cmsImgPath)})`;
+        } catch (e) {
+          return;
+        }
+      });
+      const convertEmbeddedPdfWikilink = (node) => __async(this, null, function* () {
+        const [pdfNameFromFile, ...metadataParts] = node.parts;
+        try {
+          const altText = metadataParts.join("|") || pdfNameFromFile;
+          const pdfPath = (0, import_obsidian6.getLinkpath)(pdfNameFromFile);
+          if (pdfPath === "") {
+            return buildWikilinkFallback(
+              pdfNameFromFile,
+              metadataParts
+            );
+          }
+          const linkedFile = this.metadataCache.getFirstLinkpathDest(
+            pdfPath,
+            filePath
+          );
+          if (!linkedFile || linkedFile.extension !== "pdf") {
+            return buildWikilinkFallback(
+              pdfNameFromFile,
+              metadataParts
+            );
+          }
+          if (linkedFile.stat.size > PDF_MAX_SIZE_BYTES) {
+            new import_obsidian6.Notice(
+              `PDF ${linkedFile.name} is larger than 20MB and will not be published as an embed. A link will be used.`
+            );
+            return buildWikilinkFallback(
+              pdfNameFromFile,
+              metadataParts,
+              "PDF too large to embed"
+            );
+          }
+          const cmsPdfPath = yield readAsset(linkedFile);
+          return generatePdfIframe(cmsPdfPath, altText);
+        } catch (e) {
+          import_js_logger7.default.warn("Error processing transcluded PDF link:", e);
+          return buildWikilinkFallback(
+            pdfNameFromFile,
+            metadataParts
+          );
+        }
+      });
+      const convertEmbeddedImageMarkdownLink = (node) => __async(this, null, function* () {
+        try {
+          const imagePath = node.destination;
+          if (imagePath.startsWith("http")) {
+            return;
+          }
+          const linkedFile = this.resolveLinkedFile(
+            decodeURI(imagePath),
+            filePath
+          );
+          if (!linkedFile) {
+            return;
+          }
+          const cmsImgPath = yield readAsset(linkedFile);
+          return `![${node.label}](${encodeURI(cmsImgPath)})`;
+        } catch (e) {
+          import_js_logger7.default.warn("Error processing image link:", e);
+          return;
+        }
+      });
+      const convertEmbeddedPdfMarkdownLink = (node) => __async(this, null, function* () {
+        const pdfName = node.label;
+        const pdfPath = node.destination;
+        try {
+          if (pdfPath.startsWith("http")) {
+            return generatePdfIframe(
               pdfPath,
-              filePath
-            );
-            if (!linkedFile || linkedFile.extension !== "pdf") {
-              imageText = imageText.replace(
-                pdfMatch,
-                buildWikilinkFallback(
-                  pdfNameFromFile,
-                  metadataParts
-                )
-              );
-              continue;
-            }
-            if (linkedFile.stat.size > PDF_MAX_SIZE_BYTES) {
-              new import_obsidian5.Notice(
-                `PDF ${linkedFile.name} is larger than 20MB and will not be published as an embed. A link will be used.`
-              );
-              imageText = imageText.replace(
-                pdfMatch,
-                buildWikilinkFallback(
-                  pdfNameFromFile,
-                  metadataParts,
-                  "PDF too large to embed"
-                )
-              );
-              continue;
-            }
-            const pdfBinary = yield this.vault.readBinary(linkedFile);
-            const pdfBase64 = (0, import_obsidian5.arrayBufferToBase64)(pdfBinary);
-            const cmsPdfPath = `/img/user/${linkedFile.path}`;
-            assets.push({
-              path: cmsPdfPath,
-              content: pdfBase64,
-              localHash: generateBlobHashFromBase64(pdfBase64)
-            });
-            imageText = imageText.replace(
-              pdfMatch,
-              generatePdfIframe(cmsPdfPath, altText)
-            );
-          } catch (e) {
-            import_js_logger6.default.warn(
-              "Error processing transcluded PDF link:",
-              e
-            );
-            const [pdfNameFromFile, ...metadataParts] = pdfMatch.substring(
-              pdfMatch.indexOf("[") + 2,
-              pdfMatch.indexOf("]")
-            ).split("|");
-            imageText = imageText.replace(
-              pdfMatch,
-              buildWikilinkFallback(
-                pdfNameFromFile,
-                metadataParts
-              )
+              pdfName || "External PDF"
             );
           }
+          const decodedPdfPath = decodeURI(pdfPath);
+          if (decodedPdfPath === "") {
+            return `[${pdfName || "Invalid PDF Link"}](${encodeURI(
+              pdfPath
+            )})`;
+          }
+          const linkedFile = this.metadataCache.getFirstLinkpathDest(
+            decodedPdfPath,
+            filePath
+          );
+          if (!linkedFile || linkedFile.extension !== "pdf") {
+            return `[${pdfName || decodedPdfPath}](${encodeURI(
+              pdfPath
+            )})`;
+          }
+          if (linkedFile.stat.size > PDF_MAX_SIZE_BYTES) {
+            new import_obsidian6.Notice(
+              `PDF ${linkedFile.name} is larger than 20MB and will not be published as an embed. A link will be used.`
+            );
+            return `[${pdfName || linkedFile.name} (PDF too large to embed)](${encodeURI(pdfPath)})`;
+          }
+          const cmsPdfPath = yield readAsset(linkedFile);
+          return generatePdfIframe(
+            cmsPdfPath,
+            pdfName || linkedFile.basename
+          );
+        } catch (e) {
+          import_js_logger7.default.warn("Error processing PDF link:", e);
+          return `[${pdfName || "PDF"}](${encodeURI(pdfPath)})`;
         }
-      }
-      const pdfMatches = text2.match(PDF_REGEX);
-      if (pdfMatches) {
-        for (const pdfMatch of pdfMatches) {
-          try {
-            const nameStart = pdfMatch.indexOf("[") + 1;
-            const nameEnd = pdfMatch.indexOf("]");
-            const pdfName = pdfMatch.substring(nameStart, nameEnd);
-            const pathStart = pdfMatch.lastIndexOf("(") + 1;
-            const pathEnd = pdfMatch.lastIndexOf(")");
-            const pdfPath = pdfMatch.substring(pathStart, pathEnd);
-            if (pdfPath.startsWith("http")) {
-              imageText = imageText.replace(
-                pdfMatch,
-                generatePdfIframe(
-                  pdfPath,
-                  pdfName || "External PDF"
-                )
-              );
-              continue;
-            }
-            const decodedPdfPath = decodeURI(pdfPath);
-            if (decodedPdfPath === "") {
-              imageText = imageText.replace(
-                pdfMatch,
-                `[${pdfName || "Invalid PDF Link"}](${encodeURI(
-                  pdfPath
-                )})`
-              );
-              continue;
-            }
-            const linkedFile = this.metadataCache.getFirstLinkpathDest(
-              decodedPdfPath,
-              filePath
-            );
-            if (!linkedFile || linkedFile.extension !== "pdf") {
-              imageText = imageText.replace(
-                pdfMatch,
-                `[${pdfName || decodedPdfPath}](${encodeURI(
-                  pdfPath
-                )})`
-              );
-              continue;
-            }
-            if (linkedFile.stat.size > PDF_MAX_SIZE_BYTES) {
-              new import_obsidian5.Notice(
-                `PDF ${linkedFile.name} is larger than 20MB and will not be published as an embed. A link will be used.`
-              );
-              imageText = imageText.replace(
-                pdfMatch,
-                `[${pdfName || linkedFile.name} (PDF too large to embed)](${encodeURI(
-                  pdfPath
-                )})`
-              );
-              continue;
-            }
-            const pdfBinary = yield this.vault.readBinary(linkedFile);
-            const pdfBase64 = (0, import_obsidian5.arrayBufferToBase64)(pdfBinary);
-            const cmsPdfPath = `/img/user/${linkedFile.path}`;
-            assets.push({
-              path: cmsPdfPath,
-              content: pdfBase64,
-              localHash: generateBlobHashFromBase64(pdfBase64)
-            });
-            imageText = imageText.replace(
-              pdfMatch,
-              generatePdfIframe(
-                cmsPdfPath,
-                pdfName || linkedFile.basename
-              )
-            );
-          } catch (e) {
-            import_js_logger6.default.warn("Error processing PDF link:", e);
-            const nameStart = pdfMatch.indexOf("[") + 1;
-            const nameEnd = pdfMatch.indexOf("]");
-            const pdfName = pdfMatch.substring(nameStart, nameEnd);
-            const pathStart = pdfMatch.lastIndexOf("(") + 1;
-            const pathEnd = pdfMatch.lastIndexOf(")");
-            const pdfPath = pdfMatch.substring(pathStart, pathEnd);
-            imageText = imageText.replace(
-              pdfMatch,
-              `[${pdfName || "PDF"}](${encodeURI(pdfPath)})`
+      });
+      const convertLinkedAssetWikilink = (node) => {
+        try {
+          const pipeIndex = node.inner.indexOf("|");
+          let linkedFileName = pipeIndex === -1 ? node.inner : node.inner.substring(0, pipeIndex);
+          const linkDisplayName = pipeIndex === -1 ? linkedFileName : node.inner.substring(pipeIndex + 1);
+          if (linkedFileName.endsWith("\\")) {
+            linkedFileName = linkedFileName.substring(
+              0,
+              linkedFileName.length - 1
             );
           }
+          const linkedFile = this.resolveLinkedFile(
+            (0, import_obsidian6.getLinkpath)(linkedFileName),
+            filePath
+          );
+          if (!linkedFile) {
+            return;
+          }
+          const cmsImgPath = `/img/user/${linkedFile.path}`;
+          return `[${linkDisplayName}](${encodeURI(cmsImgPath)})`;
+        } catch (e) {
+          import_js_logger7.default.warn("Error processing linked image:", e);
+          return;
         }
-      }
-      return [frontmatter + imageText, assets];
+      };
+      const convertedText = yield transformMarkdown(
+        text2,
+        (node) => __async(this, null, function* () {
+          if (node.type === "wikilink" && node.embed) {
+            if (hasExtension(node.targetWithRef, IMAGE_EXTENSIONS)) {
+              return convertEmbeddedImageWikilink(node);
+            }
+            if (node.targetWithRef.endsWith(".pdf")) {
+              return convertEmbeddedPdfWikilink(node);
+            }
+            return;
+          }
+          if (node.type === "mdlink" && node.embed) {
+            const youtubeId = YOUTUBE_URL_REGEX.test(
+              node.destination
+            ) ? this.extractYouTubeId(node.destination) : null;
+            if (youtubeId) {
+              return `<div class="youtube-embed"><iframe src="https://www.youtube.com/embed/${youtubeId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+            }
+            if (hasExtension(node.destination, IMAGE_EXTENSIONS)) {
+              return convertEmbeddedImageMarkdownLink(node);
+            }
+            if (node.destination.endsWith(".pdf")) {
+              return convertEmbeddedPdfMarkdownLink(node);
+            }
+            return;
+          }
+          if (node.type === "wikilink" && !node.embed && hasExtension(node.linkpath, LINKED_ASSET_EXTENSIONS)) {
+            return convertLinkedAssetWikilink(node);
+          }
+          return;
+        })
+      );
+      return [convertedText, assets];
     });
     this.vault = vault;
     this.settings = settings;
     this.metadataCache = metadataCache;
     this.getFilesMarkedForPublishing = getFilesMarkedForPublishing;
-    this.excalidrawCompiler = new ExcalidrawCompiler(vault);
+    this.excalidrawCompiler = new ExcalidrawCompiler(
+      vault,
+      settings,
+      metadataCache
+    );
     this.canvasCompiler = new CanvasCompiler(
       vault,
       metadataCache,
@@ -20624,7 +21009,7 @@ ${headerSection}
     return __async(this, null, function* () {
       const assets = { images: [] };
       const vaultFileText = yield file.cachedRead();
-      if (file.file.name.endsWith(".excalidraw.md")) {
+      if (isExcalidrawFile(file.file, this.metadataCache)) {
         return [
           yield this.excalidrawCompiler.compileMarkdown({
             includeExcaliDrawJs: true
@@ -20699,7 +21084,7 @@ ${headerSection}
           );
           if (!linkedFile) continue;
           const image = yield this.vault.readBinary(linkedFile);
-          const imageBase64 = (0, import_obsidian5.arrayBufferToBase64)(image);
+          const imageBase64 = (0, import_obsidian6.arrayBufferToBase64)(image);
           assets.push({
             path: `/img/user/${linkedFile.path}`,
             content: imageBase64,
@@ -20740,7 +21125,87 @@ ${headerSection}
 };
 
 // src/publisher/Publisher.ts
-var import_js_logger7 = __toESM(require_logger());
+var import_js_logger8 = __toESM(require_logger());
+
+// src/utils/debugLog.ts
+var MAX_LINES = 500;
+var lines = [];
+var context = "";
+function setDebugLogContext(value) {
+  context = value;
+}
+function appendDebugLogLine(level, messages) {
+  const rendered = messages.map(describeValue).join(" ");
+  lines.push(`${(/* @__PURE__ */ new Date()).toISOString()} [${level}] ${rendered}`);
+  if (lines.length > MAX_LINES) {
+    lines.splice(0, lines.length - MAX_LINES);
+  }
+}
+function getDebugLog() {
+  const header = `Digital Garden plugin ${context} \u2014 log copied ${(/* @__PURE__ */ new Date()).toISOString()}`;
+  if (lines.length === 0) {
+    return `${header}
+(no log entries recorded this session)`;
+  }
+  return `${header}
+${lines.join("\n")}`;
+}
+function describeError(error) {
+  if (error instanceof Error) {
+    const parts = [error.message];
+    const status = extractStatus(error);
+    if (status !== null) {
+      parts.unshift(`HTTP ${status}`);
+    }
+    const responseBody = extractResponseBody(error);
+    if (responseBody) {
+      parts.push(responseBody);
+    }
+    return parts.join(" \u2014 ");
+  }
+  return describeValue(error);
+}
+function extractStatus(error) {
+  const withStatus = error;
+  if (typeof withStatus.status === "number") {
+    return withStatus.status;
+  }
+  const response = withStatus.response;
+  if (response && typeof response.status === "number") {
+    return response.status;
+  }
+  return null;
+}
+function extractResponseBody(error) {
+  const response = error.response;
+  if (!response || response.data === void 0 || response.data === null) {
+    return null;
+  }
+  const body = typeof response.data === "string" ? response.data : safeStringify(response.data);
+  return body.length > 300 ? `${body.slice(0, 300)}\u2026` : body;
+}
+function describeValue(value) {
+  var _a6;
+  if (typeof value === "string") {
+    return value;
+  }
+  if (value instanceof Error) {
+    return (_a6 = value.stack) != null ? _a6 : `${value.name}: ${value.message}`;
+  }
+  if (typeof value === "object" && value !== null) {
+    return safeStringify(value);
+  }
+  return String(value);
+}
+function safeStringify(value) {
+  try {
+    return JSON.stringify(value);
+  } catch (e) {
+    return String(value);
+  }
+}
+
+// src/publisher/Publisher.ts
 var Publisher = class {
   constructor(vault, metadataCache, settings) {
     this.vault = vault;
@@ -20818,7 +21283,7 @@ var Publisher = class {
           }
         }
       } catch (e) {
-        import_js_logger7.default.error(
+        import_js_logger8.default.error(
           `Failed to extract images from canvas ${file.path}`,
           e
         );
@@ -20856,7 +21321,7 @@ var Publisher = class {
             }
           }
         } catch (e) {
-          import_js_logger7.default.error(e);
+          import_js_logger8.default.error(e);
         }
       }
       return {
@@ -20931,13 +21396,13 @@ var Publisher = class {
       }
     });
   }
-  publishBatch(files) {
+  publishBatch(files, onProgress) {
     return __async(this, null, function* () {
       const filesToPublish = files.filter(
         (f) => isPublishFrontmatterValid(f.frontmatter)
       );
       if (filesToPublish.length === 0) {
-        return true;
+        return { success: true };
       }
       try {
         const userGardenConnection = new RepositoryConnection(
@@ -20948,15 +21413,16 @@ var Publisher = class {
         const remoteImageHashes = yield this.getRemoteImageHashes();
         yield userGardenConnection.updateFiles(
           filesToPublish,
-          remoteImageHashes
+          remoteImageHashes,
+          onProgress
         );
-        return true;
+        return { success: true };
       } catch (error) {
         if (error instanceof LimitReachedError) {
           throw error;
         }
-        console.error(error);
-        return false;
+        import_js_logger8.default.error("Batch publish failed", error);
+        return { success: false, error: describeError(error) };
       }
     });
   }
@@ -20989,7 +21455,7 @@ var Publisher = class {
       );
       if (!remoteFileHash) {
         const file = yield userGardenConnection.getFile(path2).catch(() => {
-          import_js_logger7.default.info(`File ${path2} does not exist, adding`);
+          import_js_logger8.default.info(`File ${path2} does not exist, adding`);
         });
         remoteFileHash = file == null ? void 0 : file.sha;
         if (!remoteFileHash) {
@@ -21022,7 +21488,7 @@ var Publisher = class {
       for (const image of assets.images) {
         const remoteHash = remoteImageHashes[imageHashKey(image.path)];
         if (remoteHash && image.localHash && remoteHash === image.localHash) {
-          import_js_logger7.default.debug(`Skipping unchanged image: ${image.path}`);
+          import_js_logger8.default.debug(`Skipping unchanged image: ${image.path}`);
           continue;
         }
         yield this.uploadImage(image.path, image.content, remoteHash);
@@ -21032,26 +21498,26 @@ var Publisher = class {
   validateSettings() {
     if (this.settings.publishPlatform === "ForestryMd" /* ForestryMd */) {
       if (!this.settings.forestrySettings.apiKey) {
-        new import_obsidian6.Notice(
+        new import_obsidian7.Notice(
           "Config error: You need to define a Forestry.md Garden Key in the plugin settings"
         );
         throw {};
       }
     } else {
       if (!this.settings.githubRepo) {
-        new import_obsidian6.Notice(
+        new import_obsidian7.Notice(
           "Config error: You need to define a GitHub repo in the plugin settings"
         );
         throw {};
       }
       if (!this.settings.githubUserName) {
-        new import_obsidian6.Notice(
+        new import_obsidian7.Notice(
           "Config error: You need to define a GitHub Username in the plugin settings"
         );
         throw {};
       }
       if (!this.settings.githubToken) {
-        new import_obsidian6.Notice(
+        new import_obsidian7.Notice(
           "Config error: You need to define a GitHub Token in the plugin settings"
         );
         throw {};
@@ -21166,7 +21632,7 @@ var PublishStatusManager = class {
 };
 
 // src/views/DigitalGardenSettingTab.ts
-var import_obsidian17 = require("obsidian");
+var import_obsidian20 = require("obsidian");
 
 // node_modules/axios/lib/helpers/bind.js
 function bind(fn2, thisArg) {
@@ -21329,7 +21795,7 @@ var _global = (() => {
   if (typeof globalThis !== "undefined") return globalThis;
   return typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : global;
 })();
-var isContextDefined = (context) => !isUndefined2(context) && context !== _global;
+var isContextDefined = (context2) => !isUndefined2(context2) && context2 !== _global;
 function merge2(...objs) {
   const { caseless, skipUndefined } = isContextDefined(this) && this || {};
   const result = {};
@@ -21756,7 +22222,7 @@ function parseTokens(str) {
   return tokens;
 }
 var isValidHeaderName = (str) => /^[-_a-zA-Z0-9^`|~,!#$%&'*+.]+$/.test(str.trim());
-function matchHeaderValue(context, value, header, filter2, isHeaderNameFilter) {
+function matchHeaderValue(context2, value, header, filter2, isHeaderNameFilter) {
   if (utils_default.isFunction(filter2)) {
     return filter2.call(this, value, header);
   }
@@ -22653,9 +23119,9 @@ var defaults_default = defaults;
 // node_modules/axios/lib/core/transformData.js
 function transformData(fns, response) {
   const config = this || defaults_default;
-  const context = response || config;
-  const headers = AxiosHeaders_default.from(context.headers);
-  let data = context.data;
+  const context2 = response || config;
+  const headers = AxiosHeaders_default.from(context2.headers);
+  let data = context2.data;
   utils_default.forEach(fns, function transform(fn2) {
     data = fn2.call(config, data, headers.normalize(), response ? response.status : void 0);
   });
@@ -24479,10 +24945,10 @@ var HttpStatusCode_default = HttpStatusCode;
 
 // node_modules/axios/lib/axios.js
 function createInstance(defaultConfig) {
-  const context = new Axios_default(defaultConfig);
-  const instance = bind(Axios_default.prototype.request, context);
-  utils_default.extend(instance, Axios_default.prototype, context, { allOwnKeys: true });
-  utils_default.extend(instance, context, null, { allOwnKeys: true });
+  const context2 = new Axios_default(defaultConfig);
+  const instance = bind(Axios_default.prototype.request, context2);
+  utils_default.extend(instance, Axios_default.prototype, context2, { allOwnKeys: true });
+  utils_default.extend(instance, context2, null, { allOwnKeys: true });
   instance.create = function create2(instanceConfig) {
     return createInstance(mergeConfig(defaultConfig, instanceConfig));
   };
@@ -24930,6 +25396,15 @@ https://svelte.dev/e/lifecycle_double_unmount`, bold, normal);
     console.warn(`https://svelte.dev/e/lifecycle_double_unmount`);
   }
 }
+function select_multiple_invalid_value() {
+  if (dev_fallback_default) {
+    console.warn(`%c[svelte] select_multiple_invalid_value
+%cThe \`value\` property of a \`<select multiple>\` element should be an array, but it received a non-array value. The selection will be kept as is.
+https://svelte.dev/e/select_multiple_invalid_value`, bold, normal);
+  } else {
+    console.warn(`https://svelte.dev/e/select_multiple_invalid_value`);
+  }
+}
 function state_proxy_equality_mismatch(operator) {
   if (dev_fallback_default) {
     console.warn(`%c[svelte] state_proxy_equality_mismatch
@@ -25086,10 +25561,10 @@ function get_stack() {
   const stack2 = new Error().stack;
   Error.stackTraceLimit = limit;
   if (!stack2) return [];
-  const lines = stack2.split("\n");
+  const lines2 = stack2.split("\n");
   const new_lines = [];
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
+  for (let i = 0; i < lines2.length; i++) {
+    const line = lines2[i];
     const posixified = line.replaceAll("\\", "/");
     if (line.trim() === "Error") {
       continue;
@@ -25113,8 +25588,8 @@ function invariant(condition, message) {
 
 // node_modules/svelte/src/internal/client/context.js
 var component_context = null;
-function set_component_context(context) {
-  component_context = context;
+function set_component_context(context2) {
+  component_context = context2;
 }
 var dev_stack = null;
 function set_dev_stack(stack2) {
@@ -25145,22 +25620,22 @@ function push(props, runes = false, fn2) {
 }
 function pop(component2) {
   var _a6;
-  var context = (
+  var context2 = (
     /** @type {ComponentContext} */
     component_context
   );
-  var effects = context.e;
+  var effects = context2.e;
   if (effects !== null) {
-    context.e = null;
+    context2.e = null;
     for (var fn2 of effects) {
       create_user_effect(fn2);
     }
   }
   if (component2 !== void 0) {
-    context.x = component2;
+    context2.x = component2;
   }
-  context.i = true;
-  component_context = context.p;
+  context2.i = true;
+  component_context = context2.p;
   if (dev_fallback_default) {
     dev_current_component_function = (_a6 = component_context == null ? void 0 : component_context.function) != null ? _a6 : null;
   }
@@ -25244,11 +25719,11 @@ function get_adjustments(error, effect5) {
   var indent = is_firefox ? "  " : "	";
   var component_stack = `
 ${indent}in ${((_a6 = effect5.fn) == null ? void 0 : _a6.name) || "<unknown>"}`;
-  var context = effect5.ctx;
-  while (context !== null) {
+  var context2 = effect5.ctx;
+  while (context2 !== null) {
     component_stack += `
-${indent}in ${(_b3 = context.function) == null ? void 0 : _b3[FILENAME].split("/").pop()}`;
-    context = context.p;
+${indent}in ${(_b3 = context2.function) == null ? void 0 : _b3[FILENAME].split("/").pop()}`;
+    context2 = context2.p;
   }
   return {
     message: error.message + `
@@ -25274,11 +25749,11 @@ var STATUS_MASK = ~(DIRTY | MAYBE_DIRTY | CLEAN);
 function set_signal_status(signal, status) {
   signal.f = signal.f & STATUS_MASK | status;
 }
-function update_derived_status(derived2) {
-  if ((derived2.f & CONNECTED) !== 0 || derived2.deps === null) {
-    set_signal_status(derived2, CLEAN);
+function update_derived_status(derived3) {
+  if ((derived3.f & CONNECTED) !== 0 || derived3.deps === null) {
+    set_signal_status(derived3, CLEAN);
   } else {
-    set_signal_status(derived2, MAYBE_DIRTY);
+    set_signal_status(derived3, MAYBE_DIRTY);
   }
 }
 
@@ -25306,9 +25781,131 @@ function defer_effect(effect5, dirty_effects, maybe_dirty_effects) {
   set_signal_status(effect5, CLEAN);
 }
 
+// node_modules/svelte/src/store/utils.js
+function subscribe_to_store(store, run3, invalidate) {
+  if (store == null) {
+    run3(void 0);
+    if (invalidate) invalidate(void 0);
+    return noop2;
+  }
+  const unsub = untrack(
+    () => store.subscribe(
+      run3,
+      // @ts-expect-error
+      invalidate
+    )
+  );
+  return unsub.unsubscribe ? () => unsub.unsubscribe() : unsub;
+}
+
+// node_modules/svelte/src/store/shared/index.js
+var subscriber_queue = [];
+function writable(value, start2 = noop2) {
+  let stop = null;
+  const subscribers = /* @__PURE__ */ new Set();
+  function set2(new_value) {
+    if (safe_not_equal(value, new_value)) {
+      value = new_value;
+      if (stop) {
+        const run_queue = !subscriber_queue.length;
+        for (const subscriber of subscribers) {
+          subscriber[1]();
+          subscriber_queue.push(subscriber, value);
+        }
+        if (run_queue) {
+          for (let i = 0; i < subscriber_queue.length; i += 2) {
+            subscriber_queue[i][0](subscriber_queue[i + 1]);
+          }
+          subscriber_queue.length = 0;
+        }
+      }
+    }
+  }
+  function update2(fn2) {
+    set2(fn2(
+      /** @type {T} */
+      value
+    ));
+  }
+  function subscribe(run3, invalidate = noop2) {
+    const subscriber = [run3, invalidate];
+    subscribers.add(subscriber);
+    if (subscribers.size === 1) {
+      stop = start2(set2, update2) || noop2;
+    }
+    run3(
+      /** @type {T} */
+      value
+    );
+    return () => {
+      subscribers.delete(subscriber);
+      if (subscribers.size === 0 && stop) {
+        stop();
+        stop = null;
+      }
+    };
+  }
+  return { set: set2, update: update2, subscribe };
+}
+function get(store) {
+  let value;
+  subscribe_to_store(store, (_) => value = _)();
+  return value;
+}
+
 // node_modules/svelte/src/internal/client/reactivity/store.js
 var legacy_is_updating_store = false;
 var is_store_binding = false;
+var IS_UNMOUNTED = /* @__PURE__ */ Symbol("unmounted");
+function store_get(store, store_name, stores) {
+  var _a6;
+  const entry = (_a6 = stores[store_name]) != null ? _a6 : stores[store_name] = {
+    store: null,
+    source: mutable_source(void 0),
+    unsubscribe: noop2
+  };
+  if (dev_fallback_default) {
+    entry.source.label = store_name;
+  }
+  if (entry.store !== store && !(IS_UNMOUNTED in stores)) {
+    entry.unsubscribe();
+    entry.store = store != null ? store : null;
+    if (store == null) {
+      entry.source.v = void 0;
+      entry.unsubscribe = noop2;
+    } else {
+      var is_synchronous_callback = true;
+      entry.unsubscribe = subscribe_to_store(store, (v) => {
+        if (is_synchronous_callback) {
+          entry.source.v = v;
+        } else {
+          set(entry.source, v);
+        }
+      });
+      is_synchronous_callback = false;
+    }
+  }
+  if (store && IS_UNMOUNTED in stores) {
+    return get(store);
+  }
+  return get2(entry.source);
+}
+function setup_stores() {
+  const stores = {};
+  function cleanup() {
+    teardown(() => {
+      for (var store_name in stores) {
+        const ref = stores[store_name];
+        ref.unsubscribe();
+      }
+      define_property(stores, IS_UNMOUNTED, {
+        enumerable: false,
+        value: true
+      });
+    });
+  }
+  return [stores, cleanup];
+}
 function capture_store_binding(fn2) {
   var previous_is_store_binding = is_store_binding;
   try {
@@ -26136,10 +26733,10 @@ function derived_safe_equal(fn2) {
   signal.equals = safe_equals;
   return signal;
 }
-function destroy_derived_effects(derived2) {
-  var effects = derived2.effects;
+function destroy_derived_effects(derived3) {
+  var effects = derived3.effects;
   if (effects !== null) {
-    derived2.effects = null;
+    derived3.effects = null;
     for (var i = 0; i < effects.length; i += 1) {
       destroy_effect(
         /** @type {Effect} */
@@ -26149,27 +26746,27 @@ function destroy_derived_effects(derived2) {
   }
 }
 var stack = [];
-function execute_derived(derived2) {
+function execute_derived(derived3) {
   var value;
   var prev_active_effect = active_effect;
-  var parent = derived2.parent;
-  if (!is_destroying_effect && parent !== null && derived2.v !== UNINITIALIZED && // if it was never evaluated before, it's guaranteed to fail downstream, so we try to execute instead
+  var parent = derived3.parent;
+  if (!is_destroying_effect && parent !== null && derived3.v !== UNINITIALIZED && // if it was never evaluated before, it's guaranteed to fail downstream, so we try to execute instead
   (parent.f & (DESTROYED | INERT)) !== 0) {
     derived_inert();
-    return derived2.v;
+    return derived3.v;
   }
   set_active_effect(parent);
   if (dev_fallback_default) {
     let prev_eager_effects = eager_effects;
     set_eager_effects(/* @__PURE__ */ new Set());
     try {
-      if (includes.call(stack, derived2)) {
+      if (includes.call(stack, derived3)) {
         derived_references_self();
       }
-      stack.push(derived2);
-      derived2.f &= ~WAS_MARKED;
-      destroy_derived_effects(derived2);
-      value = update_reaction(derived2);
+      stack.push(derived3);
+      derived3.f &= ~WAS_MARKED;
+      destroy_derived_effects(derived3);
+      value = update_reaction(derived3);
     } finally {
       set_active_effect(prev_active_effect);
       set_eager_effects(prev_eager_effects);
@@ -26177,29 +26774,29 @@ function execute_derived(derived2) {
     }
   } else {
     try {
-      derived2.f &= ~WAS_MARKED;
-      destroy_derived_effects(derived2);
-      value = update_reaction(derived2);
+      derived3.f &= ~WAS_MARKED;
+      destroy_derived_effects(derived3);
+      value = update_reaction(derived3);
     } finally {
       set_active_effect(prev_active_effect);
     }
   }
   return value;
 }
-function update_derived(derived2) {
+function update_derived(derived3) {
   var _a6, _b3, _c2;
-  var value = execute_derived(derived2);
-  if (!derived2.equals(value)) {
-    derived2.wv = increment_write_version();
-    if (!((_a6 = current_batch) == null ? void 0 : _a6.is_fork) || derived2.deps === null) {
+  var value = execute_derived(derived3);
+  if (!derived3.equals(value)) {
+    derived3.wv = increment_write_version();
+    if (!((_a6 = current_batch) == null ? void 0 : _a6.is_fork) || derived3.deps === null) {
       if (current_batch !== null) {
-        current_batch.capture(derived2, value, true);
-        (_b3 = previous_batch) == null ? void 0 : _b3.capture(derived2, value, true);
+        current_batch.capture(derived3, value, true);
+        (_b3 = previous_batch) == null ? void 0 : _b3.capture(derived3, value, true);
       } else {
-        derived2.v = value;
+        derived3.v = value;
       }
-      if (derived2.deps === null) {
-        set_signal_status(derived2, CLEAN);
+      if (derived3.deps === null) {
+        set_signal_status(derived3, CLEAN);
         return;
       }
     }
@@ -26209,16 +26806,16 @@ function update_derived(derived2) {
   }
   if (batch_values !== null) {
     if (effect_tracking() || ((_c2 = current_batch) == null ? void 0 : _c2.is_fork)) {
-      batch_values.set(derived2, value);
+      batch_values.set(derived3, value);
     }
   } else {
-    update_derived_status(derived2);
+    update_derived_status(derived3);
   }
 }
-function freeze_derived_effects(derived2) {
+function freeze_derived_effects(derived3) {
   var _a6;
-  if (derived2.effects === null) return;
-  for (const e of derived2.effects) {
+  if (derived3.effects === null) return;
+  for (const e of derived3.effects) {
     if (e.teardown || e.ac) {
       (_a6 = e.teardown) == null ? void 0 : _a6.call(e);
       if (e.ac !== null) {
@@ -26233,9 +26830,9 @@ function freeze_derived_effects(derived2) {
     }
   }
 }
-function unfreeze_derived_effects(derived2) {
-  if (derived2.effects === null) return;
-  for (const e of derived2.effects) {
+function unfreeze_derived_effects(derived3) {
+  if (derived3.effects === null) return;
+  for (const e of derived3.effects) {
     if (e.teardown && e.fn !== null) {
       update_effect(e);
     }
@@ -26646,11 +27243,11 @@ process_fn = function() {
   var effects = collected_effects = [];
   var render_effects = [];
   var updates = legacy_updates = [];
-  for (const root15 of roots) {
+  for (const root18 of roots) {
     try {
-      __privateMethod(this, _Batch_instances, traverse_fn).call(this, root15, effects, render_effects);
+      __privateMethod(this, _Batch_instances, traverse_fn).call(this, root18, effects, render_effects);
     } catch (e) {
-      reset_all(root15);
+      reset_all(root18);
       if (!__privateMethod(this, _Batch_instances, is_deferred_fn).call(this)) this.discard();
       throw e;
     }
@@ -26723,9 +27320,9 @@ process_fn = function() {
  * @param {Effect[]} effects
  * @param {Effect[]} render_effects
  */
-traverse_fn = function(root15, effects, render_effects) {
-  root15.f ^= CLEAN;
-  var effect5 = root15.first;
+traverse_fn = function(root18, effects, render_effects) {
+  root18.f ^= CLEAN;
+  var effect5 = root18.first;
   while (effect5 !== null) {
     var flags2 = effect5.f;
     var is_branch = (flags2 & (BRANCH_EFFECT | ROOT_EFFECT)) !== 0;
@@ -26908,8 +27505,8 @@ commit_fn = function() {
       }
       if (__privateGet(batch, _roots).length > 0 && !__privateGet(batch, _decrement_queued)) {
         batch.apply();
-        for (var root15 of __privateGet(batch, _roots)) {
-          __privateMethod(_a6 = batch, _Batch_instances, traverse_fn).call(_a6, root15, [], []);
+        for (var root18 of __privateGet(batch, _roots)) {
+          __privateMethod(_a6 = batch, _Batch_instances, traverse_fn).call(_a6, root18, [], []);
         }
         __privateSet(batch, _roots, []);
       }
@@ -27154,6 +27751,13 @@ function mutable_source(initial_value, immutable = false, trackable = true) {
   }
   return s2;
 }
+function mutate(source2, value) {
+  set(
+    source2,
+    untrack(() => get2(source2))
+  );
+  return value;
+}
 function set(source2, value, should_proxy = false) {
   if (active_reaction !== null && // since we are untracking the function inside `$inspect.with` we need to add this check
   // to ensure we error if state is set inside an inspect effect
@@ -27201,15 +27805,15 @@ function internal_set(source2, value, updated_during_traversal = null) {
       }
     }
     if ((source2.f & DERIVED) !== 0) {
-      const derived2 = (
+      const derived3 = (
         /** @type {Derived} */
         source2
       );
       if ((source2.f & DIRTY) !== 0) {
-        execute_derived(derived2);
+        execute_derived(derived3);
       }
       if (batch_values === null) {
-        update_derived_status(derived2);
+        update_derived_status(derived3);
       }
     }
     source2.wv = increment_write_version();
@@ -27268,16 +27872,16 @@ function mark_reactions(signal, status, updated_during_traversal) {
         reaction
       );
     } else if ((flags2 & DERIVED) !== 0) {
-      var derived2 = (
+      var derived3 = (
         /** @type {Derived} */
         reaction
       );
-      (_a6 = batch_values) == null ? void 0 : _a6.delete(derived2);
+      (_a6 = batch_values) == null ? void 0 : _a6.delete(derived3);
       if ((flags2 & WAS_MARKED) === 0) {
         if (flags2 & CONNECTED && (active_effect === null || (active_effect.f & REACTION_IS_UPDATING) === 0)) {
           reaction.f |= WAS_MARKED;
         }
-        mark_reactions(derived2, MAYBE_DIRTY, updated_during_traversal);
+        mark_reactions(derived3, MAYBE_DIRTY, updated_during_traversal);
       }
     } else if (not_dirty) {
       var effect5 = (
@@ -27547,6 +28151,9 @@ function get_proxied_value(value) {
   } catch (e) {
   }
   return value;
+}
+function is(a, b) {
+  return Object.is(get_proxied_value(a), get_proxied_value(b));
 }
 var ARRAY_MUTATING_METHODS = /* @__PURE__ */ new Set([
   "copyWithin",
@@ -27873,11 +28480,11 @@ function create_effect(type, fn2) {
       push_effect(e, parent);
     }
     if (active_reaction !== null && (active_reaction.f & DERIVED) !== 0 && (type & ROOT_EFFECT) === 0) {
-      var derived2 = (
+      var derived3 = (
         /** @type {Derived} */
         active_reaction
       );
-      ((_b3 = derived2.effects) != null ? _b3 : derived2.effects = []).push(e);
+      ((_b3 = derived3.effects) != null ? _b3 : derived3.effects = []).push(e);
     }
   }
   return effect5;
@@ -27905,11 +28512,11 @@ function user_effect(fn2) {
   );
   var defer = !active_reaction && (flags2 & BRANCH_EFFECT) !== 0 && component_context !== null && !component_context.i;
   if (defer) {
-    var context = (
+    var context2 = (
       /** @type {ComponentContext} */
       component_context
     );
-    ((_a6 = context.e) != null ? _a6 : context.e = []).push(fn2);
+    ((_a6 = context2.e) != null ? _a6 : context2.e = []).push(fn2);
   } else {
     return create_user_effect(fn2);
   }
@@ -27954,12 +28561,12 @@ function effect(fn2) {
   return create_effect(EFFECT, fn2);
 }
 function legacy_pre_effect(deps, fn2) {
-  var context = (
+  var context2 = (
     /** @type {ComponentContextLegacy} */
     component_context
   );
   var token = { effect: null, ran: false, deps };
-  context.l.$.push(token);
+  context2.l.$.push(token);
   token.effect = render_effect(() => {
     deps();
     if (token.ran) return;
@@ -27977,12 +28584,12 @@ function legacy_pre_effect(deps, fn2) {
   });
 }
 function legacy_pre_effect_reset() {
-  var context = (
+  var context2 = (
     /** @type {ComponentContextLegacy} */
     component_context
   );
   render_effect(() => {
-    for (var token of context.l.$) {
+    for (var token of context2.l.$) {
       token.deps();
       var effect5 = token.effect;
       if ((effect5.f & CLEAN) !== 0 && effect5.deps !== null) {
@@ -28285,7 +28892,7 @@ function is_dirty(reaction) {
   }
   return false;
 }
-function schedule_possible_effect_self_invalidation(signal, effect5, root15 = true) {
+function schedule_possible_effect_self_invalidation(signal, effect5, root18 = true) {
   var reactions = signal.reactions;
   if (reactions === null) return;
   if (!async_mode_flag && current_sources !== null && current_sources.has(signal)) {
@@ -28301,7 +28908,7 @@ function schedule_possible_effect_self_invalidation(signal, effect5, root15 = tr
         false
       );
     } else if (effect5 === reaction) {
-      if (root15) {
+      if (root18) {
         set_signal_status(reaction, DIRTY);
       } else if ((reaction.f & CLEAN) !== 0) {
         set_signal_status(reaction, MAYBE_DIRTY);
@@ -28438,26 +29045,26 @@ function remove_reaction(signal, dependency) {
   // to be unused, when in fact it is used by the currently-updating parent. Checking `new_deps`
   // allows us to skip the expensive work of disconnecting and immediately reconnecting it
   (new_deps === null || !includes.call(new_deps, dependency))) {
-    var derived2 = (
+    var derived3 = (
       /** @type {Derived} */
       dependency
     );
-    if ((derived2.f & CONNECTED) !== 0) {
-      derived2.f ^= CONNECTED;
-      derived2.f &= ~WAS_MARKED;
+    if ((derived3.f & CONNECTED) !== 0) {
+      derived3.f ^= CONNECTED;
+      derived3.f &= ~WAS_MARKED;
     }
-    if (derived2.v !== UNINITIALIZED) {
-      update_derived_status(derived2);
+    if (derived3.v !== UNINITIALIZED) {
+      update_derived_status(derived3);
     }
-    if (derived2.ac !== null) {
+    if (derived3.ac !== null) {
       without_reactive_context(() => {
-        derived2.ac.abort(STALE_REACTION);
-        derived2.ac = null;
-        set_signal_status(derived2, DIRTY);
+        derived3.ac.abort(STALE_REACTION);
+        derived3.ac = null;
+        set_signal_status(derived3, DIRTY);
       });
     }
-    freeze_derived_effects(derived2);
-    remove_reactions(derived2, 0);
+    freeze_derived_effects(derived3);
+    remove_reactions(derived3, 0);
   }
 }
 function remove_reactions(signal, start_index) {
@@ -28597,29 +29204,29 @@ function get2(signal) {
     return old_values.get(signal);
   }
   if (is_derived) {
-    var derived2 = (
+    var derived3 = (
       /** @type {Derived} */
       signal
     );
     if (is_destroying_effect) {
-      var value = derived2.v;
-      if ((derived2.f & CLEAN) === 0 && derived2.reactions !== null || depends_on_old_values(derived2)) {
-        value = execute_derived(derived2);
+      var value = derived3.v;
+      if ((derived3.f & CLEAN) === 0 && derived3.reactions !== null || depends_on_old_values(derived3)) {
+        value = execute_derived(derived3);
       }
-      old_values.set(derived2, value);
+      old_values.set(derived3, value);
       return value;
     }
-    var should_connect = (derived2.f & CONNECTED) === 0 && !untracking && active_reaction !== null && (is_updating_effect || (active_reaction.f & CONNECTED) !== 0);
-    var is_new = (derived2.f & REACTION_RAN) === 0;
-    if (is_dirty(derived2)) {
+    var should_connect = (derived3.f & CONNECTED) === 0 && !untracking && active_reaction !== null && (is_updating_effect || (active_reaction.f & CONNECTED) !== 0);
+    var is_new = (derived3.f & REACTION_RAN) === 0;
+    if (is_dirty(derived3)) {
       if (should_connect) {
-        derived2.f |= CONNECTED;
+        derived3.f |= CONNECTED;
       }
-      update_derived(derived2);
+      update_derived(derived3);
     }
     if (should_connect && !is_new) {
-      unfreeze_derived_effects(derived2);
-      reconnect(derived2);
+      unfreeze_derived_effects(derived3);
+      reconnect(derived3);
     }
   }
   if ((_c2 = batch_values) == null ? void 0 : _c2.has(signal)) {
@@ -28630,12 +29237,12 @@ function get2(signal) {
   }
   return signal.v;
 }
-function reconnect(derived2) {
+function reconnect(derived3) {
   var _a6;
-  derived2.f |= CONNECTED;
-  if (derived2.deps === null) return;
-  for (const dep of derived2.deps) {
-    ((_a6 = dep.reactions) != null ? _a6 : dep.reactions = []).push(derived2);
+  derived3.f |= CONNECTED;
+  if (derived3.deps === null) return;
+  for (const dep of derived3.deps) {
+    ((_a6 = dep.reactions) != null ? _a6 : dep.reactions = []).push(derived3);
     if ((dep.f & DERIVED) !== 0 && (dep.f & CONNECTED) === 0) {
       unfreeze_derived_effects(
         /** @type {Derived} */
@@ -28648,10 +29255,10 @@ function reconnect(derived2) {
     }
   }
 }
-function depends_on_old_values(derived2) {
-  if (derived2.v === UNINITIALIZED) return true;
-  if (derived2.deps === null) return false;
-  for (const dep of derived2.deps) {
+function depends_on_old_values(derived3) {
+  if (derived3.v === UNINITIALIZED) return true;
+  if (derived3.deps === null) return false;
+  for (const dep of derived3.deps) {
     if (old_values.has(dep)) {
       return true;
     }
@@ -29134,7 +29741,7 @@ function hydrate(component2, options) {
   }
 }
 var listeners = /* @__PURE__ */ new Map();
-function _mount(Component2, { target, anchor, props = {}, events, context, intro = true, transformError }) {
+function _mount(Component2, { target, anchor, props = {}, events, context: context2, intro = true, transformError }) {
   init_operations();
   var component2 = void 0;
   var unmount2 = component_root(() => {
@@ -29152,7 +29759,7 @@ function _mount(Component2, { target, anchor, props = {}, events, context, intro
           /** @type {ComponentContext} */
           component_context
         );
-        if (context) ctx.c = context;
+        if (context2) ctx.c = context2;
         if (events) {
           props.$$events = events;
         }
@@ -30186,17 +30793,17 @@ function html(node, get_value, is_controlled = false, svg = false, mathml = fals
 function append_styles(anchor, css2) {
   effect(() => {
     var _a6;
-    var root15 = anchor.getRootNode();
+    var root18 = anchor.getRootNode();
     var target = (
       /** @type {ShadowRoot} */
-      root15.host ? (
+      root18.host ? (
         /** @type {ShadowRoot} */
-        root15
+        root18
       ) : (
         /** @type {Document} */
-        (_a6 = root15.head) != null ? _a6 : (
+        (_a6 = root18.head) != null ? _a6 : (
           /** @type {Document} */
-          root15.ownerDocument.head
+          root18.ownerDocument.head
         )
       )
     );
@@ -30430,6 +31037,60 @@ function set_style(dom, value, prev_styles, next_styles) {
   return next_styles;
 }
 
+// node_modules/svelte/src/internal/client/dom/elements/bindings/select.js
+function select_option(select, value, mounting = false) {
+  if (select.multiple) {
+    if (value == void 0) {
+      return;
+    }
+    if (!is_array(value)) {
+      return select_multiple_invalid_value();
+    }
+    for (var option2 of select.options) {
+      option2.selected = value.includes(get_option_value(option2));
+    }
+    return;
+  }
+  for (option2 of select.options) {
+    var option_value = get_option_value(option2);
+    if (is(option_value, value)) {
+      option2.selected = true;
+      return;
+    }
+  }
+  if (!mounting || value !== void 0) {
+    select.selectedIndex = -1;
+  }
+}
+function init_select(select) {
+  var observer = new MutationObserver(() => {
+    if ("__value" in select) {
+      select_option(select, select.__value);
+    }
+  });
+  observer.observe(select, {
+    // Listen to option element changes
+    childList: true,
+    subtree: true,
+    // because of <optgroup>
+    // Listen to option element value attribute changes
+    // (doesn't get notified of select value changes,
+    // because that property is not reflected as an attribute)
+    attributes: true,
+    attributeFilter: ["value"]
+  });
+  teardown(() => {
+    observer.disconnect();
+  });
+}
+function get_option_value(option2) {
+  if ("__value" in option2) {
+    return option2.__value;
+  } else {
+    return option2.value;
+  }
+}
+
 // node_modules/svelte/src/internal/client/dom/elements/attributes.js
 var IS_CUSTOM_ELEMENT = /* @__PURE__ */ Symbol("is custom element");
 var IS_HTML = /* @__PURE__ */ Symbol("is html");
@@ -30628,6 +31289,24 @@ function bind_value(input, get3, set2 = get3) {
     }
   });
 }
+function bind_checked(input, get3, set2 = get3) {
+  listen_to_event_and_reset_event(input, "change", (is_reset) => {
+    var value = is_reset ? input.defaultChecked : input.checked;
+    set2(value);
+  });
+  if (
+    // If we are hydrating and the value has since changed,
+    // then use the update value from the input instead.
+    hydrating && input.defaultChecked !== input.checked || // If defaultChecked is set, then checked == defaultChecked
+    untrack(get3) == null
+  ) {
+    set2(input.checked);
+  }
+  render_effect(() => {
+    var value = get3();
+    input.checked = Boolean(value);
+  });
+}
 function is_numberlike_input(input) {
   var type = input.type;
   return type === "number" || type === "range";
@@ -30695,16 +31374,26 @@ function stopPropagation(fn2) {
     return fn2 == null ? void 0 : fn2.apply(this, args);
   };
 }
+function preventDefault(fn2) {
+  return function(...args) {
+    var event2 = (
+      /** @type {Event} */
+      args[0]
+    );
+    event2.preventDefault();
+    return fn2 == null ? void 0 : fn2.apply(this, args);
+  };
+}
 
 // node_modules/svelte/src/internal/client/dom/legacy/lifecycle.js
 function init(immutable = false) {
-  const context = (
+  const context2 = (
     /** @type {ComponentContextLegacy} */
     component_context
   );
-  const callbacks = context.l.u;
+  const callbacks = context2.l.u;
   if (!callbacks) return;
-  let props = () => deep_read_state(context.s);
+  let props = () => deep_read_state(context2.s);
   if (immutable) {
     let version3 = 0;
     let prev = (
@@ -30713,7 +31402,7 @@ function init(immutable = false) {
     );
     const d = derived(() => {
       let changed = false;
-      const props2 = context.s;
+      const props2 = context2.s;
       for (const key2 in props2) {
         if (props2[key2] !== prev[key2]) {
           prev[key2] = props2[key2];
@@ -30727,7 +31416,7 @@ function init(immutable = false) {
   }
   if (callbacks.b.length) {
     user_pre_effect(() => {
-      observe_all(context, props);
+      observe_all(context2, props);
       run_all(callbacks.b);
     });
   }
@@ -30743,14 +31432,14 @@ function init(immutable = false) {
   });
   if (callbacks.a.length) {
     user_effect(() => {
-      observe_all(context, props);
+      observe_all(context2, props);
       run_all(callbacks.a);
     });
   }
 }
-function observe_all(context, props) {
-  if (context.l.s) {
-    for (const signal of context.l.s) get2(signal);
+function observe_all(context2, props) {
+  if (context2.l.s) {
+    for (const signal of context2.l.s) get2(signal);
   }
   props();
 }
@@ -31312,20 +32001,20 @@ function createEventDispatcher() {
     return true;
   };
 }
-function init_update_callbacks(context) {
+function init_update_callbacks(context2) {
   var _a6;
   var l2 = (
     /** @type {ComponentContextLegacy} */
-    context.l
+    context2.l
   );
   return (_a6 = l2.u) != null ? _a6 : l2.u = { a: [], b: [], m: [] };
 }
 
 // src/views/SettingsView/SettingView.ts
-var import_obsidian15 = require("obsidian");
+var import_obsidian18 = require("obsidian");
 
 // src/ui/suggest/file-suggest.ts
-var import_obsidian8 = require("obsidian");
+var import_obsidian9 = require("obsidian");
 
 // node_modules/@popperjs/core/lib/enums.js
 var top = "top";
@@ -32785,7 +33474,7 @@ var createPopper = /* @__PURE__ */ popperGenerator({
 });
 
 // src/ui/suggest/suggest.ts
-var import_obsidian7 = require("obsidian");
+var import_obsidian8 = require("obsidian");
 var Suggest = class {
   constructor(owner, containerEl, scope) {
     this.owner = owner;
@@ -32869,7 +33558,7 @@ var TextInputSuggest = class {
   constructor(app, inputEl) {
     this.app = app;
     this.inputEl = inputEl;
-    this.scope = new import_obsidian7.Scope();
+    this.scope = new import_obsidian8.Scope();
     this.suggestEl = createDiv("suggestion-container");
     const suggestion = this.suggestEl.createDiv("suggestion");
     this.suggest = new Suggest(this, suggestion, this.scope);
@@ -32933,7 +33622,7 @@ var SvgFileSuggest = class extends TextInputSuggest {
     const files = [];
     const lowerCaseInputStr = inputStr.toLowerCase();
     abstractFiles.forEach((file) => {
-      if (file instanceof import_obsidian8.TFile && file.extension === "svg" && file.path.toLowerCase().contains(lowerCaseInputStr)) {
+      if (file instanceof import_obsidian9.TFile && file.extension === "svg" && file.path.toLowerCase().contains(lowerCaseInputStr)) {
         files.push(file);
       }
     });
@@ -32955,7 +33644,7 @@ var ImageFileSuggest = class extends TextInputSuggest {
     const lowerCaseInputStr = inputStr.toLowerCase();
     const imageExtensions = ["png", "jpg", "jpeg", "gif", "svg", "webp"];
     abstractFiles.forEach((file) => {
-      if (file instanceof import_obsidian8.TFile && imageExtensions.includes(file.extension.toLowerCase()) && file.path.toLowerCase().contains(lowerCaseInputStr)) {
+      if (file instanceof import_obsidian9.TFile && imageExtensions.includes(file.extension.toLowerCase()) && file.path.toLowerCase().contains(lowerCaseInputStr)) {
         files.push(file);
       }
     });
@@ -32972,14 +33661,14 @@ var ImageFileSuggest = class extends TextInputSuggest {
 };
 
 // src/views/SettingsView/addFilterInput.ts
-var import_obsidian9 = require("obsidian");
+var import_obsidian10 = require("obsidian");
 function addFilterInput(filter2, el, idx, plugin) {
   const item = el.createEl("li", {
     attr: {
       style: "list-style-type: none; position: relative; margin: 5px 0; padding-right: 45px"
     }
   });
-  const patternField = new import_obsidian9.TextComponent(el);
+  const patternField = new import_obsidian10.TextComponent(el);
   patternField.setPlaceholder("regex pattern").setValue(filter2.pattern).onChange((value) => __async(null, null, function* () {
     if (!value) {
       return;
@@ -32990,7 +33679,7 @@ function addFilterInput(filter2, el, idx, plugin) {
   const patternEl = patternField.inputEl;
   patternEl.style.width = "250px";
   item.appendChild(patternEl);
-  const replaceField = new import_obsidian9.TextComponent(el);
+  const replaceField = new import_obsidian10.TextComponent(el);
   replaceField.setPlaceholder("replacement").setValue(filter2.replace).onChange((value) => __async(null, null, function* () {
     if (!value) {
       return;
@@ -33002,7 +33691,7 @@ function addFilterInput(filter2, el, idx, plugin) {
   replaceEl.style.width = "250px";
   replaceEl.style.marginLeft = "5px";
   item.appendChild(replaceEl);
-  const flagField = new import_obsidian9.TextComponent(el);
+  const flagField = new import_obsidian10.TextComponent(el);
   flagField.setPlaceholder("flags").setValue(filter2.flags).onChange((value) => __async(null, null, function* () {
     if (!value) {
       return;
@@ -33014,7 +33703,7 @@ function addFilterInput(filter2, el, idx, plugin) {
   flagEl.style.width = "50px";
   flagEl.style.marginLeft = "5px";
   item.appendChild(flagEl);
-  const removeButton = new import_obsidian9.ButtonComponent(el);
+  const removeButton = new import_obsidian10.ButtonComponent(el);
   removeButton.setIcon("minus");
   removeButton.setTooltip("Remove filter");
   removeButton.onClick(() => __async(null, null, function* () {
@@ -33033,7 +33722,7 @@ function addFilterInput(filter2, el, idx, plugin) {
 }
 
 // src/views/SettingsView/GithubSettings.ts
-var import_obsidian10 = require("obsidian");
+var import_obsidian11 = require("obsidian");
 var GithubSettings = class {
   constructor(settings, settingsRootElement) {
     this.connectionStatusMessage = "";
@@ -33051,7 +33740,7 @@ var GithubSettings = class {
         cls: "dg-forestry-upgrade-dismiss",
         attr: { "aria-label": "Dismiss" }
       });
-      const dismissIcon = (0, import_obsidian10.getIcon)("x");
+      const dismissIcon = (0, import_obsidian11.getIcon)("x");
       if (dismissIcon) {
         dismissButton.appendChild(dismissIcon);
       } else {
@@ -33065,7 +33754,7 @@ var GithubSettings = class {
       const heading = notice.createEl("div", {
         cls: "dg-forestry-upgrade-heading"
       });
-      const headingIcon = (0, import_obsidian10.getIcon)("trees");
+      const headingIcon = (0, import_obsidian11.getIcon)("trees");
       if (headingIcon) {
         heading.appendChild(headingIcon);
       }
@@ -33140,7 +33829,7 @@ var GithubSettings = class {
       }
       this.updateConnectionStatusIndicator();
     });
-    this.debouncedUpdateConnectionStatus = (0, import_obsidian10.debounce)(
+    this.debouncedUpdateConnectionStatus = (0, import_obsidian11.debounce)(
       this.updateConnectionStatus,
       500,
       true
@@ -33163,7 +33852,7 @@ var GithubSettings = class {
         statusText = this.connectionStatusMessage || "Connection error";
         statusClass = "connection-status-error";
       }
-      const icon = (0, import_obsidian10.getIcon)(iconName);
+      const icon = (0, import_obsidian11.getIcon)(iconName);
       if (icon) {
         icon.addClass("connection-status-icon");
         this.connectionStatusElement.appendChild(icon);
@@ -33233,7 +33922,7 @@ var GithubSettings = class {
     this.connectionStatusMessage = message;
   }
   initializeGitHubRepoSetting() {
-    new import_obsidian10.Setting(this.settingsRootElement).setName("GitHub repo name").setDesc("The name of the GitHub repository").addText(
+    new import_obsidian11.Setting(this.settingsRootElement).setName("GitHub repo name").setDesc("The name of the GitHub repository").addText(
       (text2) => text2.setPlaceholder("mydigitalgarden").setValue(this.settings.settings.githubRepo).onChange((value) => __async(this, null, function* () {
         this.settings.settings.githubRepo = value;
         yield this.checkConnectionAndSaveSettings();
@@ -33241,7 +33930,7 @@ var GithubSettings = class {
     );
   }
   initializeGitHubUserNameSetting() {
-    new import_obsidian10.Setting(this.settingsRootElement).setName("GitHub Username").setDesc("Your GitHub Username").addText(
+    new import_obsidian11.Setting(this.settingsRootElement).setName("GitHub Username").setDesc("Your GitHub Username").addText(
       (text2) => text2.setPlaceholder("myusername").setValue(this.settings.settings.githubUserName).onChange((value) => __async(this, null, function* () {
         this.settings.settings.githubUserName = value;
         yield this.checkConnectionAndSaveSettings();
@@ -33257,7 +33946,7 @@ var GithubSettings = class {
         link2.innerText = "here!";
       });
     });
-    new import_obsidian10.Setting(this.settingsRootElement).setName("GitHub token").setDesc(desc).addText(
+    new import_obsidian11.Setting(this.settingsRootElement).setName("GitHub token").setDesc(desc).addText(
       (text2) => text2.setPlaceholder("Secret Token").setValue(this.settings.settings.githubToken).onChange((value) => __async(this, null, function* () {
         this.settings.settings.githubToken = value;
         yield this.checkConnectionAndSaveSettings();
@@ -33265,7 +33954,7 @@ var GithubSettings = class {
     );
   }
   initializeContentBaseDirSetting() {
-    new import_obsidian10.Setting(this.settingsRootElement).setName("Content base directory (advanced)").setDesc(
+    new import_obsidian11.Setting(this.settingsRootElement).setName("Content base directory (advanced)").setDesc(
       "Subdirectory inside your repository where the digital garden template lives (e.g. Web). Leave empty if the template is at the repo root. Affects GitHub publishing, remote settings, and local export."
     ).addText(
       (text2) => {
@@ -33821,10 +34510,10 @@ function RewriteSettings($$anchor, $$props) {
 }
 
 // src/views/SettingsView/SettingView.ts
-var import_js_logger9 = __toESM(require_logger());
+var import_js_logger11 = __toESM(require_logger());
 
 // src/forestry/ForestryApi.ts
-var import_js_logger8 = __toESM(require_logger());
+var import_js_logger9 = __toESM(require_logger());
 var ForestryApi = class {
   constructor(apiKey) {
     const baseUrl = "https://api.forestry.md/app";
@@ -33846,7 +34535,23 @@ var ForestryApi = class {
         }
         return response.data;
       } catch (e) {
-        import_js_logger8.default.error(e);
+        import_js_logger9.default.error(e);
+        return null;
+      }
+    });
+  }
+  getDeploys(branch2 = "active", limit = 10) {
+    return __async(this, null, function* () {
+      try {
+        const response = yield this.client.get("pages/deploys", {
+          params: { branch: branch2, limit }
+        });
+        if (response.status !== 200) {
+          return null;
+        }
+        return response.data.value;
+      } catch (e) {
+        import_js_logger9.default.error(e);
         return null;
       }
     });
@@ -33862,7 +34567,7 @@ var ForestryApi = class {
         }
         return response.data;
       } catch (e) {
-        import_js_logger8.default.error(e);
+        import_js_logger9.default.error(e);
         return null;
       }
     });
@@ -33870,10 +34575,10 @@ var ForestryApi = class {
 };
 
 // src/views/SettingsView/ForestrySettings.svelte
-var import_obsidian12 = require("obsidian");
+var import_obsidian13 = require("obsidian");
 
 // src/ui/Icon.svelte
-var import_obsidian11 = require("obsidian");
+var import_obsidian12 = require("obsidian");
 function Icon($$anchor, $$props) {
   push($$props, false);
   let name = prop(
@@ -33886,9 +34591,9 @@ function Icon($$anchor, $$props) {
   init();
   var fragment = comment();
   var node = first_child(fragment);
-  html(node, () => (deep_read_state(import_obsidian11.getIcon), deep_read_state(name()), untrack(() => {
+  html(node, () => (deep_read_state(import_obsidian12.getIcon), deep_read_state(name()), untrack(() => {
     var _a6;
-    return (_a6 = (0, import_obsidian11.getIcon)(name())) == null ? void 0 : _a6.outerHTML;
+    return (_a6 = (0, import_obsidian12.getIcon)(name())) == null ? void 0 : _a6.outerHTML;
   })));
   append2($$anchor, fragment);
   pop();
@@ -33918,7 +34623,7 @@ function ForestrySettings($$anchor, $$props) {
   const connect = () => __awaiter(void 0, void 0, void 0, function* () {
     let pageInfo = yield getPageInfo();
     if (!pageInfo) {
-      new import_obsidian12.Notice("Invalid Garden Key");
+      new import_obsidian13.Notice("Invalid Garden Key");
       return;
     }
     settings(settings().forestrySettings.forestryPageName = pageInfo.value.pageName, true);
@@ -34136,10 +34841,10 @@ function ForestrySettings($$anchor, $$props) {
 }
 
 // src/views/NavigationOrder/NavigationOrderModal.ts
-var import_obsidian14 = require("obsidian");
+var import_obsidian15 = require("obsidian");
 
 // src/views/NavigationOrder/NavigationOrderView.svelte
-var import_obsidian13 = require("obsidian");
+var import_obsidian14 = require("obsidian");
 
 // node_modules/sortablejs/modular/sortable.esm.js
 function _defineProperty(e, r, t) {
@@ -36036,9 +36741,9 @@ function _generateId(el) {
   }
   return sum.toString(36);
 }
-function _saveInputCheckedState(root15) {
+function _saveInputCheckedState(root18) {
   savedInputChecked.length = 0;
-  var inputs = root15.getElementsByTagName("input");
+  var inputs = root18.getElementsByTagName("input");
   var idx = inputs.length;
   while (idx--) {
     var el = inputs[idx];
@@ -36497,7 +37202,7 @@ function NavigationOrderView($$anchor, $$props) {
     return __awaiter(this, void 0, void 0, function* () {
       const { notes } = yield publisher().getFilesMarkedForPublishing();
       const rewriteRules = getRewriteRules(settings().pathRewriteRules);
-      const root15 = {};
+      const root18 = {};
       for (const note of notes) {
         const vaultPath = note.getPath();
         const frontmatter = note.getFrontmatter();
@@ -36508,7 +37213,7 @@ function NavigationOrderView($$anchor, $$props) {
         if (dotIdx > 0) {
           parts[lastIdx] = parts[lastIdx].substring(0, dotIdx);
         }
-        let current = root15;
+        let current = root18;
         for (let i = 0; i < parts.length; i++) {
           const part = parts[i];
           if (!current[part]) {
@@ -36519,7 +37224,7 @@ function NavigationOrderView($$anchor, $$props) {
           }
         }
       }
-      return convertToTreeItems(root15);
+      return convertToTreeItems(root18);
     });
   }
   function convertToTreeItems(obj) {
@@ -36614,7 +37319,7 @@ function NavigationOrderView($$anchor, $$props) {
         });
         settings(settings().navigationOrder = ordering, true);
         yield saveSettings()();
-        new import_obsidian13.Notice("Navigation ordering saved!");
+        new import_obsidian14.Notice("Navigation ordering saved!");
         close()();
       } catch (e) {
         set(error, `Failed to save: ${e.message}`);
@@ -36626,7 +37331,7 @@ function NavigationOrderView($$anchor, $$props) {
   function handleReset() {
     return __awaiter(this, void 0, void 0, function* () {
       if (!remoteSha) {
-        new import_obsidian13.Notice("No custom ordering to reset.");
+        new import_obsidian14.Notice("No custom ordering to reset.");
         return;
       }
       set(saving, true);
@@ -36634,7 +37339,7 @@ function NavigationOrderView($$anchor, $$props) {
         yield repositoryConnection().deleteFile(NAV_ORDER_PATH, { sha: remoteSha });
         settings(settings().navigationOrder = void 0, true);
         yield saveSettings()();
-        new import_obsidian13.Notice("Navigation ordering reset to default.");
+        new import_obsidian14.Notice("Navigation ordering reset to default.");
         close()();
       } catch (e) {
         set(error, `Failed to reset: ${e.message}`);
@@ -36740,8 +37445,1409 @@ var NavigationOrderModal = class {
       };
       this.modal.open();
     };
-    this.modal = new import_obsidian14.Modal(app);
+    this.modal = new import_obsidian15.Modal(app);
     this.modal.titleEl.innerText = "Reorder Navigation";
+  }
+};
+
+// src/views/GardenPluginSettings/GardenPluginsModal.ts
+var import_obsidian17 = require("obsidian");
+
+// src/views/GardenPluginSettings/GardenPluginsView.svelte
+var import_obsidian16 = require("obsidian");
+
+// src/gardenPlugins/regions.ts
+function regionsOf(manifest) {
+  var _a6;
+  return Object.keys((_a6 = manifest.regions) != null ? _a6 : {});
+}
+function getRegionProviders(installed) {
+  var _a6;
+  const providers = {};
+  const enabled = [...installed].filter((plugin) => plugin.enabled).sort((a, b) => a.manifest.id.localeCompare(b.manifest.id));
+  for (const plugin of enabled) {
+    for (const region of regionsOf(plugin.manifest)) {
+      (_a6 = providers[region]) != null ? _a6 : providers[region] = plugin.manifest.id;
+    }
+  }
+  return providers;
+}
+function getRegionConflicts(incoming, installed) {
+  const incomingRegions = regionsOf(incoming);
+  if (incomingRegions.length === 0) {
+    return [];
+  }
+  return installed.filter(
+    (plugin) => plugin.enabled && plugin.manifest.id !== incoming.id && regionsOf(plugin.manifest).some(
+      (region) => incomingRegions.includes(region)
+    )
+  );
+}
+
+// src/gardenPlugins/notices.ts
+function buildTriggeredNotice(settings) {
+  if (settings.publishPlatform === "ForestryMd" /* ForestryMd */) {
+    return "Forestry is rebuilding your garden \u2014 the change will be live when the build finishes.";
+  }
+  return "A site build has been triggered \u2014 the change will be live when it finishes.";
+}
+
+// src/views/GardenPluginSettings/GardenPluginsView.svelte
+var root5 = from_html(`<div class="dg-skeleton-row svelte-j5mgcu"><div class="dg-skeleton-info svelte-j5mgcu"><span class="dg-skeleton dg-skeleton-title svelte-j5mgcu"></span> <span class="dg-skeleton dg-skeleton-text svelte-j5mgcu"></span></div> <span class="dg-skeleton dg-skeleton-pill svelte-j5mgcu"></span></div>`);
+var root_15 = from_html(`<div class="dg-plugins-loading svelte-j5mgcu" role="status" aria-label="Loading plugins from your garden repository"><!> <p class="dg-plugins-loading-hint svelte-j5mgcu"><span class="dg-spinner svelte-j5mgcu" aria-hidden="true"></span> Reading plugins from your garden repository\u2026</p></div>`);
+var root_25 = from_html(`<p class="dg-plugins-error svelte-j5mgcu"> </p>`);
+var root_35 = from_html(`<p class="svelte-j5mgcu">No plugins found. If your garden predates the plugin system,
+					update your site template first.</p>`);
+var root_43 = from_html(`<span class="dg-plugin-badge svelte-j5mgcu">Core plugin</span>`);
+var root_52 = from_html(`<span class="dg-plugin-badge is-region svelte-j5mgcu"> </span>`);
+var root_62 = from_html(`<span class="dg-plugin-region-notice svelte-j5mgcu"> <strong class="svelte-j5mgcu"> </strong> \u2014 disable it to activate this plugin.</span>`);
+var root_72 = from_html(`<button class="svelte-j5mgcu">Settings</button>`);
+var root_82 = from_html(`<button class="mod-warning svelte-j5mgcu">Confirm removal</button>`);
+var root_92 = from_html(`<button class="svelte-j5mgcu">Uninstall</button>`);
+var root_10 = from_html(`<button class="svelte-j5mgcu">Update</button> <!>`, 1);
+var root_11 = from_html(`<label class="dg-plugin-setting svelte-j5mgcu"><span class="svelte-j5mgcu"><span class="dg-plugin-setting-name svelte-j5mgcu">Enabled by default on notes</span> <span class="dg-plugin-setting-desc svelte-j5mgcu">Override per note with <code class="svelte-j5mgcu"> </code> in frontmatter.</span></span> <input type="checkbox" class="svelte-j5mgcu"/></label>`);
+var root_122 = from_html(`<span class="dg-plugin-setting-desc svelte-j5mgcu"> </span>`);
+var root_132 = from_html(`<input type="checkbox" class="svelte-j5mgcu"/>`);
+var root_142 = from_html(`<option class="svelte-j5mgcu"> </option>`);
+var root_152 = from_html(`<select class="svelte-j5mgcu"></select>`);
+var root_16 = from_html(`<input class="svelte-j5mgcu"/>`);
+var root_17 = from_html(`<label class="dg-plugin-setting svelte-j5mgcu"><span class="svelte-j5mgcu"><span class="dg-plugin-setting-name svelte-j5mgcu"> </span> <!></span> <!></label>`);
+var root_18 = from_html(`<button class="mod-cta svelte-j5mgcu">Save plugin settings</button>`);
+var root_19 = from_html(`<div class="dg-plugin-settings svelte-j5mgcu"><!> <!> <!></div>`);
+var root_20 = from_html(`<div><div class="dg-plugin-row-main svelte-j5mgcu"><div class="dg-plugin-row-info svelte-j5mgcu"><span class="dg-plugin-name svelte-j5mgcu"> <span class="dg-plugin-version svelte-j5mgcu"> </span> <!> <!></span> <span class="dg-plugin-description svelte-j5mgcu"> </span> <span class="dg-plugin-author svelte-j5mgcu"> </span> <!></div> <div class="dg-plugin-row-actions svelte-j5mgcu"><!> <!> <label class="dg-plugin-toggle svelte-j5mgcu"><input type="checkbox" class="svelte-j5mgcu"/> </label></div></div> <!></div>`);
+var root_21 = from_html(`<!> <!>`, 1);
+var root_222 = from_html(
+  `<p class="dg-plugins-intro svelte-j5mgcu">Plugins extend your garden with new features. They are stored in
+			your garden repository under <code class="svelte-j5mgcu">src/plugins/</code> \u2014 this list is
+			read directly from it.</p> <!>`,
+  1
+);
+var root_232 = from_html(`<label class="dg-plugin-conflict-choice svelte-j5mgcu"><input type="checkbox" class="svelte-j5mgcu"/> <span class="svelte-j5mgcu"> <strong class="svelte-j5mgcu"> </strong> </span></label>`);
+var root_242 = from_html(`<div class="dg-plugin-confirm svelte-j5mgcu"><p class="dg-plugin-confirm-title svelte-j5mgcu"> <strong class="svelte-j5mgcu"> </strong> </p> <p class="svelte-j5mgcu"> </p> <p class="dg-plugin-confirm-warning svelte-j5mgcu">\u26A0\uFE0F Plugins run their own code in your site's build and in
+					your visitors' browsers. Only install plugins from authors
+					you trust \u2014 review the code at <a class="svelte-j5mgcu"> </a> <code class="svelte-j5mgcu"> </code>).</p> <!> <div class="dg-plugin-confirm-actions svelte-j5mgcu"><button class="mod-cta svelte-j5mgcu"> </button> <button class="svelte-j5mgcu">Cancel</button></div></div>`);
+var root_252 = from_html(`<div class="dg-skeleton-card svelte-j5mgcu"><span class="dg-skeleton dg-skeleton-title svelte-j5mgcu"></span> <span class="dg-skeleton dg-skeleton-text svelte-j5mgcu"></span> <span class="dg-skeleton dg-skeleton-text short svelte-j5mgcu"></span></div>`);
+var root_26 = from_html(`<div class="dg-plugin-grid svelte-j5mgcu" role="status" aria-label="Loading community plugins"></div>`);
+var root_27 = from_html(`<p class="svelte-j5mgcu">The community plugin directory is not available right now. You
+				can still install any plugin from its GitHub URL above.</p>`);
+var root_28 = from_html(`<img class="dg-plugin-card-image svelte-j5mgcu" loading="lazy"/>`);
+var root_29 = from_html(`<button disabled="" class="svelte-j5mgcu">Installed</button>`);
+var root_30 = from_html(`<button class="mod-cta svelte-j5mgcu">Install</button>`);
+var root_31 = from_html(`<div class="dg-plugin-card svelte-j5mgcu"><!> <div class="dg-plugin-card-body svelte-j5mgcu"><span class="dg-plugin-name svelte-j5mgcu"> </span> <span class="dg-plugin-description svelte-j5mgcu"> </span> <span class="dg-plugin-author svelte-j5mgcu"> </span> <!></div></div>`);
+var root_322 = from_html(`<input class="dg-plugin-search svelte-j5mgcu" type="text" placeholder="Search community plugins\u2026"/> <div class="dg-plugin-grid svelte-j5mgcu"></div>`, 1);
+var root_332 = from_html(`<h3 class="svelte-j5mgcu">Install from GitHub</h3> <p class="dg-plugins-intro svelte-j5mgcu">Paste the URL of a plugin repository, e.g. <code class="svelte-j5mgcu">https://github.com/user/garden-plugin-example</code>.</p> <div class="dg-plugin-install-row svelte-j5mgcu"><input type="text" placeholder="https://github.com/user/repo" class="svelte-j5mgcu"/> <button class="mod-cta svelte-j5mgcu"> </button></div> <!> <!> <h3 class="svelte-j5mgcu">Browse community plugins</h3> <!>`, 1);
+var root_342 = from_html(`<div class="dg-plugins svelte-j5mgcu"><div class="dg-plugin-tabs svelte-j5mgcu" role="tablist"><button role="tab">Installed<!></button> <button role="tab">Browse &amp; install<!></button></div> <!></div>`);
+var $$css5 = {
+  hash: "svelte-j5mgcu",
+  code: ".dg-plugins.svelte-j5mgcu {display:flex;flex-direction:column;gap:8px;}.dg-plugins.svelte-j5mgcu h3:where(.svelte-j5mgcu) {margin:16px 0 4px 0;}.dg-plugin-tabs.svelte-j5mgcu {display:flex;gap:4px;border-bottom:1px solid var(--background-modifier-border);margin-bottom:4px;}.dg-plugin-tabs.svelte-j5mgcu button:where(.svelte-j5mgcu) {background:none;border:none;border-bottom:2px solid transparent;border-radius:0;padding:8px 14px;font-size:0.95em;color:var(--text-muted);cursor:pointer;box-shadow:none;}.dg-plugin-tabs.svelte-j5mgcu button:where(.svelte-j5mgcu):hover {color:var(--text-normal);}.dg-plugin-tabs.svelte-j5mgcu button.is-active:where(.svelte-j5mgcu) {color:var(--text-normal);font-weight:600;border-bottom-color:var(--interactive-accent);}.dg-plugins-intro.svelte-j5mgcu {color:var(--text-muted);margin:0;}.dg-plugins-error.svelte-j5mgcu {color:var(--text-error);}.dg-plugins-loading.svelte-j5mgcu {display:flex;flex-direction:column;gap:8px;}.dg-skeleton-row.svelte-j5mgcu {border:1px solid var(--background-modifier-border);border-radius:8px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;gap:12px;}.dg-skeleton-info.svelte-j5mgcu {display:flex;flex-direction:column;gap:6px;flex:1;}.dg-skeleton-card.svelte-j5mgcu {border:1px solid var(--background-modifier-border);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:8px;}.dg-skeleton.svelte-j5mgcu {display:block;border-radius:4px;background:var(--background-modifier-hover, rgba(128, 128, 128, 0.15));\n		animation: svelte-j5mgcu-dg-skeleton-pulse 1.4s ease-in-out infinite;animation-delay:var(--dg-skeleton-delay, 0s);}.dg-skeleton-title.svelte-j5mgcu {height:0.9rem;width:40%;}.dg-skeleton-text.svelte-j5mgcu {height:0.7rem;width:75%;}.dg-skeleton-text.short.svelte-j5mgcu {width:45%;}.dg-skeleton-pill.svelte-j5mgcu {height:1.4rem;width:5.5rem;border-radius:999px;}.dg-plugins-loading-hint.svelte-j5mgcu {display:flex;align-items:center;gap:8px;color:var(--text-muted);font-size:0.85em;margin:4px 0 0;}.dg-spinner.svelte-j5mgcu {width:12px;height:12px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;\n		animation: svelte-j5mgcu-dg-spin 0.7s linear infinite;flex-shrink:0;}\n\n	@keyframes svelte-j5mgcu-dg-skeleton-pulse {\n		0%,\n		100% {\n			opacity: 0.45;\n		}\n		50% {\n			opacity: 1;\n		}\n	}\n\n	@keyframes svelte-j5mgcu-dg-spin {\n		to {\n			transform: rotate(360deg);\n		}\n	}\n\n	@media (prefers-reduced-motion: reduce) {.dg-skeleton.svelte-j5mgcu {\n			animation: none;opacity:0.6;}.dg-spinner.svelte-j5mgcu {animation-duration:2.5s;}\n	}.dg-plugin-row.svelte-j5mgcu {border:1px solid var(--background-modifier-border);border-radius:8px;padding:10px 12px;}.dg-plugin-row.is-disabled.svelte-j5mgcu {opacity:0.6;}.dg-plugin-row-main.svelte-j5mgcu {display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;}.dg-plugin-row-info.svelte-j5mgcu {display:flex;flex-direction:column;gap:2px;min-width:200px;flex:1;}.dg-plugin-name.svelte-j5mgcu {font-weight:600;}.dg-plugin-version.svelte-j5mgcu,\n	.dg-plugin-author.svelte-j5mgcu {color:var(--text-muted);font-size:0.85em;font-weight:400;}.dg-plugin-badge.svelte-j5mgcu {background:var(--background-modifier-border);border-radius:4px;font-size:0.75em;font-weight:500;padding:1px 6px;margin-left:4px;}.dg-plugin-badge.is-region.svelte-j5mgcu {background:var(--interactive-accent);color:var(--text-on-accent, #fff);}.dg-plugin-region-notice.svelte-j5mgcu {font-size:0.85em;color:var(--text-warning, var(--text-muted));margin-top:4px;}.dg-plugin-conflict-choice.svelte-j5mgcu {display:flex;align-items:flex-start;gap:8px;margin:0 0 10px;font-size:0.92em;}.dg-plugin-conflict-choice.svelte-j5mgcu input:where(.svelte-j5mgcu) {margin-top:3px;}.dg-plugin-description.svelte-j5mgcu {font-size:0.9em;}.dg-plugin-row-actions.svelte-j5mgcu {display:flex;align-items:center;gap:8px;flex-wrap:wrap;}.dg-plugin-toggle.svelte-j5mgcu {display:flex;align-items:center;gap:4px;font-size:0.9em;}.dg-plugin-settings.svelte-j5mgcu {border-top:1px solid var(--background-modifier-border);margin-top:10px;padding-top:10px;display:flex;flex-direction:column;gap:10px;}.dg-plugin-setting.svelte-j5mgcu {display:flex;justify-content:space-between;align-items:center;gap:16px;}.dg-plugin-setting.svelte-j5mgcu > span:where(.svelte-j5mgcu) {display:flex;flex-direction:column;}.dg-plugin-setting-name.svelte-j5mgcu {font-weight:500;}.dg-plugin-setting-desc.svelte-j5mgcu {color:var(--text-muted);font-size:0.85em;}.dg-plugin-install-row.svelte-j5mgcu {display:flex;gap:8px;}.dg-plugin-install-row.svelte-j5mgcu input:where(.svelte-j5mgcu) {flex:1;}.dg-plugin-confirm.svelte-j5mgcu {border:1px solid var(--background-modifier-border);border-left:3px solid var(--interactive-accent);border-radius:8px;padding:10px 14px;}.dg-plugin-confirm-title.svelte-j5mgcu {margin-top:0;}.dg-plugin-confirm-warning.svelte-j5mgcu {color:var(--text-warning, var(--text-muted));}.dg-plugin-confirm-actions.svelte-j5mgcu {display:flex;gap:8px;}.dg-plugin-search.svelte-j5mgcu {width:100%;}.dg-plugin-grid.svelte-j5mgcu {display:grid;grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));gap:12px;}.dg-plugin-card.svelte-j5mgcu {border:1px solid var(--background-modifier-border);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;}.dg-plugin-card-image.svelte-j5mgcu {width:100%;height:90px;object-fit:cover;}.dg-plugin-card-body.svelte-j5mgcu {display:flex;flex-direction:column;gap:4px;padding:8px 10px;}"
+};
+function GardenPluginsView($$anchor, $$props) {
+  push($$props, false);
+  append_styles($$anchor, $$css5);
+  const regionProviders = mutable_source();
+  const pendingConflicts = mutable_source();
+  const filteredCommunity = mutable_source();
+  let manager = prop($$props, "manager", 8);
+  let settings = prop($$props, "settings", 8);
+  let saveSettings = prop($$props, "saveSettings", 8);
+  let applyNoteSettingsToSite = prop($$props, "applyNoteSettingsToSite", 8);
+  let loading = mutable_source(true);
+  let loadError = mutable_source(null);
+  let installed = mutable_source([]);
+  let community = mutable_source([]);
+  let communityFilter = mutable_source("");
+  let communityLoading = mutable_source(true);
+  let busy = mutable_source(false);
+  let installInput = mutable_source("");
+  let inspecting = mutable_source(false);
+  let installError = mutable_source(null);
+  let pendingInstall = mutable_source(null);
+  let pendingIsUpdate = mutable_source(false);
+  let installConfirmEl = mutable_source();
+  let installErrorEl = mutable_source();
+  let expandedSettingsId = mutable_source(null);
+  let settingsDraft = mutable_source({});
+  let activeTab = mutable_source("installed");
+  onMount(() => __awaiter(void 0, void 0, void 0, function* () {
+    yield refresh();
+    set(community, yield manager().fetchCommunityPlugins());
+    set(communityLoading, false);
+  }));
+  function refresh() {
+    return __awaiter(this, void 0, void 0, function* () {
+      set(loading, true);
+      set(loadError, null);
+      try {
+        set(installed, yield manager().listInstalled());
+      } catch (error) {
+        set(loadError, error instanceof Error ? error.message : "Could not read plugins from your garden repository");
+      }
+      set(loading, false);
+    });
+  }
+  function installedIds() {
+    return new Set(get2(installed).map((plugin) => plugin.manifest.id));
+  }
+  function toggleEnabled(plugin) {
+    return __awaiter(this, void 0, void 0, function* () {
+      set(busy, true);
+      try {
+        yield manager().setEnabled(plugin.manifest.id, !plugin.enabled);
+        new import_obsidian16.Notice(`${plugin.manifest.name} ${plugin.enabled ? "disabled" : "enabled"}. ${buildTriggeredNotice(settings())}`);
+        yield refresh();
+      } catch (error) {
+        new import_obsidian16.Notice(`Could not ${plugin.enabled ? "disable" : "enable"} ${plugin.manifest.name}: ${error instanceof Error ? error.message : "unknown error"}`);
+      }
+      set(busy, false);
+    });
+  }
+  function openSettings(plugin) {
+    var _a6, _b3, _c2, _d;
+    if (get2(expandedSettingsId) === plugin.manifest.id) {
+      set(expandedSettingsId, null);
+      return;
+    }
+    set(expandedSettingsId, plugin.manifest.id);
+    set(settingsDraft, {});
+    for (const entry of (_a6 = plugin.manifest.settings) !== null && _a6 !== void 0 ? _a6 : []) {
+      const stored = (_c2 = (_b3 = plugin.registryEntry) === null || _b3 === void 0 ? void 0 : _b3.settings) === null || _c2 === void 0 ? void 0 : _c2[entry.key];
+      mutate(settingsDraft, get2(settingsDraft)[entry.key] = (_d = stored !== null && stored !== void 0 ? stored : entry.default) !== null && _d !== void 0 ? _d : "");
+    }
+  }
+  function coerce(entry, value) {
+    if (entry.type === "number") {
+      return Number(value);
+    }
+    return value;
+  }
+  function saveDraft(plugin) {
+    return __awaiter(this, void 0, void 0, function* () {
+      set(busy, true);
+      try {
+        yield manager().savePluginSettings(plugin.manifest.id, get2(settingsDraft));
+        new import_obsidian16.Notice(`Saved settings for ${plugin.manifest.name}. ${buildTriggeredNotice(settings())}`);
+        set(expandedSettingsId, null);
+        yield refresh();
+      } catch (_a6) {
+        new import_obsidian16.Notice(`Could not save settings for ${plugin.manifest.name}`);
+      }
+      set(busy, false);
+    });
+  }
+  function noteSettingKeysFor(plugin) {
+    var _a6;
+    return ((_a6 = plugin.manifest.noteSettings) !== null && _a6 !== void 0 ? _a6 : []).filter((key2) => key2 in settings().defaultNoteSettings);
+  }
+  function toggleNoteSetting(key2) {
+    return __awaiter(this, void 0, void 0, function* () {
+      const noteSettings = settings().defaultNoteSettings;
+      noteSettings[key2] = !noteSettings[key2];
+      yield saveSettings()();
+      yield applyNoteSettingsToSite()();
+      set(installed, get2(installed));
+    });
+  }
+  function inspect2(repoInput, isUpdate = false) {
+    return __awaiter(this, void 0, void 0, function* () {
+      set(inspecting, true);
+      set(installError, null);
+      set(pendingInstall, null);
+      set(disableConflicts, true);
+      try {
+        const remote = yield manager().inspectRemotePlugin(repoInput);
+        if (!isUpdate && installedIds().has(remote.manifest.id)) {
+          set(pendingIsUpdate, true);
+        } else {
+          set(pendingIsUpdate, isUpdate);
+        }
+        set(pendingInstall, remote);
+      } catch (error) {
+        set(installError, error instanceof Error ? error.message : "Unknown error");
+      }
+      set(inspecting, false);
+      yield tick();
+      const target = get2(installConfirmEl) !== null && get2(installConfirmEl) !== void 0 ? get2(installConfirmEl) : get2(installErrorEl);
+      target === null || target === void 0 ? void 0 : target.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+        block: "center"
+      });
+    });
+  }
+  function confirmInstall() {
+    var _a6;
+    return __awaiter(this, void 0, void 0, function* () {
+      if (!get2(pendingInstall)) {
+        return;
+      }
+      set(busy, true);
+      const remote = get2(pendingInstall);
+      const existingEntry = (_a6 = get2(installed).find((plugin) => plugin.manifest.id === remote.manifest.id)) === null || _a6 === void 0 ? void 0 : _a6.registryEntry;
+      const disableIds = get2(disableConflicts) ? get2(pendingConflicts).map((conflict) => conflict.manifest.id) : [];
+      try {
+        yield manager().install(remote, existingEntry, disableIds);
+        new import_obsidian16.Notice(`${get2(pendingIsUpdate) ? "Updated" : "Installed"} ${remote.manifest.name} ${remote.manifest.version}. ${buildTriggeredNotice(settings())}`);
+        set(pendingInstall, null);
+        set(installInput, "");
+        yield refresh();
+      } catch (error) {
+        set(installError, error instanceof Error ? error.message : "Install failed");
+      }
+      set(busy, false);
+    });
+  }
+  function updatePlugin(plugin) {
+    var _a6;
+    return __awaiter(this, void 0, void 0, function* () {
+      const repo = (_a6 = plugin.registryEntry) === null || _a6 === void 0 ? void 0 : _a6.repo;
+      if (!repo) {
+        set(installError, `${plugin.manifest.name} has no recorded source repository. Reinstall it from a GitHub URL to enable updates.`);
+        return;
+      }
+      set(activeTab, "browse");
+      yield inspect2(repo, true);
+    });
+  }
+  let confirmUninstallId = mutable_source(null);
+  function uninstall(plugin) {
+    return __awaiter(this, void 0, void 0, function* () {
+      set(busy, true);
+      try {
+        yield manager().uninstall(plugin);
+        new import_obsidian16.Notice(`Uninstalled ${plugin.manifest.name}. ${buildTriggeredNotice(settings())}`);
+        set(confirmUninstallId, null);
+        yield refresh();
+      } catch (_a6) {
+        new import_obsidian16.Notice(`Could not uninstall ${plugin.manifest.name}`);
+      }
+      set(busy, false);
+    });
+  }
+  let disableConflicts = mutable_source(true);
+  function pluginName(id) {
+    var _a6, _b3;
+    return (_b3 = (_a6 = get2(installed).find((plugin) => plugin.manifest.id === id)) === null || _a6 === void 0 ? void 0 : _a6.manifest.name) !== null && _b3 !== void 0 ? _b3 : id;
+  }
+  function providedRegions(plugin) {
+    return regionsOf(plugin.manifest).filter((region) => get2(regionProviders)[region] === plugin.manifest.id);
+  }
+  function blockedRegions(plugin) {
+    if (!plugin.enabled) {
+      return [];
+    }
+    return regionsOf(plugin.manifest).filter((region) => get2(regionProviders)[region] && get2(regionProviders)[region] !== plugin.manifest.id).map((region) => ({ region, providerId: get2(regionProviders)[region] }));
+  }
+  legacy_pre_effect(() => (getRegionProviders, get2(installed)), () => {
+    set(regionProviders, getRegionProviders(get2(installed)));
+  });
+  legacy_pre_effect(() => (get2(pendingInstall), getRegionConflicts, get2(installed)), () => {
+    set(pendingConflicts, get2(pendingInstall) ? getRegionConflicts(get2(pendingInstall).manifest, get2(installed)) : []);
+  });
+  legacy_pre_effect(() => (get2(community), get2(communityFilter)), () => {
+    set(filteredCommunity, get2(community).filter((entry) => !get2(communityFilter) || entry.name.toLowerCase().includes(get2(communityFilter).toLowerCase()) || entry.description.toLowerCase().includes(get2(communityFilter).toLowerCase())));
+  });
+  legacy_pre_effect_reset();
+  init();
+  var div = root_342();
+  var div_1 = child(div);
+  var button = child(div_1);
+  let classes;
+  var node = sibling(child(button));
+  {
+    var consequent = ($$anchor2) => {
+      var text2 = text();
+      template_effect(() => {
+        var _a6;
+        return set_text(text2, `\xA0(${(_a6 = (get2(installed), untrack(() => get2(installed).length))) != null ? _a6 : ""})`);
+      });
+      append2($$anchor2, text2);
+    };
+    if_block(node, ($$render) => {
+      if (!get2(loading)) $$render(consequent);
+    });
+  }
+  reset(button);
+  var button_1 = sibling(button, 2);
+  let classes_1;
+  var node_1 = sibling(child(button_1));
+  {
+    var consequent_1 = ($$anchor2) => {
+      var text_1 = text();
+      template_effect(() => {
+        var _a6;
+        return set_text(text_1, `\xA0(${(_a6 = (get2(community), untrack(() => get2(community).length))) != null ? _a6 : ""})`);
+      });
+      append2($$anchor2, text_1);
+    };
+    if_block(node_1, ($$render) => {
+      if (get2(community), untrack(() => get2(community).length > 0)) $$render(consequent_1);
+    });
+  }
+  reset(button_1);
+  reset(div_1);
+  var node_2 = sibling(div_1, 2);
+  {
+    var consequent_14 = ($$anchor2) => {
+      var fragment_2 = root_222();
+      var node_3 = sibling(first_child(fragment_2), 2);
+      {
+        var consequent_2 = ($$anchor3) => {
+          var div_2 = root_15();
+          var node_4 = child(div_2);
+          each(node_4, 0, () => [0, 1, 2], (i) => i, ($$anchor4, i) => {
+            var div_3 = root5();
+            template_effect(() => set_style(div_3, `--dg-skeleton-delay: ${i * 0.15}s`));
+            append2($$anchor4, div_3);
+          });
+          next(2);
+          reset(div_2);
+          append2($$anchor3, div_2);
+        };
+        var consequent_3 = ($$anchor3) => {
+          var p = root_25();
+          var text_2 = child(p, true);
+          reset(p);
+          template_effect(() => set_text(text_2, get2(loadError)));
+          append2($$anchor3, p);
+        };
+        var alternate_2 = ($$anchor3) => {
+          var fragment_3 = root_21();
+          var node_5 = first_child(fragment_3);
+          {
+            var consequent_4 = ($$anchor4) => {
+              var p_1 = root_35();
+              append2($$anchor4, p_1);
+            };
+            if_block(node_5, ($$render) => {
+              if (get2(installed), untrack(() => get2(installed).length === 0)) $$render(consequent_4);
+            });
+          }
+          var node_6 = sibling(node_5, 2);
+          each(node_6, 1, () => get2(installed), (plugin) => plugin.manifest.id, ($$anchor4, plugin) => {
+            var div_4 = root_20();
+            let classes_2;
+            var div_5 = child(div_4);
+            var div_6 = child(div_5);
+            var span = child(div_6);
+            var text_3 = child(span);
+            var span_1 = sibling(text_3);
+            var text_4 = child(span_1);
+            reset(span_1);
+            var node_7 = sibling(span_1, 2);
+            {
+              var consequent_5 = ($$anchor5) => {
+                var span_2 = root_43();
+                append2($$anchor5, span_2);
+              };
+              if_block(node_7, ($$render) => {
+                if (get2(plugin), untrack(() => get2(plugin).isFirstParty)) $$render(consequent_5);
+              });
+            }
+            var node_8 = sibling(node_7, 2);
+            each(
+              node_8,
+              1,
+              () => (get2(plugin), untrack(() => providedRegions(get2(plugin)))),
+              (region) => region,
+              ($$anchor5, region) => {
+                var span_3 = root_52();
+                var text_5 = child(span_3);
+                reset(span_3);
+                template_effect(() => {
+                  var _a6;
+                  return set_text(text_5, `Provides ${(_a6 = get2(region)) != null ? _a6 : ""}`);
+                });
+                append2($$anchor5, span_3);
+              }
+            );
+            reset(span);
+            var span_4 = sibling(span, 2);
+            var text_6 = child(span_4, true);
+            reset(span_4);
+            var span_5 = sibling(span_4, 2);
+            var text_7 = child(span_5);
+            reset(span_5);
+            var node_9 = sibling(span_5, 2);
+            each(
+              node_9,
+              1,
+              () => (get2(plugin), untrack(() => blockedRegions(get2(plugin)))),
+              (blocked) => blocked.region,
+              ($$anchor5, blocked) => {
+                var span_6 = root_62();
+                var text_8 = child(span_6);
+                var strong = sibling(text_8);
+                var text_9 = child(strong, true);
+                reset(strong);
+                next();
+                reset(span_6);
+                template_effect(
+                  ($0, $1) => {
+                    set_text(text_8, `${$0 != null ? $0 : ""} is currently provided
+									by `);
+                    set_text(text_9, $1);
+                  },
+                  [
+                    () => (get2(blocked), untrack(() => get2(blocked).region.charAt(0).toUpperCase() + get2(blocked).region.slice(1))),
+                    () => (get2(blocked), untrack(() => pluginName(get2(blocked).providerId)))
+                  ]
+                );
+                append2($$anchor5, span_6);
+              }
+            );
+            reset(div_6);
+            var div_7 = sibling(div_6, 2);
+            var node_10 = child(div_7);
+            {
+              var consequent_6 = ($$anchor5) => {
+                var button_2 = root_72();
+                template_effect(() => button_2.disabled = get2(busy));
+                event("click", button_2, () => openSettings(get2(plugin)));
+                append2($$anchor5, button_2);
+              };
+              var d = user_derived(() => (get2(plugin), untrack(() => {
+                var _a6;
+                return ((_a6 = get2(plugin).manifest.settings) != null ? _a6 : []).length > 0 || noteSettingKeysFor(get2(plugin)).length > 0;
+              })));
+              if_block(node_10, ($$render) => {
+                if (get2(d)) $$render(consequent_6);
+              });
+            }
+            var node_11 = sibling(node_10, 2);
+            {
+              var consequent_8 = ($$anchor5) => {
+                var fragment_4 = root_10();
+                var button_3 = first_child(fragment_4);
+                var node_12 = sibling(button_3, 2);
+                {
+                  var consequent_7 = ($$anchor6) => {
+                    var button_4 = root_82();
+                    template_effect(() => button_4.disabled = get2(busy));
+                    event("click", button_4, () => uninstall(get2(plugin)));
+                    append2($$anchor6, button_4);
+                  };
+                  var alternate = ($$anchor6) => {
+                    var button_5 = root_92();
+                    template_effect(() => button_5.disabled = get2(busy));
+                    event("click", button_5, () => set(confirmUninstallId, get2(plugin).manifest.id));
+                    append2($$anchor6, button_5);
+                  };
+                  if_block(node_12, ($$render) => {
+                    if (get2(confirmUninstallId), get2(plugin), untrack(() => get2(confirmUninstallId) === get2(plugin).manifest.id)) $$render(consequent_7);
+                    else $$render(alternate, -1);
+                  });
+                }
+                template_effect(() => button_3.disabled = get2(busy));
+                event("click", button_3, () => updatePlugin(get2(plugin)));
+                append2($$anchor5, fragment_4);
+              };
+              if_block(node_11, ($$render) => {
+                if (get2(plugin), untrack(() => !get2(plugin).isFirstParty)) $$render(consequent_8);
+              });
+            }
+            var label = sibling(node_11, 2);
+            var input = child(label);
+            remove_input_defaults(input);
+            var text_10 = sibling(input);
+            reset(label);
+            reset(div_7);
+            reset(div_5);
+            var node_13 = sibling(div_5, 2);
+            {
+              var consequent_13 = ($$anchor5) => {
+                var div_8 = root_19();
+                var node_14 = child(div_8);
+                each(
+                  node_14,
+                  1,
+                  () => (get2(plugin), untrack(() => noteSettingKeysFor(get2(plugin)))),
+                  (key2) => key2,
+                  ($$anchor6, key2) => {
+                    var label_1 = root_11();
+                    var span_7 = child(label_1);
+                    var span_8 = sibling(child(span_7), 2);
+                    var code = sibling(child(span_8));
+                    var text_11 = child(code, true);
+                    reset(code);
+                    next();
+                    reset(span_8);
+                    reset(span_7);
+                    var input_1 = sibling(span_7, 2);
+                    remove_input_defaults(input_1);
+                    reset(label_1);
+                    template_effect(
+                      ($0) => {
+                        set_text(text_11, $0);
+                        set_checked(input_1, (deep_read_state(settings()), get2(key2), untrack(() => settings().defaultNoteSettings[get2(key2)])));
+                        input_1.disabled = get2(busy);
+                      },
+                      [
+                        () => (get2(key2), untrack(() => get2(key2).replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)))
+                      ]
+                    );
+                    event("change", input_1, () => toggleNoteSetting(get2(key2)));
+                    append2($$anchor6, label_1);
+                  }
+                );
+                var node_15 = sibling(node_14, 2);
+                each(
+                  node_15,
+                  1,
+                  () => (get2(plugin), untrack(() => {
+                    var _a6;
+                    return (_a6 = get2(plugin).manifest.settings) != null ? _a6 : [];
+                  })),
+                  (entry) => entry.key,
+                  ($$anchor6, entry) => {
+                    var label_2 = root_17();
+                    var span_9 = child(label_2);
+                    var span_10 = child(span_9);
+                    var text_12 = child(span_10, true);
+                    reset(span_10);
+                    var node_16 = sibling(span_10, 2);
+                    {
+                      var consequent_9 = ($$anchor7) => {
+                        var span_11 = root_122();
+                        var text_13 = child(span_11, true);
+                        reset(span_11);
+                        template_effect(() => set_text(text_13, (get2(entry), untrack(() => get2(entry).description))));
+                        append2($$anchor7, span_11);
+                      };
+                      if_block(node_16, ($$render) => {
+                        if (get2(entry), untrack(() => get2(entry).description)) $$render(consequent_9);
+                      });
+                    }
+                    reset(span_9);
+                    var node_17 = sibling(span_9, 2);
+                    {
+                      var consequent_10 = ($$anchor7) => {
+                        var input_2 = root_132();
+                        remove_input_defaults(input_2);
+                        template_effect(($0) => set_checked(input_2, $0), [
+                          () => (get2(settingsDraft), get2(entry), untrack(() => Boolean(get2(settingsDraft)[get2(entry).key])))
+                        ]);
+                        event("change", input_2, (event2) => mutate(settingsDraft, get2(settingsDraft)[get2(entry).key] = event2.currentTarget.checked));
+                        append2($$anchor7, input_2);
+                      };
+                      var consequent_11 = ($$anchor7) => {
+                        var select = root_152();
+                        each(select, 5, () => (get2(entry), untrack(() => {
+                          var _a6;
+                          return (_a6 = get2(entry).options) != null ? _a6 : [];
+                        })), (option2) => option2, ($$anchor8, option2) => {
+                          var option_1 = root_142();
+                          var text_14 = child(option_1, true);
+                          reset(option_1);
+                          var option_1_value = {};
+                          template_effect(() => {
+                            var _a6;
+                            set_text(text_14, get2(option2));
+                            if (option_1_value !== (option_1_value = get2(option2))) {
+                              option_1.value = (_a6 = option_1.__value = get2(option2)) != null ? _a6 : "";
+                            }
+                          });
+                          append2($$anchor8, option_1);
+                        });
+                        reset(select);
+                        var select_value;
+                        init_select(select);
+                        template_effect(
+                          ($0) => {
+                            var _a6;
+                            if (select_value !== (select_value = $0)) {
+                              select.value = (_a6 = select.__value = $0) != null ? _a6 : "", select_option(select, $0);
+                            }
+                          },
+                          [
+                            () => (get2(settingsDraft), get2(entry), untrack(() => {
+                              var _a6;
+                              return String((_a6 = get2(settingsDraft)[get2(entry).key]) != null ? _a6 : "");
+                            }))
+                          ]
+                        );
+                        event("change", select, (event2) => mutate(settingsDraft, get2(settingsDraft)[get2(entry).key] = event2.currentTarget.value));
+                        append2($$anchor7, select);
+                      };
+                      var alternate_1 = ($$anchor7) => {
+                        var input_3 = root_16();
+                        remove_input_defaults(input_3);
+                        template_effect(
+                          ($0) => {
+                            set_attribute2(input_3, "type", (get2(entry), untrack(() => get2(entry).type === "number" ? "number" : "text")));
+                            set_value(input_3, $0);
+                          },
+                          [
+                            () => (get2(settingsDraft), get2(entry), untrack(() => {
+                              var _a6;
+                              return String((_a6 = get2(settingsDraft)[get2(entry).key]) != null ? _a6 : "");
+                            }))
+                          ]
+                        );
+                        event("input", input_3, (event2) => mutate(settingsDraft, get2(settingsDraft)[get2(entry).key] = coerce(get2(entry), event2.currentTarget.value)));
+                        append2($$anchor7, input_3);
+                      };
+                      if_block(node_17, ($$render) => {
+                        if (get2(entry), untrack(() => get2(entry).type === "boolean")) $$render(consequent_10);
+                        else if (get2(entry), untrack(() => get2(entry).type === "select")) $$render(consequent_11, 1);
+                        else $$render(alternate_1, -1);
+                      });
+                    }
+                    reset(label_2);
+                    template_effect(() => set_text(text_12, (get2(entry), untrack(() => get2(entry).name))));
+                    append2($$anchor6, label_2);
+                  }
+                );
+                var node_18 = sibling(node_15, 2);
+                {
+                  var consequent_12 = ($$anchor6) => {
+                    var button_6 = root_18();
+                    template_effect(() => button_6.disabled = get2(busy));
+                    event("click", button_6, () => saveDraft(get2(plugin)));
+                    append2($$anchor6, button_6);
+                  };
+                  if_block(node_18, ($$render) => {
+                    if (get2(plugin), untrack(() => {
+                      var _a6;
+                      return ((_a6 = get2(plugin).manifest.settings) != null ? _a6 : []).length > 0;
+                    })) $$render(consequent_12);
+                  });
+                }
+                reset(div_8);
+                append2($$anchor5, div_8);
+              };
+              if_block(node_13, ($$render) => {
+                if (get2(expandedSettingsId), get2(plugin), untrack(() => get2(expandedSettingsId) === get2(plugin).manifest.id)) $$render(consequent_13);
+              });
+            }
+            reset(div_4);
+            template_effect(() => {
+              var _a6, _b3, _c2, _d;
+              classes_2 = set_class(div_4, 1, "dg-plugin-row svelte-j5mgcu", null, classes_2, { "is-disabled": !get2(plugin).enabled });
+              set_text(text_3, `${(_a6 = (get2(plugin), untrack(() => get2(plugin).manifest.name))) != null ? _a6 : ""} `);
+              set_text(text_4, `v${(_b3 = (get2(plugin), untrack(() => get2(plugin).manifest.version))) != null ? _b3 : ""}`);
+              set_text(text_6, (get2(plugin), untrack(() => get2(plugin).manifest.description)));
+              set_text(text_7, `by ${(_c2 = (get2(plugin), untrack(() => get2(plugin).manifest.author))) != null ? _c2 : ""}`);
+              set_checked(input, (get2(plugin), untrack(() => get2(plugin).enabled)));
+              input.disabled = get2(busy);
+              set_text(text_10, ` ${(_d = (get2(plugin), untrack(() => get2(plugin).enabled ? "Enabled" : "Disabled"))) != null ? _d : ""}`);
+            });
+            event("change", input, () => toggleEnabled(get2(plugin)));
+            append2($$anchor4, div_4);
+          });
+          append2($$anchor3, fragment_3);
+        };
+        if_block(node_3, ($$render) => {
+          if (get2(loading)) $$render(consequent_2);
+          else if (get2(loadError)) $$render(consequent_3, 1);
+          else $$render(alternate_2, -1);
+        });
+      }
+      append2($$anchor2, fragment_2);
+    };
+    var alternate_5 = ($$anchor2) => {
+      var fragment_5 = root_332();
+      var div_9 = sibling(first_child(fragment_5), 4);
+      var input_4 = child(div_9);
+      remove_input_defaults(input_4);
+      var button_7 = sibling(input_4, 2);
+      var text_15 = child(button_7, true);
+      reset(button_7);
+      reset(div_9);
+      var node_19 = sibling(div_9, 2);
+      {
+        var consequent_15 = ($$anchor3) => {
+          var p_2 = root_25();
+          var text_16 = child(p_2, true);
+          reset(p_2);
+          bind_this(p_2, ($$value) => set(installErrorEl, $$value), () => get2(installErrorEl));
+          template_effect(() => set_text(text_16, get2(installError)));
+          append2($$anchor3, p_2);
+        };
+        if_block(node_19, ($$render) => {
+          if (get2(installError)) $$render(consequent_15);
+        });
+      }
+      var node_20 = sibling(node_19, 2);
+      {
+        var consequent_17 = ($$anchor3) => {
+          var div_10 = root_242();
+          var p_3 = child(div_10);
+          var text_17 = child(p_3);
+          var strong_1 = sibling(text_17);
+          var text_18 = child(strong_1, true);
+          reset(strong_1);
+          var text_19 = sibling(strong_1);
+          reset(p_3);
+          var p_4 = sibling(p_3, 2);
+          var text_20 = child(p_4, true);
+          reset(p_4);
+          var p_5 = sibling(p_4, 2);
+          var a = sibling(child(p_5));
+          var text_21 = child(a);
+          reset(a);
+          var text_22 = sibling(a);
+          var code_1 = sibling(text_22);
+          var text_23 = child(code_1, true);
+          reset(code_1);
+          next();
+          reset(p_5);
+          var node_21 = sibling(p_5, 2);
+          {
+            var consequent_16 = ($$anchor4) => {
+              var label_3 = root_232();
+              var input_5 = child(label_3);
+              remove_input_defaults(input_5);
+              var span_12 = sibling(input_5, 2);
+              var text_24 = child(span_12);
+              var strong_2 = sibling(text_24);
+              var text_25 = child(strong_2, true);
+              reset(strong_2);
+              var text_26 = sibling(strong_2);
+              reset(span_12);
+              reset(label_3);
+              template_effect(
+                ($0, $1) => {
+                  var _a6, _b3, _c2;
+                  set_text(text_24, `${(_a6 = (get2(pendingInstall), untrack(() => get2(pendingInstall).manifest.name))) != null ? _a6 : ""} replaces `);
+                  set_text(text_25, $0);
+                  set_text(text_26, ` (${$1 != null ? $1 : ""}).
+							Disable ${(_b3 = (get2(pendingConflicts), untrack(() => get2(pendingConflicts).length === 1 ? "it" : "them"))) != null ? _b3 : ""} so ${(_c2 = (get2(pendingInstall), untrack(() => get2(pendingInstall).manifest.name))) != null ? _c2 : ""} takes
+							over right away.`);
+                },
+                [
+                  () => (get2(pendingConflicts), untrack(() => get2(pendingConflicts).map((c) => c.manifest.name).join(", "))),
+                  () => (deep_read_state(regionsOf), get2(pendingInstall), untrack(() => regionsOf(get2(pendingInstall).manifest).join(", ")))
+                ]
+              );
+              bind_checked(input_5, () => get2(disableConflicts), ($$value) => set(disableConflicts, $$value));
+              append2($$anchor4, label_3);
+            };
+            if_block(node_21, ($$render) => {
+              if (get2(pendingConflicts), untrack(() => get2(pendingConflicts).length > 0)) $$render(consequent_16);
+            });
+          }
+          var div_11 = sibling(node_21, 2);
+          var button_8 = child(div_11);
+          var text_27 = child(button_8, true);
+          reset(button_8);
+          var button_9 = sibling(button_8, 2);
+          reset(div_11);
+          reset(div_10);
+          bind_this(div_10, ($$value) => set(installConfirmEl, $$value), () => get2(installConfirmEl));
+          template_effect(() => {
+            var _a6, _b3, _c2, _d, _e;
+            set_text(text_17, `${get2(pendingIsUpdate) ? "Update" : "Install"} `);
+            set_text(text_18, (get2(pendingInstall), untrack(() => get2(pendingInstall).manifest.name)));
+            set_text(text_19, ` v${(_a6 = (get2(pendingInstall), untrack(() => get2(pendingInstall).manifest.version))) != null ? _a6 : ""} by ${(_b3 = (get2(pendingInstall), untrack(() => get2(pendingInstall).manifest.author))) != null ? _b3 : ""}?`);
+            set_text(text_20, (get2(pendingInstall), untrack(() => get2(pendingInstall).manifest.description)));
+            set_attribute2(a, "href", (get2(pendingInstall), untrack(() => `https://github.com/${get2(pendingInstall).owner}/${get2(pendingInstall).repo}`)));
+            set_text(text_21, `${(_c2 = (get2(pendingInstall), untrack(() => get2(pendingInstall).owner))) != null ? _c2 : ""}/${(_d = (get2(pendingInstall), untrack(() => get2(pendingInstall).repo))) != null ? _d : ""}`);
+            set_text(text_22, ` (${(_e = (get2(pendingInstall), untrack(() => get2(pendingInstall).files.length))) != null ? _e : ""} files, ref `);
+            set_text(text_23, (get2(pendingInstall), untrack(() => get2(pendingInstall).ref)));
+            button_8.disabled = get2(busy);
+            set_text(text_27, get2(busy) ? "Working\u2026" : get2(pendingIsUpdate) ? "Update plugin" : "Install plugin");
+            button_9.disabled = get2(busy);
+          });
+          event("click", button_8, confirmInstall);
+          event("click", button_9, () => set(pendingInstall, null));
+          append2($$anchor3, div_10);
+        };
+        if_block(node_20, ($$render) => {
+          if (get2(pendingInstall)) $$render(consequent_17);
+        });
+      }
+      var node_22 = sibling(node_20, 4);
+      {
+        var consequent_18 = ($$anchor3) => {
+          var div_12 = root_26();
+          each(div_12, 4, () => [0, 1, 2], (i) => i, ($$anchor4, i) => {
+            var div_13 = root_252();
+            template_effect(() => set_style(div_13, `--dg-skeleton-delay: ${i * 0.15}s`));
+            append2($$anchor4, div_13);
+          });
+          reset(div_12);
+          append2($$anchor3, div_12);
+        };
+        var consequent_19 = ($$anchor3) => {
+          var p_6 = root_27();
+          append2($$anchor3, p_6);
+        };
+        var alternate_4 = ($$anchor3) => {
+          var fragment_6 = root_322();
+          var input_6 = first_child(fragment_6);
+          remove_input_defaults(input_6);
+          var div_14 = sibling(input_6, 2);
+          each(div_14, 5, () => get2(filteredCommunity), (entry) => entry.id, ($$anchor4, entry) => {
+            var div_15 = root_31();
+            var node_23 = child(div_15);
+            {
+              var consequent_20 = ($$anchor5) => {
+                var img = root_28();
+                template_effect(() => {
+                  set_attribute2(img, "alt", (get2(entry), untrack(() => get2(entry).name)));
+                  set_attribute2(img, "src", (get2(entry), untrack(() => `https://raw.githubusercontent.com/${get2(entry).repo}/HEAD/${get2(entry).screenshot}`)));
+                });
+                append2($$anchor5, img);
+              };
+              if_block(node_23, ($$render) => {
+                if (get2(entry), untrack(() => get2(entry).screenshot)) $$render(consequent_20);
+              });
+            }
+            var div_16 = sibling(node_23, 2);
+            var span_13 = child(div_16);
+            var text_28 = child(span_13, true);
+            reset(span_13);
+            var span_14 = sibling(span_13, 2);
+            var text_29 = child(span_14, true);
+            reset(span_14);
+            var span_15 = sibling(span_14, 2);
+            var text_30 = child(span_15);
+            reset(span_15);
+            var node_24 = sibling(span_15, 2);
+            {
+              var consequent_21 = ($$anchor5) => {
+                var button_10 = root_29();
+                append2($$anchor5, button_10);
+              };
+              var d_1 = user_derived(() => (get2(entry), untrack(() => installedIds().has(get2(entry).id))));
+              var alternate_3 = ($$anchor5) => {
+                var button_11 = root_30();
+                template_effect(() => button_11.disabled = get2(inspecting) || get2(busy));
+                event("click", button_11, () => inspect2(get2(entry).repo));
+                append2($$anchor5, button_11);
+              };
+              if_block(node_24, ($$render) => {
+                if (get2(d_1)) $$render(consequent_21);
+                else $$render(alternate_3, -1);
+              });
+            }
+            reset(div_16);
+            reset(div_15);
+            template_effect(() => {
+              var _a6;
+              set_text(text_28, (get2(entry), untrack(() => get2(entry).name)));
+              set_text(text_29, (get2(entry), untrack(() => get2(entry).description)));
+              set_text(text_30, `by ${(_a6 = (get2(entry), untrack(() => get2(entry).author))) != null ? _a6 : ""}`);
+            });
+            append2($$anchor4, div_15);
+          });
+          reset(div_14);
+          bind_value(input_6, () => get2(communityFilter), ($$value) => set(communityFilter, $$value));
+          append2($$anchor3, fragment_6);
+        };
+        if_block(node_22, ($$render) => {
+          if (get2(communityLoading)) $$render(consequent_18);
+          else if (get2(community), untrack(() => get2(community).length === 0)) $$render(consequent_19, 1);
+          else $$render(alternate_4, -1);
+        });
+      }
+      template_effect(
+        ($0) => {
+          input_4.disabled = get2(inspecting) || get2(busy);
+          button_7.disabled = $0;
+          set_text(text_15, get2(inspecting) ? "Checking\u2026" : "Install");
+        },
+        [
+          () => (get2(inspecting), get2(busy), get2(installInput), untrack(() => get2(inspecting) || get2(busy) || !get2(installInput).trim()))
+        ]
+      );
+      bind_value(input_4, () => get2(installInput), ($$value) => set(installInput, $$value));
+      event("click", button_7, () => inspect2(get2(installInput)));
+      append2($$anchor2, fragment_5);
+    };
+    if_block(node_2, ($$render) => {
+      if (get2(activeTab) === "installed") $$render(consequent_14);
+      else $$render(alternate_5, -1);
+    });
+  }
+  reset(div);
+  template_effect(() => {
+    set_attribute2(button, "aria-selected", get2(activeTab) === "installed");
+    classes = set_class(button, 1, "svelte-j5mgcu", null, classes, { "is-active": get2(activeTab) === "installed" });
+    set_attribute2(button_1, "aria-selected", get2(activeTab) === "browse");
+    classes_1 = set_class(button_1, 1, "svelte-j5mgcu", null, classes_1, { "is-active": get2(activeTab) === "browse" });
+  });
+  event("click", button, () => set(activeTab, "installed"));
+  event("click", button_1, () => set(activeTab, "browse"));
+  append2($$anchor, div);
+  pop();
+}
+
+// src/views/GardenPluginSettings/GardenPluginsModal.ts
+var GardenPluginsModal = class {
+  constructor(app, manager, settings, saveSettings, applyNoteSettingsToSite) {
+    this.manager = manager;
+    this.settings = settings;
+    this.saveSettings = saveSettings;
+    this.applyNoteSettingsToSite = applyNoteSettingsToSite;
+    this.open = () => {
+      this.modal.onClose = () => {
+        if (this.view) {
+          unmount(this.view);
+          this.view = void 0;
+        }
+      };
+      this.modal.onOpen = () => {
+        this.modal.contentEl.empty();
+        this.modal.contentEl.addClass("dg-garden-plugins-modal");
+        this.modal.modalEl.style.width = "min(760px, 92vw)";
+        this.view = mount(GardenPluginsView, {
+          target: this.modal.contentEl,
+          props: {
+            manager: this.manager,
+            settings: this.settings,
+            saveSettings: this.saveSettings,
+            applyNoteSettingsToSite: this.applyNoteSettingsToSite
+          }
+        });
+      };
+      this.modal.open();
+    };
+    this.modal = new import_obsidian17.Modal(app);
+    this.modal.titleEl.innerText = "Garden Plugins";
+  }
+};
+
+// src/gardenPlugins/GardenPluginManager.ts
+var import_js_logger10 = __toESM(require_logger());
+
+// src/gardenPlugins/manifest.ts
+var GARDEN_PLUGIN_MANIFEST_NAME = "garden-plugin.json";
+var MAX_PLUGIN_FILE_SIZE = 2 * 1024 * 1024;
+var MAX_PLUGIN_TOTAL_SIZE = 10 * 1024 * 1024;
+var ID_PATTERN = /^[a-z0-9][a-z0-9-]*$/;
+var REQUIRED_FIELDS = [
+  "id",
+  "name",
+  "version",
+  "description",
+  "author"
+];
+function parseGitHubRepoInput(input) {
+  const trimmed = input.trim();
+  if (!trimmed) {
+    return void 0;
+  }
+  const withoutProtocol = trimmed.replace(/^(https?:\/\/)?(www\.)?github\.com[/:]/i, "").replace(/^git@github\.com:/i, "");
+  if (/^[a-z][a-z0-9+.-]*:\/\//i.test(withoutProtocol)) {
+    return void 0;
+  }
+  const segments = withoutProtocol.split("/").filter(Boolean);
+  if (segments.length < 2) {
+    return void 0;
+  }
+  const owner = segments[0];
+  const repo = segments[1].replace(/\.git$/i, "");
+  const namePattern = /^[A-Za-z0-9_.-]+$/;
+  if (!namePattern.test(owner) || !namePattern.test(repo) || !repo) {
+    return void 0;
+  }
+  return { owner, repo };
+}
+function isSafePluginPath(path2) {
+  if (typeof path2 !== "string" || path2.length === 0) {
+    return false;
+  }
+  if (path2.includes("\\") || path2.includes("\0")) {
+    return false;
+  }
+  const trimmed = path2.endsWith("/") ? path2.slice(0, -1) : path2;
+  if (trimmed.length === 0 || trimmed.startsWith("/")) {
+    return false;
+  }
+  return trimmed.split("/").every(
+    (segment) => segment !== "" && segment !== "." && segment !== ".."
+  );
+}
+var asArray = (value) => {
+  if (value === void 0 || value === null) {
+    return [];
+  }
+  return Array.isArray(value) ? value : [value];
+};
+function validateGardenPluginManifest(parsed, options = {}) {
+  var _a6, _b3;
+  const errors = [];
+  if (typeof parsed !== "object" || parsed === null) {
+    return { errors: ["garden-plugin.json is not a JSON object"] };
+  }
+  const manifest = parsed;
+  for (const field of REQUIRED_FIELDS) {
+    if (typeof manifest[field] !== "string" || !manifest[field]) {
+      errors.push(`missing required field "${field}"`);
+    }
+  }
+  if (typeof manifest.id === "string" && !ID_PATTERN.test(manifest.id)) {
+    errors.push(
+      `invalid id "${manifest.id}" (lowercase letters, digits and dashes only)`
+    );
+  }
+  if (!options.allowFirstParty && typeof manifest.id === "string" && manifest.id.startsWith("dg-")) {
+    errors.push(
+      `the "dg-" id prefix is reserved for plugins shipped with the template`
+    );
+  }
+  const declaredPaths = [
+    ...asArray(manifest.hooks),
+    ...Object.values((_a6 = manifest.slots) != null ? _a6 : {}).flatMap(
+      (files) => asArray(files)
+    ),
+    ...Object.values((_b3 = manifest.regions) != null ? _b3 : {}),
+    ...asArray(manifest.styles),
+    ...asArray(manifest.scripts),
+    ...asArray(manifest.assets)
+  ];
+  for (const declared of declaredPaths) {
+    if (!isSafePluginPath(declared)) {
+      errors.push(`unsafe path "${declared}" in manifest`);
+    }
+  }
+  if (errors.length > 0) {
+    return { errors };
+  }
+  return { manifest, errors };
+}
+function shouldSkipRepoFile(path2) {
+  const firstSegment = path2.split("/")[0];
+  return firstSegment.startsWith(".git") || firstSegment === ".github" || firstSegment === "node_modules";
+}
+
+// src/gardenPlugins/GardenPluginManager.ts
+var logger4 = import_js_logger10.default.get("garden-plugin-manager");
+var COMMUNITY_PLUGINS_URL = "https://raw.githubusercontent.com/oleeskild/digitalgarden-plugins/main/community-plugins.json";
+var GardenPluginManager = class {
+  constructor(userGardenConnection, settings, createSourceConnection = (owner, repo) => new RepositoryConnection(
+    PublishPlatformConnectionFactory.createGitHubConnection(
+      owner,
+      repo,
+      PublishPlatformConnectionFactory.githubTokenFor(settings)
+    )
+  )) {
+    this.userGardenConnection = userGardenConnection;
+    this.settings = settings;
+    this.createSourceConnection = createSourceConnection;
+  }
+  get pluginsBase() {
+    return gardenPluginsPathBase(this.settings);
+  }
+  get registryPath() {
+    return gardenPluginsRegistryPath(this.settings);
+  }
+  /** Read the registry, tolerating a missing or malformed file. */
+  getRegistry() {
+    return __async(this, null, function* () {
+      try {
+        const file = yield this.userGardenConnection.getFile(
+          this.registryPath
+        );
+        if (!file) {
+          return { registry: { version: 1, plugins: {} } };
+        }
+        const parsed = JSON.parse(gBase64.decode(file.content));
+        if (typeof (parsed == null ? void 0 : parsed.plugins) !== "object" || parsed.plugins === null) {
+          return { registry: { version: 1, plugins: {} }, sha: file.sha };
+        }
+        return {
+          registry: __spreadValues({ version: 1 }, parsed),
+          sha: file.sha
+        };
+      } catch (e) {
+        return { registry: { version: 1, plugins: {} } };
+      }
+    });
+  }
+  serializeRegistry(registry) {
+    return gBase64.encode(JSON.stringify(registry, null, 2));
+  }
+  writeRegistry(mutate2, message) {
+    return __async(this, null, function* () {
+      const { registry, sha } = yield this.getRegistry();
+      mutate2(registry);
+      const response = yield this.userGardenConnection.updateFile({
+        path: this.registryPath,
+        content: this.serializeRegistry(registry),
+        sha,
+        message
+      });
+      if (!response) {
+        throw new Error("Could not update the plugin registry");
+      }
+    });
+  }
+  /**
+   * Enumerate installed plugins from the garden repo: every
+   * src/plugins/<id>/garden-plugin.json in the tree, merged with the
+   * registry's enabled state and settings.
+   */
+  listInstalled() {
+    return __async(this, null, function* () {
+      var _a6;
+      const tree = yield this.userGardenConnection.getContent("HEAD");
+      if (!tree) {
+        throw new Error("Could not read the garden repository");
+      }
+      const manifestPaths = ((_a6 = tree.tree) != null ? _a6 : []).filter(
+        (item) => typeof item.path === "string" && item.type === "blob" && item.path.startsWith(this.pluginsBase) && item.path.endsWith(`/${GARDEN_PLUGIN_MANIFEST_NAME}`) && item.path.slice(this.pluginsBase.length).split("/").length === 2
+      );
+      const { registry } = yield this.getRegistry();
+      const plugins2 = [];
+      for (const item of manifestPaths) {
+        try {
+          const file = yield this.userGardenConnection.getFile(item.path);
+          if (!file) {
+            continue;
+          }
+          const { manifest, errors } = validateGardenPluginManifest(
+            JSON.parse(gBase64.decode(file.content)),
+            { allowFirstParty: true }
+          );
+          if (!manifest) {
+            logger4.warn(
+              `Skipping invalid plugin manifest at ${item.path}: ${errors.join(", ")}`
+            );
+            continue;
+          }
+          const registryEntry = registry.plugins[manifest.id];
+          plugins2.push({
+            manifest,
+            registryEntry,
+            enabled: (registryEntry == null ? void 0 : registryEntry.enabled) !== false,
+            isFirstParty: manifest.id.startsWith("dg-")
+          });
+        } catch (error) {
+          logger4.warn(
+            `Skipping unreadable plugin at ${item.path}`,
+            error
+          );
+        }
+      }
+      return plugins2.sort(
+        (a, b) => a.manifest.id.localeCompare(b.manifest.id)
+      );
+    });
+  }
+  setEnabled(id, enabled) {
+    return __async(this, null, function* () {
+      yield this.writeRegistry(
+        (registry) => {
+          registry.plugins[id] = __spreadProps(__spreadValues({}, registry.plugins[id]), { enabled });
+        },
+        `${enabled ? "Enable" : "Disable"} garden plugin ${id}`
+      );
+    });
+  }
+  savePluginSettings(id, values) {
+    return __async(this, null, function* () {
+      yield this.writeRegistry((registry) => {
+        registry.plugins[id] = __spreadProps(__spreadValues({}, registry.plugins[id]), {
+          settings: values
+        });
+      }, `Update settings for garden plugin ${id}`);
+    });
+  }
+  /**
+   * Fetch the community plugin list. Returns [] when unavailable.
+   *
+   * raw.githubusercontent.com serves this from a CDN with a ~5 minute
+   * cache, which would otherwise hide a newly listed plugin for that long.
+   * The query string is part of the CDN cache key, so a throwaway param
+   * gets us the current file every time. (A `Cache-Control` request header
+   * would not - the edge decides, not the client.) This costs nothing
+   * against the GitHub API rate limit: raw is not the REST API, and the
+   * request is unauthenticated so the list works before a token is
+   * configured. Only raw's own IP-based abuse limits apply, which a
+   * user-triggered fetch like this comes nowhere near.
+   */
+  fetchCommunityPlugins() {
+    return __async(this, null, function* () {
+      try {
+        const response = yield axios_default.get(
+          COMMUNITY_PLUGINS_URL,
+          { params: { cacheBust: Date.now() } }
+        );
+        if (!Array.isArray(response.data)) {
+          return [];
+        }
+        return response.data.filter(
+          (entry) => entry && entry.id && entry.repo
+        );
+      } catch (error) {
+        logger4.info("Community plugin registry not reachable", error);
+        return [];
+      }
+    });
+  }
+  /**
+   * Fetch and validate a plugin from a GitHub repo without writing
+   * anything — the result is shown to the user for confirmation before
+   * {@link install}. Throws with a readable message on any problem.
+   */
+  inspectRemotePlugin(repoInput) {
+    return __async(this, null, function* () {
+      var _a6, _b3, _c2;
+      const parsed = parseGitHubRepoInput(repoInput);
+      if (!parsed) {
+        throw new Error(
+          "Could not parse that as a GitHub repository. Expected something like https://github.com/user/repo"
+        );
+      }
+      const source2 = this.createSourceConnection(parsed.owner, parsed.repo);
+      const release = yield source2.getLatestRelease();
+      let ref = release == null ? void 0 : release.tag_name;
+      if (!ref) {
+        const info = yield source2.getRepositoryInfo();
+        ref = (_a6 = info == null ? void 0 : info.default_branch) != null ? _a6 : "HEAD";
+      }
+      const tree = yield source2.getContent(ref);
+      if (!tree) {
+        throw new Error(
+          `Could not read ${parsed.owner}/${parsed.repo}. Is it a public repository?`
+        );
+      }
+      const hasManifest = ((_b3 = tree.tree) != null ? _b3 : []).some(
+        (item) => item.path === GARDEN_PLUGIN_MANIFEST_NAME && item.type === "blob"
+      );
+      if (!hasManifest) {
+        throw new Error(
+          `${parsed.owner}/${parsed.repo} has no ${GARDEN_PLUGIN_MANIFEST_NAME} at its root, so it is not a garden plugin`
+        );
+      }
+      const manifestFile = yield source2.getFile(
+        GARDEN_PLUGIN_MANIFEST_NAME,
+        ref
+      );
+      if (!manifestFile) {
+        throw new Error(`Could not read ${GARDEN_PLUGIN_MANIFEST_NAME}`);
+      }
+      let manifestJson;
+      try {
+        manifestJson = JSON.parse(gBase64.decode(manifestFile.content));
+      } catch (e) {
+        throw new Error(`${GARDEN_PLUGIN_MANIFEST_NAME} is not valid JSON`);
+      }
+      const { manifest, errors } = validateGardenPluginManifest(manifestJson);
+      if (!manifest) {
+        throw new Error(`Invalid plugin manifest: ${errors.join("; ")}`);
+      }
+      const files = ((_c2 = tree.tree) != null ? _c2 : []).filter(
+        (item) => typeof item.path === "string" && typeof item.sha === "string" && item.type === "blob" && !shouldSkipRepoFile(item.path)
+      ).map((item) => {
+        var _a7;
+        return {
+          path: item.path,
+          size: (_a7 = item.size) != null ? _a7 : 0,
+          sha: item.sha
+        };
+      });
+      const oversized = files.find(
+        (file) => file.size > MAX_PLUGIN_FILE_SIZE
+      );
+      if (oversized) {
+        throw new Error(
+          `${oversized.path} is larger than the ${MAX_PLUGIN_FILE_SIZE / 1024 / 1024} MB per-file limit`
+        );
+      }
+      const totalSize = files.reduce((sum, file) => sum + file.size, 0);
+      if (totalSize > MAX_PLUGIN_TOTAL_SIZE) {
+        throw new Error(
+          `The plugin is larger than the ${MAX_PLUGIN_TOTAL_SIZE / 1024 / 1024} MB limit`
+        );
+      }
+      return {
+        owner: parsed.owner,
+        repo: parsed.repo,
+        ref,
+        manifest,
+        files
+      };
+    });
+  }
+  targetPathFor(id, sourcePath) {
+    return `${this.pluginsBase}${id}/${sourcePath}`;
+  }
+  /**
+   * Copy a validated remote plugin into the garden repo and record it in
+   * the registry — one atomic commit for the files plus registry. When an
+   * entry with previously installed files exists (update), files that no
+   * longer exist at the new ref are deleted in the same commit.
+   * `disablePluginIds` marks other plugins disabled in that same commit —
+   * used to hand over an exclusive region (e.g. navigation) to the
+   * incoming plugin.
+   */
+  install(_0, _1) {
+    return __async(this, arguments, function* (remote, existingEntry, disablePluginIds = []) {
+      var _a6;
+      const source2 = this.createSourceConnection(remote.owner, remote.repo);
+      const additions = [];
+      for (const file of remote.files) {
+        const content = yield source2.getBlob(file.sha);
+        if (content === void 0) {
+          throw new Error(`Could not fetch ${file.path}`);
+        }
+        additions.push({
+          path: this.targetPathFor(remote.manifest.id, file.path),
+          content: content.replace(/\n/g, "")
+        });
+      }
+      const newFilePaths = additions.map((addition) => addition.path);
+      const deletions = ((_a6 = existingEntry == null ? void 0 : existingEntry.files) != null ? _a6 : []).filter(
+        (path2) => !newFilePaths.includes(path2)
+      );
+      const { registry } = yield this.getRegistry();
+      registry.plugins[remote.manifest.id] = __spreadProps(__spreadValues({}, existingEntry), {
+        repo: `${remote.owner}/${remote.repo}`,
+        installedVersion: remote.manifest.version,
+        installedRef: remote.ref,
+        installedAt: (/* @__PURE__ */ new Date()).toISOString(),
+        enabled: (existingEntry == null ? void 0 : existingEntry.enabled) !== false,
+        files: newFilePaths
+      });
+      for (const id of disablePluginIds) {
+        if (id === remote.manifest.id) {
+          continue;
+        }
+        registry.plugins[id] = __spreadProps(__spreadValues({}, registry.plugins[id]), { enabled: false });
+      }
+      additions.push({
+        path: this.registryPath,
+        content: this.serializeRegistry(registry)
+      });
+      const action2 = existingEntry ? "Update" : "Install";
+      yield this.userGardenConnection.commitChanges({
+        additions,
+        deletions,
+        message: `${action2} garden plugin ${remote.manifest.id} (${remote.manifest.version})`
+      });
+    });
+  }
+  /**
+   * Delete a community plugin's files and registry entry in one commit.
+   * Falls back to enumerating the plugin directory when the registry has
+   * no file list (e.g. manually installed plugins).
+   */
+  uninstall(plugin) {
+    return __async(this, null, function* () {
+      var _a6, _b3;
+      const id = plugin.manifest.id;
+      let files = (_a6 = plugin.registryEntry) == null ? void 0 : _a6.files;
+      if (!files || files.length === 0) {
+        const tree = yield this.userGardenConnection.getContent("HEAD");
+        files = ((_b3 = tree == null ? void 0 : tree.tree) != null ? _b3 : []).filter(
+          (item) => typeof item.path === "string" && item.type === "blob" && item.path.startsWith(`${this.pluginsBase}${id}/`)
+        ).map((item) => item.path);
+      }
+      const { registry } = yield this.getRegistry();
+      delete registry.plugins[id];
+      yield this.userGardenConnection.commitChanges({
+        additions: [
+          {
+            path: this.registryPath,
+            content: this.serializeRegistry(registry)
+          }
+        ],
+        deletions: files,
+        message: `Uninstall garden plugin ${id}`
+      });
+    });
   }
 };
 
@@ -36749,7 +38855,7 @@ var NavigationOrderModal = class {
 var OBSIDIAN_THEME_URL = "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-css-themes.json";
 var SettingView = class {
   constructor(app, settingsRootElement, settings, saveSettings) {
-    this.debouncedSaveAndUpdate = (0, import_obsidian15.debounce)(
+    this.debouncedSaveAndUpdate = (0, import_obsidian18.debounce)(
       this.saveSiteSettingsAndUpdateEnv,
       500,
       true
@@ -36763,7 +38869,7 @@ var SettingView = class {
   }
   getIcon(name) {
     var _a6;
-    return (_a6 = (0, import_obsidian15.getIcon)(name)) != null ? _a6 : document.createElement("span");
+    return (_a6 = (0, import_obsidian18.getIcon)(name)) != null ? _a6 : document.createElement("span");
   }
   reInitializeSettings() {
     if (this.prModal) {
@@ -36800,7 +38906,7 @@ var SettingView = class {
         text: "here.",
         href: "https://docs.forestry.md/getting-started/01-getting-started/"
       });
-      new import_obsidian15.Setting(this.settingsRootElement).setName("Publish Platform").addDropdown((dd) => {
+      new import_obsidian18.Setting(this.settingsRootElement).setName("Publish Platform").addDropdown((dd) => {
         dd.addOption("SelfHosted" /* SelfHosted */, "GitHub/Self Hosted");
         dd.addOption("ForestryMd" /* ForestryMd */, "Forestry.md");
         if (this.settings.publishPlatform === "SelfHosted" /* SelfHosted */) {
@@ -36833,13 +38939,16 @@ var SettingView = class {
       this.settingsRootElement.createEl("h3", { text: "URL" }).prepend(this.getIcon("link"));
       this.initializeGitHubBaseURLSetting();
       this.initializeSlugifySetting();
-      this.settingsRootElement.createEl("h3", { text: "Features" }).prepend(this.getIcon("star"));
+      this.initializeExcalidrawSetting();
+      this.settingsRootElement.createEl("h3", { text: "Plugins" }).prepend(this.getIcon("blocks"));
+      this.initializeGardenPluginSettings();
+      this.settingsRootElement.createEl("h3", { text: "Display" }).prepend(this.getIcon("star"));
       this.initializeDefaultNoteSettings();
       this.settingsRootElement.createEl("h3", { text: "Appearance" }).prepend(this.getIcon("brush"));
       this.initializeThemesSettings();
       this.settingsRootElement.createEl("h3", { text: "Localization" }).prepend(this.getIcon("languages"));
       this.initializeUIStringsSettings();
-      new import_obsidian15.Setting(this.settingsRootElement).setName("Navigation Order").setDesc(
+      new import_obsidian18.Setting(this.settingsRootElement).setName("Navigation Order").setDesc(
         "Customize the order of files and folders in your site's navigation."
       ).addButton((cb) => {
         cb.setButtonText("Reorder Navigation");
@@ -36848,7 +38957,7 @@ var SettingView = class {
         }));
       });
       this.settingsRootElement.createEl("h3", { text: "Advanced" }).prepend(this.getIcon("cog"));
-      new import_obsidian15.Setting(this.settingsRootElement).setName("Path Rewrite Rules").setDesc(
+      new import_obsidian18.Setting(this.settingsRootElement).setName("Path Rewrite Rules").setDesc(
         "Define rules to rewrite note folder structure in the garden. See the modal for more information."
       ).addButton((cb) => {
         cb.setButtonText("Manage Rewrite Rules");
@@ -36857,17 +38966,26 @@ var SettingView = class {
         });
       });
       this.initializeCustomFilterSettings();
-      new import_obsidian15.Setting(this.settingsRootElement).setName("Enable debug logging").setDesc(
+      new import_obsidian18.Setting(this.settingsRootElement).setName("Enable debug logging").setDesc(
         "Show detailed logs in the developer console. Useful for troubleshooting."
       ).addToggle((toggle) => {
-        toggle.setValue(this.settings.logLevel === import_js_logger9.default.DEBUG).onChange((value) => __async(this, null, function* () {
-          this.settings.logLevel = value ? import_js_logger9.default.DEBUG : void 0;
-          import_js_logger9.default.setLevel(value ? import_js_logger9.default.DEBUG : import_js_logger9.default.WARN);
+        toggle.setValue(this.settings.logLevel === import_js_logger11.default.DEBUG).onChange((value) => __async(this, null, function* () {
+          this.settings.logLevel = value ? import_js_logger11.default.DEBUG : void 0;
+          import_js_logger11.default.setLevel(value ? import_js_logger11.default.DEBUG : import_js_logger11.default.WARN);
           yield this.saveSettings();
         }));
       });
+      new import_obsidian18.Setting(this.settingsRootElement).setName("Copy debug log").setDesc(
+        "Copy the plugin's recent log to the clipboard \u2014 paste it in the Discord when asking for help with a failed publish."
+      ).addButton((cb) => {
+        cb.setButtonText("Copy debug log");
+        cb.onClick(() => __async(this, null, function* () {
+          yield navigator.clipboard.writeText(getDebugLog());
+          new import_obsidian18.Notice("Debug log copied to clipboard.");
+        }));
+      });
       this.settingsRootElement.createEl("h3", { text: "Local Export" }).prepend(this.getIcon("folder-output"));
-      new import_obsidian15.Setting(this.settingsRootElement).setName("Local garden folder path").setDesc(
+      new import_obsidian18.Setting(this.settingsRootElement).setName("Local garden folder path").setDesc(
         "Absolute path to your local digital garden folder. Used by the 'Export Garden to Local Folder' command."
       ).addText((text2) => {
         var _a6;
@@ -36899,9 +39017,10 @@ var SettingView = class {
   }
   initializeDefaultNoteSettings() {
     return __async(this, null, function* () {
-      const noteSettingsModal = new import_obsidian15.Modal(this.app);
+      const noteSettingsModal = new import_obsidian18.Modal(this.app);
       let hasUnsavedChanges = false;
       const toggles = {};
+      const touchedEnvKeys = /* @__PURE__ */ new Set();
       noteSettingsModal.titleEl.createEl("h1", {
         text: "Default Note Settings"
       });
@@ -36913,7 +39032,7 @@ var SettingView = class {
         text: "here.",
         href: "https://docs.forestry.md/getting-started/03-note-settings/"
       });
-      new import_obsidian15.Setting(this.settingsRootElement).setName("Global Note Settings").setDesc(
+      new import_obsidian18.Setting(this.settingsRootElement).setName("Global Note Settings").setDesc(
         `Default settings for each published note. These can be overwritten per note via frontmatter.`
       ).addButton((cb) => {
         cb.setButtonText("Manage note settings");
@@ -36924,7 +39043,8 @@ var SettingView = class {
           yield loadRemoteSettings();
         }));
       });
-      const markAsChanged = () => {
+      const markAsChanged = (envKey) => {
+        touchedEnvKeys.add(envKey);
         hasUnsavedChanges = true;
         updateApplyButton();
       };
@@ -36940,13 +39060,17 @@ var SettingView = class {
       });
       applyButton.addEventListener("click", () => __async(this, null, function* () {
         if (!hasUnsavedChanges) return;
-        yield this.saveSiteSettingsAndUpdateEnv(
+        const applied = yield this.saveSiteSettingsAndUpdateEnv(
           this.app.metadataCache,
           this.settings,
-          this.saveSettings
+          this.saveSettings,
+          touchedEnvKeys
         );
-        hasUnsavedChanges = false;
-        updateApplyButton();
+        if (applied) {
+          touchedEnvKeys.clear();
+          hasUnsavedChanges = false;
+          updateApplyButton();
+        }
       }));
       const updateApplyButton = () => {
         if (hasUnsavedChanges) {
@@ -36984,6 +39108,7 @@ var SettingView = class {
               }
             }
           }
+          touchedEnvKeys.clear();
           hasUnsavedChanges = false;
           updateApplyButton();
         } catch (error) {
@@ -36998,122 +39123,103 @@ var SettingView = class {
         }
       });
       updateApplyButton();
-      new import_obsidian15.Setting(noteSettingsModal.contentEl).setName("Show home link (dg-home-link)").setDesc(
+      new import_obsidian18.Setting(noteSettingsModal.contentEl).setName("Show home link (dg-home-link)").setDesc(
         "Determines whether to show a link back to the homepage or not."
       ).addToggle((t) => {
         toggles["dgHomeLink"] = t;
         t.setValue(this.settings.defaultNoteSettings.dgHomeLink);
         t.onChange((val) => {
           this.settings.defaultNoteSettings.dgHomeLink = val;
-          markAsChanged();
+          markAsChanged("dgHomeLink");
         });
       });
-      new import_obsidian15.Setting(noteSettingsModal.contentEl).setName("Show local graph for notes (dg-show-local-graph)").setDesc(
+      new import_obsidian18.Setting(noteSettingsModal.contentEl).setName("Show local graph for notes (dg-show-local-graph)").setDesc(
         "When turned on, notes will show its local graph in a sidebar on desktop and at the bottom of the page on mobile."
       ).addToggle((t) => {
         toggles["dgShowLocalGraph"] = t;
         t.setValue(this.settings.defaultNoteSettings.dgShowLocalGraph);
         t.onChange((val) => {
           this.settings.defaultNoteSettings.dgShowLocalGraph = val;
-          markAsChanged();
+          markAsChanged("dgShowLocalGraph");
         });
       });
-      new import_obsidian15.Setting(noteSettingsModal.contentEl).setName("Show Graph Depth Control (dg-show-graph-depth-control)").setDesc("When turned on, graph will show a depth slider.").addToggle((t) => {
+      new import_obsidian18.Setting(noteSettingsModal.contentEl).setName("Show Graph Depth Control (dg-show-graph-depth-control)").setDesc("When turned on, graph will show a depth slider.").addToggle((t) => {
         toggles["dgShowGraphDepthControl"] = t;
         t.setValue(
           this.settings.defaultNoteSettings.dgShowGraphDepthControl
         );
         t.onChange((val) => {
           this.settings.defaultNoteSettings.dgShowGraphDepthControl = val;
-          markAsChanged();
+          markAsChanged("dgShowGraphDepthControl");
         });
       });
-      new import_obsidian15.Setting(noteSettingsModal.contentEl).setName("Show backlinks for notes (dg-show-backlinks)").setDesc(
+      new import_obsidian18.Setting(noteSettingsModal.contentEl).setName("Show backlinks for notes (dg-show-backlinks)").setDesc(
         "When turned on, notes will show backlinks in a sidebar on desktop and at the bottom of the page on mobile."
       ).addToggle((t) => {
         toggles["dgShowBacklinks"] = t;
         t.setValue(this.settings.defaultNoteSettings.dgShowBacklinks);
         t.onChange((val) => {
           this.settings.defaultNoteSettings.dgShowBacklinks = val;
-          markAsChanged();
+          markAsChanged("dgShowBacklinks");
         });
       });
-      new import_obsidian15.Setting(noteSettingsModal.contentEl).setName("Show a table of content for notes (dg-show-toc)").setDesc(
+      new import_obsidian18.Setting(noteSettingsModal.contentEl).setName("Show a table of content for notes (dg-show-toc)").setDesc(
         "When turned on, notes will show all headers as a table of content in a sidebar on desktop. It will not be shown on mobile devices."
       ).addToggle((t) => {
         toggles["dgShowToc"] = t;
         t.setValue(this.settings.defaultNoteSettings.dgShowToc);
         t.onChange((val) => {
           this.settings.defaultNoteSettings.dgShowToc = val;
-          markAsChanged();
+          markAsChanged("dgShowToc");
         });
       });
-      new import_obsidian15.Setting(noteSettingsModal.contentEl).setName("Show inline title (dg-show-inline-title)").setDesc(
+      new import_obsidian18.Setting(noteSettingsModal.contentEl).setName("Show inline title (dg-show-inline-title)").setDesc(
         "When turned on, the title of the note will show on top of the page."
       ).addToggle((t) => {
         toggles["dgShowInlineTitle"] = t;
         t.setValue(this.settings.defaultNoteSettings.dgShowInlineTitle);
         t.onChange((val) => {
           this.settings.defaultNoteSettings.dgShowInlineTitle = val;
-          markAsChanged();
+          markAsChanged("dgShowInlineTitle");
         });
       });
-      new import_obsidian15.Setting(noteSettingsModal.contentEl).setName("Show filetree sidebar (dg-show-file-tree)").setDesc("When turned on, a filetree will be shown on your site.").addToggle((t) => {
+      new import_obsidian18.Setting(noteSettingsModal.contentEl).setName("Show filetree sidebar (dg-show-file-tree)").setDesc("When turned on, a filetree will be shown on your site.").addToggle((t) => {
         toggles["dgShowFileTree"] = t;
         t.setValue(this.settings.defaultNoteSettings.dgShowFileTree);
         t.onChange((val) => {
           this.settings.defaultNoteSettings.dgShowFileTree = val;
-          markAsChanged();
+          markAsChanged("dgShowFileTree");
         });
       });
-      new import_obsidian15.Setting(noteSettingsModal.contentEl).setName("Enable search (dg-enable-search)").setDesc(
-        "When turned on, users will be able to search through the content of your site."
-      ).addToggle((t) => {
-        toggles["dgEnableSearch"] = t;
-        t.setValue(this.settings.defaultNoteSettings.dgEnableSearch);
-        t.onChange((val) => {
-          this.settings.defaultNoteSettings.dgEnableSearch = val;
-          markAsChanged();
-        });
-      });
-      new import_obsidian15.Setting(noteSettingsModal.contentEl).setName("Enable link preview (dg-link-preview)").setDesc(
-        "When turned on, hovering over links to notes in your garden shows a scrollable preview."
-      ).addToggle((t) => {
-        toggles["dgLinkPreview"] = t;
-        t.setValue(this.settings.defaultNoteSettings.dgLinkPreview);
-        t.onChange((val) => {
-          this.settings.defaultNoteSettings.dgLinkPreview = val;
-          markAsChanged();
-        });
-      });
-      new import_obsidian15.Setting(noteSettingsModal.contentEl).setName("Show Tags (dg-show-tags)").setDesc(
+      new import_obsidian18.Setting(noteSettingsModal.contentEl).setName("Show Tags (dg-show-tags)").setDesc(
         "When turned on, tags in your frontmatter will be displayed on each note. If search is enabled, clicking on a tag will bring up a search for all notes containing that tag."
       ).addToggle((t) => {
         toggles["dgShowTags"] = t;
         t.setValue(this.settings.defaultNoteSettings.dgShowTags);
         t.onChange((val) => {
           this.settings.defaultNoteSettings.dgShowTags = val;
-          markAsChanged();
+          markAsChanged("dgShowTags");
         });
       });
-      new import_obsidian15.Setting(noteSettingsModal.contentEl).setName("Let all frontmatter through (dg-pass-frontmatter)").setDesc(
+      new import_obsidian18.Setting(noteSettingsModal.contentEl).setName("Let all frontmatter through (dg-pass-frontmatter)").setDesc(
         "THIS WILL BREAK YOUR SITE IF YOU DON'T KNOW WHAT YOU ARE DOING! (But disabling will fix it). Determines whether to let all frontmatter data through to the site template. Be aware that this could break your site if you have data in a format not recognized by the template engine, 11ty."
       ).addToggle((t) => {
         toggles["dgPassFrontmatter"] = t;
         t.setValue(this.settings.defaultNoteSettings.dgPassFrontmatter);
         t.onChange((val) => {
           this.settings.defaultNoteSettings.dgPassFrontmatter = val;
-          markAsChanged();
+          markAsChanged("dgPassFrontmatter");
         });
       });
     });
   }
   initializeUIStringsSettings() {
     return __async(this, null, function* () {
-      const uiStringsModal = new import_obsidian15.Modal(this.app);
+      const uiStringsModal = new import_obsidian18.Modal(this.app);
       uiStringsModal.containerEl.addClass("dg-settings");
       let hasUnsavedChanges = false;
       const textControls = {};
+      const touchedEnvKeys = /* @__PURE__ */ new Set();
       uiStringsModal.titleEl.createEl("h1", {
         text: "UI Text Settings"
       });
@@ -37123,7 +39229,7 @@ var SettingView = class {
       descDiv.createEl("span", {
         text: "Customize text displayed on your garden. Leave empty to use defaults."
       });
-      new import_obsidian15.Setting(this.settingsRootElement).setName("UI Text / Localization").setDesc(
+      new import_obsidian18.Setting(this.settingsRootElement).setName("UI Text / Localization").setDesc(
         "Customize labels and messages shown on your garden (Search, Backlinks, etc.)"
       ).addButton((cb) => {
         cb.setButtonText("Manage UI text");
@@ -37134,7 +39240,8 @@ var SettingView = class {
           yield loadRemoteSettings();
         }));
       });
-      const markAsChanged = () => {
+      const markAsChanged = (envKey) => {
+        touchedEnvKeys.add(envKey);
         hasUnsavedChanges = true;
         updateApplyButton();
       };
@@ -37150,13 +39257,17 @@ var SettingView = class {
       });
       applyButton.addEventListener("click", () => __async(this, null, function* () {
         if (!hasUnsavedChanges) return;
-        yield this.saveSiteSettingsAndUpdateEnv(
+        const applied = yield this.saveSiteSettingsAndUpdateEnv(
           this.app.metadataCache,
           this.settings,
-          this.saveSettings
+          this.saveSettings,
+          touchedEnvKeys
         );
-        hasUnsavedChanges = false;
-        updateApplyButton();
+        if (applied) {
+          touchedEnvKeys.clear();
+          hasUnsavedChanges = false;
+          updateApplyButton();
+        }
       }));
       const updateApplyButton = () => {
         if (hasUnsavedChanges) {
@@ -37277,6 +39388,7 @@ var SettingView = class {
               }
             }
           }
+          touchedEnvKeys.clear();
           hasUnsavedChanges = false;
           updateApplyButton();
         } catch (error) {
@@ -37292,145 +39404,145 @@ var SettingView = class {
       });
       updateApplyButton();
       uiStringsModal.contentEl.createEl("h3", { text: "Backlinks" }).prepend(this.getIcon("link"));
-      new import_obsidian15.Setting(uiStringsModal.contentEl).setName("Backlink header").setDesc('Default: "Pages mentioning this page"').addText((text2) => {
+      new import_obsidian18.Setting(uiStringsModal.contentEl).setName("Backlink header").setDesc('Default: "Pages mentioning this page"').addText((text2) => {
         var _a6, _b3;
         textControls["backlinkHeader"] = text2;
         text2.setPlaceholder("Pages mentioning this page").setValue((_b3 = (_a6 = this.settings.uiStrings) == null ? void 0 : _a6.backlinkHeader) != null ? _b3 : "").onChange((val) => {
           this.settings.uiStrings.backlinkHeader = val;
-          markAsChanged();
+          markAsChanged("UI_BACKLINK_HEADER");
         });
       });
-      new import_obsidian15.Setting(uiStringsModal.contentEl).setName("No backlinks message").setDesc('Default: "No other pages mentions this page"').addText((text2) => {
+      new import_obsidian18.Setting(uiStringsModal.contentEl).setName("No backlinks message").setDesc('Default: "No other pages mentions this page"').addText((text2) => {
         var _a6, _b3;
         textControls["noBacklinksMessage"] = text2;
         text2.setPlaceholder("No other pages mentions this page").setValue((_b3 = (_a6 = this.settings.uiStrings) == null ? void 0 : _a6.noBacklinksMessage) != null ? _b3 : "").onChange((val) => {
           this.settings.uiStrings.noBacklinksMessage = val;
-          markAsChanged();
+          markAsChanged("UI_NO_BACKLINKS_MESSAGE");
         });
       });
       uiStringsModal.contentEl.createEl("h3", { text: "Search" }).prepend(this.getIcon("search"));
-      new import_obsidian15.Setting(uiStringsModal.contentEl).setName("Search button text").setDesc('Default: "Search"').addText((text2) => {
+      new import_obsidian18.Setting(uiStringsModal.contentEl).setName("Search button text").setDesc('Default: "Search"').addText((text2) => {
         var _a6, _b3;
         textControls["searchButtonText"] = text2;
         text2.setPlaceholder("Search").setValue((_b3 = (_a6 = this.settings.uiStrings) == null ? void 0 : _a6.searchButtonText) != null ? _b3 : "").onChange((val) => {
           this.settings.uiStrings.searchButtonText = val;
-          markAsChanged();
+          markAsChanged("UI_SEARCH_BUTTON_TEXT");
         });
       });
-      new import_obsidian15.Setting(uiStringsModal.contentEl).setName("Search placeholder").setDesc('Default: "Start typing..."').addText((text2) => {
+      new import_obsidian18.Setting(uiStringsModal.contentEl).setName("Search placeholder").setDesc('Default: "Start typing..."').addText((text2) => {
         var _a6, _b3;
         textControls["searchPlaceholder"] = text2;
         text2.setPlaceholder("Start typing...").setValue((_b3 = (_a6 = this.settings.uiStrings) == null ? void 0 : _a6.searchPlaceholder) != null ? _b3 : "").onChange((val) => {
           this.settings.uiStrings.searchPlaceholder = val;
-          markAsChanged();
+          markAsChanged("UI_SEARCH_PLACEHOLDER");
         });
       });
-      new import_obsidian15.Setting(uiStringsModal.contentEl).setName("Enter to select hint").setDesc('Default: "Enter to select"').addText((text2) => {
+      new import_obsidian18.Setting(uiStringsModal.contentEl).setName("Enter to select hint").setDesc('Default: "Enter to select"').addText((text2) => {
         var _a6, _b3;
         textControls["searchEnterHint"] = text2;
         text2.setPlaceholder("Enter to select").setValue((_b3 = (_a6 = this.settings.uiStrings) == null ? void 0 : _a6.searchEnterHint) != null ? _b3 : "").onChange((val) => {
           this.settings.uiStrings.searchEnterHint = val;
-          markAsChanged();
+          markAsChanged("UI_SEARCH_ENTER_HINT");
         });
       });
-      new import_obsidian15.Setting(uiStringsModal.contentEl).setName("Navigate hint").setDesc('Default: "to navigate"').addText((text2) => {
+      new import_obsidian18.Setting(uiStringsModal.contentEl).setName("Navigate hint").setDesc('Default: "to navigate"').addText((text2) => {
         var _a6, _b3;
         textControls["searchNavigateHint"] = text2;
         text2.setPlaceholder("to navigate").setValue((_b3 = (_a6 = this.settings.uiStrings) == null ? void 0 : _a6.searchNavigateHint) != null ? _b3 : "").onChange((val) => {
           this.settings.uiStrings.searchNavigateHint = val;
-          markAsChanged();
+          markAsChanged("UI_SEARCH_NAVIGATE_HINT");
         });
       });
-      new import_obsidian15.Setting(uiStringsModal.contentEl).setName("Close hint").setDesc('Default: "ESC to close"').addText((text2) => {
+      new import_obsidian18.Setting(uiStringsModal.contentEl).setName("Close hint").setDesc('Default: "ESC to close"').addText((text2) => {
         var _a6, _b3;
         textControls["searchCloseHint"] = text2;
         text2.setPlaceholder("ESC to close").setValue((_b3 = (_a6 = this.settings.uiStrings) == null ? void 0 : _a6.searchCloseHint) != null ? _b3 : "").onChange((val) => {
           this.settings.uiStrings.searchCloseHint = val;
-          markAsChanged();
+          markAsChanged("UI_SEARCH_CLOSE_HINT");
         });
       });
-      new import_obsidian15.Setting(uiStringsModal.contentEl).setName("No results message").setDesc('Default: "No results for"').addText((text2) => {
+      new import_obsidian18.Setting(uiStringsModal.contentEl).setName("No results message").setDesc('Default: "No results for"').addText((text2) => {
         var _a6, _b3;
         textControls["searchNoResults"] = text2;
         text2.setPlaceholder("No results for").setValue((_b3 = (_a6 = this.settings.uiStrings) == null ? void 0 : _a6.searchNoResults) != null ? _b3 : "").onChange((val) => {
           this.settings.uiStrings.searchNoResults = val;
-          markAsChanged();
+          markAsChanged("UI_SEARCH_NO_RESULTS");
         });
       });
-      new import_obsidian15.Setting(uiStringsModal.contentEl).setName("Preview placeholder text").setDesc('Default: "Select a result to preview"').addText((text2) => {
+      new import_obsidian18.Setting(uiStringsModal.contentEl).setName("Preview placeholder text").setDesc('Default: "Select a result to preview"').addText((text2) => {
         var _a6, _b3;
         textControls["searchPreviewPlaceholder"] = text2;
         text2.setPlaceholder("Select a result to preview").setValue(
           (_b3 = (_a6 = this.settings.uiStrings) == null ? void 0 : _a6.searchPreviewPlaceholder) != null ? _b3 : ""
         ).onChange((val) => {
           this.settings.uiStrings.searchPreviewPlaceholder = val;
-          markAsChanged();
+          markAsChanged("UI_SEARCH_PREVIEW_PLACEHOLDER");
         });
       });
-      new import_obsidian15.Setting(uiStringsModal.contentEl).setName("Search not started text").setDesc('Default: "Enter your search text in the box above"').addText((text2) => {
+      new import_obsidian18.Setting(uiStringsModal.contentEl).setName("Search not started text").setDesc('Default: "Enter your search text in the box above"').addText((text2) => {
         var _a6, _b3;
         textControls["searchNotStarted"] = text2;
         text2.setPlaceholder("Enter your search text in the box above").setValue((_b3 = (_a6 = this.settings.uiStrings) == null ? void 0 : _a6.searchNotStarted) != null ? _b3 : "").onChange((val) => {
           this.settings.uiStrings.searchNotStarted = val;
-          markAsChanged();
+          markAsChanged("UI_SEARCH_NOT_STARTED_TEXT");
         });
       });
-      new import_obsidian15.Setting(uiStringsModal.contentEl).setName("Enter hotkey label").setDesc('Default: "Enter"').addText((text2) => {
+      new import_obsidian18.Setting(uiStringsModal.contentEl).setName("Enter hotkey label").setDesc('Default: "Enter"').addText((text2) => {
         var _a6, _b3;
         textControls["searchEnterHotkey"] = text2;
         text2.setPlaceholder("Enter").setValue((_b3 = (_a6 = this.settings.uiStrings) == null ? void 0 : _a6.searchEnterHotkey) != null ? _b3 : "").onChange((val) => {
           this.settings.uiStrings.searchEnterHotkey = val;
-          markAsChanged();
+          markAsChanged("UI_SEARCH_ENTER_HOTKEY");
         });
       });
-      new import_obsidian15.Setting(uiStringsModal.contentEl).setName("Navigate hotkey label").setDesc('Default: "\u21C5"').addText((text2) => {
+      new import_obsidian18.Setting(uiStringsModal.contentEl).setName("Navigate hotkey label").setDesc('Default: "\u21C5"').addText((text2) => {
         var _a6, _b3;
         textControls["searchNavigateHotkey"] = text2;
         text2.setPlaceholder("\u21C5").setValue(
           (_b3 = (_a6 = this.settings.uiStrings) == null ? void 0 : _a6.searchNavigateHotkey) != null ? _b3 : ""
         ).onChange((val) => {
           this.settings.uiStrings.searchNavigateHotkey = val;
-          markAsChanged();
+          markAsChanged("UI_SEARCH_NAVIGATE_HOTKEY");
         });
       });
-      new import_obsidian15.Setting(uiStringsModal.contentEl).setName("Close hotkey label").setDesc('Default: "ESC"').addText((text2) => {
+      new import_obsidian18.Setting(uiStringsModal.contentEl).setName("Close hotkey label").setDesc('Default: "ESC"').addText((text2) => {
         var _a6, _b3;
         textControls["searchCloseHotkey"] = text2;
         text2.setPlaceholder("ESC").setValue((_b3 = (_a6 = this.settings.uiStrings) == null ? void 0 : _a6.searchCloseHotkey) != null ? _b3 : "").onChange((val) => {
           this.settings.uiStrings.searchCloseHotkey = val;
-          markAsChanged();
+          markAsChanged("UI_SEARCH_CLOSE_HOTKEY");
         });
       });
       uiStringsModal.contentEl.createEl("h3", { text: "Canvas" }).addClass("dg-ui-strings-section-header");
-      new import_obsidian15.Setting(uiStringsModal.contentEl).setName("Drag hint").setDesc('Default: "Drag to pan"').addText((text2) => {
+      new import_obsidian18.Setting(uiStringsModal.contentEl).setName("Drag hint").setDesc('Default: "Drag to pan"').addText((text2) => {
         var _a6, _b3;
         textControls["canvasDragHint"] = text2;
         text2.setPlaceholder("Drag to pan").setValue((_b3 = (_a6 = this.settings.uiStrings) == null ? void 0 : _a6.canvasDragHint) != null ? _b3 : "").onChange((val) => {
           this.settings.uiStrings.canvasDragHint = val;
-          markAsChanged();
+          markAsChanged("UI_CANVAS_DRAG_HINT");
         });
       });
-      new import_obsidian15.Setting(uiStringsModal.contentEl).setName("Zoom hint").setDesc('Default: "Scroll to zoom"').addText((text2) => {
+      new import_obsidian18.Setting(uiStringsModal.contentEl).setName("Zoom hint").setDesc('Default: "Scroll to zoom"').addText((text2) => {
         var _a6, _b3;
         textControls["canvasZoomHint"] = text2;
         text2.setPlaceholder("Scroll to zoom").setValue((_b3 = (_a6 = this.settings.uiStrings) == null ? void 0 : _a6.canvasZoomHint) != null ? _b3 : "").onChange((val) => {
           this.settings.uiStrings.canvasZoomHint = val;
-          markAsChanged();
+          markAsChanged("UI_CANVAS_ZOOM_HINT");
         });
       });
-      new import_obsidian15.Setting(uiStringsModal.contentEl).setName("Reset hint").setDesc('Default: "Double-click to reset"').addText((text2) => {
+      new import_obsidian18.Setting(uiStringsModal.contentEl).setName("Reset hint").setDesc('Default: "Double-click to reset"').addText((text2) => {
         var _a6, _b3;
         textControls["canvasResetHint"] = text2;
         text2.setPlaceholder("Double-click to reset").setValue((_b3 = (_a6 = this.settings.uiStrings) == null ? void 0 : _a6.canvasResetHint) != null ? _b3 : "").onChange((val) => {
           this.settings.uiStrings.canvasResetHint = val;
-          markAsChanged();
+          markAsChanged("UI_CANVAS_RESET_HINT");
         });
       });
     });
   }
   initializeThemesSettings() {
     return __async(this, null, function* () {
-      const themeModal = new import_obsidian15.Modal(this.app);
+      const themeModal = new import_obsidian18.Modal(this.app);
       themeModal.containerEl.addClass("dg-settings");
       themeModal.titleEl.createEl("h1", { text: "Appearance Settings" });
       const controls = {
@@ -37438,6 +39550,7 @@ var SettingView = class {
         siteName: null,
         mainLanguage: null,
         useFullResolutionImages: null,
+        logoHeight: null,
         timestampFormat: null,
         showCreatedTimestamp: null,
         showUpdatedTimestamp: null,
@@ -37447,6 +39560,7 @@ var SettingView = class {
         showNoteIconOnInternalLink: null,
         showNoteIconOnBackLink: null
       };
+      const touchedEnvKeys = /* @__PURE__ */ new Set();
       const statusEl = themeModal.contentEl.createDiv({
         cls: "dg-appearance-status"
       });
@@ -37474,6 +39588,12 @@ var SettingView = class {
           controlKey: "useFullResolutionImages",
           settingsKey: "useFullResolutionImages",
           isBoolean: true
+        },
+        {
+          envKey: "LOGO_HEIGHT",
+          controlKey: "logoHeight",
+          settingsKey: "logoHeight",
+          isBoolean: false
         },
         {
           envKey: "TIMESTAMP_FORMAT",
@@ -37547,6 +39667,7 @@ var SettingView = class {
                 this.settings[mapping.settingsKey] = value;
               }
             }
+            touchedEnvKeys.clear();
             statusEl.setText("Settings loaded from site");
             setTimeout(() => {
               statusEl.setText("");
@@ -37569,8 +39690,11 @@ var SettingView = class {
         cb.setButtonText("Apply settings to site");
         cb.setCta();
         cb.onClick((_ev) => __async(this, null, function* () {
-          new import_obsidian15.Notice("Applying settings to site...");
-          yield this.saveSettingsAndUpdateEnv();
+          new import_obsidian18.Notice("Applying settings to site...");
+          const applied = yield this.saveSettingsAndUpdateEnv(touchedEnvKeys);
+          if (applied) {
+            touchedEnvKeys.clear();
+          }
           const connection = yield PublishPlatformConnectionFactory.createPublishPlatformConnection(
             this.settings
           );
@@ -37580,23 +39704,23 @@ var SettingView = class {
           try {
             yield this.addFavicon(octokit, owner, repo);
           } catch (error) {
-            import_js_logger9.default.error("Failed to update favicon", error);
-            new import_obsidian15.Notice(
+            import_js_logger11.default.error("Failed to update favicon", error);
+            new import_obsidian18.Notice(
               "Failed to update favicon. Check the developer console for details."
             );
           }
           try {
             yield this.addLogo(octokit, owner, repo);
           } catch (error) {
-            import_js_logger9.default.error("Failed to update logo", error);
-            new import_obsidian15.Notice(
+            import_js_logger11.default.error("Failed to update logo", error);
+            new import_obsidian18.Notice(
               "Failed to update logo. Check the developer console for details."
             );
           }
-          new import_obsidian15.Notice("Settings applied to site!");
+          new import_obsidian18.Notice("Settings applied to site!");
         }));
       };
-      new import_obsidian15.Setting(this.settingsRootElement).setName("Appearance").setDesc("Manage themes, sitename and styling on your site").addButton((cb) => {
+      new import_obsidian18.Setting(this.settingsRootElement).setName("Appearance").setDesc("Manage themes, sitename and styling on your site").addButton((cb) => {
         cb.setButtonText("Manage appearance");
         cb.onClick(() => __async(this, null, function* () {
           themeModal.open();
@@ -37613,20 +39737,20 @@ var SettingView = class {
             cls: "dg-settings-section"
           });
           styleSettingsSection.createEl("h3", { text: "Style Settings Plugin" }).prepend(this.getIcon("paintbrush"));
-          new import_obsidian15.Setting(styleSettingsSection).setName("Apply current style settings to site").setDesc(
+          new import_obsidian18.Setting(styleSettingsSection).setName("Apply current style settings to site").setDesc(
             "Click the apply button to use the current style settings from the Style Settings Plugin on your site. (The plugin looks at the currently APPLIED settings. Meaning you need to have the theme you are using in the garden selected in Obsidian before applying)"
           ).addButton((btn) => {
             btn.setButtonText("Apply Style Settings");
             btn.setCta();
             btn.onClick((_ev) => __async(this, null, function* () {
               var _a6;
-              new import_obsidian15.Notice("Applying Style Settings...");
+              new import_obsidian18.Notice("Applying Style Settings...");
               const styleSettingsNode = document.querySelector(
                 "#css-settings-manager"
               );
               const bodyClasses = (_a6 = document.querySelector("body")) == null ? void 0 : _a6.className;
               if (!styleSettingsNode && !bodyClasses) {
-                new import_obsidian15.Notice("No Style Settings found");
+                new import_obsidian18.Notice("No Style Settings found");
                 return;
               }
               if (styleSettingsNode == null ? void 0 : styleSettingsNode.innerHTML) {
@@ -37636,15 +39760,19 @@ var SettingView = class {
                 this.settings.styleSettingsBodyClasses = `${bodyClasses}`;
               }
               if (!this.settings.styleSettingsCss && !this.settings.styleSettingsBodyClasses) {
-                new import_obsidian15.Notice("No Style Settings found");
+                new import_obsidian18.Notice("No Style Settings found");
                 return;
               }
               yield this.saveSiteSettingsAndUpdateEnv(
                 this.app.metadataCache,
                 this.settings,
-                this.saveSettings
+                this.saveSettings,
+                /* @__PURE__ */ new Set([
+                  "STYLE_SETTINGS_CSS",
+                  "STYLE_SETTINGS_BODY_CLASSES"
+                ])
               );
-              new import_obsidian15.Notice("Style Settings applied to site");
+              new import_obsidian18.Notice("Style Settings applied to site");
             }));
           }).addButton((btn) => {
             btn.setButtonText("Clear");
@@ -37654,9 +39782,13 @@ var SettingView = class {
               yield this.saveSiteSettingsAndUpdateEnv(
                 this.app.metadataCache,
                 this.settings,
-                this.saveSettings
+                this.saveSettings,
+                /* @__PURE__ */ new Set([
+                  "STYLE_SETTINGS_CSS",
+                  "STYLE_SETTINGS_BODY_CLASSES"
+                ])
               );
-              new import_obsidian15.Notice("Style Settings removed from site");
+              new import_obsidian18.Notice("Style Settings removed from site");
             }));
           });
         }
@@ -37727,6 +39859,8 @@ var SettingView = class {
         });
         card.addEventListener("click", () => __async(this, null, function* () {
           this.settings.theme = themeValue;
+          touchedEnvKeys.add("THEME");
+          touchedEnvKeys.add("BASE_THEME");
           yield this.saveSettings();
           updateCurrentThemeDisplay();
           themeGrid.querySelectorAll(".dg-theme-card").forEach((c) => c.removeClass("is-selected"));
@@ -37756,28 +39890,30 @@ var SettingView = class {
         const target = e.target;
         renderThemes(target.value);
       });
-      new import_obsidian15.Setting(themeSection).setName("Base theme").addDropdown((dd) => {
+      new import_obsidian18.Setting(themeSection).setName("Base theme").addDropdown((dd) => {
         controls.baseTheme = dd;
         dd.addOption("dark", "Dark");
         dd.addOption("light", "Light");
         dd.setValue(this.settings.baseTheme);
         dd.onChange((val) => __async(this, null, function* () {
           this.settings.baseTheme = val;
+          touchedEnvKeys.add("BASE_THEME");
           yield this.saveSettings();
         }));
       });
-      new import_obsidian15.Setting(themeSection).setName("Sitename").setDesc(
+      new import_obsidian18.Setting(themeSection).setName("Sitename").setDesc(
         "The name of your site. This will be displayed as the site header."
       ).addText((text2) => {
         controls.siteName = text2;
         text2.setValue(this.settings.siteName).onChange(
           (value) => __async(this, null, function* () {
             this.settings.siteName = value;
+            touchedEnvKeys.add("SITE_NAME_HEADER");
             yield this.saveSettings();
           })
         );
       });
-      new import_obsidian15.Setting(themeSection).setName("Logo").setDesc(
+      new import_obsidian18.Setting(themeSection).setName("Logo").setDesc(
         "Path to an image in your vault to use as a logo instead of the sitename. Leave blank to show sitename text."
       ).addText((tc) => {
         tc.setPlaceholder("mylogo.png");
@@ -37788,18 +39924,31 @@ var SettingView = class {
         }));
         new ImageFileSuggest(this.app, tc.inputEl);
       });
-      new import_obsidian15.Setting(themeSection).setName("Main language").setDesc(
+      new import_obsidian18.Setting(themeSection).setName("Logo size").setDesc(
+        "Height of the logo on your site. A number is treated as pixels (e.g. 40), or use any CSS size like 3rem. Leave blank for the default size."
+      ).addText((tc) => {
+        controls.logoHeight = tc;
+        tc.setPlaceholder("40");
+        tc.setValue(this.settings.logoHeight);
+        tc.onChange((val) => __async(this, null, function* () {
+          this.settings.logoHeight = val.trim();
+          touchedEnvKeys.add("LOGO_HEIGHT");
+          yield this.saveSettings();
+        }));
+      });
+      new import_obsidian18.Setting(themeSection).setName("Main language").setDesc(
         "Language code (ISO 639-1) for the main language of your site. This is used to set the correct language on your site to assist search engines and browsers."
       ).addText((text2) => {
         controls.mainLanguage = text2;
         text2.setValue(this.settings.mainLanguage).onChange(
           (value) => __async(this, null, function* () {
             this.settings.mainLanguage = value;
+            touchedEnvKeys.add("SITE_MAIN_LANGUAGE");
             yield this.saveSettings();
           })
         );
       });
-      new import_obsidian15.Setting(themeSection).setName("Favicon").setDesc(
+      new import_obsidian18.Setting(themeSection).setName("Favicon").setDesc(
         "Path to an svg in your vault you wish to use as a favicon. Leave blank to use default. Must be square! (eg. 16x16)"
       ).addText((tc) => {
         tc.setPlaceholder("myfavicon.svg");
@@ -37810,42 +39959,45 @@ var SettingView = class {
         }));
         new SvgFileSuggest(this.app, tc.inputEl);
       });
-      new import_obsidian15.Setting(themeSection).setName("Use full resolution images").setDesc(
+      new import_obsidian18.Setting(themeSection).setName("Use full resolution images").setDesc(
         "By default, the images on your site are compressed to make your site load faster. If you instead want to use the full resolution images, enable this setting."
       ).addToggle((toggle) => {
         controls.useFullResolutionImages = toggle;
         toggle.setValue(this.settings.useFullResolutionImages);
         toggle.onChange((val) => __async(this, null, function* () {
           this.settings.useFullResolutionImages = val;
+          touchedEnvKeys.add("USE_FULL_RESOLUTION_IMAGES");
           yield this.saveSettings();
         }));
       });
-      new import_obsidian15.Setting(themeSection).setClass("dg-apply-button-container").addButton(handleSaveSettingsButton);
+      new import_obsidian18.Setting(themeSection).setClass("dg-apply-button-container").addButton(handleSaveSettingsButton);
       const timestampsSection = themeModal.contentEl.createDiv({
         cls: "dg-settings-section"
       });
       timestampsSection.createEl("h3", { text: "Timestamps Settings" }).prepend(this.getIcon("calendar-clock"));
-      new import_obsidian15.Setting(timestampsSection).setName("Timestamp format").setDesc(
+      new import_obsidian18.Setting(timestampsSection).setName("Timestamp format").setDesc(
         "The format string to render timestamp on the garden. Must be luxon compatible"
       ).addText((text2) => {
         controls.timestampFormat = text2;
         text2.setValue(this.settings.timestampFormat).onChange(
           (value) => __async(this, null, function* () {
             this.settings.timestampFormat = value;
+            touchedEnvKeys.add("TIMESTAMP_FORMAT");
             yield this.saveSettings();
           })
         );
       });
-      new import_obsidian15.Setting(timestampsSection).setName("Show created timestamp").addToggle((t) => {
+      new import_obsidian18.Setting(timestampsSection).setName("Show created timestamp").addToggle((t) => {
         controls.showCreatedTimestamp = t;
         t.setValue(this.settings.showCreatedTimestamp).onChange(
           (value) => __async(this, null, function* () {
             this.settings.showCreatedTimestamp = value;
+            touchedEnvKeys.add("SHOW_CREATED_TIMESTAMP");
             yield this.saveSettings();
           })
         );
       });
-      new import_obsidian15.Setting(timestampsSection).setName("Created timestamp Frontmatter Key").setDesc(
+      new import_obsidian18.Setting(timestampsSection).setName("Created timestamp Frontmatter Key").setDesc(
         "Key to get the created timestamp from the frontmatter. Leave blank to get the value from file creation time. The value can be any value that luxon Datetime.fromISO can parse."
       ).addText(
         (text2) => text2.setValue(this.settings.createdTimestampKey).onChange((value) => __async(this, null, function* () {
@@ -37853,16 +40005,17 @@ var SettingView = class {
           yield this.saveSettings();
         }))
       );
-      new import_obsidian15.Setting(timestampsSection).setName("Show updated timestamp").addToggle((t) => {
+      new import_obsidian18.Setting(timestampsSection).setName("Show updated timestamp").addToggle((t) => {
         controls.showUpdatedTimestamp = t;
         t.setValue(this.settings.showUpdatedTimestamp).onChange(
           (value) => __async(this, null, function* () {
             this.settings.showUpdatedTimestamp = value;
+            touchedEnvKeys.add("SHOW_UPDATED_TIMESTAMP");
             yield this.saveSettings();
           })
         );
       });
-      new import_obsidian15.Setting(timestampsSection).setName("Updated timestamp Frontmatter Key").setDesc(
+      new import_obsidian18.Setting(timestampsSection).setName("Updated timestamp Frontmatter Key").setDesc(
         "Key to get the updated timestamp from the frontmatter. Leave blank to get the value from file update time. The value can be any value that luxon Datetime.fromISO can parse."
       ).addText(
         (text2) => text2.setValue(this.settings.updatedTimestampKey).onChange((value) => __async(this, null, function* () {
@@ -37870,12 +40023,12 @@ var SettingView = class {
           yield this.saveSettings();
         }))
       );
-      new import_obsidian15.Setting(timestampsSection).setClass("dg-apply-button-container").addButton(handleSaveSettingsButton);
+      new import_obsidian18.Setting(timestampsSection).setClass("dg-apply-button-container").addButton(handleSaveSettingsButton);
       const cssSection = themeModal.contentEl.createDiv({
         cls: "dg-settings-section"
       });
       cssSection.createEl("h3", { text: "CSS settings" }).prepend(this.getIcon("code"));
-      new import_obsidian15.Setting(cssSection).setName("Body Classes Key").setDesc(
+      new import_obsidian18.Setting(cssSection).setName("Body Classes Key").setDesc(
         "Key for setting css-classes to the note body from the frontmatter."
       ).addText(
         (text2) => text2.setValue(this.settings.contentClassesKey).onChange((value) => __async(this, null, function* () {
@@ -37883,7 +40036,7 @@ var SettingView = class {
           yield this.saveSettings();
         }))
       );
-      new import_obsidian15.Setting(cssSection).setClass("dg-apply-button-container").addButton(handleSaveSettingsButton);
+      new import_obsidian18.Setting(cssSection).setClass("dg-apply-button-container").addButton(handleSaveSettingsButton);
       const noteIconsSection = themeModal.contentEl.createDiv({
         cls: "dg-settings-section"
       });
@@ -37892,98 +40045,105 @@ var SettingView = class {
         text: "Documentation on note icons",
         href: "https://docs.forestry.md/advanced/note-specific-settings/#note-icons"
       });
-      new import_obsidian15.Setting(noteIconsSection).setName("Note icon Frontmatter Key").setDesc("Key to get the note icon value from the frontmatter").addText(
+      new import_obsidian18.Setting(noteIconsSection).setName("Note icon Frontmatter Key").setDesc("Key to get the note icon value from the frontmatter").addText(
         (text2) => text2.setValue(this.settings.noteIconKey).onChange((value) => __async(this, null, function* () {
           this.settings.noteIconKey = value;
           yield this.saveSettings();
         }))
       );
-      new import_obsidian15.Setting(noteIconsSection).setName("Default note icon Value").setDesc("The default value for note icon if not specified").addText((text2) => {
+      new import_obsidian18.Setting(noteIconsSection).setName("Default note icon Value").setDesc("The default value for note icon if not specified").addText((text2) => {
         controls.defaultNoteIcon = text2;
         text2.setValue(this.settings.defaultNoteIcon).onChange(
           (value) => __async(this, null, function* () {
             this.settings.defaultNoteIcon = value;
+            touchedEnvKeys.add("NOTE_ICON_DEFAULT");
             yield this.saveSettings();
           })
         );
       });
-      new import_obsidian15.Setting(noteIconsSection).setName("Show note icon on Title").addToggle((t) => {
+      new import_obsidian18.Setting(noteIconsSection).setName("Show note icon on Title").addToggle((t) => {
         controls.showNoteIconOnTitle = t;
         t.setValue(this.settings.showNoteIconOnTitle).onChange(
           (value) => __async(this, null, function* () {
             this.settings.showNoteIconOnTitle = value;
+            touchedEnvKeys.add("NOTE_ICON_TITLE");
             yield this.saveSettings();
           })
         );
       });
-      new import_obsidian15.Setting(noteIconsSection).setName("Show note icon in FileTree").addToggle((t) => {
+      new import_obsidian18.Setting(noteIconsSection).setName("Show note icon in FileTree").addToggle((t) => {
         controls.showNoteIconInFileTree = t;
         t.setValue(this.settings.showNoteIconInFileTree).onChange(
           (value) => __async(this, null, function* () {
             this.settings.showNoteIconInFileTree = value;
+            touchedEnvKeys.add("NOTE_ICON_FILETREE");
             yield this.saveSettings();
           })
         );
       });
-      new import_obsidian15.Setting(noteIconsSection).setName("Show note icon on Internal Links").addToggle((t) => {
+      new import_obsidian18.Setting(noteIconsSection).setName("Show note icon on Internal Links").addToggle((t) => {
         controls.showNoteIconOnInternalLink = t;
         t.setValue(this.settings.showNoteIconOnInternalLink).onChange(
           (value) => __async(this, null, function* () {
             this.settings.showNoteIconOnInternalLink = value;
+            touchedEnvKeys.add("NOTE_ICON_INTERNAL_LINKS");
             yield this.saveSettings();
           })
         );
       });
-      new import_obsidian15.Setting(noteIconsSection).setName("Show note icon on Backlinks").addToggle((t) => {
+      new import_obsidian18.Setting(noteIconsSection).setName("Show note icon on Backlinks").addToggle((t) => {
         controls.showNoteIconOnBackLink = t;
         t.setValue(this.settings.showNoteIconOnBackLink).onChange(
           (value) => __async(this, null, function* () {
             this.settings.showNoteIconOnBackLink = value;
+            touchedEnvKeys.add("NOTE_ICON_BACK_LINKS");
             yield this.saveSettings();
           })
         );
       });
-      new import_obsidian15.Setting(noteIconsSection).setClass("dg-apply-button-container").addButton(handleSaveSettingsButton);
+      new import_obsidian18.Setting(noteIconsSection).setClass("dg-apply-button-container").addButton(handleSaveSettingsButton);
     });
   }
-  saveSettingsAndUpdateEnv() {
+  saveSettingsAndUpdateEnv(touchedEnvKeys) {
     return __async(this, null, function* () {
       const theme = JSON.parse(this.settings.theme);
       const baseTheme = this.settings.baseTheme;
       if (theme.modes.indexOf(baseTheme) < 0) {
-        new import_obsidian15.Notice(
+        new import_obsidian18.Notice(
           `The ${theme.name} theme doesn't support ${baseTheme} mode.`
         );
-        return;
+        return false;
       }
       const gardenManager = new DigitalGardenSiteManager(
         this.app.metadataCache,
         this.settings
       );
-      yield gardenManager.updateEnv();
-      new import_obsidian15.Notice("Successfully applied settings");
+      yield gardenManager.updateEnv(touchedEnvKeys);
+      new import_obsidian18.Notice("Successfully applied settings");
+      return true;
     });
   }
-  saveSiteSettingsAndUpdateEnv(metadataCache, settings, saveSettings) {
+  saveSiteSettingsAndUpdateEnv(metadataCache, settings, saveSettings, touchedEnvKeys) {
     return __async(this, null, function* () {
-      new import_obsidian15.Notice("Updating settings...");
+      new import_obsidian18.Notice("Updating settings...");
       let updateFailed = false;
       try {
         const gardenManager = new DigitalGardenSiteManager(
           metadataCache,
           settings
         );
-        yield gardenManager.updateEnv();
+        yield gardenManager.updateEnv(touchedEnvKeys);
       } catch (e) {
-        new import_obsidian15.Notice(
+        new import_obsidian18.Notice(
           "Failed to update settings. Make sure you have an internet connection."
         );
         updateFailed = true;
       }
       if (!updateFailed) {
-        new import_obsidian15.Notice("Settings successfully updated!");
+        new import_obsidian18.Notice("Settings successfully updated!");
         yield saveSettings();
       }
+      return !updateFailed;
     });
   }
   parseEnvSettings(envContent) {
@@ -38005,14 +40165,18 @@ var SettingView = class {
         const faviconFile = this.app.vault.getAbstractFileByPath(
           this.settings.faviconPath
         );
-        if (!(faviconFile instanceof import_obsidian15.TFile)) {
-          new import_obsidian15.Notice(`${this.settings.faviconPath} is not a valid file.`);
+        if (!(faviconFile instanceof import_obsidian18.TFile)) {
+          new import_obsidian18.Notice(`${this.settings.faviconPath} is not a valid file.`);
           return;
         }
         const faviconContent = yield this.app.vault.readBinary(faviconFile);
         base64SettingsFaviconContent = arrayBufferToBase64(faviconContent);
       } else {
-        const baseConnection = PublishPlatformConnectionFactory.createBaseGardenConnection();
+        const baseConnection = PublishPlatformConnectionFactory.createBaseGardenConnection(
+          PublishPlatformConnectionFactory.githubTokenFor(
+            this.settings
+          )
+        );
         const defaultFavicon = yield baseConnection.octoKit.request(
           "GET /repos/{owner}/{repo}/contents/{path}",
           {
@@ -38038,7 +40202,7 @@ var SettingView = class {
         faviconsAreIdentical = // @ts-expect-error TODO: abstract octokit response
         currentFaviconOnSite.data.content.replace(/\n/g, "") === base64SettingsFaviconContent;
         if (faviconsAreIdentical) {
-          import_js_logger9.default.info("Favicons are identical, skipping update");
+          import_js_logger11.default.info("Favicons are identical, skipping update");
           return;
         }
       } catch (error) {
@@ -38060,7 +40224,7 @@ var SettingView = class {
   addLogo(octokit, owner, repo) {
     return __async(this, null, function* () {
       var _a6;
-      import_js_logger9.default.info(
+      import_js_logger11.default.info(
         `addLogo called, logoPath setting: "${this.settings.logoPath}", owner: "${owner}", repo: "${repo}"`
       );
       const logoBasePath = sitePath(this.settings, "/logo");
@@ -38101,15 +40265,15 @@ var SettingView = class {
       const logoFile = this.app.vault.getAbstractFileByPath(
         this.settings.logoPath
       );
-      if (!(logoFile instanceof import_obsidian15.TFile)) {
-        new import_obsidian15.Notice(`${this.settings.logoPath} is not a valid file.`);
+      if (!(logoFile instanceof import_obsidian18.TFile)) {
+        new import_obsidian18.Notice(`${this.settings.logoPath} is not a valid file.`);
         return;
       }
       const logoContent = yield this.app.vault.readBinary(logoFile);
       const base64LogoContent = arrayBufferToBase64(logoContent);
       const logoExtension = logoFile.extension.toLowerCase();
       const logoPath = `${logoBasePath}.${logoExtension}`;
-      import_js_logger9.default.info(
+      import_js_logger11.default.info(
         `Uploading logo from ${this.settings.logoPath} to ${logoPath}`
       );
       let logoExists = true;
@@ -38127,7 +40291,7 @@ var SettingView = class {
         logosAreIdentical = // @ts-expect-error TODO: abstract octokit response
         currentLogoOnSite.data.content.replace(/\n/g, "") === base64LogoContent;
         if (logosAreIdentical) {
-          import_js_logger9.default.info("Logos are identical, skipping update");
+          import_js_logger11.default.info("Logos are identical, skipping update");
           return;
         }
       } catch (e) {
@@ -38147,8 +40311,8 @@ var SettingView = class {
             requestPayload
           );
         } catch (error) {
-          import_js_logger9.default.error("Failed to upload logo", error);
-          new import_obsidian15.Notice(
+          import_js_logger11.default.error("Failed to upload logo", error);
+          new import_obsidian18.Notice(
             "Failed to upload logo. Check the developer console for details."
           );
         }
@@ -38156,7 +40320,7 @@ var SettingView = class {
     });
   }
   initializeGitHubBaseURLSetting() {
-    const siteBaseUrl = new import_obsidian15.Setting(this.settingsRootElement).setName("Base URL").setDesc(
+    const siteBaseUrl = new import_obsidian18.Setting(this.settingsRootElement).setName("Base URL").setDesc(
       `This is optional, but recommended. It is used for the "Copy Garden URL" command, generating a sitemap.xml for better SEO and an RSS feed located at /feed.xml. `
     );
     if (this.settings.publishPlatform === "ForestryMd" /* ForestryMd */) {
@@ -38184,7 +40348,7 @@ var SettingView = class {
     }
   }
   initializeSlugifySetting() {
-    new import_obsidian15.Setting(this.settingsRootElement).setName("Slugify Note URL").setDesc(
+    new import_obsidian18.Setting(this.settingsRootElement).setName("Slugify Note URL").setDesc(
       'Transform the URL from "/My Folder/My Note/" to "/my-folder/my-note". If your note titles contains non-English characters, this should be disabled.'
     ).addToggle(
       (toggle) => toggle.setValue(this.settings.slugifyEnabled).onChange((value) => __async(this, null, function* () {
@@ -38192,6 +40356,46 @@ var SettingView = class {
         yield this.saveSettings();
       }))
     );
+  }
+  initializeExcalidrawSetting() {
+    new import_obsidian18.Setting(this.settingsRootElement).setName("Publish Excalidraw drawings as SVG").setDesc(
+      "Export drawings as static SVG images at publish time, with embedded images, notes and fonts included. Requires the Excalidraw plugin. When disabled, drawings are published as an interactive viewer loaded from a CDN, which cannot display embedded files."
+    ).addToggle(
+      (toggle) => toggle.setValue(this.settings.excalidrawSvgExportEnabled).onChange((value) => __async(this, null, function* () {
+        this.settings.excalidrawSvgExportEnabled = value;
+        yield this.saveSettings();
+      }))
+    );
+  }
+  initializeGardenPluginSettings() {
+    new import_obsidian18.Setting(this.settingsRootElement).setName("Garden Plugins").setDesc(
+      "Install, configure and manage the plugins that power your garden's features. Read from your garden repository."
+    ).addButton((cb) => {
+      cb.setButtonText("Manage plugins");
+      cb.onClick(() => __async(this, null, function* () {
+        const connection = yield PublishPlatformConnectionFactory.createPublishPlatformConnection(
+          this.settings
+        );
+        const manager = new GardenPluginManager(
+          new RepositoryConnection(connection),
+          this.settings
+        );
+        const modal = new GardenPluginsModal(
+          this.app,
+          manager,
+          this.settings,
+          this.saveSettings,
+          () => __async(this, null, function* () {
+            yield this.saveSiteSettingsAndUpdateEnv(
+              this.app.metadataCache,
+              this.settings,
+              this.saveSettings
+            );
+          })
+        );
+        modal.open();
+      }));
+    });
   }
   openNavigationOrderModal() {
     return __async(this, null, function* () {
@@ -38220,7 +40424,7 @@ var SettingView = class {
       this.app.metadataCache,
       this.settings
     );
-    const rewriteRulesModal = new import_obsidian15.Modal(this.app);
+    const rewriteRulesModal = new import_obsidian18.Modal(this.app);
     rewriteRulesModal.open();
     const modalContent = mount(RewriteSettings, {
       target: rewriteRulesModal.contentEl,
@@ -38235,10 +40439,10 @@ var SettingView = class {
     };
   }
   initializeCustomFilterSettings() {
-    const customFilterModal = new import_obsidian15.Modal(this.app);
+    const customFilterModal = new import_obsidian18.Modal(this.app);
     customFilterModal.titleEl.createEl("h1", { text: "Custom Filters" });
     customFilterModal.modalEl.style.width = "fit-content";
-    new import_obsidian15.Setting(this.settingsRootElement).setName("Custom Filters").setDesc(
+    new import_obsidian18.Setting(this.settingsRootElement).setName("Custom Filters").setDesc(
       "Define custom rules to replace parts of the note before publishing."
     ).addButton((cb) => {
       cb.setButtonText("Manage Custom Filters");
@@ -38268,7 +40472,7 @@ var SettingView = class {
       }
     }).innerHTML = `Example: filter [<code>:smile:</code>, <code>\u{1F600}</code>, <code>g</code>] will replace text with real emojis`;
     const customFilters = this.settings.customFilters;
-    new import_obsidian15.Setting(rewriteSettingsContainer).setName("Filters").addButton((button) => {
+    new import_obsidian18.Setting(rewriteSettingsContainer).setName("Filters").addButton((button) => {
       button.setButtonText("Add");
       button.setTooltip("Add a filter");
       button.setIcon("plus");
@@ -38294,22 +40498,30 @@ var SettingView = class {
     return __async(this, null, function* () {
       var _a6, _b3, _c2;
       const target = (_a6 = this.updateSectionAnchor) != null ? _a6 : this.settingsRootElement;
-      target.createEl("h3", { text: "Update site template" }).prepend((_b3 = (0, import_obsidian15.getIcon)("sync")) != null ? _b3 : "");
+      target.createEl("h3", { text: "Update site template" }).prepend((_b3 = (0, import_obsidian18.getIcon)("sync")) != null ? _b3 : "");
+      new import_obsidian18.Setting(target).setName("Check for template updates on startup").setDesc(
+        "Show a notice on launch when a new site template version is available. Disable this if your template has diverged from the default and won't ever match. You can still check for updates manually below."
+      ).addToggle((toggle) => {
+        toggle.setValue(!this.settings.disableTemplateUpdateNotice).onChange((value) => __async(this, null, function* () {
+          this.settings.disableTemplateUpdateNotice = !value;
+          yield this.saveSettings();
+        }));
+      });
       const loadingContainer = target.createDiv({
         cls: "dg-update-loading"
       });
-      new import_obsidian15.Setting(loadingContainer).setName("Site Template").setDesc("Checking for updates...").addButton((button) => {
+      new import_obsidian18.Setting(loadingContainer).setName("Site Template").setDesc("Checking for updates...").addButton((button) => {
         button.setButtonText("Checking...");
         button.setDisabled(true);
       });
-      import_js_logger9.default.time("checkForUpdate");
+      import_js_logger11.default.time("checkForUpdate");
       let updater;
       try {
         updater = yield (yield siteManager.getTemplateUpdater()).checkForUpdates();
       } catch (error) {
-        import_js_logger9.default.warn("Failed to check for template updates", error);
+        import_js_logger11.default.warn("Failed to check for template updates", error);
         loadingContainer.empty();
-        new import_obsidian15.Setting(loadingContainer).setName("Site Template").setDesc(
+        new import_obsidian18.Setting(loadingContainer).setName("Site Template").setDesc(
           "Unable to check for updates. Please check your connection and credentials."
         ).addButton((button) => {
           button.setButtonText("Check failed");
@@ -38317,10 +40529,10 @@ var SettingView = class {
         });
         return;
       }
-      import_js_logger9.default.timeEnd("checkForUpdate");
+      import_js_logger11.default.timeEnd("checkForUpdate");
       loadingContainer.empty();
       const updateAvailable = hasUpdates(updater);
-      new import_obsidian15.Setting(loadingContainer).setName("Site Template").setDesc(
+      new import_obsidian18.Setting(loadingContainer).setName("Site Template").setDesc(
         updateAvailable ? "Manage updates to the base template. You should try updating the template when you update the plugin to make sure your garden support all features." : `Your site template is up to date! (${(_c2 = updater.newestTemplateVersion) != null ? _c2 : "latest"})`
       ).addButton((button) => __async(this, null, function* () {
         if (updateAvailable) {
@@ -38340,7 +40552,7 @@ var SettingView = class {
       const titleContainer = modal.titleEl.createDiv({
         cls: "dg-modal-title"
       });
-      const syncIcon = (0, import_obsidian15.getIcon)("refresh-cw");
+      const syncIcon = (0, import_obsidian18.getIcon)("refresh-cw");
       if (syncIcon) {
         titleContainer.appendChild(syncIcon);
       }
@@ -38351,7 +40563,7 @@ var SettingView = class {
       const infoContainer = updateSection.createDiv({
         cls: "dg-update-info"
       });
-      const infoIcon = (0, import_obsidian15.getIcon)("info");
+      const infoIcon = (0, import_obsidian18.getIcon)("info");
       if (infoIcon) {
         infoContainer.appendChild(infoIcon);
       }
@@ -38399,7 +40611,7 @@ var SettingView = class {
     const header = historySection.createDiv({
       cls: "dg-pr-history-header"
     });
-    const chevronIcon = (0, import_obsidian15.getIcon)("chevron-right");
+    const chevronIcon = (0, import_obsidian18.getIcon)("chevron-right");
     if (chevronIcon) {
       header.appendChild(chevronIcon);
     }
@@ -38423,7 +40635,7 @@ var SettingView = class {
       const prItem = prsContainer.createDiv({
         cls: "dg-pr-history-item"
       });
-      const gitPrIcon = (0, import_obsidian15.getIcon)("git-pull-request");
+      const gitPrIcon = (0, import_obsidian18.getIcon)("git-pull-request");
       if (gitPrIcon) {
         prItem.appendChild(gitPrIcon);
       }
@@ -38439,8 +40651,8 @@ var SettingView = class {
 };
 
 // src/views/UpdateGardenRepositoryModal.ts
-var import_obsidian16 = require("obsidian");
-var UpdateGardenRepositoryModal = class extends import_obsidian16.Modal {
+var import_obsidian19 = require("obsidian");
+var UpdateGardenRepositoryModal = class extends import_obsidian19.Modal {
   constructor(app) {
     super(app);
     this.modalEl.addClass("dg-update-modal");
@@ -38456,7 +40668,7 @@ var UpdateGardenRepositoryModal = class extends import_obsidian16.Modal {
     const spinnerContainer = this.loading.createDiv({
       cls: "dg-update-spinner"
     });
-    const spinnerIcon = (0, import_obsidian16.getIcon)("loader-2");
+    const spinnerIcon = (0, import_obsidian19.getIcon)("loader-2");
     if (spinnerIcon) {
       spinnerContainer.appendChild(spinnerIcon);
     }
@@ -38484,7 +40696,7 @@ var UpdateGardenRepositoryModal = class extends import_obsidian16.Modal {
     const iconContainer = successContainer.createDiv({
       cls: "dg-update-icon dg-update-icon-success"
     });
-    const checkIcon = (0, import_obsidian16.getIcon)("check-circle");
+    const checkIcon = (0, import_obsidian19.getIcon)("check-circle");
     if (checkIcon) {
       iconContainer.appendChild(checkIcon);
     }
@@ -38505,7 +40717,7 @@ var UpdateGardenRepositoryModal = class extends import_obsidian16.Modal {
         href: prUrl,
         cls: "dg-update-link"
       });
-      const externalIcon = (0, import_obsidian16.getIcon)("external-link");
+      const externalIcon = (0, import_obsidian19.getIcon)("external-link");
       if (externalIcon) {
         link2.appendChild(externalIcon);
       }
@@ -38530,7 +40742,7 @@ var UpdateGardenRepositoryModal = class extends import_obsidian16.Modal {
     const iconContainer = errorContainer.createDiv({
       cls: "dg-update-icon dg-update-icon-error"
     });
-    const alertIcon = (0, import_obsidian16.getIcon)("alert-circle");
+    const alertIcon = (0, import_obsidian19.getIcon)("alert-circle");
     if (alertIcon) {
       iconContainer.appendChild(alertIcon);
     }
@@ -38546,8 +40758,8 @@ var UpdateGardenRepositoryModal = class extends import_obsidian16.Modal {
 };
 
 // src/views/DigitalGardenSettingTab.ts
-var import_js_logger10 = __toESM(require_logger());
-var DigitalGardenSettingTab = class extends import_obsidian17.PluginSettingTab {
+var import_js_logger12 = __toESM(require_logger());
+var DigitalGardenSettingTab = class extends import_obsidian20.PluginSettingTab {
   constructor(app, plugin) {
     super(app, plugin);
     this.plugin = plugin;
@@ -38573,7 +40785,7 @@ var DigitalGardenSettingTab = class extends import_obsidian17.PluginSettingTab {
         containerEl,
         this.plugin.settings,
         () => __async(this, null, function* () {
-          return yield this.plugin.saveData(this.plugin.settings);
+          return yield this.plugin.saveSettings();
         })
       );
       const prModal = new UpdateGardenRepositoryModal(this.app);
@@ -38586,9 +40798,9 @@ var DigitalGardenSettingTab = class extends import_obsidian17.PluginSettingTab {
           return;
         }
         try {
-          import_js_logger10.default.time("update");
+          import_js_logger12.default.time("update");
           const prUrl = yield updater.updateTemplate();
-          import_js_logger10.default.timeEnd("update");
+          import_js_logger12.default.timeEnd("update");
           if (prUrl) {
             this.plugin.settings.prHistory.push(prUrl);
             yield this.plugin.saveSettings();
@@ -38612,21 +40824,290 @@ var DigitalGardenSettingTab = class extends import_obsidian17.PluginSettingTab {
 };
 
 // main.ts
-var import_js_logger12 = __toESM(require_logger());
+var import_js_logger15 = __toESM(require_logger());
+
+// src/views/GardenPluginSettings/InstallPluginModal.ts
+var import_obsidian22 = require("obsidian");
+
+// src/views/GardenPluginSettings/InstallPluginView.svelte
+var import_obsidian21 = require("obsidian");
+var root6 = from_html(`<span class="dg-spinner svelte-jtoci9" aria-hidden="true"></span> Checking\u2026`, 1);
+var root_110 = from_html(`<p class="dg-install-error svelte-jtoci9"> </p>`);
+var root_210 = from_html(`<label class="dg-install-conflict-choice svelte-jtoci9"><input type="checkbox" class="svelte-jtoci9"/> <span> <strong> </strong> </span></label>`);
+var root_36 = from_html(`<span class="dg-spinner svelte-jtoci9" aria-hidden="true"></span> Installing\u2026`, 1);
+var root_44 = from_html(`<div class="dg-install-confirm svelte-jtoci9"><p class="dg-install-confirm-title svelte-jtoci9"> <strong> </strong> </p> <p> </p> <p class="dg-install-warning svelte-jtoci9">\u26A0\uFE0F Plugins run their own code in your site's build and in your
+				visitors' browsers. Only install plugins from authors you trust
+				\u2014 review the code at <a> </a> <code> </code>).</p> <!> <div class="dg-install-actions svelte-jtoci9"><button class="mod-cta svelte-jtoci9"><!></button> <button class="svelte-jtoci9">Cancel</button></div></div>`);
+var root_53 = from_html(`<div class="dg-install-plugin svelte-jtoci9"><p class="dg-install-intro svelte-jtoci9">Paste the GitHub URL of a garden plugin. It will be reviewed before
+		anything is written to your garden repository.</p> <form class="dg-install-row svelte-jtoci9"><input type="text" placeholder="https://github.com/user/garden-plugin-example" class="svelte-jtoci9"/> <button type="submit" class="mod-cta svelte-jtoci9"><!></button></form> <!> <!></div>`);
+var $$css6 = {
+  hash: "svelte-jtoci9",
+  code: ".dg-install-plugin.svelte-jtoci9 {display:flex;flex-direction:column;gap:10px;min-width:min(440px, 80vw);}.dg-install-intro.svelte-jtoci9 {color:var(--text-muted);margin:0;}.dg-install-row.svelte-jtoci9 {display:flex;gap:8px;}.dg-install-row.svelte-jtoci9 input:where(.svelte-jtoci9) {flex:1;}.dg-install-row.svelte-jtoci9 button:where(.svelte-jtoci9) {display:inline-flex;align-items:center;gap:6px;white-space:nowrap;}.dg-install-error.svelte-jtoci9 {color:var(--text-error);margin:0;}.dg-install-confirm.svelte-jtoci9 {border:1px solid var(--background-modifier-border);border-left:3px solid var(--interactive-accent);border-radius:8px;padding:10px 14px;}.dg-install-confirm-title.svelte-jtoci9 {margin-top:0;}.dg-install-warning.svelte-jtoci9 {color:var(--text-warning, var(--text-muted));}.dg-install-conflict-choice.svelte-jtoci9 {display:flex;align-items:flex-start;gap:8px;margin:0 0 10px;font-size:0.92em;}.dg-install-conflict-choice.svelte-jtoci9 input:where(.svelte-jtoci9) {margin-top:3px;}.dg-install-actions.svelte-jtoci9 {display:flex;gap:8px;}.dg-install-actions.svelte-jtoci9 button:where(.svelte-jtoci9) {display:inline-flex;align-items:center;gap:6px;}.dg-spinner.svelte-jtoci9 {width:12px;height:12px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;\n		animation: svelte-jtoci9-dg-spin 0.7s linear infinite;}\n\n	@keyframes svelte-jtoci9-dg-spin {\n		to {\n			transform: rotate(360deg);\n		}\n	}\n\n	@media (prefers-reduced-motion: reduce) {.dg-spinner.svelte-jtoci9 {animation-duration:2.5s;}\n	}"
+};
+function InstallPluginView($$anchor, $$props) {
+  push($$props, false);
+  append_styles($$anchor, $$css6);
+  let manager = prop($$props, "manager", 8);
+  let settings = prop($$props, "settings", 8);
+  let close = prop($$props, "close", 8);
+  let input = mutable_source("");
+  let inputEl = mutable_source();
+  let inspecting = mutable_source(false);
+  let installing = mutable_source(false);
+  let error = mutable_source(null);
+  let pending2 = mutable_source(null);
+  let existingEntry = mutable_source();
+  let conflicts = mutable_source([]);
+  let disableConflicts = mutable_source(true);
+  onMount(() => {
+    get2(inputEl) === null || get2(inputEl) === void 0 ? void 0 : get2(inputEl).focus();
+  });
+  function inspect2() {
+    var _a6;
+    return __awaiter(this, void 0, void 0, function* () {
+      if (!get2(input).trim()) {
+        return;
+      }
+      set(inspecting, true);
+      set(error, null);
+      set(pending2, null);
+      set(disableConflicts, true);
+      try {
+        const remote = yield manager().inspectRemotePlugin(get2(input));
+        const installed = yield manager().listInstalled();
+        set(existingEntry, (_a6 = installed.find((plugin) => plugin.manifest.id === remote.manifest.id)) === null || _a6 === void 0 ? void 0 : _a6.registryEntry);
+        set(conflicts, getRegionConflicts(remote.manifest, installed));
+        set(pending2, remote);
+      } catch (err) {
+        set(error, err instanceof Error ? err.message : "Unknown error");
+      }
+      set(inspecting, false);
+    });
+  }
+  function confirmInstall() {
+    return __awaiter(this, void 0, void 0, function* () {
+      if (!get2(pending2)) {
+        return;
+      }
+      set(installing, true);
+      const disableIds = get2(disableConflicts) ? get2(conflicts).map((conflict) => conflict.manifest.id) : [];
+      try {
+        yield manager().install(get2(pending2), get2(existingEntry), disableIds);
+        new import_obsidian21.Notice(`${get2(existingEntry) ? "Updated" : "Installed"} ${get2(pending2).manifest.name} ${get2(pending2).manifest.version}. ${buildTriggeredNotice(settings())}`);
+        close()();
+      } catch (err) {
+        set(error, err instanceof Error ? err.message : "Install failed");
+        set(installing, false);
+      }
+    });
+  }
+  init();
+  var div = root_53();
+  var form = sibling(child(div), 2);
+  var input_1 = child(form);
+  remove_input_defaults(input_1);
+  bind_this(input_1, ($$value) => set(inputEl, $$value), () => get2(inputEl));
+  var button = sibling(input_1, 2);
+  var node = child(button);
+  {
+    var consequent = ($$anchor2) => {
+      var fragment = root6();
+      next();
+      append2($$anchor2, fragment);
+    };
+    var alternate = ($$anchor2) => {
+      var text2 = text("Check plugin");
+      append2($$anchor2, text2);
+    };
+    if_block(node, ($$render) => {
+      if (get2(inspecting)) $$render(consequent);
+      else $$render(alternate, -1);
+    });
+  }
+  reset(button);
+  reset(form);
+  var node_1 = sibling(form, 2);
+  {
+    var consequent_1 = ($$anchor2) => {
+      var p = root_110();
+      var text_1 = child(p, true);
+      reset(p);
+      template_effect(() => set_text(text_1, get2(error)));
+      append2($$anchor2, p);
+    };
+    if_block(node_1, ($$render) => {
+      if (get2(error)) $$render(consequent_1);
+    });
+  }
+  var node_2 = sibling(node_1, 2);
+  {
+    var consequent_4 = ($$anchor2) => {
+      var div_1 = root_44();
+      var p_1 = child(div_1);
+      var text_2 = child(p_1);
+      var strong = sibling(text_2);
+      var text_3 = child(strong, true);
+      reset(strong);
+      var text_4 = sibling(strong);
+      reset(p_1);
+      var p_2 = sibling(p_1, 2);
+      var text_5 = child(p_2, true);
+      reset(p_2);
+      var p_3 = sibling(p_2, 2);
+      var a = sibling(child(p_3));
+      var text_6 = child(a);
+      reset(a);
+      var text_7 = sibling(a);
+      var code = sibling(text_7);
+      var text_8 = child(code, true);
+      reset(code);
+      next();
+      reset(p_3);
+      var node_3 = sibling(p_3, 2);
+      {
+        var consequent_2 = ($$anchor3) => {
+          var label = root_210();
+          var input_2 = child(label);
+          remove_input_defaults(input_2);
+          var span = sibling(input_2, 2);
+          var text_9 = child(span);
+          var strong_1 = sibling(text_9);
+          var text_10 = child(strong_1, true);
+          reset(strong_1);
+          var text_11 = sibling(strong_1);
+          reset(span);
+          reset(label);
+          template_effect(
+            ($0, $1) => {
+              var _a6, _b3, _c2;
+              set_text(text_9, `${(_a6 = (get2(pending2), untrack(() => get2(pending2).manifest.name))) != null ? _a6 : ""} replaces `);
+              set_text(text_10, $0);
+              set_text(text_11, ` (${$1 != null ? $1 : ""}). Disable ${(_b3 = (get2(conflicts), untrack(() => get2(conflicts).length === 1 ? "it" : "them"))) != null ? _b3 : ""} so ${(_c2 = (get2(pending2), untrack(() => get2(pending2).manifest.name))) != null ? _c2 : ""} takes over right
+						away.`);
+            },
+            [
+              () => (get2(conflicts), untrack(() => get2(conflicts).map((c) => c.manifest.name).join(", "))),
+              () => (deep_read_state(regionsOf), get2(pending2), untrack(() => regionsOf(get2(pending2).manifest).join(", ")))
+            ]
+          );
+          bind_checked(input_2, () => get2(disableConflicts), ($$value) => set(disableConflicts, $$value));
+          append2($$anchor3, label);
+        };
+        if_block(node_3, ($$render) => {
+          if (get2(conflicts), untrack(() => get2(conflicts).length > 0)) $$render(consequent_2);
+        });
+      }
+      var div_2 = sibling(node_3, 2);
+      var button_1 = child(div_2);
+      var node_4 = child(button_1);
+      {
+        var consequent_3 = ($$anchor3) => {
+          var fragment_1 = root_36();
+          next();
+          append2($$anchor3, fragment_1);
+        };
+        var alternate_1 = ($$anchor3) => {
+          var text_12 = text();
+          template_effect(() => set_text(text_12, get2(existingEntry) ? "Update plugin" : "Install plugin"));
+          append2($$anchor3, text_12);
+        };
+        if_block(node_4, ($$render) => {
+          if (get2(installing)) $$render(consequent_3);
+          else $$render(alternate_1, -1);
+        });
+      }
+      reset(button_1);
+      var button_2 = sibling(button_1, 2);
+      reset(div_2);
+      reset(div_1);
+      template_effect(() => {
+        var _a6, _b3, _c2, _d, _e;
+        set_text(text_2, `${get2(existingEntry) ? "Update" : "Install"} `);
+        set_text(text_3, (get2(pending2), untrack(() => get2(pending2).manifest.name)));
+        set_text(text_4, ` v${(_a6 = (get2(pending2), untrack(() => get2(pending2).manifest.version))) != null ? _a6 : ""} by ${(_b3 = (get2(pending2), untrack(() => get2(pending2).manifest.author))) != null ? _b3 : ""}?`);
+        set_text(text_5, (get2(pending2), untrack(() => get2(pending2).manifest.description)));
+        set_attribute2(a, "href", (get2(pending2), untrack(() => `https://github.com/${get2(pending2).owner}/${get2(pending2).repo}`)));
+        set_text(text_6, `${(_c2 = (get2(pending2), untrack(() => get2(pending2).owner))) != null ? _c2 : ""}/${(_d = (get2(pending2), untrack(() => get2(pending2).repo))) != null ? _d : ""}`);
+        set_text(text_7, ` (${(_e = (get2(pending2), untrack(() => get2(pending2).files.length))) != null ? _e : ""} files, ref `);
+        set_text(text_8, (get2(pending2), untrack(() => get2(pending2).ref)));
+        button_1.disabled = get2(installing);
+        button_2.disabled = get2(installing);
+      });
+      event("click", button_1, confirmInstall);
+      event("click", button_2, () => set(pending2, null));
+      append2($$anchor2, div_1);
+    };
+    if_block(node_2, ($$render) => {
+      if (get2(pending2)) $$render(consequent_4);
+    });
+  }
+  reset(div);
+  template_effect(
+    ($0) => {
+      input_1.disabled = get2(inspecting) || get2(installing);
+      button.disabled = $0;
+    },
+    [
+      () => (get2(inspecting), get2(installing), get2(input), untrack(() => get2(inspecting) || get2(installing) || !get2(input).trim()))
+    ]
+  );
+  bind_value(input_1, () => get2(input), ($$value) => set(input, $$value));
+  event("submit", form, preventDefault(inspect2));
+  append2($$anchor, div);
+  pop();
+}
+
+// src/views/GardenPluginSettings/InstallPluginModal.ts
+var InstallPluginModal = class {
+  constructor(app, settings) {
+    this.app = app;
+    this.settings = settings;
+    this.open = () => __async(this, null, function* () {
+      const connection = yield PublishPlatformConnectionFactory.createPublishPlatformConnection(
+        this.settings
+      );
+      const manager = new GardenPluginManager(
+        new RepositoryConnection(connection),
+        this.settings
+      );
+      this.modal.onClose = () => {
+        if (this.view) {
+          unmount(this.view);
+          this.view = void 0;
+        }
+      };
+      this.modal.onOpen = () => {
+        this.modal.contentEl.empty();
+        this.modal.contentEl.addClass("dg-garden-plugins-modal");
+        this.view = mount(InstallPluginView, {
+          target: this.modal.contentEl,
+          props: {
+            manager,
+            settings: this.settings,
+            close: () => this.modal.close()
+          }
+        });
+      };
+      this.modal.open();
+    });
+    this.modal = new import_obsidian22.Modal(app);
+    this.modal.titleEl.innerText = "Install Garden Plugin";
+  }
+};
 
 // src/forestry/limitNotice.ts
-var import_obsidian18 = require("obsidian");
+var import_obsidian23 = require("obsidian");
 function notifyLimitReached(error) {
   var _a6, _b3;
   if (error.errorType === "build_limit_reached") {
     const used = (_a6 = error.buildsUsed) != null ? _a6 : 0;
     const limit = (_b3 = error.monthlyLimit) != null ? _b3 : 0;
-    new import_obsidian18.Notice(
+    new import_obsidian23.Notice(
       `Publishing blocked: You've used all ${used}/${limit} builds this month. Upgrade to Pro for 1000 builds/month at dashboard.forestry.md/settings`,
       1e4
     );
   } else {
-    new import_obsidian18.Notice(
+    new import_obsidian23.Notice(
       `Publishing blocked: Storage limit exceeded. Free up space or upgrade at dashboard.forestry.md/settings`,
       1e4
     );
@@ -38634,10 +41115,10 @@ function notifyLimitReached(error) {
 }
 
 // src/localExport/LocalExporter.ts
-var import_obsidian19 = require("obsidian");
+var import_obsidian24 = require("obsidian");
 var import_promises = __toESM(require("fs/promises"));
 var import_path = __toESM(require("path"));
-var import_js_logger11 = __toESM(require_logger());
+var import_js_logger13 = __toESM(require_logger());
 var PRESERVED_FILES = /* @__PURE__ */ new Set(["notes.json", "notes.11tydata.js"]);
 var IMG_USER_PREFIX = "/img/user/";
 var LocalExporter = class {
@@ -38650,7 +41131,7 @@ var LocalExporter = class {
     return __async(this, null, function* () {
       const targetPath = this.settings.localExportPath;
       if (!targetPath) {
-        new import_obsidian19.Notice(
+        new import_obsidian24.Notice(
           "Set a local garden folder path in plugin settings first."
         );
         throw new Error("localExportPath is not configured");
@@ -38666,7 +41147,7 @@ var LocalExporter = class {
           "favicon.svg"
         );
       } catch (e) {
-        import_js_logger11.default.warn("Failed to copy favicon", e);
+        import_js_logger13.default.warn("Failed to copy favicon", e);
       }
       try {
         yield this.copyFromVault(
@@ -38675,7 +41156,7 @@ var LocalExporter = class {
           "logo"
         );
       } catch (e) {
-        import_js_logger11.default.warn("Failed to copy logo", e);
+        import_js_logger13.default.warn("Failed to copy logo", e);
       }
       const marked = yield this.publisher.getFilesMarkedForPublishing();
       const notesDir = import_path.default.join(targetPath, base, NOTE_PATH_BASE);
@@ -38715,7 +41196,7 @@ var LocalExporter = class {
             imagesWritten++;
           }
         } catch (e) {
-          import_js_logger11.default.error(`Failed to export ${file.getPath()}`, e);
+          import_js_logger13.default.error(`Failed to export ${file.getPath()}`, e);
           failed++;
         }
       }
@@ -38725,8 +41206,8 @@ var LocalExporter = class {
         }
         try {
           const imageFile = this.vault.getAbstractFileByPath(imagePath);
-          if (!(imageFile instanceof import_obsidian19.TFile)) {
-            import_js_logger11.default.warn(`Image not found in vault: ${imagePath}`);
+          if (!(imageFile instanceof import_obsidian24.TFile)) {
+            import_js_logger13.default.warn(`Image not found in vault: ${imagePath}`);
             continue;
           }
           const binary = yield this.vault.readBinary(imageFile);
@@ -38736,7 +41217,7 @@ var LocalExporter = class {
           writtenImagePaths.add(imagePath);
           imagesWritten++;
         } catch (e) {
-          import_js_logger11.default.error(`Failed to export image ${imagePath}`, e);
+          import_js_logger13.default.error(`Failed to export image ${imagePath}`, e);
         }
       }
       yield this.cleanStaleFiles(notesDir, writtenNotePaths, PRESERVED_FILES);
@@ -38750,7 +41231,7 @@ var LocalExporter = class {
       try {
         yield import_promises.default.access(targetPath);
       } catch (e) {
-        new import_obsidian19.Notice(`Local garden folder not found: ${targetPath}`);
+        new import_obsidian24.Notice(`Local garden folder not found: ${targetPath}`);
         throw new Error(`Target path does not exist: ${targetPath}`);
       }
       const expectedSiteDir = import_path.default.join(targetPath, base, "src", "site");
@@ -38758,7 +41239,7 @@ var LocalExporter = class {
         yield import_promises.default.access(expectedSiteDir);
       } catch (e) {
         const expectedRelative = base ? `${base}src/site/` : "src/site/";
-        new import_obsidian19.Notice(
+        new import_obsidian24.Notice(
           `Folder doesn't look like a digital garden \u2014 expected ${expectedRelative} directory at ` + targetPath
         );
         throw new Error(
@@ -38809,16 +41290,16 @@ var LocalExporter = class {
     return __async(this, null, function* () {
       if (sourcePath === "") return;
       const sourceFile = this.vault.getAbstractFileByPath(sourcePath);
-      if (sourceFile instanceof import_obsidian19.TFile) {
+      if (sourceFile instanceof import_obsidian24.TFile) {
         const fileName = (rename == null ? void 0 : rename.includes(".")) ? rename : `${rename != null ? rename : sourceFile.basename}.${sourceFile.extension}`;
         const targetPath = import_path.default.join(targetFolder, fileName);
         yield import_promises.default.writeFile(
           targetPath,
           Buffer.from(yield this.vault.readBinary(sourceFile))
         );
-        import_js_logger11.default.debug(`Copied file from ${sourcePath} to ${targetPath}`);
+        import_js_logger13.default.debug(`Copied file from ${sourcePath} to ${targetPath}`);
       } else {
-        import_js_logger11.default.warn(`File not found at '${sourcePath}'`);
+        import_js_logger13.default.warn(`File not found at '${sourcePath}'`);
       }
     });
   }
@@ -38834,7 +41315,7 @@ var LocalExporter = class {
           }
           if (!writtenPaths.has(relativePath)) {
             yield import_promises.default.unlink(filePath);
-            import_js_logger11.default.debug(`Cleaned stale file: ${filePath}`);
+            import_js_logger13.default.debug(`Cleaned stale file: ${filePath}`);
             let parent = import_path.default.dirname(filePath);
             while (parent !== dir && parent.startsWith(dir)) {
               try {
@@ -38847,7 +41328,7 @@ var LocalExporter = class {
           }
         }
       } catch (e) {
-        import_js_logger11.default.warn("Failed to clean stale files", e);
+        import_js_logger13.default.warn("Failed to clean stale files", e);
       }
     });
   }
@@ -38872,7 +41353,7 @@ var LocalExporter = class {
 };
 
 // src/views/PublicationCenterView/PublicationCenterView.ts
-var import_obsidian21 = require("obsidian");
+var import_obsidian26 = require("obsidian");
 
 // src/views/PublicationCenterView/constants.ts
 var VIEW_TYPE = "digital-garden-publication-center";
@@ -38880,7 +41361,7 @@ var VIEW_DISPLAY_TEXT = "Publication Center";
 var VIEW_ICON = "book-up";
 
 // src/views/PublicationCenterView/PublicationCenter.svelte
-var import_obsidian20 = require("obsidian");
+var import_obsidian25 = require("obsidian");
 
 // src/views/PublicationCenterView/annotate.ts
 function annotateFiles(status) {
@@ -38942,7 +41423,7 @@ function buildPublishPlan(selected, files) {
 
 // src/views/PublicationCenterView/fileTree.ts
 function buildFileTree(files) {
-  const root15 = {
+  const root18 = {
     name: "",
     path: "",
     isFolder: true,
@@ -38950,7 +41431,7 @@ function buildFileTree(files) {
   };
   for (const f of files) {
     const parts = f.path.split("/");
-    let node = root15;
+    let node = root18;
     for (let i = 0; i < parts.length; i++) {
       const part = parts[i];
       const isLast = i === parts.length - 1;
@@ -38976,8 +41457,8 @@ function buildFileTree(files) {
       node = child2;
     }
   }
-  sortTree(root15);
-  return root15;
+  sortTree(root18);
+  return root18;
 }
 function sortTree(node) {
   if (!node.children) return;
@@ -39007,15 +41488,15 @@ function filterTree(node, active) {
 }
 
 // src/views/PublicationCenterView/StatusFilters.svelte
-var root5 = from_html(`<button><span></span> <span class="dg-pc-count svelte-xxtcjg"> </span></button>`);
-var root_15 = from_html(`<div class="dg-pc-filters svelte-xxtcjg"></div>`);
-var $$css5 = {
+var root7 = from_html(`<button><span></span> <span class="dg-pc-count svelte-xxtcjg"> </span></button>`);
+var root_111 = from_html(`<div class="dg-pc-filters svelte-xxtcjg"></div>`);
+var $$css7 = {
   hash: "svelte-xxtcjg",
   code: ".dg-pc-filters.svelte-xxtcjg {display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}.dg-pc-chip.svelte-xxtcjg {display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:12px;border:1px solid var(--background-modifier-border);background:var(--background-secondary);color:var(--text-muted);cursor:pointer;font-size:0.8rem;}.dg-pc-chip.active.svelte-xxtcjg {color:var(--text-normal);border-color:var(--interactive-accent);}.dg-pc-count.svelte-xxtcjg {opacity:0.7;font-variant-numeric:tabular-nums;}.dg-pc-dot.svelte-xxtcjg {width:8px;height:8px;border-radius:50%;display:inline-block;}.dg-pc-dot-changed.svelte-xxtcjg {background:var(--text-warning, orange);}.dg-pc-dot-new.svelte-xxtcjg {background:var(--text-success, green);}.dg-pc-dot-deleted.svelte-xxtcjg {background:var(--text-error, red);}.dg-pc-dot-published.svelte-xxtcjg {background:var(--text-muted);}"
 };
 function StatusFilters($$anchor, $$props) {
   push($$props, false);
-  append_styles($$anchor, $$css5);
+  append_styles($$anchor, $$css7);
   let counts = prop($$props, "counts", 8);
   let active = prop($$props, "active", 8);
   const dispatch = createEventDispatcher();
@@ -39026,11 +41507,11 @@ function StatusFilters($$anchor, $$props) {
     { status: "published", label: "Published" }
   ];
   init();
-  var div = root_15();
+  var div = root_111();
   each(div, 5, () => ORDER, index, ($$anchor2, $$item) => {
     let status = () => get2($$item).status;
     let label = () => get2($$item).label;
-    var button = root5();
+    var button = root7();
     let classes;
     var span = child(button);
     var text2 = sibling(span);
@@ -39062,16 +41543,16 @@ function StatusFilters($$anchor, $$props) {
 
 // src/views/PublicationCenterView/FileTreeNode.svelte
 var _expanded = {};
-var root6 = from_html(`<div class="dg-pc-children svelte-abh6wh"></div>`);
-var root_16 = from_html(`<div class="dg-pc-folder"><div class="dg-pc-row svelte-abh6wh"><span><!></span> <input type="checkbox"/> <!> <span class="dg-pc-name svelte-abh6wh"> </span></div> <!></div>`);
-var root_25 = from_html(`<div><span class="dg-pc-arrow-spacer svelte-abh6wh"></span> <input type="checkbox"/> <span></span> <span class="dg-pc-name svelte-abh6wh"> </span></div>`);
-var $$css6 = {
+var root8 = from_html(`<div class="dg-pc-children svelte-abh6wh"></div>`);
+var root_112 = from_html(`<div class="dg-pc-folder"><div class="dg-pc-row svelte-abh6wh"><span><!></span> <input type="checkbox"/> <!> <span class="dg-pc-name svelte-abh6wh"> </span></div> <!></div>`);
+var root_211 = from_html(`<div><span class="dg-pc-arrow-spacer svelte-abh6wh"></span> <input type="checkbox"/> <span></span> <span class="dg-pc-name svelte-abh6wh"> </span></div>`);
+var $$css8 = {
   hash: "svelte-abh6wh",
   code: ".dg-pc-row.svelte-abh6wh {display:flex;align-items:center;gap:4px;padding:1px 2px;border-radius:4px;cursor:pointer;user-select:none;}.dg-pc-file.svelte-abh6wh:hover {background:var(--background-modifier-hover);}.dg-pc-file.active.svelte-abh6wh {background:var(\n			--background-modifier-active-hover,\n			var(--background-secondary-alt)\n		);}.dg-pc-children.svelte-abh6wh {padding-left:1.1rem;}.dg-pc-arrow.svelte-abh6wh {display:inline-flex;transition:transform 100ms;}.dg-pc-arrow.open.svelte-abh6wh {transform:rotate(90deg);}.dg-pc-arrow-spacer.svelte-abh6wh {width:var(--icon-size, 16px);display:inline-block;}.dg-pc-name.svelte-abh6wh {flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}.dg-pc-status-dot.svelte-abh6wh {width:8px;height:8px;border-radius:50%;flex:0 0 auto;}.dg-pc-dot-changed.svelte-abh6wh {background:var(--text-warning, orange);}.dg-pc-dot-new.svelte-abh6wh {background:var(--text-success, green);}.dg-pc-dot-deleted.svelte-abh6wh {background:var(--text-error, red);}.dg-pc-dot-published.svelte-abh6wh {background:var(--text-muted);}"
 };
 function FileTreeNode($$anchor, $$props) {
   push($$props, false);
-  append_styles($$anchor, $$css6);
+  append_styles($$anchor, $$css8);
   const paths = mutable_source();
   const allChecked = mutable_source();
   const someChecked = mutable_source();
@@ -39121,7 +41602,7 @@ function FileTreeNode($$anchor, $$props) {
   var node_1 = first_child(fragment);
   {
     var consequent_1 = ($$anchor2) => {
-      var div = root_16();
+      var div = root_112();
       var div_1 = child(div);
       var span = child(div_1);
       let classes;
@@ -39141,7 +41622,7 @@ function FileTreeNode($$anchor, $$props) {
       var node_4 = sibling(div_1, 2);
       {
         var consequent = ($$anchor3) => {
-          var div_2 = root6();
+          var div_2 = root8();
           each(
             div_2,
             5,
@@ -39193,7 +41674,7 @@ function FileTreeNode($$anchor, $$props) {
       append2($$anchor2, div);
     };
     var alternate = ($$anchor2) => {
-      var div_3 = root_25();
+      var div_3 = root_211();
       let classes_1;
       var input_1 = sibling(child(div_3), 2);
       remove_input_defaults(input_1);
@@ -39229,24 +41710,24 @@ function FileTreeNode($$anchor, $$props) {
 }
 
 // src/views/PublicationCenterView/FileTree.svelte
-var root7 = from_html(`<div class="dg-pc-tree-empty svelte-sxyfb9">No files match the current filters.</div>`);
-var root_17 = from_html(`<div class="dg-pc-tree"><!></div>`);
-var $$css7 = {
+var root9 = from_html(`<div class="dg-pc-tree-empty svelte-sxyfb9">No files match the current filters.</div>`);
+var root_113 = from_html(`<div class="dg-pc-tree"><!></div>`);
+var $$css9 = {
   hash: "svelte-sxyfb9",
   code: ".dg-pc-tree-empty.svelte-sxyfb9 {color:var(--text-muted);padding:8px;font-size:0.9rem;}"
 };
 function FileTree($$anchor, $$props) {
   push($$props, false);
-  append_styles($$anchor, $$css7);
+  append_styles($$anchor, $$css9);
   let node = prop($$props, "node", 8);
   let selected = prop($$props, "selected", 8);
   let activePath = prop($$props, "activePath", 8);
   init();
-  var div = root_17();
+  var div = root_113();
   var node_1 = child(div);
   {
     var consequent = ($$anchor2) => {
-      var div_1 = root7();
+      var div_1 = root9();
       append2($$anchor2, div_1);
     };
     var alternate = ($$anchor2) => {
@@ -39299,9 +41780,9 @@ function FileTree($$anchor, $$props) {
 
 // src/views/PublicationCenterView/diffRows.ts
 function splitLines(value) {
-  const lines = value.split("\n");
-  if (lines.length > 0 && lines[lines.length - 1] === "") lines.pop();
-  return lines;
+  const lines2 = value.split("\n");
+  if (lines2.length > 0 && lines2[lines2.length - 1] === "") lines2.pop();
+  return lines2;
 }
 function computeUnifiedRows(changes, contextLines = 3) {
   const all3 = [];
@@ -39378,14 +41859,14 @@ function computeSplitRows(changes) {
     addBuf = [];
   };
   for (const part of changes) {
-    const lines = splitLines(part.value);
+    const lines2 = splitLines(part.value);
     if (part.removed) {
-      delBuf.push(...lines);
+      delBuf.push(...lines2);
     } else if (part.added) {
-      addBuf.push(...lines);
+      addBuf.push(...lines2);
     } else {
       flush();
-      for (const text2 of lines) {
+      for (const text2 of lines2) {
         oldLine++;
         newLine++;
         rows.push({
@@ -39400,16 +41881,16 @@ function computeSplitRows(changes) {
 }
 
 // src/views/PublicationCenterView/UnifiedDiff.svelte
-var root8 = from_html(`<div class="dg-pc-gap svelte-de2ej4"> </div>`);
-var root_18 = from_html(`<div><span class="dg-pc-ln svelte-de2ej4"> </span> <span class="dg-pc-ln svelte-de2ej4"> </span> <span class="dg-pc-sign svelte-de2ej4"> </span> <span class="dg-pc-text"> </span></div>`);
-var root_26 = from_html(`<div class="dg-pc-unified svelte-de2ej4"></div>`);
-var $$css8 = {
+var root10 = from_html(`<div class="dg-pc-gap svelte-de2ej4"> </div>`);
+var root_114 = from_html(`<div><span class="dg-pc-ln svelte-de2ej4"> </span> <span class="dg-pc-ln svelte-de2ej4"> </span> <span class="dg-pc-sign svelte-de2ej4"> </span> <span class="dg-pc-text"> </span></div>`);
+var root_212 = from_html(`<div class="dg-pc-unified svelte-de2ej4"></div>`);
+var $$css10 = {
   hash: "svelte-de2ej4",
   code: ".dg-pc-unified.svelte-de2ej4 {font-family:var(--font-monospace);font-size:var(--font-smaller, 0.85rem);white-space:pre-wrap;word-break:break-word;}.dg-pc-uline.svelte-de2ej4 {display:grid;grid-template-columns:3.5em 3.5em 1em 1fr;gap:4px;}.dg-pc-add.svelte-de2ej4 {background:var(--background-modifier-success);}.dg-pc-del.svelte-de2ej4 {background:var(--background-modifier-error);}.dg-pc-ln.svelte-de2ej4 {color:var(--text-faint);text-align:right;user-select:none;}.dg-pc-sign.svelte-de2ej4 {user-select:none;}.dg-pc-gap.svelte-de2ej4 {color:var(--text-faint);text-align:center;padding:2px 0;background:var(--background-secondary);font-size:0.8rem;}"
 };
 function UnifiedDiff($$anchor, $$props) {
   push($$props, false);
-  append_styles($$anchor, $$css8);
+  append_styles($$anchor, $$css10);
   const rows = mutable_source();
   let changes = prop($$props, "changes", 8);
   legacy_pre_effect(() => (computeUnifiedRows, deep_read_state(changes())), () => {
@@ -39417,13 +41898,13 @@ function UnifiedDiff($$anchor, $$props) {
   });
   legacy_pre_effect_reset();
   init();
-  var div = root_26();
+  var div = root_212();
   each(div, 5, () => get2(rows), index, ($$anchor2, row) => {
     var fragment = comment();
     var node = first_child(fragment);
     {
       var consequent = ($$anchor3) => {
-        var div_1 = root8();
+        var div_1 = root10();
         var text2 = child(div_1);
         reset(div_1);
         template_effect(() => {
@@ -39433,7 +41914,7 @@ function UnifiedDiff($$anchor, $$props) {
         append2($$anchor3, div_1);
       };
       var alternate = ($$anchor3) => {
-        var div_2 = root_18();
+        var div_2 = root_114();
         var span = child(div_2);
         var text_1 = child(span, true);
         reset(span);
@@ -39470,15 +41951,15 @@ function UnifiedDiff($$anchor, $$props) {
 }
 
 // src/views/PublicationCenterView/SplitDiff.svelte
-var root9 = from_html(`<div class="dg-pc-srow svelte-5qm8im"><div><span class="dg-pc-ln svelte-5qm8im"> </span> <span class="dg-pc-text"> </span></div> <div><span class="dg-pc-ln svelte-5qm8im"> </span> <span class="dg-pc-text"> </span></div></div>`);
-var root_19 = from_html(`<div class="dg-pc-split svelte-5qm8im"></div>`);
-var $$css9 = {
+var root11 = from_html(`<div class="dg-pc-srow svelte-5qm8im"><div><span class="dg-pc-ln svelte-5qm8im"> </span> <span class="dg-pc-text"> </span></div> <div><span class="dg-pc-ln svelte-5qm8im"> </span> <span class="dg-pc-text"> </span></div></div>`);
+var root_115 = from_html(`<div class="dg-pc-split svelte-5qm8im"></div>`);
+var $$css11 = {
   hash: "svelte-5qm8im",
   code: ".dg-pc-split.svelte-5qm8im {font-family:var(--font-monospace);font-size:var(--font-smaller, 0.85rem);}.dg-pc-srow.svelte-5qm8im {display:grid;grid-template-columns:1fr 1fr;gap:8px;}.dg-pc-scell.svelte-5qm8im {display:grid;grid-template-columns:3.5em 1fr;gap:4px;white-space:pre-wrap;word-break:break-word;border-left:2px solid transparent;}.dg-pc-add.svelte-5qm8im {background:var(--background-modifier-success);}.dg-pc-del.svelte-5qm8im {background:var(--background-modifier-error);}.dg-pc-empty.svelte-5qm8im {background:var(--background-secondary);}.dg-pc-ln.svelte-5qm8im {color:var(--text-faint);text-align:right;user-select:none;}"
 };
 function SplitDiff($$anchor, $$props) {
   push($$props, false);
-  append_styles($$anchor, $$css9);
+  append_styles($$anchor, $$css11);
   const rows = mutable_source();
   let changes = prop($$props, "changes", 8);
   legacy_pre_effect(() => (computeSplitRows, deep_read_state(changes())), () => {
@@ -39486,9 +41967,9 @@ function SplitDiff($$anchor, $$props) {
   });
   legacy_pre_effect_reset();
   init();
-  var div = root_19();
+  var div = root_115();
   each(div, 5, () => get2(rows), index, ($$anchor2, row) => {
-    var div_1 = root9();
+    var div_1 = root11();
     var div_2 = child(div_1);
     var span = child(div_2);
     var text2 = child(span, true);
@@ -39551,21 +42032,21 @@ function SplitDiff($$anchor, $$props) {
 }
 
 // src/views/PublicationCenterView/DiffPane.svelte
-var root10 = from_html(`<div class="dg-pc-diff-empty svelte-13xoyn6">Select a file from the left to see what changed.</div>`);
-var root_110 = from_html(`<button class="dg-pc-open">Open note</button>`);
-var root_27 = from_html(`<div class="dg-pc-diff-msg svelte-13xoyn6">Loading diff\u2026</div>`);
-var root_35 = from_html(`<div class="dg-pc-diff-msg svelte-13xoyn6">No diff available.</div>`);
-var root_43 = from_html(`<div class="dg-pc-diff-msg svelte-13xoyn6"> </div>`);
-var root_52 = from_html(`<div class="dg-pc-diff-msg svelte-13xoyn6">This image will be deleted on publish.</div>`);
-var root_62 = from_html(`<div class="dg-pc-diff-msg svelte-13xoyn6">No changes \u2014 local and published versions match.</div>`);
-var root_72 = from_html(`<div class="dg-pc-diff-header svelte-13xoyn6"><span class="dg-pc-diff-path svelte-13xoyn6"><!> </span> <span class="dg-pc-diff-actions svelte-13xoyn6"><span class="dg-pc-toggle svelte-13xoyn6"><button>Split</button> <button>Unified</button></span> <!></span></div> <div class="dg-pc-diff-body"><!></div>`, 1);
-var $$css10 = {
+var root12 = from_html(`<div class="dg-pc-diff-empty svelte-13xoyn6">Select a file from the left to see what changed.</div>`);
+var root_116 = from_html(`<button class="dg-pc-open">Open note</button>`);
+var root_213 = from_html(`<div class="dg-pc-diff-msg svelte-13xoyn6">Loading diff\u2026</div>`);
+var root_37 = from_html(`<div class="dg-pc-diff-msg svelte-13xoyn6">No diff available.</div>`);
+var root_45 = from_html(`<div class="dg-pc-diff-msg svelte-13xoyn6"> </div>`);
+var root_54 = from_html(`<div class="dg-pc-diff-msg svelte-13xoyn6">This image will be deleted on publish.</div>`);
+var root_63 = from_html(`<div class="dg-pc-diff-msg svelte-13xoyn6">No changes \u2014 local and published versions match.</div>`);
+var root_73 = from_html(`<div class="dg-pc-diff-header svelte-13xoyn6"><span class="dg-pc-diff-path svelte-13xoyn6"><!> </span> <span class="dg-pc-diff-actions svelte-13xoyn6"><span class="dg-pc-toggle svelte-13xoyn6"><button>Split</button> <button>Unified</button></span> <!></span></div> <div class="dg-pc-diff-body"><!></div>`, 1);
+var $$css12 = {
   hash: "svelte-13xoyn6",
   code: ".dg-pc-diff-empty.svelte-13xoyn6,\n	.dg-pc-diff-msg.svelte-13xoyn6 {color:var(--text-muted);padding:16px;}.dg-pc-diff-header.svelte-13xoyn6 {display:flex;justify-content:space-between;align-items:center;gap:8px;padding-bottom:8px;margin-bottom:8px;border-bottom:1px solid var(--background-modifier-border);position:sticky;top:0;background:var(--background-primary);}.dg-pc-diff-path.svelte-13xoyn6 {display:inline-flex;align-items:center;gap:4px;font-family:var(--font-monospace);font-size:0.85rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}.dg-pc-diff-actions.svelte-13xoyn6 {display:inline-flex;gap:8px;flex:0 0 auto;}.dg-pc-toggle.svelte-13xoyn6 button:where(.svelte-13xoyn6) {border:1px solid var(--background-modifier-border);background:var(--background-secondary);color:var(--text-muted);padding:2px 8px;cursor:pointer;}.dg-pc-toggle.svelte-13xoyn6 button.active:where(.svelte-13xoyn6) {background:var(--interactive-accent);color:var(--text-on-accent);}.dg-pc-toggle.svelte-13xoyn6 button:where(.svelte-13xoyn6):first-child {border-radius:4px 0 0 4px;}.dg-pc-toggle.svelte-13xoyn6 button:where(.svelte-13xoyn6):last-child {border-radius:0 4px 4px 0;}"
 };
 function DiffPane($$anchor, $$props) {
   push($$props, false);
-  append_styles($$anchor, $$css10);
+  append_styles($$anchor, $$css12);
   let path2 = prop($$props, "path", 8);
   let status = prop($$props, "status", 8);
   let data = prop($$props, "data", 8);
@@ -39577,11 +42058,11 @@ function DiffPane($$anchor, $$props) {
   var node = first_child(fragment);
   {
     var consequent = ($$anchor2) => {
-      var div = root10();
+      var div = root12();
       append2($$anchor2, div);
     };
     var alternate_1 = ($$anchor2) => {
-      var fragment_1 = root_72();
+      var fragment_1 = root_73();
       var div_1 = first_child(fragment_1);
       var span = child(div_1);
       var node_1 = child(span);
@@ -39598,7 +42079,7 @@ function DiffPane($$anchor, $$props) {
       var node_2 = sibling(span_2, 2);
       {
         var consequent_1 = ($$anchor3) => {
-          var button_2 = root_110();
+          var button_2 = root_116();
           event("click", button_2, () => dispatch("open", { path: path2() }));
           append2($$anchor3, button_2);
         };
@@ -39612,15 +42093,15 @@ function DiffPane($$anchor, $$props) {
       var node_3 = child(div_2);
       {
         var consequent_2 = ($$anchor3) => {
-          var div_3 = root_27();
+          var div_3 = root_213();
           append2($$anchor3, div_3);
         };
         var consequent_3 = ($$anchor3) => {
-          var div_4 = root_35();
+          var div_4 = root_37();
           append2($$anchor3, div_4);
         };
         var consequent_4 = ($$anchor3) => {
-          var div_5 = root_43();
+          var div_5 = root_45();
           var text_1 = child(div_5);
           reset(div_5);
           template_effect(() => {
@@ -39630,11 +42111,11 @@ function DiffPane($$anchor, $$props) {
           append2($$anchor3, div_5);
         };
         var consequent_5 = ($$anchor3) => {
-          var div_6 = root_52();
+          var div_6 = root_54();
           append2($$anchor3, div_6);
         };
         var consequent_6 = ($$anchor3) => {
-          var div_7 = root_62();
+          var div_7 = root_63();
           append2($$anchor3, div_7);
         };
         var consequent_7 = ($$anchor3) => {
@@ -39682,24 +42163,24 @@ function DiffPane($$anchor, $$props) {
 }
 
 // src/views/PublicationCenterView/Notices.svelte
-var root11 = from_html(`<div class="dg-pc-problem svelte-gja4cc"><span class="dg-pc-problem-path svelte-gja4cc"> </span> <span> </span></div>`);
-var root_111 = from_html(`<div class="dg-pc-callout dg-pc-warning svelte-gja4cc"><div class="dg-pc-callout-title svelte-gja4cc">\u26A0\uFE0F Issues found</div> <!></div>`);
-var root_28 = from_html(`<div class="dg-pc-callout dg-pc-info svelte-gja4cc"><div class="dg-pc-callout-header svelte-gja4cc"><div class="dg-pc-callout-title svelte-gja4cc">Image handling improved</div> <button class="dg-pc-dismiss svelte-gja4cc" aria-label="Dismiss"><!></button></div> <div>Images with size parameters (e.g. <code>![[image.png|200]]</code>)
+var root13 = from_html(`<div class="dg-pc-problem svelte-gja4cc"><span class="dg-pc-problem-path svelte-gja4cc"> </span> <span> </span></div>`);
+var root_117 = from_html(`<div class="dg-pc-callout dg-pc-warning svelte-gja4cc"><div class="dg-pc-callout-title svelte-gja4cc">\u26A0\uFE0F Issues found</div> <!></div>`);
+var root_214 = from_html(`<div class="dg-pc-callout dg-pc-info svelte-gja4cc"><div class="dg-pc-callout-header svelte-gja4cc"><div class="dg-pc-callout-title svelte-gja4cc">Image handling improved</div> <button class="dg-pc-dismiss svelte-gja4cc" aria-label="Dismiss"><!></button></div> <div>Images with size parameters (e.g. <code>![[image.png|200]]</code>)
 			are now handled differently to fix rendering in tables. This may
 			cause notes with images to show as changed. This is expected and
 			safe to publish.</div></div>`);
-var root_36 = from_html(`<div class="dg-pc-callout dg-pc-info svelte-gja4cc"><div class="dg-pc-callout-header svelte-gja4cc"><div class="dg-pc-callout-title svelte-gja4cc">Bases support added</div> <button class="dg-pc-dismiss svelte-gja4cc" aria-label="Dismiss"><!></button></div> <div>Frontmatter properties are now nested differently to support
+var root_38 = from_html(`<div class="dg-pc-callout dg-pc-info svelte-gja4cc"><div class="dg-pc-callout-header svelte-gja4cc"><div class="dg-pc-callout-title svelte-gja4cc">Bases support added</div> <button class="dg-pc-dismiss svelte-gja4cc" aria-label="Dismiss"><!></button></div> <div>Frontmatter properties are now nested differently to support
 			Obsidian Bases. This may cause notes to show as changed. This is
 			expected and safe to publish. You must update your site template to
 			use Bases.</div></div>`);
-var root_44 = from_html(`<!> <!> <!>`, 1);
-var $$css11 = {
+var root_46 = from_html(`<!> <!> <!>`, 1);
+var $$css13 = {
   hash: "svelte-gja4cc",
   code: ".dg-pc-callout.svelte-gja4cc {border:1px solid var(--background-modifier-border);border-radius:6px;padding:10px;margin-bottom:10px;font-size:0.85rem;}.dg-pc-warning.svelte-gja4cc {background:var(\n			--background-modifier-error-hover,\n			rgba(255, 150, 0, 0.1)\n		);}.dg-pc-info.svelte-gja4cc {background:var(--background-secondary);}.dg-pc-callout-header.svelte-gja4cc {display:flex;justify-content:space-between;align-items:center;}.dg-pc-callout-title.svelte-gja4cc {font-weight:bold;margin-bottom:6px;}.dg-pc-dismiss.svelte-gja4cc {background:none;border:none;cursor:pointer;color:var(--text-muted);padding:2px;}.dg-pc-problem.svelte-gja4cc {display:flex;flex-direction:column;margin:4px 0;}.dg-pc-problem-path.svelte-gja4cc {font-family:var(--font-monospace);color:var(--text-muted);}"
 };
 function Notices($$anchor, $$props) {
   push($$props, false);
-  append_styles($$anchor, $$css11);
+  append_styles($$anchor, $$css13);
   let problematicFiles = prop($$props, "problematicFiles", 24, () => []);
   const IMAGE_FIX_NOTICE_KEY = "dg-dismissed-image-fix-notice";
   const BASES_NOTICE_KEY = "dg-dismissed-bases-support-notice";
@@ -39714,14 +42195,14 @@ function Notices($$anchor, $$props) {
     localStorage.setItem(BASES_NOTICE_KEY, "true");
   }
   init();
-  var fragment = root_44();
+  var fragment = root_46();
   var node = first_child(fragment);
   {
     var consequent = ($$anchor2) => {
-      var div = root_111();
+      var div = root_117();
       var node_1 = sibling(child(div), 2);
       each(node_1, 1, problematicFiles, index, ($$anchor3, file) => {
-        var div_1 = root11();
+        var div_1 = root13();
         var span = child(div_1);
         var text2 = child(span, true);
         reset(span);
@@ -39745,7 +42226,7 @@ function Notices($$anchor, $$props) {
   var node_2 = sibling(node, 2);
   {
     var consequent_1 = ($$anchor2) => {
-      var div_2 = root_28();
+      var div_2 = root_214();
       var div_3 = child(div_2);
       var button = sibling(child(div_3), 2);
       var node_3 = child(button);
@@ -39764,7 +42245,7 @@ function Notices($$anchor, $$props) {
   var node_4 = sibling(node_2, 2);
   {
     var consequent_2 = ($$anchor2) => {
-      var div_4 = root_36();
+      var div_4 = root_38();
       var div_5 = child(div_4);
       var button_1 = sibling(child(div_5), 2);
       var node_5 = child(button_1);
@@ -39785,19 +42266,19 @@ function Notices($$anchor, $$props) {
 }
 
 // src/views/PublicationCenterView/PublishBar.svelte
-var root12 = from_html(`<div class="dg-pc-bar svelte-zy625j"><button class="dg-pc-refresh">Refresh</button> <button class="dg-pc-publish svelte-zy625j"> </button></div>`);
-var $$css12 = {
+var root14 = from_html(`<div class="dg-pc-bar svelte-zy625j"><button class="dg-pc-refresh">Refresh</button> <button class="dg-pc-publish svelte-zy625j"> </button></div>`);
+var $$css14 = {
   hash: "svelte-zy625j",
   code: ".dg-pc-bar.svelte-zy625j {display:flex;justify-content:flex-end;gap:8px;padding:8px;border-top:1px solid var(--background-modifier-border);}.dg-pc-publish.svelte-zy625j {background:var(--interactive-accent);color:var(--text-on-accent);font-weight:bold;cursor:pointer;}.dg-pc-publish.svelte-zy625j:disabled {opacity:0.5;cursor:default;}"
 };
 function PublishBar($$anchor, $$props) {
   push($$props, false);
-  append_styles($$anchor, $$css12);
+  append_styles($$anchor, $$css14);
   let selectedCount = prop($$props, "selectedCount", 8);
   let publishing = prop($$props, "publishing", 8);
   const dispatch = createEventDispatcher();
   init();
-  var div = root12();
+  var div = root14();
   var button = child(div);
   var button_1 = sibling(button, 2);
   var text2 = child(button_1, true);
@@ -39814,15 +42295,317 @@ function PublishBar($$anchor, $$props) {
   pop();
 }
 
+// src/views/PublicationCenterView/RecentBuilds.svelte
+var root15 = from_html(`<span class="dg-builds-dot running svelte-seznc9"></span> <span class="dg-builds-summary svelte-seznc9">Queued\u2026</span>`, 1);
+var root_118 = from_html(`<span></span> <span class="dg-builds-summary svelte-seznc9"> </span>`, 1);
+var root_215 = from_html(`<div class="dg-builds-row svelte-seznc9"><span class="dg-builds-dot running svelte-seznc9"></span> <span class="svelte-seznc9">Waiting for publish to start\u2026</span></div>`);
+var root_39 = from_html(`<div class="dg-builds-error-hint svelte-seznc9"> </div>`);
+var root_47 = from_html(`<li class="svelte-seznc9"> </li>`);
+var root_55 = from_html(`<ul class="dg-builds-error-notes svelte-seznc9"></ul>`);
+var root_64 = from_html(`<div class="dg-builds-error svelte-seznc9"><div class="svelte-seznc9"> </div> <!> <!></div>`);
+var root_74 = from_html(`<div class="dg-builds-row svelte-seznc9"><span></span> <span class="dg-builds-status svelte-seznc9"> </span> <span class="dg-builds-meta svelte-seznc9"> <!> <!></span></div> <!>`, 1);
+var root_83 = from_html(`<div class="dg-builds-limits svelte-seznc9"> </div>`);
+var root_93 = from_html(`<div class="dg-builds-list svelte-seznc9"><!> <!> <!></div>`);
+var root_102 = from_html(`<div class="dg-builds svelte-seznc9"><button class="dg-builds-header svelte-seznc9"><span class="dg-builds-title svelte-seznc9">Publish status</span> <!> <span class="dg-builds-chevron svelte-seznc9"> </span></button> <!></div>`);
+var $$css15 = {
+  hash: "svelte-seznc9",
+  code: ".dg-builds.svelte-seznc9 {border-top:1px solid var(--background-modifier-border);}.dg-builds-header.svelte-seznc9 {display:flex;align-items:center;gap:8px;width:100%;padding:6px 12px;background:none;border:none;box-shadow:none;cursor:pointer;font-size:0.85rem;text-align:left;}.dg-builds-title.svelte-seznc9 {font-weight:600;}.dg-builds-summary.svelte-seznc9 {color:var(--text-muted);}.dg-builds-chevron.svelte-seznc9 {margin-left:auto;color:var(--text-muted);}.dg-builds-dot.svelte-seznc9 {width:8px;height:8px;border-radius:50%;flex-shrink:0;}.dg-builds-dot.success.svelte-seznc9 {background:var(--color-green, #4caf50);}.dg-builds-dot.failure.svelte-seznc9 {background:var(--color-red, #f44336);}.dg-builds-dot.skipped.svelte-seznc9 {background:var(--text-faint, #999);}.dg-builds-dot.running.svelte-seznc9 {background:var(--color-yellow, #ffc107);\n		animation: svelte-seznc9-dg-builds-pulse 1.5s ease-in-out infinite;}\n\n	@keyframes svelte-seznc9-dg-builds-pulse {\n		0%,\n		100% {\n			opacity: 1;\n		}\n		50% {\n			opacity: 0.3;\n		}\n	}.dg-builds-list.svelte-seznc9 {max-height:220px;overflow-y:auto;padding:0 12px 8px;}.dg-builds-row.svelte-seznc9 {display:flex;align-items:center;gap:8px;padding:3px 0;font-size:0.85rem;}.dg-builds-status.svelte-seznc9 {min-width:90px;}.dg-builds-meta.svelte-seznc9 {color:var(--text-muted);}.dg-builds-error.svelte-seznc9 {margin:2px 0 6px 16px;padding:6px 8px;border-left:2px solid var(--color-red, #f44336);background:var(--background-secondary);font-size:0.8rem;}.dg-builds-error-hint.svelte-seznc9 {color:var(--text-muted);margin-top:2px;}.dg-builds-error-notes.svelte-seznc9 {margin:4px 0 0;padding-left:16px;color:var(--text-muted);}.dg-builds-limits.svelte-seznc9 {margin-top:6px;color:var(--text-faint);font-size:0.75rem;}"
+};
+function RecentBuilds($$anchor, $$props) {
+  push($$props, false);
+  append_styles($$anchor, $$css15);
+  const $updates = () => store_get(updates, "$updates", $$stores);
+  const [$$stores, $$cleanup] = setup_stores();
+  const builds = mutable_source();
+  const latest = mutable_source();
+  const awaitingNewBuild = mutable_source();
+  const limits = mutable_source();
+  var _a6 = mutable_source();
+  let tracker = prop($$props, "tracker", 8);
+  const updates = tracker().store;
+  let expanded = mutable_source(false);
+  let seenFailureCount = mutable_source(null);
+  function statusKind(build) {
+    if (build.status === "completed") return "success";
+    if (build.status === "failed") return "failure";
+    if (build.status === "cancelled") return "skipped";
+    return "running";
+  }
+  function statusLabel(build) {
+    switch (build.status) {
+      case "completed":
+        return "Live";
+      case "failed":
+        return "Publish failed";
+      case "cancelled":
+        return "Replaced";
+      case "inprogress":
+        return "Publishing\u2026";
+      default:
+        return "Queued";
+    }
+  }
+  function timeAgo(iso) {
+    const seconds = Math.max(0, Math.floor((Date.now() - new Date(iso).getTime()) / 1e3));
+    if (seconds < 60) return "just now";
+    if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
+    if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
+    return `${Math.floor(seconds / 86400)}d ago`;
+  }
+  function formatDuration(seconds) {
+    if (seconds < 60) return `${seconds}s`;
+    return `${Math.floor(seconds / 60)}m ${seconds % 60}s`;
+  }
+  let now2 = mutable_source(Date.now());
+  onMount(() => {
+    tracker().refresh();
+    const clock = setInterval(() => set(now2, Date.now()), 3e4);
+    return () => clearInterval(clock);
+  });
+  legacy_pre_effect(() => (get2(seenFailureCount), $updates()), () => {
+    if (get2(seenFailureCount) === null) {
+      set(seenFailureCount, $updates().failureCount);
+    } else if ($updates().failureCount > get2(seenFailureCount)) {
+      set(seenFailureCount, $updates().failureCount);
+      set(expanded, true);
+    }
+  });
+  legacy_pre_effect(() => $updates(), () => {
+    set(builds, $updates().builds);
+  });
+  legacy_pre_effect(() => (safe_get(_a6), get2(builds)), () => {
+    set(latest, set(_a6, get2(builds)[0]) !== null && safe_get(_a6) !== void 0 ? safe_get(_a6) : null);
+  });
+  legacy_pre_effect(() => $updates(), () => {
+    set(awaitingNewBuild, $updates().awaitingNewBuild);
+  });
+  legacy_pre_effect(() => $updates(), () => {
+    set(limits, $updates().limits);
+  });
+  legacy_pre_effect_reset();
+  init();
+  var fragment = comment();
+  var node = first_child(fragment);
+  {
+    var consequent_10 = ($$anchor2) => {
+      var div = root_102();
+      var button = child(div);
+      var node_1 = sibling(child(button), 2);
+      {
+        var consequent = ($$anchor3) => {
+          var fragment_1 = root15();
+          next(2);
+          append2($$anchor3, fragment_1);
+        };
+        var consequent_1 = ($$anchor3) => {
+          var fragment_2 = comment();
+          var node_2 = first_child(fragment_2);
+          key(node_2, () => get2(now2), ($$anchor4) => {
+            var fragment_3 = root_118();
+            var span = first_child(fragment_3);
+            var span_1 = sibling(span, 2);
+            var text2 = child(span_1);
+            reset(span_1);
+            template_effect(
+              ($0, $1, $2) => {
+                set_class(span, 1, `dg-builds-dot ${$0 != null ? $0 : ""}`, "svelte-seznc9");
+                set_text(text2, `${$1 != null ? $1 : ""} \xB7 ${$2 != null ? $2 : ""}`);
+              },
+              [
+                () => (get2(latest), untrack(() => statusKind(get2(latest)))),
+                () => (get2(latest), untrack(() => statusLabel(get2(latest)))),
+                () => (get2(latest), untrack(() => timeAgo(get2(latest).createdAt)))
+              ]
+            );
+            append2($$anchor4, fragment_3);
+          });
+          append2($$anchor3, fragment_2);
+        };
+        if_block(node_1, ($$render) => {
+          if (get2(awaitingNewBuild)) $$render(consequent);
+          else if (get2(latest)) $$render(consequent_1, 1);
+        });
+      }
+      var span_2 = sibling(node_1, 2);
+      var text_1 = child(span_2, true);
+      reset(span_2);
+      reset(button);
+      var node_3 = sibling(button, 2);
+      {
+        var consequent_9 = ($$anchor3) => {
+          var div_1 = root_93();
+          var node_4 = child(div_1);
+          {
+            var consequent_2 = ($$anchor4) => {
+              var div_2 = root_215();
+              append2($$anchor4, div_2);
+            };
+            if_block(node_4, ($$render) => {
+              if (get2(awaitingNewBuild)) $$render(consequent_2);
+            });
+          }
+          var node_5 = sibling(node_4, 2);
+          key(node_5, () => get2(now2), ($$anchor4) => {
+            var fragment_4 = comment();
+            var node_6 = first_child(fragment_4);
+            each(node_6, 1, () => get2(builds), (build) => build.runId, ($$anchor5, build) => {
+              var fragment_5 = root_74();
+              var div_3 = first_child(fragment_5);
+              var span_3 = child(div_3);
+              var span_4 = sibling(span_3, 2);
+              var text_2 = child(span_4, true);
+              reset(span_4);
+              var span_5 = sibling(span_4, 2);
+              var text_3 = child(span_5);
+              var node_7 = sibling(text_3);
+              {
+                var consequent_3 = ($$anchor6) => {
+                  var text_4 = text();
+                  template_effect(($0) => set_text(text_4, `\xB7 ${$0 != null ? $0 : ""}`), [
+                    () => (get2(build), untrack(() => formatDuration(get2(build).durationSeconds)))
+                  ]);
+                  append2($$anchor6, text_4);
+                };
+                if_block(node_7, ($$render) => {
+                  if (get2(build), untrack(() => get2(build).durationSeconds != null)) $$render(consequent_3);
+                });
+              }
+              var node_8 = sibling(node_7, 2);
+              {
+                var consequent_4 = ($$anchor6) => {
+                  var text_5 = text();
+                  template_effect(() => {
+                    var _a7;
+                    return set_text(text_5, `\xB7 ${(_a7 = (get2(build), untrack(() => get2(build).branch))) != null ? _a7 : ""}`);
+                  });
+                  append2($$anchor6, text_5);
+                };
+                if_block(node_8, ($$render) => {
+                  if (get2(build), untrack(() => get2(build).branch && get2(build).branch !== "main")) $$render(consequent_4);
+                });
+              }
+              reset(span_5);
+              reset(div_3);
+              var node_9 = sibling(div_3, 2);
+              {
+                var consequent_7 = ($$anchor6) => {
+                  var div_4 = root_64();
+                  var div_5 = child(div_4);
+                  var text_6 = child(div_5, true);
+                  reset(div_5);
+                  var node_10 = sibling(div_5, 2);
+                  {
+                    var consequent_5 = ($$anchor7) => {
+                      var div_6 = root_39();
+                      var text_7 = child(div_6, true);
+                      reset(div_6);
+                      template_effect(() => set_text(text_7, (get2(build), untrack(() => get2(build).friendlyError.hint))));
+                      append2($$anchor7, div_6);
+                    };
+                    if_block(node_10, ($$render) => {
+                      if (get2(build), untrack(() => get2(build).friendlyError.hint)) $$render(consequent_5);
+                    });
+                  }
+                  var node_11 = sibling(node_10, 2);
+                  {
+                    var consequent_6 = ($$anchor7) => {
+                      var ul = root_55();
+                      each(
+                        ul,
+                        5,
+                        () => (get2(build), untrack(() => get2(build).friendlyError.affectedNotes)),
+                        index,
+                        ($$anchor8, note) => {
+                          var li = root_47();
+                          var text_8 = child(li, true);
+                          reset(li);
+                          template_effect(() => set_text(text_8, get2(note)));
+                          append2($$anchor8, li);
+                        }
+                      );
+                      reset(ul);
+                      append2($$anchor7, ul);
+                    };
+                    if_block(node_11, ($$render) => {
+                      if (get2(build), untrack(() => {
+                        var _a7;
+                        return (_a7 = get2(build).friendlyError.affectedNotes) == null ? void 0 : _a7.length;
+                      })) $$render(consequent_6);
+                    });
+                  }
+                  reset(div_4);
+                  template_effect(() => set_text(text_6, (get2(build), untrack(() => get2(build).friendlyError.message))));
+                  append2($$anchor6, div_4);
+                };
+                if_block(node_9, ($$render) => {
+                  if (get2(build), untrack(() => get2(build).status === "failed" && get2(build).friendlyError)) $$render(consequent_7);
+                });
+              }
+              template_effect(
+                ($0, $1, $2) => {
+                  set_class(span_3, 1, `dg-builds-dot ${$0 != null ? $0 : ""}`, "svelte-seznc9");
+                  set_text(text_2, $1);
+                  set_text(text_3, `${$2 != null ? $2 : ""} `);
+                },
+                [
+                  () => (get2(build), untrack(() => statusKind(get2(build)))),
+                  () => (get2(build), untrack(() => statusLabel(get2(build)))),
+                  () => (get2(build), untrack(() => timeAgo(get2(build).createdAt)))
+                ]
+              );
+              append2($$anchor5, fragment_5);
+            });
+            append2($$anchor4, fragment_4);
+          });
+          var node_12 = sibling(node_5, 2);
+          {
+            var consequent_8 = ($$anchor4) => {
+              var div_7 = root_83();
+              var text_9 = child(div_7);
+              reset(div_7);
+              template_effect(() => {
+                var _a7, _b3;
+                return set_text(text_9, `${(_a7 = (get2(limits), untrack(() => get2(limits).builds.monthlyRemaining))) != null ? _a7 : ""} of ${(_b3 = (get2(limits), untrack(() => get2(limits).builds.monthlyLimit))) != null ? _b3 : ""} publishes left this month`);
+              });
+              append2($$anchor4, div_7);
+            };
+            if_block(node_12, ($$render) => {
+              if (get2(limits)) $$render(consequent_8);
+            });
+          }
+          reset(div_1);
+          append2($$anchor3, div_1);
+        };
+        if_block(node_3, ($$render) => {
+          if (get2(expanded)) $$render(consequent_9);
+        });
+      }
+      reset(div);
+      template_effect(() => {
+        set_attribute2(button, "aria-expanded", get2(expanded));
+        set_text(text_1, get2(expanded) ? "\u25BE" : "\u25B8");
+      });
+      event("click", button, () => set(expanded, !get2(expanded)));
+      append2($$anchor2, div);
+    };
+    if_block(node, ($$render) => {
+      if ($updates(), get2(latest), get2(awaitingNewBuild), untrack(() => $updates().loaded && !$updates().loadFailed && (get2(latest) || get2(awaitingNewBuild)))) $$render(consequent_10);
+    });
+  }
+  append2($$anchor, fragment);
+  pop();
+  $$cleanup();
+}
+
 // src/views/PublicationCenterView/Tutorial.svelte
-var root13 = from_html(`<div class="dg-pc-tutorial svelte-t512ud"><div class="dg-pc-tutorial-header svelte-t512ud"><div class="dg-pc-tutorial-title svelte-t512ud">\u{1F44B} Welcome to the Publication Center</div> <button class="dg-pc-tutorial-close svelte-t512ud" aria-label="Dismiss tutorial"><!></button></div> <ul class="dg-pc-tutorial-list svelte-t512ud"><li>The left column lists your notes, each with a status dot: <span class="dg-pc-tut-dot dg-pc-dot-new svelte-t512ud"></span> new, <span class="dg-pc-tut-dot dg-pc-dot-changed svelte-t512ud"></span> changed, <span class="dg-pc-tut-dot dg-pc-dot-deleted svelte-t512ud"></span> deleted, <span class="dg-pc-tut-dot dg-pc-dot-published svelte-t512ud"></span> published.</li> <li>Use the filter chips at the top to focus on the statuses you
+var root16 = from_html(`<div class="dg-pc-tutorial svelte-t512ud"><div class="dg-pc-tutorial-header svelte-t512ud"><div class="dg-pc-tutorial-title svelte-t512ud">\u{1F44B} Welcome to the Publication Center</div> <button class="dg-pc-tutorial-close svelte-t512ud" aria-label="Dismiss tutorial"><!></button></div> <ul class="dg-pc-tutorial-list svelte-t512ud"><li>The left column lists your notes, each with a status dot: <span class="dg-pc-tut-dot dg-pc-dot-new svelte-t512ud"></span> new, <span class="dg-pc-tut-dot dg-pc-dot-changed svelte-t512ud"></span> changed, <span class="dg-pc-tut-dot dg-pc-dot-deleted svelte-t512ud"></span> deleted, <span class="dg-pc-tut-dot dg-pc-dot-published svelte-t512ud"></span> published.</li> <li>Use the filter chips at the top to focus on the statuses you
 				care about.</li> <li>Click a file to see its changes, and switch between <strong>Split</strong> and <strong>Unified</strong> diff views.</li> <li>Tick the files you want, then press <strong>Publish selected</strong>.</li></ul> <div class="dg-pc-tutorial-actions svelte-t512ud"><button class="dg-pc-tutorial-got svelte-t512ud">Got it</button></div></div>`);
-var $$css13 = {
+var $$css16 = {
   hash: "svelte-t512ud",
   code: ".dg-pc-tutorial.svelte-t512ud {border:1px solid var(--interactive-accent);border-radius:6px;padding:12px;margin-bottom:10px;background:var(--background-secondary);}.dg-pc-tutorial-header.svelte-t512ud {display:flex;justify-content:space-between;align-items:center;}.dg-pc-tutorial-title.svelte-t512ud {font-weight:bold;font-size:1.05rem;}.dg-pc-tutorial-close.svelte-t512ud {background:none;border:none;cursor:pointer;color:var(--text-muted);padding:2px;display:flex;align-items:center;}.dg-pc-tutorial-close.svelte-t512ud:hover {color:var(--text-normal);}.dg-pc-tutorial-list.svelte-t512ud {margin:8px 0 4px;padding-left:1.2rem;display:flex;flex-direction:column;gap:4px;}.dg-pc-tut-dot.svelte-t512ud {display:inline-block;width:8px;height:8px;border-radius:50%;vertical-align:middle;}.dg-pc-dot-new.svelte-t512ud {background:var(--text-success, green);}.dg-pc-dot-changed.svelte-t512ud {background:var(--text-warning, orange);}.dg-pc-dot-deleted.svelte-t512ud {background:var(--text-error, red);}.dg-pc-dot-published.svelte-t512ud {background:var(--text-muted);}.dg-pc-tutorial-actions.svelte-t512ud {display:flex;justify-content:flex-end;}.dg-pc-tutorial-got.svelte-t512ud {background:var(--interactive-accent);color:var(--text-on-accent);cursor:pointer;font-weight:bold;}"
 };
 function Tutorial($$anchor) {
-  append_styles($$anchor, $$css13);
+  append_styles($$anchor, $$css16);
   const TUTORIAL_KEY = "dg-pc-tutorial-dismissed";
   let show = mutable_source(!localStorage.getItem(TUTORIAL_KEY));
   function dismiss() {
@@ -39833,7 +42616,7 @@ function Tutorial($$anchor) {
   var node = first_child(fragment);
   {
     var consequent = ($$anchor2) => {
-      var div = root13();
+      var div = root16();
       var div_1 = child(div);
       var button = sibling(child(div_1), 2);
       var node_1 = child(button);
@@ -39856,19 +42639,23 @@ function Tutorial($$anchor) {
 }
 
 // src/views/PublicationCenterView/PublicationCenter.svelte
-var root14 = from_html(`<div class="dg-pc-error svelte-g0az0q"> </div>`);
-var root_112 = from_html(`<div class="dg-pc-loading svelte-g0az0q"><!> <div>Calculating publication status\u2026</div></div>`);
-var root_29 = from_html(`<div class="dg-pc-syncing svelte-g0az0q">Updating\u2026</div>`);
-var root_37 = from_html(`<div class="dg-pc-progress svelte-g0az0q"><div> </div> <div class="dg-pc-progress-track svelte-g0az0q"><div class="dg-pc-progress-fill svelte-g0az0q"></div></div> <div class="dg-pc-progress-current svelte-g0az0q"> </div></div>`);
-var root_45 = from_html(`<!> <!> <!> <!> <div class="dg-pc-layout svelte-g0az0q"><div class="dg-pc-tree-pane svelte-g0az0q"><!> <!></div> <div class="dg-pc-diff-pane svelte-g0az0q"><!></div></div> <!>`, 1);
-var root_53 = from_html(`<div class="dg-pc-root svelte-g0az0q"><!></div>`);
-var $$css14 = {
+var import_js_logger14 = __toESM(require_logger());
+var root17 = from_html(`<div class="dg-pc-error svelte-g0az0q"> </div>`);
+var root_119 = from_html(`<div class="dg-pc-loading svelte-g0az0q"><!> <div>Calculating publication status\u2026</div></div>`);
+var root_216 = from_html(`<div class="dg-pc-syncing svelte-g0az0q">Updating\u2026</div>`);
+var root_310 = from_html(`<div class="dg-pc-progress svelte-g0az0q"><div> </div> <div class="dg-pc-progress-track svelte-g0az0q"><div class="dg-pc-progress-fill svelte-g0az0q"></div></div> <div class="dg-pc-progress-current svelte-g0az0q"> </div></div>`);
+var root_48 = from_html(`<div class="dg-pc-publish-error svelte-g0az0q"><div class="dg-pc-publish-error-header svelte-g0az0q"><strong>Publishing failed</strong> <div class="dg-pc-publish-error-actions svelte-g0az0q"><button>Copy details</button> <button>Dismiss</button></div></div> <pre class="dg-pc-publish-error-message svelte-g0az0q"> </pre> <div class="dg-pc-publish-error-hint svelte-g0az0q">Nothing was lost \u2014 your notes are unchanged. Often
+					publishing again just works. If it keeps failing, click
+					"Copy details" and paste it in the Discord so we can help.</div></div>`);
+var root_56 = from_html(`<!> <!> <!> <!> <!> <div class="dg-pc-layout svelte-g0az0q"><div class="dg-pc-tree-pane svelte-g0az0q"><!> <!></div> <div class="dg-pc-diff-pane svelte-g0az0q"><!></div></div> <!> <!>`, 1);
+var root_65 = from_html(`<div class="dg-pc-root svelte-g0az0q"><!></div>`);
+var $$css17 = {
   hash: "svelte-g0az0q",
-  code: ".dg-pc-root.svelte-g0az0q {display:flex;flex-direction:column;height:100%;}.dg-pc-layout.svelte-g0az0q {display:flex;flex:1;min-height:0;}.dg-pc-tree-pane.svelte-g0az0q {flex:0 0 33%;max-width:33%;overflow:auto;border-right:1px solid var(--background-modifier-border);padding:8px;}.dg-pc-diff-pane.svelte-g0az0q {flex:1;overflow:auto;padding:8px;}.dg-pc-loading.svelte-g0az0q {display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;font-size:1.2rem;gap:8px;}.dg-pc-error.svelte-g0az0q {color:var(--text-error);padding:16px;}.dg-pc-syncing.svelte-g0az0q {color:var(--text-muted);font-size:0.8rem;padding:2px 4px 6px;}.dg-pc-progress.svelte-g0az0q {padding:8px;border-bottom:1px solid var(--background-modifier-border);}.dg-pc-progress-track.svelte-g0az0q {height:4px;background:var(--background-modifier-border);border-radius:2px;margin:6px 0;}.dg-pc-progress-fill.svelte-g0az0q {height:100%;background:var(--interactive-accent);transition:width 0.3s ease;}.dg-pc-progress-current.svelte-g0az0q {color:var(--text-muted);font-size:0.8rem;}"
+  code: ".dg-pc-root.svelte-g0az0q {display:flex;flex-direction:column;height:100%;}.dg-pc-layout.svelte-g0az0q {display:flex;flex:1;min-height:0;}.dg-pc-tree-pane.svelte-g0az0q {flex:0 0 33%;max-width:33%;overflow:auto;border-right:1px solid var(--background-modifier-border);padding:8px;}.dg-pc-diff-pane.svelte-g0az0q {flex:1;overflow:auto;padding:8px;}.dg-pc-loading.svelte-g0az0q {display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;font-size:1.2rem;gap:8px;}.dg-pc-error.svelte-g0az0q {color:var(--text-error);padding:16px;}.dg-pc-publish-error.svelte-g0az0q {margin:8px 16px;padding:10px 12px;border:1px solid var(--background-modifier-error);border-radius:6px;background-color:var(--background-modifier-error-hover, transparent);}.dg-pc-publish-error-header.svelte-g0az0q {display:flex;align-items:center;justify-content:space-between;gap:8px;color:var(--text-error);}.dg-pc-publish-error-actions.svelte-g0az0q {display:flex;gap:6px;}.dg-pc-publish-error-message.svelte-g0az0q {margin:8px 0;padding:6px 8px;max-height:120px;overflow:auto;white-space:pre-wrap;word-break:break-word;font-size:var(--font-ui-smaller);background-color:var(--background-primary);border-radius:4px;}.dg-pc-publish-error-hint.svelte-g0az0q {color:var(--text-muted);font-size:var(--font-ui-smaller);}.dg-pc-syncing.svelte-g0az0q {color:var(--text-muted);font-size:0.8rem;padding:2px 4px 6px;}.dg-pc-progress.svelte-g0az0q {padding:8px;border-bottom:1px solid var(--background-modifier-border);}.dg-pc-progress-track.svelte-g0az0q {height:4px;background:var(--background-modifier-border);border-radius:2px;margin:6px 0;}.dg-pc-progress-fill.svelte-g0az0q {height:100%;background:var(--interactive-accent);transition:width 0.3s ease;}.dg-pc-progress-current.svelte-g0az0q {color:var(--text-muted);font-size:0.8rem;}"
 };
 function PublicationCenter($$anchor, $$props) {
   push($$props, false);
-  append_styles($$anchor, $$css14);
+  append_styles($$anchor, $$css17);
   const selectedCount = mutable_source();
   const activeFile = mutable_source();
   const tree = mutable_source();
@@ -39880,6 +42667,7 @@ function PublicationCenter($$anchor, $$props) {
   let publisher = prop($$props, "publisher", 8);
   let statusManager = prop($$props, "statusManager", 8);
   let openFile = prop($$props, "openFile", 8);
+  let siteUpdateTracker = prop($$props, "siteUpdateTracker", 8, null);
   let registerApi = prop($$props, "registerApi", 8, () => {
   });
   let status = mutable_source(null);
@@ -39893,9 +42681,22 @@ function PublicationCenter($$anchor, $$props) {
   let activePath = mutable_source(null);
   let problematicFiles = mutable_source([]);
   let publishing = mutable_source(false);
+  let publishError = mutable_source(null);
   let progressTotal = mutable_source(0);
   let progressDone = mutable_source(0);
   let progressCurrent = mutable_source("");
+  const copyPublishErrorDetails = () => __awaiter(void 0, void 0, void 0, function* () {
+    const details = [
+      "Digital Garden publish error",
+      "",
+      get2(publishError) !== null && get2(publishError) !== void 0 ? get2(publishError) : "(no error message)",
+      "",
+      "--- Recent plugin log ---",
+      getDebugLog()
+    ].join("\n");
+    yield navigator.clipboard.writeText(details);
+    new import_obsidian25.Notice("Error details copied to clipboard.");
+  });
   let diffMode = mutable_source("split");
   let diffCache = /* @__PURE__ */ new Map();
   let diffData = mutable_source(null);
@@ -39945,6 +42746,7 @@ function PublicationCenter($$anchor, $$props) {
     if (get2(refreshing)) return;
     if (Date.now() - lastRefreshAt < REFRESH_DEBOUNCE_MS) return;
     loadStatus({ background: true });
+    siteUpdateTracker() === null || siteUpdateTracker() === void 0 ? void 0 : siteUpdateTracker().refresh();
   }
   function mergeSelection(prevSelected, prevAllPaths, files) {
     const next2 = /* @__PURE__ */ new Set();
@@ -39972,25 +42774,35 @@ function PublicationCenter($$anchor, $$props) {
     }
   }
   function publishSelected() {
+    var _a7;
     return __awaiter(this, void 0, void 0, function* () {
       const plan = buildPublishPlan(get2(selected), get2(annotated));
-      set(progressTotal, plan.notesToPublish.length + plan.notesToDelete.length + plan.imagesToDelete.length);
+      const deletesTotal = plan.notesToDelete.length + plan.imagesToDelete.length;
+      set(progressTotal, plan.notesToPublish.length + deletesTotal);
       if (get2(progressTotal) === 0) return;
       const publishedPaths = /* @__PURE__ */ new Set();
       const removedPaths = /* @__PURE__ */ new Set();
       let hadFailure = false;
       set(publishing, true);
+      set(publishError, null);
       set(progressDone, 0);
       try {
-        set(progressCurrent, "Publishing notes\u2026");
-        const published = yield publisher().publishBatch(plan.notesToPublish);
-        set(progressDone, get2(progressDone) + plan.notesToPublish.length);
-        if (published) {
+        set(progressCurrent, "Preparing upload\u2026");
+        let batchSteps = plan.notesToPublish.length;
+        const batchResult = yield publisher().publishBatch(plan.notesToPublish, (done, total, message) => {
+          batchSteps = total;
+          set(progressTotal, total + deletesTotal);
+          set(progressDone, done);
+          set(progressCurrent, message);
+        });
+        set(progressDone, batchSteps);
+        if (batchResult.success) {
           for (const note of plan.notesToPublish) {
             publishedPaths.add(note.getPath());
           }
         } else if (plan.notesToPublish.length > 0) {
           hadFailure = true;
+          set(publishError, (_a7 = batchResult.error) !== null && _a7 !== void 0 ? _a7 : "Unknown error");
         }
         for (const path2 of plan.notesToDelete) {
           set(progressCurrent, `Deleting ${path2}`);
@@ -40004,17 +42816,21 @@ function PublicationCenter($$anchor, $$props) {
           removedPaths.add(path2);
           set(progressDone, get2(progressDone) + 1);
         }
-        new import_obsidian20.Notice(hadFailure ? "Some notes failed to publish. Check the console for details." : "Publication complete.");
+        new import_obsidian25.Notice(hadFailure ? "Publishing failed. See the details in the Publication Center." : "Publication complete.");
       } catch (e) {
         if (e instanceof LimitReachedError) {
           notifyLimitReached(e);
         } else {
-          console.error("Publication Center: publish failed", e);
-          new import_obsidian20.Notice("Unable to publish, something went wrong.");
+          import_js_logger14.default.error("Publication Center: publish failed", e);
+          set(publishError, describeError(e));
+          new import_obsidian25.Notice("Publishing failed. See the details in the Publication Center.");
         }
       } finally {
         applyOptimisticUpdate(publishedPaths, removedPaths);
         set(publishing, false);
+        if (publishedPaths.size > 0 || removedPaths.size > 0) {
+          siteUpdateTracker() === null || siteUpdateTracker() === void 0 ? void 0 : siteUpdateTracker().notifyPublished();
+        }
       }
     });
   }
@@ -40089,7 +42905,7 @@ function PublicationCenter($$anchor, $$props) {
     set(diffMode, mode);
   }
   const bigRotatingCog = () => {
-    const cog = (0, import_obsidian20.getIcon)("cog");
+    const cog = (0, import_obsidian25.getIcon)("cog");
     cog === null || cog === void 0 ? void 0 : cog.classList.add("dg-rotate");
     cog === null || cog === void 0 ? void 0 : cog.style.setProperty("width", "40px");
     cog === null || cog === void 0 ? void 0 : cog.style.setProperty("height", "40px");
@@ -40120,11 +42936,11 @@ function PublicationCenter($$anchor, $$props) {
   });
   legacy_pre_effect_reset();
   init();
-  var div = root_53();
+  var div = root_65();
   var node = child(div);
   {
     var consequent = ($$anchor2) => {
-      var div_1 = root14();
+      var div_1 = root17();
       var text2 = child(div_1);
       reset(div_1);
       template_effect(() => {
@@ -40134,7 +42950,7 @@ function PublicationCenter($$anchor, $$props) {
       append2($$anchor2, div_1);
     };
     var consequent_1 = ($$anchor2) => {
-      var div_2 = root_112();
+      var div_2 = root_119();
       var node_1 = child(div_2);
       html(node_1, () => untrack(() => {
         var _a7, _b4;
@@ -40145,7 +42961,7 @@ function PublicationCenter($$anchor, $$props) {
       append2($$anchor2, div_2);
     };
     var alternate = ($$anchor2) => {
-      var fragment = root_45();
+      var fragment = root_56();
       var node_2 = first_child(fragment);
       Tutorial(node_2, {});
       var node_3 = sibling(node_2, 2);
@@ -40157,7 +42973,7 @@ function PublicationCenter($$anchor, $$props) {
       var node_4 = sibling(node_3, 2);
       {
         var consequent_2 = ($$anchor3) => {
-          var div_3 = root_29();
+          var div_3 = root_216();
           append2($$anchor3, div_3);
         };
         if_block(node_4, ($$render) => {
@@ -40167,7 +42983,7 @@ function PublicationCenter($$anchor, $$props) {
       var node_5 = sibling(node_4, 2);
       {
         var consequent_3 = ($$anchor3) => {
-          var div_4 = root_37();
+          var div_4 = root_310();
           var div_5 = child(div_4);
           var text_1 = child(div_5);
           reset(div_5);
@@ -40190,10 +43006,34 @@ function PublicationCenter($$anchor, $$props) {
           if (get2(publishing)) $$render(consequent_3);
         });
       }
-      var div_9 = sibling(node_5, 2);
-      var div_10 = child(div_9);
-      var node_6 = child(div_10);
-      StatusFilters(node_6, {
+      var node_6 = sibling(node_5, 2);
+      {
+        var consequent_4 = ($$anchor3) => {
+          var div_9 = root_48();
+          var div_10 = child(div_9);
+          var div_11 = sibling(child(div_10), 2);
+          var button = child(div_11);
+          var button_1 = sibling(button, 2);
+          reset(div_11);
+          reset(div_10);
+          var pre = sibling(div_10, 2);
+          var text_3 = child(pre, true);
+          reset(pre);
+          next(2);
+          reset(div_9);
+          template_effect(() => set_text(text_3, get2(publishError)));
+          event("click", button, copyPublishErrorDetails);
+          event("click", button_1, () => set(publishError, null));
+          append2($$anchor3, div_9);
+        };
+        if_block(node_6, ($$render) => {
+          if (get2(publishError)) $$render(consequent_4);
+        });
+      }
+      var div_12 = sibling(node_6, 2);
+      var div_13 = child(div_12);
+      var node_7 = child(div_13);
+      StatusFilters(node_7, {
         get counts() {
           return get2(counts);
         },
@@ -40202,8 +43042,8 @@ function PublicationCenter($$anchor, $$props) {
         },
         $$events: { toggle: (e) => toggleFilter(e.detail.status) }
       });
-      var node_7 = sibling(node_6, 2);
-      FileTree(node_7, {
+      var node_8 = sibling(node_7, 2);
+      FileTree(node_8, {
         get node() {
           return get2(visibleTree);
         },
@@ -40218,15 +43058,15 @@ function PublicationCenter($$anchor, $$props) {
           toggle: (e) => toggleSelection(e.detail.paths, e.detail.checked)
         }
       });
-      reset(div_10);
-      var div_11 = sibling(div_10, 2);
-      var node_8 = child(div_11);
+      reset(div_13);
+      var div_14 = sibling(div_13, 2);
+      var node_9 = child(div_14);
       {
         let $0 = derived_safe_equal(() => (get2(activeFile), untrack(() => {
           var _a7, _b4;
           return (_b4 = (_a7 = get2(activeFile)) == null ? void 0 : _a7.status) != null ? _b4 : null;
         })));
-        DiffPane(node_8, {
+        DiffPane(node_9, {
           get path() {
             return get2(activePath);
           },
@@ -40248,10 +43088,23 @@ function PublicationCenter($$anchor, $$props) {
           }
         });
       }
-      reset(div_11);
-      reset(div_9);
-      var node_9 = sibling(div_9, 2);
-      PublishBar(node_9, {
+      reset(div_14);
+      reset(div_12);
+      var node_10 = sibling(div_12, 2);
+      {
+        var consequent_5 = ($$anchor3) => {
+          RecentBuilds($$anchor3, {
+            get tracker() {
+              return siteUpdateTracker();
+            }
+          });
+        };
+        if_block(node_10, ($$render) => {
+          if (siteUpdateTracker()) $$render(consequent_5);
+        });
+      }
+      var node_11 = sibling(node_10, 2);
+      PublishBar(node_11, {
         get selectedCount() {
           return get2(selectedCount);
         },
@@ -40274,7 +43127,7 @@ function PublicationCenter($$anchor, $$props) {
 }
 
 // src/views/PublicationCenterView/PublicationCenterView.ts
-var PublicationCenterView = class extends import_obsidian21.ItemView {
+var PublicationCenterView = class extends import_obsidian26.ItemView {
   constructor(leaf, plugin) {
     super(leaf);
     this.plugin = plugin;
@@ -40290,32 +43143,47 @@ var PublicationCenterView = class extends import_obsidian21.ItemView {
   }
   onOpen() {
     return __async(this, null, function* () {
-      const { app, settings } = this.plugin;
-      const siteManager = new DigitalGardenSiteManager(
-        app.metadataCache,
-        settings
-      );
-      const publisher = new Publisher(app.vault, app.metadataCache, settings);
-      const statusManager = new PublishStatusManager(siteManager, publisher);
-      this.contentEl.empty();
-      this.contentEl.addClass("dg-publication-center-view");
-      this.component = mount(PublicationCenter, {
-        target: this.contentEl,
-        props: {
-          siteManager,
-          publisher,
-          statusManager,
-          openFile: (path2) => this.openFile(path2),
-          registerApi: (api) => {
-            this.refreshApi = api;
-          }
-        }
-      });
+      this.remountComponent();
       this.registerEvent(
         this.app.workspace.on("active-leaf-change", (leaf) => {
           if (leaf === this.leaf) this.maybeRefresh();
         })
       );
+    });
+  }
+  /**
+   * (Re)mount the Svelte component from current plugin state. Called on
+   * open and again when settings change something the view captures as
+   * props (e.g. the publish platform's site-update tracker).
+   */
+  remountComponent() {
+    const { app, settings } = this.plugin;
+    if (this.component) {
+      unmount(this.component);
+      this.component = void 0;
+      this.refreshApi = void 0;
+    }
+    const siteManager = new DigitalGardenSiteManager(
+      app.metadataCache,
+      settings
+    );
+    const publisher = new Publisher(app.vault, app.metadataCache, settings);
+    const statusManager = new PublishStatusManager(siteManager, publisher);
+    this.contentEl.empty();
+    this.contentEl.addClass("dg-publication-center-view");
+    this.component = mount(PublicationCenter, {
+      target: this.contentEl,
+      props: {
+        siteManager,
+        publisher,
+        statusManager,
+        // Only set for gardens hosted on Forestry.md.
+        siteUpdateTracker: this.plugin.siteUpdateTracker,
+        openFile: (path2) => this.openFile(path2),
+        registerApi: (api) => {
+          this.refreshApi = api;
+        }
+      }
     });
   }
   onClose() {
@@ -40335,10 +43203,187 @@ var PublicationCenterView = class extends import_obsidian21.ItemView {
   openFile(path2) {
     return __async(this, null, function* () {
       const file = this.plugin.app.vault.getAbstractFileByPath(path2);
-      if (file instanceof import_obsidian21.TFile) {
+      if (file instanceof import_obsidian26.TFile) {
         yield this.plugin.app.workspace.getLeaf("tab").openFile(file);
       }
     });
+  }
+};
+
+// src/forestry/SiteUpdateTracker.ts
+var import_obsidian27 = require("obsidian");
+var POLL_INTERVAL_MS = 5e3;
+var POLL_TIMEOUT_MS = 10 * 60 * 1e3;
+var LIVE_PHASE_MS = 2 * 60 * 1e3;
+var SiteUpdateTracker = class {
+  constructor(api) {
+    this.builds = [];
+    this.knownRunIds = /* @__PURE__ */ new Set();
+    this.awaitingNewBuild = false;
+    this.watchedRunId = null;
+    this.pollTimer = null;
+    this.pollDeadline = 0;
+    this.liveTimer = null;
+    this.api = api;
+    this.store = writable({
+      builds: [],
+      limits: null,
+      loaded: false,
+      loadFailed: false,
+      phase: "idle",
+      awaitingNewBuild: false,
+      failureCount: 0
+    });
+    void this.init();
+  }
+  /** Call after anything was pushed to the garden repo. */
+  notifyPublished() {
+    if (this.liveTimer !== null) {
+      clearTimeout(this.liveTimer);
+      this.liveTimer = null;
+    }
+    this.knownRunIds = new Set(this.builds.map((b) => b.runId));
+    this.watchedRunId = null;
+    this.awaitingNewBuild = true;
+    this.patch({ awaitingNewBuild: true, phase: "queued" });
+    this.startPolling();
+    void this.tick();
+  }
+  /** One-off refresh of the update list (e.g. when a view regains focus). */
+  refresh() {
+    void this.fetchBuilds();
+  }
+  dispose() {
+    if (this.pollTimer !== null) clearInterval(this.pollTimer);
+    if (this.liveTimer !== null) clearTimeout(this.liveTimer);
+    this.pollTimer = null;
+    this.liveTimer = null;
+  }
+  patch(partial) {
+    this.store.update((s2) => __spreadValues(__spreadValues({}, s2), partial));
+  }
+  isSettled(build) {
+    return build.status === "completed" || build.status === "failed" || build.status === "cancelled";
+  }
+  init() {
+    return __async(this, null, function* () {
+      yield this.fetchBuilds();
+      this.knownRunIds = new Set(this.builds.map((b) => b.runId));
+      const latest = this.builds[0];
+      if (latest && !this.isSettled(latest)) {
+        this.patch({
+          phase: latest.status === "inprogress" ? "updating" : "queued"
+        });
+        this.startPolling();
+      } else if ((latest == null ? void 0 : latest.status) === "failed") {
+        this.patch({ phase: "failed" });
+      }
+      const limits = yield this.api.getUserLimits();
+      this.patch({ limits });
+    });
+  }
+  fetchBuilds() {
+    return __async(this, null, function* () {
+      const result = yield this.api.getDeploys("active", 10);
+      if (result) {
+        this.builds = result;
+        this.patch({ builds: result, loaded: true, loadFailed: false });
+      } else {
+        this.store.update((s2) => __spreadProps(__spreadValues({}, s2), {
+          loadFailed: s2.loaded ? s2.loadFailed : true,
+          loaded: true
+        }));
+      }
+      return result !== null;
+    });
+  }
+  startPolling() {
+    this.pollDeadline = Date.now() + POLL_TIMEOUT_MS;
+    if (this.pollTimer !== null) return;
+    this.pollTimer = setInterval(() => void this.tick(), POLL_INTERVAL_MS);
+  }
+  stopPolling() {
+    if (this.pollTimer !== null) {
+      clearInterval(this.pollTimer);
+      this.pollTimer = null;
+    }
+    this.awaitingNewBuild = false;
+    this.watchedRunId = null;
+    this.patch({ awaitingNewBuild: false });
+  }
+  tick() {
+    return __async(this, null, function* () {
+      if (Date.now() > this.pollDeadline) {
+        this.stopPolling();
+        this.patch({ phase: "idle" });
+        return;
+      }
+      if (!(yield this.fetchBuilds())) return;
+      if (this.awaitingNewBuild) {
+        const fresh = this.builds.find(
+          (b) => !this.knownRunIds.has(b.runId)
+        );
+        if (fresh) {
+          this.awaitingNewBuild = false;
+          this.watchedRunId = fresh.runId;
+          this.patch({ awaitingNewBuild: false });
+        }
+      }
+      if (this.watchedRunId) {
+        const watched = this.builds.find(
+          (b) => b.runId === this.watchedRunId
+        );
+        if (watched) {
+          if (!this.isSettled(watched)) {
+            this.patch({
+              phase: watched.status === "inprogress" ? "updating" : "queued"
+            });
+          } else if (watched.status === "cancelled") {
+            this.knownRunIds.add(watched.runId);
+            this.watchedRunId = null;
+            this.awaitingNewBuild = true;
+            this.patch({ awaitingNewBuild: true, phase: "queued" });
+          } else {
+            this.announceResult(watched);
+            this.stopPolling();
+          }
+        }
+        return;
+      }
+      if (!this.awaitingNewBuild) {
+        const latest = this.builds[0];
+        if (latest && !this.isSettled(latest)) {
+          this.patch({
+            phase: latest.status === "inprogress" ? "updating" : "queued"
+          });
+        } else {
+          this.stopPolling();
+          this.patch({
+            phase: (latest == null ? void 0 : latest.status) === "failed" ? "failed" : "idle"
+          });
+        }
+      }
+    });
+  }
+  announceResult(build) {
+    var _a6;
+    if (build.status === "completed") {
+      new import_obsidian27.Notice("Your site is live \u{1F331}");
+      this.patch({ phase: "live" });
+      this.liveTimer = setTimeout(() => {
+        this.liveTimer = null;
+        this.patch({ phase: "idle" });
+      }, LIVE_PHASE_MS);
+    } else {
+      new import_obsidian27.Notice(
+        ((_a6 = build.friendlyError) == null ? void 0 : _a6.message) ? `Publish failed: ${build.friendlyError.message}` : "Publish failed. See Publish status for details.",
+        8e3
+      );
+      this.store.update((s2) => __spreadProps(__spreadValues({}, s2), {
+        phase: "failed",
+        failureCount: s2.failureCount + 1
+      }));
+    }
   }
 };
 
@@ -40362,11 +43407,13 @@ var DEFAULT_SETTINGS = {
   theme: JSON.stringify(defaultTheme),
   faviconPath: "",
   logoPath: "",
+  logoHeight: "",
   useFullResolutionImages: false,
   noteSettingsIsInitialized: false,
   siteName: "Digital Garden",
   mainLanguage: "en",
   slugifyEnabled: true,
+  excalidrawSvgExportEnabled: true,
   // Note Icon Related Settings
   noteIconKey: "dg-note-icon",
   defaultNoteIcon: "",
@@ -40426,30 +43473,46 @@ var DEFAULT_SETTINGS = {
   localExportPath: "",
   contentBaseDir: ""
 };
-import_js_logger12.default.useDefaults({
-  defaultLevel: import_js_logger12.default.WARN,
+import_js_logger15.default.useDefaults({
+  defaultLevel: import_js_logger15.default.WARN,
   formatter: function(messages, _context) {
     messages.unshift((/* @__PURE__ */ new Date()).toUTCString());
     messages.unshift("DG: ");
   }
 });
-var DigitalGarden = class extends import_obsidian23.Plugin {
+var consoleLogHandler = import_js_logger15.default.createDefaultHandler({
+  formatter: function(messages, _context) {
+    messages.unshift((/* @__PURE__ */ new Date()).toUTCString());
+    messages.unshift("DG: ");
+  }
+});
+import_js_logger15.default.setHandler((messages, context2) => {
+  appendDebugLogLine(context2.level.name, Array.from(messages));
+  consoleLogHandler(messages, context2);
+});
+var DigitalGarden = class extends import_obsidian29.Plugin {
   constructor() {
     super(...arguments);
     this.isPublishing = false;
+    /** Tracks garden site updates; only set for Forestry.md-hosted gardens. */
+    this.siteUpdateTracker = null;
+    this.siteStatusBarItem = null;
+    this.siteStatusUnsubscribe = null;
+    this.siteTrackerApiKey = null;
   }
   onload() {
     return __async(this, null, function* () {
       this.appVersion = this.manifest.version;
+      setDebugLogContext(`v${this.appVersion}`);
       console.log("Initializing DigitalGarden plugin v" + this.appVersion);
       yield this.loadSettings();
-      this.settings.logLevel && import_js_logger12.default.setLevel(this.settings.logLevel);
-      import_js_logger12.default.info(
-        "Digital garden log level set to " + import_js_logger12.default.getLevel().name
+      this.settings.logLevel && import_js_logger15.default.setLevel(this.settings.logLevel);
+      import_js_logger15.default.info(
+        "Digital garden log level set to " + import_js_logger15.default.getLevel().name
       );
       this.addSettingTab(new DigitalGardenSettingTab(this.app, this));
       yield this.addCommands();
-      (0, import_obsidian23.addIcon)("digital-garden-icon", seedling);
+      (0, import_obsidian29.addIcon)("digital-garden-icon", seedling);
       this.addRibbonIcon(
         "digital-garden-icon",
         "Digital Garden Publication Center",
@@ -40461,13 +43524,121 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
         VIEW_TYPE,
         (leaf) => new PublicationCenterView(leaf, this)
       );
+      this.syncSiteUpdateTracker();
+      this.refreshForestryPageInfo();
       this.checkForTemplateUpdates();
       this.registerDevAutoExport();
     });
   }
+  /**
+   * Re-fetch the garden's name and base URL from the Forestry API. Both are
+   * stored at connect time and go stale when the garden is renamed on the
+   * dashboard — the Garden Key keeps working, but copied note/garden URLs
+   * would point at the dead old subdomain. Fire-and-forget on startup;
+   * failures (offline, revoked key) leave the stored values untouched.
+   */
+  refreshForestryPageInfo() {
+    return __async(this, null, function* () {
+      var _a6;
+      const forestrySettings = this.settings.forestrySettings;
+      if (this.settings.publishPlatform !== "ForestryMd" /* ForestryMd */ || !forestrySettings.apiKey) {
+        return;
+      }
+      const pageInfo = yield new ForestryApi(
+        forestrySettings.apiKey
+      ).getPageInfo();
+      if (!((_a6 = pageInfo == null ? void 0 : pageInfo.value) == null ? void 0 : _a6.pageName) || !pageInfo.value.baseUrl) {
+        return;
+      }
+      if (forestrySettings.forestryPageName === pageInfo.value.pageName && forestrySettings.baseUrl === pageInfo.value.baseUrl) {
+        return;
+      }
+      import_js_logger15.default.info(
+        `Garden info changed (${forestrySettings.baseUrl} -> ${pageInfo.value.baseUrl}); updating stored settings`
+      );
+      forestrySettings.forestryPageName = pageInfo.value.pageName;
+      forestrySettings.baseUrl = pageInfo.value.baseUrl;
+      yield this.saveSettings();
+    });
+  }
+  /**
+   * Create or tear down the site-update tracker and its status bar item so
+   * they match the current settings. Called on load and after every
+   * settings save, so switching publish platform (or changing the API key)
+   * takes effect immediately.
+   */
+  syncSiteUpdateTracker() {
+    const apiKey = this.settings.forestrySettings.apiKey;
+    const enabled = this.settings.publishPlatform === "ForestryMd" /* ForestryMd */ && !!apiKey;
+    if (enabled && this.siteUpdateTracker && this.siteTrackerApiKey === apiKey) {
+      return;
+    }
+    this.teardownSiteUpdateTracker();
+    if (enabled) {
+      this.createSiteUpdateTracker(apiKey);
+    }
+    for (const leaf of this.app.workspace.getLeavesOfType(VIEW_TYPE)) {
+      if (leaf.view instanceof PublicationCenterView) {
+        leaf.view.remountComponent();
+      }
+    }
+  }
+  teardownSiteUpdateTracker() {
+    var _a6, _b3, _c2;
+    (_a6 = this.siteStatusUnsubscribe) == null ? void 0 : _a6.call(this);
+    this.siteStatusUnsubscribe = null;
+    (_b3 = this.siteStatusBarItem) == null ? void 0 : _b3.remove();
+    this.siteStatusBarItem = null;
+    (_c2 = this.siteUpdateTracker) == null ? void 0 : _c2.dispose();
+    this.siteUpdateTracker = null;
+    this.siteTrackerApiKey = null;
+  }
+  /**
+   * For Forestry.md gardens: start the plugin-wide site-update tracker and
+   * mirror its state into a persistent status bar item, so publishes from
+   * any command report whether the site actually went live.
+   */
+  createSiteUpdateTracker(apiKey) {
+    this.siteUpdateTracker = new SiteUpdateTracker(new ForestryApi(apiKey));
+    this.siteTrackerApiKey = apiKey;
+    const statusBarItem = this.addStatusBarItem();
+    statusBarItem.addClass("dg-site-status");
+    statusBarItem.setAttribute(
+      "aria-label",
+      "Forestry site \u2014 click for publish status"
+    );
+    statusBarItem.setAttribute("data-tooltip-position", "top");
+    statusBarItem.onClickEvent(() => {
+      this.activatePublicationCenter();
+    });
+    const phaseLabels = {
+      idle: "",
+      queued: " Queued\u2026",
+      updating: " Publishing\u2026",
+      live: " Live",
+      failed: " Publish failed"
+    };
+    this.siteStatusUnsubscribe = this.siteUpdateTracker.store.subscribe(
+      (state2) => {
+        statusBarItem.toggleClass(
+          "dg-site-status-updating",
+          state2.phase === "queued" || state2.phase === "updating"
+        );
+        statusBarItem.toggleClass(
+          "dg-site-status-failed",
+          state2.phase === "failed"
+        );
+        statusBarItem.setText(`\u{1F331}${phaseLabels[state2.phase]}`);
+      }
+    );
+    this.siteStatusBarItem = statusBarItem;
+  }
   checkForTemplateUpdates() {
     return __async(this, null, function* () {
       if (this.settings.publishPlatform !== "SelfHosted" /* SelfHosted */) {
+        return;
+      }
+      if (this.settings.disableTemplateUpdateNotice) {
         return;
       }
       try {
@@ -40477,7 +43648,7 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
         );
         const updater = yield (yield siteManager.getTemplateUpdater()).checkForUpdates();
         if (hasUpdates(updater)) {
-          new import_obsidian23.Notice(
+          new import_obsidian29.Notice(
             `Digital Garden: A new site template version (${updater.newestTemplateVersion}) is available. Update in the plugin settings.`,
             1e4
           );
@@ -40487,6 +43658,7 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
     });
   }
   onunload() {
+    this.teardownSiteUpdateTracker();
   }
   loadSettings() {
     return __async(this, null, function* () {
@@ -40500,15 +43672,26 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
   saveSettings() {
     return __async(this, null, function* () {
       yield this.saveData(this.settings);
+      this.syncSiteUpdateTracker();
     });
   }
   addCommands() {
     return __async(this, null, function* () {
       this.addCommand({
+        id: "copy-debug-log",
+        name: "Copy debug log",
+        callback: () => __async(this, null, function* () {
+          yield navigator.clipboard.writeText(getDebugLog());
+          new import_obsidian29.Notice(
+            "Debug log copied to clipboard. Paste it in the Discord if you need help."
+          );
+        })
+      });
+      this.addCommand({
         id: "quick-publish-and-share-note",
         name: "Quick Publish And Share Note",
         callback: () => __async(this, null, function* () {
-          new import_obsidian23.Notice("Adding publish flag to note and publishing it.");
+          new import_obsidian29.Notice("Adding publish flag to note and publishing it.");
           yield this.setPublishFlagValue(true);
           const activeFile = this.app.workspace.getActiveFile();
           const event2 = this.app.metadataCache.on(
@@ -40535,8 +43718,16 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
           yield this.publishSingleNote();
         })
       });
-      if (this.settings["ENABLE_DEVELOPER_TOOLS"] && import_obsidian23.Platform.isDesktop) {
-        import_js_logger12.default.info("Developer tools enabled");
+      this.addCommand({
+        id: "install-garden-plugin",
+        name: "Install garden plugin from URL",
+        callback: () => __async(this, null, function* () {
+          const modal = new InstallPluginModal(this.app, this.settings);
+          yield modal.open();
+        })
+      });
+      if (this.settings["ENABLE_DEVELOPER_TOOLS"] && import_obsidian29.Platform.isDesktop) {
+        import_js_logger15.default.info("Developer tools enabled");
         const publisher = new Publisher(
           this.app.vault,
           this.app.metadataCache,
@@ -40554,7 +43745,7 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
             })
           });
         }).catch((e) => {
-          import_js_logger12.default.error("Unable to load generateGardenSnapshot", e);
+          import_js_logger15.default.error("Unable to load generateGardenSnapshot", e);
         });
       }
       this.addCommand({
@@ -40562,8 +43753,9 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
         name: "Publish All Notes Marked for Publish",
         // TODO: move to publisher?
         callback: () => __async(this, null, function* () {
+          var _a6, _b3;
           if (this.isPublishing) {
-            new import_obsidian23.Notice(
+            new import_obsidian29.Notice(
               "A publish operation is already in progress. Please wait for it to complete."
             );
             return;
@@ -40571,7 +43763,7 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
           this.isPublishing = true;
           const statusBarItem = this.addStatusBarItem();
           try {
-            new import_obsidian23.Notice("Processing files to publish...");
+            new import_obsidian29.Notice("Processing files to publish...");
             const { vault, metadataCache } = this.app;
             const publisher = new Publisher(
               vault,
@@ -40595,7 +43787,7 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
             const imagesToDelete = publishStatus.deletedImagePaths;
             const totalItems = filesToPublish.length + filesToDelete.length + imagesToDelete.length;
             if (totalItems === 0) {
-              new import_obsidian23.Notice("Garden is already fully synced!");
+              new import_obsidian29.Notice("Garden is already fully synced!");
               statusBarItem.remove();
               this.isPublishing = false;
               return;
@@ -40604,11 +43796,19 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
               statusBarItem,
               filesToPublish.length + filesToDelete.length + imagesToDelete.length
             );
-            new import_obsidian23.Notice(
+            new import_obsidian29.Notice(
               `Publishing ${filesToPublish.length} notes, deleting ${filesToDelete.length} notes and ${imagesToDelete.length} images. See the status bar in lower right corner for progress.`,
               8e3
             );
-            yield publisher.publishBatch(filesToPublish);
+            const batchResult = yield publisher.publishBatch(filesToPublish);
+            if (!batchResult.success) {
+              new import_obsidian29.Notice(
+                `Publishing failed: ${(_a6 = batchResult.error) != null ? _a6 : "unknown error"}
+
+Run "Copy debug log" from the command palette to share details when asking for help.`,
+                0
+              );
+            }
             statusBar.incrementMultiple(filesToPublish.length);
             for (const file of filesToDelete) {
               yield publisher.deleteNote(file.path);
@@ -40619,16 +43819,17 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
               statusBar.increment();
             }
             statusBar.finish(8e3);
-            new import_obsidian23.Notice(
+            (_b3 = this.siteUpdateTracker) == null ? void 0 : _b3.notifyPublished();
+            new import_obsidian29.Notice(
               `Successfully published ${filesToPublish.length} notes to your garden.`
             );
             if (filesToDelete.length > 0) {
-              new import_obsidian23.Notice(
+              new import_obsidian29.Notice(
                 `Successfully deleted ${filesToDelete.length} notes from your garden.`
               );
             }
             if (imagesToDelete.length > 0) {
-              new import_obsidian23.Notice(
+              new import_obsidian29.Notice(
                 `Successfully deleted ${imagesToDelete.length} images from your garden.`
               );
             }
@@ -40641,7 +43842,7 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
               return;
             }
             console.error(e);
-            new import_obsidian23.Notice(
+            new import_obsidian29.Notice(
               "Unable to publish multiple notes, something went wrong."
             );
           }
@@ -40696,7 +43897,7 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
           this.openNavigationOrderModal();
         })
       });
-      if (import_obsidian23.Platform.isDesktop) {
+      if (import_obsidian29.Platform.isDesktop) {
         this.addCommand({
           id: "export-garden-to-local-folder",
           name: "Export Garden to Local Folder",
@@ -40710,7 +43911,7 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
   runLocalExport() {
     return __async(this, null, function* () {
       try {
-        new import_obsidian23.Notice("Exporting garden to local folder...");
+        new import_obsidian29.Notice("Exporting garden to local folder...");
         const { vault, metadataCache } = this.app;
         const publisher = new Publisher(
           vault,
@@ -40720,23 +43921,23 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
         const exporter = new LocalExporter(vault, publisher, this.settings);
         const result = yield exporter.export();
         if (result.failed > 0) {
-          new import_obsidian23.Notice(
+          new import_obsidian29.Notice(
             `Exported ${result.notes} notes and ${result.images} images (${result.failed} failed). Check console for details.`,
             8e3
           );
         } else {
-          new import_obsidian23.Notice(
+          new import_obsidian29.Notice(
             `Exported ${result.notes} notes and ${result.images} images to ${this.settings.localExportPath}`,
             8e3
           );
         }
       } catch (e) {
-        import_js_logger12.default.error("Local export failed", e);
+        import_js_logger15.default.error("Local export failed", e);
       }
     });
   }
   registerDevAutoExport() {
-    if (!import_obsidian23.Platform.isDesktop || !this.settings.ENABLE_DEVELOPER_TOOLS || !this.settings.localExportOnLoad || !this.settings.localExportPath) {
+    if (!import_obsidian29.Platform.isDesktop || !this.settings.ENABLE_DEVELOPER_TOOLS || !this.settings.localExportOnLoad || !this.settings.localExportPath) {
       return;
     }
     this.app.workspace.onLayoutReady(() => {
@@ -40748,7 +43949,7 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
   getActiveFile(workspace) {
     const activeFile = workspace.getActiveFile();
     if (!activeFile) {
-      new import_obsidian23.Notice(
+      new import_obsidian29.Notice(
         "No file is open/active. Please open a file and try again."
       );
       return null;
@@ -40769,10 +43970,10 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
         );
         const fullUrl = siteManager.getNoteUrl(activeFile);
         yield navigator.clipboard.writeText(fullUrl);
-        new import_obsidian23.Notice(`Note URL copied to clipboard`);
+        new import_obsidian29.Notice(`Note URL copied to clipboard`);
       } catch (e) {
         console.log(e);
-        new import_obsidian23.Notice(
+        new import_obsidian29.Notice(
           "Unable to copy note URL to clipboard, something went wrong."
         );
       }
@@ -40781,6 +43982,7 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
   // TODO: move to publisher?
   publishSingleNote() {
     return __async(this, null, function* () {
+      var _a6;
       try {
         const { vault, workspace, metadataCache } = this.app;
         const activeFile = this.getActiveFile(workspace);
@@ -40788,12 +43990,12 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
           return;
         }
         if (activeFile.extension !== "md" && activeFile.extension !== "canvas") {
-          new import_obsidian23.Notice(
+          new import_obsidian29.Notice(
             "The current file is not a markdown or canvas file. Please open a supported file and try again."
           );
           return;
         }
-        new import_obsidian23.Notice("Publishing note...");
+        new import_obsidian29.Notice("Publishing note...");
         const publisher = new Publisher(
           vault,
           metadataCache,
@@ -40809,9 +44011,10 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
         }).compile();
         const publishSuccessful = yield publisher.publish(publishFile);
         if (publishSuccessful) {
-          new import_obsidian23.Notice(`Successfully published note to your garden.`);
+          new import_obsidian29.Notice(`Successfully published note to your garden.`);
+          (_a6 = this.siteUpdateTracker) == null ? void 0 : _a6.notifyPublished();
         } else {
-          new import_obsidian23.Notice("Unable to publish note, something went wrong.");
+          new import_obsidian29.Notice("Unable to publish note, something went wrong.");
         }
         return publishSuccessful;
       } catch (e) {
@@ -40820,7 +44023,7 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
           return false;
         }
         console.error(e);
-        new import_obsidian23.Notice("Unable to publish note, something went wrong.");
+        new import_obsidian29.Notice("Unable to publish note, something went wrong.");
         return false;
       }
     });
@@ -40862,7 +44065,7 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
       }
       const currentFileCache = this.app.metadataCache.getFileCache(activeFile);
       if ((_a6 = currentFileCache == null ? void 0 : currentFileCache.frontmatter) == null ? void 0 : _a6["dg-home" /* HOME */]) {
-        new import_obsidian23.Notice("This note is already set as the garden home page.");
+        new import_obsidian29.Notice("This note is already set as the garden home page.");
         return;
       }
       const existingHomePages = [];
@@ -40880,7 +44083,7 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
             frontmatter["dg-publish" /* PUBLISH */] = true;
           }
         );
-        new import_obsidian23.Notice(
+        new import_obsidian29.Notice(
           `${activeFile.basename} is now your garden's home page and has been marked for publishing.`
         );
       } else {
@@ -40903,7 +44106,7 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
                   frontmatter["dg-publish" /* PUBLISH */] = true;
                 }
               );
-              new import_obsidian23.Notice(
+              new import_obsidian29.Notice(
                 `${activeFile.basename} is now your garden's home page and has been marked for publishing.`
               );
             }
@@ -40951,7 +44154,7 @@ var DigitalGarden = class extends import_obsidian23.Plugin {
     });
   }
 };
-var HomePageConfirmationModal = class extends import_obsidian23.Modal {
+var HomePageConfirmationModal = class extends import_obsidian29.Modal {
   constructor(app, newHomeFile, existingHomeFile, onConfirm) {
     super(app);
     this.newHomeFile = newHomeFile;
@@ -41016,11 +44219,6 @@ var HomePageConfirmationModal = class extends import_obsidian23.Modal {
     contentEl.empty();
   }
 };
-//!()[image.svg]
-//![[image.png]] or ![[file.pdf]]
-//![](image.png) or ![](file.pdf)
-//![[image.png]]
-//![](image.png)
 /*! Bundled license information:
 
 js-logger/src/logger.js:

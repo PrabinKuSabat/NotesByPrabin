@@ -1,78 +1,4 @@
 /* src/styles.scss */
-.ac-settings .properties-field > .setting-item-info {
-  flex: 0;
-  margin: 0;
-  padding: var(--size-4-1) var(--size-4-2);
-  border: var(--input-border-width) solid var(--background-modifier-border);
-  border-radius: var(--input-radius) 0 0 var(--input-radius);
-}
-.ac-settings .properties-field > .setting-item-control > input {
-  width: 100%;
-  border-radius: 0 var(--input-radius) var(--input-radius) 0;
-}
-.ac-settings .ac-settings-heading:not(:first-child) {
-  margin-top: var(--size-4-10) !important;
-}
-.ac-settings .ac-settings-heading:has(.checkbox-container:not(.is-enabled)) {
-  border-bottom-color: var(--background-modifier-border-hover);
-}
-.ac-settings .ac-settings-heading .setting-item-description {
-  margin-inline-end: 20px;
-}
-.ac-settings .settings-header-children {
-  transform-origin: top center;
-  transform: scaleY(1);
-  transition: transform 0.2s ease-in-out;
-}
-.ac-settings .ac-settings-heading:has(.checkbox-container:not(.is-enabled)) + .settings-header-children {
-  opacity: 0.5;
-  pointer-events: none;
-  height: 0;
-  transform: scaleY(0);
-}
-.ac-settings .setting-item > .setting-item-control input[type=text] {
-  width: 75px;
-}
-.ac-settings details.setting-item {
-  flex-direction: column;
-  align-items: initial;
-}
-.ac-settings details.setting-item:not([open]) {
-  row-gap: 0;
-}
-.ac-settings details.setting-item[open] {
-  padding-bottom: var(--size-4-2);
-}
-.ac-settings details.setting-item[open] > summary {
-  margin-bottom: var(--size-4-2);
-}
-.ac-settings details.setting-item > *:not(summary) {
-  border: 1px solid var(--background-primary);
-}
-.ac-settings .kofi-banner {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--size-4-3);
-  background-color: var(--background-primary-alt);
-  border-radius: var(--radius-m);
-}
-.ac-settings .kofi-banner .ac-kofi-banner-title {
-  margin: 0;
-  font-size: var(--font-ui-small);
-  font-weight: 600;
-}
-.ac-settings .kofi-banner .ac-kofi-button {
-  width: min-content;
-  height: min-content;
-  line-height: 0;
-}
-.ac-settings .kofi-banner .ac-kofi-button img {
-  min-width: 75px;
-  width: 25%;
-  max-width: 100px;
-}
 .canvas-wrapper > .document-search-container {
   transform: translateZ(0);
   margin: 0;
@@ -361,6 +287,9 @@
 .icon-modal-suggestion .icon-modal-suggestion-id {
   font-size: var(--font-ui-smaller);
   color: var(--text-muted);
+}
+.ac-pinned-pdf-page-embed {
+  height: 100%;
 }
 .canvas.is-exporting {
   --zoom-multiplier: 1;
