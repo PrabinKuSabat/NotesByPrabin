@@ -4,19 +4,31 @@
     "type": "split",
     "children": [
       {
-        "id": "c3003e6eef2f150f",
+        "id": "4509724f8bf84da7",
         "type": "tabs",
         "children": [
           {
-            "id": "6f1d95a365c1335d",
+            "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "Excalidraw/Drawing 2026-09-07 10.28.59.excalidraw.md"
+                "file": "Homepage.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "excalidraw-icon",
-              "title": "Drawing 2026-09-07 10.28.59.excalidraw"
+              "icon": "lucide-file",
+              "title": "Homepage"
             }
           }
         ]
@@ -87,7 +99,8 @@
               "title": "Vertical tabs"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -236,11 +249,15 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "c8e38b6a1726940f",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/The Problem Statement and metrics to check.md",
+    "EFFORTS/RISC-V.md",
+    "EFFORTS/Efforts.md",
+    "Homepage.md",
+    "Excalidraw/Untitled.base",
     "Excalidraw/Drawing 2026-09-07 10.28.59.excalidraw.md",
     "Excalidraw/Drawing 2025-12-26 20.15.13.excalidraw.md",
-    "Homepage.md",
     "Excalidraw/User-Level OS Implementation - Idea Board.md",
     "Excalidraw/address_translation.excalidraw.md",
     "Excalidraw/Accel-sim Walk Around.excalidraw.md",
@@ -262,9 +279,6 @@
     "Kanban Boards/CAB To Do.md",
     "Kanban Boards/Untitled Kanban.md",
     "Kanban Boards/README.md",
-    "Extras/README.md",
-    "Extras/Library.md",
-    "Extras/Drafts/Farming Labor Problem Statement.md",
     "Extras/Guide Books AI/101",
     "Extras/Guide Books AI/Minimal Kernel",
     "Extras/Guide Books AI/AI Suggest Skill Mastering Courses",
@@ -273,7 +287,6 @@
     "Extras/Guide Books AI/Question banks",
     "Extras/Guide Books AI/QEMU",
     "Extras/Guide Books AI",
-    "Extras/Archives/Extras-Excalidraw-legacy-2026-07-31.tar.gz",
     "Extras/ATTACHMENTS/image-97.png",
     "Extras/ATTACHMENTS/image-95.png",
     "Extras/ATTACHMENTS/9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f-2.png",
