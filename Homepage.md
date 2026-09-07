@@ -4,10 +4,10 @@
 
 # [[CALENDAR/Calendar|CALENDAR]]
 
-# [[Prabin's KB ~/Prabins KB ~|Website Homepage]]
+# [[Home|Website Homepage]]
 
-# [[TO-DO List]]
+[[Kanban Boards/Status Kanban.kanban|Status Kanban]]
 
-# [[Kanban Boards/Status Kanban.kanban|Status Kanban]]
+[[Buffer]]
 
-# [[Buffer]]
+[[TO-DO List]]

@@ -8,16 +8,27 @@
         "type": "tabs",
         "children": [
           {
-            "id": "e7a7b303c61786dc",
+            "id": "217c4243a02bbaed",
             "type": "leaf",
             "state": {
-              "type": "bases",
+              "type": "markdown",
               "state": {
-                "file": "Untitled.base",
-                "viewName": "Table"
+                "file": "EFFORTS/Native Minimal Kernel for OP Rv2.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "lucide-table",
-              "title": "Untitled"
+              "icon": "lucide-file",
+              "title": "Native Minimal Kernel for OP Rv2"
             }
           }
         ]
@@ -236,8 +247,26 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "217c4243a02bbaed",
   "lastOpenFiles": [
+    "EFFORTS/Efforts.md",
+    "EFFORTS/Native Minimal Kernel for OP Rv2.md",
+    "EFFORTS/The Problem Statement and metrics to check.md",
+    "EFFORTS/RISC-V.md",
+    "Homepage.md",
+    "EFFORTS/Address Translation in Systems.md",
+    "EFFORTS/Project Setups.md",
+    "Prabin's KB ~/Home.md",
+    "Prabin's KB ~/RISC-V OS development.md",
+    "EFFORTS/RISC-V User-Space Kernel Design.md",
+    "Prabin's KB ~/Research Notes.md",
+    "Prabin's KB ~/Vast.AI.md",
+    "Prabin's KB ~/GPU Architectures and Whitepapers.md",
+    "Prabin's KB ~/Project Setups.md",
+    "EFFORTS/AccelSim.md",
+    "EFFORTS/Setting up QEMU for OrangePi Kernel Development.md",
+    "TO-DO List.md",
+    "Untitled.base",
     "Extras/ATTACHMENTS/DGLogoS.svg",
     "Extras/ATTACHMENTS/digital-garden-favicon-square.svg",
     "Extras/ATTACHMENTS/DGLogoP.png",
@@ -245,11 +274,6 @@
     "Extras/ATTACHMENTS/DGLogo.png",
     "Extras/ATTACHMENTS/ChatGPT Image Sep 7, 2026, 02_42_10 PM.png",
     "Extras/ATTACHMENTS/digital-garden-logo.svg",
-    "Homepage.md",
-    "Untitled.base",
-    "EFFORTS/The Problem Statement and metrics to check.md",
-    "EFFORTS/RISC-V.md",
-    "EFFORTS/Efforts.md",
     "Excalidraw/Untitled.base",
     "Excalidraw/Drawing 2026-09-07 10.28.59.excalidraw.md",
     "Excalidraw/Drawing 2025-12-26 20.15.13.excalidraw.md",
@@ -260,18 +284,6 @@
     "Excalidraw/Drawing 2026-01-04 12.07.10.excalidraw.md",
     "Excalidraw/Drawing 2025-12-26 20.01.48.excalidraw.md",
     "Excalidraw/Questions on TPU.excalidraw.md",
-    "Excalidraw/Drawing 2026-03-06 14.04.29.excalidraw.md",
-    "Excalidraw/Dissertation Status.excalidraw.md",
-    "excalibrain.md",
-    "EFFORTS/Dissertation.md",
-    "EFFORTS/Case Study Mathematical Modelling.md",
-    "EFFORTS/Case Study - Mathematical Modelling Presentation Notes Section 6.md",
-    "Kanban Boards/Status Kanban.kanban.md",
-    "README.md",
-    "Kanban Boards/M. Tech. Course Work.md",
-    "Kanban Boards/Professional to do.md",
-    "Kanban Boards/CAB To Do.md",
-    "Kanban Boards/Untitled Kanban.md",
     "Extras/Guide Books AI/101",
     "Extras/Guide Books AI/Minimal Kernel",
     "Extras/Guide Books AI/AI Suggest Skill Mastering Courses",
@@ -283,7 +295,6 @@
     "Extras/ATTACHMENTS/image-97.png",
     "Extras/ATTACHMENTS/image-95.png",
     "Extras/ATTACHMENTS/9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f-2.png",
-    "Extras/ATTACHMENTS/9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f-1.png",
     "EFFORTS/Untitled.canvas",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "EFFORTS/Binary Search.canvas",

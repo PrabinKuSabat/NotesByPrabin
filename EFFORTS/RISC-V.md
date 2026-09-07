@@ -10,7 +10,7 @@ updated: 2026-07-31
 
 ## Architecture Related
 
-[[Address Translation in Systems]]
+
 
 ## Things Regarding the OrangePi RV2
 
@@ -19,10 +19,6 @@ This note keeps track of all the things that are related to the OrangePi Board :
 ## SOS - V
 
 The efforts put into this mission of making an OS for teaching and research purposes will be documented in this Notes and the notes within : [[Writing a Operating System]].
-
-## Native Minimal Kernel
-
-[[The Problem Statement and metrics to check]]
 
 ## User-space kernel design notes
 

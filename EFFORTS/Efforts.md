@@ -18,9 +18,8 @@ updated: 2026-07-31
 > [[AccelSim]]  
 > [[GPU_Microbenchmark]]  
 > [[RISC-V OS development]]  
-> [[Project Setups]]  
 > [[RISC-V]]
-> 
+> [[Native Minimal Kernel for OP Rv2]]
  
 
 > [! important] coding  
