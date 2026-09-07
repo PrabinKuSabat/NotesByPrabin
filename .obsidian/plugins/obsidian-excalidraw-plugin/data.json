@@ -50,7 +50,7 @@
   "overrideObsidianFontSize": false,
   "dynamicStyling": "colorful",
   "isLeftHanded": false,
-  "desktopUIMode": "compact",
+  "desktopUIMode": "tray",
   "tabletUIMode": "tray",
   "phoneUIMode": "mobile",
   "iframeMatchExcalidrawTheme": true,
@@ -252,16 +252,386 @@
         "value": false
       },
       "Growth Mode": {
-        "value": "Right-facing"
-      },
-      "Is Minimized": {
-        "value": false
+        "value": "Right-Left",
+        "valueset": [
+          "Radial",
+          "Right-facing",
+          "Left-facing",
+          "Right-Left",
+          "Up-facing",
+          "Down-facing",
+          "Up-Down"
+        ]
       },
       "Arrow Stroke Style": {
         "value": false
       },
       "Rounded Corners": {
-        "value": false
+        "value": true
+      },
+      "Layout Config": {
+        "value": {
+          "GAP_X": 120,
+          "GAP_Y": 25,
+          "GAP_MULTIPLIER": 0.6,
+          "ROOT_RADIUS_FACTOR": 0.8,
+          "MIN_RADIUS": 350,
+          "RADIAL_ASPECT_RATIO": 0.7,
+          "RADIAL_POLE_GAP_BONUS": 2,
+          "RADIAL_START_ANGLE": 280,
+          "RADIAL_MAX_SWEEP": 340,
+          "DIRECTIONAL_ARC_SPAN_RADIANS": 1,
+          "GAP_MULTIPLIER_DIRECTIONAL": 1.5,
+          "RADIUS_PADDING_PER_NODE": 7,
+          "VERTICAL_SUBTREE_WIDTH_BLEND_SINGLE": 0.35,
+          "VERTICAL_SUBTREE_WIDTH_BLEND_DUAL": 0.6,
+          "VERTICAL_SUBTREE_SMOOTH_THRESHOLD_MULTIPLIER": 6,
+          "VERTICAL_SUBTREE_SMOOTH_MIN_SCALE": 240,
+          "HORIZONTAL_L1_SOFTCAP_THRESHOLD": 560,
+          "HORIZONTAL_L1_COMPRESSION_MIN_SCALE": 240,
+          "VERTICAL_COMPACT_PARENT_CHILD_GAP_RATIO": 0.55,
+          "DIRECTIONAL_CROSS_AXIS_RATIO": 0.2,
+          "INDICATOR_OFFSET": 10,
+          "INDICATOR_OPACITY": 40,
+          "CONTAINER_PADDING": 10,
+          "MAX_SEGMENT_LENGTH": 80,
+          "MANUAL_GAP_MULTIPLIER": 1.3,
+          "MANUAL_JITTER_RANGE": 300
+        },
+        "hidden": true
+      },
+      "Is Undocked": {
+        "value": true,
+        "hidden": false
+      },
+      "Preferred Zoom Level": {
+        "value": "Medium",
+        "hidden": false
+      },
+      "Active Preset": {
+        "value": "Default",
+        "hidden": false
+      },
+      "Arrow Type": {
+        "value": "curved",
+        "hidden": false
+      },
+      "Font Sizes": {
+        "value": "Normal Scale",
+        "hidden": false
+      },
+      "Multicolor Mode": {
+        "value": true,
+        "hidden": false
+      },
+      "Max Text Width": {
+        "value": 450,
+        "hidden": false
+      },
+      "Center text in nodes?": {
+        "value": true,
+        "hidden": false
+      },
+      "Fill Sweep": {
+        "value": false,
+        "hidden": false
+      },
+      "Branch Scale Style": {
+        "value": "Hierarchical",
+        "hidden": false
+      },
+      "Base Stroke Width": {
+        "value": 6,
+        "hidden": false
+      },
+      "Custom Palette": {
+        "value": {
+          "enabled": false,
+          "random": false,
+          "colors": []
+        },
+        "hidden": true
+      },
+      "Hotkeys": {
+        "value": [
+          {
+            "action": "Add",
+            "key": "Enter",
+            "modifiers": [],
+            "scope": 3
+          },
+          {
+            "action": "Add Next Sibling",
+            "key": "Enter",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Add Prev Sibling",
+            "key": "Enter",
+            "modifiers": [
+              "Alt",
+              "Shift"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Add + follow",
+            "key": "Enter",
+            "modifiers": [
+              "Mod",
+              "Alt"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Add + follow + focus",
+            "key": "Enter",
+            "modifiers": [
+              "Mod"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Add + follow + zoom",
+            "key": "Enter",
+            "modifiers": [
+              "Mod",
+              "Shift"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Dock/Undock",
+            "key": "Enter",
+            "modifiers": [
+              "Shift"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Dock & hide",
+            "key": "Escape",
+            "modifiers": [],
+            "scope": 2
+          },
+          {
+            "action": "Edit node",
+            "code": "KeyE",
+            "modifiers": [
+              "Mod"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Toggle Checkbox",
+            "code": "KeyL",
+            "modifiers": [
+              "Mod"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Calendar",
+            "code": "KeyD",
+            "modifiers": [
+              "Alt",
+              "Mod"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Pin/Unpin",
+            "code": "KeyP",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Box/Unbox",
+            "code": "KeyB",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Toggle Boundary",
+            "code": "KeyB",
+            "modifiers": [
+              "Alt",
+              "Shift"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Toggle Submap Root",
+            "code": "KeyJ",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Group/Ungroup Single Branch",
+            "code": "KeyG",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Toggle Embed/Link",
+            "code": "KeyE",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Copy",
+            "code": "KeyC",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Cut",
+            "code": "KeyX",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Paste",
+            "code": "KeyV",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 1
+          },
+          {
+            "action": "Import Outline from Linked File",
+            "code": "KeyI",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Rearrange Map",
+            "code": "KeyR",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Cycle Zoom",
+            "code": "KeyZ",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Focus (center) node",
+            "code": "KeyF",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Navigate",
+            "key": "ArrowKeys",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Navigate & zoom",
+            "key": "ArrowKeys",
+            "modifiers": [
+              "Alt",
+              "Shift"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Navigate & focus",
+            "key": "ArrowKeys",
+            "modifiers": [
+              "Mod",
+              "Shift"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Change Order/Promote Node",
+            "code": "ArrowKeys",
+            "modifiers": [
+              "Mod"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Fold/Unfold Branch",
+            "code": "Digit1",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Fold/Unfold to Level 1",
+            "code": "Digit2",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Fold/Unfold Branch Recursively",
+            "code": "Digit3",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Undo",
+            "key": "z",
+            "modifiers": [
+              "Mod"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Redo (Ctrl-Shift-Z)",
+            "key": "z",
+            "modifiers": [
+              "Mod",
+              "Shift"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Redo (Ctrl-Y)",
+            "key": "y",
+            "modifiers": [
+              "Mod"
+            ],
+            "scope": 2
+          }
+        ],
+        "hidden": true
       }
     },
     "Downloaded/Auto Layout": {
@@ -318,6 +688,61 @@
       "Print only marker frames": {
         "value": true
       }
+    },
+    "Downloaded/Comicbook Callout Editor": {
+      "ComicBubbles_Settings_V5": {
+        "presets": {
+          "Default": {
+            "shapeType": "cloud",
+            "stemType": "curvy_v",
+            "strokeSharpness": "sharp",
+            "pathResolution": 50,
+            "cornerRoundness": 0.2,
+            "bumpCount": 15,
+            "bumpDepth": 0.15,
+            "bumpVariance": 0,
+            "randomVariance": false,
+            "polySides": 6,
+            "polyRotation": 0,
+            "heightRatio": 1,
+            "stemPosition": 35,
+            "stemBend": -65,
+            "stemLength": 110,
+            "stemWidth": 8,
+            "ribbonEnds": "both",
+            "addSpikes": false,
+            "spikeCount": 3,
+            "spikeWidth": 5,
+            "spikeHeight": 30,
+            "spikeDist": "Even",
+            "haloType": "none",
+            "haloSpace": 10,
+            "haloLength": 25,
+            "haloDensity": 30,
+            "haloVariance": 20,
+            "haloThickness": 2,
+            "haloLayers": 1,
+            "haloThicknessPattern": "uniform",
+            "haloGapPattern": "uniform",
+            "haloStylePattern": "solid",
+            "bubbleCount": 3,
+            "bubbleShrink": 30,
+            "bubbleDistance": 20,
+            "wrapWidth": 250,
+            "textMargin": 35,
+            "strokeStyle": "solid",
+            "strokeWidth": 1,
+            "roughness": 0,
+            "fontFamily": 5,
+            "fontSize": 16,
+            "textColor": "black",
+            "bgColor": "#ffffff",
+            "strokeColor": "black",
+            "bgOpacity": 100
+          }
+        },
+        "lastUsedPreset": "Default"
+      }
     }
   },
   "autostartScripts": {
@@ -338,13 +763,13 @@
     "Excalidraw/Scripts/Downloaded/Slideshow.md",
     "Excalidraw/Scripts/Downloaded/Shade Master.md",
     "Excalidraw/Scripts/Downloaded/Scribble Helper.md",
-    "Excalidraw/Scripts/Downloaded/Normalize Selected Arrows.md",
     "Excalidraw/Scripts/Downloaded/Mindmap Builder.md",
     "Excalidraw/Scripts/Downloaded/Comic Strip Director.md",
-    "Excalidraw/Scripts/Downloaded/Comicbook Callout Editor.md"
+    "Excalidraw/Scripts/Downloaded/Comicbook Callout Editor.md",
+    "Excalidraw/Scripts/Downloaded/Printable Layout Wizard.md"
   ],
   "sidepanelTabs": [
-    "{\"script\":\"Downloaded/Comicbook Callout Editor\",\"title\":\"Comic Bubbles\"}"
+    "{\"script\":\"Downloaded/Mindmap Builder\",\"title\":\"Mind Map Builder\"}"
   ],
   "customPens": [
     {
