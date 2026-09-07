@@ -5,7 +5,7 @@ dg-publish: true
 # Why QEMU?
 
 Why not Docker!!  
-That's same question I was asked with by one of my juniors. See Docker and QEMU server fundamentally different purposes and are not interchangeable. Docker is a _**containerization platform**_ that shares the host operating system's kernel across all containers. Whereas QEMU by contrast is a _**hardware emulator**_ and virtualizer designed to run operating systems with custom kernels.
+That's same question I was asked with by one of my juniors. See Docker and QEMU server fundamentally different purposes and are not interchangeable. Docker is a _**containerization platform**_ that shares the host operating system's kernel across all containers. Whereas QEMU by contrast is a _**hardware emulator**_ and virtualizer designed to run operating systems with custom kernels. ^6hXAYisM
 
 > [!info] Hardware Acceleration for QEMU  
 > Using Kernel Virtual Machine(KVM), systems achieve near-native performance running 8x to 12x faster than software-based translation using QEMU's TCG(Tiny Code Generator).

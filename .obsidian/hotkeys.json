@@ -209,14 +209,6 @@
       "key": "Q"
     }
   ],
-  "templater-obsidian:Templates/Canva Right Align.md": [
-    {
-      "modifiers": [
-        "Alt"
-      ],
-      "key": "E"
-    }
-  ],
   "templater-obsidian:insert-templater": [
     {
       "modifiers": [

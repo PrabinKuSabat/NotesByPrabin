@@ -252,7 +252,7 @@
         "value": false
       },
       "Growth Mode": {
-        "value": "Right-Left",
+        "value": "Right-facing",
         "valueset": [
           "Radial",
           "Right-facing",
@@ -305,7 +305,7 @@
         "hidden": false
       },
       "Preferred Zoom Level": {
-        "value": "Medium",
+        "value": "Low",
         "hidden": false
       },
       "Active Preset": {
@@ -317,7 +317,7 @@
         "hidden": false
       },
       "Font Sizes": {
-        "value": "Normal Scale",
+        "value": "Fibonacci Scale",
         "hidden": false
       },
       "Multicolor Mode": {
@@ -631,6 +631,58 @@
             "scope": 2
           }
         ],
+        "hidden": true
+      },
+      "Map Presets": {
+        "value": {
+          "Default": {
+            "growthMode": "Right-facing",
+            "arrowType": "curved",
+            "fontsizeScale": "Fibonacci Scale",
+            "multicolor": true,
+            "boxChildren": false,
+            "roundedCorners": false,
+            "maxWrapWidth": 450,
+            "isSolidArrow": false,
+            "centerText": true,
+            "fillSweep": false,
+            "branchScale": "Hierarchical",
+            "baseStrokeWidth": 6,
+            "customPalette": {
+              "enabled": false,
+              "random": false,
+              "colors": []
+            },
+            "layoutSettings": {
+              "GAP_X": 120,
+              "GAP_Y": 25,
+              "GAP_MULTIPLIER": 0.6,
+              "ROOT_RADIUS_FACTOR": 0.8,
+              "MIN_RADIUS": 350,
+              "RADIAL_ASPECT_RATIO": 0.7,
+              "RADIAL_POLE_GAP_BONUS": 2,
+              "RADIAL_START_ANGLE": 280,
+              "RADIAL_MAX_SWEEP": 340,
+              "DIRECTIONAL_ARC_SPAN_RADIANS": 1,
+              "GAP_MULTIPLIER_DIRECTIONAL": 1.5,
+              "RADIUS_PADDING_PER_NODE": 7,
+              "VERTICAL_SUBTREE_WIDTH_BLEND_SINGLE": 0.35,
+              "VERTICAL_SUBTREE_WIDTH_BLEND_DUAL": 0.6,
+              "VERTICAL_SUBTREE_SMOOTH_THRESHOLD_MULTIPLIER": 6,
+              "VERTICAL_SUBTREE_SMOOTH_MIN_SCALE": 240,
+              "HORIZONTAL_L1_SOFTCAP_THRESHOLD": 560,
+              "HORIZONTAL_L1_COMPRESSION_MIN_SCALE": 240,
+              "VERTICAL_COMPACT_PARENT_CHILD_GAP_RATIO": 0.55,
+              "DIRECTIONAL_CROSS_AXIS_RATIO": 0.2,
+              "INDICATOR_OFFSET": 10,
+              "INDICATOR_OPACITY": 40,
+              "CONTAINER_PADDING": 10,
+              "MAX_SEGMENT_LENGTH": 80,
+              "MANUAL_GAP_MULTIPLIER": 1.3,
+              "MANUAL_JITTER_RANGE": 300
+            }
+          }
+        },
         "hidden": true
       }
     },
