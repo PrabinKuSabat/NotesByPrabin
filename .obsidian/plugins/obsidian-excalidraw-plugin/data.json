@@ -343,7 +343,9 @@
     "Excalidraw/Scripts/Downloaded/Comic Strip Director.md",
     "Excalidraw/Scripts/Downloaded/Comicbook Callout Editor.md"
   ],
-  "sidepanelTabs": [],
+  "sidepanelTabs": [
+    "{\"script\":\"Downloaded/Comicbook Callout Editor\",\"title\":\"Comic Bubbles\"}"
+  ],
   "customPens": [
     {
       "type": "default",

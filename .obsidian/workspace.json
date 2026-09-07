@@ -8,43 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "217c4243a02bbaed",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "EFFORTS/Native Minimal Kernel for OP Rv2.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Native Minimal Kernel for OP Rv2"
-            }
-          },
-          {
-            "id": "67ef9fd9d55292ac",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "EFFORTS/Native Minimal Kernel RV2.excalidraw.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "Native Minimal Kernel RV2.excalidraw"
-            }
-          },
-          {
-            "id": "90ce8e49d8de2658",
+            "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -67,8 +31,7 @@
               "title": "Homepage"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -136,7 +99,8 @@
               "title": "Vertical tabs"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -232,9 +196,19 @@
               "icon": "lucide-archive",
               "title": "All properties"
             }
+          },
+          {
+            "id": "1f08514118c9e1ab",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw-sidepanel",
+              "state": {},
+              "icon": "excalidraw-icon",
+              "title": "Excalidraw Sidepanel"
+            }
           }
         ],
-        "currentTab": 4
+        "currentTab": 6
       },
       {
         "id": "5be65b7a15dbdafe",
@@ -246,7 +220,7 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Guide Books AI/Question banks/GATE_CSE_Master_Question_Bank_770.md"
+                "file": "Homepage.md"
               },
               "icon": "lucide-info",
               "title": "File properties"
@@ -256,8 +230,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 471.5,
-    "collapsed": true
+    "width": 471.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -285,8 +258,17 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "67ef9fd9d55292ac",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "EFFORTS/Native Minimal Kernel RV2.excalidraw.md",
+    "Excalidraw/Scripts/Downloaded/Split Ellipse.svg",
+    "Excalidraw/Scripts/Downloaded/Split Ellipse.md",
+    "Excalidraw/Scripts/Downloaded/PDF Page Text to Clipboard.svg",
+    "Excalidraw/Scripts/Downloaded/PDF Page Text to Clipboard.md",
+    "Excalidraw/Scripts/Downloaded/Icon Library.svg",
+    "Excalidraw/Scripts/Downloaded/Icon Library.md",
+    "Excalidraw/Scripts/Downloaded/ExcaliAI.svg",
+    "Excalidraw/Scripts/Downloaded/ExcaliAI.md",
     "Excalidraw/Scripts/Downloaded/Comicbook Callout Editor.svg",
     "Excalidraw/Scripts/Downloaded/Comicbook Callout Editor.md",
     "Excalidraw/Scripts/Downloaded/Comic Strip Director.svg",
@@ -297,13 +279,7 @@
     "Excalidraw/Scripts/Downloaded/Boolean Operations.md",
     "Excalidraw/Scripts/Downloaded/Full-Year Calendar Generator.svg",
     "Excalidraw/Scripts/Downloaded/Uniform size.svg",
-    "Excalidraw/Scripts/Downloaded/Set Grid.svg",
-    "Excalidraw/Scripts/Downloaded/Text to Sticky Notes.svg",
-    "Excalidraw/Scripts/Downloaded/Normalize Selected Arrows.svg",
-    "Excalidraw/Scripts/Downloaded/Elbow connectors.svg",
-    "Excalidraw/Scripts/Downloaded/Connect elements.svg",
     "EFFORTS/Native Minimal Kernel for OP Rv2.md",
-    "EFFORTS/Native Minimal Kernel RV2.excalidraw.md",
     "Homepage.md",
     "EFFORTS/Efforts.md",
     "EFFORTS/The Problem Statement and metrics to check.md",
@@ -319,12 +295,8 @@
     "Prabin's KB ~/Project Setups.md",
     "EFFORTS/AccelSim.md",
     "EFFORTS/Setting up QEMU for OrangePi Kernel Development.md",
-    "TO-DO List.md",
     "Untitled.base",
     "Excalidraw/Untitled.base",
-    "Excalidraw/Drawing 2026-09-07 10.28.59.excalidraw.md",
-    "Excalidraw/Drawing 2025-12-26 20.15.13.excalidraw.md",
-    "Excalidraw/User-Level OS Implementation - Idea Board.md",
     "Extras/Guide Books AI/101",
     "Extras/Guide Books AI/Minimal Kernel",
     "Extras/Guide Books AI/AI Suggest Skill Mastering Courses",
