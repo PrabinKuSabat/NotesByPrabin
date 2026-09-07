@@ -38,6 +38,10 @@ if(!pathEl) {
 } else {
   pathElID = pathEl.id;
 }
+const originalPathType = pathEl.type;
+const originalPathDirectionLR = ["line","arrow","freedraw"].includes(pathEl.type)
+  ? (pathEl.points[pathEl.points.length-1][0] < 0 ? true : false)
+  : true;
 
 const st = ea.getExcalidrawAPI().getAppState();
 const fontSize = textEl?.fontSize ?? st.currentItemFontSize;
@@ -46,12 +50,19 @@ ea.style.fontSize = fontSize;
 ea.style.fontFamily = fontFamily;
 const fontHeight = ea.measureText("M").height*1.3;
 
-const aspectRatio = pathEl.width/pathEl.height;
-const isCircle = pathEl.type === "ellipse" && aspectRatio > 0.9  && aspectRatio < 1.1;
+// Remove isCircle check and introduce isClosedShape
 const isPathLinear = ["line", "arrow", "freedraw"].includes(pathEl.type);
-if(!isCircle && !isPathLinear) {
+const isClosedShape = ["ellipse", "rectangle", "diamond"].includes(originalPathType) || (pathEl.type === "line" && pathEl.polygon);
+
+// Expand and convert all closed shapes to line elements uniformly
+if(!isPathLinear) {
   ea.copyViewElementsToEAforEditing([pathEl]);
   pathEl = ea.getElement(pathEl.id);
+
+  if (pathEl.type === "line" && isClosedShape && isClockwise(pathEl.points)) {
+    pathEl.points = pathEl.points.reverse();
+  }
+
   pathEl.x -= fontHeight/2;
   pathEl.y -= fontHeight/2;
   pathEl.width += fontHeight;
@@ -72,66 +83,246 @@ if(!isCircle && !isPathLinear) {
   tempElementIDs.push(pathEl.id);
 }
 
-
 // ---------------------------------------------------------
 // Convert path to SVG and use real path for text placement.
 // ---------------------------------------------------------
 let isLeftToRight = true;
-if(
+let pathElBottom = null;
+
+if (
   (["line", "arrow"].includes(pathEl.type) && pathEl.roundness !== null) ||
   pathEl.type === "freedraw"
 ) {
-  [pathEl, isLeftToRight] = await convertBezierToPoints();
+  [pathEl, isLeftToRight, pathElBottom] = await convertBezierToPoints();
+} else if (pathEl.points) {
+  isLeftToRight = pathEl.points[pathEl.points.length - 1][0] >= 0;
 }
 
 // ---------------------------------------------------------
-// Retreive original text from text-on-path customData
+// Retrieve original settings from text-on-path customData
 // ---------------------------------------------------------
-const initialOffset = textEl?.customData?.text2Path?.offset ?? 0;
-const initialArchAbove = textEl?.customData?.text2Path?.archAbove ?? true;
+let currentOffsetPct = textEl?.customData?.text2Path?.offsetPct ?? 0;
+let currentDistanceOffset = textEl?.customData?.text2Path?.distanceOffset ?? 0;
+let currentLetterSpacing = textEl?.customData?.text2Path?.letterSpacing ?? 0;
 
-const text = (await utils.inputPrompt({
-  header: "Edit",
-  value: textEl?.customData?.text2Path
-    ? textEl.customData.text2Path.text
-    : textEl?.text ?? "",
-  lines: 3,
-  customComponents: isCircle ? circleArchControl : offsetControl,
-  draggable: true,
-}))?.replace(" \n"," ").replace("\n ", " ").replace("\n"," ");
+// Map legacy archAbove to currentIsReversed for backwards compatibility
+let currentIsReversed = textEl?.customData?.text2Path?.isReversed ?? (textEl?.customData?.text2Path?.archAbove === false ? true : false);
+let currentPlaceInside = textEl?.customData?.text2Path?.placeInside ?? false; 
+let currentText = textEl?.customData?.text2Path
+  ? textEl.customData.text2Path.text
+  : textEl?.text ?? "";
+currentText = currentText.replace(/ \n/g," ").replace(/\n /g, " ").replace(/\n/g," ");
 
-if(!text) {
-  new Notice("No text provided!");
-  return;
+let generatedIDs = [];
+let updateTimeout = null;
+let textUpdateTimeout = null;
+
+function isClockwise(points) {
+  if(points.length <=3 ) return true
+  return points[points.length-2] > 0
 }
 
-// -------------------------------------
-// Copy font style to ExcalidrawAutomate
-// -------------------------------------
-ea.style.fontSize = fontSize;
-ea.style.fontFamily = fontFamily;
-ea.style.strokeColor = textEl?.strokeColor ?? st.currentItemStrokeColor;
-ea.style.opacity = textEl?.opacity ?? st.currentItemOpacity;
+async function updatePath() {
+  if (!currentText || currentText.trim() === "") return;
 
-// -----------------------------------
-// Delete previous text arch if exists
-// -----------------------------------
-if (textEl?.customData?.text2Path) {
-  const pathID = textEl.customData.text2Path.pathID;
-  const elements = ea.getViewElements().filter(el=>el.customData?.text2Path && el.customData.text2Path.pathID === pathID);
-  ea.copyViewElementsToEAforEditing(elements);
-  ea.getElements().forEach(el=>{el.isDeleted = true;});
-} else {
-  if(textEl) {
-    ea.copyViewElementsToEAforEditing([textEl]);
-    ea.getElements().forEach(el=>{el.isDeleted = true;});
+  ea.clear();
+  let elementsToDelete = [];
+  
+  // Target generated elements from this session, or the original text element 
+  // and its associated path characters if editing a pre-existing path
+  if (generatedIDs.length > 0) {
+    elementsToDelete = ea.getViewElements().filter(el => generatedIDs.includes(el.id));
+  } else if (textEl && !textEl.isDeleted) {
+    if (textEl?.customData?.text2Path) {
+      const pathID = textEl.customData.text2Path.pathID;
+      elementsToDelete = ea.getViewElements().filter(el => el.customData?.text2Path && el.customData.text2Path.pathID === pathID);
+    } else {
+      elementsToDelete = [textEl];
+    }
   }
+
+  if (elementsToDelete.length > 0) {
+    ea.copyViewElementsToEAforEditing(elementsToDelete);
+    ea.getElements().forEach(el => { el.isDeleted = true; });
+  }
+
+  // Re-apply style rules to the EA workbench context
+  ea.style.fontSize = fontSize;
+  ea.style.fontFamily = fontFamily;
+  ea.style.strokeColor = textEl?.strokeColor ?? st.currentItemStrokeColor;
+  ea.style.opacity = textEl?.opacity ?? st.currentItemOpacity;
+
+  generatedIDs = [];
+
+  // Apply fitTextToShape universally
+  await fitTextToShape();
 }
 
-if(isCircle) {
-  await fitTextToCircle();
-} else {
-  await fitTextToShape();
+// -------------------------------------
+// Floating Modal UI
+// -------------------------------------
+const modal = new ea.FloatingModal(ea.plugin.app);
+
+// Constrain the modal width
+modal.modalEl.style.width = "400px";
+modal.modalEl.style.maxWidth = "100%";
+
+let outsideClickHandler; // Store reference to remove it later
+
+modal.onOpen = () => {
+  modal.contentEl.empty();
+  
+  // Text Input
+  const textSetting = new ea.obsidian.Setting(modal.contentEl)
+    .setName("Text")
+    .addTextArea(text => {
+      text.setValue(currentText)
+          .onChange(val => {
+            currentText = val.replace(/ \n/g," ").replace(/\n /g, " ").replace(/\n/g," ");
+            if (textUpdateTimeout) clearTimeout(textUpdateTimeout);
+            textUpdateTimeout = setTimeout(() => {
+              updatePath();
+            }, 1000); 
+          });
+      // Make text area fill its container
+      text.inputEl.style.width = "100%";
+      text.inputEl.style.minHeight = "80px";
+      text.inputEl.style.resize = "vertical";
+    });
+    
+  // Force block layout so the textarea sits below the label and takes 100% width
+  textSetting.settingEl.style.display = "block";
+  textSetting.controlEl.style.width = "100%";
+  textSetting.controlEl.style.marginTop = "8px";
+
+  // Offset Slider (Now applies to all shapes)
+  const offsetSetting = new ea.obsidian.Setting(modal.contentEl)
+    .setName("Slide text along the path")
+    .addSlider(slider => {
+      slider.setLimits(-50, 50, 0.1)
+            .setValue(currentOffsetPct)
+            .onChange(val => {
+              currentOffsetPct = val;
+              // 500ms Throttle for continuous sliding to keep performance smooth
+              if (updateTimeout) clearTimeout(updateTimeout);
+              updateTimeout = setTimeout(() => {
+                updatePath();
+              }, 500); 
+            });
+      // Make the slider stretch to fill the control element
+      slider.sliderEl.style.width = "100%";
+    });
+    
+  // Tell the control container to expand and take up all remaining width
+  offsetSetting.controlEl.style.flexGrow = "1";
+  offsetSetting.controlEl.style.width = "100%";
+  offsetSetting.infoEl.style.flex = "0 1 auto"; 
+
+  const distanceSetting = new ea.obsidian.Setting(modal.contentEl)
+    .setName("Distance from line")
+    .addSlider(slider => {
+      slider.setLimits(-50, 50, 1)
+            .setValue(currentDistanceOffset)
+            .onChange(val => {
+              currentDistanceOffset = val;
+              if (updateTimeout) clearTimeout(updateTimeout);
+              updateTimeout = setTimeout(() => { updatePath(); }, 500); 
+            });
+      slider.sliderEl.style.width = "100%";
+    });
+  distanceSetting.controlEl.style.flexGrow = "1";
+  distanceSetting.controlEl.style.width = "100%";
+  distanceSetting.infoEl.style.flex = "0 1 auto"; 
+
+  const spacingSetting = new ea.obsidian.Setting(modal.contentEl)
+    .setName("Character spacing")
+    .addSlider(slider => {
+      slider.setLimits(-25, 50, 1)
+            .setValue(currentLetterSpacing)
+            .onChange(val => {
+              currentLetterSpacing = val;
+              if (updateTimeout) clearTimeout(updateTimeout);
+              updateTimeout = setTimeout(() => { updatePath(); }, 500); 
+            });
+      slider.sliderEl.style.width = "100%";
+    });
+  spacingSetting.controlEl.style.flexGrow = "1";
+  spacingSetting.controlEl.style.width = "100%";
+  spacingSetting.infoEl.style.flex = "0 1 auto"; 
+
+  new ea.obsidian.Setting(modal.contentEl)
+    .setName("Reverse text")
+    .setDesc("Flips the text direction (useful for placing text on the inside or bottom of a shape).")
+    .addToggle(toggle => {
+      toggle.setValue(currentIsReversed)
+            .onChange(val => {
+              currentIsReversed = val;
+              updatePath();
+            });
+    });
+
+  const placementLabel = isClosedShape ? "Place inside shape" : "Place on opposite side";
+  const placementDesc = isClosedShape
+      ? "Places the text on the inside of the shape's boundary."
+      : "Places the text on the other side of the path.";
+
+  new ea.obsidian.Setting(modal.contentEl)
+    .setName(placementLabel)
+    .setDesc(placementDesc)
+    .addToggle(toggle => {
+      toggle.setValue(currentPlaceInside)
+            .onChange(val => {
+              currentPlaceInside = val;
+              updatePath();
+            });
+    });
+
+  // Action Buttons
+  const btnContainer = modal.contentEl.createDiv({ attr: { style: "display: flex; gap: 10px; justify-content: flex-end; margin-top: 15px;" } });
+  
+  const updateBtn = btnContainer.createEl("button", { text: "Update Preview" });
+  updateBtn.onclick = () => {
+    if (updateTimeout) clearTimeout(updateTimeout);
+    if (textUpdateTimeout) clearTimeout(textUpdateTimeout);
+    updatePath();
+  };
+
+  const closeBtn = btnContainer.createEl("button", { text: "Done", cls: "mod-cta" });
+  closeBtn.onclick = async () => {
+    if (updateTimeout) clearTimeout(updateTimeout);
+    if (textUpdateTimeout) clearTimeout(textUpdateTimeout);
+    await updatePath();
+    modal.close();
+  };
+
+  // Add outside click listener
+  outsideClickHandler = (e) => {
+    // If the click is outside the modal element
+    if (modal.modalEl && !modal.modalEl.contains(e.target)) {
+      modal.close();
+    }
+  };
+
+  // Delay attaching the listener slightly so the click that opened the script 
+  // doesn't immediately trigger the close.
+  setTimeout(() => {
+    ea.targetView.ownerWindow.addEventListener("pointerdown", outsideClickHandler);
+  }, 100);
+};
+
+modal.onClose = () => {
+   if (updateTimeout) clearTimeout(updateTimeout);
+   if (outsideClickHandler) {
+     ea.targetView.ownerWindow.removeEventListener("pointerdown", outsideClickHandler);
+   }
+};
+
+modal.enableKeyCapture();
+modal.open();
+
+// Trigger initial calculation
+if (currentText.trim() !== "") {
+  await updatePath();
 }
 
 
@@ -148,102 +339,67 @@ function transposeElements(ids) {
   })
 }
 
-// Function to create the circle arch position control in the dialog
-function circleArchControl(container) {
-  if (typeof win.ArchPosition === "undefined") {
-    win.ArchPosition = initialArchAbove;
-  }
-  
-  const archContainer = container.createDiv();
-  archContainer.style.display = "flex";
-  archContainer.style.alignItems = "center";
-  archContainer.style.marginBottom = "8px";
-  
-  const label = archContainer.createEl("label");
-  label.textContent = "Arch position:";
-  label.style.marginRight = "10px";
-  label.style.fontWeight = "bold";
-  
-  const select = archContainer.createEl("select");
-  
-  // Add options for above/below
-  const aboveOption = select.createEl("option");
-  aboveOption.value = "true";
-  aboveOption.text = "Above";
-  
-  const belowOption = select.createEl("option");
-  belowOption.value = "false";
-  belowOption.text = "Below";
-  
-  // Set the default value
-  select.value = win.ArchPosition ? "true" : "false";
-  
-  select.addEventListener("change", (e) => {
-    win.ArchPosition = e.target.value === "true";
-  });
-}
-
-// Function to create the offset input control in the dialog
-function offsetControl(container) {
-  if (!win.TextArchOffset) win.TextArchOffset = initialOffset.toString();
-  
-  const offsetContainer = container.createDiv();
-  offsetContainer.style.display = "flex";
-  offsetContainer.style.alignItems = "center";
-  offsetContainer.style.marginBottom = "8px";
-  
-  const label = offsetContainer.createEl("label");
-  label.textContent = "Offset (px):";
-  label.style.marginRight = "10px";
-  label.style.fontWeight = "bold";
-  
-  const input = offsetContainer.createEl("input");
-  input.type = "number";
-  input.value = win.TextArchOffset;
-  input.placeholder = "0";
-  input.style.width = "60px";
-  input.style.padding = "4px";
-  
-  input.addEventListener("input", (e) => {
-    const val = e.target.value.trim();
-    if (val === "" || !isNaN(parseInt(val))) {
-      win.TextArchOffset = val;
-    } else {
-      e.target.value = win.TextArchOffset || "0";
-    }
-  });
-}
-
 // Function to convert any shape to a series of points along its path
 function calculatePathPoints(element) { 
-  // Handle lines, arrows, and freedraw paths
   const points = [];
   
-  // Get absolute coordinates of all points
-  const absolutePoints = element.points.map(point => [
-    point[0] + element.x,
-    point[1] + element.y
-  ]);
+  let minX = 0, minY = 0, maxX = 0, maxY = 0;
+  if (element.points && element.points.length > 0) {
+    minX = Math.min(...element.points.map(p => p[0]));
+    minY = Math.min(...element.points.map(p => p[1]));
+    maxX = Math.max(...element.points.map(p => p[0]));
+    maxY = Math.max(...element.points.map(p => p[1]));
+  } else {
+    maxX = element.width;
+    maxY = element.height;
+  }
+  const cx = element.x + minX + (maxX - minX) / 2;
+  const cy = element.y + minY + (maxY - minY) / 2;
+  
+  const angle = element.angle || 0;
+  
+  // Get absolute coordinates of all points, accounting for rotation
+  const absolutePoints = element.points.map(point => {
+    const sx = point[0] + element.x;
+    const sy = point[1] + element.y;
+    
+    if (angle !== 0) {
+      const cos = Math.cos(angle);
+      const sin = Math.sin(angle);
+      const rx = cos * (sx - cx) - sin * (sy - cy) + cx;
+      const ry = sin * (sx - cx) + cos * (sy - cy) + cy;
+      return [rx, ry];
+    }
+    return [sx, sy];
+  });
+  
+  // If it's a closed polygon, ensure the last point connects to the first
+  if (element.polygon) {
+    const firstPt = absolutePoints[0];
+    const lastPt = absolutePoints[absolutePoints.length - 1];
+    if (Math.abs(firstPt[0] - lastPt[0]) > 0.001 || Math.abs(firstPt[1] - lastPt[1]) > 0.001) {
+      absolutePoints.push([...firstPt]);
+    }
+  }
   
   // Calculate segment information
   let segments = [];
-  
   for (let i = 0; i < absolutePoints.length - 1; i++) {
     const p0 = absolutePoints[i];
     const p1 = absolutePoints[i+1];
     const dx = p1[0] - p0[0];
     const dy = p1[1] - p0[1];
     const segmentLength = Math.sqrt(dx * dx + dy * dy);
-    const angle = Math.atan2(dy, dx);
     
-    segments.push({
-      p0, p1, length: segmentLength, angle
-    });
+    // Skip zero-length segments to prevent angle corruption
+    if (segmentLength < 0.001) continue;
+    
+    const angleSeg = Math.atan2(dy, dx);
+    segments.push({ p0, p1, length: segmentLength, angle: angleSeg });
   }
   
   // Sample points along each segment
   for (const segment of segments) {
-    // Number of points to sample depends on segment length
     const numSamplePoints = Math.max(2, Math.ceil(segment.length / 5)); // 1 point every 5 pixels
     
     for (let i = 0; i < numSamplePoints; i++) {
@@ -258,17 +414,21 @@ function calculatePathPoints(element) {
 }
 
 // Function to distribute text along any path
-function distributeTextAlongPath(text, pathPoints, pathID, objectIDs, offset = 0, isLeftToRight) {
+function distributeTextAlongPath(text, pathPoints, pathID, objectIDs, offset = 0, isLeftToRight, isClosed = false, isReversed = false, isInside = false, isBottomEdge = false) {
   if (pathPoints.length === 0) return;
 
-  const {baseline} = ExcalidrawLib.getFontMetrics(ea.style.fontFamily, ea.style.fontSize);
-
   const originalText = text;
-  if(!isLeftToRight) {
+  
+  // Determine if we need to draw the characters backwards based on path direction and reversal setting
+  let shouldReverseString = !isLeftToRight;
+  if (isReversed) {
+    shouldReverseString = !shouldReverseString;
+  }
+
+  if (shouldReverseString) {
     text = text.split('').reverse().join('');
   }
 
-  // Calculate path length
   let pathLength = 0;
   let pathSegments = [];
   let accumulatedLength = 0;
@@ -278,9 +438,11 @@ function distributeTextAlongPath(text, pathPoints, pathID, objectIDs, offset = 0
     const [x2, y2] = [pathPoints[i][0], pathPoints[i][1]];
     const segLength = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     
+    if (segLength < 0.001) continue;
+
     pathSegments.push({
-      startPoint: pathPoints[i-1],
-      endPoint: pathPoints[i],
+      startPoint: [x1, y1], // Create new arrays to safely mutate them later
+      endPoint: [x2, y2],
       length: segLength,
       startDist: accumulatedLength,
       endDist: accumulatedLength + segLength
@@ -289,103 +451,212 @@ function distributeTextAlongPath(text, pathPoints, pathID, objectIDs, offset = 0
     accumulatedLength += segLength;
     pathLength += segLength;
   }
-
-  // Precompute substring widths for kerning-accurate placement
-  const substrWidths = [];
-  for (let i = 0; i <= text.length; i++) {
-    substrWidths.push(ea.measureText(text.substring(0, i)).width);
-  }
-
-  // The actual distance along the path for a character's center is `offset + charCenter`.
-  for (let i = 0; i < text.length; i++) {
-    const character = text.substring(i, i+1);
-    const charHeight = ea.measureText(character).height;
-
-    // Advance for this character (kerning-aware)
-    const prevWidth = substrWidths[i];
-    const nextWidth = substrWidths[i+1];
-    const charAdvance = nextWidth - prevWidth;
-
-    // Center of this character in the full text
-    const charCenter = isLeftToRight
-      ? (i === 0 ? charAdvance / 2 : prevWidth + charAdvance / 2)
-      : prevWidth + charAdvance / 2; // For RTL, text is reversed, so this logic still holds for the reversed string
-
-    // Target distance along the path for the character's center
-    const targetDistOnPath = offset + charCenter;
-
-    // Find point on path for the BASELINE at the center of this character
-    let pointInfo = getPointAtDistance(targetDistOnPath, pathSegments, pathLength);
-    let x, y, angle;
-    if (pointInfo) {
-      x = pointInfo.x;
-      y = pointInfo.y;
-      angle = pointInfo.angle;
-    } else {
-      // We're beyond the path, continue in the direction of the last segment
-      const lastSegment = pathSegments[pathSegments.length - 1];
-      if (!lastSegment) { // Should not happen if pathPoints.length > 0
-        // Fallback if somehow pathSegments is empty but pathPoints was not
-        x = pathPoints[0]?.[0] ?? 0;
-        y = pathPoints[0]?.[1] ?? 0;
-        angle = pathPoints[0]?.[2] ?? 0;
+  
+  // --- Trimming logic to remove freedraw terminal hooks ---
+  if (originalPathType === "freedraw" && !isClosed && pathSegments.length > 0) {
+    let trimDist = 15;
+    while (pathSegments.length > 0 && trimDist > 0) {
+      const lastSeg = pathSegments[pathSegments.length - 1];
+      if (lastSeg.length <= trimDist) {
+        trimDist -= lastSeg.length;
+        pathSegments.pop();
       } else {
-        const lastPoint = lastSegment.endPoint;
-        const secondLastPoint = lastSegment.startPoint;
-        angle = Math.atan2(
-          lastPoint[1] - secondLastPoint[1], 
-          lastPoint[0] - secondLastPoint[0]
-        );
-      
-        // Calculate how far past the end of the path this character's center should be
-        const distanceFromEnd = targetDistOnPath - pathLength;
-      
-        // Position character extending beyond the path
-        x = lastPoint[0] + Math.cos(angle) * distanceFromEnd;
-        y = lastPoint[1] + Math.sin(angle) * distanceFromEnd;
+        const ratio = (lastSeg.length - trimDist) / lastSeg.length;
+        lastSeg.endPoint[0] = lastSeg.startPoint[0] + (lastSeg.endPoint[0] - lastSeg.startPoint[0]) * ratio;
+        lastSeg.endPoint[1] = lastSeg.startPoint[1] + (lastSeg.endPoint[1] - lastSeg.startPoint[1]) * ratio;
+        lastSeg.length -= trimDist;
+        lastSeg.endDist -= trimDist;
+        break;
       }
     }
+    pathLength = pathSegments.length > 0 ? pathSegments[pathSegments.length - 1].endDist : 0;
+  }
 
-    // Use baseline offset directly (already in px)
-    const baselineOffset = baseline;
+  if (pathSegments.length === 0) return;
 
-    // Place the character so its baseline is on the path and horizontally centered
-    const drawX = x - charAdvance / 2;
-    const drawY = y - baselineOffset/2;
+  // Pre-calculate contextual widths to preserve natural kerning
+  const substrWidths = [];
+  const spaceWidth = ea.measureText(" ").width;
+  for (let i = 0; i <= text.length; i++) {
+    const sub = text.substring(0, i);
+    substrWidths.push(ea.measureText(sub + " ").width - spaceWidth);
+  }
 
-    ea.style.angle = angle + (isLeftToRight ? 0 : Math.PI);
+  // Calculate the exact target distance (center-to-center) on a straight line
+  const centers = [];
+  for (let i = 0; i < text.length; i++) {
+    centers.push((substrWidths[i] + substrWidths[i+1]) / 2);
+  }
+
+  // Helper to get the exact projected coordinate on the offset path
+  function getProjectedPoint(s, dy) {
+    let actualDist = s;
+    if (isClosed && pathLength > 0) {
+      actualDist = ((s % pathLength) + pathLength) % pathLength;
+    }
+    
+    let pointInfo = getPointAtDistance(actualDist, pathSegments, pathLength);
+    if (!pointInfo) return null;
+    
+    const rotAngle = pointInfo.angle + (isLeftToRight ? 0 : Math.PI);
+    const rotatedDx = -dy * Math.sin(rotAngle);
+    const rotatedDy = dy * Math.cos(rotAngle);
+    
+    return {
+      x: pointInfo.x - rotatedDx,
+      y: pointInfo.y - rotatedDy,
+      angle: rotAngle
+    };
+  }
+
+  let currentS = offset;
+  let lastPlacedPoint = null;
+  
+  for (let i = 0; i < text.length; i++) {
+    const character = text.substring(i, i+1);
+    const charMetrics = ea.measureText(character);
+    const charPixelWidth = charMetrics.width;
+    const charPixelHeight = charMetrics.height;
+
+    // Determine the vertical shift required to place the text
+    let dy = 0;
+    if (["line", "arrow", "freedraw"].includes(originalPathType)) {
+      // For open lines, shift UP so the text sits on top of the line
+      const margin = ea.style.fontSize * 0.2;
+      dy = (charPixelHeight / 2) + margin;
+      
+      // Apply custom distance offset (mapped to percentage of fontSize)
+      dy += (currentDistanceOffset / 100) * ea.style.fontSize;
+      
+      // If we are using the bottom edge, its normal vectors actually point UP into the stroke.
+      // So we must invert dy to push the text DOWN away from the stroke edge.
+      // if (isBottomEdge) dy = -dy;
+      
+      if (isInside) dy = -dy; 
+    } else {
+      // For shapes, the path was already expanded outwards by fontHeight/2 earlier in the script.
+      // Therefore, the base path is exactly where the text centers should be.
+      dy = 0;
+      
+      // Apply custom distance offset (mapped to percentage of fontSize)
+      dy += (currentDistanceOffset / 100) * ea.style.fontSize;
+      
+      if (isInside) dy = -dy - fontHeight; 
+    }
+
+    // Target spatial distance from the previous character center
+    let targetDist = i === 0 ? centers[0] : centers[i] - centers[i-1];
+    
+    // Apply custom letter spacing (scale mapped to percentage of font size)
+    if (i > 0) {
+      targetDist += (currentLetterSpacing / 100) * ea.style.fontSize;
+      if (targetDist < 1) targetDist = 1; // Prevent backward steps or collapsed kerning
+    }
+
+    if (i === 0) {
+      // Find the starting reference point at 'offset'
+      lastPlacedPoint = getProjectedPoint(offset, dy);
+    }
+
+    let safety = 0;
+    let currPt = getProjectedPoint(currentS, dy);
+    let dist = (currPt && lastPlacedPoint) ? Math.hypot(currPt.x - lastPlacedPoint.x, currPt.y - lastPlacedPoint.y) : 0;
+    
+    // Ray-marching: Step forward along the base path until the 2D Euclidean distance 
+    // between the character centers exactly matches the natural kerning distance.
+    while (dist < targetDist && safety < 10000) {
+      currentS += 0.5; // High-precision half-pixel steps
+      currPt = getProjectedPoint(currentS, dy);
+      if (currPt && lastPlacedPoint) {
+        dist = Math.hypot(currPt.x - lastPlacedPoint.x, currPt.y - lastPlacedPoint.y);
+      }
+      safety++;
+    }
+    
+    lastPlacedPoint = currPt;
+    if (!currPt) continue;
+
+    // Center the visual bounding box on that exact structural center
+    const drawX = currPt.x - charPixelWidth / 2;
+    const drawY = currPt.y - charPixelHeight / 2;
+
+    // If reversing the text, rotate the characters 180 degrees to keep them upright 
+    ea.style.angle = currPt.angle + (isReversed ? Math.PI : 0);
+    ea.style.textAlign = "left";
+    ea.style.verticalAlign = "top";
+    
     const charID = ea.addText(drawX, drawY, character);
+    
+    // Pass custom properties back into the customData to be persisted
     ea.addAppendUpdateCustomData(charID, {
-      text2Path: {pathID, text: originalText, pathElID, offset}
+      text2Path: {
+        pathID, 
+        text: originalText, 
+        pathElID, 
+        isReversed, 
+        offsetPct: currentOffsetPct, 
+        distanceOffset: currentDistanceOffset,
+        letterSpacing: currentLetterSpacing,
+        placeInside: isInside
+      }
     });
     objectIDs.push(charID);
   }
-
-  transposeElements(new Set(objectIDs));
 }
 
 // Helper function to find a point at a specific distance along the path
+// Enhanced to include extrapolation with a stabilizing window to prevent terminal jitters
 function getPointAtDistance(distance, segments, totalLength) {
-  if (distance > totalLength) return null;
+  if (!segments || segments.length === 0) return null;
   
-  // Find the segment where this distance falls
-  const segment = segments.find(seg => 
-    distance >= seg.startDist && distance <= seg.endDist
-  );
+  // Extrapolate backwards if distance is negative
+  if (distance <= 0) {
+    let refSegIdx = 0;
+    let accumLen = 0;
+    // Look ahead at least 5 pixels to get a stable starting angle, bypassing pen-down hooks
+    while(refSegIdx < segments.length - 1 && accumLen < 5) {
+        accumLen += segments[refSegIdx].length;
+        refSegIdx++;
+    }
+    const refSeg = segments[refSegIdx];
+    const firstSeg = segments[0];
+    const angle = Math.atan2(refSeg.endPoint[1] - firstSeg.startPoint[1], refSeg.endPoint[0] - firstSeg.startPoint[0]);
+    
+    return {
+      x: firstSeg.startPoint[0] + Math.cos(angle) * distance,
+      y: firstSeg.startPoint[1] + Math.sin(angle) * distance,
+      angle: angle
+    };
+  }
   
-  if (!segment) return null;
+  // Extrapolate forwards if distance exceeds path length
+  if (distance >= totalLength) {
+    let refSegIdx = segments.length - 1;
+    let accumLen = 0;
+    // Look behind at least 5 pixels to get a stable ending angle, bypassing pen-lift hooks
+    while(refSegIdx > 0 && accumLen < 5) {
+        accumLen += segments[refSegIdx].length;
+        refSegIdx--;
+    }
+    const refSeg = segments[refSegIdx];
+    const lastSeg = segments[segments.length - 1];
+    const angle = Math.atan2(lastSeg.endPoint[1] - refSeg.startPoint[1], lastSeg.endPoint[0] - refSeg.startPoint[0]);
+    const over = distance - totalLength;
+    
+    return {
+      x: lastSeg.endPoint[0] + Math.cos(angle) * over,
+      y: lastSeg.endPoint[1] + Math.sin(angle) * over,
+      angle: angle
+    };
+  }
   
-  // Calculate position within the segment
+  // Interpolate along the matching segment
+  const segment = segments.find(seg => distance >= seg.startDist && distance <= seg.endDist) || segments[segments.length - 1];
   const t = (distance - segment.startDist) / segment.length;
-  const [x1, y1, angle1] = segment.startPoint;
-  const [x2, y2, angle2] = segment.endPoint;
+  const x = segment.startPoint[0] + t * (segment.endPoint[0] - segment.startPoint[0]);
+  const y = segment.startPoint[1] + t * (segment.endPoint[1] - segment.startPoint[1]);
   
-  // Linear interpolation
-  const x = x1 + t * (x2 - x1);
-  const y = y1 + t * (y2 - y1);
-  
-  // Use the segment's angle
-  const angle = angle1;
+  const angle = Math.atan2(segment.endPoint[1] - segment.startPoint[1], segment.endPoint[0] - segment.startPoint[0]);
   
   return { x, y, angle };
 }
@@ -393,6 +664,7 @@ function getPointAtDistance(distance, segments, totalLength) {
 async function convertBezierToPoints() {
   const svgPadding = 100;
   let isLeftToRight = true;
+  
   async function getSVGForPath() {
     let el = ea.getElement(pathEl.id);
     if(!el) {
@@ -402,31 +674,34 @@ async function convertBezierToPoints() {
     el.roughness = 0;
     el.fillStyle = "solid";
     el.backgroundColor = "transparent";
-    const {topX, topY, width, height} = ea.getBoundingBox(ea.getElements());
-    const svgElement = await ea.createSVG(undefined,false,undefined,undefined,'light',svgPadding);
+    const svgElement = await ea.createSVG(undefined, false, undefined, undefined, 'light', svgPadding);
     ea.clear();
-    return {
-      svgElement,
-      boundingBox: {topX, topY, width, height}
-    };
+    return svgElement;
   }
   
-  const {svgElement, boundingBox} = await getSVGForPath();
+  const svgElement = await getSVGForPath();
 
   if (svgElement) {
-    // Find the <path> element in the SVG
     const pathElSVG = svgElement.querySelector('path');
     if (pathElSVG) {
-      // Use SVGPathElement's getPointAtLength to sample points along the path
-      function samplePathPoints(pathElSVG, step = 15) {
+      // Extract only the first continuous subpath to avoid disconnected jumps
+      const d = pathElSVG.getAttribute('d');
+      const subpaths = d.match(/[Mm][^Mm]*/g);
+      
+      let workingPath = pathElSVG;
+      if (subpaths && subpaths.length > 1) {
+        workingPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        workingPath.setAttribute('d', subpaths[0]);
+      }
+
+      function samplePathPoints(pathNode, step = 5) {
         const points = [];
-        const totalLength = pathElSVG.getTotalLength();
+        const totalLength = pathNode.getTotalLength();
         for (let len = 0; len <= totalLength; len += step) {
-          const pt = pathElSVG.getPointAtLength(len);
+          const pt = pathNode.getPointAtLength(len);
           points.push([pt.x, pt.y]);
         }
-        // Ensure last point is included
-        const lastPt = pathElSVG.getPointAtLength(totalLength);
+        const lastPt = pathNode.getPointAtLength(totalLength);
         if (
           points.length === 0 ||
           points[points.length - 1][0] !== lastPt.x ||
@@ -437,57 +712,106 @@ async function convertBezierToPoints() {
         return points;
       }
       
-      let points = samplePathPoints(pathElSVG, 15); // 15 px step, adjust for smoothness
+      let points = samplePathPoints(workingPath, 5);
 
-      // --- Map SVG coordinates back to Excalidraw coordinate system ---
-      // Get the <g> transform
-      const g = pathElSVG.closest('g');
-      let dx = 0, dy = 0;
-      if (g) {
-        const m = g.getAttribute('transform');
-        // Parse translate(x y) from transform
-        const match = m && m.match(/translate\(([-\d.]+)[ ,]([-\d.]+)/);
-        if (match) {
-          dx = parseFloat(match[1]);
-          dy = parseFloat(match[2]);
+      const cx = pathEl.x + pathEl.width / 2;
+      const cy = pathEl.y + pathEl.height / 2;
+      const angle = pathEl.angle || 0;
+
+      points = points.map(([x, y]) => {
+        let sx = pathEl.x + x;
+        let sy = pathEl.y + y;
+        
+        if (angle !== 0) {
+          const cos = Math.cos(angle);
+          const sin = Math.sin(angle);
+          const rx = cos * (sx - cx) - sin * (sy - cy) + cx;
+          const ry = sin * (sx - cx) + cos * (sy - cy) + cy;
+          return [rx, ry];
+        }
+        return [sx, sy];
+      });
+      
+      isLeftToRight = pathEl.points[pathEl.points.length-1][0] >= 0;
+
+      let pointsTop = points;
+      let pointsBottom = null;
+
+      // Handle Freedraw Trimming and Bottom Edge Extraction
+      if (pathEl.type === "freedraw" && points.length > 10) {
+        // Perfect Freehand creates a looped polygon. 
+        // The first half traces one edge, the second half traces the return edge.
+        const half = Math.floor(points.length / 2);
+        
+        let topEdge = points.slice(0, half);
+        // Reverse the bottom edge so it flows Start->End, matching the top edge
+        let bottomEdge = points.slice(half).reverse();
+        
+        // Trim the rounded end-caps (usually ~6 points at both ends)
+        const TRIM = 6;
+        if (topEdge.length > TRIM * 2) topEdge = topEdge.slice(TRIM, topEdge.length - TRIM);
+        if (bottomEdge.length > TRIM * 2) bottomEdge = bottomEdge.slice(TRIM, bottomEdge.length - TRIM);
+
+        // Ensure topEdge is actually the visual Top
+        // If drawn Right-to-Left, the SVG winding order might map the first half to the bottom
+        if (!isLeftToRight) {
+           const temp = topEdge;
+           topEdge = bottomEdge;
+           bottomEdge = temp;
+        }
+
+        pointsTop = topEdge;
+        pointsBottom = bottomEdge;
+      } 
+      // FIX: robustly handle simulated A->B->A strokes on lines and Double-Rounds on polygons
+      else if (points.length > 10) {
+        const firstPt = points[0];
+        const lastPt = points[points.length - 1];
+        const isLoop = Math.hypot(firstPt[0] - lastPt[0], firstPt[1] - lastPt[1]) < 3;
+
+        if (pathEl.polygon) {
+          // Polygons: find the FIRST time the path returns to the start to get exactly one round
+          let loopEndIdx = -1;
+          for (let i = 10; i < points.length; i++) {
+            if (Math.hypot(points[i][0] - firstPt[0], points[i][1] - firstPt[1]) < 5) {
+              loopEndIdx = i;
+              break;
+            }
+          }
+          if (loopEndIdx !== -1 && loopEndIdx < points.length * 0.9) {
+            pointsTop = points.slice(0, loopEndIdx + 1);
+          }
+        } else if (isLoop) {
+          // Open Lines: If it loops back, Excalidraw drew A->B->A. Slice in half to keep A->B.
+          if (!isLeftToRight) points = points.reverse();
+          pointsTop = points.slice(0, Math.ceil(points.length / 2));
         }
       }
-      
-      // Calculate the scale factor from SVG space to actual element space
-      const svgContentWidth = boundingBox.width;
-      const svgContentHeight = boundingBox.height;
-           
-      // The transform dy includes both padding and element positioning within SVG
-      // We need to subtract the padding from the transform to get the actual element offset
-      const elementOffsetY = dy - svgPadding;
-      
-      isLeftToRight = pathEl.points[pathEl.points.length-1][0] >=0;
 
-      points = points.map(([x, y]) => [
-        boundingBox.topX + (x - dx) + svgPadding + (isLeftToRight ? 0 : boundingBox.width*2),
-        pathEl.y + y
-      ]);
-      
-      // For freedraw paths, we typically want only the top half of the outline
-      // The SVG path traces the entire perimeter, but we want just the top edge
-      // Trim to get approximately the first half of the path points
-      if (points.length > 3) {
-        if(!isLeftToRight && pathEl.type === "freedraw") {
-          points = points.reverse();
-        }
-        points = points.slice(0, Math.ceil(points.length / 2)-2); //DO NOT REMOVE THE -2 !!!!!
-      }
-
-      if (points.length > 1) {
+      if (pointsTop.length > 1) {
         ea.clear();
         ea.style.backgroundColor="transparent";
         ea.style.roughness = 0;
         ea.style.strokeWidth = 1;
         ea.style.roundness = null;
-        const lineId = ea.addLine(points);
+        
+        // We create line elements for BOTH the top and bottom edges in the EA workbench 
+        // so we can dynamically swap them inside fitTextToShape when the user toggles settings.
+        const lineId = ea.addLine(pointsTop);
         const line = ea.getElement(lineId);
+        line.polygon = pathEl.polygon; 
+        
         tempElementIDs.push(lineId);
-        return [line, isLeftToRight];
+        
+        let lineBottom = null;
+        if (pointsBottom && pointsBottom.length > 1) {
+          const lineBottomId = ea.addLine(pointsBottom);
+          lineBottom = ea.getElement(lineBottomId);
+          lineBottom.polygon = pathEl.polygon;
+          tempElementIDs.push(lineBottomId);
+        }
+
+        return [line, isLeftToRight, lineBottom];
       } else {
         new Notice("Could not extract enough points from SVG path.");
       }
@@ -495,7 +819,7 @@ async function convertBezierToPoints() {
       new Notice("No path element found in SVG.");
     }
   }
-  return [pathEl, isLeftToRight];
+  return [pathEl, isLeftToRight, null];
 }
 
 /**
@@ -971,108 +1295,72 @@ async function addToView() {
   await ea.addElementsToView(false, false, true);
 }
 
-async function fitTextToCircle() {
-  const r = (pathEl.width+pathEl.height)/4 + fontHeight/2;
-  const archAbove = win.ArchPosition ?? initialArchAbove;
-
-  if (textEl?.customData?.text2Path) {
-    const pathID = textEl.customData.text2Path.pathID;
-    const elements = ea.getViewElements().filter(el=>el.customData?.text2Path && el.customData.text2Path.pathID === pathID);
-    ea.copyViewElementsToEAforEditing(elements);
-  } else {
-    if(textEl) ea.copyViewElementsToEAforEditing([textEl]);
-  }
-  ea.getElements().forEach(el=>{el.isDeleted = true;});
-
-  // Define center point of the ellipse
-  const centerX = pathEl.x + r - fontHeight/2;
-  const centerY = pathEl.y + r - fontHeight/2;
-
-  function circlePoint(angle) {
-    // Calculate point exactly on the ellipse's circumference
-    return [
-      centerX + r * Math.sin(angle),
-      centerY - r * Math.cos(angle)
-    ];
-  }
-
-  // Calculate the text width to center it properly
-  const textWidth = ea.measureText(text).width;
-
-  // Calculate starting angle based on arch position
-  // For "Arch above", start at top (0 radians)
-  // For "Arch below", start at bottom (π radians)
-  const startAngle = archAbove ? 0 : Math.PI;
-
-  // Calculate how much of the circle arc the text will occupy
-  const arcLength = textWidth / r;
-
-  // Set the starting rotation to center the text at the top/bottom point
-  let rot = startAngle - arcLength / 2;
-
-  const pathID = ea.generateElementId();
-
-  let objectIDs = [];
-
-  for(
-    archAbove ? i=0 : i=text.length-1;
-    archAbove ? i<text.length : i>=0;
-    archAbove ? i++ : i--
-  ) {
-    const character = text.substring(i,i+1);
-    const charMetrics = ea.measureText(character);
-    const charWidth = charMetrics.width / r;
-    // Adjust rotation to position the current character
-    const charAngle = rot + charWidth / 2;
-    // Calculate point on the circle's edge
-    const [baseX, baseY] = circlePoint(charAngle);
-
-    // Center each character horizontally and vertically
-    // Use the actual character width and height for precise placement
-    const charPixelWidth = charMetrics.width;
-    const charPixelHeight = charMetrics.height;
-    // Place the character so its center is on the circle
-    const x = baseX - charPixelWidth / 2;
-    const y = baseY - charPixelHeight / 2;
-
-    // Set rotation for the character to align with the tangent of the circle
-    // No additional 90 degree rotation needed
-    ea.style.angle = charAngle + (archAbove ? 0 : Math.PI);
-
-    const charID = ea.addText(x, y, character);
-    ea.addAppendUpdateCustomData(charID, {
-      text2Path: {pathID, text, pathElID, archAbove, offset: 0}
-    });
-    objectIDs.push(charID);
-
-    rot += charWidth;
-  }
-
-  const groupID = ea.addToGroup(objectIDs);
-  const letterSet = new Set(objectIDs);
-  await addToView();
-  ea.selectElementsInView(ea.getViewElements().filter(el=>letterSet.has(el.id) && !el.isDeleted));
-}
-
 // ------------------------------------------------------------
 // Convert any shape type to a series of points along a path
-// In practice this only applies to ellipses and streight lines
+// In practice this only applies to ellipses and straight lines
 // ------------------------------------------------------------
 async function fitTextToShape() {
-  const pathPoints = calculatePathPoints(pathEl);
+  // Swap to the bottom path if it's a freedraw and the user reversed the text or placed it inside
+  let activePathEl = pathEl;
+  if (originalPathType === "freedraw" && pathElBottom) {
+     if (currentPlaceInside) {
+        activePathEl = pathElBottom;
+     }
+  }
+  
+  const pathPoints = calculatePathPoints(activePathEl);
 
-  // Generate a unique ID for this text arch
+  let pathLength = 0;
+  for (let i = 1; i < pathPoints.length; i++) {
+    const dx = pathPoints[i][0] - pathPoints[i-1][0];
+    const dy = pathPoints[i][1] - pathPoints[i-1][1];
+    pathLength += Math.sqrt(dx*dx + dy*dy);
+  }
+  
+  const textWidth = ea.measureText(currentText).width;
+  let offsetValue = 0;
+  
+  const effectiveCurrentOffsetPct = originalPathDirectionLR ? -currentOffsetPct : currentOffsetPct;
+  if (pathEl.polygon) {
+    // With double-loops removed from the path array, pathLength is now 1 round.
+    // 100 divisor maps +/- 50% slider range exactly to 1 full loop length.
+    offsetValue = (effectiveCurrentOffsetPct / 100) * pathLength; 
+  } else {
+    // Open path calibration
+    if (effectiveCurrentOffsetPct < 0) {
+      offsetValue = (Math.abs(effectiveCurrentOffsetPct) / 50) * -textWidth;
+    } else {
+      offsetValue = (effectiveCurrentOffsetPct / 50) * pathLength;
+    }
+  }
+
   const pathID = ea.generateElementId();
   let objectIDs = [];
 
-  // Place text along the path with natural spacing
-  const offsetValue = (parseInt(win.TextArchOffset ?? initialOffset) || 0);
+  distributeTextAlongPath(
+    currentText,
+    pathPoints,
+    pathID,
+    objectIDs,
+    offsetValue,
+    isLeftToRight,
+    pathEl.polygon,
+    currentIsReversed,
+    currentPlaceInside,
+    activePathEl === pathElBottom // Pass a flag to invert dy if using the bottom edge
+  );
 
-  distributeTextAlongPath(text, pathPoints, pathID, objectIDs, offsetValue, isLeftToRight);
-
-  // Add all text characters to a group
   const groupID = ea.addToGroup(objectIDs);
-  const letterSet = new Set(objectIDs);
+  generatedIDs.push(...objectIDs);
+
   await addToView();
-  ea.selectElementsInView(ea.getViewElements().filter(el=>letterSet.has(el.id) && !el.isDeleted));
+  const selectedElementIds = Object.fromEntries(
+    objectIDs.map(id => [id, true])
+  );
+  ea.viewUpdateScene({
+    appState: {
+      selectedElementIds,
+      selectedGroupIds: { [groupID]: true }
+    }
+  });
 }

@@ -30,8 +30,45 @@
               "icon": "lucide-file",
               "title": "Native Minimal Kernel for OP Rv2"
             }
+          },
+          {
+            "id": "67ef9fd9d55292ac",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "EFFORTS/Native Minimal Kernel RV2.excalidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Native Minimal Kernel RV2.excalidraw"
+            }
+          },
+          {
+            "id": "90ce8e49d8de2658",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Homepage.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Homepage"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -103,7 +140,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 251.32353591918945
+    "width": 251.32353591918945,
+    "collapsed": true
   },
   "right": {
     "id": "43fc27400badb105",
@@ -247,13 +285,29 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "217c4243a02bbaed",
+  "active": "67ef9fd9d55292ac",
   "lastOpenFiles": [
-    "EFFORTS/Efforts.md",
+    "Excalidraw/Scripts/Downloaded/Comicbook Callout Editor.svg",
+    "Excalidraw/Scripts/Downloaded/Comicbook Callout Editor.md",
+    "Excalidraw/Scripts/Downloaded/Comic Strip Director.svg",
+    "Excalidraw/Scripts/Downloaded/Comic Strip Director.md",
+    "Excalidraw/Scripts/Downloaded/Capture Note.svg",
+    "Excalidraw/Scripts/Downloaded/Capture Note.md",
+    "Excalidraw/Scripts/Downloaded/Boolean Operations.svg",
+    "Excalidraw/Scripts/Downloaded/Boolean Operations.md",
+    "Excalidraw/Scripts/Downloaded/Full-Year Calendar Generator.svg",
+    "Excalidraw/Scripts/Downloaded/Uniform size.svg",
+    "Excalidraw/Scripts/Downloaded/Set Grid.svg",
+    "Excalidraw/Scripts/Downloaded/Text to Sticky Notes.svg",
+    "Excalidraw/Scripts/Downloaded/Normalize Selected Arrows.svg",
+    "Excalidraw/Scripts/Downloaded/Elbow connectors.svg",
+    "Excalidraw/Scripts/Downloaded/Connect elements.svg",
     "EFFORTS/Native Minimal Kernel for OP Rv2.md",
+    "EFFORTS/Native Minimal Kernel RV2.excalidraw.md",
+    "Homepage.md",
+    "EFFORTS/Efforts.md",
     "EFFORTS/The Problem Statement and metrics to check.md",
     "EFFORTS/RISC-V.md",
-    "Homepage.md",
     "EFFORTS/Address Translation in Systems.md",
     "EFFORTS/Project Setups.md",
     "Prabin's KB ~/Home.md",
@@ -267,23 +321,10 @@
     "EFFORTS/Setting up QEMU for OrangePi Kernel Development.md",
     "TO-DO List.md",
     "Untitled.base",
-    "Extras/ATTACHMENTS/DGLogoS.svg",
-    "Extras/ATTACHMENTS/digital-garden-favicon-square.svg",
-    "Extras/ATTACHMENTS/DGLogoP.png",
-    "Extras/ATTACHMENTS/DGlogoS.svg",
-    "Extras/ATTACHMENTS/DGLogo.png",
-    "Extras/ATTACHMENTS/ChatGPT Image Sep 7, 2026, 02_42_10 PM.png",
-    "Extras/ATTACHMENTS/digital-garden-logo.svg",
     "Excalidraw/Untitled.base",
     "Excalidraw/Drawing 2026-09-07 10.28.59.excalidraw.md",
     "Excalidraw/Drawing 2025-12-26 20.15.13.excalidraw.md",
     "Excalidraw/User-Level OS Implementation - Idea Board.md",
-    "Excalidraw/address_translation.excalidraw.md",
-    "Excalidraw/Accel-sim Walk Around.excalidraw.md",
-    "Excalidraw/Drawing 2026-03-06 14.26.25.excalidraw.md",
-    "Excalidraw/Drawing 2026-01-04 12.07.10.excalidraw.md",
-    "Excalidraw/Drawing 2025-12-26 20.01.48.excalidraw.md",
-    "Excalidraw/Questions on TPU.excalidraw.md",
     "Extras/Guide Books AI/101",
     "Extras/Guide Books AI/Minimal Kernel",
     "Extras/Guide Books AI/AI Suggest Skill Mastering Courses",
@@ -292,9 +333,6 @@
     "Extras/Guide Books AI/Question banks",
     "Extras/Guide Books AI/QEMU",
     "Extras/Guide Books AI",
-    "Extras/ATTACHMENTS/image-97.png",
-    "Extras/ATTACHMENTS/image-95.png",
-    "Extras/ATTACHMENTS/9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f-2.png",
     "EFFORTS/Untitled.canvas",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "EFFORTS/Binary Search.canvas",
