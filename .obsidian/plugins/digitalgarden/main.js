@@ -10425,17 +10425,17 @@ var generateGardenSnapshot_exports = {};
 __export(generateGardenSnapshot_exports, {
   generateGardenSnapshot: () => generateGardenSnapshot
 });
-var import_obsidian28, import_promises2, SNAPSHOT_PATH, generateGardenSnapshot;
+var import_obsidian30, import_promises2, SNAPSHOT_PATH, generateGardenSnapshot;
 var init_generateGardenSnapshot = __esm({
   "src/test/snapshot/generateGardenSnapshot.ts"() {
     "use strict";
-    import_obsidian28 = require("obsidian");
+    import_obsidian30 = require("obsidian");
     import_promises2 = __toESM(require("fs/promises"));
     SNAPSHOT_PATH = "src/test/snapshot/snapshot.md";
     generateGardenSnapshot = (settings, publisher) => __async(null, null, function* () {
       const devPluginPath = settings.devPluginPath;
       if (!devPluginPath) {
-        new import_obsidian28.Notice("devPluginPath missing, run generateGardenSettings.mjs");
+        new import_obsidian30.Notice("devPluginPath missing, run generateGardenSettings.mjs");
         return;
       }
       const marked = yield publisher.getFilesMarkedForPublishing();
@@ -10457,11 +10457,11 @@ var init_generateGardenSnapshot = __esm({
       }
       fileString += "==========\n";
       const fullSnapshotPath = `${devPluginPath}/${SNAPSHOT_PATH}`;
-      if (import_obsidian28.Platform.isDesktop) {
+      if (import_obsidian30.Platform.isDesktop) {
         yield import_promises2.default.writeFile(fullSnapshotPath, fileString);
       }
-      new import_obsidian28.Notice(`Snapshot written to ${fullSnapshotPath}`);
-      new import_obsidian28.Notice(`Check snapshot to make sure nothing has accidentally changed`);
+      new import_obsidian30.Notice(`Snapshot written to ${fullSnapshotPath}`);
+      new import_obsidian30.Notice(`Check snapshot to make sure nothing has accidentally changed`);
     });
   }
 });
@@ -10472,7 +10472,7 @@ __export(main_exports, {
   default: () => DigitalGarden
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian29 = require("obsidian");
+var import_obsidian31 = require("obsidian");
 
 // src/publisher/Publisher.ts
 var import_obsidian7 = require("obsidian");
@@ -10831,6 +10831,15 @@ function gardenPluginsRegistryPath(settings) {
 var logger = import_js_logger.default.get("repository-connection");
 var IMAGE_PATH_BASE2 = "src/site/";
 var NOTE_PATH_BASE2 = "src/site/notes/";
+var MAX_TREE_ENTRIES_PER_COMMIT = 100;
+var chunkLabel = (index3, count) => count > 1 ? ` (${index3 + 1}/${count})` : "";
+var chunk = (items, size) => {
+  const result = [];
+  for (let i = 0; i < items.length; i += size) {
+    result.push(items.slice(i, i + size));
+  }
+  return result;
+};
 var RepositoryConnection = class {
   constructor({
     octoKit,
@@ -11011,71 +11020,93 @@ var RepositoryConnection = class {
       }
     });
   }
-  // NB: Do not use this, it does not work for some reason.
-  //TODO: Fix this. For now use deleteNote and deleteImage instead
-  deleteFiles(filePaths) {
+  /**
+   * Delete the given full repo paths from the default branch. Like
+   * {@link updateFiles}, large deletions are split into consecutive commits
+   * of at most {@link MAX_TREE_ENTRIES_PER_COMMIT} entries so GitHub's
+   * create-tree endpoint does not time out, and the branch is advanced after
+   * every commit so partial progress is kept. Throws on failure.
+   */
+  deleteFiles(repoPaths, onProgress) {
     return __async(this, null, function* () {
-      const latestCommit = yield this.getLatestCommit();
-      if (!latestCommit) {
-        logger.error("Could not get latest commit");
+      if (repoPaths.length === 0) {
         return;
       }
-      const normalizePath = (path2) => path2.startsWith("/") ? path2.slice(1) : path2;
-      const filesToDelete = filePaths.map((path2) => {
-        if (path2.endsWith(".md")) {
-          return `${this.contentBase}${NOTE_PATH_BASE2}${normalizePath(
-            path2
-          )}`;
-        }
-        return `${this.contentBase}${IMAGE_PATH_BASE2}${normalizePath(
-          path2
-        )}`;
-      });
-      const repoDataPromise = this.octokit.request(
+      const latestCommit = yield this.getLatestCommit();
+      if (!latestCommit) {
+        throw new Error("Could not get latest commit");
+      }
+      const repoData = yield this.octokit.request(
         "GET /repos/{owner}/{repo}",
         __spreadValues({}, this.getBasePayload())
       );
-      const latestCommitSha = latestCommit.sha;
-      const baseTreeSha = latestCommit.commit.tree.sha;
-      const baseTree = yield this.octokit.request(
-        "GET /repos/{owner}/{repo}/git/trees/{tree_sha}?recursive=1",
-        __spreadProps(__spreadValues({}, this.getBasePayload()), {
-          tree_sha: baseTreeSha
-        })
-      );
-      const newTreeEntries = baseTree.data.tree.filter(
-        (item) => !filesToDelete.includes(item.path)
-      ).map(
-        (item) => ({
-          path: item.path,
-          mode: item.mode,
-          type: item.type,
-          sha: item.sha
-        })
-      );
+      const state2 = {
+        parentCommitSha: latestCommit.sha,
+        baseTreeSha: latestCommit.commit.tree.sha,
+        defaultBranch: repoData.data.default_branch
+      };
+      const chunks = chunk(repoPaths, MAX_TREE_ENTRIES_PER_COMMIT);
+      const totalSteps = repoPaths.length + chunks.length;
+      let stepsDone = 0;
+      onProgress == null ? void 0 : onProgress(0, totalSteps, "Deleting files\u2026");
+      for (const [index3, pathChunk] of chunks.entries()) {
+        const commitLabel = chunkLabel(index3, chunks.length);
+        onProgress == null ? void 0 : onProgress(
+          stepsDone,
+          totalSteps,
+          `Deleting ${pathChunk.length} files${commitLabel}\u2026`
+        );
+        yield this.commitTreeEntries(
+          pathChunk.map((path2) => ({
+            path: path2,
+            mode: "100644",
+            type: "blob",
+            sha: null
+          })),
+          `Deleted multiple files${commitLabel}`,
+          state2
+        );
+        stepsDone += pathChunk.length + 1;
+        onProgress == null ? void 0 : onProgress(
+          stepsDone,
+          totalSteps,
+          `Deleted ${pathChunk.length} files`
+        );
+      }
+      onProgress == null ? void 0 : onProgress(totalSteps, totalSteps, "Deleted");
+    });
+  }
+  /**
+   * Create a tree on top of `state.baseTreeSha` with the given entries,
+   * commit it on top of `state.parentCommitSha`, advance the default branch
+   * to it, and update `state` so the next call chains onto this commit.
+   */
+  commitTreeEntries(tree, message, state2) {
+    return __async(this, null, function* () {
       const newTree = yield this.octokit.request(
         "POST /repos/{owner}/{repo}/git/trees",
         __spreadProps(__spreadValues({}, this.getBasePayload()), {
-          tree: newTreeEntries
+          base_tree: state2.baseTreeSha,
+          tree
         })
       );
-      const commitMessage = "Deleted multiple files";
       const newCommit = yield this.octokit.request(
         "POST /repos/{owner}/{repo}/git/commits",
         __spreadProps(__spreadValues({}, this.getBasePayload()), {
-          message: commitMessage,
+          message,
           tree: newTree.data.sha,
-          parents: [latestCommitSha]
+          parents: [state2.parentCommitSha]
         })
       );
-      const defaultBranch = (yield repoDataPromise).data.default_branch;
       yield this.octokit.request(
-        "PATCH /repos/{owner}/{repo}/git/refs/{ref}",
+        "PATCH /repos/{owner}/{repo}/git/refs/heads/{branch}",
         __spreadProps(__spreadValues({}, this.getBasePayload()), {
-          ref: `heads/${defaultBranch}`,
+          branch: state2.defaultBranch,
           sha: newCommit.data.sha
         })
       );
+      state2.parentCommitSha = newCommit.data.sha;
+      state2.baseTreeSha = newTree.data.sha;
     });
   }
   updateFiles(_0) {
@@ -11089,16 +11120,8 @@ var RepositoryConnection = class {
         "GET /repos/{owner}/{repo}",
         __spreadValues({}, this.getBasePayload())
       );
-      const latestCommitSha = latestCommit.sha;
-      const baseTreeSha = latestCommit.commit.tree.sha;
       const normalizePath = (path2) => path2.startsWith("/") ? path2.slice(1) : path2;
-      let totalSteps = 0;
-      let stepsDone = 0;
-      const reportUpload = (path2) => {
-        stepsDone += 1;
-        onProgress == null ? void 0 : onProgress(stepsDone, totalSteps, `Uploaded ${path2}`);
-      };
-      const treePromises = files.map((file) => __async(this, null, function* () {
+      const uploadNote = (file) => __async(this, null, function* () {
         const [text2, _] = file.compiledFile;
         try {
           const blob = yield this.octokit.request(
@@ -11108,7 +11131,6 @@ var RepositoryConnection = class {
               encoding: "utf-8"
             })
           );
-          reportUpload(file.getPath());
           return {
             path: `${this.contentBase}${NOTE_PATH_BASE2}${normalizePath(
               file.getPath()
@@ -11120,9 +11142,8 @@ var RepositoryConnection = class {
         } catch (error) {
           throwIfLimitError(error);
           logger.error(error);
-          reportUpload(file.getPath());
         }
-      }));
+      });
       const allImages = files.flatMap((x) => x.compiledFile[1].images);
       const imagesToUpload = allImages.filter((asset) => {
         const hashKey = asset.path.replace("/img/user/", "");
@@ -11133,7 +11154,7 @@ var RepositoryConnection = class {
         }
         return true;
       });
-      const treeAssetPromises = imagesToUpload.map((asset) => __async(this, null, function* () {
+      const uploadImage = (asset) => __async(this, null, function* () {
         try {
           const blob = yield this.octokit.request(
             "POST /repos/{owner}/{repo}/git/blobs",
@@ -11142,7 +11163,6 @@ var RepositoryConnection = class {
               encoding: "base64"
             })
           );
-          reportUpload(asset.path);
           return {
             path: `${this.contentBase}${IMAGE_PATH_BASE2}${normalizePath(
               asset.path
@@ -11154,39 +11174,54 @@ var RepositoryConnection = class {
         } catch (error) {
           throwIfLimitError(error);
           logger.error(error);
-          reportUpload(asset.path);
         }
-      }));
-      treePromises.push(...treeAssetPromises);
-      totalSteps = files.length + imagesToUpload.length + 1;
+      });
+      const jobs = [
+        ...files.map((file) => ({
+          path: file.getPath(),
+          run: () => uploadNote(file)
+        })),
+        ...imagesToUpload.map((asset) => ({
+          path: asset.path,
+          run: () => uploadImage(asset)
+        }))
+      ];
+      const chunks = chunk(jobs, MAX_TREE_ENTRIES_PER_COMMIT);
+      const totalSteps = jobs.length + chunks.length;
+      let stepsDone = 0;
       onProgress == null ? void 0 : onProgress(0, totalSteps, "Uploading files\u2026");
-      const treeList = yield Promise.all(treePromises);
-      onProgress == null ? void 0 : onProgress(totalSteps - 1, totalSteps, "Creating commit\u2026");
-      const tree = treeList.filter((x) => x !== void 0);
-      const newTree = yield this.octokit.request(
-        "POST /repos/{owner}/{repo}/git/trees",
-        __spreadProps(__spreadValues({}, this.getBasePayload()), {
-          base_tree: baseTreeSha,
-          tree
-        })
-      );
-      const commitMessage = "Published multiple files";
-      const newCommit = yield this.octokit.request(
-        "POST /repos/{owner}/{repo}/git/commits",
-        __spreadProps(__spreadValues({}, this.getBasePayload()), {
-          message: commitMessage,
-          tree: newTree.data.sha,
-          parents: [latestCommitSha]
-        })
-      );
-      const defaultBranch = (yield repoDataPromise).data.default_branch;
-      yield this.octokit.request(
-        "PATCH /repos/{owner}/{repo}/git/refs/heads/{branch}",
-        __spreadProps(__spreadValues({}, this.getBasePayload()), {
-          branch: defaultBranch,
-          sha: newCommit.data.sha
-        })
-      );
+      const state2 = {
+        parentCommitSha: latestCommit.sha,
+        baseTreeSha: latestCommit.commit.tree.sha,
+        defaultBranch: (yield repoDataPromise).data.default_branch
+      };
+      for (const [index3, jobChunk] of chunks.entries()) {
+        const treeList = yield Promise.all(
+          jobChunk.map((job) => __async(this, null, function* () {
+            const entry = yield job.run();
+            stepsDone += 1;
+            onProgress == null ? void 0 : onProgress(stepsDone, totalSteps, `Uploaded ${job.path}`);
+            return entry;
+          }))
+        );
+        const tree = treeList.filter(
+          (x) => x !== void 0
+        );
+        const commitLabel = chunkLabel(index3, chunks.length);
+        onProgress == null ? void 0 : onProgress(
+          stepsDone,
+          totalSteps,
+          `Creating commit${commitLabel}\u2026`
+        );
+        if (tree.length > 0) {
+          yield this.commitTreeEntries(
+            tree,
+            `Published multiple files${commitLabel}`,
+            state2
+          );
+        }
+        stepsDone += 1;
+      }
       onProgress == null ? void 0 : onProgress(totalSteps, totalSteps, "Published");
     });
   }
@@ -21377,22 +21412,35 @@ var Publisher = class {
       }
     });
   }
-  deleteBatch(filePaths) {
+  /**
+   * Delete notes (vault paths) and images (vault paths) in as few commits
+   * as GitHub allows. Returns `success: false` with a description on error;
+   * whatever was committed before the failure stays deleted.
+   */
+  deleteBatch(notePaths, imagePaths, onProgress) {
     return __async(this, null, function* () {
-      if (filePaths.length === 0) {
-        return true;
+      const repoPaths = [
+        ...notePaths.map((path2) => notePathBase(this.settings) + path2),
+        ...imagePaths.map((path2) => imagePathBase(this.settings) + path2)
+      ];
+      if (repoPaths.length === 0) {
+        return { success: true };
       }
       try {
+        this.validateSettings();
         const userGardenConnection = new RepositoryConnection(
           yield PublishPlatformConnectionFactory.createPublishPlatformConnection(
             this.settings
           )
         );
-        yield userGardenConnection.deleteFiles(filePaths);
-        return true;
+        yield userGardenConnection.deleteFiles(repoPaths, onProgress);
+        return { success: true };
       } catch (error) {
-        console.error(error);
-        return false;
+        if (error instanceof LimitReachedError) {
+          throw error;
+        }
+        import_js_logger8.default.error("Batch delete failed", error);
+        return { success: false, error: describeError(error) };
       }
     });
   }
@@ -23774,17 +23822,17 @@ var composeSignals = (signals, timeout) => {
 var composeSignals_default = composeSignals;
 
 // node_modules/axios/lib/helpers/trackStream.js
-var streamChunk = function* (chunk, chunkSize) {
-  let len = chunk.byteLength;
+var streamChunk = function* (chunk2, chunkSize) {
+  let len = chunk2.byteLength;
   if (!chunkSize || len < chunkSize) {
-    yield chunk;
+    yield chunk2;
     return;
   }
   let pos = 0;
   let end2;
   while (pos < len) {
     end2 = pos + chunkSize;
-    yield chunk.slice(pos, end2);
+    yield chunk2.slice(pos, end2);
     pos = end2;
   }
 };
@@ -23792,8 +23840,8 @@ var readBytes = function(iterable, chunkSize) {
   return __asyncGenerator(this, null, function* () {
     try {
       for (var iter = __forAwait(readStream(iterable)), more, temp, error; more = !(temp = yield new __await(iter.next())).done; more = false) {
-        const chunk = temp.value;
-        yield* __yieldStar(streamChunk(chunk, chunkSize));
+        const chunk2 = temp.value;
+        yield* __yieldStar(streamChunk(chunk2, chunkSize));
       }
     } catch (temp) {
       error = [temp];
@@ -34514,30 +34562,110 @@ var import_js_logger11 = __toESM(require_logger());
 
 // src/forestry/ForestryApi.ts
 var import_js_logger9 = __toESM(require_logger());
+function getForestryBaseUrl() {
+  return "https://api.forestry.md/app";
+}
+var ForestryApiError = class extends Error {
+  constructor(kind, message, status) {
+    super(message);
+    this.name = "ForestryApiError";
+    this.kind = kind;
+    this.status = status != null ? status : null;
+  }
+};
+function classifyError(e) {
+  var _a6, _b3, _c2;
+  if (axios_default.isAxiosError(e)) {
+    const status = (_a6 = e.response) == null ? void 0 : _a6.status;
+    if (status && status >= 400 && status < 500) {
+      const serverMessage = typeof ((_c2 = (_b3 = e.response) == null ? void 0 : _b3.data) == null ? void 0 : _c2.errorMessage) === "string" ? e.response.data.errorMessage : null;
+      return new ForestryApiError(
+        "unauthorized",
+        serverMessage != null ? serverMessage : `Forestry.md rejected the request (${status})`,
+        status
+      );
+    }
+    return new ForestryApiError(
+      "unreachable",
+      status ? `Forestry.md returned an error (${status})` : "Couldn't reach Forestry.md",
+      status
+    );
+  }
+  return new ForestryApiError(
+    "unreachable",
+    e instanceof Error ? e.message : "Couldn't reach Forestry.md"
+  );
+}
 var ForestryApi = class {
   constructor(apiKey) {
-    const baseUrl = "https://api.forestry.md/app";
     this.client = axios_default.create({
-      baseURL: baseUrl,
+      baseURL: getForestryBaseUrl(),
       headers: {
         Authorization: `Bearer ${apiKey}`
       }
     });
   }
-  getPageInfo() {
+  /**
+   * Redeem a one-time connect code minted by the dashboard for the garden's
+   * key. Needs no credentials; the code is the credential. Throws a
+   * {@link ForestryApiError} so callers can tell "expired/invalid code"
+   * from "offline".
+   */
+  static exchangeConnectCode(code) {
     return __async(this, null, function* () {
+      var _a6;
+      try {
+        const response = yield axios_default.post(
+          `${getForestryBaseUrl()}/connect/exchange`,
+          { code },
+          { headers: { "Content-Type": "application/json" } }
+        );
+        const value = (_a6 = response.data) == null ? void 0 : _a6.value;
+        if (!(value == null ? void 0 : value.apiKey) || !value.pageName) {
+          throw new ForestryApiError(
+            "unreachable",
+            "Forestry.md returned an unexpected response",
+            response.status
+          );
+        }
+        return value;
+      } catch (e) {
+        if (e instanceof ForestryApiError) throw e;
+        import_js_logger9.default.error(e);
+        throw classifyError(e);
+      }
+    });
+  }
+  /**
+   * Like {@link getPageInfo}, but says why it failed instead of returning
+   * null, so connect UIs can distinguish a wrong key from being offline.
+   */
+  getPageInfoResult() {
+    return __async(this, null, function* () {
+      var _a6;
       try {
         const response = yield this.client.get(
           "pages/info"
         );
-        if (response.status !== 200) {
-          return null;
+        if (response.status !== 200 || !((_a6 = response.data) == null ? void 0 : _a6.value)) {
+          return {
+            ok: false,
+            kind: "unreachable",
+            message: `Unexpected response (${response.status})`
+          };
         }
-        return response.data;
+        return { ok: true, value: response.data };
       } catch (e) {
         import_js_logger9.default.error(e);
-        return null;
+        const error = classifyError(e);
+        return { ok: false, kind: error.kind, message: error.message };
       }
+    });
+  }
+  getPageInfo() {
+    return __async(this, null, function* () {
+      const result = yield this.getPageInfoResult();
+      return result.ok ? result.value : null;
     });
   }
   getDeploys(branch2 = "active", limit = 10) {
@@ -34600,38 +34728,55 @@ function Icon($$anchor, $$props) {
 }
 
 // src/views/SettingsView/ForestrySettings.svelte
-var root3 = from_html(`<div class="setting-item"><div class="setting-item-info"><div class="setting-item-name">Garden Key</div> <div class="setting-item-description">Enter your Garden Key from <a href="https://dashboard.forestry.md">Forestry.md</a> to connect your digital garden</div></div> <div class="setting-item-control"><input type="text" placeholder="Enter your Garden Key" style="margin-right: 8px; min-width: 250px;"/> <button class="mod-cta">Connect</button></div></div>`);
-var root_12 = from_html(`<div class="setting-item" style="margin-top: 12px;"><div class="setting-item-info"><div class="setting-item-name">Loading usage info...</div></div></div>`);
-var root_22 = from_html(`<div style="display: flex; justify-content: space-between;"><span>Starter credits remaining</span> <span> </span></div>`);
-var root_32 = from_html(`<div style="margin-top: 8px; padding: 8px; background: var(--background-modifier-error); border-radius: 4px; font-size: 0.85em;">You've reached your usage limit. <a href="https://dashboard.forestry.md/settings" target="_blank">Upgrade your plan</a> to continue publishing.</div>`);
-var root_4 = from_html(`<div style="margin-top: 16px; padding: 12px; background: var(--background-secondary); border-radius: 8px;"><div style="font-weight: 600; margin-bottom: 8px;"> </div> <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.9em; color: var(--text-muted);"><div style="display: flex; justify-content: space-between;"><span>Builds this month</span> <span> </span></div> <!> <div style="display: flex; justify-content: space-between;"><span>Storage</span> <span> </span></div> <div style="display: flex; justify-content: space-between;"><span>Sites</span> <span> </span></div></div> <!></div>`);
-var root_5 = from_html(`<div class="setting-item"><div class="setting-item-info"><div class="setting-item-name" style="display: flex; align-items: center; gap: 8px;"><!> </div> <div class="setting-item-description">Your digital garden is connected to Forestry.md</div></div> <div class="setting-item-control"><button>Disconnect</button></div></div> <div style="margin-top: 12px; margin-left: 0;"><a href="https://dashboard.forestry.md" target="_blank" style="display: inline-flex; align-items: center; gap: 4px;"><!> Open Forestry.md Dashboard</a></div> <!>`, 1);
-var root_6 = from_html(`<div class="setting-item"><div class="setting-item-info"><div class="setting-item-name" style="color: var(--text-error);">Connection Error</div> <div class="setting-item-description">Something went wrong when connecting to
+var root3 = from_html(`<div class="dg-forestry-connect-error"> </div>`);
+var root_12 = from_html(
+  `<div class="setting-item"><div class="setting-item-info"><div class="setting-item-name">Garden Key</div> <div class="setting-item-description">Enter your Garden Key from <a href="https://dashboard.forestry.md">Forestry.md</a> to connect your digital garden</div></div> <div class="setting-item-control"><input type="text" placeholder="Enter your Garden Key" style="margin-right: 8px; min-width: 250px;"/> <button class="mod-cta"> </button></div></div> <!> <div class="setting-item-description dg-forestry-connect-hint">Tip: the "Connect Obsidian" button on your garden's dashboard
+				page fills this in for you.</div>`,
+  1
+);
+var root_22 = from_html(`<div class="setting-item" style="margin-top: 12px;"><div class="setting-item-info"><div class="setting-item-name">Loading usage info...</div></div></div>`);
+var root_32 = from_html(`<div style="display: flex; justify-content: space-between;"><span>Starter credits remaining</span> <span> </span></div>`);
+var root_4 = from_html(`<div style="margin-top: 8px; padding: 8px; background: var(--background-modifier-error); border-radius: 4px; font-size: 0.85em;">You've reached your usage limit. <a href="https://dashboard.forestry.md/settings" target="_blank">Upgrade your plan</a> to continue publishing.</div>`);
+var root_5 = from_html(`<div style="margin-top: 16px; padding: 12px; background: var(--background-secondary); border-radius: 8px;"><div style="font-weight: 600; margin-bottom: 8px;"> </div> <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.9em; color: var(--text-muted);"><div style="display: flex; justify-content: space-between;"><span>Builds this month</span> <span> </span></div> <!> <div style="display: flex; justify-content: space-between;"><span>Storage</span> <span> </span></div> <div style="display: flex; justify-content: space-between;"><span>Sites</span> <span> </span></div></div> <!></div>`);
+var root_6 = from_html(`<div class="setting-item"><div class="setting-item-info"><div class="setting-item-name" style="display: flex; align-items: center; gap: 8px;"><!> </div> <div class="setting-item-description">Your digital garden is connected to Forestry.md</div></div> <div class="setting-item-control"><button>Disconnect</button></div></div> <div style="margin-top: 12px; margin-left: 0;"><a href="https://dashboard.forestry.md" target="_blank" style="display: inline-flex; align-items: center; gap: 4px;"><!> Open Forestry.md Dashboard</a></div> <!>`, 1);
+var root_7 = from_html(`<div class="setting-item"><div class="setting-item-info"><div class="setting-item-name" style="color: var(--text-error);">Connection Error</div> <div class="setting-item-description">Something went wrong when connecting to
 								Forestry.md</div></div> <div class="setting-item-control"><button>Disconnect</button></div></div>`);
-var root_7 = from_html(`<div class="setting-item"><div class="setting-item-info"><div class="setting-item-name" style="color: var(--text-error);">Connection Error</div> <div class="setting-item-description">Something went wrong when connecting to Forestry.md</div></div> <div class="setting-item-control"><button>Disconnect</button></div></div>`);
-var root_8 = from_html(`<div class="setting-item"><div class="setting-item-info"><div class="setting-item-name">Loading Forestry.md settings...</div></div></div>`);
-var root_9 = from_html(`<div><h3><!>Forestry.md Settings</h3> <!></div>`);
+var root_8 = from_html(`<div class="setting-item"><div class="setting-item-info"><div class="setting-item-name" style="color: var(--text-error);">Connection Error</div> <div class="setting-item-description">Something went wrong when connecting to Forestry.md</div></div> <div class="setting-item-control"><button>Disconnect</button></div></div>`);
+var root_9 = from_html(`<div class="setting-item"><div class="setting-item-info"><div class="setting-item-name">Loading Forestry.md settings...</div></div></div>`);
+var root_10 = from_html(`<div><h3><!>Forestry.md Settings</h3> <!></div>`);
 function ForestrySettings($$anchor, $$props) {
   push($$props, false);
   let unique = mutable_source({});
   let settings = prop($$props, "settings", 12);
   let saveSettings = prop($$props, "saveSettings", 8);
   let onConnect = prop($$props, "onConnect", 8);
+  let afterConnect = prop($$props, "afterConnect", 8, null);
   let apiKey = mutable_source(settings().forestrySettings.apiKey);
   let limits = mutable_source(null);
   let limitsLoading = mutable_source(false);
+  let connecting = mutable_source(false);
+  let connectError = mutable_source(null);
   const connect = () => __awaiter(void 0, void 0, void 0, function* () {
-    let pageInfo = yield getPageInfo();
-    if (!pageInfo) {
-      new import_obsidian13.Notice("Invalid Garden Key");
+    const trimmedKey = get2(apiKey).trim();
+    if (!trimmedKey || get2(connecting)) return;
+    set(connecting, true);
+    set(connectError, null);
+    const result = yield new ForestryApi(trimmedKey).getPageInfoResult();
+    set(connecting, false);
+    if (!result.ok) {
+      set(connectError, result.kind === "unauthorized" ? "Invalid Garden Key. Copy it again from your garden's page on the Forestry.md dashboard." : "Couldn't reach Forestry.md \u2014 check your connection and try again.");
+      new import_obsidian13.Notice(get2(connectError));
       return;
     }
+    const pageInfo = result.value;
     settings(settings().forestrySettings.forestryPageName = pageInfo.value.pageName, true);
     settings(settings().forestrySettings.baseUrl = pageInfo.value.baseUrl, true);
-    settings(settings().forestrySettings.apiKey = get2(apiKey), true);
+    settings(settings().forestrySettings.apiKey = trimmedKey, true);
     yield saveSettings()();
     set(unique, {});
-    onConnect()();
+    new import_obsidian13.Notice(`Connected to Forestry.md garden ${pageInfo.value.pageName} \u{1F331}`);
+    yield onConnect()();
+    afterConnect() === null || afterConnect() === void 0 ? void 0 : afterConnect()();
   });
   const disconnect = () => __awaiter(void 0, void 0, void 0, function* () {
     settings(settings().forestrySettings.apiKey = "", true);
@@ -34661,7 +34806,7 @@ function ForestrySettings($$anchor, $$props) {
   });
   legacy_pre_effect_reset();
   init();
-  var div = root_9();
+  var div = root_10();
   var h3 = child(div);
   var node = child(h3);
   Icon(node, { name: "trees" });
@@ -34672,164 +34817,191 @@ function ForestrySettings($$anchor, $$props) {
     var fragment = comment();
     var node_2 = first_child(fragment);
     {
-      var consequent = ($$anchor3) => {
-        var div_1 = root3();
+      var consequent_1 = ($$anchor3) => {
+        var fragment_1 = root_12();
+        var div_1 = first_child(fragment_1);
         var div_2 = sibling(child(div_1), 2);
         var input = child(div_2);
         remove_input_defaults(input);
         var button = sibling(input, 2);
+        var text2 = child(button, true);
+        reset(button);
         reset(div_2);
         reset(div_1);
+        var node_3 = sibling(div_1, 2);
+        {
+          var consequent = ($$anchor4) => {
+            var div_3 = root3();
+            var text_1 = child(div_3, true);
+            reset(div_3);
+            template_effect(() => set_text(text_1, get2(connectError)));
+            append2($$anchor4, div_3);
+          };
+          if_block(node_3, ($$render) => {
+            if (get2(connectError)) $$render(consequent);
+          });
+        }
+        next(2);
+        template_effect(
+          ($0) => {
+            button.disabled = $0;
+            set_text(text2, get2(connecting) ? "Connecting\u2026" : "Connect");
+          },
+          [
+            () => (get2(connecting), get2(apiKey), untrack(() => get2(connecting) || !get2(apiKey).trim()))
+          ]
+        );
         bind_value(input, () => get2(apiKey), ($$value) => set(apiKey, $$value));
+        event("keydown", input, (e) => e.key === "Enter" && connect());
         event("click", button, connect);
-        append2($$anchor3, div_1);
+        append2($$anchor3, fragment_1);
       };
       var alternate_1 = ($$anchor3) => {
-        var fragment_1 = comment();
-        var node_3 = first_child(fragment_1);
+        var fragment_2 = comment();
+        var node_4 = first_child(fragment_2);
         await_block(
-          node_3,
+          node_4,
           () => untrack(getPageInfo),
           ($$anchor4) => {
-            var div_21 = root_8();
-            append2($$anchor4, div_21);
+            var div_22 = root_9();
+            append2($$anchor4, div_22);
           },
           ($$anchor4, pageInfo) => {
-            var fragment_2 = comment();
-            var node_4 = first_child(fragment_2);
+            var fragment_3 = comment();
+            var node_5 = first_child(fragment_3);
             {
-              var consequent_5 = ($$anchor5) => {
-                var fragment_3 = root_5();
-                var div_3 = first_child(fragment_3);
-                var div_4 = child(div_3);
+              var consequent_6 = ($$anchor5) => {
+                var fragment_4 = root_6();
+                var div_4 = first_child(fragment_4);
                 var div_5 = child(div_4);
-                var node_5 = child(div_5);
-                Icon(node_5, { name: "check-circle" });
-                var text2 = sibling(node_5);
-                reset(div_5);
-                next(2);
-                reset(div_4);
-                var div_6 = sibling(div_4, 2);
-                var button_1 = child(div_6);
+                var div_6 = child(div_5);
+                var node_6 = child(div_6);
+                Icon(node_6, { name: "check-circle" });
+                var text_2 = sibling(node_6);
                 reset(div_6);
-                reset(div_3);
-                var div_7 = sibling(div_3, 2);
-                var a = child(div_7);
-                var node_6 = child(a);
-                Icon(node_6, { name: "external-link" });
+                next(2);
+                reset(div_5);
+                var div_7 = sibling(div_5, 2);
+                var button_1 = child(div_7);
+                reset(div_7);
+                reset(div_4);
+                var div_8 = sibling(div_4, 2);
+                var a = child(div_8);
+                var node_7 = child(a);
+                Icon(node_7, { name: "external-link" });
                 next();
                 reset(a);
-                reset(div_7);
-                var node_7 = sibling(div_7, 2);
+                reset(div_8);
+                var node_8 = sibling(div_8, 2);
                 {
-                  var consequent_1 = ($$anchor6) => {
-                    var div_8 = root_12();
-                    append2($$anchor6, div_8);
-                  };
-                  var consequent_4 = ($$anchor6) => {
-                    var div_9 = root_4();
-                    var div_10 = child(div_9);
-                    var text_1 = child(div_10);
-                    reset(div_10);
-                    var div_11 = sibling(div_10, 2);
-                    var div_12 = child(div_11);
-                    var span = sibling(child(div_12), 2);
-                    var text_2 = child(span);
-                    reset(span);
-                    reset(div_12);
-                    var node_8 = sibling(div_12, 2);
-                    {
-                      var consequent_2 = ($$anchor7) => {
-                        var div_13 = root_22();
-                        var span_1 = sibling(child(div_13), 2);
-                        var text_3 = child(span_1, true);
-                        reset(span_1);
-                        reset(div_13);
-                        template_effect(() => set_text(text_3, (get2(limits), untrack(() => get2(limits).builds.starterCreditsRemaining))));
-                        append2($$anchor7, div_13);
-                      };
-                      if_block(node_8, ($$render) => {
-                        if (get2(limits), untrack(() => get2(limits).builds.starterCreditsRemaining > 0)) $$render(consequent_2);
-                      });
-                    }
-                    var div_14 = sibling(node_8, 2);
-                    var span_2 = sibling(child(div_14), 2);
-                    var text_4 = child(span_2);
-                    reset(span_2);
-                    reset(div_14);
-                    var div_15 = sibling(div_14, 2);
-                    var span_3 = sibling(child(div_15), 2);
-                    var text_5 = child(span_3);
-                    reset(span_3);
-                    reset(div_15);
-                    reset(div_11);
-                    var node_9 = sibling(div_11, 2);
-                    {
-                      var consequent_3 = ($$anchor7) => {
-                        var div_16 = root_32();
-                        append2($$anchor7, div_16);
-                      };
-                      if_block(node_9, ($$render) => {
-                        if (get2(limits), untrack(() => get2(limits).builds.monthlyRemaining === 0 || get2(limits).storage.usedBytes >= get2(limits).storage.limitBytes)) $$render(consequent_3);
-                      });
-                    }
-                    reset(div_9);
-                    template_effect(() => {
-                      var _a6, _b3, _c2, _d, _e, _f, _g, _h, _i;
-                      set_text(text_1, `Usage \u2014 ${(_a6 = (get2(limits), untrack(() => get2(limits).plan))) != null ? _a6 : ""} plan`);
-                      set_style(span, `color: ${(_b3 = (get2(limits), untrack(() => get2(limits).builds.monthlyRemaining === 0 ? "var(--text-error)" : "var(--text-normal)"))) != null ? _b3 : ""};`);
-                      set_text(text_2, `${(_c2 = (get2(limits), untrack(() => get2(limits).builds.monthlyLimit - get2(limits).builds.monthlyRemaining))) != null ? _c2 : ""} / ${(_d = (get2(limits), untrack(() => get2(limits).builds.monthlyLimit))) != null ? _d : ""}`);
-                      set_style(span_2, `color: ${(_e = (get2(limits), untrack(() => get2(limits).storage.usedBytes >= get2(limits).storage.limitBytes ? "var(--text-error)" : "var(--text-normal)"))) != null ? _e : ""};`);
-                      set_text(text_4, `${(_f = (get2(limits), untrack(() => get2(limits).storage.usedFormatted))) != null ? _f : ""} / ${(_g = (get2(limits), untrack(() => get2(limits).storage.limitFormatted))) != null ? _g : ""}`);
-                      set_text(text_5, `${(_h = (get2(limits), untrack(() => get2(limits).sites.current))) != null ? _h : ""} / ${(_i = (get2(limits), untrack(() => get2(limits).sites.limit))) != null ? _i : ""}`);
-                    });
+                  var consequent_2 = ($$anchor6) => {
+                    var div_9 = root_22();
                     append2($$anchor6, div_9);
                   };
-                  if_block(node_7, ($$render) => {
-                    if (get2(limitsLoading)) $$render(consequent_1);
-                    else if (get2(limits)) $$render(consequent_4, 1);
+                  var consequent_5 = ($$anchor6) => {
+                    var div_10 = root_5();
+                    var div_11 = child(div_10);
+                    var text_3 = child(div_11);
+                    reset(div_11);
+                    var div_12 = sibling(div_11, 2);
+                    var div_13 = child(div_12);
+                    var span = sibling(child(div_13), 2);
+                    var text_4 = child(span);
+                    reset(span);
+                    reset(div_13);
+                    var node_9 = sibling(div_13, 2);
+                    {
+                      var consequent_3 = ($$anchor7) => {
+                        var div_14 = root_32();
+                        var span_1 = sibling(child(div_14), 2);
+                        var text_5 = child(span_1, true);
+                        reset(span_1);
+                        reset(div_14);
+                        template_effect(() => set_text(text_5, (get2(limits), untrack(() => get2(limits).builds.starterCreditsRemaining))));
+                        append2($$anchor7, div_14);
+                      };
+                      if_block(node_9, ($$render) => {
+                        if (get2(limits), untrack(() => get2(limits).builds.starterCreditsRemaining > 0)) $$render(consequent_3);
+                      });
+                    }
+                    var div_15 = sibling(node_9, 2);
+                    var span_2 = sibling(child(div_15), 2);
+                    var text_6 = child(span_2);
+                    reset(span_2);
+                    reset(div_15);
+                    var div_16 = sibling(div_15, 2);
+                    var span_3 = sibling(child(div_16), 2);
+                    var text_7 = child(span_3);
+                    reset(span_3);
+                    reset(div_16);
+                    reset(div_12);
+                    var node_10 = sibling(div_12, 2);
+                    {
+                      var consequent_4 = ($$anchor7) => {
+                        var div_17 = root_4();
+                        append2($$anchor7, div_17);
+                      };
+                      if_block(node_10, ($$render) => {
+                        if (get2(limits), untrack(() => get2(limits).builds.monthlyRemaining === 0 || get2(limits).storage.usedBytes >= get2(limits).storage.limitBytes)) $$render(consequent_4);
+                      });
+                    }
+                    reset(div_10);
+                    template_effect(() => {
+                      var _a6, _b3, _c2, _d, _e, _f, _g, _h, _i;
+                      set_text(text_3, `Usage \u2014 ${(_a6 = (get2(limits), untrack(() => get2(limits).plan))) != null ? _a6 : ""} plan`);
+                      set_style(span, `color: ${(_b3 = (get2(limits), untrack(() => get2(limits).builds.monthlyRemaining === 0 ? "var(--text-error)" : "var(--text-normal)"))) != null ? _b3 : ""};`);
+                      set_text(text_4, `${(_c2 = (get2(limits), untrack(() => get2(limits).builds.monthlyLimit - get2(limits).builds.monthlyRemaining))) != null ? _c2 : ""} / ${(_d = (get2(limits), untrack(() => get2(limits).builds.monthlyLimit))) != null ? _d : ""}`);
+                      set_style(span_2, `color: ${(_e = (get2(limits), untrack(() => get2(limits).storage.usedBytes >= get2(limits).storage.limitBytes ? "var(--text-error)" : "var(--text-normal)"))) != null ? _e : ""};`);
+                      set_text(text_6, `${(_f = (get2(limits), untrack(() => get2(limits).storage.usedFormatted))) != null ? _f : ""} / ${(_g = (get2(limits), untrack(() => get2(limits).storage.limitFormatted))) != null ? _g : ""}`);
+                      set_text(text_7, `${(_h = (get2(limits), untrack(() => get2(limits).sites.current))) != null ? _h : ""} / ${(_i = (get2(limits), untrack(() => get2(limits).sites.limit))) != null ? _i : ""}`);
+                    });
+                    append2($$anchor6, div_10);
+                  };
+                  if_block(node_8, ($$render) => {
+                    if (get2(limitsLoading)) $$render(consequent_2);
+                    else if (get2(limits)) $$render(consequent_5, 1);
                   });
                 }
                 template_effect(() => {
                   var _a6;
-                  return set_text(text2, ` Connected to: ${(_a6 = (deep_read_state(get2(pageInfo)), untrack(() => {
+                  return set_text(text_2, ` Connected to: ${(_a6 = (deep_read_state(get2(pageInfo)), untrack(() => {
                     var _a7;
                     return (_a7 = get2(pageInfo).value.pageName) != null ? _a7 : "Unknown";
                   }))) != null ? _a6 : ""}`);
                 });
                 event("click", button_1, disconnect);
-                append2($$anchor5, fragment_3);
+                append2($$anchor5, fragment_4);
               };
               var alternate = ($$anchor5) => {
-                var div_17 = root_6();
-                var div_18 = sibling(child(div_17), 2);
-                var button_2 = child(div_18);
+                var div_18 = root_7();
+                var div_19 = sibling(child(div_18), 2);
+                var button_2 = child(div_19);
+                reset(div_19);
                 reset(div_18);
-                reset(div_17);
                 event("click", button_2, disconnect);
-                append2($$anchor5, div_17);
+                append2($$anchor5, div_18);
               };
-              if_block(node_4, ($$render) => {
-                if (get2(pageInfo)) $$render(consequent_5);
+              if_block(node_5, ($$render) => {
+                if (get2(pageInfo)) $$render(consequent_6);
                 else $$render(alternate, -1);
               });
             }
-            append2($$anchor4, fragment_2);
+            append2($$anchor4, fragment_3);
           },
           ($$anchor4) => {
-            var div_19 = root_7();
-            var div_20 = sibling(child(div_19), 2);
-            var button_3 = child(div_20);
+            var div_20 = root_8();
+            var div_21 = sibling(child(div_20), 2);
+            var button_3 = child(div_21);
+            reset(div_21);
             reset(div_20);
-            reset(div_19);
             event("click", button_3, disconnect);
-            append2($$anchor4, div_19);
+            append2($$anchor4, div_20);
           }
         );
-        append2($$anchor3, fragment_1);
+        append2($$anchor3, fragment_2);
       };
       if_block(node_2, ($$render) => {
-        if (deep_read_state(settings()), untrack(() => !settings().forestrySettings.apiKey)) $$render(consequent);
+        if (deep_read_state(settings()), untrack(() => !settings().forestrySettings.apiKey)) $$render(consequent_1);
         else $$render(alternate_1, -1);
       });
     }
@@ -37504,7 +37676,7 @@ var root_62 = from_html(`<span class="dg-plugin-region-notice svelte-j5mgcu"> <s
 var root_72 = from_html(`<button class="svelte-j5mgcu">Settings</button>`);
 var root_82 = from_html(`<button class="mod-warning svelte-j5mgcu">Confirm removal</button>`);
 var root_92 = from_html(`<button class="svelte-j5mgcu">Uninstall</button>`);
-var root_10 = from_html(`<button class="svelte-j5mgcu">Update</button> <!>`, 1);
+var root_102 = from_html(`<button class="svelte-j5mgcu">Update</button> <!>`, 1);
 var root_11 = from_html(`<label class="dg-plugin-setting svelte-j5mgcu"><span class="svelte-j5mgcu"><span class="dg-plugin-setting-name svelte-j5mgcu">Enabled by default on notes</span> <span class="dg-plugin-setting-desc svelte-j5mgcu">Override per note with <code class="svelte-j5mgcu"> </code> in frontmatter.</span></span> <input type="checkbox" class="svelte-j5mgcu"/></label>`);
 var root_122 = from_html(`<span class="dg-plugin-setting-desc svelte-j5mgcu"> </span>`);
 var root_132 = from_html(`<input type="checkbox" class="svelte-j5mgcu"/>`);
@@ -37915,7 +38087,7 @@ function GardenPluginsView($$anchor, $$props) {
             var node_11 = sibling(node_10, 2);
             {
               var consequent_8 = ($$anchor5) => {
-                var fragment_4 = root_10();
+                var fragment_4 = root_102();
                 var button_3 = first_child(fragment_4);
                 var node_12 = sibling(button_3, 2);
                 {
@@ -38854,7 +39026,7 @@ var GardenPluginManager = class {
 // src/views/SettingsView/SettingView.ts
 var OBSIDIAN_THEME_URL = "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-css-themes.json";
 var SettingView = class {
-  constructor(app, settingsRootElement, settings, saveSettings) {
+  constructor(app, settingsRootElement, settings, saveSettings, afterForestryConnect = null) {
     this.debouncedSaveAndUpdate = (0, import_obsidian18.debounce)(
       this.saveSiteSettingsAndUpdateEnv,
       500,
@@ -38866,6 +39038,7 @@ var SettingView = class {
     this.settingsRootElement.classList.add("dg-settings");
     this.settings = settings;
     this.saveSettings = saveSettings;
+    this.afterForestryConnect = afterForestryConnect;
   }
   getIcon(name) {
     var _a6;
@@ -39010,7 +39183,8 @@ var SettingView = class {
           saveSettings: this.saveSettings,
           onConnect: () => __async(this, null, function* () {
             this.reInitializeSettings();
-          })
+          }),
+          afterConnect: this.afterForestryConnect
         }
       });
     }
@@ -40786,7 +40960,8 @@ var DigitalGardenSettingTab = class extends import_obsidian20.PluginSettingTab {
         this.plugin.settings,
         () => __async(this, null, function* () {
           return yield this.plugin.saveSettings();
-        })
+        }),
+        () => this.plugin.afterForestryConnected()
       );
       const prModal = new UpdateGardenRepositoryModal(this.app);
       const handlePR = (button, updater) => __async(this, null, function* () {
@@ -41359,6 +41534,19 @@ var import_obsidian26 = require("obsidian");
 var VIEW_TYPE = "digital-garden-publication-center";
 var VIEW_DISPLAY_TEXT = "Publication Center";
 var VIEW_ICON = "book-up";
+
+// src/publishFile/homePage.ts
+function findHomePageFiles(app) {
+  var _a6;
+  const homePages = [];
+  for (const file of app.vault.getMarkdownFiles()) {
+    const cache = app.metadataCache.getFileCache(file);
+    if ((_a6 = cache == null ? void 0 : cache.frontmatter) == null ? void 0 : _a6["dg-home" /* HOME */]) {
+      homePages.push(file);
+    }
+  }
+  return homePages;
+}
 
 // src/views/PublicationCenterView/PublicationCenter.svelte
 var import_obsidian25 = require("obsidian");
@@ -42306,7 +42494,7 @@ var root_64 = from_html(`<div class="dg-builds-error svelte-seznc9"><div class="
 var root_74 = from_html(`<div class="dg-builds-row svelte-seznc9"><span></span> <span class="dg-builds-status svelte-seznc9"> </span> <span class="dg-builds-meta svelte-seznc9"> <!> <!></span></div> <!>`, 1);
 var root_83 = from_html(`<div class="dg-builds-limits svelte-seznc9"> </div>`);
 var root_93 = from_html(`<div class="dg-builds-list svelte-seznc9"><!> <!> <!></div>`);
-var root_102 = from_html(`<div class="dg-builds svelte-seznc9"><button class="dg-builds-header svelte-seznc9"><span class="dg-builds-title svelte-seznc9">Publish status</span> <!> <span class="dg-builds-chevron svelte-seznc9"> </span></button> <!></div>`);
+var root_103 = from_html(`<div class="dg-builds svelte-seznc9"><button class="dg-builds-header svelte-seznc9"><span class="dg-builds-title svelte-seznc9">Publish status</span> <!> <span class="dg-builds-chevron svelte-seznc9"> </span></button> <!></div>`);
 var $$css15 = {
   hash: "svelte-seznc9",
   code: ".dg-builds.svelte-seznc9 {border-top:1px solid var(--background-modifier-border);}.dg-builds-header.svelte-seznc9 {display:flex;align-items:center;gap:8px;width:100%;padding:6px 12px;background:none;border:none;box-shadow:none;cursor:pointer;font-size:0.85rem;text-align:left;}.dg-builds-title.svelte-seznc9 {font-weight:600;}.dg-builds-summary.svelte-seznc9 {color:var(--text-muted);}.dg-builds-chevron.svelte-seznc9 {margin-left:auto;color:var(--text-muted);}.dg-builds-dot.svelte-seznc9 {width:8px;height:8px;border-radius:50%;flex-shrink:0;}.dg-builds-dot.success.svelte-seznc9 {background:var(--color-green, #4caf50);}.dg-builds-dot.failure.svelte-seznc9 {background:var(--color-red, #f44336);}.dg-builds-dot.skipped.svelte-seznc9 {background:var(--text-faint, #999);}.dg-builds-dot.running.svelte-seznc9 {background:var(--color-yellow, #ffc107);\n		animation: svelte-seznc9-dg-builds-pulse 1.5s ease-in-out infinite;}\n\n	@keyframes svelte-seznc9-dg-builds-pulse {\n		0%,\n		100% {\n			opacity: 1;\n		}\n		50% {\n			opacity: 0.3;\n		}\n	}.dg-builds-list.svelte-seznc9 {max-height:220px;overflow-y:auto;padding:0 12px 8px;}.dg-builds-row.svelte-seznc9 {display:flex;align-items:center;gap:8px;padding:3px 0;font-size:0.85rem;}.dg-builds-status.svelte-seznc9 {min-width:90px;}.dg-builds-meta.svelte-seznc9 {color:var(--text-muted);}.dg-builds-error.svelte-seznc9 {margin:2px 0 6px 16px;padding:6px 8px;border-left:2px solid var(--color-red, #f44336);background:var(--background-secondary);font-size:0.8rem;}.dg-builds-error-hint.svelte-seznc9 {color:var(--text-muted);margin-top:2px;}.dg-builds-error-notes.svelte-seznc9 {margin:4px 0 0;padding-left:16px;color:var(--text-muted);}.dg-builds-limits.svelte-seznc9 {margin-top:6px;color:var(--text-faint);font-size:0.75rem;}"
@@ -42388,7 +42576,7 @@ function RecentBuilds($$anchor, $$props) {
   var node = first_child(fragment);
   {
     var consequent_10 = ($$anchor2) => {
-      var div = root_102();
+      var div = root_103();
       var button = child(div);
       var node_1 = sibling(child(button), 2);
       {
@@ -42642,13 +42830,15 @@ function Tutorial($$anchor) {
 var import_js_logger14 = __toESM(require_logger());
 var root17 = from_html(`<div class="dg-pc-error svelte-g0az0q"> </div>`);
 var root_119 = from_html(`<div class="dg-pc-loading svelte-g0az0q"><!> <div>Calculating publication status\u2026</div></div>`);
-var root_216 = from_html(`<div class="dg-pc-syncing svelte-g0az0q">Updating\u2026</div>`);
-var root_310 = from_html(`<div class="dg-pc-progress svelte-g0az0q"><div> </div> <div class="dg-pc-progress-track svelte-g0az0q"><div class="dg-pc-progress-fill svelte-g0az0q"></div></div> <div class="dg-pc-progress-current svelte-g0az0q"> </div></div>`);
-var root_48 = from_html(`<div class="dg-pc-publish-error svelte-g0az0q"><div class="dg-pc-publish-error-header svelte-g0az0q"><strong>Publishing failed</strong> <div class="dg-pc-publish-error-actions svelte-g0az0q"><button>Copy details</button> <button>Dismiss</button></div></div> <pre class="dg-pc-publish-error-message svelte-g0az0q"> </pre> <div class="dg-pc-publish-error-hint svelte-g0az0q">Nothing was lost \u2014 your notes are unchanged. Often
+var root_216 = from_html(`<div class="dg-pc-callout dg-pc-home-banner"><div class="dg-pc-callout-header"><div class="dg-pc-callout-title">\u{1F3E1} No home page yet</div> <button class="mod-cta">Choose home page</button></div> <div>Visitors see a plain list of notes at your site root until
+					you pick a note as the home page.</div></div>`);
+var root_310 = from_html(`<div class="dg-pc-syncing svelte-g0az0q">Updating\u2026</div>`);
+var root_48 = from_html(`<div class="dg-pc-progress svelte-g0az0q"><div> </div> <div class="dg-pc-progress-track svelte-g0az0q"><div class="dg-pc-progress-fill svelte-g0az0q"></div></div> <div class="dg-pc-progress-current svelte-g0az0q"> </div></div>`);
+var root_56 = from_html(`<div class="dg-pc-publish-error svelte-g0az0q"><div class="dg-pc-publish-error-header svelte-g0az0q"><strong>Publishing failed</strong> <div class="dg-pc-publish-error-actions svelte-g0az0q"><button>Copy details</button> <button>Dismiss</button></div></div> <pre class="dg-pc-publish-error-message svelte-g0az0q"> </pre> <div class="dg-pc-publish-error-hint svelte-g0az0q">Nothing was lost \u2014 your notes are unchanged. Often
 					publishing again just works. If it keeps failing, click
 					"Copy details" and paste it in the Discord so we can help.</div></div>`);
-var root_56 = from_html(`<!> <!> <!> <!> <!> <div class="dg-pc-layout svelte-g0az0q"><div class="dg-pc-tree-pane svelte-g0az0q"><!> <!></div> <div class="dg-pc-diff-pane svelte-g0az0q"><!></div></div> <!> <!>`, 1);
-var root_65 = from_html(`<div class="dg-pc-root svelte-g0az0q"><!></div>`);
+var root_65 = from_html(`<!> <!> <!> <!> <!> <!> <div class="dg-pc-layout svelte-g0az0q"><div class="dg-pc-tree-pane svelte-g0az0q"><!> <!></div> <div class="dg-pc-diff-pane svelte-g0az0q"><!></div></div> <!> <!>`, 1);
+var root_75 = from_html(`<div class="dg-pc-root svelte-g0az0q"><!></div>`);
 var $$css17 = {
   hash: "svelte-g0az0q",
   code: ".dg-pc-root.svelte-g0az0q {display:flex;flex-direction:column;height:100%;}.dg-pc-layout.svelte-g0az0q {display:flex;flex:1;min-height:0;}.dg-pc-tree-pane.svelte-g0az0q {flex:0 0 33%;max-width:33%;overflow:auto;border-right:1px solid var(--background-modifier-border);padding:8px;}.dg-pc-diff-pane.svelte-g0az0q {flex:1;overflow:auto;padding:8px;}.dg-pc-loading.svelte-g0az0q {display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;font-size:1.2rem;gap:8px;}.dg-pc-error.svelte-g0az0q {color:var(--text-error);padding:16px;}.dg-pc-publish-error.svelte-g0az0q {margin:8px 16px;padding:10px 12px;border:1px solid var(--background-modifier-error);border-radius:6px;background-color:var(--background-modifier-error-hover, transparent);}.dg-pc-publish-error-header.svelte-g0az0q {display:flex;align-items:center;justify-content:space-between;gap:8px;color:var(--text-error);}.dg-pc-publish-error-actions.svelte-g0az0q {display:flex;gap:6px;}.dg-pc-publish-error-message.svelte-g0az0q {margin:8px 0;padding:6px 8px;max-height:120px;overflow:auto;white-space:pre-wrap;word-break:break-word;font-size:var(--font-ui-smaller);background-color:var(--background-primary);border-radius:4px;}.dg-pc-publish-error-hint.svelte-g0az0q {color:var(--text-muted);font-size:var(--font-ui-smaller);}.dg-pc-syncing.svelte-g0az0q {color:var(--text-muted);font-size:0.8rem;padding:2px 4px 6px;}.dg-pc-progress.svelte-g0az0q {padding:8px;border-bottom:1px solid var(--background-modifier-border);}.dg-pc-progress-track.svelte-g0az0q {height:4px;background:var(--background-modifier-border);border-radius:2px;margin:6px 0;}.dg-pc-progress-fill.svelte-g0az0q {height:100%;background:var(--interactive-accent);transition:width 0.3s ease;}.dg-pc-progress-current.svelte-g0az0q {color:var(--text-muted);font-size:0.8rem;}"
@@ -42668,6 +42858,10 @@ function PublicationCenter($$anchor, $$props) {
   let statusManager = prop($$props, "statusManager", 8);
   let openFile = prop($$props, "openFile", 8);
   let siteUpdateTracker = prop($$props, "siteUpdateTracker", 8, null);
+  let homePageMissing = prop($$props, "homePageMissing", 8, null);
+  let onChooseHomePage = prop($$props, "onChooseHomePage", 8, () => {
+  });
+  let showHomePageBanner = mutable_source(false);
   let registerApi = prop($$props, "registerApi", 8, () => {
   });
   let status = mutable_source(null);
@@ -42760,7 +42954,9 @@ function PublicationCenter($$anchor, $$props) {
     return next2;
   }
   function validate(s2) {
+    var _a7;
     set(problematicFiles, []);
+    set(showHomePageBanner, (_a7 = homePageMissing() === null || homePageMissing() === void 0 ? void 0 : homePageMissing()()) !== null && _a7 !== void 0 ? _a7 : false);
     const homeFiles = [
       ...s2.publishedNotes,
       ...s2.unpublishedNotes,
@@ -42804,17 +43000,23 @@ function PublicationCenter($$anchor, $$props) {
           hadFailure = true;
           set(publishError, (_a7 = batchResult.error) !== null && _a7 !== void 0 ? _a7 : "Unknown error");
         }
-        for (const path2 of plan.notesToDelete) {
-          set(progressCurrent, `Deleting ${path2}`);
-          yield publisher().deleteNote(path2);
-          removedPaths.add(path2);
-          set(progressDone, get2(progressDone) + 1);
-        }
-        for (const path2 of plan.imagesToDelete) {
-          set(progressCurrent, `Deleting ${path2}`);
-          yield publisher().deleteImage(path2);
-          removedPaths.add(path2);
-          set(progressDone, get2(progressDone) + 1);
+        if (deletesTotal > 0) {
+          const deleteResult = yield publisher().deleteBatch(plan.notesToDelete, plan.imagesToDelete, (done, total, message) => {
+            set(progressTotal, batchSteps + total);
+            set(progressDone, batchSteps + done);
+            set(progressCurrent, message);
+          });
+          if (deleteResult.success) {
+            for (const path2 of plan.notesToDelete) {
+              removedPaths.add(path2);
+            }
+            for (const path2 of plan.imagesToDelete) {
+              removedPaths.add(path2);
+            }
+          } else {
+            hadFailure = true;
+            set(publishError, [get2(publishError), deleteResult.error].filter(Boolean).join("\n"));
+          }
         }
         new import_obsidian25.Notice(hadFailure ? "Publishing failed. See the details in the Publication Center." : "Publication complete.");
       } catch (e) {
@@ -42936,7 +43138,7 @@ function PublicationCenter($$anchor, $$props) {
   });
   legacy_pre_effect_reset();
   init();
-  var div = root_65();
+  var div = root_75();
   var node = child(div);
   {
     var consequent = ($$anchor2) => {
@@ -42961,79 +43163,98 @@ function PublicationCenter($$anchor, $$props) {
       append2($$anchor2, div_2);
     };
     var alternate = ($$anchor2) => {
-      var fragment = root_56();
+      var fragment = root_65();
       var node_2 = first_child(fragment);
       Tutorial(node_2, {});
       var node_3 = sibling(node_2, 2);
-      Notices(node_3, {
+      {
+        var consequent_2 = ($$anchor3) => {
+          var div_3 = root_216();
+          var div_4 = child(div_3);
+          var button = sibling(child(div_4), 2);
+          reset(div_4);
+          next(2);
+          reset(div_3);
+          event("click", button, function(...$$args) {
+            var _a7;
+            (_a7 = onChooseHomePage()) == null ? void 0 : _a7.apply(this, $$args);
+          });
+          append2($$anchor3, div_3);
+        };
+        if_block(node_3, ($$render) => {
+          if (get2(showHomePageBanner)) $$render(consequent_2);
+        });
+      }
+      var node_4 = sibling(node_3, 2);
+      Notices(node_4, {
         get problematicFiles() {
           return get2(problematicFiles);
         }
       });
-      var node_4 = sibling(node_3, 2);
-      {
-        var consequent_2 = ($$anchor3) => {
-          var div_3 = root_216();
-          append2($$anchor3, div_3);
-        };
-        if_block(node_4, ($$render) => {
-          if (get2(refreshing)) $$render(consequent_2);
-        });
-      }
       var node_5 = sibling(node_4, 2);
       {
         var consequent_3 = ($$anchor3) => {
-          var div_4 = root_310();
-          var div_5 = child(div_4);
-          var text_1 = child(div_5);
-          reset(div_5);
-          var div_6 = sibling(div_5, 2);
-          var div_7 = child(div_6);
-          reset(div_6);
-          var div_8 = sibling(div_6, 2);
-          var text_2 = child(div_8, true);
-          reset(div_8);
-          reset(div_4);
-          template_effect(() => {
-            var _a7, _b4;
-            set_text(text_1, `${(_a7 = get2(progressDone)) != null ? _a7 : ""} of ${(_b4 = get2(progressTotal)) != null ? _b4 : ""} processed`);
-            set_style(div_7, `width: ${get2(progressTotal) ? get2(progressDone) / get2(progressTotal) * 100 : 0}%`);
-            set_text(text_2, get2(progressCurrent));
-          });
-          append2($$anchor3, div_4);
+          var div_5 = root_310();
+          append2($$anchor3, div_5);
         };
         if_block(node_5, ($$render) => {
-          if (get2(publishing)) $$render(consequent_3);
+          if (get2(refreshing)) $$render(consequent_3);
         });
       }
       var node_6 = sibling(node_5, 2);
       {
         var consequent_4 = ($$anchor3) => {
-          var div_9 = root_48();
-          var div_10 = child(div_9);
-          var div_11 = sibling(child(div_10), 2);
-          var button = child(div_11);
-          var button_1 = sibling(button, 2);
-          reset(div_11);
+          var div_6 = root_48();
+          var div_7 = child(div_6);
+          var text_1 = child(div_7);
+          reset(div_7);
+          var div_8 = sibling(div_7, 2);
+          var div_9 = child(div_8);
+          reset(div_8);
+          var div_10 = sibling(div_8, 2);
+          var text_2 = child(div_10, true);
           reset(div_10);
-          var pre = sibling(div_10, 2);
+          reset(div_6);
+          template_effect(() => {
+            var _a7, _b4;
+            set_text(text_1, `${(_a7 = get2(progressDone)) != null ? _a7 : ""} of ${(_b4 = get2(progressTotal)) != null ? _b4 : ""} processed`);
+            set_style(div_9, `width: ${get2(progressTotal) ? get2(progressDone) / get2(progressTotal) * 100 : 0}%`);
+            set_text(text_2, get2(progressCurrent));
+          });
+          append2($$anchor3, div_6);
+        };
+        if_block(node_6, ($$render) => {
+          if (get2(publishing)) $$render(consequent_4);
+        });
+      }
+      var node_7 = sibling(node_6, 2);
+      {
+        var consequent_5 = ($$anchor3) => {
+          var div_11 = root_56();
+          var div_12 = child(div_11);
+          var div_13 = sibling(child(div_12), 2);
+          var button_1 = child(div_13);
+          var button_2 = sibling(button_1, 2);
+          reset(div_13);
+          reset(div_12);
+          var pre = sibling(div_12, 2);
           var text_3 = child(pre, true);
           reset(pre);
           next(2);
-          reset(div_9);
+          reset(div_11);
           template_effect(() => set_text(text_3, get2(publishError)));
-          event("click", button, copyPublishErrorDetails);
-          event("click", button_1, () => set(publishError, null));
-          append2($$anchor3, div_9);
+          event("click", button_1, copyPublishErrorDetails);
+          event("click", button_2, () => set(publishError, null));
+          append2($$anchor3, div_11);
         };
-        if_block(node_6, ($$render) => {
-          if (get2(publishError)) $$render(consequent_4);
+        if_block(node_7, ($$render) => {
+          if (get2(publishError)) $$render(consequent_5);
         });
       }
-      var div_12 = sibling(node_6, 2);
-      var div_13 = child(div_12);
-      var node_7 = child(div_13);
-      StatusFilters(node_7, {
+      var div_14 = sibling(node_7, 2);
+      var div_15 = child(div_14);
+      var node_8 = child(div_15);
+      StatusFilters(node_8, {
         get counts() {
           return get2(counts);
         },
@@ -43042,8 +43263,8 @@ function PublicationCenter($$anchor, $$props) {
         },
         $$events: { toggle: (e) => toggleFilter(e.detail.status) }
       });
-      var node_8 = sibling(node_7, 2);
-      FileTree(node_8, {
+      var node_9 = sibling(node_8, 2);
+      FileTree(node_9, {
         get node() {
           return get2(visibleTree);
         },
@@ -43058,15 +43279,15 @@ function PublicationCenter($$anchor, $$props) {
           toggle: (e) => toggleSelection(e.detail.paths, e.detail.checked)
         }
       });
-      reset(div_13);
-      var div_14 = sibling(div_13, 2);
-      var node_9 = child(div_14);
+      reset(div_15);
+      var div_16 = sibling(div_15, 2);
+      var node_10 = child(div_16);
       {
         let $0 = derived_safe_equal(() => (get2(activeFile), untrack(() => {
           var _a7, _b4;
           return (_b4 = (_a7 = get2(activeFile)) == null ? void 0 : _a7.status) != null ? _b4 : null;
         })));
-        DiffPane(node_9, {
+        DiffPane(node_10, {
           get path() {
             return get2(activePath);
           },
@@ -43088,23 +43309,23 @@ function PublicationCenter($$anchor, $$props) {
           }
         });
       }
+      reset(div_16);
       reset(div_14);
-      reset(div_12);
-      var node_10 = sibling(div_12, 2);
+      var node_11 = sibling(div_14, 2);
       {
-        var consequent_5 = ($$anchor3) => {
+        var consequent_6 = ($$anchor3) => {
           RecentBuilds($$anchor3, {
             get tracker() {
               return siteUpdateTracker();
             }
           });
         };
-        if_block(node_10, ($$render) => {
-          if (siteUpdateTracker()) $$render(consequent_5);
+        if_block(node_11, ($$render) => {
+          if (siteUpdateTracker()) $$render(consequent_6);
         });
       }
-      var node_11 = sibling(node_10, 2);
-      PublishBar(node_11, {
+      var node_12 = sibling(node_11, 2);
+      PublishBar(node_12, {
         get selectedCount() {
           return get2(selectedCount);
         },
@@ -43179,6 +43400,10 @@ var PublicationCenterView = class extends import_obsidian26.ItemView {
         statusManager,
         // Only set for gardens hosted on Forestry.md.
         siteUpdateTracker: this.plugin.siteUpdateTracker,
+        // Only Forestry gardens get the "no home page" banner; the
+        // vault scan runs on each status refresh.
+        homePageMissing: this.plugin.siteUpdateTracker ? () => findHomePageFiles(app).length === 0 : null,
+        onChooseHomePage: () => this.plugin.openHomePagePicker(),
         openFile: (path2) => this.openFile(path2),
         registerApi: (api) => {
           this.refreshApi = api;
@@ -43217,6 +43442,11 @@ var POLL_TIMEOUT_MS = 10 * 60 * 1e3;
 var LIVE_PHASE_MS = 2 * 60 * 1e3;
 var SiteUpdateTracker = class {
   constructor(api) {
+    /**
+     * Set by the plugin. When the site goes live without a home page, the
+     * "live" notice becomes clickable and calls this to open the picker.
+     */
+    this.onChooseHomePage = null;
     this.builds = [];
     this.knownRunIds = /* @__PURE__ */ new Set();
     this.awaitingNewBuild = false;
@@ -43368,7 +43598,20 @@ var SiteUpdateTracker = class {
   announceResult(build) {
     var _a6;
     if (build.status === "completed") {
-      new import_obsidian27.Notice("Your site is live \u{1F331}");
+      if (build.hasHomePage === false && this.onChooseHomePage) {
+        const chooseHomePage = this.onChooseHomePage;
+        const notice = new import_obsidian27.Notice(
+          "Your site is live, but has no home page yet. Click to choose one.",
+          15e3
+        );
+        notice.noticeEl.addClass("dg-notice-clickable");
+        notice.noticeEl.addEventListener("click", () => {
+          notice.hide();
+          chooseHomePage();
+        });
+      } else {
+        new import_obsidian27.Notice("Your site is live \u{1F331}");
+      }
       this.patch({ phase: "live" });
       this.liveTimer = setTimeout(() => {
         this.liveTimer = null;
@@ -43386,6 +43629,98 @@ var SiteUpdateTracker = class {
     }
   }
 };
+
+// src/views/HomePage/HomePagePickerModal.ts
+var import_obsidian28 = require("obsidian");
+var HomePagePickerModal = class extends import_obsidian28.FuzzySuggestModal {
+  constructor(app, onChoose) {
+    super(app);
+    this.currentHomePaths = /* @__PURE__ */ new Set();
+    this.onChoose = onChoose;
+    this.setPlaceholder("Choose your garden's home page");
+    this.setInstructions([
+      { command: "\u2191\u2193", purpose: "to navigate" },
+      { command: "\u21B5", purpose: "to set as home page and publish" },
+      { command: "esc", purpose: "to skip for now" }
+    ]);
+  }
+  /**
+   * Notes already flagged dg-home come first, then the active note, then
+   * the rest of the vault, so the likely answer is one Enter away.
+   */
+  getItems() {
+    const files = this.app.vault.getMarkdownFiles();
+    const homePages = findHomePageFiles(this.app);
+    this.currentHomePaths = new Set(homePages.map((f) => f.path));
+    const active = this.app.workspace.getActiveFile();
+    const ordered = [...homePages];
+    if (active && active.extension === "md" && !this.currentHomePaths.has(active.path)) {
+      ordered.push(active);
+    }
+    const listed = new Set(ordered.map((f) => f.path));
+    return [...ordered, ...files.filter((f) => !listed.has(f.path))];
+  }
+  getItemText(file) {
+    const name = file.path.endsWith(".md") ? file.path.slice(0, -3) : file.path;
+    return this.currentHomePaths.has(file.path) ? `${name}  (current home page)` : name;
+  }
+  onChooseItem(file) {
+    void this.onChoose(file);
+  }
+};
+
+// src/views/HomePage/HomePagePromptModal.ts
+var import_obsidian29 = require("obsidian");
+var HomePagePromptModal = class extends import_obsidian29.Modal {
+  constructor(app, file, resolve) {
+    super(app);
+    this.dontAskAgain = false;
+    this.settled = false;
+    this.file = file;
+    this.resolve = resolve;
+  }
+  settle(choice) {
+    if (this.settled) return;
+    this.settled = true;
+    this.resolve({ choice, dontAskAgain: this.dontAskAgain });
+    this.close();
+  }
+  onOpen() {
+    const { contentEl } = this;
+    contentEl.createEl("h2", { text: "Your garden has no home page yet" });
+    contentEl.createEl("p", {
+      text: `Without one, visitors to your site's root see a plain list of notes. Make "${this.file.basename}" the home page?`
+    });
+    contentEl.createEl("p", {
+      text: 'You can change this any time with the "Set as Garden Home Page" command.',
+      cls: "dg-home-prompt-hint"
+    });
+    new import_obsidian29.Setting(contentEl).setName("Don't ask again").addToggle(
+      (toggle) => toggle.setValue(false).onChange((value) => {
+        this.dontAskAgain = value;
+      })
+    );
+    const buttons = contentEl.createDiv({ cls: "dg-home-prompt-buttons" });
+    buttons.createEl("button", { text: "Publish anyway" }).addEventListener("click", () => this.settle("publish-anyway"));
+    buttons.createEl("button", {
+      text: "Make it the home page",
+      cls: "mod-cta"
+    }).addEventListener("click", () => this.settle("make-home"));
+    this.scope.register([], "Enter", () => {
+      this.settle("make-home");
+      return false;
+    });
+  }
+  onClose() {
+    this.contentEl.empty();
+    this.settle("cancel");
+  }
+};
+function promptForHomePage(app, file) {
+  return new Promise((resolve) => {
+    new HomePagePromptModal(app, file, resolve).open();
+  });
+}
 
 // main.ts
 var defaultTheme = {
@@ -43490,7 +43825,7 @@ import_js_logger15.default.setHandler((messages, context2) => {
   appendDebugLogLine(context2.level.name, Array.from(messages));
   consoleLogHandler(messages, context2);
 });
-var DigitalGarden = class extends import_obsidian29.Plugin {
+var DigitalGarden = class extends import_obsidian31.Plugin {
   constructor() {
     super(...arguments);
     this.isPublishing = false;
@@ -43499,6 +43834,8 @@ var DigitalGarden = class extends import_obsidian29.Plugin {
     this.siteStatusBarItem = null;
     this.siteStatusUnsubscribe = null;
     this.siteTrackerApiKey = null;
+    /** The home-page prompt is shown at most once per Obsidian session. */
+    this.askedAboutHomePage = false;
   }
   onload() {
     return __async(this, null, function* () {
@@ -43512,7 +43849,7 @@ var DigitalGarden = class extends import_obsidian29.Plugin {
       );
       this.addSettingTab(new DigitalGardenSettingTab(this.app, this));
       yield this.addCommands();
-      (0, import_obsidian29.addIcon)("digital-garden-icon", seedling);
+      (0, import_obsidian31.addIcon)("digital-garden-icon", seedling);
       this.addRibbonIcon(
         "digital-garden-icon",
         "Digital Garden Publication Center",
@@ -43525,6 +43862,7 @@ var DigitalGarden = class extends import_obsidian29.Plugin {
         (leaf) => new PublicationCenterView(leaf, this)
       );
       this.syncSiteUpdateTracker();
+      this.registerDeepLinks();
       this.refreshForestryPageInfo();
       this.checkForTemplateUpdates();
       this.registerDevAutoExport();
@@ -43600,6 +43938,7 @@ var DigitalGarden = class extends import_obsidian29.Plugin {
    */
   createSiteUpdateTracker(apiKey) {
     this.siteUpdateTracker = new SiteUpdateTracker(new ForestryApi(apiKey));
+    this.siteUpdateTracker.onChooseHomePage = () => this.openHomePagePicker();
     this.siteTrackerApiKey = apiKey;
     const statusBarItem = this.addStatusBarItem();
     statusBarItem.addClass("dg-site-status");
@@ -43648,7 +43987,7 @@ var DigitalGarden = class extends import_obsidian29.Plugin {
         );
         const updater = yield (yield siteManager.getTemplateUpdater()).checkForUpdates();
         if (hasUpdates(updater)) {
-          new import_obsidian29.Notice(
+          new import_obsidian31.Notice(
             `Digital Garden: A new site template version (${updater.newestTemplateVersion}) is available. Update in the plugin settings.`,
             1e4
           );
@@ -43682,7 +44021,7 @@ var DigitalGarden = class extends import_obsidian29.Plugin {
         name: "Copy debug log",
         callback: () => __async(this, null, function* () {
           yield navigator.clipboard.writeText(getDebugLog());
-          new import_obsidian29.Notice(
+          new import_obsidian31.Notice(
             "Debug log copied to clipboard. Paste it in the Discord if you need help."
           );
         })
@@ -43691,7 +44030,7 @@ var DigitalGarden = class extends import_obsidian29.Plugin {
         id: "quick-publish-and-share-note",
         name: "Quick Publish And Share Note",
         callback: () => __async(this, null, function* () {
-          new import_obsidian29.Notice("Adding publish flag to note and publishing it.");
+          new import_obsidian31.Notice("Adding publish flag to note and publishing it.");
           yield this.setPublishFlagValue(true);
           const activeFile = this.app.workspace.getActiveFile();
           const event2 = this.app.metadataCache.on(
@@ -43726,7 +44065,7 @@ var DigitalGarden = class extends import_obsidian29.Plugin {
           yield modal.open();
         })
       });
-      if (this.settings["ENABLE_DEVELOPER_TOOLS"] && import_obsidian29.Platform.isDesktop) {
+      if (this.settings["ENABLE_DEVELOPER_TOOLS"] && import_obsidian31.Platform.isDesktop) {
         import_js_logger15.default.info("Developer tools enabled");
         const publisher = new Publisher(
           this.app.vault,
@@ -43755,7 +44094,7 @@ var DigitalGarden = class extends import_obsidian29.Plugin {
         callback: () => __async(this, null, function* () {
           var _a6, _b3;
           if (this.isPublishing) {
-            new import_obsidian29.Notice(
+            new import_obsidian31.Notice(
               "A publish operation is already in progress. Please wait for it to complete."
             );
             return;
@@ -43763,7 +44102,7 @@ var DigitalGarden = class extends import_obsidian29.Plugin {
           this.isPublishing = true;
           const statusBarItem = this.addStatusBarItem();
           try {
-            new import_obsidian29.Notice("Processing files to publish...");
+            new import_obsidian31.Notice("Processing files to publish...");
             const { vault, metadataCache } = this.app;
             const publisher = new Publisher(
               vault,
@@ -43787,7 +44126,7 @@ var DigitalGarden = class extends import_obsidian29.Plugin {
             const imagesToDelete = publishStatus.deletedImagePaths;
             const totalItems = filesToPublish.length + filesToDelete.length + imagesToDelete.length;
             if (totalItems === 0) {
-              new import_obsidian29.Notice("Garden is already fully synced!");
+              new import_obsidian31.Notice("Garden is already fully synced!");
               statusBarItem.remove();
               this.isPublishing = false;
               return;
@@ -43796,13 +44135,13 @@ var DigitalGarden = class extends import_obsidian29.Plugin {
               statusBarItem,
               filesToPublish.length + filesToDelete.length + imagesToDelete.length
             );
-            new import_obsidian29.Notice(
+            new import_obsidian31.Notice(
               `Publishing ${filesToPublish.length} notes, deleting ${filesToDelete.length} notes and ${imagesToDelete.length} images. See the status bar in lower right corner for progress.`,
               8e3
             );
             const batchResult = yield publisher.publishBatch(filesToPublish);
             if (!batchResult.success) {
-              new import_obsidian29.Notice(
+              new import_obsidian31.Notice(
                 `Publishing failed: ${(_a6 = batchResult.error) != null ? _a6 : "unknown error"}
 
 Run "Copy debug log" from the command palette to share details when asking for help.`,
@@ -43820,16 +44159,16 @@ Run "Copy debug log" from the command palette to share details when asking for h
             }
             statusBar.finish(8e3);
             (_b3 = this.siteUpdateTracker) == null ? void 0 : _b3.notifyPublished();
-            new import_obsidian29.Notice(
+            new import_obsidian31.Notice(
               `Successfully published ${filesToPublish.length} notes to your garden.`
             );
             if (filesToDelete.length > 0) {
-              new import_obsidian29.Notice(
+              new import_obsidian31.Notice(
                 `Successfully deleted ${filesToDelete.length} notes from your garden.`
               );
             }
             if (imagesToDelete.length > 0) {
-              new import_obsidian29.Notice(
+              new import_obsidian31.Notice(
                 `Successfully deleted ${imagesToDelete.length} images from your garden.`
               );
             }
@@ -43842,7 +44181,7 @@ Run "Copy debug log" from the command palette to share details when asking for h
               return;
             }
             console.error(e);
-            new import_obsidian29.Notice(
+            new import_obsidian31.Notice(
               "Unable to publish multiple notes, something went wrong."
             );
           }
@@ -43891,13 +44230,20 @@ Run "Copy debug log" from the command palette to share details when asking for h
         })
       });
       this.addCommand({
+        id: "dg-choose-home-page",
+        name: "Choose Garden Home Page",
+        callback: () => {
+          this.openHomePagePicker();
+        }
+      });
+      this.addCommand({
         id: "dg-reorder-navigation",
         name: "Reorder navigation",
         callback: () => __async(this, null, function* () {
           this.openNavigationOrderModal();
         })
       });
-      if (import_obsidian29.Platform.isDesktop) {
+      if (import_obsidian31.Platform.isDesktop) {
         this.addCommand({
           id: "export-garden-to-local-folder",
           name: "Export Garden to Local Folder",
@@ -43911,7 +44257,7 @@ Run "Copy debug log" from the command palette to share details when asking for h
   runLocalExport() {
     return __async(this, null, function* () {
       try {
-        new import_obsidian29.Notice("Exporting garden to local folder...");
+        new import_obsidian31.Notice("Exporting garden to local folder...");
         const { vault, metadataCache } = this.app;
         const publisher = new Publisher(
           vault,
@@ -43921,12 +44267,12 @@ Run "Copy debug log" from the command palette to share details when asking for h
         const exporter = new LocalExporter(vault, publisher, this.settings);
         const result = yield exporter.export();
         if (result.failed > 0) {
-          new import_obsidian29.Notice(
+          new import_obsidian31.Notice(
             `Exported ${result.notes} notes and ${result.images} images (${result.failed} failed). Check console for details.`,
             8e3
           );
         } else {
-          new import_obsidian29.Notice(
+          new import_obsidian31.Notice(
             `Exported ${result.notes} notes and ${result.images} images to ${this.settings.localExportPath}`,
             8e3
           );
@@ -43937,7 +44283,7 @@ Run "Copy debug log" from the command palette to share details when asking for h
     });
   }
   registerDevAutoExport() {
-    if (!import_obsidian29.Platform.isDesktop || !this.settings.ENABLE_DEVELOPER_TOOLS || !this.settings.localExportOnLoad || !this.settings.localExportPath) {
+    if (!import_obsidian31.Platform.isDesktop || !this.settings.ENABLE_DEVELOPER_TOOLS || !this.settings.localExportOnLoad || !this.settings.localExportPath) {
       return;
     }
     this.app.workspace.onLayoutReady(() => {
@@ -43949,7 +44295,7 @@ Run "Copy debug log" from the command palette to share details when asking for h
   getActiveFile(workspace) {
     const activeFile = workspace.getActiveFile();
     if (!activeFile) {
-      new import_obsidian29.Notice(
+      new import_obsidian31.Notice(
         "No file is open/active. Please open a file and try again."
       );
       return null;
@@ -43970,10 +44316,10 @@ Run "Copy debug log" from the command palette to share details when asking for h
         );
         const fullUrl = siteManager.getNoteUrl(activeFile);
         yield navigator.clipboard.writeText(fullUrl);
-        new import_obsidian29.Notice(`Note URL copied to clipboard`);
+        new import_obsidian31.Notice(`Note URL copied to clipboard`);
       } catch (e) {
         console.log(e);
-        new import_obsidian29.Notice(
+        new import_obsidian31.Notice(
           "Unable to copy note URL to clipboard, something went wrong."
         );
       }
@@ -43982,20 +44328,75 @@ Run "Copy debug log" from the command palette to share details when asking for h
   // TODO: move to publisher?
   publishSingleNote() {
     return __async(this, null, function* () {
+      const activeFile = this.getActiveFile(this.app.workspace);
+      if (!activeFile) {
+        return;
+      }
+      if (activeFile.extension !== "md" && activeFile.extension !== "canvas") {
+        new import_obsidian31.Notice(
+          "The current file is not a markdown or canvas file. Please open a supported file and try again."
+        );
+        return;
+      }
+      if (!(yield this.maybeOfferAsHomePage(activeFile))) {
+        return false;
+      }
+      return this.publishNote(activeFile);
+    });
+  }
+  isForestryGarden() {
+    return this.settings.publishPlatform === "ForestryMd" /* ForestryMd */ && !!this.settings.forestrySettings.apiKey;
+  }
+  /**
+   * Before publishing a single note to a Forestry garden that has no home
+   * page, offer to make this note the home page. Resolves false when the
+   * user backed out and nothing should be published.
+   */
+  maybeOfferAsHomePage(file) {
+    return __async(this, null, function* () {
+      if (!this.isForestryGarden() || file.extension !== "md" || this.settings.dontAskAboutHomePage || this.askedAboutHomePage || findHomePageFiles(this.app).length > 0) {
+        return true;
+      }
+      this.askedAboutHomePage = true;
+      const result = yield promptForHomePage(this.app, file);
+      if (result.dontAskAgain) {
+        this.settings.dontAskAboutHomePage = true;
+        yield this.saveSettings();
+      }
+      if (result.choice === "cancel") {
+        return false;
+      }
+      if (result.choice === "make-home") {
+        yield this.setHomePage(file);
+        yield this.waitForHomeFlag(file);
+      }
+      return true;
+    });
+  }
+  /**
+   * processFrontMatter writes the file; the metadata cache (which the
+   * compiler reads) catches up asynchronously. Wait briefly for dg-home to
+   * show up so the note is published as the home page, not a plain note.
+   */
+  waitForHomeFlag(file, timeoutMs = 3e3) {
+    return __async(this, null, function* () {
+      var _a6;
+      const deadline = Date.now() + timeoutMs;
+      while (Date.now() < deadline) {
+        const cache = this.app.metadataCache.getFileCache(file);
+        if ((_a6 = cache == null ? void 0 : cache.frontmatter) == null ? void 0 : _a6["dg-home" /* HOME */]) {
+          return;
+        }
+        yield new Promise((r) => window.setTimeout(r, 100));
+      }
+    });
+  }
+  publishNote(file) {
+    return __async(this, null, function* () {
       var _a6;
       try {
-        const { vault, workspace, metadataCache } = this.app;
-        const activeFile = this.getActiveFile(workspace);
-        if (!activeFile) {
-          return;
-        }
-        if (activeFile.extension !== "md" && activeFile.extension !== "canvas") {
-          new import_obsidian29.Notice(
-            "The current file is not a markdown or canvas file. Please open a supported file and try again."
-          );
-          return;
-        }
-        new import_obsidian29.Notice("Publishing note...");
+        const { vault, metadataCache } = this.app;
+        new import_obsidian31.Notice("Publishing note...");
         const publisher = new Publisher(
           vault,
           metadataCache,
@@ -44003,7 +44404,7 @@ Run "Copy debug log" from the command palette to share details when asking for h
         );
         publisher.validateSettings();
         const publishFile = yield new PublishFile({
-          file: activeFile,
+          file,
           vault,
           compiler: publisher.compiler,
           metadataCache,
@@ -44011,10 +44412,10 @@ Run "Copy debug log" from the command palette to share details when asking for h
         }).compile();
         const publishSuccessful = yield publisher.publish(publishFile);
         if (publishSuccessful) {
-          new import_obsidian29.Notice(`Successfully published note to your garden.`);
+          new import_obsidian31.Notice(`Successfully published note to your garden.`);
           (_a6 = this.siteUpdateTracker) == null ? void 0 : _a6.notifyPublished();
         } else {
-          new import_obsidian29.Notice("Unable to publish note, something went wrong.");
+          new import_obsidian31.Notice("Unable to publish note, something went wrong.");
         }
         return publishSuccessful;
       } catch (e) {
@@ -44023,7 +44424,7 @@ Run "Copy debug log" from the command palette to share details when asking for h
           return false;
         }
         console.error(e);
-        new import_obsidian29.Notice("Unable to publish note, something went wrong.");
+        new import_obsidian31.Notice("Unable to publish note, something went wrong.");
         return false;
       }
     });
@@ -44058,60 +44459,143 @@ Run "Copy debug log" from the command palette to share details when asking for h
   }
   setAsHomePage() {
     return __async(this, null, function* () {
-      var _a6, _b3;
       const activeFile = this.getActiveFile(this.app.workspace);
       if (!activeFile) {
         return;
       }
-      const currentFileCache = this.app.metadataCache.getFileCache(activeFile);
+      yield this.setHomePage(activeFile);
+    });
+  }
+  /**
+   * Flag `file` as the garden home page (dg-home + dg-publish). If another
+   * note already is, ask before moving the flag. Resolves true when `file`
+   * ended up as the home page.
+   */
+  setHomePage(file) {
+    return __async(this, null, function* () {
+      var _a6;
+      const currentFileCache = this.app.metadataCache.getFileCache(file);
       if ((_a6 = currentFileCache == null ? void 0 : currentFileCache.frontmatter) == null ? void 0 : _a6["dg-home" /* HOME */]) {
-        new import_obsidian29.Notice("This note is already set as the garden home page.");
-        return;
+        new import_obsidian31.Notice("This note is already set as the garden home page.");
+        return true;
       }
-      const existingHomePages = [];
-      for (const file of this.app.vault.getMarkdownFiles()) {
-        const cache = this.app.metadataCache.getFileCache(file);
-        if ((_b3 = cache == null ? void 0 : cache.frontmatter) == null ? void 0 : _b3["dg-home" /* HOME */]) {
-          existingHomePages.push(file);
-        }
-      }
-      if (existingHomePages.length === 0) {
+      const existingHomePages = findHomePageFiles(this.app).filter(
+        (f) => f.path !== file.path
+      );
+      const markAsHome = () => __async(this, null, function* () {
         yield this.app.fileManager.processFrontMatter(
-          activeFile,
+          file,
           (frontmatter) => {
             frontmatter["dg-home" /* HOME */] = true;
             frontmatter["dg-publish" /* PUBLISH */] = true;
           }
         );
-        new import_obsidian29.Notice(
-          `${activeFile.basename} is now your garden's home page and has been marked for publishing.`
+        new import_obsidian31.Notice(
+          `${file.basename} is now your garden's home page and has been marked for publishing.`
         );
-      } else {
+      });
+      if (existingHomePages.length === 0) {
+        yield markAsHome();
+        return true;
+      }
+      return new Promise((resolve) => {
         new HomePageConfirmationModal(
           this.app,
-          activeFile,
+          file,
           existingHomePages[0],
           (shouldUpdate) => __async(this, null, function* () {
-            if (shouldUpdate) {
+            if (!shouldUpdate) {
+              resolve(false);
+              return;
+            }
+            for (const existing of existingHomePages) {
               yield this.app.fileManager.processFrontMatter(
-                existingHomePages[0],
+                existing,
                 (frontmatter) => {
                   delete frontmatter["dg-home" /* HOME */];
                 }
               );
-              yield this.app.fileManager.processFrontMatter(
-                activeFile,
-                (frontmatter) => {
-                  frontmatter["dg-home" /* HOME */] = true;
-                  frontmatter["dg-publish" /* PUBLISH */] = true;
-                }
-              );
-              new import_obsidian29.Notice(
-                `${activeFile.basename} is now your garden's home page and has been marked for publishing.`
-              );
             }
+            yield markAsHome();
+            resolve(true);
           })
         ).open();
+      });
+    });
+  }
+  /**
+   * Let the user pick the garden's home page from the vault. On Forestry
+   * gardens the chosen note is published right away so the site root
+   * stops being empty.
+   */
+  openHomePagePicker() {
+    new HomePagePickerModal(this.app, (file) => __async(this, null, function* () {
+      const isHome = yield this.setHomePage(file);
+      if (!isHome || !this.isForestryGarden()) {
+        return;
+      }
+      yield this.waitForHomeFlag(file);
+      yield this.publishNote(file);
+    })).open();
+  }
+  /**
+   * Called right after a garden is connected to Forestry.md (from the
+   * settings tab or a deep link). The new garden has no home page yet
+   * whatever the vault holds, so always offer to pick one. A note that is
+   * already flagged dg-home (from an earlier garden) is listed first;
+   * choosing it just publishes it to the new garden.
+   */
+  afterForestryConnected() {
+    this.openHomePagePicker();
+  }
+  /**
+   * `obsidian://digital-garden?...` deep links, used by the Forestry.md
+   * dashboard:
+   * - `connect=<code>`: one-click connect; the code is exchanged for the
+   *   garden key server-side.
+   * - `open=home-picker`: open the home page picker.
+   * Unknown parameters (e.g. the legacy `code`/`state` pair) are ignored.
+   */
+  registerDeepLinks() {
+    this.registerObsidianProtocolHandler("digital-garden", (params) => {
+      if (typeof params.connect === "string" && params.connect) {
+        void this.connectWithCode(params.connect);
+        return;
+      }
+      if (params.open === "home-picker") {
+        this.openHomePagePicker();
+        return;
+      }
+      import_js_logger15.default.info("Ignoring digital-garden deep link", params);
+    });
+  }
+  connectWithCode(code) {
+    return __async(this, null, function* () {
+      new import_obsidian31.Notice("Connecting to Forestry.md\u2026");
+      try {
+        const connection = yield ForestryApi.exchangeConnectCode(code);
+        this.settings.publishPlatform = "ForestryMd" /* ForestryMd */;
+        this.settings.forestrySettings.apiKey = connection.apiKey;
+        this.settings.forestrySettings.forestryPageName = connection.pageName;
+        this.settings.forestrySettings.baseUrl = connection.baseUrl;
+        yield this.saveSettings();
+        new import_obsidian31.Notice(
+          `Connected to Forestry.md garden ${connection.pageName} \u{1F331}`
+        );
+        this.afterForestryConnected();
+      } catch (e) {
+        import_js_logger15.default.error("Connect via deep link failed", e);
+        if (e instanceof ForestryApiError && e.kind === "unauthorized") {
+          new import_obsidian31.Notice(
+            "This connect link is invalid or has expired. Open your garden in the Forestry.md dashboard and click Connect again.",
+            1e4
+          );
+          return;
+        }
+        new import_obsidian31.Notice(
+          "Couldn't reach Forestry.md to finish connecting. Check your connection and click Connect in the dashboard again.",
+          1e4
+        );
       }
     });
   }
@@ -44154,7 +44638,7 @@ Run "Copy debug log" from the command palette to share details when asking for h
     });
   }
 };
-var HomePageConfirmationModal = class extends import_obsidian29.Modal {
+var HomePageConfirmationModal = class extends import_obsidian31.Modal {
   constructor(app, newHomeFile, existingHomeFile, onConfirm) {
     super(app);
     this.newHomeFile = newHomeFile;

@@ -11,24 +11,13 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "bases",
               "state": {
-                "file": "Homepage.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
+                "file": "Untitled.base",
+                "viewName": "Table"
               },
-              "icon": "lucide-file",
-              "title": "Homepage"
+              "icon": "lucide-table",
+              "title": "Untitled"
             }
           }
         ]
@@ -99,13 +88,11 @@
               "title": "Vertical tabs"
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 251.32353591918945,
-    "collapsed": true
+    "width": 251.32353591918945
   },
   "right": {
     "id": "43fc27400badb105",
@@ -249,12 +236,18 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "4b44bc66b81b0ac8",
   "lastOpenFiles": [
+    "Extras/ATTACHMENTS/DGLogoP.png",
+    "Extras/ATTACHMENTS/DGlogoS.svg",
+    "Extras/ATTACHMENTS/DGLogo.png",
+    "Extras/ATTACHMENTS/ChatGPT Image Sep 7, 2026, 02_42_10 PM.png",
+    "Extras/ATTACHMENTS/digital-garden-logo.svg",
+    "Homepage.md",
+    "Untitled.base",
     "EFFORTS/The Problem Statement and metrics to check.md",
     "EFFORTS/RISC-V.md",
     "EFFORTS/Efforts.md",
-    "Homepage.md",
     "Excalidraw/Untitled.base",
     "Excalidraw/Drawing 2026-09-07 10.28.59.excalidraw.md",
     "Excalidraw/Drawing 2025-12-26 20.15.13.excalidraw.md",
@@ -273,12 +266,10 @@
     "EFFORTS/Case Study - Mathematical Modelling Presentation Notes Section 6.md",
     "Kanban Boards/Status Kanban.kanban.md",
     "README.md",
-    "Untitled.base",
     "Kanban Boards/M. Tech. Course Work.md",
     "Kanban Boards/Professional to do.md",
     "Kanban Boards/CAB To Do.md",
     "Kanban Boards/Untitled Kanban.md",
-    "Kanban Boards/README.md",
     "Extras/Guide Books AI/101",
     "Extras/Guide Books AI/Minimal Kernel",
     "Extras/Guide Books AI/AI Suggest Skill Mastering Courses",
@@ -293,10 +284,6 @@
     "Extras/ATTACHMENTS/9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f-1.png",
     "Extras/ATTACHMENTS/ChatGPT Image Mar 2, 2026, 11_27_38 AM.png",
     "Extras/ATTACHMENTS/9ef04c7f-1ab9-4833-a3ef-6d0b5b8ab48f.png",
-    "Excalidraw/Scripts/Downloaded/Auto Layout.svg",
-    "Extras/ATTACHMENTS/image-108.png",
-    "Extras/ATTACHMENTS/image-107.png",
-    "Extras/ATTACHMENTS/image-106.png",
     "EFFORTS/Untitled.canvas",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "EFFORTS/Binary Search.canvas",
