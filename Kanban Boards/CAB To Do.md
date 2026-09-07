@@ -6,6 +6,10 @@ kanban-plugin: board
 
 ## To-Do
 
+- [ ] News
+	- [ ] In the news section the mathematical equations should render properly.
+	- [ ] Should also render inline image links. 
+	- [ ] Update the daily news page. Remove the orange un-necessary wordings.
 
 
 ## Doing

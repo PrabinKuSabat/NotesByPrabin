@@ -11,23 +11,12 @@
             "id": "6f1d95a365c1335d",
             "type": "leaf",
             "state": {
-              "type": "kanban",
+              "type": "excalidraw",
               "state": {
-                "file": "Kanban Boards/M. Tech. Course Work.md",
-                "kanbanViewState": {
-                  "kanban-plugin": "board",
-                  "list-collapse": [
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
-                  ]
-                }
+                "file": "Excalidraw/Drawing 2026-09-07 10.28.59.excalidraw.md"
               },
-              "icon": "lucide-trello",
-              "title": "M. Tech. Course Work"
+              "icon": "excalidraw-icon",
+              "title": "Drawing 2026-09-07 10.28.59.excalidraw"
             }
           }
         ]
@@ -102,7 +91,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 414.5
+    "width": 251.32353591918945,
+    "collapsed": true
   },
   "right": {
     "id": "43fc27400badb105",
@@ -246,34 +236,35 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "4b44bc66b81b0ac8",
+  "active": "c8e38b6a1726940f",
   "lastOpenFiles": [
-    "Kanban Boards/Untitled Kanban.md",
-    "Kanban Boards/M. Tech. Course Work.md",
-    "Kanban Boards/CAB To Do.md",
+    "Excalidraw/Drawing 2026-09-07 10.28.59.excalidraw.md",
+    "Excalidraw/Drawing 2025-12-26 20.15.13.excalidraw.md",
+    "Homepage.md",
+    "Excalidraw/User-Level OS Implementation - Idea Board.md",
+    "Excalidraw/address_translation.excalidraw.md",
+    "Excalidraw/Accel-sim Walk Around.excalidraw.md",
+    "Excalidraw/Drawing 2026-03-06 14.26.25.excalidraw.md",
+    "Excalidraw/Drawing 2026-01-04 12.07.10.excalidraw.md",
+    "Excalidraw/Drawing 2025-12-26 20.01.48.excalidraw.md",
+    "Excalidraw/Questions on TPU.excalidraw.md",
+    "Excalidraw/Drawing 2026-03-06 14.04.29.excalidraw.md",
+    "Excalidraw/Dissertation Status.excalidraw.md",
+    "excalibrain.md",
+    "EFFORTS/Dissertation.md",
+    "EFFORTS/Case Study Mathematical Modelling.md",
+    "EFFORTS/Case Study - Mathematical Modelling Presentation Notes Section 6.md",
     "Kanban Boards/Status Kanban.kanban.md",
-    "Kanban Boards/Professional Outreach to do.md",
+    "README.md",
+    "Untitled.base",
+    "Kanban Boards/M. Tech. Course Work.md",
+    "Kanban Boards/Professional to do.md",
+    "Kanban Boards/CAB To Do.md",
+    "Kanban Boards/Untitled Kanban.md",
     "Kanban Boards/README.md",
     "Extras/README.md",
     "Extras/Library.md",
     "Extras/Drafts/Farming Labor Problem Statement.md",
-    "Extras/Drafts/Kanban Draft 2.md",
-    "Extras/Drafts/README.md",
-    "Extras/Drafts/Untitled Note.md",
-    "Extras/Drafts/Kanban Draft.md",
-    "ATLAS/Atlas.md",
-    "Extras/Clippings/Inner Product Verification L2.md",
-    "EFFORTS/RISC-V.md",
-    "ATLAS/Ada Lovelace ISA.md",
-    "ATLAS/Wafers.md",
-    "ATLAS/AMD Architecture.md",
-    "ATLAS/NVIDIA- Architectures.md",
-    "ATLAS/Intel Architectures.md",
-    "ATLAS/Magnus - AMD.md",
-    "ATLAS/RDNA 6 - AMD.md",
-    "EFFORTS/RISC-V User-Space Kernel Design.md",
-    "Prabin's KB ~/RISC-V OS development.md",
-    "ATLAS/Branch Predictors.md",
     "Extras/Guide Books AI/101",
     "Extras/Guide Books AI/Minimal Kernel",
     "Extras/Guide Books AI/AI Suggest Skill Mastering Courses",
@@ -282,7 +273,6 @@
     "Extras/Guide Books AI/Question banks",
     "Extras/Guide Books AI/QEMU",
     "Extras/Guide Books AI",
-    "Untitled.base",
     "Extras/Archives/Extras-Excalidraw-legacy-2026-07-31.tar.gz",
     "Extras/ATTACHMENTS/image-97.png",
     "Extras/ATTACHMENTS/image-95.png",

@@ -8,7 +8,7 @@
   "obsidian-prism-theme@@pt-status-bar-style": "pt-status-bar-position-hidden",
   "obsidian-prism-theme@@pt-fixed-status-bar-align": "pt-fixed-status-bar-align-left",
   "obsidian-prism-theme@@scroll-bar-size": 7,
-  "obsidian-prism-theme@@pt-titlebar-hide-text": true,
+  "obsidian-prism-theme@@pt-titlebar-hide-text": false,
   "obsidian-prism-theme@@radius-m": 8,
   "obsidian-prism-theme@@radius-s": 4,
   "obsidian-prism-theme@@dark-accent-color-preset": "pt-accent-color-orange-dt",
@@ -58,9 +58,9 @@
   "minimal-style@@window-title-off": true,
   "minimal-style@@workspace-background-translucent@@dark": "#000000",
   "minimal-style@@workspace-background-translucent@@light": "#FF000000",
-  "Components@@tab-autohide": true,
-  "Components@@status-bar-autohide": true,
-  "Components@@Ribbon-autohide": true,
+  "Components@@tab-autohide": false,
+  "Components@@status-bar-autohide": false,
+  "Components@@Ribbon-autohide": false,
   "Plugin@@Projects-bg-color": "Projects-bg-color-default",
   "Plugin@@colorful-checkbox": true,
   "Components@@outline-enhanced": true,
@@ -160,5 +160,7 @@
   "minimal-advanced@@animations": "fast-animations",
   "blue-topaz-theme@@bt-colorful-titlebar": false,
   "blue-topaz-theme@@tab-head-style": "transparent-tab-style",
-  "blue-topaz-theme@@hide-titlebar-close-btn": false
+  "blue-topaz-theme@@hide-titlebar-close-btn": false,
+  "Components@@vault-profile-autohide": false,
+  "Components@@nav-header-autohide": false
 }
