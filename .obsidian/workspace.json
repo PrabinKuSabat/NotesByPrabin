@@ -116,8 +116,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 251.32353591918945,
-    "collapsed": true
+    "width": 251.32353591918945
   },
   "right": {
     "id": "43fc27400badb105",
@@ -265,8 +264,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "7987037481a7c580",
+  "active": "4b44bc66b81b0ac8",
   "lastOpenFiles": [
+    "Extras/Pdfs/Computer Architecture - A Quantitative Approach (John L. Hennessy,.pdf",
+    "Extras/Pdfs",
     "Homepage.md",
     "Excalidraw/Drawing 2026-09-07 10.28.59.excalidraw.md",
     "EFFORTS/mlperf_inference_no_external_datasets.md",
@@ -303,7 +304,6 @@
     "EFFORTS/RISC-V User-Space Kernel Design.md",
     "Prabin's KB ~/Research Notes.md",
     "Prabin's KB ~/Vast.AI.md",
-    "Prabin's KB ~/GPU Architectures and Whitepapers.md",
     "Untitled.base",
     "Extras/Guide Books AI/101",
     "Extras/Guide Books AI/Minimal Kernel",
@@ -312,7 +312,6 @@
     "Extras/Guide Books AI/RV2",
     "Extras/Guide Books AI/Question banks",
     "Extras/Guide Books AI/QEMU",
-    "Extras/Guide Books AI",
     "EFFORTS/Untitled.canvas",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "EFFORTS/Binary Search.canvas",
