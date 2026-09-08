@@ -317,7 +317,7 @@
         "hidden": false
       },
       "Font Sizes": {
-        "value": "Fibonacci Scale",
+        "value": "Normal Scale",
         "valueset": [
           "Use scene fontsize",
           "Fibonacci Scale",
@@ -824,9 +824,7 @@
     "Excalidraw/Scripts/Downloaded/Comicbook Callout Editor.md",
     "Excalidraw/Scripts/Downloaded/Printable Layout Wizard.md"
   ],
-  "sidepanelTabs": [
-    "{\"script\":\"Downloaded/Mindmap Builder\",\"title\":\"Mind Map Builder\"}"
-  ],
+  "sidepanelTabs": [],
   "customPens": [
     {
       "type": "default",

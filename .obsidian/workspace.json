@@ -4,41 +4,31 @@
     "type": "split",
     "children": [
       {
-        "id": "0a35612633148c54",
+        "id": "8f711c847d86406e",
         "type": "tabs",
         "children": [
           {
-            "id": "313f513665e6ee3a",
+            "id": "d90c9592b3b23ddc",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "Excalidraw/Drawing 2026-09-07 10.28.59.excalidraw.md"
+                "file": "Homepage.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "excalidraw-icon",
-              "title": "Drawing 2026-09-07 10.28.59.excalidraw"
-            }
-          }
-        ]
-      },
-      {
-        "id": "c302c168bb54793b",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "8b1eb02625b667d2",
-            "type": "leaf",
-            "state": {
-              "type": "pdf",
-              "state": {
-                "file": "Extras/Pdfs/Computer Architecture - A Quantitative Approach (John L. Hennessy,.pdf",
-                "page": 19,
-                "left": -610,
-                "top": 285,
-                "zoom": 0.3
-              },
-              "icon": "lucide-file-text",
-              "title": "Computer Architecture - A Quantitative Approach (John L. Hennessy,"
+              "icon": "lucide-file",
+              "title": "Homepage"
             }
           }
         ]
@@ -252,10 +242,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "313f513665e6ee3a",
+  "active": "d90c9592b3b23ddc",
   "lastOpenFiles": [
-    "Extras/Pdfs/Computer Architecture - A Quantitative Approach (John L. Hennessy,.pdf",
     "Excalidraw/Drawing 2026-09-07 10.28.59.excalidraw.md",
+    "Extras/Pdfs/Computer Architecture - A Quantitative Approach (John L. Hennessy,.pdf",
     "Homepage.md",
     "Extras/Templates/Atlas Template.md",
     "EFFORTS/RV2.md",
