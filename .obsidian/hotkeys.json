@@ -403,5 +403,13 @@
     }
   ],
   "easy-typing-obsidian:easy-typing-toggle-comment": [],
-  "easy-typing-obsidian:easy-typing-goto-new-line-after-cur-line": []
+  "easy-typing-obsidian:easy-typing-goto-new-line-after-cur-line": [],
+  "obsidian-excalidraw-plugin:Downloaded/Mindmap Builder": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "M"
+    }
+  ]
 }

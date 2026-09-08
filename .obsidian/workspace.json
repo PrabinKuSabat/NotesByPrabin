@@ -4,33 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "2040044bd23c9d8a",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "5e5fe0696303fc22",
-            "type": "leaf",
-            "state": {
-              "type": "pdf",
-              "state": {
-                "file": "Extras/Pdfs/Computer Architecture - A Quantitative Approach (John L. Hennessy,.pdf",
-                "page": 8,
-                "left": -27,
-                "top": 1163,
-                "zoom": 0.6413418911501183
-              },
-              "icon": "lucide-file-text",
-              "title": "Computer Architecture - A Quantitative Approach (John L. Hennessy,"
-            }
-          }
-        ]
-      },
-      {
         "id": "0a35612633148c54",
         "type": "tabs",
         "children": [
           {
-            "id": "8b1eb02625b667d2",
+            "id": "313f513665e6ee3a",
             "type": "leaf",
             "state": {
               "type": "excalidraw",
@@ -39,6 +17,28 @@
               },
               "icon": "excalidraw-icon",
               "title": "Drawing 2026-09-07 10.28.59.excalidraw"
+            }
+          }
+        ]
+      },
+      {
+        "id": "c302c168bb54793b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8b1eb02625b667d2",
+            "type": "leaf",
+            "state": {
+              "type": "pdf",
+              "state": {
+                "file": "Extras/Pdfs/Computer Architecture - A Quantitative Approach (John L. Hennessy,.pdf",
+                "page": 13,
+                "left": -27,
+                "top": 947,
+                "zoom": 0.6413418911501182
+              },
+              "icon": "lucide-file-text",
+              "title": "Computer Architecture - A Quantitative Approach (John L. Hennessy,"
             }
           }
         ]
@@ -223,7 +223,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 329.7010498046875,
+    "width": 489.81005859375,
     "collapsed": true
   },
   "left-ribbon": {
@@ -252,7 +252,7 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "5e5fe0696303fc22",
+  "active": "8b1eb02625b667d2",
   "lastOpenFiles": [
     "Excalidraw/Drawing 2026-09-07 10.28.59.excalidraw.md",
     "Extras/Pdfs/Computer Architecture - A Quantitative Approach (John L. Hennessy,.pdf",
