@@ -32,10 +32,10 @@
               "type": "pdf",
               "state": {
                 "file": "Extras/Pdfs/Computer Architecture - A Quantitative Approach (John L. Hennessy,.pdf",
-                "page": 13,
-                "left": -27,
-                "top": 947,
-                "zoom": 0.6413418911501182
+                "page": 19,
+                "left": -610,
+                "top": 285,
+                "zoom": 0.3
               },
               "icon": "lucide-file-text",
               "title": "Computer Architecture - A Quantitative Approach (John L. Hennessy,"
@@ -252,10 +252,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "8b1eb02625b667d2",
+  "active": "313f513665e6ee3a",
   "lastOpenFiles": [
-    "Excalidraw/Drawing 2026-09-07 10.28.59.excalidraw.md",
     "Extras/Pdfs/Computer Architecture - A Quantitative Approach (John L. Hennessy,.pdf",
+    "Excalidraw/Drawing 2026-09-07 10.28.59.excalidraw.md",
     "Homepage.md",
     "Extras/Templates/Atlas Template.md",
     "EFFORTS/RV2.md",
