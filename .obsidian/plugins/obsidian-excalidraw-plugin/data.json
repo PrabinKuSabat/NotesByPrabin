@@ -267,7 +267,7 @@
         "value": false
       },
       "Rounded Corners": {
-        "value": true
+        "value": false
       },
       "Layout Config": {
         "value": {
@@ -318,7 +318,11 @@
       },
       "Font Sizes": {
         "value": "Fibonacci Scale",
-        "hidden": false
+        "valueset": [
+          "Use scene fontsize",
+          "Fibonacci Scale",
+          "Normal Scale"
+        ]
       },
       "Multicolor Mode": {
         "value": true,
