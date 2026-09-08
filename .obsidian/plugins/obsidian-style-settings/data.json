@@ -162,5 +162,7 @@
   "blue-topaz-theme@@tab-head-style": "transparent-tab-style",
   "blue-topaz-theme@@hide-titlebar-close-btn": false,
   "Components@@vault-profile-autohide": false,
-  "Components@@nav-header-autohide": false
+  "Components@@nav-header-autohide": false,
+  "big-and-bold-theme@@left-align-h1": true,
+  "big-and-bold-theme@@colored-headings": true
 }

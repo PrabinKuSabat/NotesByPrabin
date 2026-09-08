@@ -1,7 +1,7 @@
 {
   "accentColor": "#09e8ec",
   "theme": "obsidian",
-  "cssTheme": "Prism",
+  "cssTheme": "Big & Bold",
   "nativeMenus": false,
   "translucency": false,
   "interfaceFontFamily": "Liberation Mono",
@@ -10,9 +10,6 @@
   "baseFontSize": 16,
   "baseFontSizeAction": true,
   "showViewHeader": true,
-  "enabledCssSnippets": [
-    "booksearch",
-    "custom-admonitions.c5575a"
-  ],
+  "enabledCssSnippets": [],
   "showRibbon": true
 }

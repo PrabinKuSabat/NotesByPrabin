@@ -27,15 +27,15 @@
   "copyCommands": [
     {
       "name": "Quote",
-      "template": "> ({{linkWithDisplay}})\n> {{selection}}\n"
+      "template": "> ({{linkWithDisplay}})\n> {{text}}\n"
     },
     {
       "name": "Link",
       "template": "{{linkWithDisplay}}"
     },
     {
-      "name": "Text",
-      "template": "{{text}}"
+      "name": "Embed",
+      "template": "!{{link}}"
     },
     {
       "name": "Callout",
@@ -64,7 +64,7 @@
   "focusObsidianAfterOpenPDFWithDefaultApp": true,
   "syncWithDefaultApp": false,
   "dontActivateAfterOpenPDF": true,
-  "dontActivateAfterOpenMD": false,
+  "dontActivateAfterOpenMD": true,
   "highlightDuration": 0.75,
   "noTextHighlightsInEmbed": false,
   "noAnnotationHighlightsInEmbed": true,
@@ -192,8 +192,8 @@
   "executeBuiltinCommandForZoom": true,
   "executeFontSizeAdjusterCommand": true,
   "closeSidebarWithShowCommandIfExist": true,
-  "autoHidePDFSidebar": true,
-  "defaultSidebarView": 2,
+  "autoHidePDFSidebar": false,
+  "defaultSidebarView": 1,
   "outlineDrag": true,
   "outlineContextMenu": true,
   "outlineLinkDisplayTextFormat": "{{file.basename}}, {{text}}",
@@ -211,13 +211,13 @@
   "useCallout": true,
   "calloutType": "PDF",
   "calloutIcon": "highlighter",
-  "highlightBacklinksInEmbed": false,
+  "highlightBacklinksInEmbed": true,
   "highlightBacklinksInHoverPopover": false,
   "highlightBacklinksInCanvas": true,
   "clickPDFInternalLinkWithModifierKey": true,
   "clickOutlineItemWithModifierKey": true,
   "clickThumbnailWithModifierKey": true,
-  "focusEditorAfterAutoPaste": false,
+  "focusEditorAfterAutoPaste": true,
   "clearSelectionAfterAutoPaste": true,
   "respectCursorPositionWhenAutoPaste": true,
   "blankLineAboveAppendedContent": true,
@@ -266,15 +266,15 @@
   "rectEmbedStaticImage": false,
   "rectImageFormat": "file",
   "rectImageExtension": "webp",
-  "zoomToFitRect": true,
+  "zoomToFitRect": false,
   "rectFollowAdaptToTheme": true,
   "rectEmbedResolution": 100,
   "includeColorWhenCopyingRectLink": true,
   "backlinkIconSize": 50,
-  "showBacklinkIconForSelection": true,
-  "showBacklinkIconForAnnotation": true,
+  "showBacklinkIconForSelection": false,
+  "showBacklinkIconForAnnotation": false,
   "showBacklinkIconForOffset": true,
-  "showBacklinkIconForRect": true,
+  "showBacklinkIconForRect": false,
   "showBoundingRectForBacklinkedAnnot": false,
   "hideReplyAnnotation": false,
   "hideStampAnnotation": false,
