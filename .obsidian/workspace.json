@@ -6,6 +6,7 @@
       {
         "id": "4509724f8bf84da7",
         "type": "tabs",
+        "dimension": 79.4770206022187,
         "children": [
           {
             "id": "e7a7b303c61786dc",
@@ -24,6 +25,7 @@
       {
         "id": "a7798cb5e11383ee",
         "type": "tabs",
+        "dimension": 20.5229793977813,
         "children": [
           {
             "id": "b16adbabc03ea1ea",
@@ -231,8 +233,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 489.81005859375,
-    "collapsed": true
+    "width": 489.81005859375
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -258,8 +259,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "1f08514118c9e1ab",
   "lastOpenFiles": [
+    "Excalidraw/Linux Boot-UP.excalidraw.md",
+    "Defconfig Values.md",
     "Extras/ICONS/tabler-icons-main/turbo.json",
     "Extras/ICONS/tabler-icons-main/test/test-preact/src/assets/preact.svg",
     "Extras/ICONS/tabler-icons-main/test/test-astro/src/styles/index.css",
@@ -271,7 +274,6 @@
     "Extras/ICONS/tabler-icons-main/test/test-svelte/src/main.ts",
     "Extras/ICONS/tabler-icons-main/test/test-svelte/src/app.css",
     "Extras/ICONS/tabler-icons-main/test/test-svelte/src/App.svelte",
-    "Extras/ICONS/tabler-icons-main/test/test-vue/src/vite-env.d.ts",
     "Extras/ICONS/tabler-icons-main/test/test-angular/src/brand-angular.png",
     "Extras/ICONS/tabler-icons-main/test/test-svelte/README.md",
     "Extras/ICONS/tabler-icons-main/test/test-vue/README.md",
@@ -305,7 +307,6 @@
     "Extras/ICONS/simple-icons-develop/README.md",
     "Extras/ICONS/simple-icons-develop/LICENSE.md",
     "Extras/ICONS/simple-icons-develop/DISCLAIMER.md",
-    "Extras/ICONS/simple-icons-develop/CODE_OF_CONDUCT.md",
     "EFFORTS/Untitled.canvas",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "EFFORTS/Binary Search.canvas",
