@@ -11,24 +11,12 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "Homepage.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
+                "file": "Excalidraw/Linux Boot-UP.excalidraw.md"
               },
-              "icon": "lucide-file",
-              "title": "Homepage"
+              "icon": "excalidraw-icon",
+              "title": "Linux Boot-UP.excalidraw"
             }
           }
         ]
@@ -213,8 +201,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 489.81005859375,
-    "collapsed": true
+    "width": 489.81005859375
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -240,11 +227,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "1f08514118c9e1ab",
   "lastOpenFiles": [
-    "Defconfig Values.md",
-    "Excalidraw/Linux Boot-UP.excalidraw.md",
     "Homepage.md",
+    "Excalidraw/Linux Boot-UP.excalidraw.md",
+    "Defconfig Values.md",
     "Excalidraw/Quantitative Design and Analysis.excalidraw.md",
     "EFFORTS/Setting up QEMU for OrangePi Kernel Development.md",
     "Extras/Pdfs/Computer Architecture - A Quantitative Approach (John L. Hennessy,.pdf",

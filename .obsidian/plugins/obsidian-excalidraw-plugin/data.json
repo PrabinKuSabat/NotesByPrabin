@@ -807,6 +807,41 @@
     "Downloaded/Comic Strip Director": {
       "panelPaper": false,
       "pageAspect": "ld"
+    },
+    "Downloaded/Icon Library": {
+      "filters": [
+        {
+          "name": "Icon",
+          "pattern": "^icon - (.*?)(?: - [^-]+)?$",
+          "folderPattern": "",
+          "extensions": "",
+          "maxKb": ""
+        },
+        {
+          "name": "Stickfigure",
+          "pattern": "^stickfigure - (.*?)(?: - [^-]+)?$",
+          "folderPattern": "",
+          "extensions": "",
+          "maxKb": ""
+        },
+        {
+          "name": "Logo",
+          "pattern": "^logo - (.*?)(?: - [^-]+)?$",
+          "folderPattern": "",
+          "extensions": "",
+          "maxKb": ""
+        }
+      ],
+      "excludeFolders": "",
+      "defaultIconWidth": 180,
+      "thumbSize": 100,
+      "lightBgColor": "#FFFFFF60",
+      "darkBgColor": "#FFFFFF60",
+      "activeFilterNames": [
+        "Icon",
+        "Stickfigure",
+        "Logo"
+      ]
     }
   },
   "autostartScripts": {
