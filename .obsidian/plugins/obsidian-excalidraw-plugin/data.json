@@ -811,9 +811,9 @@
     "Downloaded/Icon Library": {
       "filters": [
         {
-          "name": "Icon",
-          "pattern": "^icon - (.*?)(?: - [^-]+)?$",
-          "folderPattern": "",
+          "name": "Icons",
+          "pattern": "^(.*)$",
+          "folderPattern": "^Extras/ICONS(?:/|$)",
           "extensions": "",
           "maxKb": ""
         },
@@ -838,7 +838,7 @@
       "lightBgColor": "#FFFFFF60",
       "darkBgColor": "#FFFFFF60",
       "activeFilterNames": [
-        "Icon",
+        "Icons",
         "Stickfigure",
         "Logo"
       ]
