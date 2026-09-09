@@ -21,9 +21,9 @@
       "template": ""
     }
   ],
-  "defaultDisplayTextFormatIndex": 0,
+  "defaultDisplayTextFormatIndex": 2,
   "syncDisplayTextFormat": true,
-  "syncDefaultDisplayTextFormat": false,
+  "syncDefaultDisplayTextFormat": true,
   "copyCommands": [
     {
       "name": "Quote",
@@ -44,6 +44,10 @@
     {
       "name": "Quote in callout",
       "template": "> [!{{calloutType}}|{{color}}] {{linkWithDisplay}}\n> > {{text}}\n> \n> "
+    },
+    {
+      "name": "MindMap",
+      "template": "- {{linkWithDisplay}}"
     }
   ],
   "useAnotherCopyTemplateWhenNoSelection": false,
@@ -98,9 +102,9 @@
   "singleMDLeafInSidebar": true,
   "alwaysUseSidebar": true,
   "ignoreExistingMarkdownTabIn": [],
-  "defaultColorPaletteActionIndex": 4,
+  "defaultColorPaletteActionIndex": 5,
   "syncColorPaletteAction": true,
-  "syncDefaultColorPaletteAction": false,
+  "syncDefaultColorPaletteAction": true,
   "proxyMDProperty": "PDF",
   "hoverPDFLinkToOpen": false,
   "ignoreHeightParamInPopoverPreview": true,

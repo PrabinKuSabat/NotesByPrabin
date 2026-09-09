@@ -74,7 +74,7 @@
   "zoomStep": 0.05,
   "zoomMin": 0.1,
   "zoomMax": 30,
-  "linkPrefix": "📍",
+  "linkPrefix": "",
   "urlPrefix": "🌐",
   "parseTODO": false,
   "todo": "☐",
@@ -85,7 +85,7 @@
   "showSecondOrderLinks": true,
   "focusOnFileTab": true,
   "openInMainWorkspace": true,
-  "showLinkBrackets": true,
+  "showLinkBrackets": false,
   "syncElementLinkWithText": false,
   "allowCtrlClick": true,
   "forceWrap": false,
@@ -345,7 +345,7 @@
         "hidden": false
       },
       "Base Stroke Width": {
-        "value": 6,
+        "value": 10,
         "hidden": false
       },
       "Custom Palette": {
@@ -501,7 +501,7 @@
             "modifiers": [
               "Alt"
             ],
-            "scope": 2
+            "scope": 1
           },
           {
             "action": "Cut",
@@ -566,7 +566,7 @@
               "Alt",
               "Shift"
             ],
-            "scope": 2
+            "scope": 3
           },
           {
             "action": "Navigate & focus",
@@ -591,7 +591,7 @@
             "modifiers": [
               "Alt"
             ],
-            "scope": 1
+            "scope": 2
           },
           {
             "action": "Fold/Unfold to Level 1",
@@ -642,7 +642,7 @@
           "Default": {
             "growthMode": "Right-facing",
             "arrowType": "curved",
-            "fontsizeScale": "Fibonacci Scale",
+            "fontsizeScale": "Normal Scale",
             "multicolor": true,
             "boxChildren": false,
             "roundedCorners": false,
@@ -650,8 +650,8 @@
             "isSolidArrow": false,
             "centerText": true,
             "fillSweep": false,
-            "branchScale": "Hierarchical",
-            "baseStrokeWidth": 6,
+            "branchScale": "Uniform",
+            "baseStrokeWidth": 5.5,
             "customPalette": {
               "enabled": false,
               "random": false,
@@ -688,6 +688,10 @@
           }
         },
         "hidden": true
+      },
+      "Group Branches": {
+        "value": false,
+        "hidden": false
       }
     },
     "Downloaded/Auto Layout": {
@@ -799,6 +803,10 @@
         },
         "lastUsedPreset": "Default"
       }
+    },
+    "Downloaded/Comic Strip Director": {
+      "panelPaper": false,
+      "pageAspect": "ld"
     }
   },
   "autostartScripts": {
@@ -824,7 +832,9 @@
     "Excalidraw/Scripts/Downloaded/Comicbook Callout Editor.md",
     "Excalidraw/Scripts/Downloaded/Printable Layout Wizard.md"
   ],
-  "sidepanelTabs": [],
+  "sidepanelTabs": [
+    "{\"script\":\"Downloaded/Mindmap Builder\",\"title\":\"Mind Map Builder\"}"
+  ],
   "customPens": [
     {
       "type": "default",

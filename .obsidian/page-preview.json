@@ -1,4 +1,9 @@
 {
   "preview": true,
-  "pdf-plus-citation-link": true
+  "pdf-plus-citation-link": false,
+  "pdf-plus": false,
+  "pdf-plus-internal-link": false,
+  "pdf-plus-external-link": false,
+  "pdf-plus-outline": false,
+  "pdf-plus-thumbnail": false
 }
