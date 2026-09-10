@@ -1,0 +1,1609 @@
+# Orange Pi RV2 / X1 U-Boot boot-trace mind map
+
+- Evidence scope
+  - Repository: orangepi-xunlong/u-boot-orangepi
+  - Pinned commit: 89bff4a7e4cadfb5f130edb1ec44c39bff20a427
+  - Target seed: configs/x1_defconfig
+  - VERIFIED = direct pinned-source evidence
+  - DERIVED = deterministic code consequence or arithmetic
+  - TENTATIVE = requires generated artifacts, Boot-ROM documentation, or runtime trace
+  - The three configurations are layers, not choices
+    - x1_defconfig = human-maintained seed
+    - .config = effective build after defaults, depends, select, and imply
+    - ELF/map/UART = linked and runtime truth
+- Critical address map
+  - U-Boot proper link/load/entry = 0x00200000
+    - Decimal: 2,097,152
+    - Binary: 0b0000_0000_0010_0000_0000_0000_0000_0000
+    - Meaning: 2 MiB from address zero; FIT load target and OpenSBI next_addr/mepc target.
+  - SPL / FSBL entry = 0xC0801000
+    - Decimal: 3,229,618,176
+    - Binary: 0b1100_0000_1000_0000_0001_0000_0000_0000
+    - Meaning: Expected _start address; Boot-ROM placement is tentative.
+  - SPL maximum linked-content end = 0xC0834000
+    - Decimal: 3,229,827,072
+    - Binary: 0b1100_0000_1000_0011_0100_0000_0000_0000
+    - Meaning: Derived from SPL_TEXT_BASE + SPL_MAX_SIZE.
+  - SPL BSS start = 0xC0837000
+    - Decimal: 3,229,839,360
+    - Binary: 0b1100_0000_1000_0011_0111_0000_0000_0000
+    - Meaning: Maximum configured BSS end is 0xC0839000.
+  - SPL stack top = 0xC0840000
+    - Decimal: 3,229,876,224
+    - Binary: 0b1100_0000_1000_0100_0000_0000_0000_0000
+    - Meaning: Early downward-growing stack.
+  - OpenSBI configured load = 0x00000000
+    - Decimal: 0
+    - Binary: 0b0000_0000_0000_0000_0000_0000_0000_0000
+    - Meaning: M-mode firmware location after DDR; verify final ELF/FIT.
+  - U-Boot initial stack = 0x01000000
+    - Decimal: 16,777,216
+    - Binary: 0b0000_0001_0000_0000_0000_0000_0000_0000
+    - Meaning: 16 MiB pre-relocation stack.
+  - SPL malloc = 0x04000000
+    - Decimal: 67,108,864
+    - Binary: 0b0000_0100_0000_0000_0000_0000_0000_0000
+    - Meaning: 64 MiB start; 32 MiB range ends at 0x06000000.
+  - FIT/kernel/Fastboot buffer = 0x11000000
+    - Decimal: 285,212,672
+    - Binary: 0b0001_0001_0000_0000_0000_0000_0000_0000
+    - Meaning: 272 MiB; reused in different phases.
+  - Ramdisk staging = 0x21000000
+    - Decimal: 553,648,128
+    - Binary: 0b0010_0001_0000_0000_0000_0000_0000_0000
+    - Meaning: 528 MiB; immediately after maximum Fastboot range.
+  - Linux FDT staging = 0x31000000
+    - Decimal: 822,083,584
+    - Binary: 0b0011_0001_0000_0000_0000_0000_0000_0000
+    - Meaning: 784 MiB; not SPL's x1_spl control DT.
+- Tentative exact execution flow
+  - 1. Reset / Boot ROM — chooses medium, reads FSBL/SPL, places it at 0xC0801000, and branches to _start. ROM details are outside this tree.
+  - 2. SPL _start — linker ENTRY(_start); generated config should select RV64 M-mode SPL; start.S sets SP=0xC0840000, clears BSS, calls board_init_f then board_init_r.
+  - 3. X1 early board init — UART/pins, I2C/EEPROM identity, clocks/power, DDR selection/training, storage drivers, and control DT.
+  - 4. Medium selection — board code considers eMMC, NAND, NOR, SD, RAM, or USB recovery based on boot mode.
+  - 5. Load OpenSBI + U-Boot FIT — primary image/partition is opensbi; secondary is uboot; FIT may stage at 0x11000000 and loads U-Boot proper to 0x00200000 with RV2 DTB.
+  - 6. SPL calls OpenSBI FW_DYNAMIC — a0=boot hart, a1=FDT address, a2=dynamic-info pointer; next_addr=0x00200000, next_mode=S, options=0.
+  - 7. OpenSBI M-mode handoff — sets mstatus.MPP=S and mepc=0x00200000, prepares supervisor state and arguments, then MRET; fetch resumes at U-Boot _start in S-mode.
+  - 8. U-Boot proper — uses initial SP 0x01000000, runs board_init_f, reserves RAM, relocates, fixes pointers, changes stack, enters board_init_r/main loop.
+  - 9. Environment/autoboot — compiled fallback bootm 0x11000000; x1.env can scan USB/MMC/NVMe/PXE/DHCP; saved environment can override both.
+  - 10. OS image preparation — bootm parses/verifies image at 0x11000000, chooses kernel entry, FDT and ramdisk, decompresses within the 256 MiB limit, and checks placement.
+  - 11. Linux handoff — arch/riscv/lib/bootm.c calls kernel entry with a0=hart ID and a1=Linux FDT pointer. Linux runs S-mode; OpenSBI remains M-mode for SBI ECALL services.
+- Complete x1_defconfig glossary — 297 entries
+  - Architecture, board, and privilege
+    - Why this branch matters: Sets the compiled ISA, X1 board selection, and M/S-mode or hart behavior. Confirm derived choices in generated .config.
+    - CONFIG_RISCV
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Sets the compiled ISA, X1 board selection, and M/S-mode or hart behavior. Confirm derived choices in generated .config.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_TARGET_KY_X1
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Sets the compiled ISA, X1 board selection, and M/S-mode or hart behavior. Confirm derived choices in generated .config.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_K1_X_BOARD_ASIC
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Sets the compiled ISA, X1 board selection, and M/S-mode or hart behavior. Confirm derived choices in generated .config.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_ARCH_RV64I
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Sets the compiled ISA, X1 board selection, and M/S-mode or hart behavior. Confirm derived choices in generated .config.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_RISCV_SMODE
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Builds U-Boot proper for supervisor mode. OpenSBI remains in machine mode and supplies SBI services.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_ 
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Explicitly off: SPL initialization is single-hart. Board Kconfig may imply SMP for U-Boot proper, so inspect the generated .config separately.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_LOCALVERSION
+      - Seed value: "ky"
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Sets the compiled ISA, X1 board selection, and M/S-mode or hart behavior. Confirm derived choices in generated .config.
+      - Definition evidence: vendor-tree search required
+  - Memory and placement
+    - Why this branch matters: Defines an address or capacity. Prove it against ELF LOAD segments, map symbols, live bdinfo, and collision-free ranges.
+    - CONFIG_SYS_TEXT_BASE
+      - Seed value: 0x00200000; decimal 2,097,152; binary 0b0000_0000_0010_0000_0000_0000_0000_0000; 2 MiB
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: VERIFIED source chain: this is U-Boot proper's link/load target. The X1 ITS loads u-boot-nodtb.bin at 0x00200000. SPL's OpenSBI path copies CONFIG_SYS_TEXT_BASE into fw_dynamic_info.next_addr. OpenSBI then prepares mepc=0x00200000 and MRET to S-mode. Confirm the built u-boot ELF entry and LOAD segment.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SYS_MALLOC_LEN
+      - Seed value: 0x1000000; decimal 16,777,216; binary 0b0000_0001_0000_0000_0000_0000_0000_0000; 16 MiB
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Defines an address or capacity. Prove it against ELF LOAD segments, map symbols, live bdinfo, and collision-free ranges.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_NR_DRAM_BANKS
+      - Seed value: 2; decimal 2; binary 0b0000_0000_0000_0000_0000_0000_0000_0010
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Defines an address or capacity. Prove it against ELF LOAD segments, map symbols, live bdinfo, and collision-free ranges.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SYS_LOAD_ADDR
+      - Seed value: 0x200000; decimal 2,097,152; binary 0b0000_0000_0010_0000_0000_0000_0000_0000; 2 MiB
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Same number, different role. This generic command/load default becomes kernel_comp_addr_r in x1.h. Normal X1 OS staging uses kernel_addr_r=0x11000000. Before relocation, arbitrary data loaded at 0x00200000 could overwrite U-Boot proper.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_HAS_CUSTOM_SYS_INIT_SP_ADDR
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Defines an address or capacity. Prove it against ELF LOAD segments, map symbols, live bdinfo, and collision-free ranges.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CUSTOM_SYS_INIT_SP_ADDR
+      - Seed value: 0x1000000; decimal 16,777,216; binary 0b0000_0001_0000_0000_0000_0000_0000_0000; 16 MiB
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: U-Boot proper's pre-relocation stack address 0x01000000 (16 MiB), aligned down to 16 bytes by RISC-V start.S.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_STACK_SIZE
+      - Seed value: 0x100000; decimal 1,048,576; binary 0b0000_0000_0001_0000_0000_0000_0000_0000; 1 MiB
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Defines an address or capacity. Prove it against ELF LOAD segments, map symbols, live bdinfo, and collision-free ranges.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SYS_BOOTM_LEN
+      - Seed value: 0x10000000; decimal 268,435,456; binary 0b0001_0000_0000_0000_0000_0000_0000_0000; 256 MiB
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Maximum decompressed OS-image size is 256 MiB. It is a limit, not proof that all of that range is collision-free.
+      - Definition evidence: vendor-tree search required
+  - Environment, partitions, and filesystems
+    - Why this branch matters: Defines persistent state or on-media layout. Confirm the active device/backend before writing.
+    - CONFIG_ENV_SIZE
+      - Seed value: 0x4000; decimal 16,384; binary 0b0000_0000_0000_0000_0100_0000_0000_0000; 16 KiB
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Defines persistent state or on-media layout. Confirm the active device/backend before writing.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_ENV_OFFSET
+      - Seed value: 0x60000; decimal 393,216; binary 0b0000_0000_0000_0110_0000_0000_0000_0000; 384 KiB
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: 0x60000 = 393,216 bytes = 384 KiB, matching the SPI-NOR env partition start.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_ENV_VARS_UBOOT_CONFIG
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Defines persistent state or on-media layout. Confirm the active device/backend before writing.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_JFFS2_MTDPARTS
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Defines persistent state or on-media layout. Confirm the active device/backend before writing.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_JFFS2_PART_OFFSET
+      - Seed value: 0x700000; decimal 7,340,032; binary 0b0000_0000_0111_0000_0000_0000_0000_0000; 7 MiB
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Defines persistent state or on-media layout. Confirm the active device/backend before writing.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_JFFS2_PART_SIZE
+      - Seed value: 0x100000; decimal 1,048,576; binary 0b0000_0000_0001_0000_0000_0000_0000_0000; 1 MiB
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Defines persistent state or on-media layout. Confirm the active device/backend before writing.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_MTDIDS_DEFAULT
+      - Seed value: "nor0=d420c000.spi-0"
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Defines persistent state or on-media layout. Confirm the active device/backend before writing.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_MTDPARTS_DEFAULT
+      - Seed value: "d420c000.spi-0:64K@0(bootinfo),64K@64K(private),256K@128K(fsbl),64K@384K(env),192K@448K(opensbi),-@640K(uboot)"
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: SPI-NOR map: bootinfo 0–64 KiB; private 64–128 KiB; fsbl 128–384 KiB; env 384–448 KiB; opensbi 448–640 KiB; uboot from 640 KiB onward. Back up flash before writes.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_ENABLE_SET_NUM_PART_SEARCH
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Defines persistent state or on-media layout. Confirm the active device/backend before writing.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_PARTITION_TYPE_GUID
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Defines persistent state or on-media layout. Confirm the active device/backend before writing.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_ENV_OVERWRITE
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Defines persistent state or on-media layout. Confirm the active device/backend before writing.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_ENV_IS_NOWHERE
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Fallback non-persistent environment coexists with MMC/NFS/SPI backends. Runtime selection decides the active backend.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_ENV_IS_IN_MMC
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Defines persistent state or on-media layout. Confirm the active device/backend before writing.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_ENV_IS_IN_NFS
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Defines persistent state or on-media layout. Confirm the active device/backend before writing.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_ENV_IS_IN_SPI_FLASH
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Defines persistent state or on-media layout. Confirm the active device/backend before writing.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SYS_MMC_ENV_DEV
+      - Seed value: 1; decimal 1; binary 0b0000_0000_0000_0000_0000_0000_0000_0001
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Defines persistent state or on-media layout. Confirm the active device/backend before writing.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_JFFS2_NOR
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Defines persistent state or on-media layout. Confirm the active device/backend before writing.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_JFFS2_USE_MTD_READ
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Defines persistent state or on-media layout. Confirm the active device/backend before writing.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_UBIFS_SILENCE_MSG
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Defines persistent state or on-media layout. Confirm the active device/backend before writing.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_IMAGE_SPARSE_TRANSFER_BLK_NUM
+      - Seed value: 0x3000; decimal 12,288; binary 0b0000_0000_0000_0000_0011_0000_0000_0000; 12 KiB
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Defines persistent state or on-media layout. Confirm the active device/backend before writing.
+      - Definition evidence: vendor-tree search required
+  - GPIO, buttons, pins, LEDs
+    - Why this branch matters: Provides recovery input and indicators; polarity and pins must be read from the DT.
+    - CONFIG_DM_GPIO
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Provides recovery input and indicators; polarity and pins must be read from the DT.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_BUTTON
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Provides recovery input and indicators; polarity and pins must be read from the DT.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_BUTTON_GPIO
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Provides recovery input and indicators; polarity and pins must be read from the DT.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_X1_GPIO
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Provides recovery input and indicators; polarity and pins must be read from the DT.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_PINCTRL
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Provides recovery input and indicators; polarity and pins must be read from the DT.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_PINCTRL_SINGLE
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Provides recovery input and indicators; polarity and pins must be read from the DT.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_LED
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Provides recovery input and indicators; polarity and pins must be read from the DT.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_LED_GPIO
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Provides recovery input and indicators; polarity and pins must be read from the DT.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_LED_BLINK
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Provides recovery input and indicators; polarity and pins must be read from the DT.
+      - Definition evidence: vendor-tree search required
+  - SPL and next-stage loading
+    - Why this branch matters: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+    - CONFIG_SPL_DM_SPI
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_DEFAULT_DEVICE_TREE
+      - Seed value: "x1_spl"
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Build control DT is x1_spl. It describes hardware for U-Boot/SPL and is distinct from the Linux DTB; the U-Boot packaging ITS selects x1_orangepi-rv2.dtb.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_TEXT_BASE
+      - Seed value: 0xC0801000; decimal 3,229,618,176; binary 0b1100_0000_1000_0000_0001_0000_0000_0000; 3153924 KiB
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Expected SPL/FSBL _start address. Boot ROM must place the image here and jump here, but the immutable-ROM contract remains TENTATIVE until vendor documentation or a hardware trace confirms it.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_MMC
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_DRIVERS_MISC
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_SIZE_LIMIT
+      - Seed value: 0x31000; decimal 200,704; binary 0b0000_0000_0000_0011_0001_0000_0000_0000; 196 KiB
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Emitted SPL binary cap is 0x31000 = 200,704 bytes = 196 KiB. Validate with stat and ELF sections.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_SPI_FLASH_SUPPORT
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_SPI
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_OPENSBI_LOAD_ADDR
+      - Seed value: 0x0; decimal 0; binary 0b0000_0000_0000_0000_0000_0000_0000_0000
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Requests OpenSBI at address zero after DDR initialization. SYS_SDRAM_BASE is also zero in x1.h. Confirm the packaged OpenSBI ELF/FIT load and entry fields; do not assume every system maps usable DRAM at zero.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_FIT_SIGNATURE
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables signature-verification capability in SPL. It does not prove this artifact is signed: the inspected X1 ITS has CRC32 hashes but no signature node. Inspect final u-boot.itb.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_LOAD_FIT_ADDRESS
+      - Seed value: 0x11000000; decimal 285,212,672; binary 0b0001_0001_0000_0000_0000_0000_0000_0000; 272 MiB
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: SPL FIT working address 0x11000000. It is phase-reused later as the kernel_addr_r/Fastboot buffer, not U-Boot's final execution address.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_LOGLEVEL
+      - Seed value: 1; decimal 1; binary 0b0000_0000_0000_0000_0000_0000_0000_0001
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Level 1 is alert-only in the normal U-Boot ordering; lower SPL noise/size but little trace detail.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_MAX_SIZE
+      - Seed value: 0x33000; decimal 208,896; binary 0b0000_0000_0000_0011_0011_0000_0000_0000; 204 KiB
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Link limit 0x33000 = 208,896 bytes = 204 KiB, excluding BSS per Kconfig help. 0xC0801000 + 0x33000 = 0xC0834000.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_PAD_TO
+      - Seed value: 0x0; decimal 0; binary 0b0000_0000_0000_0000_0000_0000_0000_0000
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_BSS_START_ADDR
+      - Seed value: 0xC0837000; decimal 3,229,839,360; binary 0b1100_0000_1000_0011_0111_0000_0000_0000; 3154140 KiB
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: BSS starts 0xC0837000; max 0x2000 bytes ends at 0xC0839000. Verify __bss_start/__bss_end in u-boot-spl.map and ELF.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_BSS_MAX_SIZE
+      - Seed value: 0x2000; decimal 8,192; binary 0b0000_0000_0000_0000_0010_0000_0000_0000; 8 KiB
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_BOARD_INIT
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_RAW_IMAGE_SUPPORT
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_SHARES_INIT_SP_ADDR
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_STACK
+      - Seed value: 0xC0840000; decimal 3,229,876,224; binary 0b1100_0000_1000_0100_0000_0000_0000_0000; 3154176 KiB
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Early stack top 0xC0840000. RISC-V stack grows downward; prove no collision with BSS, DDR-training buffers, ROM data, and code.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SYS_SPL_MALLOC
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CUSTOM_SYS_SPL_MALLOC_ADDR
+      - Seed value: 0x4000000; decimal 67,108,864; binary 0b0000_0100_0000_0000_0000_0000_0000_0000; 64 MiB
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SYS_SPL_MALLOC_SIZE
+      - Seed value: 0x2000000; decimal 33,554,432; binary 0b0000_0010_0000_0000_0000_0000_0000_0000; 32 MiB
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_USE_SECTOR
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_SECTOR
+      - Seed value: 0x680; decimal 1,664; binary 0b0000_0000_0000_0000_0000_0110_1000_0000
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Sector 0x680 = 1,664; at 512 bytes/sector, byte offset 851,968 = 0xD0000 = 832 KiB. Verify device and block size before raw I/O.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_USE_PARTITION
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_ENV_SUPPORT
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_I2C
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_MMC_WRITE
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_MTD_SUPPORT
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_DM_SPI_FLASH
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_DM_RESET
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_POWER
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_RAM_SUPPORT
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_SPI_FLASH_TINY
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_SPI_FLASH_MTD
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_MTD_LOAD
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SYS_LOAD_IMAGE_PARTITION_NAME
+      - Seed value: "opensbi"
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SYS_LOAD_IMAGE_SEC_PARTITION
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SYS_LOAD_IMAGE_SEC_PARTITION_NAME
+      - Seed value: "uboot"
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_USB_GADGET
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_FASTBOOT_LOAD
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_USB_SDP_SUPPORT
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_OPENSBI_SCRATCH_OPTIONS
+      - Seed value: 0x0; decimal 0; binary 0b0000_0000_0000_0000_0000_0000_0000_0000
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_FASTBOOT
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_ENV_IS_NOWHERE
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_CLK
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_CLK_CCF
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_FASTBOOT_CMD_OEM_CONFIG_ACCESS
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_FASTBOOT_CMD_OEM_ERASE
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_FASTBOOT_CMD_OEM_ENV_ACCESS
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_DM_I2C
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_SYS_I2C_LEGACY
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_SYS_I2C_KY
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_KY_X1_EFUSE
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_MMC_HS400_ES_SUPPORT
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_MMC_HS400_SUPPORT
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_MMC_SDHCI_ADMA
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_DM_PMIC
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_KY_POWER
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_USE_TINY_PRINTF
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_SHA1
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPL_SHA256
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Executes in the early loader before U-Boot proper. It affects media access, FIT parsing, OpenSBI loading, and handoff.
+      - Definition evidence: vendor-tree search required
+  - Driver infrastructure and other board features
+    - Why this branch matters: Supporting driver-model or vendor feature; trace call sites and DT bindings.
+    - CONFIG_SPL
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Supporting driver-model or vendor feature; trace call sites and DT bindings.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_AHCI
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Supporting driver-model or vendor feature; trace call sites and DT bindings.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_HAS_CUSTOM_SPL_MALLOC_START
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Supporting driver-model or vendor feature; trace call sites and DT bindings.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SYS_DISABLE_AUTOLOAD
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Supporting driver-model or vendor feature; trace call sites and DT bindings.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_MULTI_DTB_FIT
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Supporting driver-model or vendor feature; trace call sites and DT bindings.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_REGMAP
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Supporting driver-model or vendor feature; trace call sites and DT bindings.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_DEVRES
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Supporting driver-model or vendor feature; trace call sites and DT bindings.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SCSI_AHCI
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Supporting driver-model or vendor feature; trace call sites and DT bindings.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_KY_SHUTDOWN_CHARGE
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Supporting driver-model or vendor feature; trace call sites and DT bindings.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_DM_MTD
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Supporting driver-model or vendor feature; trace call sites and DT bindings.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_KY_X1_EMAC
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Supporting driver-model or vendor feature; trace call sites and DT bindings.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_DM_BATTERY
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Supporting driver-model or vendor feature; trace call sites and DT bindings.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CW2015_BATTERY
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Supporting driver-model or vendor feature; trace call sites and DT bindings.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_DM_CHARGER
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Supporting driver-model or vendor feature; trace call sites and DT bindings.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SGM41515_CHARGER
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Supporting driver-model or vendor feature; trace call sites and DT bindings.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SCSI
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Supporting driver-model or vendor feature; trace call sites and DT bindings.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_DM_SCSI
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Supporting driver-model or vendor feature; trace call sites and DT bindings.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_TIMER_EARLY
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Supporting driver-model or vendor feature; trace call sites and DT bindings.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SYS_USB_EVENT_POLL_COMPATIBLE
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Supporting driver-model or vendor feature; trace call sites and DT bindings.
+      - Definition evidence: vendor-tree search required
+  - Images, boot policy, and shell
+    - Why this branch matters: Controls image interpretation and autoboot. Compiled defaults can be overridden by board text environment and persistent environment.
+    - CONFIG_FIT
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls image interpretation and autoboot. Compiled defaults can be overridden by board text environment and persistent environment.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_BOOTSTD
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls image interpretation and autoboot. Compiled defaults can be overridden by board text environment and persistent environment.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_LEGACY_IMAGE_FORMAT
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls image interpretation and autoboot. Compiled defaults can be overridden by board text environment and persistent environment.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SUPPORT_RAW_INITRD
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls image interpretation and autoboot. Compiled defaults can be overridden by board text environment and persistent environment.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_OF_BOARD_SETUP
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls image interpretation and autoboot. Compiled defaults can be overridden by board text environment and persistent environment.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_BOOTDELAY
+      - Seed value: 0; decimal 0; binary 0b0000_0000_0000_0000_0000_0000_0000_0000
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Zero-second autoboot makes interruption timing-sensitive. AUTOBOOT_STOP_STR says lowercase s.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_AUTOBOOT_KEYED
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls image interpretation and autoboot. Compiled defaults can be overridden by board text environment and persistent environment.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_AUTOBOOT_STOP_STR
+      - Seed value: "s"
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls image interpretation and autoboot. Compiled defaults can be overridden by board text environment and persistent environment.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_USE_BOOTCOMMAND
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls image interpretation and autoboot. Compiled defaults can be overridden by board text environment and persistent environment.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_BOOTCOMMAND
+      - Seed value: "bootm 0x11000000"
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Kconfig fallback is bootm 0x11000000, while x1.env defines distro scan plus vendor autoboot. A saved environment can override both; printenv bootcmd is runtime truth.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_MISC_INIT_R
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls image interpretation and autoboot. Compiled defaults can be overridden by board text environment and persistent environment.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_FDT_SIMPLEFB
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls image interpretation and autoboot. Compiled defaults can be overridden by board text environment and persistent environment.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_HUSH_PARSER
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls image interpretation and autoboot. Compiled defaults can be overridden by board text environment and persistent environment.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SYS_CBSIZE
+      - Seed value: 256; decimal 256; binary 0b0000_0000_0000_0000_0000_0001_0000_0000
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls image interpretation and autoboot. Compiled defaults can be overridden by board text environment and persistent environment.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SYS_PBSIZE
+      - Seed value: 276; decimal 276; binary 0b0000_0000_0000_0000_0000_0001_0001_0100
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls image interpretation and autoboot. Compiled defaults can be overridden by board text environment and persistent environment.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_BOOTP_SERVERIP
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls image interpretation and autoboot. Compiled defaults can be overridden by board text environment and persistent environment.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_OF_LIBFDT_OVERLAY
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls image interpretation and autoboot. Compiled defaults can be overridden by board text environment and persistent environment.
+      - Definition evidence: vendor-tree search required
+  - Console and diagnostics
+    - Why this branch matters: Controls observability and log volume during the trace.
+    - CONFIG_LOGLEVEL
+      - Seed value: 7; decimal 7; binary 0b0000_0000_0000_0000_0000_0000_0000_0111
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Level 7 is debug in U-Boot's standard ordering; high observability but verbose output.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SYS_DEVICE_NULLDEV
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls observability and log volume during the trace.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SYS_NS16550_IER
+      - Seed value: 0x40; decimal 64; binary 0b0000_0000_0000_0000_0000_0000_0100_0000
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: 0x40 = decimal 64 = binary 0b0100_0000. Treat it as a vendor UART initialization value; inspect the X1 UART integration before assigning generic 16550 bit semantics.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_HTIF_CONSOLE
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls observability and log volume during the trace.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SIFIVE_SERIAL
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls observability and log volume during the trace.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_PRINT_TIMESTAMP
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls observability and log volume during the trace.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_HEXDUMP
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls observability and log volume during the trace.
+      - Definition evidence: vendor-tree search required
+  - Display
+    - Why this branch matters: Enables framebuffer/display/splash functionality and reserves RAM; validate its memory impact.
+    - CONFIG_DISPLAY_CPUINFO
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables framebuffer/display/splash functionality and reserves RAM; validate its memory impact.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_DISPLAY_BOARDINFO
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables framebuffer/display/splash functionality and reserves RAM; validate its memory impact.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_DM_VIDEO
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables framebuffer/display/splash functionality and reserves RAM; validate its memory impact.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_VIDEO_PCI_DEFAULT_FB_SIZE
+      - Seed value: 0x1000000; decimal 16,777,216; binary 0b0000_0001_0000_0000_0000_0000_0000_0000; 16 MiB
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables framebuffer/display/splash functionality and reserves RAM; validate its memory impact.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_VIDEO_COPY
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables framebuffer/display/splash functionality and reserves RAM; validate its memory impact.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SYS_WHITE_ON_BLACK
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables framebuffer/display/splash functionality and reserves RAM; validate its memory impact.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_DISPLAY
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables framebuffer/display/splash functionality and reserves RAM; validate its memory impact.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPLASH_SCREEN
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables framebuffer/display/splash functionality and reserves RAM; validate its memory impact.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPLASH_SCREEN_ALIGN
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables framebuffer/display/splash functionality and reserves RAM; validate its memory impact.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPLASH_SOURCE
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables framebuffer/display/splash functionality and reserves RAM; validate its memory impact.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_VIDEO_BMP_RLE8
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables framebuffer/display/splash functionality and reserves RAM; validate its memory impact.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_BMP_16BPP
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables framebuffer/display/splash functionality and reserves RAM; validate its memory impact.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_BMP_24BPP
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables framebuffer/display/splash functionality and reserves RAM; validate its memory impact.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_BMP_32BPP
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables framebuffer/display/splash functionality and reserves RAM; validate its memory impact.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_VIDEO_KY
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables framebuffer/display/splash functionality and reserves RAM; validate its memory impact.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_DISPLAY_KY_HDMI
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables framebuffer/display/splash functionality and reserves RAM; validate its memory impact.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_DISPLAY_KY_MIPI
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables framebuffer/display/splash functionality and reserves RAM; validate its memory impact.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_DISPLAY_KY_EDP
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables framebuffer/display/splash functionality and reserves RAM; validate its memory impact.
+      - Definition evidence: vendor-tree search required
+  - Operator commands
+    - Why this branch matters: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+    - CONFIG_CMD_CPU
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_TLV_EEPROM
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_NVEDIT_EFI
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_EEPROM
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_MD5SUM
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_ZIP
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_CLK
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_GPIO
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_GPIO_READ
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_GPT
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_GPT_RENAME
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_I2C
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_MMC
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_BKOPS_ENABLE
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_MTD
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_PART
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_SCSI
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_USB
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_WDT
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_DHCP
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_TFTPPUT
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_TFTPSRV
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_PXE
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_BMP
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_TIME
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_GETTIME
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_TIMER
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_SYSBOOT
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_EXT4_WRITE
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_SQUASHFS
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_JFFS2
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_MTDPARTS
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_MTDPARTS_SPREAD
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_MTDPARTS_SHOW_NET_SIZES
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_UBI
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_REGULATOR
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_MISC
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_CMD_LED
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Adds an interactive command used for diagnosis/recovery. It also adds code size and sometimes destructive capability.
+      - Definition evidence: vendor-tree search required
+  - Storage, flash, PHY, PCIe
+    - Why this branch matters: Enables the corresponding hardware path; DT, pinmux, clock, reset, and successful probe are still required.
+    - CONFIG_KY_FLASH
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables the corresponding hardware path; DT, pinmux, clock, reset, and successful probe are still required.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_MMC
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables the corresponding hardware path; DT, pinmux, clock, reset, and successful probe are still required.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SUPPORT_EMMC_BOOT
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables the corresponding hardware path; DT, pinmux, clock, reset, and successful probe are still required.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_MMC_HS400_ES_SUPPORT
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables the corresponding hardware path; DT, pinmux, clock, reset, and successful probe are still required.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_MMC_HS400_SUPPORT
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables the corresponding hardware path; DT, pinmux, clock, reset, and successful probe are still required.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_MMC_VERBOSE
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables the corresponding hardware path; DT, pinmux, clock, reset, and successful probe are still required.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_MMC_SDHCI
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables the corresponding hardware path; DT, pinmux, clock, reset, and successful probe are still required.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_MMC_SDHCI_ADMA
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables the corresponding hardware path; DT, pinmux, clock, reset, and successful probe are still required.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_MMC_SDHCI_X1
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables the corresponding hardware path; DT, pinmux, clock, reset, and successful probe are still required.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_MTD_NOR_FLASH
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables the corresponding hardware path; DT, pinmux, clock, reset, and successful probe are still required.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_MTD_SPI_NAND
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables the corresponding hardware path; DT, pinmux, clock, reset, and successful probe are still required.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPI_FLASH_GIGADEVICE
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables the corresponding hardware path; DT, pinmux, clock, reset, and successful probe are still required.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPI_FLASH_WINBOND
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables the corresponding hardware path; DT, pinmux, clock, reset, and successful probe are still required.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPI_FLASH_FM
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables the corresponding hardware path; DT, pinmux, clock, reset, and successful probe are still required.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPINOR_BLOCK_SUPPORT
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables the corresponding hardware path; DT, pinmux, clock, reset, and successful probe are still required.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPI_FLASH_USE_4K_SECTORS
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables the corresponding hardware path; DT, pinmux, clock, reset, and successful probe are still required.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SPI_FLASH_MTD
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables the corresponding hardware path; DT, pinmux, clock, reset, and successful probe are still required.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_PHY_REALTEK
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables the corresponding hardware path; DT, pinmux, clock, reset, and successful probe are still required.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_NVME_PCI
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables the corresponding hardware path; DT, pinmux, clock, reset, and successful probe are still required.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_PCIE_DW_X1
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables the corresponding hardware path; DT, pinmux, clock, reset, and successful probe are still required.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_PHY_KY_X1_COMBPHY
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables the corresponding hardware path; DT, pinmux, clock, reset, and successful probe are still required.
+      - Definition evidence: vendor-tree search required
+  - Networking
+    - Why this branch matters: Controls DHCP, TFTP, PXE, ARP, or retry behavior for network boot and recovery.
+    - CONFIG_ARP_TIMEOUT
+      - Seed value: 200; decimal 200; binary 0b0000_0000_0000_0000_0000_0000_1100_1000
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls DHCP, TFTP, PXE, ARP, or retry behavior for network boot and recovery.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_NET_RETRY_COUNT
+      - Seed value: 50; decimal 50; binary 0b0000_0000_0000_0000_0000_0000_0011_0010
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls DHCP, TFTP, PXE, ARP, or retry behavior for network boot and recovery.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_PROT_UDP
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls DHCP, TFTP, PXE, ARP, or retry behavior for network boot and recovery.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_NET_RANDOM_ETHADDR
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls DHCP, TFTP, PXE, ARP, or retry behavior for network boot and recovery.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_IP_DEFRAG
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls DHCP, TFTP, PXE, ARP, or retry behavior for network boot and recovery.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_NET_MAXDEFRAG
+      - Seed value: 65535; decimal 65,535; binary 0b0000_0000_0000_0000_1111_1111_1111_1111
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls DHCP, TFTP, PXE, ARP, or retry behavior for network boot and recovery.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_KEEP_SERVERADDR
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Controls DHCP, TFTP, PXE, ARP, or retry behavior for network boot and recovery.
+      - Definition evidence: vendor-tree search required
+  - Clock, power, reset, watchdog
+    - Why this branch matters: Establishes hardware prerequisites and fault recovery; ordering errors can stop DDR or peripheral probe.
+    - CONFIG_KY_X1_CCU
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Establishes hardware prerequisites and fault recovery; ordering errors can stop DDR or peripheral probe.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_DYNAMIC_DDR_CLK_FREQ
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Establishes hardware prerequisites and fault recovery; ordering errors can stop DDR or peripheral probe.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_DMA
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Establishes hardware prerequisites and fault recovery; ordering errors can stop DDR or peripheral probe.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_DMA_CHANNELS
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Establishes hardware prerequisites and fault recovery; ordering errors can stop DDR or peripheral probe.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_POWER_DOMAIN
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Establishes hardware prerequisites and fault recovery; ordering errors can stop DDR or peripheral probe.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_X1_POWER_DOMAIN
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Establishes hardware prerequisites and fault recovery; ordering errors can stop DDR or peripheral probe.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_DM_PMIC
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Establishes hardware prerequisites and fault recovery; ordering errors can stop DDR or peripheral probe.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_PMIC_SPM8XX
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Establishes hardware prerequisites and fault recovery; ordering errors can stop DDR or peripheral probe.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_DM_REGULATOR
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Establishes hardware prerequisites and fault recovery; ordering errors can stop DDR or peripheral probe.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_DM_REGULATOR_SPM8XX
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Establishes hardware prerequisites and fault recovery; ordering errors can stop DDR or peripheral probe.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_DM_REGULATOR_KY_HUB
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Establishes hardware prerequisites and fault recovery; ordering errors can stop DDR or peripheral probe.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_DM_PWM
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Establishes hardware prerequisites and fault recovery; ordering errors can stop DDR or peripheral probe.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_PWM_PXA
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Establishes hardware prerequisites and fault recovery; ordering errors can stop DDR or peripheral probe.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_RESET_KY_X1
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Establishes hardware prerequisites and fault recovery; ordering errors can stop DDR or peripheral probe.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SYSRESET_SBI
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Establishes hardware prerequisites and fault recovery; ordering errors can stop DDR or peripheral probe.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SYSRESET_SYSCON
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Establishes hardware prerequisites and fault recovery; ordering errors can stop DDR or peripheral probe.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SYSRESET_WATCHDOG
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Establishes hardware prerequisites and fault recovery; ordering errors can stop DDR or peripheral probe.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_WDT_KY
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Establishes hardware prerequisites and fault recovery; ordering errors can stop DDR or peripheral probe.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_WDT_PMIC_KY
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Establishes hardware prerequisites and fault recovery; ordering errors can stop DDR or peripheral probe.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_DM_REGULATOR_FIXED
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Establishes hardware prerequisites and fault recovery; ordering errors can stop DDR or peripheral probe.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_DM_REGULATOR_GPIO
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Establishes hardware prerequisites and fault recovery; ordering errors can stop DDR or peripheral probe.
+      - Definition evidence: vendor-tree search required
+  - USB and Fastboot
+    - Why this branch matters: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+    - CONFIG_USB_FUNCTION_FASTBOOT
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_FASTBOOT_BUF_ADDR
+      - Seed value: 0x11000000; decimal 285,212,672; binary 0b0001_0001_0000_0000_0000_0000_0000_0000; 272 MiB
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: 0x11000000 is also kernel_addr_r. A download replaces the staged boot image by design; do not let it overlap relocated U-Boot/FDT/ramdisk.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_FASTBOOT_BUF_SIZE
+      - Seed value: 0x10000000; decimal 268,435,456; binary 0b0001_0000_0000_0000_0000_0000_0000_0000; 256 MiB
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: 0x10000000 = 256 MiB, range [0x11000000,0x21000000). Its end exactly meets ramdisk_addr_r; enforce size.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_FASTBOOT_FLASH
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_FASTBOOT_MULTI_FLASH_OPTION
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_FASTBOOT_FLASH_MMC_DEV
+      - Seed value: 2; decimal 2; binary 0b0000_0000_0000_0000_0000_0000_0000_0010
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_FASTBOOT_MMC_BOOT_SUPPORT
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_FASTBOOT_MMC_BOOT1_NAME
+      - Seed value: "fsbl"
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_FASTBOOT_MMC_BOOT2_NAME
+      - Seed value: "fsbl_1"
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_FASTBOOT_CMD_OEM_READ
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_FASTBOOT_SUPPORT_BLOCK_DEV
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_FASTBOOT_SUPPORT_SECOND_BLOCK_DEV
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_FASTBOOT_CMD_OEM_CONFIG_ACCESS
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_FASTBOOT_CMD_OEM_ERASE
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_FASTBOOT_CMD_OEM_ENV_ACCESS
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_USB
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_USB_XHCI_HCD
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_USB_XHCI_DWC3
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_USB_EHCI_HCD
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_USB_EHCI_X1
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_USB_DWC3
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_USB_DWC3_GADGET
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_USB_DWC3_GENERIC
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_USB_STORAGE
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_USB_KEYBOARD
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_USB_GADGET
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_USB_GADGET_VENDOR_NUM
+      - Seed value: 0x361C; decimal 13,852; binary 0b0000_0000_0000_0000_0011_0110_0001_1100
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_USB_GADGET_PRODUCT_NUM
+      - Seed value: 0x1001; decimal 4,097; binary 0b0000_0000_0000_0000_0001_0000_0000_0001
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_USB2_X1_CI
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_USB_SET_SERIAL_NUMBER
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables USB host/device recovery. Check transfer-buffer bounds and flash target before use.
+      - Definition evidence: vendor-tree search required
+  - I2C, EEPROM, eFuse
+    - Why this branch matters: Provides board identity/calibration/power data that may influence DDR and product setup.
+    - CONFIG_DM_I2C
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Provides board identity/calibration/power data that may influence DDR and product setup.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_SYS_I2C_KY
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Provides board identity/calibration/power data that may influence DDR and product setup.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_I2C_MUX
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Provides board identity/calibration/power data that may influence DDR and product setup.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_INPUT
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Provides board identity/calibration/power data that may influence DDR and product setup.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_MISC
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Provides board identity/calibration/power data that may influence DDR and product setup.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_I2C_EEPROM
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Provides board identity/calibration/power data that may influence DDR and product setup.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_KY_X1_EFUSE
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Provides board identity/calibration/power data that may influence DDR and product setup.
+      - Definition evidence: vendor-tree search required
+  - SPI controllers
+    - Why this branch matters: Enables X1 SPI/QSPI buses; bus and chip-select identities come from the control DT.
+    - CONFIG_SPI
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables X1 SPI/QSPI buses; bus and chip-select identities come from the control DT.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_X1_QSPI
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables X1 SPI/QSPI buses; bus and chip-select identities come from the control DT.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_X1_SPI
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Enables X1 SPI/QSPI buses; bus and chip-select identities come from the control DT.
+      - Definition evidence: vendor-tree search required
+  - Verification and compression
+    - Why this branch matters: Provides algorithms; capability is effective only when the packaged image metadata uses it.
+    - CONFIG_RSA
+      - Seed value: not set
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Provides algorithms; capability is effective only when the packaged image metadata uses it.
+      - Definition evidence: vendor-tree search required
+    - CONFIG_ZSTD
+      - Seed value: y
+      - Meaning: Vendor or legacy symbol without a standalone definition in the indexed Kconfig files. Locate every reference with git grep, then confirm whether it survives in generated .config.
+      - X1 boot-trace effect: Provides algorithms; capability is effective only when the packaged image metadata uses it.
+      - Definition evidence: vendor-tree search required
+- Correctness gates
+  - Config: preserve .config, run olddefconfig, compare savedefconfig; confirm SPL_RISCV_MMODE, U-Boot RISCV_SMODE, SMP, FIT, environment, and driver results.
+  - Link: inspect entry points, ELF LOAD segments, section addresses, _start, __bss_start/__bss_end, map files, and SPL binary size.
+  - Package: inspect FSBL.bin and u-boot.itb load/entry addresses, DTB name, hashes/signatures, and partition offsets.
+  - Memory: compare end-exclusive ranges with relocated U-Boot, malloc, stack, framebuffer, FDT, ramdisk, reserved memory, and actual DRAM banks.
+  - Runtime: preserve full reset-to-Linux UART; interrupt with s; record version, bdinfo, printenv, fdt addr, fdt print /chosen, and iminfo where safe.
+  - Hardware: verify straps, selected medium, sector size, SPI erase geometry, board revision, EEPROM, DDR training, and recovery-button state.
+  - Safety: do not use erase, write, saveenv, fastboot flash, or raw MMC/SPI writes until device, offset, length, and backup are independently confirmed.
+- Primary references
+  - Pinned defconfig: https://github.com/orangepi-xunlong/u-boot-orangepi/blob/89bff4a7e4cadfb5f130edb1ec44c39bff20a427/configs/x1_defconfig
+  - X1 board Kconfig: https://github.com/orangepi-xunlong/u-boot-orangepi/blob/89bff4a7e4cadfb5f130edb1ec44c39bff20a427/board/ky/x1/Kconfig
+  - X1 U-Boot/FDT ITS: https://github.com/orangepi-xunlong/u-boot-orangepi/blob/89bff4a7e4cadfb5f130edb1ec44c39bff20a427/board/ky/x1/configs/uboot_fdt.its
+  - SPL OpenSBI handoff: https://github.com/orangepi-xunlong/u-boot-orangepi/blob/89bff4a7e4cadfb5f130edb1ec44c39bff20a427/common/spl/spl_opensbi.c
+  - OpenSBI FW_DYNAMIC: https://github.com/orangepi-xunlong/u-boot-orangepi/blob/89bff4a7e4cadfb5f130edb1ec44c39bff20a427/opensbi/docs/firmware/fw_dynamic.md
+  - U-Boot SPL boot: https://docs.u-boot.org/en/v2026.01/usage/spl_boot.html
+  - U-Boot bootm: https://docs.u-boot.org/en/v2024.01/usage/cmd/bootm.html
+  - U-Boot environment: https://docs.u-boot.org/en/v2023.10/usage/environment.html
+  - RISC-V machine privilege and MRET: https://docs.riscv.org/reference/isa/v20260120/priv/machine.html
+
