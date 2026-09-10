@@ -11,9 +11,40 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Excalidraw/Linux Boot-UP.excalidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Linux Boot-UP.excalidraw"
+            }
+          },
+          {
+            "id": "e02b9850c978fd26",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Excalidraw/x1_defconfig_architecture.excaidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "x1_defconfig_architecture.excaidraw"
+            }
+          }
+        ],
+        "currentTab": 1
+      },
+      {
+        "id": "fcbe9b2c3db2906d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "11d18b5f109c0a22",
+            "type": "leaf",
+            "state": {
               "type": "markdown",
               "state": {
-                "file": "Homepage.md",
+                "file": "Extras/Guide Books AI/RV2/rv2-x1-defconfig-boot-mindmap.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +59,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Homepage"
+              "title": "rv2-x1-defconfig-boot-mindmap"
             }
           }
         ]
@@ -240,12 +271,13 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "e02b9850c978fd26",
   "lastOpenFiles": [
     "Excalidraw/Linux Boot-UP.excalidraw.md",
+    "Excalidraw/x1_defconfig_architecture.excaidraw.md",
     "Extras/Guide Books AI/RV2/rv2-x1-defconfig-boot-mindmap.md",
-    "Defconfig Values.md",
     "Homepage.md",
+    "Defconfig Values.md",
     "Extras/ICONS/tabler-icons-main/turbo.json",
     "Extras/ICONS/tabler-icons-main/test/test-preact/src/assets/preact.svg",
     "Extras/ICONS/tabler-icons-main/test/test-astro/src/styles/index.css",
@@ -287,7 +319,6 @@
     "Extras/ICONS/tabler-icons-main/README.md",
     "Extras/ICONS/simple-icons-develop/slugs.md",
     "Extras/ICONS/simple-icons-develop/VERSIONING.md",
-    "Extras/ICONS/simple-icons-develop/README.md",
     "EFFORTS/Untitled.canvas",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "EFFORTS/Binary Search.canvas",
