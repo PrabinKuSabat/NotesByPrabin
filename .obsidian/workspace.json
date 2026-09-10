@@ -20,7 +20,7 @@
             }
           },
           {
-            "id": "e02b9850c978fd26",
+            "id": "70260e01f6173a30",
             "type": "leaf",
             "state": {
               "type": "excalidraw",
@@ -271,12 +271,12 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e02b9850c978fd26",
+  "active": "70260e01f6173a30",
   "lastOpenFiles": [
     "Excalidraw/Linux Boot-UP.excalidraw.md",
     "Excalidraw/x1_defconfig_architecture.excaidraw.md",
-    "Extras/Guide Books AI/RV2/rv2-x1-defconfig-boot-mindmap.md",
     "Homepage.md",
+    "Extras/Guide Books AI/RV2/rv2-x1-defconfig-boot-mindmap.md",
     "Defconfig Values.md",
     "Extras/ICONS/tabler-icons-main/turbo.json",
     "Extras/ICONS/tabler-icons-main/test/test-preact/src/assets/preact.svg",

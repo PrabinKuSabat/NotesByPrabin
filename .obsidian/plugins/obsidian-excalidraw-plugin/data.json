@@ -1,6 +1,6 @@
 {
   "showTabTitlebarButtons": true,
-  "copyLinkToElemenetAnchorTo100": false,
+  "copyLinkToElemenetAnchorTo100": true,
   "copyFrameLinkByName": false,
   "disableDoubleClickTextEditing": false,
   "phoneFooterSafeAreaPadding": false,
