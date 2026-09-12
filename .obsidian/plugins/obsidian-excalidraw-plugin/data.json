@@ -50,7 +50,7 @@
   "overrideObsidianFontSize": false,
   "dynamicStyling": "colorful",
   "isLeftHanded": false,
-  "desktopUIMode": "compact",
+  "desktopUIMode": "tray",
   "tabletUIMode": "tray",
   "phoneUIMode": "mobile",
   "iframeMatchExcalidrawTheme": true,
@@ -333,7 +333,7 @@
         "hidden": false
       },
       "Center text in nodes?": {
-        "value": true,
+        "value": false,
         "hidden": false
       },
       "Fill Sweep": {
