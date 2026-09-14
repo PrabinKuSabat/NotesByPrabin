@@ -30,8 +30,21 @@
               "icon": "lucide-file",
               "title": "Homepage"
             }
+          },
+          {
+            "id": "39451083796f0484",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Excalidraw/Linux Boot-UP.excalidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Linux Boot-UP.excalidraw"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -93,8 +106,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 251.32353591918945,
-    "collapsed": true
+    "width": 251.32353591918945
   },
   "right": {
     "id": "43fc27400badb105",
@@ -240,12 +252,12 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "39451083796f0484",
   "lastOpenFiles": [
+    "Homepage.md",
     "Excalidraw/Linux Boot-UP.excalidraw.md",
     "Excalidraw/x1_defconfig_architecture.excaidraw.md",
     "Extras/Guide Books AI/RV2/rv2-x1-defconfig-boot-mindmap.md",
-    "Homepage.md",
     "Defconfig Values.md",
     "Extras/ICONS/tabler-icons-main/turbo.json",
     "Extras/ICONS/tabler-icons-main/test/test-preact/src/assets/preact.svg",
