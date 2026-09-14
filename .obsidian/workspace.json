@@ -11,24 +11,24 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "Excalidraw/Linux Boot-UP.excalidraw.md"
+                "file": "Homepage.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "excalidraw-icon",
-              "title": "Linux Boot-UP.excalidraw"
-            }
-          },
-          {
-            "id": "70260e01f6173a30",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Excalidraw/x1_defconfig_architecture.excaidraw.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "x1_defconfig_architecture.excaidraw"
+              "icon": "lucide-file",
+              "title": "Homepage"
             }
           }
         ]
@@ -242,9 +242,9 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Excalidraw/Linux Boot-UP.excalidraw.md",
     "Excalidraw/x1_defconfig_architecture.excaidraw.md",
     "Extras/Guide Books AI/RV2/rv2-x1-defconfig-boot-mindmap.md",
-    "Excalidraw/Linux Boot-UP.excalidraw.md",
     "Homepage.md",
     "Defconfig Values.md",
     "Extras/ICONS/tabler-icons-main/turbo.json",
