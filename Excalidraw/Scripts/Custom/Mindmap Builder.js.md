@@ -308,6 +308,8 @@ const STRINGS = {
     DESC_LAYOUT_GAP_Y: "Vertical distance between sibling nodes. Also used as the base gap for Radial layouts.",
     GAP_MULTIPLIER: "Gap Multiplier",
     DESC_LAYOUT_GAP_MULTIPLIER: "Vertical spacing for 'leaf' nodes (no children), relative to font size. Low: list-like stacking. High: standard tree spacing.",
+    DEPTH_GAP_DECAY: "Deep-branch Gap Compression",
+    DESC_LAYOUT_DEPTH_GAP_DECAY: "Gradually reduces parent-child spacing at deeper levels. 1.0 keeps uniform spacing; lower values make large maps more compact without changing the first level.",
     DIRECTIONAL_ARC_SPAN_RADIANS: "Directional Arc-span Radians",
     DESC_LAYOUT_ARC_SPAN: "Curvature of the child list. Low (0.5): Flatter, list-like. High (2.0): Curved, organic, but risk of overlap.",
     ROOT_RADIUS_FACTOR: "Root Radius Factor",
@@ -599,6 +601,8 @@ addLocale("zh", {
   DESC_LAYOUT_GAP_Y: "同级节点之间的垂直距离。径向布局中的基础间距。",
   GAP_MULTIPLIER: "间距倍数",
   DESC_LAYOUT_GAP_MULTIPLIER: "叶节点（无子节点的节点）相对于字体大小的垂直间距。低：类似列表堆叠；高：标准树状间距。",
+  DEPTH_GAP_DECAY: "深层分支间距压缩",
+  DESC_LAYOUT_DEPTH_GAP_DECAY: "逐层缩小深层父子节点间距。1.0 保持统一间距；较低值让大型导图更紧凑，同时不改变第一级间距。",
   DIRECTIONAL_ARC_SPAN_RADIANS: "定向张开弧度（Arc-span Radians）",
   DESC_LAYOUT_ARC_SPAN: "子节点排列的曲率。低（0.5）：较平，类似列表。高（2.0）：弯曲有机，但有重叠风险。",
   ROOT_RADIUS_FACTOR: "根节点半径系数",
@@ -880,6 +884,8 @@ addLocale("zh-tw", {
   DESC_LAYOUT_GAP_Y: "同級節點之間的垂直距離。徑向佈局中的基礎間距。",
   GAP_MULTIPLIER: "間距倍數",
   DESC_LAYOUT_GAP_MULTIPLIER: "葉節點（無子節點的節點）相對於字型大小的垂直間距。低：類似列表堆疊；高：標準樹狀間距。",
+  DEPTH_GAP_DECAY: "深層分支間距壓縮",
+  DESC_LAYOUT_DEPTH_GAP_DECAY: "逐層縮小深層父子節點間距。1.0 保持統一間距；較低值讓大型導圖更緊湊，同時不改變第一級間距。",
   DIRECTIONAL_ARC_SPAN_RADIANS: "定向張開弧度（Arc-span Radians）",
   DESC_LAYOUT_ARC_SPAN: "子節點排列的曲率。低（0.5）：較平，類似列表。高（2.0）：彎曲有機，但有重疊風險。",
   ROOT_RADIUS_FACTOR: "根節點半徑係數",
@@ -1114,6 +1120,15 @@ const LAYOUT_METADATA = {
     step: 0.1,
     desc: t("DESC_LAYOUT_GAP_MULTIPLIER"),
     name: t("GAP_MULTIPLIER"),
+  },
+  DEPTH_GAP_DECAY: {
+    section: "SECTION_GENERAL",
+    def: 0.86,
+    min: 0.55,
+    max: 1.0,
+    step: 0.05,
+    desc: t("DESC_LAYOUT_DEPTH_GAP_DECAY"),
+    name: t("DEPTH_GAP_DECAY"),
   },
 
   // --- Radial (New & Updated) ---
@@ -1375,7 +1390,6 @@ const WRAP_WIDTH_MAX = 600;
 const WRAP_WIDTH_STEP = 10;
 const FLOAT_MODAL_OPACITY = 0.8;
 const FLOAT_MODAL_OFFSET = 5;
-const FLOAT_MODAL_MAX_HEIGHT = "calc(2 * var(--size-4-4) + 12px + var(--input-height))";
 const NOTICE_DURATION_CONFLICT = 6000;
 const NOTICE_DURATION_GLOBAL_CONFLICT = 10000;
 
@@ -2636,8 +2650,8 @@ const getSettingsRootNode = (el, allElements, elementById = null, parentMap = nu
  * Returns depth from a specific ancestor.
  * If the ancestor is not found, it safely falls back to absolute hierarchy depth.
  */
-const getDepthFromAncestor = (nodeId, ancestorId, allElements, parentMap = null) => {
-  const byId = buildElementMap(allElements);
+const getDepthFromAncestor = (nodeId, ancestorId, allElements, parentMap = null, elementById = null) => {
+  const byId = elementById ?? buildElementMap(allElements);
   let curr = byId.get(nodeId);
   if (!curr) return 0;
 
@@ -2652,6 +2666,22 @@ const getDepthFromAncestor = (nodeId, ancestorId, allElements, parentMap = null)
 
   const fallbackNode = byId.get(nodeId);
   return fallbackNode ? getHierarchy(fallbackNode, allElements, byId, parentMap).depth : 0;
+};
+
+const getDepthAdjustedPrimaryGap = (nodeId, rootId, allElements, parentMap = null, elementById = null) => {
+  const depth = getDepthFromAncestor(nodeId, rootId, allElements, parentMap, elementById);
+  const configuredDecay = layoutSettings?.DEPTH_GAP_DECAY;
+  const decay = Number.isFinite(configuredDecay) ?
+    Math.min(1, Math.max(LAYOUT_METADATA.DEPTH_GAP_DECAY.min, configuredDecay)) :
+    LAYOUT_METADATA.DEPTH_GAP_DECAY.def;
+  const baseGap = Number.isFinite(layoutSettings?.GAP_X) ? layoutSettings.GAP_X : LAYOUT_METADATA.GAP_X.def;
+  const siblingGap = Number.isFinite(layoutSettings?.GAP_Y) ? layoutSettings.GAP_Y : LAYOUT_METADATA.GAP_Y.def;
+  // Preserve the spacious first level, then progressively compact deeper
+  // branches. The lower bound prevents arrows and multiline nodes crowding.
+  return Math.max(
+    siblingGap * 2,
+    Math.round(baseGap * Math.pow(decay, Math.max(0, depth))),
+  );
 };
 
 const MAP_ROOT_CUSTOMDATA_KEYS = [
@@ -2733,7 +2763,14 @@ const getRootConfigForNode = (rootNode) => {
     fillSweep: typeof cd?.fillSweep === "boolean" ? cd.fillSweep : fillSweep,
     branchScale: cd?.branchScale ?? branchScale,
     baseStrokeWidth: typeof cd?.baseStrokeWidth === "number" ? cd.baseStrokeWidth : baseStrokeWidth,
-    layoutSettings: JSON.parse(JSON.stringify(cd?.layoutSettings ?? defaultLayout)),
+    // Older maps may carry only the settings that existed when they were
+    // created. Merge them over today's defaults so new layout controls never
+    // become undefined or produce NaN coordinates.
+    layoutSettings: JSON.parse(JSON.stringify({
+      ...LAYOUT_DEFAULTS,
+      ...defaultLayout,
+      ...(cd?.layoutSettings || {}),
+    })),
   };
 };
 
@@ -4623,7 +4660,7 @@ const layoutSubtree = (nodeId, targetX, targetCenterY, side, allElements, hasGlo
 
     const subtreeHeight = getSubtreeHeight(nodeId, allElements, childrenByParent, heightCache, elementById);
     let currentY = currentYCenter - subtreeHeight / 2;
-    const dynamicGapX = layoutSettings.GAP_X;
+    const dynamicGapX = getDepthAdjustedPrimaryGap(nodeId, rootId, allElements, parentMap, elementById);
 
     unpinnedChildren.forEach((child) => {
       const childH = getSubtreeHeight(child.id, allElements, childrenByParent, heightCache, elementById);
@@ -4926,13 +4963,14 @@ const layoutSubtreeVertical = (nodeId, targetCenterX, targetY, side, allElements
       const grandChildren = childrenByParent?.get(child.id) ?? getChildrenNodes(child.id, allElements);
       return !grandChildren.some(gc => !gc.customData?.isPinned);
     });
+    const depthAdjustedGap = getDepthAdjustedPrimaryGap(nodeId, rootId, allElements, parentMap, elementById);
     const compactGap = Math.max(
       layoutSettings.GAP_Y,
-      Math.round(layoutSettings.GAP_X * (layoutSettings.VERTICAL_COMPACT_PARENT_CHILD_GAP_RATIO ?? LAYOUT_METADATA.VERTICAL_COMPACT_PARENT_CHILD_GAP_RATIO.def)),
+      Math.round(depthAdjustedGap * (layoutSettings.VERTICAL_COMPACT_PARENT_CHILD_GAP_RATIO ?? LAYOUT_METADATA.VERTICAL_COMPACT_PARENT_CHILD_GAP_RATIO.def)),
     );
     const dynamicGapPrimary = (unpinnedChildren.length <= 2 && allChildrenCompact) ?
       compactGap :
-      layoutSettings.GAP_X;
+      depthAdjustedGap;
 
     unpinnedChildren.forEach((child, index) => {
       const childW = childWidths[index];
@@ -5498,7 +5536,7 @@ const sortL1NodesBasedOnVisualSequence = (l1Nodes, mode, rootCenter) => {
  * @param {boolean} forceUngroup - Force ungrouping of branches before layout.
  * @param {boolean} mustHonorMindmapOrder - If true, enforces the current mindmapOrder over visual position.
  */
-const triggerGlobalLayout = async (rootId, forceUngroup = false, mustHonorMindmapOrder = false) => {
+const performGlobalLayout = async (rootId, forceUngroup = false, mustHonorMindmapOrder = false) => {
   if (!isViewSet()) return;
   // Programmatic imports and configuration changes may not have an active
   // canvas selection. The explicit root is sufficient to lay out the map.
@@ -5822,6 +5860,18 @@ const triggerGlobalLayout = async (rootId, forceUngroup = false, mustHonorMindma
   }
 
   selectNodeInView(selectedElement);
+};
+
+// Layout can be requested by paste, edit, settings, and fold actions in quick
+// succession. Serialize those mutations so a slower pass cannot overwrite a
+// newer pass with stale positions or group data.
+let layoutQueue = Promise.resolve();
+const triggerGlobalLayout = (...args) => {
+  const task = layoutQueue.then(() => performGlobalLayout(...args));
+  layoutQueue = task.catch((error) => {
+    console.error("Mindmap Builder: auto-layout failed", error);
+  });
+  return task;
 };
 
 // ---------------------------------------------------------------------------
@@ -9405,6 +9455,7 @@ const updateUI = (sel) => {
   
   if (inputEl) {
     inputEl.disabled = false;
+    inputEl.resizeToContent?.();
   }
   
   const all = ea.getViewElements();
@@ -10603,6 +10654,7 @@ const renderInput = (container, isFloating = false) => {
 
   inputRow = new ea.obsidian.Setting(container);
   let secondaryButtonContainer = null;
+  let primaryButtonContainer = null;
 
   if (!isFloating) {
     inputRow.settingEl.style.display = "block";
@@ -10612,9 +10664,12 @@ const renderInput = (container, isFloating = false) => {
   } else {
     container.style.width = "85vw";
     container.style.maxWidth = "calc((var(--icon-size) + 2 * var(--size-2-3)) * 18)";
+    inputRow.settingEl.style.display = "block";
     inputRow.settingEl.style.border = "none";
     inputRow.settingEl.style.padding = "0";
     inputRow.infoEl.style.display = "none";
+    inputRow.controlEl.style.display = "block";
+    inputRow.controlEl.style.width = "100%";
 
     // Expandable container for floating mode
     secondaryButtonContainer = container.createDiv();
@@ -10629,6 +10684,16 @@ const renderInput = (container, isFloating = false) => {
   inputRow.controlEl.empty();
   const wrapper = inputRow.controlEl.createDiv("mindmap-input-wrapper");
 
+  if (isFloating) {
+    primaryButtonContainer = inputRow.controlEl.createDiv("mindmap-floating-primary-actions");
+    primaryButtonContainer.style.display = "flex";
+    primaryButtonContainer.style.justifyContent = "flex-end";
+    primaryButtonContainer.style.alignItems = "center";
+    primaryButtonContainer.style.flexWrap = "wrap";
+    primaryButtonContainer.style.gap = "2px";
+    primaryButtonContainer.style.marginTop = "4px";
+  }
+
   ontologyEl = wrapper.createEl("input", {
     type: "text",
     cls: "mindmap-input-ontology",
@@ -10639,14 +10704,40 @@ const renderInput = (container, isFloating = false) => {
     cls: "mindmap-input-main",
     placeholder: `${t("INPUT_PLACEHOLDER")} — Shift+Enter for a new line`,
     attr: {
-      rows: "2",
+      rows: "1",
       spellcheck: "true"
     }
   });
-  inputEl.style.resize = "vertical";
+  inputEl.style.resize = "none";
   inputEl.style.whiteSpace = "pre-wrap";
+  inputEl.style.overflowY = "hidden";
+  inputEl.style.boxSizing = "border-box";
 
-  inputEl.addEventListener("input", () => updateUI());
+  inputEl.resizeToContent = () => {
+    const inputWindow = inputEl.ownerDocument.defaultView;
+    const styles = inputWindow?.getComputedStyle(inputEl);
+    const lineHeight = Number.parseFloat(styles?.lineHeight) || 20;
+    const chrome = (Number.parseFloat(styles?.paddingTop) || 0) +
+      (Number.parseFloat(styles?.paddingBottom) || 0) +
+      (Number.parseFloat(styles?.borderTopWidth) || 0) +
+      (Number.parseFloat(styles?.borderBottomWidth) || 0);
+    const minHeight = lineHeight + chrome;
+    const maxHeight = lineHeight * 5 + chrome;
+    // Obsidian applies modal-specific textarea dimensions. Important inline
+    // bounds make the floating editor obey the same 1-5 line contract as the
+    // sidebar editor, even when a theme defines its own modal min-height.
+    inputEl.style.setProperty("min-height", `${minHeight}px`, "important");
+    inputEl.style.setProperty("max-height", `${maxHeight}px`, "important");
+    inputEl.style.setProperty("height", "auto", "important");
+    const nextHeight = Math.min(inputEl.scrollHeight, maxHeight);
+    inputEl.style.setProperty("height", `${Math.max(minHeight, nextHeight)}px`, "important");
+    inputEl.style.setProperty("overflow-y", inputEl.scrollHeight > maxHeight ? "auto" : "hidden", "important");
+  };
+
+  inputEl.addEventListener("input", () => {
+    inputEl.resizeToContent();
+    updateUI();
+  });
   ontologyEl.addEventListener("input", () => updateUI());
   inputEl.addEventListener("paste", (event) => {
     const html = event.clipboardData?.getData("text/html");
@@ -10658,6 +10749,11 @@ const renderInput = (container, isFloating = false) => {
     event.preventDefault();
     inputEl.setRangeText(markdown, inputEl.selectionStart, inputEl.selectionEnd, "end");
     inputEl.dispatchEvent(new Event("input", { bubbles: true }));
+  });
+  inputEl.resizeToContent();
+  const renderedInputEl = inputEl;
+  renderedInputEl.ownerDocument.defaultView?.requestAnimationFrame(() => {
+    if (renderedInputEl.isConnected) renderedInputEl.resizeToContent();
   });
 
   const updateFocusState = (focusedElement) => {
@@ -10746,6 +10842,8 @@ const renderInput = (container, isFloating = false) => {
         dockedButtonContainer.appendChild(el);
       } else if (isFloating && moveToSecondary && secondaryButtonContainer) {
         secondaryButtonContainer.appendChild(el);
+      } else if (isFloating && primaryButtonContainer) {
+        primaryButtonContainer.appendChild(el);
       }
     });
   };
@@ -10806,7 +10904,7 @@ const renderInput = (container, isFloating = false) => {
       if (secondaryButtonContainer) {
         secondaryButtonContainer.style.display = isFloatingPanelExpanded ? "flex" : "none";
         if (floatingInputModal && floatingInputModal.modalEl) {
-          floatingInputModal.modalEl.style.maxHeight = isFloatingPanelExpanded ? "unset" : FLOAT_MODAL_MAX_HEIGHT;
+          floatingInputModal.modalEl.style.maxHeight = "unset";
         }
       }
     };
@@ -11870,9 +11968,10 @@ const toggleDock = async ({
       modalEl.style.minHeight = "0px";
       modalEl.style.width = "fit-content";
       modalEl.style.height = "auto";
-      // The secondary controls are rendered below the input. Do not clip them
-      // when the floating panel starts expanded.
-      modalEl.style.maxHeight = isFloatingPanelExpanded ? "unset" : FLOAT_MODAL_MAX_HEIGHT;
+      // Let the content determine the height in both compact and expanded modes.
+      // A fixed compact height clips the primary controls and prevents the
+      // textarea from growing from one to five lines in the floating window.
+      modalEl.style.maxHeight = "unset";
 
       if (isExcaliBrainView()) {
         modalEl.style.display = "none";
@@ -11880,7 +11979,7 @@ const toggleDock = async ({
 
       const container = floatingInputModal.contentEl.createDiv();
       renderInput(container, true);
-      modalEl.style.maxHeight = isFloatingPanelExpanded ? "unset" : FLOAT_MODAL_MAX_HEIGHT;
+      modalEl.style.maxHeight = "unset";
       
       // Setup Drag Handle
       const dragHandle = modalEl.createDiv("mindmap-drag-handle");
