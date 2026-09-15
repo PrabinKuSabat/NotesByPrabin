@@ -10,7 +10,7 @@ The script balances **automation** (auto-layout, recursive grouping, and contras
 
 ### Sidepanel & Docking
 - **Persistent UI**: The script utilizes `ea.createSidepanelTab` to maintain state and controls alongside the drawing canvas.
-- **Floating Mode**: The UI can be "undocked" (Shift+Enter) into a `FloatingModal` for a focus-mode experience or to move controls closer to the active drawing area on large screens.
+- **Floating Mode**: The UI can be "undocked" (Alt+Shift+Enter) into a `FloatingModal` for a focus-mode experience or to move controls closer to the active drawing area on large screens.
 
 ### Map-Specific Persistence (customData)
 The script uses `ea.addAppendUpdateCustomData` to store state on elements:
@@ -1699,6 +1699,17 @@ const trimText = (text) => {
   return text.match(/^(?:[ \t]*[-\*][ \t])?(?:[ \t]*)(.*?)[ \t]*$/)[1];
 }
 
+// Clipboard text is intentionally kept verbatim for regular nodes. Markdown
+// lists/headings are the only text shapes that should be promoted to a tree.
+// This lets prose, logs, tables and fenced code blocks remain multiline nodes.
+const normalizeClipboardText = (text) => (text || "").replace(/\r\n?|\n/g, "\n");
+const isFencedCodeBlock = (text) => /^\s*```[^\n`]*\n[\s\S]*\n```\s*$/.test(normalizeClipboardText(text));
+const isStructuredMindmapText = (text) => {
+  const firstLine = normalizeClipboardText(text).split("\n").find((line) => line.trim() !== "") || "";
+  if (isFencedCodeBlock(text)) return false;
+  return /^#{1,6}\s+/.test(firstLine) || /^(?:\s*)(?:[-*+]|\d+[.)])\s+/.test(firstLine);
+};
+
 const parseText = async (text) => {
   const trimmed = trimText(text);
   if (trimmed && (trimmed.startsWith("![[") || trimmed.match(/^[-*][ \t]+!\[\[/)) && trimmed.endsWith("]]")) {
@@ -1924,7 +1935,7 @@ const DEFAULT_HOTKEYS = [
   { action: ACTION_ADD_FOLLOW_ZOOM, key: "Enter", modifiers: ["Mod", "Shift"], scope: SCOPE.input, isInputOnly: true, requiresNode: false },
   
   //Window
-  { action: ACTION_DOCK_UNDOCK, key: "Enter", modifiers: ["Shift"], scope: SCOPE.input, isInputOnly: true, requiresNode: false },
+  { action: ACTION_DOCK_UNDOCK, key: "Enter", modifiers: ["Alt", "Shift"], scope: SCOPE.input, isInputOnly: true, requiresNode: false },
   { action: ACTION_HIDE, key: "Escape", modifiers:[], scope: SCOPE.excalidraw, isInputOnly: true, requiresNode: false },
 
   // Edit
@@ -6212,6 +6223,12 @@ const addNode = async (text, follow = false, skipFinalLayout = false, batchModeA
     }
   }
 
+  // Keep a durable marker so fenced code pasted through either the editor or
+  // Alt+V remains distinguishable from ordinary multiline prose.
+  if (isFencedCodeBlock(text)) {
+    ea.addAppendUpdateCustomData(newNodeId, { isCodeBlock: true });
+  }
+
   if (isBatchMode) {
     return ea.getElement(newNodeId);
   }
@@ -7248,12 +7265,19 @@ const importTextToMap = async (rawText) => {
 // Pastes a Markdown list from clipboard into the map, converting it to nodes.
 **/
 const pasteListToMap = async (contentToPaste = null) => {
-  const rawText = contentToPaste || await navigator.clipboard.readText();
+  const rawText = normalizeClipboardText(contentToPaste ?? await navigator.clipboard.readText());
   if (!rawText) {
     new Notice(t("NOTICE_CLIPBOARD_EMPTY"));
     return;
   }
-  await importTextToMap(rawText);
+
+  // Alt+V remains an outline importer for Markdown lists/headings. Everything
+  // else is valid node content, including multiline prose and fenced code.
+  if (isStructuredMindmapText(rawText)) {
+    await importTextToMap(rawText);
+  } else {
+    await addNode(rawText, false, false, null, null, null, null);
+  }
 };
 
 /**
@@ -7577,6 +7601,75 @@ const updateSubtreeFontSize = (nodeId, newDepth, oldDepth, allElements, newFontS
   children.forEach(child => {
     updateSubtreeFontSize(child.id, newDepth + 1, oldDepth + 1, allElements, newFontScaleType, oldFontScaleType);
   });
+};
+
+/**
+ * Applies a changed font-scale preset to the visible map. Existing manually
+ * sized text is deliberately left alone; only text that still matches the old
+ * preset size is updated. Additional roots are independent submaps, so a
+ * parent-map update stops at their children and a submap update starts with
+ * its own children.
+ */
+const applyFontScaleToSettingsRoot = async (settingsRootId, oldScaleType, newScaleType) => {
+  if (!settingsRootId || oldScaleType === newScaleType || !isViewSet()) return;
+
+  const allElements = ea.getViewElements();
+  const settingsRoot = allElements.find((el) => el.id === settingsRootId);
+  if (!settingsRoot) return;
+
+  const oldScale = getFontScale(oldScaleType);
+  const newScale = getFontScale(newScaleType);
+  let changed = false;
+
+  const editable = (sceneElement) => {
+    if (!sceneElement) return null;
+    if (!ea.getElement(sceneElement.id)) {
+      ea.copyViewElementsToEAforEditing([sceneElement]);
+    }
+    return ea.getElement(sceneElement.id);
+  };
+
+  const updateNode = (node, depth) => {
+    if (!node) return;
+    const textId = node.type === "text" ? node.id : node.boundElements?.find((be) => be.type === "text")?.id;
+    const textElement = textId ? allElements.find((el) => el.id === textId) : null;
+    const oldSize = oldScale[Math.min(depth, oldScale.length - 1)];
+    const newSize = newScale[Math.min(depth, newScale.length - 1)];
+
+    if (textElement?.fontSize === oldSize && oldSize !== newSize) {
+      const eaText = editable(textElement);
+      eaText.fontSize = newSize;
+      ea.refreshTextElementSize(eaText.id);
+      changed = true;
+    }
+
+    const incomingArrow = allElements.find((el) =>
+      el.type === "arrow" && el.customData?.isBranch && el.endBinding?.elementId === node.id
+    );
+    const ontology = incomingArrow && ea.getBoundTextElement(incomingArrow, true)?.sceneElement;
+    if (ontology?.fontSize === Math.floor(oldSize / 2)) {
+      const eaOntology = editable(ontology);
+      eaOntology.fontSize = Math.floor(newSize / 2);
+      ea.refreshTextElementSize(eaOntology.id);
+      changed = true;
+    }
+
+    // A nested submap owns the scale of its descendants.
+    if (node.customData?.isAdditionalRoot && node.id !== settingsRootId) return;
+    getChildrenNodes(node.id, allElements).forEach((child) => updateNode(child, depth + 1));
+  };
+
+  if (settingsRoot.customData?.isAdditionalRoot) {
+    getChildrenNodes(settingsRoot.id, allElements).forEach((child) => updateNode(child, 1));
+  } else {
+    updateNode(settingsRoot, 0);
+  }
+
+  if (!changed) return;
+  await addElementsToView({ captureUpdate: "EVENTUALLY" });
+  if (settingsRoot.customData?.autoLayoutDisabled !== true) {
+    await triggerGlobalLayout(settingsRootId);
+  }
 };
 
 /**
@@ -10364,11 +10457,16 @@ const renderInput = (container, isFloating = false) => {
     placeholder: t("ONTOLOGY_PLACEHOLDER")
   });
 
-  inputEl = wrapper.createEl("input", {
-    type: "text",
+  inputEl = wrapper.createEl("textarea", {
     cls: "mindmap-input-main",
-    placeholder: t("INPUT_PLACEHOLDER")
+    placeholder: `${t("INPUT_PLACEHOLDER")} — Shift+Enter for a new line`,
+    attr: {
+      rows: "2",
+      spellcheck: "true"
+    }
   });
+  inputEl.style.resize = "vertical";
+  inputEl.style.whiteSpace = "pre-wrap";
 
   inputEl.addEventListener("input", () => updateUI());
   ontologyEl.addEventListener("input", () => updateUI());
@@ -11079,13 +11177,17 @@ const renderBody = (contentEl) => {
     FONT_SCALE_TYPES.forEach((key) => d.addOption(key, key));
     d.setValue(fontsizeScale);
     d.onChange(async (v) => {
+      const previousFontsizeScale = fontsizeScale;
       fontsizeScale = v;
       if (disableTabEvents) return;
 
       setVal(K_FONTSIZE, v);
-      await updateRootNodeCustomData({
+      const info = await updateRootNodeCustomData({
         fontsizeScale: v
       });
+      if (info) {
+        await applyFontScaleToSettingsRoot(info.settingsRootId, previousFontsizeScale, v);
+      }
     });
   });
 
@@ -11720,6 +11822,16 @@ const handleKeydown = (e) => {
 
   if (!currentWindow) return;
 
+  // The primary editor is deliberately multiline. Keep the established Enter
+  // shortcuts for map actions, while Shift+Enter always inserts a literal line
+  // break and leaves native paste untouched.
+  if (
+    e.key === "Enter" && e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey &&
+    e.target === inputEl && inputEl?.tagName === "TEXTAREA"
+  ) {
+    return;
+  }
+
   const st = getAppState();
   if (!st || !!st.editingTextElement || !!st.selectedLinearElement?.isEditing || (st.showHyperlinkPopup === "editor")) return;
 
@@ -11755,6 +11867,7 @@ const handleKeydown = (e) => {
     if (!modalEl.contains(activeEl)) return;
     const selector = [
       "input:not([disabled])",
+      "textarea:not([disabled])",
       "div:not([style*='not-allowed'])",
     ].join(",");
 
