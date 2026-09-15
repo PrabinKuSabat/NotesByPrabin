@@ -1812,13 +1812,34 @@ const getCodeFontFamily = () =>
   3; // Cascadia/monospace fallback used by Excalidraw.
 const isStructuredMindmapText = (text) => {
   if (isFencedCodeBlock(text)) return false;
-  const lines = normalizeClipboardText(text).split("\n").filter((line) => line.trim() !== "");
+  let insideFence = false;
+  const lines = normalizeClipboardText(text).split("\n").filter((line) => {
+    const isFence = /^\s*```/.test(line);
+    if (isFence) {
+      insideFence = !insideFence;
+      return false;
+    }
+    return !insideFence && line.trim() !== "";
+  });
   const isStructural = (line) => /^#{1,6}\s+/.test(line) || /^(?:\s*)(?:[-*+]|\d+[.)])\s+/.test(line);
   if (isStructural(lines[0] || "")) return true;
   // Web/ChatGPT copies commonly include a plain title or introduction before
   // the actual outline. Two or more structural lines are enough to treat the
   // content as an import rather than flattening everything into one node.
   return lines.filter(isStructural).length >= 2;
+};
+
+// Some web applications escape list markers when copying Markdown.  They are
+// still outline markers, but only outside fenced code; changing them inside a
+// source block would corrupt valid code such as regular expressions or docs.
+const restoreEscapedOutlineMarkers = (text) => {
+  let insideFence = false;
+  return normalizeClipboardText(text).split("\n").map((line) => {
+    const isFence = /^\s*```/.test(line);
+    const restored = insideFence ? line : line.replace(/^(\s*)\\([*+-])(?=\s)/, "$1$2");
+    if (isFence) insideFence = !insideFence;
+    return restored;
+  }).join("\n");
 };
 
 // Convert clipboard HTML (from browsers and ChatGPT) to portable Markdown
@@ -2167,37 +2188,37 @@ const DEFAULT_HOTKEYS = [
   { action: ACTION_HIDE, key: "Escape", modifiers:[], scope: SCOPE.excalidraw, isInputOnly: true, requiresNode: false },
 
   // Edit
-  { action: ACTION_EDIT, code: "KeyE", modifiers: ["Mod"], scope: SCOPE.input, isInputOnly: false, requiresNode: true },
+  { action: ACTION_EDIT, code: "KeyE", modifiers: ["Mod"], scope: SCOPE.excalidraw, isInputOnly: false, requiresNode: true },
 
   // Structure Modifiers
-  { action: ACTION_TOGGLE_CHECKBOX, code: "KeyL", modifiers: ["Mod"], scope: SCOPE.input, isInputOnly: false, requiresNode: true },
-  { action: ACTION_CALENDAR, code: "KeyD", modifiers: ["Alt", "Mod"], scope: SCOPE.input, isInputOnly: false, requiresNode: false },
-  { action: ACTION_PIN, code: "KeyP", modifiers: ["Alt"], scope: SCOPE.input, isInputOnly: false, requiresNode: true },
-  { action: ACTION_BOX, code: "KeyB", modifiers: ["Alt"], scope: SCOPE.input, isInputOnly: false, requiresNode: true },
-  { action: ACTION_TOGGLE_BOUNDARY, code: "KeyB", modifiers: ["Alt", "Shift"], scope: SCOPE.input, isInputOnly: false, requiresNode: true },
-  { action: ACTION_TOGGLE_SUBMAP_ROOT, code: "KeyJ", modifiers: ["Alt"], scope: SCOPE.input, isInputOnly: false, requiresNode: true },
-  { action: ACTION_TOGGLE_GROUP, code: "KeyG", modifiers: ["Alt"], scope: SCOPE.input, isInputOnly: false, requiresNode: true },
-  { action: ACTION_TOGGLE_EMBED, code: "KeyE", modifiers:["Alt"], scope: SCOPE.input, isInputOnly: false, requiresNode: true },
+  { action: ACTION_TOGGLE_CHECKBOX, code: "KeyL", modifiers: ["Mod"], scope: SCOPE.excalidraw, isInputOnly: false, requiresNode: true },
+  { action: ACTION_CALENDAR, code: "KeyD", modifiers: ["Alt", "Mod"], scope: SCOPE.excalidraw, isInputOnly: false, requiresNode: false },
+  { action: ACTION_PIN, code: "KeyP", modifiers: ["Alt"], scope: SCOPE.excalidraw, isInputOnly: false, requiresNode: true },
+  { action: ACTION_BOX, code: "KeyB", modifiers: ["Alt"], scope: SCOPE.excalidraw, isInputOnly: false, requiresNode: true },
+  { action: ACTION_TOGGLE_BOUNDARY, code: "KeyB", modifiers: ["Alt", "Shift"], scope: SCOPE.excalidraw, isInputOnly: false, requiresNode: true },
+  { action: ACTION_TOGGLE_SUBMAP_ROOT, code: "KeyJ", modifiers: ["Alt"], scope: SCOPE.excalidraw, isInputOnly: false, requiresNode: true },
+  { action: ACTION_TOGGLE_GROUP, code: "KeyG", modifiers: ["Alt"], scope: SCOPE.excalidraw, isInputOnly: false, requiresNode: true },
+  { action: ACTION_TOGGLE_EMBED, code: "KeyE", modifiers:["Alt"], scope: SCOPE.excalidraw, isInputOnly: false, requiresNode: true },
 
   // Clipboard (Alt to distinguish from text editing)
-  { action: ACTION_COPY, code: "KeyC", modifiers: ["Alt"], scope: SCOPE.input, isInputOnly: false, requiresNode: true },
-  { action: ACTION_CUT, code: "KeyX", modifiers: ["Alt"], scope: SCOPE.input, isInputOnly: false, requiresNode: true },
-  { action: ACTION_PASTE, code: "KeyV", modifiers: ["Alt"], scope: SCOPE.input, isInputOnly: false, requiresNode: false },
-  { action: ACTION_IMPORT_OUTLINE, code: "KeyI", modifiers: ["Alt"], scope: SCOPE.input, isInputOnly: false, requiresNode: true },
+  { action: ACTION_COPY, code: "KeyC", modifiers: ["Alt"], scope: SCOPE.excalidraw, isInputOnly: false, requiresNode: true },
+  { action: ACTION_CUT, code: "KeyX", modifiers: ["Alt"], scope: SCOPE.excalidraw, isInputOnly: false, requiresNode: true },
+  { action: ACTION_PASTE, code: "KeyV", modifiers: ["Alt"], scope: SCOPE.excalidraw, isInputOnly: false, requiresNode: false },
+  { action: ACTION_IMPORT_OUTLINE, code: "KeyI", modifiers: ["Alt"], scope: SCOPE.excalidraw, isInputOnly: false, requiresNode: true },
 
   // View Actions
-  { action: ACTION_REARRANGE, code: "KeyR", modifiers: ["Alt"], scope: SCOPE.input, isInputOnly: false, requiresNode: true },
-  { action: ACTION_ZOOM, code: "KeyZ", modifiers:["Alt"], scope: SCOPE.input, isInputOnly: false, requiresNode: true },
-  { action: ACTION_FOCUS, code: "KeyF", modifiers: ["Alt"], scope: SCOPE.input, isInputOnly: false, requiresNode: false },
+  { action: ACTION_REARRANGE, code: "KeyR", modifiers: ["Alt"], scope: SCOPE.excalidraw, isInputOnly: false, requiresNode: true },
+  { action: ACTION_ZOOM, code: "KeyZ", modifiers:["Alt"], scope: SCOPE.excalidraw, isInputOnly: false, requiresNode: true },
+  { action: ACTION_FOCUS, code: "KeyF", modifiers: ["Alt"], scope: SCOPE.excalidraw, isInputOnly: false, requiresNode: false },
 
   //Navigation
-  { action: ACTION_NAVIGATE, key: "ArrowKeys", modifiers: ["Alt"], isNavigation: true, scope: SCOPE.input, isInputOnly: false, requiresNode: true },
-  { action: ACTION_NAVIGATE_ZOOM, key: "ArrowKeys", modifiers: ["Alt", "Shift"], isNavigation: true, scope: SCOPE.input, isInputOnly: false, requiresNode: true },
-  { action: ACTION_NAVIGATE_FOCUS, key: "ArrowKeys", modifiers: ["Alt", "Mod"], isNavigation: true, scope: SCOPE.input, isInputOnly: false, requiresNode: true },
-  { action: ACTION_SORT_ORDER, code: "ArrowKeys", modifiers: ["Mod"], isNavigation: true, scope: SCOPE.input, isInputOnly: false, requiresNode: true },
-  { action: ACTION_FOLD, code: "Digit1", modifiers: ["Alt"], scope: SCOPE.input, isInputOnly: false, requiresNode: true },
-  { action: ACTION_FOLD_L1, code: "Digit2", modifiers:["Alt"], scope: SCOPE.input, isInputOnly: false, requiresNode: true },
-  { action: ACTION_FOLD_ALL, code: "Digit3", modifiers: ["Alt"], scope: SCOPE.input, isInputOnly: false, requiresNode: true },
+  { action: ACTION_NAVIGATE, key: "ArrowKeys", modifiers: ["Alt"], isNavigation: true, scope: SCOPE.excalidraw, isInputOnly: false, requiresNode: true },
+  { action: ACTION_NAVIGATE_ZOOM, key: "ArrowKeys", modifiers: ["Alt", "Shift"], isNavigation: true, scope: SCOPE.excalidraw, isInputOnly: false, requiresNode: true },
+  { action: ACTION_NAVIGATE_FOCUS, key: "ArrowKeys", modifiers: ["Alt", "Mod"], isNavigation: true, scope: SCOPE.excalidraw, isInputOnly: false, requiresNode: true },
+  { action: ACTION_SORT_ORDER, code: "ArrowKeys", modifiers: ["Mod"], isNavigation: true, scope: SCOPE.excalidraw, isInputOnly: false, requiresNode: true },
+  { action: ACTION_FOLD, code: "Digit1", modifiers: ["Alt"], scope: SCOPE.excalidraw, isInputOnly: false, requiresNode: true },
+  { action: ACTION_FOLD_L1, code: "Digit2", modifiers:["Alt"], scope: SCOPE.excalidraw, isInputOnly: false, requiresNode: true },
+  { action: ACTION_FOLD_ALL, code: "Digit3", modifiers: ["Alt"], scope: SCOPE.excalidraw, isInputOnly: false, requiresNode: true },
 
   // Undo / Redo
   { action: ACTION_UNDO, code: "KeyZ", modifiers: ["Mod"], scope: SCOPE.excalidraw, isInputOnly: false, hidden: true, requiresNode: false },
@@ -2419,6 +2440,15 @@ if (hotkeysWereNormalized) {
 
 const getHotkeyDefByAction = (action) => userHotkeys.find((h) => h.action === action);
 
+// Toolbar actions must remain available while the Excalidraw canvas or the
+// floating panel has focus.  Older saved settings marked these non-typing
+// actions as input-only in practice (scope: input), which made Alt+V, Alt+B
+// and similar shortcuts appear dead unless the text cursor was active.
+// Preserve explicitly broader Global bindings, but promote the legacy input
+// scope to the Excalidraw-view scope at runtime.
+const getEffectiveHotkeyScope = (hotkey) =>
+  !hotkey?.isInputOnly && hotkey?.scope === SCOPE.input ? SCOPE.excalidraw : hotkey?.scope;
+
 const getHotkeyDisplayString = (h) => {
   const parts = [];
   if (h.modifiers.includes("Ctrl")) parts.push("Ctrl");
@@ -2468,13 +2498,13 @@ const generateRuntimeHotkeys = () => {
           action: h.action,
           key,
           modifiers: h.modifiers,
-          scope: h.scope,
+          scope: getEffectiveHotkeyScope(h),
           requiresNode: h.requiresNode,
           isInputOnly: h.isInputOnly
         });
       });
     } else {
-      addRuntimeHotkey(h);
+      addRuntimeHotkey({ ...h, scope: getEffectiveHotkeyScope(h) });
     }
   });
   return runtimeKeys;
@@ -6498,9 +6528,11 @@ const addNode = async (text, follow = false, skipFinalLayout = false, batchModeA
   let curMaxH = 0;
 
   if (!imageInfo?.isImagePath && !imageInfo?.imageFile && !embeddableUrl) {
-    renderedText = (await parseText(text)) ?? text;
+    // A fenced block is source, not Markdown prose: parsing or soft-wrapping
+    // it changes indentation and can make C/assembly unusable after an edit.
+    renderedText = isCodeBlock ? text : ((await parseText(text)) ?? text);
     metrics = ea.measureText(renderedText);
-    shouldWrap = metrics.width > curMaxW;
+    shouldWrap = !isCodeBlock && metrics.width > curMaxW;
     curMaxH = metrics.height;
 
     if (shouldWrap) {
@@ -6716,7 +6748,9 @@ const addNode = async (text, follow = false, skipFinalLayout = false, batchModeA
         textVerticalAlign: "middle",
         width: shouldWrap ? curMaxW : undefined,
         height: shouldWrap ? curMaxH : undefined,
-        autoResize: !shouldWrap,
+        // Fenced source must retain physical lines and be able to shrink when
+        // collapsed; a fixed-width text element preserves neither guarantee.
+        autoResize: isCodeBlock ? true : !shouldWrap,
       }, preGenTextId);
     }
 
@@ -7390,7 +7424,8 @@ const copyMapAsText = async (cut = false, toClipboard = true) => {
 **/
 const performImportTextToMap = async (rawText) => {
   if (!isViewSet()) return;
-  if (!rawText) return;
+  rawText = restoreEscapedOutlineMarkers(rawText);
+  if (!rawText.trim()) return;
 
   let sel = getMindmapNodeFromSelection();
   let currentParent;
@@ -7936,7 +7971,7 @@ const importTextToMap = async (rawText) => {
 // Pastes a Markdown list from clipboard into the map, converting it to nodes.
 **/
 const pasteListToMap = async (contentToPaste = null) => {
-  const rawText = normalizeClipboardText(contentToPaste ?? await readClipboardText());
+  const rawText = restoreEscapedOutlineMarkers(contentToPaste ?? await readClipboardText());
   if (!rawText) {
     new Notice(t("NOTICE_CLIPBOARD_EMPTY"));
     return;
@@ -9527,6 +9562,23 @@ const toggleCheckboxStatus = async () => {
  * Toggles the selected node between an embed (![[...]]) and a link ([[...|alias]]).
  * Cleans the markdown '# ' characters when mapping the section name to the alias.
  */
+// Excalidraw's updateContainerSize expands reliably but, in some plugin
+// versions, does not shrink a container after a long code block is collapsed.
+// Set the frame from the freshly measured text first, then let the native API
+// reconcile the binding after commit.
+const fitCodeContainerToText = (containerId, textId) => {
+  const container = ea.getElement(containerId);
+  const text = ea.getElement(textId);
+  if (!container || !text || container.type === "text") return;
+  const padding = layoutSettings.CONTAINER_PADDING;
+  const centerX = container.x + container.width / 2;
+  const centerY = container.y + container.height / 2;
+  container.width = Math.ceil(text.width + padding * 2);
+  container.height = Math.ceil(text.height + padding * 2);
+  container.x = centerX - container.width / 2;
+  container.y = centerY - container.height / 2;
+};
+
 const toggleCodeNode = async () => {
   if (!isViewSet()) return;
   const selected = getMindmapNodeFromSelection();
@@ -9552,7 +9604,9 @@ const toggleCodeNode = async () => {
     eaText.originalText = fencedSource;
     eaText.text = fencedSource;
     eaText.fontFamily = getCodeFontFamily();
+    eaText.autoResize = true;
     ea.refreshTextElementSize(eaText.id);
+    if (node.type !== "text") fitCodeContainerToText(node.id, eaText.id);
     ea.addAppendUpdateCustomData(node.id, {
       isCodeBlock: true,
       isCodeCollapsed: false,
@@ -9585,7 +9639,9 @@ const toggleCodeNode = async () => {
   eaText.originalText = nextText;
   eaText.text = nextText;
   eaText.fontFamily = getCodeFontFamily();
+  eaText.autoResize = true;
   ea.refreshTextElementSize(eaText.id);
+  if (node.type !== "text") fitCodeContainerToText(node.id, eaText.id);
   ea.addAppendUpdateCustomData(node.id, {
     isCodeCollapsed: !collapsed,
     codeSource: source,
@@ -9917,7 +9973,7 @@ const registerObsidianHotkeyOverrides = () => {
   };
 
   RUNTIME_HOTKEYS.forEach(h => {
-    if (context < h.scope) return;
+    if (context < getEffectiveHotkeyScope(h)) return;
     if (h.key) reg(h.modifiers, h.key);
     if (h.code) {
       const char = h.code.replace("Key", "").replace("Digit", "").toLowerCase();
@@ -10693,18 +10749,23 @@ const commitEdit = async () => {
     if (textChanged && textEl) {
       ea.copyViewElementsToEAforEditing([textEl]);
       const eaEl = ea.getElement(textEl.id);
+      const isCodeBlock = isFencedCodeBlock(textInput);
 
-      const renderedText = await parseText(textInput);
+      // Keep fenced source byte-for-byte intact. ea.parseText() and the normal
+      // wrap path are correct for prose, but they can alter code indentation.
+      const renderedText = isCodeBlock ? textInput : await parseText(textInput);
 
       eaEl.rawText = textInput;
       eaEl.originalText = renderedText;
 
-      // Refresh family/size in case global settings changed, though this is optional
+      // Switch before measuring so C/assembly and other code languages retain
+      // their monospace dimensions when opened, edited, collapsed, or expanded.
+      eaEl.fontFamily = isCodeBlock ? getCodeFontFamily() : getAppState().currentItemFontFamily;
       ea.style.fontFamily = eaEl.fontFamily;
       ea.style.fontSize = eaEl.fontSize;
 
       const metrics = ea.measureText(renderedText);
-      const shouldWrap = metrics.width > maxWidth;
+      const shouldWrap = !isCodeBlock && metrics.width > maxWidth;
 
       if (!shouldWrap) {
         eaEl.autoResize = true;
@@ -10721,10 +10782,11 @@ const commitEdit = async () => {
 
       ea.refreshTextElementSize(eaEl.id);
 
-      const isCodeBlock = isFencedCodeBlock(textInput);
-      if (isCodeBlock) eaEl.fontFamily = getCodeFontFamily();
       if (!ea.getElement(visualNode.id)) {
         ea.copyViewElementsToEAforEditing([visualNode]);
+      }
+      if (isCodeBlock && visualNode.id !== eaEl.id) {
+        fitCodeContainerToText(visualNode.id, eaEl.id);
       }
       ea.addAppendUpdateCustomData(visualNode.id, isCodeBlock ? {
         isCodeBlock: true,
@@ -12753,7 +12815,7 @@ const getActionFromEvent = (e) => {
 
   return match ? {
     action: match.action,
-    scope: match.scope ?? SCOPE.none,
+    scope: getEffectiveHotkeyScope(match) ?? SCOPE.none,
     requiresNode: match.requiresNode
   } : {};
 };
