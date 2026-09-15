@@ -11,12 +11,24 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "Excalidraw/Linux Boot-UP.excalidraw.md"
+                "file": "Homepage.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "excalidraw-icon",
-              "title": "Linux Boot-UP.excalidraw"
+              "icon": "lucide-file",
+              "title": "Homepage"
             }
           }
         ]
@@ -201,7 +213,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 489.81005859375
+    "width": 489.81005859375,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -227,10 +240,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "1f08514118c9e1ab",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Homepage.md",
     "Excalidraw/Linux Boot-UP.excalidraw.md",
+    "Homepage.md",
     "Excalidraw/Scripts/Custom/Mindmap Builder.js.md",
     "Excalidraw/Scripts/Custom",
     "Excalidraw/x1_defconfig_architecture.excaidraw.md",
