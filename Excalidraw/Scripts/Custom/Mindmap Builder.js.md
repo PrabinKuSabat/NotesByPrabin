@@ -1797,36 +1797,78 @@ const EMBEDED_OBJECT_WIDTH_CHILD = 180;
 //special trim function that returns trimmed text, including trimming a bullet point of the bullet
 const trimText = (text) => {
   if (!text) return text;
-  return text.match(/^(?:[ \t]*[-\*][ \t])?(?:[ \t]*)(.*?)[ \t]*$/)[1];
+  // Clipboard prose and code are commonly multiline. The former single-line
+  // pattern returned null for them, so parseImageInput() crashed before Add or
+  // Alt+V could create the node. Keep every newline while trimming only the
+  // optional leading list marker and outer horizontal whitespace.
+  const match = String(text).match(/^(?:[ \t]*[-\*][ \t])?([\s\S]*?)[ \t]*$/);
+  return match ? match[1] : String(text);
 }
 
 // Clipboard text is intentionally kept verbatim for regular nodes. Markdown
 // lists/headings are the only text shapes that should be promoted to a tree.
 // This lets prose, logs, tables and fenced code blocks remain multiline nodes.
 const normalizeClipboardText = (text) => (text || "").replace(/\r\n?|\n/g, "\n");
-const isFencedCodeBlock = (text) => /^\s*```[^\n`]*\n[\s\S]*\n```\s*$/.test(normalizeClipboardText(text));
-const getCodeBlockLanguage = (text) => normalizeClipboardText(text).match(/^\s*```([^\n`]*)\n/)?.[1].trim() || "plain";
+const getFenceMarker = (line) => line.match(/^\s*(`{3,}|~{3,})([^`~]*)$/)?.[1] || null;
+const hasMatchingFence = (line, openingMarker) => {
+  const closingMarker = getFenceMarker(line);
+  return !!closingMarker &&
+    closingMarker[0] === openingMarker[0] &&
+    closingMarker.length >= openingMarker.length;
+};
+const isFencedCodeBlock = (text) => {
+  const lines = normalizeClipboardText(text).trim().split("\n");
+  if (lines.length < 2) return false;
+  const openingMarker = getFenceMarker(lines[0]);
+  return !!openingMarker && hasMatchingFence(lines[lines.length - 1], openingMarker);
+};
+const getCodeBlockLanguage = (text) => normalizeClipboardText(text).match(/^\s*(?:`{3,}|~{3,})([^`~\n]*)\n/)?.[1].trim() || "plain";
 const getCodeFontFamily = () =>
   globalThis.ExcalidrawLib?.FONT_FAMILY?.Cascadia ||
   globalThis.ExcalidrawLib?.FontFamily?.Cascadia ||
   3; // Cascadia/monospace fallback used by Excalidraw.
+const hasOutlineSyntax = (text) => {
+  let insideFence = false;
+  let openingMarker = null;
+  const lines = normalizeClipboardText(text).split("\n");
+  const structural = (line) => /^#{1,6}\s+/.test(line) || /^(?:\s*)(?:[-*+]|\d+[.)])\s+/.test(line);
+  const visibleLines = [];
+  for (const line of lines) {
+    if (insideFence) {
+      if (hasMatchingFence(line, openingMarker)) {
+        insideFence = false;
+        openingMarker = null;
+      }
+      continue;
+    }
+    const marker = getFenceMarker(line);
+    if (marker) {
+      insideFence = true;
+      openingMarker = marker;
+      continue;
+    }
+    if (line.trim()) visibleLines.push(line);
+  }
+  return structural(visibleLines[0] || "") || visibleLines.filter(structural).length >= 2;
+};
+
+// Chat apps sometimes wrap copied Markdown in an outer ````…````/~~~~ fence
+// so its inner triple-backtick source survives.  Peel that presentation-only
+// wrapper only when its contents are genuinely an outline; ordinary pasted
+// code remains one code node.
+const unwrapOutlineFenceWrapper = (text) => {
+  const lines = normalizeClipboardText(text).trim().split("\n");
+  if (lines.length < 3) return normalizeClipboardText(text);
+  const openingMarker = getFenceMarker(lines[0]);
+  if (!openingMarker || !hasMatchingFence(lines[lines.length - 1], openingMarker)) {
+    return normalizeClipboardText(text);
+  }
+  const body = lines.slice(1, -1).join("\n");
+  return hasOutlineSyntax(body) ? body : normalizeClipboardText(text);
+};
 const isStructuredMindmapText = (text) => {
   if (isFencedCodeBlock(text)) return false;
-  let insideFence = false;
-  const lines = normalizeClipboardText(text).split("\n").filter((line) => {
-    const isFence = /^\s*```/.test(line);
-    if (isFence) {
-      insideFence = !insideFence;
-      return false;
-    }
-    return !insideFence && line.trim() !== "";
-  });
-  const isStructural = (line) => /^#{1,6}\s+/.test(line) || /^(?:\s*)(?:[-*+]|\d+[.)])\s+/.test(line);
-  if (isStructural(lines[0] || "")) return true;
-  // Web/ChatGPT copies commonly include a plain title or introduction before
-  // the actual outline. Two or more structural lines are enough to treat the
-  // content as an import rather than flattening everything into one node.
-  return lines.filter(isStructural).length >= 2;
+  return hasOutlineSyntax(text);
 };
 
 // Some web applications escape list markers when copying Markdown.  They are
@@ -1834,10 +1876,17 @@ const isStructuredMindmapText = (text) => {
 // source block would corrupt valid code such as regular expressions or docs.
 const restoreEscapedOutlineMarkers = (text) => {
   let insideFence = false;
+  let openingMarker = null;
   return normalizeClipboardText(text).split("\n").map((line) => {
-    const isFence = /^\s*```/.test(line);
+    const marker = getFenceMarker(line);
     const restored = insideFence ? line : line.replace(/^(\s*)\\([*+-])(?=\s)/, "$1$2");
-    if (isFence) insideFence = !insideFence;
+    if (insideFence && hasMatchingFence(line, openingMarker)) {
+      insideFence = false;
+      openingMarker = null;
+    } else if (!insideFence && marker) {
+      insideFence = true;
+      openingMarker = marker;
+    }
     return restored;
   }).join("\n");
 };
@@ -7424,7 +7473,7 @@ const copyMapAsText = async (cut = false, toClipboard = true) => {
 **/
 const performImportTextToMap = async (rawText) => {
   if (!isViewSet()) return;
-  rawText = restoreEscapedOutlineMarkers(rawText);
+  rawText = unwrapOutlineFenceWrapper(restoreEscapedOutlineMarkers(rawText));
   if (!rawText.trim()) return;
 
   let sel = getMindmapNodeFromSelection();
@@ -7432,16 +7481,16 @@ const performImportTextToMap = async (rawText) => {
 
   // Ignore blank/divider lines between outline nodes, but preserve every line
   // inside fenced code so the imported code node remains byte-for-byte useful.
-  let insideFenceDuringCleanup = false;
+  let cleanupFenceMarker = null;
   let lines = rawText.split(/\r\n|\n|\r/).filter((line) => {
     const trimmed = line.trim();
-    const fenceCount = (line.match(/```/g) || []).length;
-    if (insideFenceDuringCleanup) {
-      if (fenceCount % 2 === 1) insideFenceDuringCleanup = false;
+    if (cleanupFenceMarker) {
+      if (hasMatchingFence(line, cleanupFenceMarker)) cleanupFenceMarker = null;
       return true;
     }
-    if (fenceCount % 2 === 1) {
-      insideFenceDuringCleanup = true;
+    const openingMarker = getFenceMarker(line);
+    if (openingMarker) {
+      cleanupFenceMarker = openingMarker;
       return true;
     }
     return trimmed !== "" && !/^-{3,}$/.test(trimmed);
@@ -7534,13 +7583,13 @@ const performImportTextToMap = async (rawText) => {
   const nodeToOutgoingRefs = new Map(); // newNodeId -> [{ref: string, label: string}, ...]
 
   let headingContextIndent = null;
-  let insideFencedContinuation = false;
+  let fencedContinuationMarker = null;
   let fencedIndentChars = 0;
   lines.forEach((line, index) => {
-    if (insideFencedContinuation && parsed.length > 0) {
+    if (fencedContinuationMarker && parsed.length > 0) {
       const leadingWhitespace = line.match(/^\s*/)?.[0].length ?? 0;
       parsed[parsed.length - 1].text += "\n" + line.slice(Math.min(fencedIndentChars, leadingWhitespace));
-      if (((line.match(/```/g) || []).length % 2) === 1) insideFencedContinuation = false;
+      if (hasMatchingFence(line, fencedContinuationMarker)) fencedContinuationMarker = null;
       return;
     }
 
@@ -7578,6 +7627,11 @@ const performImportTextToMap = async (rawText) => {
       } else if (parsed.length > 0) {
         // multiline handling
         parsed[parsed.length - 1].text += "\n" + line.trim();
+        const continuationMarker = getFenceMarker(line);
+        if (continuationMarker) {
+          fencedContinuationMarker = continuationMarker;
+          fencedIndentChars = line.match(/^\s*/)?.[0].length ?? 0;
+        }
         return;
       }
     }
@@ -7628,8 +7682,9 @@ const performImportTextToMap = async (rawText) => {
         isSubmapDef,
         isSubmapRef
       });
-      if (((text.match(/```/g) || []).length % 2) === 1) {
-        insideFencedContinuation = true;
+      const openingMarker = getFenceMarker(text);
+      if (openingMarker) {
+        fencedContinuationMarker = openingMarker;
         fencedIndentChars = listIndentChars;
       }
     }
@@ -7971,7 +8026,7 @@ const importTextToMap = async (rawText) => {
 // Pastes a Markdown list from clipboard into the map, converting it to nodes.
 **/
 const pasteListToMap = async (contentToPaste = null) => {
-  const rawText = restoreEscapedOutlineMarkers(contentToPaste ?? await readClipboardText());
+  const rawText = unwrapOutlineFenceWrapper(restoreEscapedOutlineMarkers(contentToPaste ?? await readClipboardText()));
   if (!rawText) {
     new Notice(t("NOTICE_CLIPBOARD_EMPTY"));
     return;
@@ -7980,10 +8035,33 @@ const pasteListToMap = async (contentToPaste = null) => {
   // Alt+V remains an outline importer for Markdown lists/headings. Everything
   // else is valid node content, including multiline prose and fenced code.
   if (isStructuredMindmapText(rawText)) {
-    await importTextToMap(rawText);
+    try {
+      await importTextToMap(rawText);
+    } catch (error) {
+      // Never lose a copied branch because one malformed/legacy item prevents
+      // reconstruction. Retain the complete Markdown in a single editable
+      // node and leave a diagnostic in the console for follow-up.
+      console.error("Mindmap Builder: outline import failed; preserving source as one node", error);
+      await addNode(rawText, false, false, null, null, null, null);
+      new Notice("Outline could not be split into branches; its complete source was added as one node.", 7000);
+    }
   } else {
     await addNode(rawText, false, false, null, null, null, null);
   }
+};
+
+// The editor's Add button normally creates one node.  A copied outer fence is
+// different: it is a transport wrapper around a Markdown outline, so treat it
+// exactly like Alt+V instead of creating a literal four-backtick code node.
+const addEditorTextToMap = async (rawText, follow = false, ontology = null) => {
+  const restored = restoreEscapedOutlineMarkers(rawText);
+  const prepared = unwrapOutlineFenceWrapper(restored);
+  if (prepared !== restored && isStructuredMindmapText(prepared)) {
+    await pasteListToMap(prepared);
+    return true;
+  }
+  await addNode(prepared, follow, false, null, null, null, ontology);
+  return false;
 };
 
 /**
@@ -9626,11 +9704,13 @@ const toggleCodeNode = async () => {
   }
 
   const collapsed = node.customData?.isCodeCollapsed === true;
-  const source = node.customData?.codeSource || text.rawText;
-  const language = node.customData?.codeLanguage || getCodeBlockLanguage(source);
+  // The expanded text element is newest; the cached value is only needed once
+  // its text has been replaced by the collapsed summary.
+  const source = isFencedCodeBlock(text.rawText) ? text.rawText : (node.customData?.codeSource || text.rawText);
+  const language = getCodeBlockLanguage(source);
   const body = normalizeClipboardText(source)
-    .replace(/^\s*```[^\n`]*\n/, "")
-    .replace(/\n```\s*$/, "");
+    .replace(/^\s*(?:`{3,}|~{3,})[^\n`~]*\n/, "")
+    .replace(/\n(?:`{3,}|~{3,})\s*$/, "");
   const nextText = collapsed ? source : `… ${language} code (${body ? body.split("\n").length : 0} lines)`;
 
   ea.copyViewElementsToEAforEditing([text, node].filter((el) => !ea.getElement(el.id)));
@@ -10416,9 +10496,12 @@ const startEditing = () => {
   if (!sel) return;
   const all = ea.getViewElements();
   const visualNode = sel.containerId ? all.find((el) => el.id === sel.containerId) : sel;
-  const text = visualNode?.customData?.isCodeBlock && visualNode.customData?.codeSource
+  const visibleText = getTextFromNode(all, sel, true, true);
+  // Prefer the visible fenced source over cached metadata. This makes a
+  // language edit such as ```text → ```c survive a later collapse.
+  const text = visualNode?.customData?.isCodeBlock && visualNode.customData?.codeSource && !isFencedCodeBlock(visibleText)
     ? visualNode.customData.codeSource
-    : getTextFromNode(all, sel, true, true);
+    : visibleText;
   const didToggle = revealInputEl();
 
   setTimeout(() => {
@@ -10465,9 +10548,10 @@ const commitEdit = async () => {
   const ontologyInput = ontologyEl.value;
 
   // Retrieve current text representation (raw, short path for images) to compare against input
-  const currentText = visualNode?.customData?.isCodeBlock && visualNode.customData?.codeSource
+  const visibleCurrentText = getTextFromNode(all, visualNode, true, true);
+  const currentText = visualNode?.customData?.isCodeBlock && visualNode.customData?.codeSource && !isFencedCodeBlock(visibleCurrentText)
     ? visualNode.customData.codeSource
-    : getTextFromNode(all, visualNode, true, true);
+    : visibleCurrentText;
 
   // Find arrow pointing TO this node to check current ontology
   // We need this for diffing, and potentially for updating later
@@ -13675,7 +13759,7 @@ const performAction = async (action, event) => {
     case ACTION_ADD_FOLLOW_FOCUS:
     case ACTION_ADD_FOLLOW_ZOOM:
       if (!inputEl.value) return;
-      await addNode(inputEl.value, true, false, null, null, null, ontologyEl.value);
+      await addEditorTextToMap(inputEl.value, true, ontologyEl.value);
       inputEl.value = "";
       ontologyEl.value = "";
       updateUI();
@@ -13694,7 +13778,7 @@ const performAction = async (action, event) => {
           editingNodeId = null;
         }
         if (inputEl.value) {
-          await addNode(inputEl.value, false, false, null, null, null, ontologyEl.value);
+          await addEditorTextToMap(inputEl.value, false, ontologyEl.value);
           inputEl.value = "";
           ontologyEl.value = "";
         } else {
