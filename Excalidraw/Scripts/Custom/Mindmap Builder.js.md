@@ -11870,7 +11870,9 @@ const toggleDock = async ({
       modalEl.style.minHeight = "0px";
       modalEl.style.width = "fit-content";
       modalEl.style.height = "auto";
-      modalEl.style.maxHeight = FLOAT_MODAL_MAX_HEIGHT;
+      // The secondary controls are rendered below the input. Do not clip them
+      // when the floating panel starts expanded.
+      modalEl.style.maxHeight = isFloatingPanelExpanded ? "unset" : FLOAT_MODAL_MAX_HEIGHT;
 
       if (isExcaliBrainView()) {
         modalEl.style.display = "none";
@@ -11878,6 +11880,7 @@ const toggleDock = async ({
 
       const container = floatingInputModal.contentEl.createDiv();
       renderInput(container, true);
+      modalEl.style.maxHeight = isFloatingPanelExpanded ? "unset" : FLOAT_MODAL_MAX_HEIGHT;
       
       // Setup Drag Handle
       const dragHandle = modalEl.createDiv("mindmap-drag-handle");

@@ -874,6 +874,10 @@
           "MANUAL_JITTER_RANGE": 300
         },
         "hidden": true
+      },
+      "Is Undocked": {
+        "value": false,
+        "hidden": false
       }
     }
   },
@@ -901,7 +905,6 @@
     "Excalidraw/Scripts/Downloaded/Printable Layout Wizard.md"
   ],
   "sidepanelTabs": [
-    "{\"script\":\"Downloaded/Mindmap Builder\",\"title\":\"Mind Map Builder\"}",
     "{\"script\":\"Custom/Mindmap Builder.js\",\"title\":\"Mind Map Builder\"}"
   ],
   "customPens": [
