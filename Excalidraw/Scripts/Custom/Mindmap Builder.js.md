@@ -1704,10 +1704,106 @@ const trimText = (text) => {
 // This lets prose, logs, tables and fenced code blocks remain multiline nodes.
 const normalizeClipboardText = (text) => (text || "").replace(/\r\n?|\n/g, "\n");
 const isFencedCodeBlock = (text) => /^\s*```[^\n`]*\n[\s\S]*\n```\s*$/.test(normalizeClipboardText(text));
+const getCodeBlockLanguage = (text) => normalizeClipboardText(text).match(/^\s*```([^\n`]*)\n/)?.[1].trim() || "plain";
+const getCodeFontFamily = () =>
+  globalThis.ExcalidrawLib?.FONT_FAMILY?.Cascadia ||
+  globalThis.ExcalidrawLib?.FontFamily?.Cascadia ||
+  3; // Cascadia/monospace fallback used by Excalidraw.
 const isStructuredMindmapText = (text) => {
   const firstLine = normalizeClipboardText(text).split("\n").find((line) => line.trim() !== "") || "";
   if (isFencedCodeBlock(text)) return false;
   return /^#{1,6}\s+/.test(firstLine) || /^(?:\s*)(?:[-*+]|\d+[.)])\s+/.test(firstLine);
+};
+
+// Convert clipboard HTML (from browsers and ChatGPT) to portable Markdown
+// without inserting untrusted HTML into Obsidian or the Excalidraw canvas.
+const htmlToMarkdown = (html) => {
+  if (!html || typeof DOMParser === "undefined") return "";
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  const cellText = (cell) => renderHtmlNode(cell).replace(/\n+/g, " ").replace(/\|/g, "\\|").trim();
+
+  doc.querySelectorAll("pre").forEach((pre) => {
+    const code = pre.querySelector("code");
+    const language = (code?.className || "").match(/(?:language-|lang-)([\w+-]+)/i)?.[1] || "";
+    const source = (code || pre).textContent.replace(/\n$/, "");
+    pre.replaceWith(doc.createTextNode(`\n\n\`\`\`${language}\n${source}\n\`\`\`\n\n`));
+  });
+
+  doc.querySelectorAll("table").forEach((table) => {
+    const rows = Array.from(table.querySelectorAll("tr")).map((row) =>
+      Array.from(row.querySelectorAll("th,td")).map(cellText)
+    ).filter((row) => row.length > 0);
+    if (rows.length === 0) return table.remove();
+    const width = Math.max(...rows.map((row) => row.length));
+    const normalizeRow = (row) => `| ${Array.from({ length: width }, (_, i) => row[i] || "").join(" | ")} |`;
+    const markdown = [normalizeRow(rows[0]), `| ${Array(width).fill("---").join(" | ")} |`, ...rows.slice(1).map(normalizeRow)].join("\n");
+    table.replaceWith(doc.createTextNode(`\n\n${markdown}\n\n`));
+  });
+
+  function renderHtmlNode(node) {
+    if (node.nodeType === Node.TEXT_NODE) return node.nodeValue || "";
+    if (node.nodeType !== Node.ELEMENT_NODE) return "";
+    const tag = node.tagName.toLowerCase();
+    const children = Array.from(node.childNodes).map(renderHtmlNode).join("");
+    if (tag === "br") return "\n";
+    if (/^h[1-6]$/.test(tag)) return `\n\n${"#".repeat(Number(tag[1]))} ${children.trim()}\n\n`;
+    if (tag === "p" || tag === "div" || tag === "section" || tag === "article" || tag === "blockquote") return `\n\n${children.trim()}\n\n`;
+    if (tag === "li") return `\n- ${children.trim()}`;
+    if (tag === "ul" || tag === "ol") return `\n${children}\n`;
+    if (tag === "strong" || tag === "b") return `**${children}**`;
+    if (tag === "em" || tag === "i") return `*${children}*`;
+    if (tag === "del" || tag === "s" || tag === "strike") return `~~${children}~~`;
+    if (tag === "code") return `\`${children.replace(/`/g, "\\`")}\``;
+    if (tag === "a") {
+      const href = node.getAttribute("href");
+      return href ? `[${children.trim()}](${href})` : children;
+    }
+    if (tag === "img") {
+      const src = node.getAttribute("src");
+      return src ? `![${node.getAttribute("alt") || "image"}](${src})` : "";
+    }
+    return children;
+  }
+
+  return normalizeClipboardText(renderHtmlNode(doc.body))
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+};
+
+const readClipboardText = async () => {
+  try {
+    const items = await navigator.clipboard.read();
+    const item = items.find((candidate) => candidate.types.includes("text/html") || candidate.types.includes("text/plain"));
+    if (item?.types.includes("text/html")) {
+      const markdown = htmlToMarkdown(await (await item.getType("text/html")).text());
+      if (markdown) return markdown;
+    }
+    if (item?.types.includes("text/plain")) return normalizeClipboardText(await (await item.getType("text/plain")).text());
+  } catch (e) {
+    // ClipboardItem access is not available in every Obsidian/Electron build.
+  }
+  return normalizeClipboardText(await navigator.clipboard.readText());
+};
+
+let activeImportJob = null;
+const startImportJob = (total) => {
+  const notice = new Notice(`Importing 0/${total} nodes. Press Escape to cancel.`, 0);
+  const job = { cancelled: false, total, completed: 0, notice };
+  activeImportJob = job;
+  return job;
+};
+const updateImportJob = async (job) => {
+  job.completed += 1;
+  if (job.completed % 25 === 0 || job.completed === job.total) {
+    job.notice.setMessage(`Importing ${job.completed}/${job.total} nodes. Press Escape to cancel.`);
+    // Yield periodically so the cancel hotkey and Obsidian UI can run.
+    await sleep(0);
+  }
+};
+const finishImportJob = (job, message, hideAfter = 4000) => {
+  if (activeImportJob === job) activeImportJob = null;
+  job.notice.setMessage(message);
+  job.notice.setAutoHide(hideAfter);
 };
 
 const parseText = async (text) => {
@@ -5404,7 +5500,9 @@ const sortL1NodesBasedOnVisualSequence = (l1Nodes, mode, rootCenter) => {
  */
 const triggerGlobalLayout = async (rootId, forceUngroup = false, mustHonorMindmapOrder = false) => {
   if (!isViewSet()) return;
-  const selectedElement = getMindmapNodeFromSelection();
+  // Programmatic imports and configuration changes may not have an active
+  // canvas selection. The explicit root is sufficient to lay out the map.
+  const selectedElement = getMindmapNodeFromSelection() || ea.getViewElements().find((el) => el.id === rootId);
   if (!selectedElement) return;
 
   const run = async (allElements, mindmapIds, root, doVisualSort, sharedSets, mustHonorMindmapOrder = false) => {
@@ -5796,6 +5894,8 @@ const addNode = async (text, follow = false, skipFinalLayout = false, batchModeA
   if (!isViewSet()) return;
   if (!text || text.trim() === "") return;
 
+  const isCodeBlock = isFencedCodeBlock(text);
+
   const preGenTextId = ea.generateElementId();
   if (text.includes("__NODE_LINK_PLACEHOLDER__")) {
     const file = app.workspace.getActiveFile();
@@ -5904,7 +6004,7 @@ const addNode = async (text, follow = false, skipFinalLayout = false, batchModeA
 
   const fontScale = getFontScale(rootCfgForAdd?.fontsizeScale ?? fontsizeScale);
   if (!isBatchMode) ea.clear();
-  ea.style.fontFamily = st.currentItemFontFamily;
+  ea.style.fontFamily = isCodeBlock ? getCodeFontFamily() : st.currentItemFontFamily;
   ea.style.fontSize = fontScale[Math.min(depth, fontScale.length - 1)];
   ea.style.roundness = (rootCfgForAdd?.roundedCorners ?? roundedCorners) ? {
     type: 3
@@ -6225,8 +6325,13 @@ const addNode = async (text, follow = false, skipFinalLayout = false, batchModeA
 
   // Keep a durable marker so fenced code pasted through either the editor or
   // Alt+V remains distinguishable from ordinary multiline prose.
-  if (isFencedCodeBlock(text)) {
-    ea.addAppendUpdateCustomData(newNodeId, { isCodeBlock: true });
+  if (isCodeBlock) {
+    ea.addAppendUpdateCustomData(newNodeId, {
+      isCodeBlock: true,
+      isCodeCollapsed: false,
+      codeLanguage: getCodeBlockLanguage(text),
+      codeSource: text,
+    });
   }
 
   if (isBatchMode) {
@@ -6873,9 +6978,6 @@ const importTextToMap = async (rawText) => {
 
   const delta = isHeader(lines[0]) ? 1 : 0;
 
-  const notice = new Notice(t("NOTICE_PASTE_START"), 0);
-  await sleep(10);
-
   // Maps for crosslink & submap reconstruction
   const blockRefToNodeId = new Map(); // ^12345678 -> newNodeId
   const nodeToOutgoingRefs = new Map(); // newNodeId -> [{ref: string, label: string}, ...]
@@ -6965,6 +7067,8 @@ const importTextToMap = async (rawText) => {
     new Notice(t("NOTICE_NO_LIST"));
     return;
   }
+
+  const importJob = startImportJob(parsed.length);
 
   ea.clear();
 
@@ -7072,6 +7176,14 @@ const importTextToMap = async (rawText) => {
   }
 
   for (const item of parsed) {
+    await updateImportJob(importJob);
+    if (importJob.cancelled) {
+      // Nothing has been committed to the view yet; discard the workbench only.
+      ea.clear();
+      finishImportJob(importJob, `Import cancelled after ${importJob.completed - 1}/${importJob.total} nodes.`, 5000);
+      return;
+    }
+
     // Relocate stack parser root when encountering a ## Submap Header
     if (item.isSubmapDef) {
       const targetNode = submapNodesByName.get(item.text);
@@ -7257,15 +7369,14 @@ const importTextToMap = async (rawText) => {
     currentParent.id;
   await triggerGlobalLayout(rootId);
 
-  notice.setMessage(t("NOTICE_PASTE_COMPLETE"));
-  notice.setAutoHide(4000);
+  finishImportJob(importJob, t("NOTICE_PASTE_COMPLETE"));
 };
 
 /**
 // Pastes a Markdown list from clipboard into the map, converting it to nodes.
 **/
 const pasteListToMap = async (contentToPaste = null) => {
-  const rawText = normalizeClipboardText(contentToPaste ?? await navigator.clipboard.readText());
+  const rawText = normalizeClipboardText(contentToPaste ?? await readClipboardText());
   if (!rawText) {
     new Notice(t("NOTICE_CLIPBOARD_EMPTY"));
     return;
@@ -7286,17 +7397,10 @@ const pasteListToMap = async (contentToPaste = null) => {
  */
 const pasteElementToMap = async () => {
   if (!isViewSet()) return;
-  const sel = getMindmapNodeFromSelection();
-
-  // Standard text-list paste handles root-level initialization better
-  if (!sel) {
-    await pasteListToMap();
-    return;
-  }
 
   let rawText = "";
   try {
-    rawText = await navigator.clipboard.readText();
+    rawText = await readClipboardText();
   } catch (e) {}
 
   const excalidrawClipboardPayload = rawText && rawText.includes('"type":"excalidraw/clipboard"');
@@ -8831,6 +8935,50 @@ const toggleCheckboxStatus = async () => {
  * Toggles the selected node between an embed (![[...]]) and a link ([[...|alias]]).
  * Cleans the markdown '# ' characters when mapping the section name to the alias.
  */
+const toggleCodeNode = async () => {
+  if (!isViewSet()) return;
+  const selected = getMindmapNodeFromSelection();
+  const all = ea.getViewElements();
+  const node = selected?.containerId ? all.find((el) => el.id === selected.containerId) : selected;
+  if (!node?.customData?.isCodeBlock) {
+    new Notice("Select a code node to collapse or expand.");
+    return;
+  }
+
+  const textId = node.type === "text" ? node.id : node.boundElements?.find((be) => be.type === "text")?.id;
+  const text = all.find((el) => el.id === textId);
+  if (!text) return;
+
+  const collapsed = node.customData?.isCodeCollapsed === true;
+  const source = node.customData?.codeSource || text.rawText;
+  const language = node.customData?.codeLanguage || getCodeBlockLanguage(source);
+  const body = normalizeClipboardText(source)
+    .replace(/^\s*```[^\n`]*\n/, "")
+    .replace(/\n```\s*$/, "");
+  const nextText = collapsed ? source : `… ${language} code (${body ? body.split("\n").length : 0} lines)`;
+
+  ea.copyViewElementsToEAforEditing([text, node].filter((el) => !ea.getElement(el.id)));
+  const eaText = ea.getElement(text.id);
+  eaText.rawText = nextText;
+  eaText.originalText = nextText;
+  eaText.text = nextText;
+  eaText.fontFamily = getCodeFontFamily();
+  ea.refreshTextElementSize(eaText.id);
+  ea.addAppendUpdateCustomData(node.id, {
+    isCodeCollapsed: !collapsed,
+    codeSource: source,
+    codeLanguage: language,
+  });
+
+  await addElementsToView({ captureUpdate: "EVENTUALLY" });
+  const container = ea.getViewElements().find((el) => el.id === eaText.containerId);
+  if (container) api().updateContainerSize([container]);
+  if (node.customData?.autoLayoutDisabled !== true) {
+    const info = getHierarchy(node, ea.getViewElements());
+    await triggerGlobalLayout(info.rootId);
+  }
+};
+
 const toggleEmbedStatus = async () => {
   if (!isViewSet()) return;
   const sel = getMindmapNodeFromSelection();
@@ -9103,13 +9251,15 @@ let fontSizeDropdown, boxToggle, roundToggle, strokeToggle;
 let branchScaleDropdown, baseWidthSlider;
 let colorToggle, widthSlider, centerToggle;
 let fillSweepToggleSetting, fillSweepToggle;
-let pinBtn, refreshBtn, cutBtn, copyBtn, boxBtn, dockBtn, editBtn;
+let pinBtn, refreshBtn, cutBtn, copyBtn, boxBtn, dockBtn, editBtn, codeBtn;
 let toggleGroupBtn, zoomBtn, focusBtn, boundaryBtn, calendarBtn;
 let submapRootBtn;
 let foldBtnL0, foldBtnL1, foldBtnAll;
 let floatingGroupBtn, floatingBoxBtn, floatingZoomBtn;
 let panelExpandBtn, importOutlineBtn, toggleCheckboxBtn, toggleEmbedBtn;
-let isFloatingPanelExpanded = false;
+// A floating panel should expose its controls immediately; hiding them behind
+// the compact expander makes the panel appear broken after undocking.
+let isFloatingPanelExpanded = true;
 let toggleFloatingExtras = null;
 let inputContainer;
 let helpContainer;
@@ -9223,6 +9373,7 @@ const disableUI = () => {
   setButtonDisabled(toggleCheckboxBtn, true);
   setButtonDisabled(calendarBtn, true); // Added calendarBtn to default disabled state
   setButtonDisabled(toggleEmbedBtn, true);
+  setButtonDisabled(codeBtn, true);
   setButtonDisabled(floatingGroupBtn, true);
   setButtonDisabled(floatingBoxBtn, true);
   setButtonDisabled(floatingZoomBtn, true);
@@ -9282,6 +9433,7 @@ const updateUI = (sel) => {
     const hasChildren = children.length > 0;
     const hasGrandChildren = hasChildren && children.some(child => getChildrenNodes(child.id, all).length > 0);
     const nodeText = getTextFromNode(all, sel, true, false);
+    const visualNode = sel.containerId ? all.find((el) => el.id === sel.containerId) : sel;
     const isLinkedFile = !!getNodeMarkdownFile(nodeText);
 
     cd = root?.customData ?? {};
@@ -9300,11 +9452,18 @@ const updateUI = (sel) => {
     }
 
     if (toggleEmbedBtn) {
-      const visualNode = sel.containerId ? all.find(el => el.id === sel.containerId) : sel;
       const nodeTextForEmbed = getTextFromNode(all, visualNode, true, true).trim();
       // Regex matches only exact format: [[NoteName#SectionName]] or ![[NoteName#SectionName]] with optional alias
       const linkRegex = /^!?\[\[([^\]]+?#[^\]|]+)(?:\|[^\]]*)?\]\]$/;
       setButtonDisabled(toggleEmbedBtn, !linkRegex.test(nodeTextForEmbed));
+    }
+
+    if (codeBtn) {
+      const isCodeNode = visualNode?.customData?.isCodeBlock === true;
+      const isCodeCollapsed = visualNode?.customData?.isCodeCollapsed === true;
+      codeBtn.setIcon(isCodeCollapsed ? "chevrons-down-up" : "braces");
+      codeBtn.setTooltip(isCodeCollapsed ? "Expand code node" : "Collapse code node");
+      setButtonDisabled(codeBtn, !isCodeNode);
     }
 
     if (pinBtn) {
@@ -9552,11 +9711,10 @@ const startEditing = () => {
   const sel = getMindmapNodeFromSelection();
   if (!sel) return;
   const all = ea.getViewElements();
-  const text = getTextFromNode(all, sel, true, true);
-  if (text.match(/\n/)) {
-    new Notice(`${t("NOTICE_CANNOT_EDIT_MULTILINE")} ${getActionHotkeyString(ACTION_REARRANGE)}`, 7000);
-    return;
-  }
+  const visualNode = sel.containerId ? all.find((el) => el.id === sel.containerId) : sel;
+  const text = visualNode?.customData?.isCodeBlock && visualNode.customData?.codeSource
+    ? visualNode.customData.codeSource
+    : getTextFromNode(all, sel, true, true);
   const didToggle = revealInputEl();
 
   setTimeout(() => {
@@ -9603,7 +9761,9 @@ const commitEdit = async () => {
   const ontologyInput = ontologyEl.value;
 
   // Retrieve current text representation (raw, short path for images) to compare against input
-  const currentText = getTextFromNode(all, visualNode, true, true);
+  const currentText = visualNode?.customData?.isCodeBlock && visualNode.customData?.codeSource
+    ? visualNode.customData.codeSource
+    : getTextFromNode(all, visualNode, true, true);
 
   // Find arrow pointing TO this node to check current ontology
   // We need this for diffing, and potentially for updating later
@@ -9753,7 +9913,8 @@ const commitEdit = async () => {
       "isFolded", "foldIndicatorId", "foldState", "boundaryId",
       "fontsizeScale", "multicolor", "boxChildren", "roundedCorners",
       "maxWrapWidth", "isSolidArrow", "centerText", "arrowType",
-      "fillSweep", "branchScale", "baseStrokeWidth", "layoutSettings"
+      "fillSweep", "branchScale", "baseStrokeWidth", "layoutSettings",
+      "isCodeBlock", "isCodeCollapsed", "codeLanguage", "codeSource"
     ];
     const dataToCopy = {};
     keysToCopy.forEach(k => {
@@ -9911,6 +10072,23 @@ const commitEdit = async () => {
       }
 
       ea.refreshTextElementSize(eaEl.id);
+
+      const isCodeBlock = isFencedCodeBlock(textInput);
+      if (isCodeBlock) eaEl.fontFamily = getCodeFontFamily();
+      if (!ea.getElement(visualNode.id)) {
+        ea.copyViewElementsToEAforEditing([visualNode]);
+      }
+      ea.addAppendUpdateCustomData(visualNode.id, isCodeBlock ? {
+        isCodeBlock: true,
+        isCodeCollapsed: false,
+        codeLanguage: getCodeBlockLanguage(textInput),
+        codeSource: textInput,
+      } : {
+        isCodeBlock: undefined,
+        isCodeCollapsed: undefined,
+        codeLanguage: undefined,
+        codeSource: undefined,
+      });
     }
 
     // 3. Save Changes
@@ -10416,7 +10594,7 @@ const renderInput = (container, isFloating = false) => {
   }, 200);
   container.empty();
 
-  pinBtn = submapRootBtn = refreshBtn = dockBtn = inputEl = ontologyEl = null;
+  pinBtn = submapRootBtn = refreshBtn = dockBtn = codeBtn = inputEl = ontologyEl = null;
   foldBtnL0 = foldBtnL1 = foldBtnAll = null;
   boundaryBtn = panelExpandBtn = null;
   floatingGroupBtn = floatingBoxBtn = floatingZoomBtn = null;
@@ -10470,6 +10648,17 @@ const renderInput = (container, isFloating = false) => {
 
   inputEl.addEventListener("input", () => updateUI());
   ontologyEl.addEventListener("input", () => updateUI());
+  inputEl.addEventListener("paste", (event) => {
+    const html = event.clipboardData?.getData("text/html");
+    const markdown = htmlToMarkdown(html);
+    if (!markdown) return;
+
+    // Native paste would discard most browser/ChatGPT structure. Replace the
+    // selected range with Markdown text, never with the source HTML.
+    event.preventDefault();
+    inputEl.setRangeText(markdown, inputEl.selectionStart, inputEl.selectionEnd, "end");
+    inputEl.dispatchEvent(new Event("input", { bubbles: true }));
+  });
 
   const updateFocusState = (focusedElement) => {
     if (ignoreFocusChanges) return;
@@ -10598,6 +10787,13 @@ const renderInput = (container, isFloating = false) => {
     btn.setTooltip(`${t("TOOLTIP_TOGGLE_EMBED")} ${getActionHotkeyString(ACTION_TOGGLE_EMBED)}`);
     btn.extraSettingsEl.setAttr("action", ACTION_TOGGLE_EMBED);
     btn.onClick(() => performAction(ACTION_TOGGLE_EMBED));
+  }, true);
+
+  addButton((btn) => {
+    codeBtn = btn;
+    btn.setIcon("braces");
+    btn.setTooltip("Collapse or expand a fenced code node");
+    btn.onClick(() => toggleCodeNode());
   }, true);
 
   toggleFloatingExtras = null;
@@ -11813,6 +12009,14 @@ const handleKeydown = (e) => {
   // Prevents "Enter" from triggering actions when it's just confirming a character selection
   if (e.isComposing || e.keyCode === 229) return;
 
+  if (activeImportJob && e.key === "Escape") {
+    activeImportJob.cancelled = true;
+    activeImportJob.notice.setMessage(`Cancelling import at ${activeImportJob.completed}/${activeImportJob.total}…`);
+    e.preventDefault();
+    e.stopPropagation();
+    return;
+  }
+
   if (isRecordingHotkey) return;
   if (!ea.targetView || !ea.targetView.leaf.isVisible()) return;
 
@@ -11821,6 +12025,18 @@ const handleKeydown = (e) => {
     sidepanelWindow;
 
   if (!currentWindow) return;
+
+  // Explicit multiline-editor shortcut. Existing users may still have the old
+  // Shift+Enter mapping saved, so do not depend on DEFAULT_HOTKEYS migration.
+  if (
+    e.key === "Enter" && e.altKey && e.shiftKey && !e.ctrlKey && !e.metaKey &&
+    e.target === inputEl && inputEl?.tagName === "TEXTAREA"
+  ) {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleDock({ saveSetting: true });
+    return;
+  }
 
   // The primary editor is deliberately multiline. Keep the established Enter
   // shortcuts for map actions, while Shift+Enter always inserts a literal line

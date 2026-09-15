@@ -11,30 +11,6 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Homepage.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Homepage"
-            }
-          },
-          {
-            "id": "39451083796f0484",
-            "type": "leaf",
-            "state": {
               "type": "excalidraw",
               "state": {
                 "file": "Excalidraw/Linux Boot-UP.excalidraw.md"
@@ -43,8 +19,7 @@
               "title": "Linux Boot-UP.excalidraw"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -226,7 +201,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 489.81005859375
+    "width": 489.81005859375,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -252,12 +228,12 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "39451083796f0484",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Excalidraw/Scripts/Custom/Mindmap Builder.js.md",
-    "Excalidraw/Scripts/Custom",
     "Homepage.md",
     "Excalidraw/Linux Boot-UP.excalidraw.md",
+    "Excalidraw/Scripts/Custom/Mindmap Builder.js.md",
+    "Excalidraw/Scripts/Custom",
     "Excalidraw/x1_defconfig_architecture.excaidraw.md",
     "Extras/Guide Books AI/RV2/rv2-x1-defconfig-boot-mindmap.md",
     "Defconfig Values.md",
