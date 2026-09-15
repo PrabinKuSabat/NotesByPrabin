@@ -9657,6 +9657,125 @@ const fitCodeContainerToText = (containerId, textId) => {
   container.y = centerY - container.height / 2;
 };
 
+const getCodeNotePath = async () => {
+  const drawingFolder = ea.targetView?.file?.parent?.path || "";
+  const folderPath = drawingFolder ? `${drawingFolder}/Mindmap Code` : "Mindmap Code";
+  if (!app.vault.getAbstractFileByPath(folderPath)) {
+    await app.vault.createFolder(folderPath);
+  }
+  const drawingName = ea.targetView?.file?.basename || "Mindmap";
+  const safeDrawingName = String(drawingName).replace(/[\\/:*?"<>|#^\[\]]/g, "-").trim() || "Mindmap";
+  return `${folderPath}/${safeDrawingName} code.md`;
+};
+
+const openCodeNote = async (path, blockId = null) => {
+  if (!path) return;
+  const file = app.vault.getAbstractFileByPath(path);
+  if (!file) {
+    new Notice(`Code note is missing: ${path}`);
+    return;
+  }
+  const target = blockId ? `${path}#^${blockId}` : path;
+  await app.workspace.openLinkText(target, ea.targetView?.file?.path || "", false);
+};
+
+// Markdown-file embeds are rendered by the Excalidraw plugin as a single
+// snapshot element.  This retains Obsidian's syntax-colored code on canvas,
+// while auto-layout sees and moves only one element rather than a token cloud.
+const showCodeNoteInCanvas = async (nodeId = null) => {
+  if (!isViewSet()) return;
+  const all = ea.getViewElements();
+  const selected = nodeId ? all.find((element) => element.id === nodeId) : getMindmapNodeFromSelection();
+  const node = selected?.containerId ? all.find((element) => element.id === selected.containerId) : selected;
+  if (!node?.customData?.isCodeNote) return;
+  if (node.type === "image") {
+    new Notice("This code note is already visible on the canvas.");
+    return;
+  }
+  const file = app.vault.getAbstractFileByPath(node.customData.codeNotePath);
+  if (!file) {
+    new Notice(`Code note is missing: ${node.customData.codeNotePath}`);
+    return;
+  }
+  const linkText = app.metadataCache.fileToLinktext(file, ea.targetView?.file?.path || "", true);
+  const previewWidth = Math.max(320, Math.min(720, Math.round(node.width || 520)));
+  const preview = `![[${linkText}#^${node.customData.codeNoteBlockId}|${previewWidth}]]`;
+  const incomingArrow = all.find((element) =>
+    element.type === "arrow" && element.customData?.isBranch && element.endBinding?.elementId === node.id,
+  );
+
+  // Reuse the battle-tested text-to-image conversion path: it preserves
+  // branch bindings, groups, boundaries, and layout metadata.
+  editingNodeId = node.id;
+  inputEl.value = preview;
+  ontologyEl.value = incomingArrow ? (ea.getBoundTextElement(incomingArrow, true)?.sceneElement?.rawText || "") : "";
+  await commitEdit();
+};
+
+// Moves the source out of the scene once. The map retains only a compact
+// wikilink, while Obsidian owns editing and language-aware highlighting.
+const moveCodeNodeToObsidianNote = async () => {
+  if (!isViewSet()) return;
+  const selected = getMindmapNodeFromSelection();
+  const all = ea.getViewElements();
+  const node = selected?.containerId ? all.find((element) => element.id === selected.containerId) : selected;
+  if (!node) return;
+  if (node.customData?.isCodeNote) {
+    await openCodeNote(node.customData.codeNotePath, node.customData.codeNoteBlockId);
+    return;
+  }
+  if (!node.customData?.isCodeBlock) {
+    new Notice("Convert the selected text to a code block first.");
+    return;
+  }
+
+  const textId = node.type === "text" ? node.id : node.boundElements?.find((bound) => bound.type === "text")?.id;
+  const text = all.find((element) => element.id === textId);
+  if (!text) return;
+  const source = isFencedCodeBlock(text.rawText) ? text.rawText : (node.customData?.codeSource || text.rawText);
+  const language = getCodeBlockLanguage(source);
+  const path = await getCodeNotePath();
+  const blockId = `mindmap-code-${node.id.replace(/[^a-z0-9_-]/gi, "").slice(0, 24)}`;
+  const section = `\n\n## ${language} code\n^${blockId}\n\n${source}\n`;
+  let file = app.vault.getAbstractFileByPath(path);
+  if (file) {
+    await app.vault.append(file, section);
+  } else {
+    const drawingName = ea.targetView?.file?.basename || "Mindmap";
+    file = await app.vault.create(path, `# ${drawingName} code\n${section}`);
+  }
+  const linkText = app.metadataCache.fileToLinktext(file, ea.targetView?.file?.path || "", true);
+  const summary = `[[${linkText}#^${blockId}|${language} code note]]`;
+
+  ea.copyViewElementsToEAforEditing([text, node].filter((element) => !ea.getElement(element.id)));
+  const editableText = ea.getElement(text.id);
+  editableText.rawText = summary;
+  editableText.originalText = summary;
+  editableText.text = summary;
+  editableText.fontFamily = getCodeFontFamily();
+  editableText.autoResize = true;
+  ea.refreshTextElementSize(editableText.id);
+  if (node.type !== "text") fitCodeContainerToText(node.id, editableText.id);
+  ea.addAppendUpdateCustomData(node.id, {
+    isCodeBlock: undefined,
+    isCodeCollapsed: undefined,
+    codeSource: undefined,
+    codeNotePath: path,
+    codeNoteBlockId: blockId,
+    codeLanguage: language,
+    isCodeNote: true,
+  });
+
+  await addElementsToView({ captureUpdate: "EVENTUALLY" });
+  const container = ea.getViewElements().find((element) => element.id === editableText.containerId);
+  if (container) api().updateContainerSize([container]);
+  const info = getHierarchy(node, ea.getViewElements());
+  if (info?.rootId && node.customData?.autoLayoutDisabled !== true) await triggerGlobalLayout(info.rootId);
+  new Notice(`Created Obsidian code note: ${path}`);
+  await showCodeNoteInCanvas(node.id);
+  updateUI();
+};
+
 const toggleCodeNode = async () => {
   if (!isViewSet()) return;
   const selected = getMindmapNodeFromSelection();
@@ -9666,6 +9785,11 @@ const toggleCodeNode = async () => {
   const textId = node.type === "text" ? node.id : node.boundElements?.find((be) => be.type === "text")?.id;
   const text = all.find((el) => el.id === textId);
   if (!text) return;
+
+  if (node.customData?.isCodeNote) {
+    await openCodeNote(node.customData.codeNotePath, node.customData.codeNoteBlockId);
+    return;
+  }
 
   // The same button is intentionally a conversion action for ordinary text
   // nodes.  It preserves the source verbatim, wraps it as a plain-text fenced
@@ -10009,7 +10133,7 @@ let fontSizeDropdown, fontBaseSizeDropdown, fontMinSizeDropdown, boxToggle, roun
 let branchScaleDropdown, baseWidthSlider;
 let colorToggle, widthSlider, centerToggle;
 let fillSweepToggleSetting, fillSweepToggle;
-let pinBtn, refreshBtn, cutBtn, copyBtn, boxBtn, dockBtn, editBtn, codeBtn;
+let pinBtn, refreshBtn, cutBtn, copyBtn, boxBtn, dockBtn, editBtn, codeBtn, codeNoteBtn;
 let toggleGroupBtn, zoomBtn, focusBtn, boundaryBtn, calendarBtn;
 let submapRootBtn;
 let foldBtnL0, foldBtnL1, foldBtnAll;
@@ -10132,6 +10256,7 @@ const disableUI = () => {
   setButtonDisabled(calendarBtn, true); // Added calendarBtn to default disabled state
   setButtonDisabled(toggleEmbedBtn, true);
   setButtonDisabled(codeBtn, true);
+  setButtonDisabled(codeNoteBtn, true);
   setButtonDisabled(floatingGroupBtn, true);
   setButtonDisabled(floatingBoxBtn, true);
   setButtonDisabled(floatingZoomBtn, true);
@@ -10219,15 +10344,26 @@ const updateUI = (sel) => {
 
     if (codeBtn) {
       const isCodeNode = visualNode?.customData?.isCodeBlock === true;
+      const isCodeNote = visualNode?.customData?.isCodeNote === true;
       const isCodeCollapsed = visualNode?.customData?.isCodeCollapsed === true;
       const boundTextId = visualNode?.type === "text" ? visualNode.id :
         visualNode?.boundElements?.find((bound) => bound.type === "text")?.id;
       const canConvertToCode = Boolean(boundTextId && all.some((element) => element.id === boundTextId && element.type === "text"));
       codeBtn.setIcon(isCodeNode && isCodeCollapsed ? "chevrons-down-up" : "braces");
       codeBtn.setTooltip(
-        isCodeNode ? (isCodeCollapsed ? "Expand code node" : "Collapse code node") : "Convert selected node to code block",
+        isCodeNote ? "Open Obsidian code note" :
+          (isCodeNode ? (isCodeCollapsed ? "Expand code node" : "Collapse code node") : "Convert selected node to code block"),
       );
       setButtonDisabled(codeBtn, !canConvertToCode);
+      if (codeNoteBtn) {
+        const codePreviewVisible = isCodeNote && visualNode?.type === "image";
+        codeNoteBtn.setIcon(codePreviewVisible ? "external-link" : (isCodeNote ? "image-plus" : "file-code-2"));
+        codeNoteBtn.setTooltip(
+          codePreviewVisible ? "Code preview is already visible" :
+            (isCodeNote ? "Show highlighted code on canvas" : "Move code to an Obsidian note"),
+        );
+        setButtonDisabled(codeNoteBtn, !(isCodeNode || isCodeNote));
+      }
     }
 
     if (pinBtn) {
@@ -10496,6 +10632,10 @@ const startEditing = () => {
   if (!sel) return;
   const all = ea.getViewElements();
   const visualNode = sel.containerId ? all.find((el) => el.id === sel.containerId) : sel;
+  if (visualNode?.customData?.isCodeNote) {
+    void openCodeNote(visualNode.customData.codeNotePath, visualNode.customData.codeNoteBlockId);
+    return;
+  }
   const visibleText = getTextFromNode(all, sel, true, true);
   // Prefer the visible fenced source over cached metadata. This makes a
   // language edit such as ```text → ```c survive a later collapse.
@@ -10702,7 +10842,7 @@ const commitEdit = async () => {
       "fontsizeScale", "fontSizeBase", "fontSizeMinimum", "multicolor", "boxChildren", "roundedCorners",
       "maxWrapWidth", "isSolidArrow", "centerText", "arrowType",
       "fillSweep", "branchScale", "baseStrokeWidth", "layoutSettings",
-      "isCodeBlock", "isCodeCollapsed", "codeLanguage", "codeSource"
+      "isCodeBlock", "isCodeCollapsed", "codeLanguage", "codeSource", "isCodeNote", "codeNotePath", "codeNoteBlockId"
     ];
     const dataToCopy = {};
     keysToCopy.forEach(k => {
@@ -11388,7 +11528,7 @@ const renderInput = (container, isFloating = false) => {
   }, 200);
   container.empty();
 
-  pinBtn = submapRootBtn = refreshBtn = dockBtn = codeBtn = inputEl = ontologyEl = null;
+  pinBtn = submapRootBtn = refreshBtn = dockBtn = codeBtn = codeNoteBtn = inputEl = ontologyEl = null;
   foldBtnL0 = foldBtnL1 = foldBtnAll = null;
   boundaryBtn = panelExpandBtn = null;
   floatingGroupBtn = floatingBoxBtn = floatingZoomBtn = null;
@@ -11635,6 +11775,22 @@ const renderInput = (container, isFloating = false) => {
     btn.setIcon("braces");
     btn.setTooltip("Collapse or expand a fenced code node");
     btn.onClick(() => toggleCodeNode());
+  }, true);
+
+  addButton((btn) => {
+    codeNoteBtn = btn;
+    btn.setIcon("file-code-2");
+    btn.setTooltip("Move code to an Obsidian note");
+    btn.onClick(async () => {
+      const selected = getMindmapNodeFromSelection();
+      const all = ea.getViewElements();
+      const node = selected?.containerId ? all.find((element) => element.id === selected.containerId) : selected;
+      if (node?.customData?.isCodeNote && node.type !== "image") {
+        await showCodeNoteInCanvas(node.id);
+      } else {
+        await moveCodeNodeToObsidianNote();
+      }
+    });
   }, true);
 
   toggleFloatingExtras = null;
