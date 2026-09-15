@@ -145,6 +145,7 @@ const STRINGS = {
     NOTICE_CONFLICT_WITH_ACTION: "Conflict with \"{action}\"",
     NOTICE_OBSIDIAN_HOTKEY_CONFLICT: "⚠️ Obsidian Hotkey Conflict!\n\nThis key overrides:\n\"{command}\"",
     NOTICE_GLOBAL_HOTKEY_CONFLICT: "⚠️ Global Hotkey Conflict!\n\nThis key overrides:\n\"{command}\"",
+    NOTICE_RESERVED_MULTILINE_HOTKEY: "Shift+Enter is reserved for inserting a new line in the mind-map editor.",
     NOTICE_NO_HEADINGS: "No headings found in the linked file.",
     NOTICE_CANNOT_EDIT_MULTILINE: "Cannot edit multi-line nodes directly.\nDouble-click the element in Excalidraw to edit, then run auto re-arrange map to update the layout.",
     NOTICE_CANNOT_MOVE_PINNED: "Cannot move pinned nodes. Unpin the node first.",
@@ -257,7 +258,9 @@ const STRINGS = {
     LABEL_MAX_WRAP_WIDTH: "Max Wrap Width",
     LABEL_CENTER_TEXT: "Center text",
     DESC_CENTER_TEXT: "Toggle off: align nodes to right/left depending; Toggle on: center the text.",
-    LABEL_FONT_SIZES: "Font Sizes",
+    LABEL_FONT_SIZES: "Font Scale Style",
+    LABEL_FONT_BASE_SIZE: "Base Font Size",
+    DESC_FONT_BASE_SIZE: "Choose the root/base size. Uniform uses it everywhere; Normal and Fibonacci derive each deeper level from it.",
     HOTKEY_SECTION_TITLE: "Hotkey Configuration",
     HOTKEY_HINT: "These hotkeys may override some Obsidian defaults. They're Local (⌨️) by default, active only when the MindMap input field is focused. Use the 🌐/🎨/⌨️ toggle to change hotkey scope: 🌐 Overrides Obsidian hotkeys whenever an Excalidraw tab is visible, 🎨 Overrides Obsidian hotkeys whenever Excalidraw is focused, ⌨️ Local (input focused).",
     RECORD_HOTKEY_PROMPT: "Press hotkey...",
@@ -438,6 +441,7 @@ addLocale("zh", {
   NOTICE_CONFLICT_WITH_ACTION: "与“{action}”操作冲突",
   NOTICE_OBSIDIAN_HOTKEY_CONFLICT: "⚠️ Obsidian 热键冲突！\n\n此按键将覆盖：\n“{command}”",
   NOTICE_GLOBAL_HOTKEY_CONFLICT: "⚠️ 全局热键冲突！\n\n此按键将覆盖：\n“{command}”",
+  NOTICE_RESERVED_MULTILINE_HOTKEY: "Shift+Enter 保留用于在思维导图编辑器中插入新行。",
   NOTICE_NO_HEADINGS: "链接文件中未发现小标题。",
   NOTICE_CANNOT_EDIT_MULTILINE: "无法直接编辑多行节点。\n请在 Excalidraw 中双击元素进行编辑，然后运行“自动重排导图”来更新布局。",
   NOTICE_CANNOT_MOVE_PINNED: "无法移动已锁定的节点。请先解锁。",
@@ -550,7 +554,9 @@ addLocale("zh", {
   LABEL_MAX_WRAP_WIDTH: "最大折行宽度",
   LABEL_CENTER_TEXT: "文本居中",
   DESC_CENTER_TEXT: "关闭：根据位置左/右对齐；开启：文本强制居中。",
-  LABEL_FONT_SIZES: "字体大小",
+  LABEL_FONT_SIZES: "字体缩放样式",
+  LABEL_FONT_BASE_SIZE: "基础字体大小",
+  DESC_FONT_BASE_SIZE: "选择根节点/基础字号。统一样式在所有层级使用该字号；普通和斐波那契样式会据此计算更深层级。",
   HOTKEY_SECTION_TITLE: "热键配置",
   HOTKEY_HINT: "这些热键可能覆盖 Obsidian 默认设置。热键作用域默认为局部（⌨️），使用 🌐/🎨/⌨️ 切换作用域：🌐 Excalidraw 标签页可见即生效，🎨 Excalidraw 聚焦时生效，⌨️ 输入框聚焦时生效。",
   RECORD_HOTKEY_PROMPT: "按下热键…",
@@ -721,6 +727,7 @@ addLocale("zh-tw", {
   NOTICE_CONFLICT_WITH_ACTION: "與“{action}”操作衝突",
   NOTICE_OBSIDIAN_HOTKEY_CONFLICT: "⚠️ Obsidian 熱鍵衝突！\n\n此按鍵將覆蓋：\n“{command}”",
   NOTICE_GLOBAL_HOTKEY_CONFLICT: "⚠️ 全域性熱鍵衝突！\n\n此按鍵將覆蓋：\n“{command}”",
+  NOTICE_RESERVED_MULTILINE_HOTKEY: "Shift+Enter 保留用於在心智圖編輯器中插入新行。",
   NOTICE_NO_HEADINGS: "連結檔案中未發現小標題。",
   NOTICE_CANNOT_EDIT_MULTILINE: "無法直接編輯多行節點。\n請在 Excalidraw 中雙擊元素進行編輯，然後執行“自動重排導圖”來更新佈局。",
   NOTICE_CANNOT_MOVE_PINNED: "無法移動已鎖定的節點。請先解鎖。",
@@ -833,7 +840,9 @@ addLocale("zh-tw", {
   LABEL_MAX_WRAP_WIDTH: "最大折行寬度",
   LABEL_CENTER_TEXT: "文字居中",
   DESC_CENTER_TEXT: "關閉：根據位置左/右對齊；開啟：文字強制居中。",
-  LABEL_FONT_SIZES: "字型大小",
+  LABEL_FONT_SIZES: "字型縮放樣式",
+  LABEL_FONT_BASE_SIZE: "基礎字型大小",
+  DESC_FONT_BASE_SIZE: "選擇根節點/基礎字號。統一樣式在所有層級使用該字號；普通和費波那契樣式會據此計算更深層級。",
   HOTKEY_SECTION_TITLE: "熱鍵配置",
   HOTKEY_HINT: "這些熱鍵可能覆蓋 Obsidian 預設設定。熱鍵作用域預設為區域性（⌨️），使用 🌐/🎨/⌨️ 切換作用域：🌐 Excalidraw 標籤頁可見即生效，🎨 Excalidraw 聚焦時生效，⌨️ 輸入框聚焦時生效。",
   RECORD_HOTKEY_PROMPT: "按下熱鍵…",
@@ -1003,7 +1012,7 @@ const VALUE_SETS = Object.freeze({
     global: 1,
     none: 0,
   }),
-  FONT_SCALE: Object.freeze(["Use scene fontsize", "Fibonacci Scale", "Normal Scale"]),
+  FONT_SCALE: Object.freeze(["Uniform Size", "Normal Scale", "Fibonacci Scale"]),
   GROWTH: Object.freeze(["Radial", "Right-facing", "Left-facing", "Right-Left", "Up-facing", "Down-facing", "Up-Down"]),
   ZOOM: Object.freeze(["Low", "Medium", "High"]),
   ARROW: Object.freeze(["curved", "straight"]),
@@ -1011,6 +1020,9 @@ const VALUE_SETS = Object.freeze({
 });
 
 const FONT_SCALE_TYPES = VALUE_SETS.FONT_SCALE;
+const FONT_BASE_SIZES = Object.freeze([12, 14, 16, 18, 20, 24, 28, 32, 36, 42, 48, 56, 64, 68, 72, 84, 96]);
+const DEFAULT_FONT_BASE_SIZE = 36;
+const MIN_SCALED_FONT_SIZE = 8;
 const GROWTH_TYPES = VALUE_SETS.GROWTH;
 const ZOOM_TYPES = VALUE_SETS.ZOOM;
 const SCOPE = VALUE_SETS.SCOPE;
@@ -1027,18 +1039,39 @@ const getZoom = (level) => {
   return ea.DEVICE.isMobile ? target.mobile : target.desktop;
 };
 
-const fontScale = (type) => {
-  switch (type) {
-    case "Use scene fontsize":
-      return Array(5).fill(getAppState().currentItemFontSize);
-    case "Fibonacci Scale":
-      return [68, 42, 26, 16, 10];
-    default: // "Normal Scale"
-      return [36, 28, 20, 16, 12];
-  }
+const normalizeFontScaleType = (type) => {
+  if (type === "Use scene fontsize") return "Uniform Size";
+  return FONT_SCALE_TYPES.includes(type) ? type : "Normal Scale";
 };
 
-const getFontScale = (type) => fontScale(type) ?? fontScale("Normal Scale");
+const sanitizeFontBaseSize = (value, fallback = DEFAULT_FONT_BASE_SIZE) => {
+  const numeric = Number(value);
+  return Number.isFinite(numeric) && numeric > 0 ? numeric : fallback;
+};
+
+const getLegacyFontBaseSize = (type) => {
+  if (type === "Fibonacci Scale") return 68;
+  if (type === "Use scene fontsize") {
+    return sanitizeFontBaseSize(getAppState()?.currentItemFontSize, 20);
+  }
+  return DEFAULT_FONT_BASE_SIZE;
+};
+
+const fontScale = (type, baseSize = DEFAULT_FONT_BASE_SIZE) => {
+  const normalizedType = normalizeFontScaleType(type);
+  const base = sanitizeFontBaseSize(baseSize);
+  if (normalizedType === "Uniform Size") return Array(5).fill(base);
+  if (normalizedType === "Fibonacci Scale") {
+    const goldenRatioInverse = 0.61803398875;
+    return Array.from({ length: 5 }, (_, depth) =>
+      Math.max(MIN_SCALED_FONT_SIZE, Math.round(base * Math.pow(goldenRatioInverse, depth)))
+    );
+  }
+  const normalRatios = [1, 28 / 36, 20 / 36, 16 / 36, 12 / 36];
+  return normalRatios.map((ratio) => Math.max(MIN_SCALED_FONT_SIZE, Math.round(base * ratio)));
+};
+
+const getFontScale = (type, baseSize = DEFAULT_FONT_BASE_SIZE) => fontScale(type, baseSize);
 
 let dirty = false;
 const getVal = (key, def) => ea.getScriptSettingValue(key, typeof def === "object" ? def: { value: def }).value;
@@ -1059,6 +1092,7 @@ const setVal = (key, value, hidden = false) => {
 
 const K_WIDTH = "Max Text Width";
 const K_FONTSIZE = "Font Sizes";
+const K_FONT_BASE_SIZE = "Base Font Size";
 const K_BOX = "Box Children";
 const K_ROUND = "Rounded Corners";
 const K_BRANCH_SCALE = "Branch Scale Style";
@@ -1399,10 +1433,15 @@ let arrowType = getVal(K_ARROW_TYPE, {
 });
 let maxWidth = parseInt(getVal(K_WIDTH, 450));
 if (isNaN(maxWidth)) maxWidth = 450;
-let fontsizeScale = getVal(K_FONTSIZE, {
+const storedFontsizeScale = getVal(K_FONTSIZE, {
   value: "Normal Scale",
   valueset: FONT_SCALE_TYPES
 });
+let fontsizeScale = normalizeFontScaleType(storedFontsizeScale);
+let fontSizeBase = sanitizeFontBaseSize(
+  getVal(K_FONT_BASE_SIZE, getLegacyFontBaseSize(storedFontsizeScale)),
+  getLegacyFontBaseSize(storedFontsizeScale),
+);
 let boxChildren = getVal(K_BOX, false);
 let roundedCorners = getVal(K_ROUND, false);
 let multicolor = getVal(K_MULTICOLOR, true);
@@ -1450,6 +1489,11 @@ if (!ea.getScriptSettingValue(K_FONTSIZE, {
   dirty = true;
 }
 
+if (storedFontsizeScale !== fontsizeScale) {
+  setVal(K_FONTSIZE, fontsizeScale);
+}
+setVal(K_FONT_BASE_SIZE, fontSizeBase);
+
 if (!ea.getScriptSettingValue(K_GROWTH, {
     value: "Right-Left",
     valueset: GROWTH_TYPES
@@ -1489,6 +1533,7 @@ const extractConfigFromGlobals = () => ({
   growthMode: currentModalGrowthMode,
   arrowType,
   fontsizeScale,
+  fontSizeBase,
   multicolor,
   boxChildren,
   roundedCorners,
@@ -1536,7 +1581,8 @@ const normalizeMapConfig = (c) => {
   return {
     growthMode: c.growthMode ?? "Right-Left",
     arrowType: c.arrowType ?? "curved",
-    fontsizeScale: c.fontsizeScale ?? "Normal Scale",
+    fontsizeScale: normalizeFontScaleType(c.fontsizeScale),
+    fontSizeBase: sanitizeFontBaseSize(c.fontSizeBase, getLegacyFontBaseSize(c.fontsizeScale)),
     multicolor: c.multicolor ?? true,
     boxChildren: c.boxChildren ?? false,
     roundedCorners: c.roundedCorners ?? false,
@@ -1568,7 +1614,7 @@ const diffMapConfig = (c1, c2) => {
   const n2 = normalizeMapConfig(c2);
   
   const keys = [
-    "growthMode", "arrowType", "fontsizeScale", "multicolor", 
+    "growthMode", "arrowType", "fontsizeScale", "fontSizeBase", "multicolor", 
     "boxChildren", "roundedCorners", "maxWrapWidth", "isSolidArrow", 
     "centerText", "fillSweep", "branchScale", "baseStrokeWidth"
   ];
@@ -1614,6 +1660,7 @@ const applyPresetToGlobals = (presetName) => {
   currentModalGrowthMode = n.growthMode;
   arrowType = n.arrowType;
   fontsizeScale = n.fontsizeScale;
+  fontSizeBase = n.fontSizeBase;
   multicolor = n.multicolor;
   boxChildren = n.boxChildren;
   roundedCorners = n.roundedCorners;
@@ -1629,6 +1676,7 @@ const applyPresetToGlobals = (presetName) => {
   setVal(K_GROWTH, currentModalGrowthMode);
   setVal(K_ARROW_TYPE, arrowType);
   setVal(K_FONTSIZE, fontsizeScale);
+  setVal(K_FONT_BASE_SIZE, fontSizeBase);
   setVal(K_MULTICOLOR, multicolor);
   setVal(K_BOX, boxChildren);
   setVal(K_ROUND, roundedCorners);
@@ -1649,6 +1697,7 @@ const applyPresetToMap = async (presetName, sel) => {
     growthMode: currentModalGrowthMode,
     arrowType,
     fontsizeScale,
+    fontSizeBase,
     multicolor,
     boxChildren,
     roundedCorners,
@@ -2039,7 +2088,7 @@ const DEFAULT_HOTKEYS = [
   // Creation - Enter based
   { action: ACTION_ADD, key: "Enter", modifiers: [], scope: SCOPE.input, isInputOnly: true, requiresNode: false },
   { action: ACTION_ADD_SIBLING_AFTER, key: "Enter", modifiers: ["Alt"], scope: SCOPE.input, isInputOnly: true, requiresNode: false },
-  { action: ACTION_ADD_SIBLING_BEFORE, key: "Enter", modifiers: ["Alt", "Shift"], scope: SCOPE.input, isInputOnly: true, requiresNode: false },
+  { action: ACTION_ADD_SIBLING_BEFORE, key: "Enter", modifiers: ["Mod", "Alt", "Shift"], scope: SCOPE.input, isInputOnly: true, requiresNode: false },
   { action: ACTION_ADD_FOLLOW, key: "Enter", modifiers:["Mod", "Alt"], scope: SCOPE.input, isInputOnly: true, requiresNode: false },
   { action: ACTION_ADD_FOLLOW_FOCUS, key: "Enter", modifiers: ["Mod"], scope: SCOPE.input, isInputOnly: true, requiresNode: false },
   { action: ACTION_ADD_FOLLOW_ZOOM, key: "Enter", modifiers: ["Mod", "Shift"], scope: SCOPE.input, isInputOnly: true, requiresNode: false },
@@ -2082,10 +2131,66 @@ const DEFAULT_HOTKEYS = [
   { action: ACTION_FOLD_ALL, code: "Digit3", modifiers: ["Alt"], scope: SCOPE.input, isInputOnly: false, requiresNode: true },
 
   // Undo / Redo
-  { action: ACTION_UNDO, key: "z", modifiers: ["Mod"], scope: SCOPE.excalidraw, isInputOnly: false, hidden: true, requiresNode: false },
-  { action: ACTION_REDO_Z, key: "z", modifiers: ["Mod", "Shift"], scope: SCOPE.excalidraw, isInputOnly: false, hidden: true, requiresNode: false },
-  { action: ACTION_REDO_Y, key: "y", modifiers: ["Mod"], scope: SCOPE.excalidraw, isInputOnly: false, hidden: true, requiresNode: false },
+  { action: ACTION_UNDO, code: "KeyZ", modifiers: ["Mod"], scope: SCOPE.excalidraw, isInputOnly: false, hidden: true, requiresNode: false },
+  { action: ACTION_REDO_Z, code: "KeyZ", modifiers: ["Mod", "Shift"], scope: SCOPE.excalidraw, isInputOnly: false, hidden: true, requiresNode: false },
+  { action: ACTION_REDO_Y, code: "KeyY", modifiers: ["Mod"], scope: SCOPE.excalidraw, isInputOnly: false, hidden: true, requiresNode: false },
 ];
+
+const normalizeHotkeyKey = (key) => {
+  if (key === " " || key === "Space" || key === "Spacebar") return "Space";
+  return typeof key === "string" && key.length === 1 ? key.toLowerCase() : key;
+};
+
+const getExpectedModifierState = (modifiers = []) => ({
+  ctrl: modifiers.includes("Ctrl") || (!isMac && modifiers.includes("Mod")),
+  meta: modifiers.includes("Meta") || (isMac && modifiers.includes("Mod")),
+  alt: modifiers.includes("Alt"),
+  shift: modifiers.includes("Shift"),
+});
+
+const eventMatchesModifiers = (event, modifiers = []) => {
+  const expected = getExpectedModifierState(modifiers);
+  return event.ctrlKey === expected.ctrl &&
+    event.metaKey === expected.meta &&
+    event.altKey === expected.alt &&
+    event.shiftKey === expected.shift;
+};
+
+const getModifierSignature = (modifiers = []) => {
+  const expected = getExpectedModifierState(modifiers);
+  return `${expected.ctrl ? 1 : 0}${expected.meta ? 1 : 0}${expected.alt ? 1 : 0}${expected.shift ? 1 : 0}`;
+};
+
+const getHotkeyKeySignatures = (hotkey) => {
+  if (hotkey?.isNavigation) {
+    return ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].map((key) => `key:${key}`);
+  }
+  if (hotkey?.code) {
+    if (hotkey.code.startsWith("Key")) return [`char:${hotkey.code.slice(3).toLowerCase()}`];
+    if (hotkey.code.startsWith("Digit")) return [`char:${hotkey.code.slice(5).toLowerCase()}`];
+    return [`code:${hotkey.code}`];
+  }
+  const key = normalizeHotkeyKey(hotkey?.key);
+  if (typeof key === "string" && key.length === 1) return [`char:${key}`];
+  return [`key:${key}`];
+};
+
+const hotkeysConflict = (first, second) => {
+  if (!first || !second || getModifierSignature(first.modifiers) !== getModifierSignature(second.modifiers)) return false;
+  const secondKeys = new Set(getHotkeyKeySignatures(second));
+  return getHotkeyKeySignatures(first).some((key) => secondKeys.has(key));
+};
+
+const isReservedMultilineHotkey = (hotkey) => {
+  const keys = getHotkeyKeySignatures(hotkey);
+  return keys.includes("key:Enter") && getModifierSignature(hotkey.modifiers) === getModifierSignature(["Shift"]);
+};
+
+const canonicalizeRecordedModifiers = (modifiers) => {
+  const platformMod = isMac ? "Meta" : "Ctrl";
+  const normalized = modifiers.map((modifier) => modifier === platformMod ? "Mod" : modifier);
+  return [...new Set(normalized)];
+};
 
 // Load hotkeys from settings or use default
 // IMPORTANT: Use JSON.parse/stringify to create a deep copy of defaults.
@@ -2100,14 +2205,16 @@ let cancelHotkeyRecording = null;
 const getObsidianConflict = (h) => {
   if (!h) return null;
 
-  const normalize = (s) => s.toLowerCase().replace("key", "").replace("digit", "");
-  const sortMods = (m) => [...m].sort().join(",");
+  const normalize = (value) => String(normalizeHotkeyKey(value) ?? "")
+    .toLowerCase()
+    .replace("key", "")
+    .replace("digit", "");
 
   const keysToCheck = h.isNavigation ?
     ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"] :
     [h.code ? h.code : h.key];
 
-  const targetMods = sortMods(h.modifiers);
+  const targetMods = getModifierSignature(h.modifiers);
 
   const commands = app.commands.listCommands();
   for (const cmd of commands) {
@@ -2116,7 +2223,7 @@ const getObsidianConflict = (h) => {
 
     for (const hk of hotkeys) {
       const hkKey = normalize(hk.key);
-      const hkMods = sortMods(hk.modifiers);
+      const hkMods = getModifierSignature(hk.modifiers);
 
       for (const targetKeyRaw of keysToCheck) {
         if (normalize(targetKeyRaw) === hkKey && targetMods === hkMods) {
@@ -2203,11 +2310,43 @@ function updateUserHotkeys() {
     next.push(cleaned);
   }
 
+  // Migrate the legacy default collision where both "Add previous sibling"
+  // and "Dock/Undock" used Alt+Shift+Enter. Dock keeps that shortcut; the
+  // sibling action moves to Mod+Alt+Shift+Enter.
+  const previousSiblingIndex = next.findIndex((hotkey) => hotkey.action === ACTION_ADD_SIBLING_BEFORE);
+  const dockIndex = next.findIndex((hotkey) => hotkey.action === ACTION_DOCK_UNDOCK);
+  if (
+    previousSiblingIndex !== -1 && dockIndex !== -1 &&
+    hotkeysConflict(next[previousSiblingIndex], next[dockIndex])
+  ) {
+    const defaultPreviousSibling = defaultByAction.get(ACTION_ADD_SIBLING_BEFORE);
+    next[previousSiblingIndex] = JSON.parse(JSON.stringify(defaultPreviousSibling));
+    dirty = true;
+  }
+
+  // A configurable action bound to Shift+Enter would be displayed as valid but
+  // could never run because that chord is reserved for multiline text entry.
+  next.forEach((hotkey, index) => {
+    if (!isReservedMultilineHotkey(hotkey)) return;
+    const fallback = defaultByAction.get(hotkey.action);
+    if (fallback && !isReservedMultilineHotkey(fallback)) {
+      next[index] = JSON.parse(JSON.stringify(fallback));
+      dirty = true;
+    }
+  });
+
   userHotkeys = next;
   return dirty;
 }
 
-dirty = updateUserHotkeys();
+const hotkeysWereNormalized = updateUserHotkeys();
+if (hotkeysWereNormalized) {
+  const hotkeysToSave = userHotkeys.map((hotkey) => {
+    const { isInputOnly, requiresNode, isNavigation, hidden, ...configurableProps } = hotkey;
+    return configurableProps;
+  });
+  setVal(K_HOTKEYS, hotkeysToSave, true);
+}
 
 const getHotkeyDefByAction = (action) => userHotkeys.find((h) => h.action === action);
 
@@ -2241,10 +2380,22 @@ if (userHotkeys.length !== DEFAULT_HOTKEYS.length) {
 // Generate the runtime HOTKEYS array used by getActionFromEvent
 const generateRuntimeHotkeys = () => {
   const runtimeKeys = [];
+  const claimedBindings = new Map();
+  const addRuntimeHotkey = (hotkey) => {
+    const signature = `${getModifierSignature(hotkey.modifiers)}:${getHotkeyKeySignatures(hotkey)[0]}`;
+    const existingAction = claimedBindings.get(signature);
+    if (existingAction) {
+      console.warn(`Mindmap Builder: ignored duplicate hotkey for "${hotkey.action}"; already used by "${existingAction}".`);
+      return;
+    }
+    claimedBindings.set(signature, hotkey.action);
+    runtimeKeys.push(hotkey);
+  };
+
   userHotkeys.forEach(h => {
     if (h.isNavigation) {
       ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].forEach(key => {
-        runtimeKeys.push({
+        addRuntimeHotkey({
           action: h.action,
           key,
           modifiers: h.modifiers,
@@ -2254,7 +2405,7 @@ const generateRuntimeHotkeys = () => {
         });
       });
     } else {
-      runtimeKeys.push(h);
+      addRuntimeHotkey(h);
     }
   });
   return runtimeKeys;
@@ -2690,6 +2841,7 @@ const MAP_ROOT_CUSTOMDATA_KEYS = [
   "autoLayoutDisabled",
   "arrowType",
   "fontsizeScale",
+  "fontSizeBase",
   "multicolor",
   "boxChildren",
   "roundedCorners",
@@ -2749,11 +2901,16 @@ const inferDirectionalGrowthMode = (node, parent, sourceRoot = null, sourceMode 
 const getRootConfigForNode = (rootNode) => {
   const cd = rootNode?.customData ?? {};
   const defaultLayout = layoutSettings || {};
+  const rawFontScaleType = cd?.fontsizeScale ?? fontsizeScale;
   return {
     growthMode: cd?.growthMode || currentModalGrowthMode,
     autoLayoutDisabled: cd?.autoLayoutDisabled === true,
     arrowType: cd?.arrowType ?? arrowType,
-    fontsizeScale: cd?.fontsizeScale ?? fontsizeScale,
+    fontsizeScale: normalizeFontScaleType(rawFontScaleType),
+    fontSizeBase: sanitizeFontBaseSize(
+      cd?.fontSizeBase,
+      cd?.fontsizeScale ? getLegacyFontBaseSize(cd.fontsizeScale) : fontSizeBase,
+    ),
     multicolor: typeof cd?.multicolor === "boolean" ? cd.multicolor : multicolor,
     boxChildren: typeof cd?.boxChildren === "boolean" ? cd.boxChildren : boxChildren,
     roundedCorners: typeof cd?.roundedCorners === "boolean" ? cd.roundedCorners : roundedCorners,
@@ -5927,6 +6084,7 @@ const initializeRootCustomData = (nodeId) => {
     autoLayoutDisabled: false,
     arrowType: arrowType, 
     fontsizeScale,
+    fontSizeBase,
     multicolor,
     boxChildren,
     roundedCorners,
@@ -6052,7 +6210,9 @@ const addNode = async (text, follow = false, skipFinalLayout = false, batchModeA
     }
   }
 
-  const fontScale = getFontScale(rootCfgForAdd?.fontsizeScale ?? fontsizeScale);
+  const effectiveFontScaleType = rootCfgForAdd?.fontsizeScale ?? fontsizeScale;
+  const effectiveFontBaseSize = rootCfgForAdd?.fontSizeBase ?? fontSizeBase;
+  const fontScale = getFontScale(effectiveFontScaleType, effectiveFontBaseSize);
   if (!isBatchMode) ea.clear();
   ea.style.fontFamily = isCodeBlock ? getCodeFontFamily() : st.currentItemFontFamily;
   ea.style.fontSize = fontScale[Math.min(depth, fontScale.length - 1)];
@@ -7693,29 +7853,20 @@ const reconnectArrow = (currentBindingElement, newBindingElement, arrow, side = 
  * preserving user customizations.
  * Also updates the ontology label (if present) on the incoming arrow to be half the node's new size.
  */
-const updateSubtreeFontSize = (nodeId, newDepth, oldDepth, allElements, newFontScaleType, oldFontScaleType) => {
-  const newFontScale = getFontScale(newFontScaleType);
-  const oldFontScale = getFontScale(oldFontScaleType);
-
+const updateSubtreeFontSize = (nodeId, newDepth, allElements, newFontScaleType, newFontBaseSize) => {
+  const newFontScale = getFontScale(newFontScaleType, newFontBaseSize);
   const node = allElements.find(el => el.id === nodeId);
   if (!node) return;
-  if (!ea.getElement(nodeId)) {
-    ea.copyViewElementsToEAforEditing([node]);
-  }
-
-  // Calculate standard sizes based on the old and new contexts
-  const oldStandardSize = oldFontScale[Math.min(oldDepth, oldFontScale.length - 1)];
   const newStandardSize = newFontScale[Math.min(newDepth, newFontScale.length - 1)];
 
-  // Update only if the user hasn't customized the font size
-  if (node.fontSize === oldStandardSize) {
-    const eaNode = ea.getElement(nodeId);
-    eaNode.fontSize = newStandardSize;
-
-    // Refresh dimensions to fit new font size
-    if (eaNode.type === "text" || (eaNode.boundElements && eaNode.boundElements.some(b => b.type === "text"))) {
-      ea.refreshTextElementSize(eaNode.id);
-    }
+  const textElement = node.type === "text" ?
+    node :
+    allElements.find((element) => element.id === node.boundElements?.find((bound) => bound.type === "text")?.id);
+  if (textElement) {
+    if (!ea.getElement(textElement.id)) ea.copyViewElementsToEAforEditing([textElement]);
+    const eaText = ea.getElement(textElement.id);
+    eaText.fontSize = newStandardSize;
+    ea.refreshTextElementSize(eaText.id);
   }
 
   // Update Ontology (Arrow Label) size
@@ -7737,9 +7888,8 @@ const updateSubtreeFontSize = (nodeId, newDepth, oldDepth, allElements, newFontS
       eaOntologyEl = ea.getElement(maybeTextElement.sceneElement.id);
     }
 
-    // Apply half-size logic
-    if (eaOntologyEl && eaOntologyEl.fontSize === Math.floor(oldStandardSize / 2)) {
-      eaOntologyEl.fontSize = Math.floor(newStandardSize / 2);
+    if (eaOntologyEl) {
+      eaOntologyEl.fontSize = Math.max(MIN_SCALED_FONT_SIZE, Math.floor(newStandardSize / 2));
       ea.refreshTextElementSize(eaOntologyEl.id);
     }
   }
@@ -7753,26 +7903,26 @@ const updateSubtreeFontSize = (nodeId, newDepth, oldDepth, allElements, newFontS
   // Recurse to children
   const children = getChildrenNodes(nodeId, allElements);
   children.forEach(child => {
-    updateSubtreeFontSize(child.id, newDepth + 1, oldDepth + 1, allElements, newFontScaleType, oldFontScaleType);
+    updateSubtreeFontSize(child.id, newDepth + 1, allElements, newFontScaleType, newFontBaseSize);
   });
 };
 
 /**
- * Applies a changed font-scale preset to the visible map. Existing manually
- * sized text is deliberately left alone; only text that still matches the old
- * preset size is updated. Additional roots are independent submaps, so a
- * parent-map update stops at their children and a submap update starts with
- * its own children.
+ * Applies a font scale and base size to every text node in the selected map.
+ * The setting cascades into descendant submaps, where depth restarts at one.
+ * A submap-root node remains visually owned by its parent map, so changing a
+ * submap starts with its children and never changes ancestors.
  */
-const applyFontScaleToSettingsRoot = async (settingsRootId, oldScaleType, newScaleType) => {
-  if (!settingsRootId || oldScaleType === newScaleType || !isViewSet()) return;
+const applyFontScaleToSettingsRoot = async (settingsRootId, newScaleType, newBaseSize) => {
+  if (!settingsRootId || !isViewSet()) return;
 
   const allElements = ea.getViewElements();
   const settingsRoot = allElements.find((el) => el.id === settingsRootId);
   if (!settingsRoot) return;
 
-  const oldScale = getFontScale(oldScaleType);
-  const newScale = getFontScale(newScaleType);
+  const normalizedScaleType = normalizeFontScaleType(newScaleType);
+  const normalizedBaseSize = sanitizeFontBaseSize(newBaseSize);
+  const newScale = getFontScale(normalizedScaleType, normalizedBaseSize);
   let changed = false;
 
   const editable = (sceneElement) => {
@@ -7783,38 +7933,48 @@ const applyFontScaleToSettingsRoot = async (settingsRootId, oldScaleType, newSca
     return ea.getElement(sceneElement.id);
   };
 
-  const updateNode = (node, depth) => {
+  const updateNode = (node, depth, isStartingSubmapRoot = false) => {
     if (!node) return;
-    const textId = node.type === "text" ? node.id : node.boundElements?.find((be) => be.type === "text")?.id;
-    const textElement = textId ? allElements.find((el) => el.id === textId) : null;
-    const oldSize = oldScale[Math.min(depth, oldScale.length - 1)];
     const newSize = newScale[Math.min(depth, newScale.length - 1)];
 
-    if (textElement?.fontSize === oldSize && oldSize !== newSize) {
-      const eaText = editable(textElement);
-      eaText.fontSize = newSize;
-      ea.refreshTextElementSize(eaText.id);
-      changed = true;
+    if (!isStartingSubmapRoot) {
+      const textId = node.type === "text" ? node.id : node.boundElements?.find((be) => be.type === "text")?.id;
+      const textElement = textId ? allElements.find((el) => el.id === textId) : null;
+      if (textElement) {
+        const eaText = editable(textElement);
+        eaText.fontSize = newSize;
+        ea.refreshTextElementSize(eaText.id);
+        changed = true;
+      }
+
+      const incomingArrow = allElements.find((el) =>
+        el.type === "arrow" && el.customData?.isBranch && el.endBinding?.elementId === node.id
+      );
+      const ontology = incomingArrow && ea.getBoundTextElement(incomingArrow, true)?.sceneElement;
+      if (ontology) {
+        const eaOntology = editable(ontology);
+        eaOntology.fontSize = Math.max(MIN_SCALED_FONT_SIZE, Math.floor(newSize / 2));
+        ea.refreshTextElementSize(eaOntology.id);
+        changed = true;
+      }
     }
 
-    const incomingArrow = allElements.find((el) =>
-      el.type === "arrow" && el.customData?.isBranch && el.endBinding?.elementId === node.id
-    );
-    const ontology = incomingArrow && ea.getBoundTextElement(incomingArrow, true)?.sceneElement;
-    if (ontology?.fontSize === Math.floor(oldSize / 2)) {
-      const eaOntology = editable(ontology);
-      eaOntology.fontSize = Math.floor(newSize / 2);
-      ea.refreshTextElementSize(eaOntology.id);
+    if (node.customData?.isAdditionalRoot) {
+      if (!ea.getElement(node.id)) ea.copyViewElementsToEAforEditing([node]);
+      ea.addAppendUpdateCustomData(node.id, {
+        fontsizeScale: normalizedScaleType,
+        fontSizeBase: normalizedBaseSize,
+      });
       changed = true;
+      getChildrenNodes(node.id, allElements).forEach((child) => updateNode(child, 1));
+      return;
     }
 
-    // A nested submap owns the scale of its descendants.
-    if (node.customData?.isAdditionalRoot && node.id !== settingsRootId) return;
     getChildrenNodes(node.id, allElements).forEach((child) => updateNode(child, depth + 1));
   };
 
   if (settingsRoot.customData?.isAdditionalRoot) {
-    getChildrenNodes(settingsRoot.id, allElements).forEach((child) => updateNode(child, 1));
+    updateNode(settingsRoot, 0, true);
   } else {
     updateNode(settingsRoot, 0);
   }
@@ -7996,6 +8156,7 @@ const toggleSubmapRoot = async () => {
       autoLayoutDisabled: sourceCfg.autoLayoutDisabled,
       arrowType: sourceCfg.arrowType,
       fontsizeScale: sourceCfg.fontsizeScale,
+      fontSizeBase: sourceCfg.fontSizeBase,
       multicolor: sourceCfg.multicolor,
       boxChildren: sourceCfg.boxChildren,
       roundedCorners: sourceCfg.roundedCorners,
@@ -8155,7 +8316,7 @@ const changeNodeOrder = async (key) => {
         mindmapOrder: isRadial && !isInPositive ? parentOrder - 0.5 : parentOrder + 0.5
       });
 
-      updateSubtreeFontSize(current.id, newDepth, oldDepth, allElements, newRootCfg.fontsizeScale, oldRootCfg.fontsizeScale);
+      updateSubtreeFontSize(current.id, newDepth, allElements, newRootCfg.fontsizeScale, newRootCfg.fontSizeBase);
       updateSubtreeStrokeWidth(current.id, newDepth, oldDepth, allElements, newRootCfg.baseStrokeWidth, newRootCfg.branchScale, oldRootCfg.baseStrokeWidth, oldRootCfg.branchScale);
 
       // --- Update Colors (Promotion) ---
@@ -8253,7 +8414,7 @@ const changeNodeOrder = async (key) => {
         });
       }
 
-      updateSubtreeFontSize(current.id, newDepth, oldDepth, allElements, newRootCfg.fontsizeScale, oldRootCfg.fontsizeScale);
+      updateSubtreeFontSize(current.id, newDepth, allElements, newRootCfg.fontsizeScale, newRootCfg.fontSizeBase);
       updateSubtreeStrokeWidth(current.id, newDepth, oldDepth, allElements, newRootCfg.baseStrokeWidth, newRootCfg.branchScale, oldRootCfg.baseStrokeWidth, oldRootCfg.branchScale);
 
       // --- Update Colors (Demotion) ---
@@ -11539,6 +11700,8 @@ const renderBody = (contentEl) => {
     const def = DEFAULT_HOTKEYS.find(d => d.action === current.action);
     if (!def) return false;
 
+    if (current.scope !== def.scope) return true;
+
     const k1 = current.code || current.key;
     const k2 = def.code || def.key;
     if (k1 !== k2) return true;
@@ -11588,6 +11751,7 @@ const renderBody = (contentEl) => {
       if (e.metaKey) mods.push("Meta");
       if (e.altKey) mods.push("Alt");
       if (e.shiftKey) mods.push("Shift");
+      const canonicalMods = canonicalizeRecordedModifiers(mods);
 
       let key = e.key;
       let code = e.code;
@@ -11604,19 +11768,30 @@ const renderBody = (contentEl) => {
         return false;
       }
 
+      const candidate = {
+        ...targetConfig,
+        modifiers: canonicalMods,
+      };
+      if (!isNav) {
+        if (code && (code.startsWith("Key") || code.startsWith("Digit"))) {
+          candidate.code = code;
+          delete candidate.key;
+        } else {
+          candidate.key = key;
+          delete candidate.code;
+        }
+      }
+
+      if (isReservedMultilineHotkey(candidate)) {
+        new Notice(t("NOTICE_RESERVED_MULTILINE_HOTKEY"), NOTICE_DURATION_CONFLICT);
+        cleanup();
+        return false;
+      }
+
       // Check conflicts
       const conflict = userHotkeys.find((h, i) => {
         if (i === hIndex) return false;
-
-        const sameMods = h.modifiers.length === mods.length && h.modifiers.every(m => mods.includes(m));
-        if (!sameMods) return false;
-
-        if (h.isNavigation && isNav) return true;
-        if (h.isNavigation && key.startsWith("Arrow")) return true;
-
-        const hKey = h.code ? h.code.replace("Key", "").replace("Digit", "") : h.key;
-        const eKey = code ? code.replace("Key", "").replace("Digit", "") : key;
-        return hKey.toLowerCase() === eKey.toLowerCase();
+        return hotkeysConflict(h, candidate);
       });
 
       if (conflict) {
@@ -11627,14 +11802,14 @@ const renderBody = (contentEl) => {
         setTimeout(() => label.style.color = "", 4000);
       } else {
         if (isNav) {
-          targetConfig.modifiers = mods.map(m => m === "Ctrl" || m === "Meta" ? "Mod" : m);
+          targetConfig.modifiers = candidate.modifiers;
         } else {
-          targetConfig.modifiers = mods.map(m => m === "Ctrl" || m === "Meta" ? "Mod" : m);
-          if (code && (code.startsWith("Key") || code.startsWith("Digit"))) {
-            targetConfig.code = code;
+          targetConfig.modifiers = candidate.modifiers;
+          if (candidate.code) {
+            targetConfig.code = candidate.code;
             delete targetConfig.key;
           } else {
-            targetConfig.key = key;
+            targetConfig.key = candidate.key;
             delete targetConfig.code;
           }
         }
@@ -11765,6 +11940,15 @@ const renderBody = (contentEl) => {
     restoreBtn.onclick = () => {
       const def = DEFAULT_HOTKEYS.find(d => d.action === userHotkeys[index].action);
       if (def) {
+        const conflict = userHotkeys.find((hotkey, otherIndex) =>
+          otherIndex !== index && hotkeysConflict(hotkey, def)
+        );
+        if (conflict) {
+          new Notice(t("NOTICE_CONFLICT_WITH_ACTION", {
+            action: getActionLabel(conflict.action)
+          }), NOTICE_DURATION_CONFLICT);
+          return;
+        }
         userHotkeys[index] = JSON.parse(JSON.stringify(def));
         saveHotkeys();
         updateRowUI();
@@ -12078,19 +12262,12 @@ const toggleDock = async ({
  * @returns {object} - { action, scope, requiresNode } or empty object if no match.
  */
 const getActionFromEvent = (e) => {
-  const isMod = e.ctrlKey || e.metaKey;
-
   const match = RUNTIME_HOTKEYS.find(h => {
-    const keyMatch = h.code ? (e.code === h.code) : (e.key === h.key);
+    const keyMatch = h.code ?
+      e.code === h.code :
+      normalizeHotkeyKey(e.key) === normalizeHotkeyKey(h.key);
     if (!keyMatch) return false;
-
-    const hasMod = h.modifiers.includes("Mod") || h.modifiers.includes("Ctrl") || h.modifiers.includes("Meta");
-    const hasShift = h.modifiers.includes("Shift");
-    const hasAlt = h.modifiers.includes("Alt");
-
-    return (isMod === hasMod) &&
-      (e.shiftKey === hasShift) &&
-      (e.altKey === hasAlt);
+    return eventMatchesModifiers(e, h.modifiers);
   });
 
   return match ? {
@@ -12110,6 +12287,9 @@ const handleKeydown = (e) => {
   // Fix for IME (Korean, Chinese, Japanese, etc.) composition issues
   // Prevents "Enter" from triggering actions when it's just confirming a character selection
   if (e.isComposing || e.keyCode === 229) return;
+  // AltGr is reported as Ctrl+Alt on many international keyboard layouts. It
+  // must remain available for typing characters instead of firing shortcuts.
+  if (e.getModifierState?.("AltGraph")) return;
 
   if (activeImportJob && e.key === "Escape") {
     activeImportJob.cancelled = true;
@@ -12128,21 +12308,9 @@ const handleKeydown = (e) => {
 
   if (!currentWindow) return;
 
-  // Explicit multiline-editor shortcut. Existing users may still have the old
-  // Shift+Enter mapping saved, so do not depend on DEFAULT_HOTKEYS migration.
-  if (
-    e.key === "Enter" && e.altKey && e.shiftKey && !e.ctrlKey && !e.metaKey &&
-    e.target === inputEl && inputEl?.tagName === "TEXTAREA"
-  ) {
-    e.preventDefault();
-    e.stopPropagation();
-    toggleDock({ saveSetting: true });
-    return;
-  }
-
   // The primary editor is deliberately multiline. Keep the established Enter
-  // shortcuts for map actions, while Shift+Enter always inserts a literal line
-  // break and leaves native paste untouched.
+  // shortcuts for map actions, while unmodified Shift+Enter always inserts a
+  // literal line break. Configurable shortcuts continue through the matcher.
   if (
     e.key === "Enter" && e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey &&
     e.target === inputEl && inputEl?.tagName === "TEXTAREA"
@@ -12173,6 +12341,14 @@ const handleKeydown = (e) => {
     scope,
     requiresNode
   } = getActionFromEvent(e);
+
+  // While either text field is focused, native text undo/redo must win over
+  // the canvas history shortcuts. Canvas undo/redo remains active elsewhere.
+  const isTextEntryTarget = e.target === inputEl || e.target === ontologyEl;
+  if (isTextEntryTarget && [ACTION_UNDO, ACTION_REDO_Z, ACTION_REDO_Y].includes(action)) {
+    return;
+  }
+
   if (!action && !["Tab", "Enter"].includes(e.key)) return;
 
   let context = getHotkeyContext();
@@ -12239,7 +12415,10 @@ const handleKeydown = (e) => {
   e.preventDefault();
   e.stopPropagation();
 
-  performAction(action, e);
+  void performAction(action, e).catch((error) => {
+    console.error(`Mindmap Builder: hotkey action "${action}" failed`, error);
+    new Notice(`Mindmap Builder: ${getActionLabel(action)} failed. Check the developer console for details.`);
+  });
 }
 
 const addSibling = async (event, insertAfter = true) => {
@@ -12932,7 +13111,7 @@ const performAction = async (action, event) => {
       break;
 
     case ACTION_DOCK_UNDOCK:
-      toggleDock({
+      await toggleDock({
         saveSetting: true
       });
       break;
@@ -12942,11 +13121,11 @@ const performAction = async (action, event) => {
       break;
 
     case ACTION_ADD_SIBLING_AFTER:
-      addSibling(event, true);
+      await addSibling(event, true);
       break;
 
     case ACTION_ADD_SIBLING_BEFORE:
-      addSibling(event, false);
+      await addSibling(event, false);
       break;
 
     case ACTION_ADD_FOLLOW:

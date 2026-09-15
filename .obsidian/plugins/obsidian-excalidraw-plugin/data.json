@@ -972,6 +972,7 @@
             "action": "Add Prev Sibling",
             "key": "Enter",
             "modifiers": [
+              "Mod",
               "Alt",
               "Shift"
             ],
@@ -1208,7 +1209,7 @@
           },
           {
             "action": "Undo",
-            "key": "z",
+            "code": "KeyZ",
             "modifiers": [
               "Mod"
             ],
@@ -1216,7 +1217,7 @@
           },
           {
             "action": "Redo (Ctrl-Shift-Z)",
-            "key": "z",
+            "code": "KeyZ",
             "modifiers": [
               "Mod",
               "Shift"
@@ -1225,7 +1226,7 @@
           },
           {
             "action": "Redo (Ctrl-Y)",
-            "key": "y",
+            "code": "KeyY",
             "modifiers": [
               "Mod"
             ],
