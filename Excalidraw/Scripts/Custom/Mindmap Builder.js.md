@@ -3549,9 +3549,13 @@ const moveCrossLinks = (allElements, originalPositions) => {
   return touched;
 };
 
-const moveDecorations = (allElements, originalPositions, groupToNodes, rootId, elementById, parentMap) => {
-  const structuralIds = new Set();
-  if (rootId) {
+const moveDecorations = (allElements, originalPositions, groupToNodes, rootId, elementById, parentMap, knownStructuralIds = null) => {
+  // Layout already knows every structural ID in the active project. Reusing it
+  // avoids walking the hierarchy once per element (the old path grew quickly on
+  // large maps with grouped decorations). Keep the original discovery fallback
+  // for callers that do not have that index.
+  const structuralIds = knownStructuralIds ? new Set(knownStructuralIds) : new Set();
+  if (!knownStructuralIds && rootId) {
     allElements.forEach(el => {
       if (isStructuralElement(el, allElements, rootId, elementById, parentMap)) {
         structuralIds.add(el.id);
@@ -4639,7 +4643,7 @@ const layoutChildrenAsAdditionalRoot = (nodeId, allElements, hasGlobalFolds, chi
   const node = elementById?.get(nodeId) ?? allElements.find((el) => el.id === nodeId);
   if (!node || node.customData?.isAdditionalRoot !== true) return false;
 
-  const l1Nodes = getChildrenNodes(nodeId, allElements);
+  const l1Nodes = childrenByParent?.get(nodeId) ?? getChildrenNodes(nodeId, allElements);
   if (l1Nodes.length === 0) return false;
 
   // Apply local submap settings for this subtree only.
@@ -5803,9 +5807,16 @@ const performGlobalLayout = async (rootId, forceUngroup = false, mustHonorMindma
 
       const branchIds = new Set(mindmapIds);
       const groupToNodes = buildGroupToNodes(branchIds, allElements);
+      const mindmapGroupCache = new Map();
+      const isCachedMindmapGroup = (groupId) => {
+        if (!mindmapGroupCache.has(groupId)) {
+          mindmapGroupCache.set(groupId, isMindmapGroup(groupId, allElements));
+        }
+        return mindmapGroupCache.get(groupId);
+      };
 
       const hasGlobalFolds = allElements.some(el => el.customData?.isFolded === true);
-      const l1Nodes = getChildrenNodes(rootId, allElements);
+      const l1Nodes = childrenByParent.get(rootId) || [];
       if (l1Nodes.length === 0) return {
         structuralChange: false,
         visualChange: false
@@ -5815,7 +5826,7 @@ const performGlobalLayout = async (rootId, forceUngroup = false, mustHonorMindma
         mindmapIds.forEach((id) => {
           const el = ea.getElement(id);
           if (el && el.groupIds) {
-            el.groupIds = el.groupIds.filter(gid => !isMindmapGroup(gid, allElements));
+            el.groupIds = el.groupIds.filter(gid => !isCachedMindmapGroup(gid));
           }
         });
       }
@@ -5948,7 +5959,15 @@ const performGlobalLayout = async (rootId, forceUngroup = false, mustHonorMindma
       } = sharedSets;
 
       moveCrossLinks(ea.getElements(), originalPositions);
-      moveDecorations(ea.getElements(), originalPositions, groupToNodes, rootId, elementById, parentMap);
+      moveDecorations(
+        ea.getElements(),
+        originalPositions,
+        groupToNodes,
+        rootId,
+        elementById,
+        parentMap,
+        sharedSets.mindmapIdsSet,
+      );
 
       ea.getElements().filter(el => !mindmapIdsSet.has(el.id) && !crosslinkIdSet.has(el.id) && !decorationIdSet.has(el.id)).forEach(el => {
         delete ea.elementsDict[el.id];
@@ -5982,7 +6001,8 @@ const performGlobalLayout = async (rootId, forceUngroup = false, mustHonorMindma
 
   if (root.customData?.autoLayoutDisabled) return;
 
-  const mindmapIds = getBranchElementIds(rootId, allElements);
+  const workbenchElementById = buildElementMap(allElements);
+  const mindmapIds = getBranchElementIds(rootId, allElements, workbenchElementById);
   const {
     structuralGroupId,
     groupedElementIds
@@ -5991,17 +6011,36 @@ const performGlobalLayout = async (rootId, forceUngroup = false, mustHonorMindma
     removeGroupFromElements(structuralGroupId, allElements);
   }
 
-  const expandedMindmapIds = [...mindmapIds];
-  mindmapIds.forEach(id => {
-    const el = allElements.find(e => e.id === id);
-    if (el && el.boundElements) {
-      el.boundElements.forEach(be => expandedMindmapIds.push(be.id));
-    }
-  });
-
-  const mindmapIdsSet = new Set(expandedMindmapIds);
+  // Include every structural dependency once. In particular, this keeps a
+  // text/container pair from being mistaken for a decoration during cleanup.
+  const mindmapIdsSet = new Set(mindmapIds);
+  const dependencyQueue = [...mindmapIds];
+  for (let index = 0; index < dependencyQueue.length; index += 1) {
+    const id = dependencyQueue[index];
+    const element = workbenchElementById.get(id);
+    if (!element) continue;
+    const dependencyIds = [
+      ...(element.boundElements || []).map((bound) => bound.id),
+      element.containerId,
+      element.customData?.foldIndicatorId,
+      element.customData?.boundaryId,
+    ].filter(Boolean);
+    dependencyIds.forEach((dependencyId) => {
+      if (mindmapIdsSet.has(dependencyId)) return;
+      mindmapIdsSet.add(dependencyId);
+      dependencyQueue.push(dependencyId);
+    });
+  }
   const crosslinkIdSet = collectCrosslinkIds(allElements);
-  const decorationIdSet = collectDecorationIds(allElements, rootId);
+  // allElements is the project-only workbench subset. Once branch elements
+  // (including bound text) and cross-links are accounted for, every remaining
+  // element is a decoration that must travel with its host group. This replaces
+  // an expensive hierarchy lookup for every grouped element.
+  const decorationIdSet = new Set(
+    allElements
+      .filter((element) => !mindmapIdsSet.has(element.id) && !crosslinkIdSet.has(element.id))
+      .map((element) => element.id),
+  );
   const sharedSets = {
     mindmapIdsSet,
     crosslinkIdSet,
@@ -6096,14 +6135,40 @@ const performGlobalLayout = async (rootId, forceUngroup = false, mustHonorMindma
 
 // Layout can be requested by paste, edit, settings, and fold actions in quick
 // succession. Serialize those mutations so a slower pass cannot overwrite a
-// newer pass with stale positions or group data.
+// newer pass with stale positions or group data. Identical requests waiting in
+// the queue share a single pass, which keeps rapid edits from building a long
+// backlog after a large import.
 let layoutQueue = Promise.resolve();
-const triggerGlobalLayout = (...args) => {
-  const task = layoutQueue.then(() => performGlobalLayout(...args));
-  layoutQueue = task.catch((error) => {
+const queuedLayoutRequests = new Map();
+const triggerGlobalLayout = (rootId, forceUngroup = false, mustHonorMindmapOrder = false) => {
+  if (!rootId) return Promise.resolve();
+
+  const existing = queuedLayoutRequests.get(rootId);
+  if (existing && !existing.started) {
+    // A stronger request must retain its guarantees when it joins a pending run.
+    existing.forceUngroup ||= forceUngroup;
+    existing.mustHonorMindmapOrder ||= mustHonorMindmapOrder;
+    return existing.promise;
+  }
+
+  const request = {
+    started: false,
+    forceUngroup,
+    mustHonorMindmapOrder,
+    promise: null,
+  };
+  const task = layoutQueue.then(async () => {
+    request.started = true;
+    return performGlobalLayout(rootId, request.forceUngroup, request.mustHonorMindmapOrder);
+  });
+  request.promise = task.finally(() => {
+    if (queuedLayoutRequests.get(rootId) === request) queuedLayoutRequests.delete(rootId);
+  });
+  queuedLayoutRequests.set(rootId, request);
+  layoutQueue = request.promise.catch((error) => {
     console.error("Mindmap Builder: auto-layout failed", error);
   });
-  return task;
+  return request.promise;
 };
 
 // ---------------------------------------------------------------------------
@@ -8912,7 +8977,9 @@ const refreshMapLayout = async (sel) => {
  * Collects all node IDs and arrow IDs belonging to a branch.
  * Includes "isBranch" arrows and internal non-mindmap arrows.
  **/
-const getBranchElementIds = (nodeId, allElements) => {
+const getBranchElementIds = (nodeId, allElements, elementById = null) => {
+
+  const byId = elementById || buildElementMap(allElements);
 
   const childMap = new Map();
   const allArrows = [];
@@ -8935,11 +9002,14 @@ const getBranchElementIds = (nodeId, allElements) => {
 
   const branchNodes = new Set([nodeId]);
   const queue = [nodeId];
+  let queueIndex = 0;
 
-  while (queue.length > 0) {
-    const currentId = queue.shift();
+  // Using an index keeps this traversal O(nodes + arrows); Array.shift() turns
+  // a large imported outline into a quadratic traversal.
+  while (queueIndex < queue.length) {
+    const currentId = queue[queueIndex++];
 
-    const currentNode = allElements.find(el => el.id === currentId);
+    const currentNode = byId.get(currentId);
     if (currentNode?.customData?.boundaryId) {
       branchNodes.add(currentNode.customData.boundaryId);
     }
@@ -9021,16 +9091,16 @@ const removeGroupFromElements = (groupId, workbenchEls) => {
   });
 }
 
-const getDecorationAndCrossLinkIdsForBranches = (branchIds, allElements, rootId) => {
+const getDecorationAndCrossLinkIdsForBranches = (branchIds, allElements, rootId, elementById = null, parentMap = null) => {
   const idsInBranch = new Set(branchIds);
   const decorationsAndCrossLInks = new Set();
 
   // Pre-index elements by ID and GroupID to avoid O(N*M) lookups
-  const elementMap = new Map();
+  const elementMap = elementById || new Map();
   const groupMap = new Map();
 
   for (const el of allElements) {
-    elementMap.set(el.id, el);
+    if (!elementById) elementMap.set(el.id, el);
     if (el.groupIds && el.groupIds.length > 0) {
       for (const gid of el.groupIds) {
         if (!groupMap.has(gid)) {
@@ -9062,7 +9132,7 @@ const getDecorationAndCrossLinkIdsForBranches = (branchIds, allElements, rootId)
         const structuralMembers = [];
 
         for (const member of groupMembers) {
-          if (idsInBranch.has(member.id) || isStructuralElement(member, allElements, rootId)) {
+          if (idsInBranch.has(member.id) || isStructuralElement(member, allElements, rootId, elementMap, parentMap)) {
             structuralMembers.push(member);
             if (!idsInBranch.has(member.id)) {
               hasOutsider = true;
@@ -9113,11 +9183,19 @@ const getDecorationAndCrossLinkIdsForBranches = (branchIds, allElements, rootId)
  * This includes nodes, branch arrows, crosslinks, decorations, boundaries, and bound text.
  */
 const getMindmapProjectElements = (rootId, allViewElements) => {
+  const elementById = buildElementMap(allViewElements);
+  const parentMap = buildParentMap(allViewElements, elementById);
   // 1. Get core structural IDs
-  const branchIds = getBranchElementIds(rootId, allViewElements);
+  const branchIds = getBranchElementIds(rootId, allViewElements, elementById);
 
   // 2. Get decorations and cross-links (requires scanning allViewElements for groups/arrows)
-  const decorationAndCrossLinkIds = getDecorationAndCrossLinkIdsForBranches(branchIds, allViewElements, rootId);
+  const decorationAndCrossLinkIds = getDecorationAndCrossLinkIdsForBranches(
+    branchIds,
+    allViewElements,
+    rootId,
+    elementById,
+    parentMap,
+  );
 
   const projectElementIds = new Set([...branchIds, ...decorationAndCrossLinkIds]);
   const projectElements = [];
@@ -9125,7 +9203,7 @@ const getMindmapProjectElements = (rootId, allViewElements) => {
 
   const addWithDependencies = (id) => {
     if (addedIds.has(id)) return;
-    const el = allViewElements.find(e => e.id === id);
+    const el = elementById.get(id);
     if (!el) return;
 
     projectElements.push(el);

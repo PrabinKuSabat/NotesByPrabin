@@ -271,8 +271,8 @@
       },
       "Layout Config": {
         "value": {
-          "GAP_X": 90,
-          "GAP_Y": 95,
+          "GAP_X": 120,
+          "GAP_Y": 25,
           "GAP_MULTIPLIER": 0.6,
           "ROOT_RADIUS_FACTOR": 0.8,
           "MIN_RADIUS": 350,
@@ -280,7 +280,7 @@
           "RADIAL_POLE_GAP_BONUS": 2,
           "RADIAL_START_ANGLE": 280,
           "RADIAL_MAX_SWEEP": 340,
-          "DIRECTIONAL_ARC_SPAN_RADIANS": 0.5,
+          "DIRECTIONAL_ARC_SPAN_RADIANS": 1,
           "GAP_MULTIPLIER_DIRECTIONAL": 1.5,
           "RADIUS_PADDING_PER_NODE": 7,
           "VERTICAL_SUBTREE_WIDTH_BLEND_SINGLE": 0.35,
@@ -296,8 +296,7 @@
           "CONTAINER_PADDING": 10,
           "MAX_SEGMENT_LENGTH": 80,
           "MANUAL_GAP_MULTIPLIER": 1.3,
-          "MANUAL_JITTER_RANGE": 300,
-          "DEPTH_GAP_DECAY": 0.86
+          "MANUAL_JITTER_RANGE": 300
         },
         "hidden": true
       },
@@ -318,7 +317,7 @@
         "hidden": false
       },
       "Font Sizes": {
-        "value": "Uniform Size",
+        "value": "Use scene fontsize",
         "valueset": [
           "Use scene fontsize",
           "Fibonacci Scale",
@@ -334,7 +333,7 @@
         "hidden": false
       },
       "Center text in nodes?": {
-        "value": false,
+        "value": true,
         "hidden": false
       },
       "Fill Sweep": {
@@ -342,7 +341,7 @@
         "hidden": false
       },
       "Branch Scale Style": {
-        "value": "Hierarchical",
+        "value": "Uniform",
         "hidden": false
       },
       "Base Stroke Width": {
@@ -847,8 +846,8 @@
     "Custom/Mindmap Builder.js": {
       "Layout Config": {
         "value": {
-          "GAP_X": 90,
-          "GAP_Y": 95,
+          "GAP_X": 120,
+          "GAP_Y": 25,
           "GAP_MULTIPLIER": 0.6,
           "DEPTH_GAP_DECAY": 0.86,
           "ROOT_RADIUS_FACTOR": 0.8,
@@ -857,7 +856,7 @@
           "RADIAL_POLE_GAP_BONUS": 2,
           "RADIAL_START_ANGLE": 280,
           "RADIAL_MAX_SWEEP": 340,
-          "DIRECTIONAL_ARC_SPAN_RADIANS": 0.5,
+          "DIRECTIONAL_ARC_SPAN_RADIANS": 1,
           "GAP_MULTIPLIER_DIRECTIONAL": 1.5,
           "RADIUS_PADDING_PER_NODE": 7,
           "VERTICAL_SUBTREE_WIDTH_BLEND_SINGLE": 0.35,
@@ -878,7 +877,7 @@
         "hidden": true
       },
       "Is Undocked": {
-        "value": true,
+        "value": false,
         "hidden": false
       },
       "Active Preset": {
@@ -930,7 +929,7 @@
         "hidden": false
       },
       "Center text in nodes?": {
-        "value": false,
+        "value": true,
         "hidden": false
       },
       "Fill Sweep": {
@@ -938,7 +937,7 @@
         "hidden": false
       },
       "Branch Scale Style": {
-        "value": "Hierarchical",
+        "value": "Uniform",
         "hidden": false
       },
       "Base Stroke Width": {
@@ -1237,7 +1236,7 @@
         "hidden": true
       },
       "Base Font Size": {
-        "value": 36,
+        "value": 48,
         "hidden": false
       },
       "Minimum Font Size": {
