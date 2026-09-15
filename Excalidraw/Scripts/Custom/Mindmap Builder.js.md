@@ -16,7 +16,7 @@ The script balances **automation** (auto-layout, recursive grouping, and contras
 The script uses `ea.addAppendUpdateCustomData` to store state on elements:
 - `growthMode`: Stored on the Root node (Radial, Left, or Right).
 - `autoLayoutDisabled`: Stored on the Root node to pause layout engine for specific maps (toggle from UI).
-- `arrowType`, `fontsizeScale`, `multicolor`, `boxChildren`, `roundedCorners`, `maxWrapWidth`, `isSolidArrow`, `centerText`: Stored on the Root node to persist display preferences per map.
+- `arrowType`, `fontsizeScale`, `fontSizeBase`, `fontSizeMinimum`, `multicolor`, `boxChildren`, `roundedCorners`, `maxWrapWidth`, `isSolidArrow`, `centerText`: Stored on the Root node to persist display preferences per map.
 - `isPinned`: Stored on individual nodes (boolean) to bypass the layout engine.
 - `isBranch`: Stored on arrows (boolean) to distinguish Mind Map connectors from standard annotations.
 - `mindmapOrder`: Stored on nodes (number) to maintain manual sort order of siblings.
@@ -261,6 +261,8 @@ const STRINGS = {
     LABEL_FONT_SIZES: "Font Scale Style",
     LABEL_FONT_BASE_SIZE: "Base Font Size",
     DESC_FONT_BASE_SIZE: "Choose the root/base size. Uniform uses it everywhere; Normal and Fibonacci derive each deeper level from it.",
+    LABEL_FONT_MIN_SIZE: "Minimum Font Size",
+    DESC_FONT_MIN_SIZE: "Normal and Fibonacci levels will never become smaller than this size.",
     HOTKEY_SECTION_TITLE: "Hotkey Configuration",
     HOTKEY_HINT: "These hotkeys may override some Obsidian defaults. They're Local (⌨️) by default, active only when the MindMap input field is focused. Use the 🌐/🎨/⌨️ toggle to change hotkey scope: 🌐 Overrides Obsidian hotkeys whenever an Excalidraw tab is visible, 🎨 Overrides Obsidian hotkeys whenever Excalidraw is focused, ⌨️ Local (input focused).",
     RECORD_HOTKEY_PROMPT: "Press hotkey...",
@@ -557,6 +559,8 @@ addLocale("zh", {
   LABEL_FONT_SIZES: "字体缩放样式",
   LABEL_FONT_BASE_SIZE: "基础字体大小",
   DESC_FONT_BASE_SIZE: "选择根节点/基础字号。统一样式在所有层级使用该字号；普通和斐波那契样式会据此计算更深层级。",
+  LABEL_FONT_MIN_SIZE: "最小字体大小",
+  DESC_FONT_MIN_SIZE: "普通和斐波那契样式的任何层级都不会小于此字号。",
   HOTKEY_SECTION_TITLE: "热键配置",
   HOTKEY_HINT: "这些热键可能覆盖 Obsidian 默认设置。热键作用域默认为局部（⌨️），使用 🌐/🎨/⌨️ 切换作用域：🌐 Excalidraw 标签页可见即生效，🎨 Excalidraw 聚焦时生效，⌨️ 输入框聚焦时生效。",
   RECORD_HOTKEY_PROMPT: "按下热键…",
@@ -843,6 +847,8 @@ addLocale("zh-tw", {
   LABEL_FONT_SIZES: "字型縮放樣式",
   LABEL_FONT_BASE_SIZE: "基礎字型大小",
   DESC_FONT_BASE_SIZE: "選擇根節點/基礎字號。統一樣式在所有層級使用該字號；普通和費波那契樣式會據此計算更深層級。",
+  LABEL_FONT_MIN_SIZE: "最小字型大小",
+  DESC_FONT_MIN_SIZE: "普通和費波那契樣式的任何層級都不會小於此字號。",
   HOTKEY_SECTION_TITLE: "熱鍵配置",
   HOTKEY_HINT: "這些熱鍵可能覆蓋 Obsidian 預設設定。熱鍵作用域預設為區域性（⌨️），使用 🌐/🎨/⌨️ 切換作用域：🌐 Excalidraw 標籤頁可見即生效，🎨 Excalidraw 聚焦時生效，⌨️ 輸入框聚焦時生效。",
   RECORD_HOTKEY_PROMPT: "按下熱鍵…",
@@ -1021,8 +1027,10 @@ const VALUE_SETS = Object.freeze({
 
 const FONT_SCALE_TYPES = VALUE_SETS.FONT_SCALE;
 const FONT_BASE_SIZES = Object.freeze([12, 14, 16, 18, 20, 24, 28, 32, 36, 42, 48, 56, 64, 68, 72, 84, 96]);
+const FONT_MIN_SIZES = Object.freeze([8, 10, 12, 14, 16, 18, 20, 24]);
 const DEFAULT_FONT_BASE_SIZE = 36;
-const MIN_SCALED_FONT_SIZE = 8;
+const DEFAULT_FONT_MIN_SIZE = 10;
+const MIN_ONTOLOGY_FONT_SIZE = 8;
 const GROWTH_TYPES = VALUE_SETS.GROWTH;
 const ZOOM_TYPES = VALUE_SETS.ZOOM;
 const SCOPE = VALUE_SETS.SCOPE;
@@ -1049,6 +1057,12 @@ const sanitizeFontBaseSize = (value, fallback = DEFAULT_FONT_BASE_SIZE) => {
   return Number.isFinite(numeric) && numeric > 0 ? numeric : fallback;
 };
 
+const sanitizeFontMinSize = (value, baseSize = DEFAULT_FONT_BASE_SIZE) => {
+  const numeric = Number(value);
+  const valid = Number.isFinite(numeric) && numeric > 0 ? numeric : DEFAULT_FONT_MIN_SIZE;
+  return Math.min(valid, sanitizeFontBaseSize(baseSize));
+};
+
 const getLegacyFontBaseSize = (type) => {
   if (type === "Fibonacci Scale") return 68;
   if (type === "Use scene fontsize") {
@@ -1057,21 +1071,23 @@ const getLegacyFontBaseSize = (type) => {
   return DEFAULT_FONT_BASE_SIZE;
 };
 
-const fontScale = (type, baseSize = DEFAULT_FONT_BASE_SIZE) => {
+const fontScale = (type, baseSize = DEFAULT_FONT_BASE_SIZE, minimumSize = DEFAULT_FONT_MIN_SIZE) => {
   const normalizedType = normalizeFontScaleType(type);
   const base = sanitizeFontBaseSize(baseSize);
+  const minimum = sanitizeFontMinSize(minimumSize, base);
   if (normalizedType === "Uniform Size") return Array(5).fill(base);
   if (normalizedType === "Fibonacci Scale") {
     const goldenRatioInverse = 0.61803398875;
     return Array.from({ length: 5 }, (_, depth) =>
-      Math.max(MIN_SCALED_FONT_SIZE, Math.round(base * Math.pow(goldenRatioInverse, depth)))
+      Math.max(minimum, Math.round(base * Math.pow(goldenRatioInverse, depth)))
     );
   }
   const normalRatios = [1, 28 / 36, 20 / 36, 16 / 36, 12 / 36];
-  return normalRatios.map((ratio) => Math.max(MIN_SCALED_FONT_SIZE, Math.round(base * ratio)));
+  return normalRatios.map((ratio) => Math.max(minimum, Math.round(base * ratio)));
 };
 
-const getFontScale = (type, baseSize = DEFAULT_FONT_BASE_SIZE) => fontScale(type, baseSize);
+const getFontScale = (type, baseSize = DEFAULT_FONT_BASE_SIZE, minimumSize = DEFAULT_FONT_MIN_SIZE) =>
+  fontScale(type, baseSize, minimumSize);
 
 let dirty = false;
 const getVal = (key, def) => ea.getScriptSettingValue(key, typeof def === "object" ? def: { value: def }).value;
@@ -1093,6 +1109,7 @@ const setVal = (key, value, hidden = false) => {
 const K_WIDTH = "Max Text Width";
 const K_FONTSIZE = "Font Sizes";
 const K_FONT_BASE_SIZE = "Base Font Size";
+const K_FONT_MIN_SIZE = "Minimum Font Size";
 const K_BOX = "Box Children";
 const K_ROUND = "Rounded Corners";
 const K_BRANCH_SCALE = "Branch Scale Style";
@@ -1442,6 +1459,10 @@ let fontSizeBase = sanitizeFontBaseSize(
   getVal(K_FONT_BASE_SIZE, getLegacyFontBaseSize(storedFontsizeScale)),
   getLegacyFontBaseSize(storedFontsizeScale),
 );
+let fontSizeMinimum = sanitizeFontMinSize(
+  getVal(K_FONT_MIN_SIZE, DEFAULT_FONT_MIN_SIZE),
+  fontSizeBase,
+);
 let boxChildren = getVal(K_BOX, false);
 let roundedCorners = getVal(K_ROUND, false);
 let multicolor = getVal(K_MULTICOLOR, true);
@@ -1478,10 +1499,15 @@ let redoAvailable = null; // { steps: number, version: number } - state after a 
 // -----------------------------------------------------------
 // Cleanup an migration of old settings values
 // -----------------------------------------------------------
-if (!ea.getScriptSettingValue(K_FONTSIZE, {
-    value: "Normal Scale",
-    valueset: FONT_SCALE_TYPES
-  }).hasOwnProperty("valueset")) {
+const fontScaleSettingDefinition = ea.getScriptSettingValue(K_FONTSIZE, {
+  value: "Normal Scale",
+  valueset: FONT_SCALE_TYPES
+});
+if (
+  !fontScaleSettingDefinition.hasOwnProperty("valueset") ||
+  JSON.stringify(fontScaleSettingDefinition.valueset) !== JSON.stringify(FONT_SCALE_TYPES) ||
+  fontScaleSettingDefinition.value !== fontsizeScale
+) {
   ea.setScriptSettingValue(K_FONTSIZE, {
     value: fontsizeScale,
     valueset: FONT_SCALE_TYPES
@@ -1493,6 +1519,7 @@ if (storedFontsizeScale !== fontsizeScale) {
   setVal(K_FONTSIZE, fontsizeScale);
 }
 setVal(K_FONT_BASE_SIZE, fontSizeBase);
+setVal(K_FONT_MIN_SIZE, fontSizeMinimum);
 
 if (!ea.getScriptSettingValue(K_GROWTH, {
     value: "Right-Left",
@@ -1534,6 +1561,7 @@ const extractConfigFromGlobals = () => ({
   arrowType,
   fontsizeScale,
   fontSizeBase,
+  fontSizeMinimum,
   multicolor,
   boxChildren,
   roundedCorners,
@@ -1583,6 +1611,10 @@ const normalizeMapConfig = (c) => {
     arrowType: c.arrowType ?? "curved",
     fontsizeScale: normalizeFontScaleType(c.fontsizeScale),
     fontSizeBase: sanitizeFontBaseSize(c.fontSizeBase, getLegacyFontBaseSize(c.fontsizeScale)),
+    fontSizeMinimum: sanitizeFontMinSize(
+      c.fontSizeMinimum,
+      sanitizeFontBaseSize(c.fontSizeBase, getLegacyFontBaseSize(c.fontsizeScale)),
+    ),
     multicolor: c.multicolor ?? true,
     boxChildren: c.boxChildren ?? false,
     roundedCorners: c.roundedCorners ?? false,
@@ -1614,7 +1646,7 @@ const diffMapConfig = (c1, c2) => {
   const n2 = normalizeMapConfig(c2);
   
   const keys = [
-    "growthMode", "arrowType", "fontsizeScale", "fontSizeBase", "multicolor", 
+    "growthMode", "arrowType", "fontsizeScale", "fontSizeBase", "fontSizeMinimum", "multicolor",
     "boxChildren", "roundedCorners", "maxWrapWidth", "isSolidArrow", 
     "centerText", "fillSweep", "branchScale", "baseStrokeWidth"
   ];
@@ -1661,6 +1693,7 @@ const applyPresetToGlobals = (presetName) => {
   arrowType = n.arrowType;
   fontsizeScale = n.fontsizeScale;
   fontSizeBase = n.fontSizeBase;
+  fontSizeMinimum = n.fontSizeMinimum;
   multicolor = n.multicolor;
   boxChildren = n.boxChildren;
   roundedCorners = n.roundedCorners;
@@ -1677,6 +1710,7 @@ const applyPresetToGlobals = (presetName) => {
   setVal(K_ARROW_TYPE, arrowType);
   setVal(K_FONTSIZE, fontsizeScale);
   setVal(K_FONT_BASE_SIZE, fontSizeBase);
+  setVal(K_FONT_MIN_SIZE, fontSizeMinimum);
   setVal(K_MULTICOLOR, multicolor);
   setVal(K_BOX, boxChildren);
   setVal(K_ROUND, roundedCorners);
@@ -1692,12 +1726,13 @@ const applyPresetToGlobals = (presetName) => {
 
 const applyPresetToMap = async (presetName, sel) => {
   applyPresetToGlobals(presetName);
-  await updateRootNodeCustomData({ 
+  const info = await updateRootNodeCustomData({
     presetName,
     growthMode: currentModalGrowthMode,
     arrowType,
     fontsizeScale,
     fontSizeBase,
+    fontSizeMinimum,
     multicolor,
     boxChildren,
     roundedCorners,
@@ -1709,8 +1744,11 @@ const applyPresetToMap = async (presetName, sel) => {
     baseStrokeWidth,
     layoutSettings: JSON.parse(JSON.stringify(layoutSettings))
   }, sel);
-  
-  await refreshMapLayout(sel);
+  if (info) {
+    await applyFontScaleToSettingsRoot(info.settingsRootId, fontsizeScale, fontSizeBase, fontSizeMinimum);
+  } else {
+    await refreshMapLayout(sel);
+  }
   updateUI();
 };
 
@@ -1773,9 +1811,14 @@ const getCodeFontFamily = () =>
   globalThis.ExcalidrawLib?.FontFamily?.Cascadia ||
   3; // Cascadia/monospace fallback used by Excalidraw.
 const isStructuredMindmapText = (text) => {
-  const firstLine = normalizeClipboardText(text).split("\n").find((line) => line.trim() !== "") || "";
   if (isFencedCodeBlock(text)) return false;
-  return /^#{1,6}\s+/.test(firstLine) || /^(?:\s*)(?:[-*+]|\d+[.)])\s+/.test(firstLine);
+  const lines = normalizeClipboardText(text).split("\n").filter((line) => line.trim() !== "");
+  const isStructural = (line) => /^#{1,6}\s+/.test(line) || /^(?:\s*)(?:[-*+]|\d+[.)])\s+/.test(line);
+  if (isStructural(lines[0] || "")) return true;
+  // Web/ChatGPT copies commonly include a plain title or introduction before
+  // the actual outline. Two or more structural lines are enough to treat the
+  // content as an import rather than flattening everything into one node.
+  return lines.filter(isStructural).length >= 2;
 };
 
 // Convert clipboard HTML (from browsers and ChatGPT) to portable Markdown
@@ -1803,16 +1846,38 @@ const htmlToMarkdown = (html) => {
     table.replaceWith(doc.createTextNode(`\n\n${markdown}\n\n`));
   });
 
-  function renderHtmlNode(node) {
+  function renderHtmlNode(node, listDepth = 0) {
     if (node.nodeType === Node.TEXT_NODE) return node.nodeValue || "";
     if (node.nodeType !== Node.ELEMENT_NODE) return "";
     const tag = node.tagName.toLowerCase();
-    const children = Array.from(node.childNodes).map(renderHtmlNode).join("");
+    if (tag === "ul" || tag === "ol") {
+      const ordered = tag === "ol";
+      const listItems = Array.from(node.children).filter((child) => child.tagName?.toLowerCase() === "li");
+      return listItems.map((item, index) => {
+        const content = Array.from(item.childNodes)
+          .filter((child) => !["ul", "ol"].includes(child.tagName?.toLowerCase()))
+          .map((child) => renderHtmlNode(child, listDepth))
+          .join("")
+          .replace(/\n+/g, " ")
+          .trim();
+        const nested = Array.from(item.children)
+          .filter((child) => ["ul", "ol"].includes(child.tagName?.toLowerCase()))
+          .map((child) => renderHtmlNode(child, listDepth + 1))
+          .join("");
+        const marker = ordered ? `${index + 1}.` : "-";
+        return `\n${"  ".repeat(listDepth)}${marker} ${content}${nested}`;
+      }).join("") + "\n";
+    }
+    const children = Array.from(node.childNodes).map((child) => renderHtmlNode(child, listDepth)).join("");
     if (tag === "br") return "\n";
     if (/^h[1-6]$/.test(tag)) return `\n\n${"#".repeat(Number(tag[1]))} ${children.trim()}\n\n`;
-    if (tag === "p" || tag === "div" || tag === "section" || tag === "article" || tag === "blockquote") return `\n\n${children.trim()}\n\n`;
-    if (tag === "li") return `\n- ${children.trim()}`;
-    if (tag === "ul" || tag === "ol") return `\n${children}\n`;
+    if (tag === "blockquote") {
+      const quoted = children.trim().split("\n").map((line) => `> ${line}`).join("\n");
+      return `\n\n${quoted}\n\n`;
+    }
+    if (tag === "hr") return "\n\n---\n\n";
+    if (tag === "p" || tag === "div" || tag === "section" || tag === "article") return `\n\n${children.trim()}\n\n`;
+    if (tag === "li") return children;
     if (tag === "strong" || tag === "b") return `**${children}**`;
     if (tag === "em" || tag === "i") return `*${children}*`;
     if (tag === "del" || tag === "s" || tag === "strike") return `~~${children}~~`;
@@ -1866,7 +1931,11 @@ const updateImportJob = async (job) => {
 const finishImportJob = (job, message, hideAfter = 4000) => {
   if (activeImportJob === job) activeImportJob = null;
   job.notice.setMessage(message);
-  job.notice.setAutoHide(hideAfter);
+  // Obsidian Notice exposes setMessage() and hide(), but no setAutoHide().
+  // Calling the non-existent method made a successful import report a failure
+  // at the very end of the operation.
+  const timerHost = ea.targetView?.ownerWindow || globalThis;
+  timerHost.setTimeout(() => job.notice.hide(), hideAfter);
 };
 
 const parseText = async (text) => {
@@ -2842,6 +2911,7 @@ const MAP_ROOT_CUSTOMDATA_KEYS = [
   "arrowType",
   "fontsizeScale",
   "fontSizeBase",
+  "fontSizeMinimum",
   "multicolor",
   "boxChildren",
   "roundedCorners",
@@ -2902,14 +2972,19 @@ const getRootConfigForNode = (rootNode) => {
   const cd = rootNode?.customData ?? {};
   const defaultLayout = layoutSettings || {};
   const rawFontScaleType = cd?.fontsizeScale ?? fontsizeScale;
+  const rootFontBaseSize = sanitizeFontBaseSize(
+    cd?.fontSizeBase,
+    cd?.fontsizeScale ? getLegacyFontBaseSize(cd.fontsizeScale) : fontSizeBase,
+  );
   return {
     growthMode: cd?.growthMode || currentModalGrowthMode,
     autoLayoutDisabled: cd?.autoLayoutDisabled === true,
     arrowType: cd?.arrowType ?? arrowType,
     fontsizeScale: normalizeFontScaleType(rawFontScaleType),
-    fontSizeBase: sanitizeFontBaseSize(
-      cd?.fontSizeBase,
-      cd?.fontsizeScale ? getLegacyFontBaseSize(cd.fontsizeScale) : fontSizeBase,
+    fontSizeBase: rootFontBaseSize,
+    fontSizeMinimum: sanitizeFontMinSize(
+      cd?.fontSizeMinimum ?? (cd?.fontsizeScale ? DEFAULT_FONT_MIN_SIZE : fontSizeMinimum),
+      rootFontBaseSize,
     ),
     multicolor: typeof cd?.multicolor === "boolean" ? cd.multicolor : multicolor,
     boxChildren: typeof cd?.boxChildren === "boolean" ? cd.boxChildren : boxChildren,
@@ -6085,6 +6160,7 @@ const initializeRootCustomData = (nodeId) => {
     arrowType: arrowType, 
     fontsizeScale,
     fontSizeBase,
+    fontSizeMinimum,
     multicolor,
     boxChildren,
     roundedCorners,
@@ -6212,7 +6288,8 @@ const addNode = async (text, follow = false, skipFinalLayout = false, batchModeA
 
   const effectiveFontScaleType = rootCfgForAdd?.fontsizeScale ?? fontsizeScale;
   const effectiveFontBaseSize = rootCfgForAdd?.fontSizeBase ?? fontSizeBase;
-  const fontScale = getFontScale(effectiveFontScaleType, effectiveFontBaseSize);
+  const effectiveFontMinimum = rootCfgForAdd?.fontSizeMinimum ?? fontSizeMinimum;
+  const fontScale = getFontScale(effectiveFontScaleType, effectiveFontBaseSize, effectiveFontMinimum);
   if (!isBatchMode) ea.clear();
   ea.style.fontFamily = isCodeBlock ? getCodeFontFamily() : st.currentItemFontFamily;
   ea.style.fontSize = fontScale[Math.min(depth, fontScale.length - 1)];
@@ -6681,10 +6758,33 @@ const importOutline = async () => {
     return;
   }
 
-  const cache = await app.metadataCache.blockCache.getForFile({
-    isCancelled: () => false
-  }, markdownFile);
-  if (!cache || !cache.blocks) {
+  let headings = [];
+  try {
+    // Use Obsidian's public file cache first. The former internal blockCache API
+    // is version-sensitive and is the main reason linked-file imports can stop
+    // working after an Obsidian update.
+    const fileCache = app.metadataCache.getFileCache?.(markdownFile);
+    headings = Array.isArray(fileCache?.headings) ? fileCache.headings.map((heading) => ({
+      text: heading.heading,
+      level: heading.level,
+    })) : [];
+
+    // Metadata can briefly be unavailable immediately after a file change.
+    // Fall back to the file contents so importing remains deterministic.
+    if (headings.length === 0) {
+      const markdown = await app.vault.cachedRead(markdownFile);
+      headings = markdown.split(/\r?\n/).flatMap((line) => {
+        const match = line.match(/^(#{1,6})\s+(.+?)\s*#*\s*$/);
+        return match ? [{ text: match[2], level: match[1].length }] : [];
+      });
+    }
+  } catch (error) {
+    console.error("Mindmap Builder: failed to read linked outline", error);
+    new Notice(`Could not read the linked Markdown file: ${error?.message || error}`);
+    return;
+  }
+
+  if (headings.length === 0) {
     new Notice(t("NOTICE_NO_HEADINGS"));
     return;
   }
@@ -6692,25 +6792,15 @@ const importOutline = async () => {
   const shortFilePath = app.metadataCache.fileToLinktext(markdownFile, ea.targetView.file.path, true);
   const outlines = [];
 
-  for (const block of cache.blocks) {
-    if (block.node.type === "heading") {
-      const depth = block.node.depth;
+  for (const heading of headings) {
+    const rawHeadingText = String(heading.text || "").trim();
+    if (!rawHeadingText) continue;
+    if (rawHeadingText === "Excalidraw Data") break;
 
-      // Strip markdown heading markers (# ) from display text
-      const rawHeadingText = block.display.replace(/^#+\s+/, "");
-
-      if (rawHeadingText === "Excalidraw Data") break;
-
-      // Format Alias: Replace pipe with space to prevent broken links
-      const alias = rawHeadingText.replace(/\|/g, " ");
-
-      // Format Anchor: replace specific chars (#|\:) with space for the link target
-      const anchor = rawHeadingText.replace(/[|#\\:]/g, " ");
-
-      const indent = "  ".repeat(Math.max(0, depth - 1));
-
-      outlines.push(`${indent}- [[${shortFilePath}#${anchor}|${alias}]]`);
-    }
+    const alias = rawHeadingText.replace(/\|/g, " ");
+    const anchor = rawHeadingText.replace(/\|/g, " ");
+    const indent = "  ".repeat(Math.max(0, Number(heading.level || 1) - 1));
+    outlines.push(`${indent}- [[${shortFilePath}#${anchor}|${alias}]]`);
   }
 
   if (outlines.length === 0) {
@@ -7109,20 +7199,38 @@ const copyMapAsText = async (cut = false, toClipboard = true) => {
 // Core logic to parse a list string and add nodes to the map.
 // Now dynamically links "## Submap" definitions to their "![[#Submap]]" embed nodes.
 **/
-const importTextToMap = async (rawText) => {
+const performImportTextToMap = async (rawText) => {
   if (!isViewSet()) return;
   if (!rawText) return;
 
   let sel = getMindmapNodeFromSelection();
   let currentParent;
 
-  // Filter out empty lines AND divider lines
-  const lines = rawText.split(/\r\n|\n|\r/).filter((l) => {
-    const trimmed = l.trim();
+  // Ignore blank/divider lines between outline nodes, but preserve every line
+  // inside fenced code so the imported code node remains byte-for-byte useful.
+  let insideFenceDuringCleanup = false;
+  let lines = rawText.split(/\r\n|\n|\r/).filter((line) => {
+    const trimmed = line.trim();
+    const fenceCount = (line.match(/```/g) || []).length;
+    if (insideFenceDuringCleanup) {
+      if (fenceCount % 2 === 1) insideFenceDuringCleanup = false;
+      return true;
+    }
+    if (fenceCount % 2 === 1) {
+      insideFenceDuringCleanup = true;
+      return true;
+    }
     return trimmed !== "" && !/^-{3,}$/.test(trimmed);
   });
 
   if (lines.length === 0) return;
+
+  const structuralLineRegex = /^(?:#{1,6}\s+|\s*(?:[-*+]|\d+[.)])\s+)/;
+  if (!structuralLineRegex.test(lines[0]) && lines.slice(1).filter((line) => structuralLineRegex.test(line)).length >= 2) {
+    // Preserve a plain title/introduction copied above an otherwise valid
+    // outline by treating its first line as the root heading.
+    lines[0] = `# ${lines[0].trim()}`;
+  }
 
   // Regex patterns
   const boundaryRegex = /\s#boundary\b/;
@@ -7133,9 +7241,9 @@ const importTextToMap = async (rawText) => {
 
   if (lines.length === 1) {
     let text = lines[0];
-    const listMatch = text.match(/^(\s*)(?:-|\*|\d+\.)\s+(.*)$/);
+    const listMatch = text.match(/^(\s*)((?:[-*+]|\d+[.)])\s+)(.*)$/);
     if (listMatch) {
-      text = listMatch[2].trim();
+      text = listMatch[3].trim();
       if (/^\[[ xX]\] /.test(text)) {
         // Retain task syntax if it was an imported list item
         text = "- " + text;
@@ -7165,7 +7273,10 @@ const importTextToMap = async (rawText) => {
       currentParent = await addNode(text.trim(), true, false, null, null, null, ontology);
       if (isSubmapRef) {
         ea.addAppendUpdateCustomData(currentParent.id, {
-          isAdditionalRoot: true
+          isAdditionalRoot: true,
+          fontsizeScale,
+          fontSizeBase,
+          fontSizeMinimum,
         });
       }
       if (sel) {
@@ -7178,40 +7289,63 @@ const importTextToMap = async (rawText) => {
   let parsed = [];
   let rootTextFromHeader = null;
 
-  const isHeader = (l) => l.match(/^#+\s/);
-  const isListItem = (l) => l.match(/^(\s*)(?:-|\*|\d+\.)\s+(.*)$/);
+  const isHeader = (line) => line.match(/^(#{1,6})\s+(.*)$/);
+  const isListItem = (line) => line.match(/^(\s*)((?:[-*+]|\d+[.)])\s+)(.*)$/);
+  const indentWidth = (indentation) => Array.from(indentation || "").reduce(
+    (width, character) => width + (character === "\t" ? 4 : 1),
+    0,
+  );
+  const referencedSubmapNames = new Set(lines.flatMap((line) => {
+    const match = line.match(/^\s*(?:[-*+]|\d+[.)])\s+!\[\[#([^\]]+)\]\]\s*$/);
+    return match ? [match[1].trim()] : [];
+  }));
 
   if (!isHeader(lines[0]) && !isListItem(lines[0])) {
     new Notice(t("NOTICE_PASTE_ABORTED"));
     return;
   }
 
-  const delta = isHeader(lines[0]) ? 1 : 0;
-
   // Maps for crosslink & submap reconstruction
   const blockRefToNodeId = new Map(); // ^12345678 -> newNodeId
   const nodeToOutgoingRefs = new Map(); // newNodeId -> [{ref: string, label: string}, ...]
 
+  let headingContextIndent = null;
+  let insideFencedContinuation = false;
+  let fencedIndentChars = 0;
   lines.forEach((line, index) => {
+    if (insideFencedContinuation && parsed.length > 0) {
+      const leadingWhitespace = line.match(/^\s*/)?.[0].length ?? 0;
+      parsed[parsed.length - 1].text += "\n" + line.slice(Math.min(fencedIndentChars, leadingWhitespace));
+      if (((line.match(/```/g) || []).length % 2) === 1) insideFencedContinuation = false;
+      return;
+    }
+
     let text = "";
     let indent = 0;
     let isSubmapDef = false;
+    let listIndentChars = 0;
 
-    if (isHeader(line)) {
-      if (index === 0) {
-        indent = 0;
-        text = line.replace(/^#+\s/, "").trim();
-      } else {
-        // Subsequent headers signify details of a Submap
+    const headerMatch = isHeader(line);
+    if (headerMatch) {
+      text = headerMatch[2].trim();
+      const headingLevel = headerMatch[1].length;
+      if (index > 0 && referencedSubmapNames.has(text)) {
+        // Only headings explicitly referenced by ![[#Name]] are special
+        // exported submap definitions. Normal Markdown headings stay nodes.
         isSubmapDef = true;
-        text = line.replace(/^#+\s/, "").trim();
-        indent = -1; // Special indent pushes it strictly below its parent in stack validation
+        indent = -1;
+        headingContextIndent = 0;
+      } else {
+        indent = Math.max(0, headingLevel - 1) * 2;
+        headingContextIndent = indent;
       }
     } else {
       const match = isListItem(line);
       if (match) {
-        indent = delta + match[1].length;
-        let extractedText = match[2].trim();
+        const headingOffset = headingContextIndent === null ? 0 : headingContextIndent + 2;
+        indent = headingOffset + indentWidth(match[1]);
+        listIndentChars = match[1].length + match[2].length;
+        let extractedText = match[3].trim();
         // Check if list item has task bracket syntax
         if (/^\[[ xX]\] /.test(extractedText)) {
           extractedText = "- " + extractedText;
@@ -7270,6 +7404,10 @@ const importTextToMap = async (rawText) => {
         isSubmapDef,
         isSubmapRef
       });
+      if (((text.match(/```/g) || []).length % 2) === 1) {
+        insideFencedContinuation = true;
+        fencedIndentChars = listIndentChars;
+      }
     }
   });
 
@@ -7346,7 +7484,10 @@ const importTextToMap = async (rawText) => {
       if (item.hasBoundary) createImportBoundary(id);
       if (item.isSubmapRef) {
         ea.addAppendUpdateCustomData(id, {
-          isAdditionalRoot: true
+          isAdditionalRoot: true,
+          fontsizeScale,
+          fontSizeBase,
+          fontSizeMinimum,
         });
         submapNodesByName.set(item.text, ea.getElement(id));
       }
@@ -7359,6 +7500,7 @@ const importTextToMap = async (rawText) => {
 
       sel = currentParent = await addNode(rootItem.text, true, true, [], null, null, rootItem.ontology);
       processRootMeta(rootItem, currentParent.id);
+      await updateImportJob(importJob);
 
       // Safely extract the root item from the array so it isn't rendered twice
       if (rootIndex !== -1) {
@@ -7408,7 +7550,10 @@ const importTextToMap = async (rawText) => {
         const currentAllElements = ea.getElements();
         const newNode = await addNode(item.text, false, true, currentAllElements, currentParent, null, null);
         ea.addAppendUpdateCustomData(newNode.id, {
-          isAdditionalRoot: true
+          isAdditionalRoot: true,
+          fontsizeScale,
+          fontSizeBase,
+          fontSizeMinimum,
         });
         submapNodesByName.set(item.text, newNode);
         stack.length = 0;
@@ -7433,7 +7578,10 @@ const importTextToMap = async (rawText) => {
     if (item.hasBoundary) createImportBoundary(newNode.id);
     if (item.isSubmapRef) {
       ea.addAppendUpdateCustomData(newNode.id, {
-        isAdditionalRoot: true
+        isAdditionalRoot: true,
+        fontsizeScale,
+        fontSizeBase,
+        fontSizeMinimum,
       });
       submapNodesByName.set(item.text, newNode);
     }
@@ -7582,6 +7730,19 @@ const importTextToMap = async (rawText) => {
   finishImportJob(importJob, t("NOTICE_PASTE_COMPLETE"));
 };
 
+const importTextToMap = async (rawText) => {
+  try {
+    return await performImportTextToMap(rawText);
+  } catch (error) {
+    if (activeImportJob) {
+      const failedJob = activeImportJob;
+      ea.clear();
+      finishImportJob(failedJob, `Import failed after ${failedJob.completed}/${failedJob.total} nodes.`, 7000);
+    }
+    throw error;
+  }
+};
+
 /**
 // Pastes a Markdown list from clipboard into the map, converting it to nodes.
 **/
@@ -7661,7 +7822,7 @@ const pasteElementToMap = async () => {
             textToPaste = link.startsWith("[[") ? `!${link}` : `![[${link}]]`;
           }
           if (textToPaste) {
-            pasteListToMap(textToPaste);
+            await pasteListToMap(textToPaste);
             return;
           }
         }
@@ -7783,14 +7944,22 @@ const pasteElementToMap = async () => {
 
       if (imagePathResolved) {
         await pasteListToMap(`![pasted image](${imagePathResolved})`);
+        return;
       }
     }
-    return;
+    // If Electron refused the synthetic image paste, do not silently swallow
+    // accompanying clipboard text. Let the normal Markdown/text path handle it.
+    if (!rawText) {
+      new Notice(t("NOTICE_PASTE_ABORTED"));
+      return;
+    }
   }
 
   // Fallback to Outline parser
   if (!excalidrawClipboardPayload) {
-    await pasteListToMap();
+    // Reuse the successful clipboard read. Re-reading here can fail on Electron
+    // clipboard implementations that grant access for only one read operation.
+    await pasteListToMap(rawText);
   } else {
     new Notice(t("NOTICE_PASTE_ABORTED"));
   }
@@ -7848,13 +8017,11 @@ const reconnectArrow = (currentBindingElement, newBindingElement, arrow, side = 
 };
 
 /**
- * Recursively updates the font size of a subtree based on the new depth level.
- * Only updates if the current font size matches the default for its *previous* depth,
- * preserving user customizations.
- * Also updates the ontology label (if present) on the incoming arrow to be half the node's new size.
+ * Recursively updates every node text in a moved subtree for its new map depth.
+ * Ontology labels on incoming arrows follow at half size with a readability floor.
  */
-const updateSubtreeFontSize = (nodeId, newDepth, allElements, newFontScaleType, newFontBaseSize) => {
-  const newFontScale = getFontScale(newFontScaleType, newFontBaseSize);
+const updateSubtreeFontSize = (nodeId, newDepth, allElements, newFontScaleType, newFontBaseSize, newFontMinSize) => {
+  const newFontScale = getFontScale(newFontScaleType, newFontBaseSize, newFontMinSize);
   const node = allElements.find(el => el.id === nodeId);
   if (!node) return;
   const newStandardSize = newFontScale[Math.min(newDepth, newFontScale.length - 1)];
@@ -7889,7 +8056,7 @@ const updateSubtreeFontSize = (nodeId, newDepth, allElements, newFontScaleType, 
     }
 
     if (eaOntologyEl) {
-      eaOntologyEl.fontSize = Math.max(MIN_SCALED_FONT_SIZE, Math.floor(newStandardSize / 2));
+      eaOntologyEl.fontSize = Math.max(MIN_ONTOLOGY_FONT_SIZE, Math.floor(newStandardSize / 2));
       ea.refreshTextElementSize(eaOntologyEl.id);
     }
   }
@@ -7903,7 +8070,7 @@ const updateSubtreeFontSize = (nodeId, newDepth, allElements, newFontScaleType, 
   // Recurse to children
   const children = getChildrenNodes(nodeId, allElements);
   children.forEach(child => {
-    updateSubtreeFontSize(child.id, newDepth + 1, allElements, newFontScaleType, newFontBaseSize);
+    updateSubtreeFontSize(child.id, newDepth + 1, allElements, newFontScaleType, newFontBaseSize, newFontMinSize);
   });
 };
 
@@ -7913,16 +8080,25 @@ const updateSubtreeFontSize = (nodeId, newDepth, allElements, newFontScaleType, 
  * A submap-root node remains visually owned by its parent map, so changing a
  * submap starts with its children and never changes ancestors.
  */
-const applyFontScaleToSettingsRoot = async (settingsRootId, newScaleType, newBaseSize) => {
+const applyFontScaleToSettingsRoot = async (settingsRootId, newScaleType, newBaseSize, newMinSize, relayout = true) => {
   if (!settingsRootId || !isViewSet()) return;
 
   const allElements = ea.getViewElements();
-  const settingsRoot = allElements.find((el) => el.id === settingsRootId);
+  const elementById = buildElementMap(allElements);
+  const childrenByParent = buildChildrenMap(allElements, elementById);
+  const incomingArrowByNode = new Map();
+  allElements.forEach((element) => {
+    if (element.type === "arrow" && element.customData?.isBranch && element.endBinding?.elementId) {
+      incomingArrowByNode.set(element.endBinding.elementId, element);
+    }
+  });
+  const settingsRoot = elementById.get(settingsRootId);
   if (!settingsRoot) return;
 
   const normalizedScaleType = normalizeFontScaleType(newScaleType);
   const normalizedBaseSize = sanitizeFontBaseSize(newBaseSize);
-  const newScale = getFontScale(normalizedScaleType, normalizedBaseSize);
+  const normalizedMinSize = sanitizeFontMinSize(newMinSize, normalizedBaseSize);
+  const newScale = getFontScale(normalizedScaleType, normalizedBaseSize, normalizedMinSize);
   let changed = false;
 
   const editable = (sceneElement) => {
@@ -7933,13 +8109,15 @@ const applyFontScaleToSettingsRoot = async (settingsRootId, newScaleType, newBas
     return ea.getElement(sceneElement.id);
   };
 
+  const visited = new Set();
   const updateNode = (node, depth, isStartingSubmapRoot = false) => {
-    if (!node) return;
+    if (!node || visited.has(node.id)) return;
+    visited.add(node.id);
     const newSize = newScale[Math.min(depth, newScale.length - 1)];
 
     if (!isStartingSubmapRoot) {
       const textId = node.type === "text" ? node.id : node.boundElements?.find((be) => be.type === "text")?.id;
-      const textElement = textId ? allElements.find((el) => el.id === textId) : null;
+      const textElement = textId ? elementById.get(textId) : null;
       if (textElement) {
         const eaText = editable(textElement);
         eaText.fontSize = newSize;
@@ -7947,13 +8125,12 @@ const applyFontScaleToSettingsRoot = async (settingsRootId, newScaleType, newBas
         changed = true;
       }
 
-      const incomingArrow = allElements.find((el) =>
-        el.type === "arrow" && el.customData?.isBranch && el.endBinding?.elementId === node.id
-      );
-      const ontology = incomingArrow && ea.getBoundTextElement(incomingArrow, true)?.sceneElement;
+      const incomingArrow = incomingArrowByNode.get(node.id);
+      const boundOntology = incomingArrow && ea.getBoundTextElement(incomingArrow, true);
+      const ontology = boundOntology?.sceneElement || boundOntology?.eaElement;
       if (ontology) {
         const eaOntology = editable(ontology);
-        eaOntology.fontSize = Math.max(MIN_SCALED_FONT_SIZE, Math.floor(newSize / 2));
+        eaOntology.fontSize = Math.max(MIN_ONTOLOGY_FONT_SIZE, Math.floor(newSize / 2));
         ea.refreshTextElementSize(eaOntology.id);
         changed = true;
       }
@@ -7964,13 +8141,14 @@ const applyFontScaleToSettingsRoot = async (settingsRootId, newScaleType, newBas
       ea.addAppendUpdateCustomData(node.id, {
         fontsizeScale: normalizedScaleType,
         fontSizeBase: normalizedBaseSize,
+        fontSizeMinimum: normalizedMinSize,
       });
       changed = true;
-      getChildrenNodes(node.id, allElements).forEach((child) => updateNode(child, 1));
+      (childrenByParent.get(node.id) || []).forEach((child) => updateNode(child, 1));
       return;
     }
 
-    getChildrenNodes(node.id, allElements).forEach((child) => updateNode(child, depth + 1));
+    (childrenByParent.get(node.id) || []).forEach((child) => updateNode(child, depth + 1));
   };
 
   if (settingsRoot.customData?.isAdditionalRoot) {
@@ -7981,7 +8159,7 @@ const applyFontScaleToSettingsRoot = async (settingsRootId, newScaleType, newBas
 
   if (!changed) return;
   await addElementsToView({ captureUpdate: "EVENTUALLY" });
-  if (settingsRoot.customData?.autoLayoutDisabled !== true) {
+  if (relayout && settingsRoot.customData?.autoLayoutDisabled !== true) {
     await triggerGlobalLayout(settingsRootId);
   }
 };
@@ -8157,6 +8335,7 @@ const toggleSubmapRoot = async () => {
       arrowType: sourceCfg.arrowType,
       fontsizeScale: sourceCfg.fontsizeScale,
       fontSizeBase: sourceCfg.fontSizeBase,
+      fontSizeMinimum: sourceCfg.fontSizeMinimum,
       multicolor: sourceCfg.multicolor,
       boxChildren: sourceCfg.boxChildren,
       roundedCorners: sourceCfg.roundedCorners,
@@ -8316,7 +8495,7 @@ const changeNodeOrder = async (key) => {
         mindmapOrder: isRadial && !isInPositive ? parentOrder - 0.5 : parentOrder + 0.5
       });
 
-      updateSubtreeFontSize(current.id, newDepth, allElements, newRootCfg.fontsizeScale, newRootCfg.fontSizeBase);
+      updateSubtreeFontSize(current.id, newDepth, allElements, newRootCfg.fontsizeScale, newRootCfg.fontSizeBase, newRootCfg.fontSizeMinimum);
       updateSubtreeStrokeWidth(current.id, newDepth, oldDepth, allElements, newRootCfg.baseStrokeWidth, newRootCfg.branchScale, oldRootCfg.baseStrokeWidth, oldRootCfg.branchScale);
 
       // --- Update Colors (Promotion) ---
@@ -8414,7 +8593,7 @@ const changeNodeOrder = async (key) => {
         });
       }
 
-      updateSubtreeFontSize(current.id, newDepth, allElements, newRootCfg.fontsizeScale, newRootCfg.fontSizeBase);
+      updateSubtreeFontSize(current.id, newDepth, allElements, newRootCfg.fontsizeScale, newRootCfg.fontSizeBase, newRootCfg.fontSizeMinimum);
       updateSubtreeStrokeWidth(current.id, newDepth, oldDepth, allElements, newRootCfg.baseStrokeWidth, newRootCfg.branchScale, oldRootCfg.baseStrokeWidth, oldRootCfg.branchScale);
 
       // --- Update Colors (Demotion) ---
@@ -9458,7 +9637,7 @@ let lastFocusedInput = null;
 let isOntologyFocused = false;
 let ignoreFocusChanges = false;
 let autoLayoutToggle, linkSuggester, arrowTypeToggle;
-let fontSizeDropdown, boxToggle, roundToggle, strokeToggle;
+let fontSizeDropdown, fontBaseSizeDropdown, fontMinSizeDropdown, boxToggle, roundToggle, strokeToggle;
 let branchScaleDropdown, baseWidthSlider;
 let colorToggle, widthSlider, centerToggle;
 let fillSweepToggleSetting, fillSweepToggle;
@@ -9774,6 +9953,8 @@ const updateUI = (sel) => {
       growthMode: cd?.growthMode ?? currentModalGrowthMode,
       arrowType: cd?.arrowType ?? arrowType,
       fontsizeScale: cd?.fontsizeScale ?? fontsizeScale,
+      fontSizeBase: cd?.fontSizeBase ?? fontSizeBase,
+      fontSizeMinimum: cd?.fontSizeMinimum ?? (cd?.fontsizeScale ? DEFAULT_FONT_MIN_SIZE : fontSizeMinimum),
       multicolor: typeof cd?.multicolor === "boolean" ? cd.multicolor : multicolor,
       boxChildren: typeof cd?.boxChildren === "boolean" ? cd.boxChildren : boxChildren,
       roundedCorners: typeof cd?.roundedCorners === "boolean" ? cd.roundedCorners : roundedCorners,
@@ -9818,8 +9999,19 @@ const updateUI = (sel) => {
     arrowType = (typeof cd.arrowType === "string" && ARROW_TYPES.includes(cd.arrowType)) ? cd.arrowType : getVal(K_ARROW_TYPE, "curved");
     setVal(K_ARROW_TYPE, arrowType);
 
-    fontsizeScale = cd.fontsizeScale ?? getVal(K_FONTSIZE, "Normal Scale");
+    const selectedRawFontScale = cd.fontsizeScale ?? getVal(K_FONTSIZE, "Normal Scale");
+    fontsizeScale = normalizeFontScaleType(selectedRawFontScale);
     setVal(K_FONTSIZE, fontsizeScale);
+    fontSizeBase = sanitizeFontBaseSize(
+      cd.fontSizeBase,
+      cd.fontsizeScale ? getLegacyFontBaseSize(cd.fontsizeScale) : getVal(K_FONT_BASE_SIZE, DEFAULT_FONT_BASE_SIZE),
+    );
+    setVal(K_FONT_BASE_SIZE, fontSizeBase);
+    fontSizeMinimum = sanitizeFontMinSize(
+      cd.fontSizeMinimum ?? (cd.fontsizeScale ? DEFAULT_FONT_MIN_SIZE : getVal(K_FONT_MIN_SIZE, DEFAULT_FONT_MIN_SIZE)),
+      fontSizeBase,
+    );
+    setVal(K_FONT_MIN_SIZE, fontSizeMinimum);
 
     multicolor = typeof cd.multicolor === "boolean" ? cd.multicolor : getVal(K_MULTICOLOR, true);
     setVal(K_MULTICOLOR, multicolor);
@@ -9878,6 +10070,13 @@ const updateUI = (sel) => {
   }
   if (fontSizeDropdown) {
     fontSizeDropdown.setValue(fontsizeScale);
+  }
+  if (fontBaseSizeDropdown) {
+    fontBaseSizeDropdown.setValue(String(fontSizeBase));
+  }
+  if (fontMinSizeDropdown) {
+    fontMinSizeDropdown.setValue(String(fontSizeMinimum));
+    fontMinSizeDropdown.selectEl.disabled = fontsizeScale === "Uniform Size";
   }
   if (colorToggle) {
     colorToggle.setValue(multicolor);
@@ -10067,7 +10266,7 @@ const commitEdit = async () => {
       // Back to Text
       if (ea.style.strokeColor === "transparent") ea.style.strokeColor = "black";
       ea.style.fontFamily = st.currentItemFontFamily;
-      const fontScale = getFontScale(fontsizeScale);
+      const fontScale = getFontScale(fontsizeScale, fontSizeBase, fontSizeMinimum);
       ea.style.fontSize = fontScale[Math.min(depth, fontScale.length - 1)];
       ea.style.backgroundColor = "transparent";
       ea.style.strokeWidth = getStrokeWidthForDepth(depth);
@@ -10123,7 +10322,7 @@ const commitEdit = async () => {
     const keysToCopy = [
       "mindmapOrder", "isPinned", "growthMode", "autoLayoutDisabled",
       "isFolded", "foldIndicatorId", "foldState", "boundaryId",
-      "fontsizeScale", "multicolor", "boxChildren", "roundedCorners",
+      "fontsizeScale", "fontSizeBase", "fontSizeMinimum", "multicolor", "boxChildren", "roundedCorners",
       "maxWrapWidth", "isSolidArrow", "centerText", "arrowType",
       "fillSweep", "branchScale", "baseStrokeWidth", "layoutSettings",
       "isCodeBlock", "isCodeCollapsed", "codeLanguage", "codeSource"
@@ -11627,24 +11826,65 @@ const renderBody = (contentEl) => {
         })
     });
 
+  const applySelectedFontSettings = async () => {
+    fontsizeScale = normalizeFontScaleType(fontsizeScale);
+    fontSizeBase = sanitizeFontBaseSize(fontSizeBase);
+    fontSizeMinimum = sanitizeFontMinSize(fontSizeMinimum, fontSizeBase);
+    setVal(K_FONTSIZE, fontsizeScale);
+    setVal(K_FONT_BASE_SIZE, fontSizeBase);
+    setVal(K_FONT_MIN_SIZE, fontSizeMinimum);
+
+    const info = await updateRootNodeCustomData({
+      fontsizeScale,
+      fontSizeBase,
+      fontSizeMinimum,
+    });
+    if (info) {
+      await applyFontScaleToSettingsRoot(info.settingsRootId, fontsizeScale, fontSizeBase, fontSizeMinimum);
+    }
+    updateUI();
+  };
+
   new ea.obsidian.Setting(bodyContainer).setName(t("LABEL_FONT_SIZES")).addDropdown((d) => {
     fontSizeDropdown = d;
     FONT_SCALE_TYPES.forEach((key) => d.addOption(key, key));
     d.setValue(fontsizeScale);
     d.onChange(async (v) => {
-      const previousFontsizeScale = fontsizeScale;
-      fontsizeScale = v;
+      fontsizeScale = normalizeFontScaleType(v);
       if (disableTabEvents) return;
-
-      setVal(K_FONTSIZE, v);
-      const info = await updateRootNodeCustomData({
-        fontsizeScale: v
-      });
-      if (info) {
-        await applyFontScaleToSettingsRoot(info.settingsRootId, previousFontsizeScale, v);
-      }
+      await applySelectedFontSettings();
     });
   });
+
+  new ea.obsidian.Setting(bodyContainer)
+    .setName(t("LABEL_FONT_BASE_SIZE"))
+    .setDesc(t("DESC_FONT_BASE_SIZE"))
+    .addDropdown((d) => {
+      fontBaseSizeDropdown = d;
+      FONT_BASE_SIZES.forEach((size) => d.addOption(String(size), `${size} px`));
+      d.setValue(String(fontSizeBase));
+      d.onChange(async (value) => {
+        fontSizeBase = sanitizeFontBaseSize(value);
+        fontSizeMinimum = sanitizeFontMinSize(fontSizeMinimum, fontSizeBase);
+        if (disableTabEvents) return;
+        await applySelectedFontSettings();
+      });
+    });
+
+  new ea.obsidian.Setting(bodyContainer)
+    .setName(t("LABEL_FONT_MIN_SIZE"))
+    .setDesc(t("DESC_FONT_MIN_SIZE"))
+    .addDropdown((d) => {
+      fontMinSizeDropdown = d;
+      FONT_MIN_SIZES.forEach((size) => d.addOption(String(size), `${size} px`));
+      d.setValue(String(fontSizeMinimum));
+      d.selectEl.disabled = fontsizeScale === "Uniform Size";
+      d.onChange(async (value) => {
+        fontSizeMinimum = sanitizeFontMinSize(value, fontSizeBase);
+        if (disableTabEvents) return;
+        await applySelectedFontSettings();
+      });
+    });
 
   // ------------------------------------
   // Hotkey Configuration Section
@@ -13314,22 +13554,7 @@ const performAction = async (action, event) => {
       "";
   };
 
-  const extractMapConfig = (rootNode) => ({
-    growthMode: rootNode.customData?.growthMode || currentModalGrowthMode,
-    autoLayoutDisabled: rootNode.customData?.autoLayoutDisabled === true,
-    arrowType: rootNode.customData?.arrowType ?? arrowType,
-    fontsizeScale: rootNode.customData?.fontsizeScale ?? fontsizeScale,
-    multicolor: typeof rootNode.customData?.multicolor === "boolean" ? rootNode.customData.multicolor : multicolor,
-    boxChildren: typeof rootNode.customData?.boxChildren === "boolean" ? rootNode.customData.boxChildren : boxChildren,
-    roundedCorners: typeof rootNode.customData?.roundedCorners === "boolean" ? rootNode.customData.roundedCorners : roundedCorners,
-    maxWrapWidth: typeof rootNode.customData?.maxWrapWidth === "number" ? rootNode.customData.maxWrapWidth : maxWidth,
-    isSolidArrow: typeof rootNode.customData?.isSolidArrow === "boolean" ? rootNode.customData.isSolidArrow : isSolidArrow,
-    centerText: typeof rootNode.customData?.centerText === "boolean" ? rootNode.customData.centerText : centerText,
-    fillSweep: typeof rootNode.customData?.fillSweep === "boolean" ? rootNode.customData.fillSweep : fillSweep,
-    branchScale: rootNode.customData?.branchScale ?? branchScale,
-    baseStrokeWidth: typeof rootNode.customData?.baseStrokeWidth === "number" ? rootNode.customData.baseStrokeWidth : baseStrokeWidth,
-    layoutSettings: JSON.parse(JSON.stringify(rootNode.customData?.layoutSettings ?? layoutSettings)),
-  });
+  const extractMapConfig = (rootNode) => getRootConfigForNode(rootNode);
 
   const API_ACTIONS = {
     ADD: ACTION_ADD,
@@ -14163,7 +14388,23 @@ const performAction = async (action, event) => {
           ...patch
         }, node);
         if (!info) return mmErr(MMError.OPERATION_FAILED, "Failed to update map config");
-        if (relayout) await refreshMapLayout(node);
+        const fontSettingsChanged = Object.prototype.hasOwnProperty.call(patch, "fontsizeScale") ||
+          Object.prototype.hasOwnProperty.call(patch, "fontSizeBase") ||
+          Object.prototype.hasOwnProperty.call(patch, "fontSizeMinimum");
+        if (fontSettingsChanged) {
+          const updatedElements = ea.getViewElements();
+          const settingsRoot = updatedElements.find((element) => element.id === info.settingsRootId);
+          const config = getRootConfigForNode(settingsRoot);
+          await applyFontScaleToSettingsRoot(
+            info.settingsRootId,
+            config.fontsizeScale,
+            config.fontSizeBase,
+            config.fontSizeMinimum,
+            relayout,
+          );
+        } else if (relayout) {
+          await refreshMapLayout(node);
+        }
         return mmOk({
           rootId: info.rootId,
           settingsRootId: info.settingsRootId
@@ -14275,6 +14516,8 @@ const performAction = async (action, event) => {
           autoLayoutDisabled: autoLayoutDisabled,
           arrowType: arrowType,
           fontsizeScale: fontsizeScale,
+          fontSizeBase: fontSizeBase,
+          fontSizeMinimum: fontSizeMinimum,
           multicolor: multicolor,
           boxChildren: boxChildren,
           roundedCorners: roundedCorners,
@@ -14314,6 +14557,18 @@ const performAction = async (action, event) => {
         if (patch.fontsizeScale && FONT_SCALE_TYPES.includes(patch.fontsizeScale)) {
           fontsizeScale = patch.fontsizeScale;
           setVal(K_FONTSIZE, patch.fontsizeScale);
+          requiresSave = true;
+        }
+        if (typeof patch.fontSizeBase === "number") {
+          fontSizeBase = sanitizeFontBaseSize(patch.fontSizeBase);
+          fontSizeMinimum = sanitizeFontMinSize(fontSizeMinimum, fontSizeBase);
+          setVal(K_FONT_BASE_SIZE, fontSizeBase);
+          setVal(K_FONT_MIN_SIZE, fontSizeMinimum);
+          requiresSave = true;
+        }
+        if (typeof patch.fontSizeMinimum === "number") {
+          fontSizeMinimum = sanitizeFontMinSize(patch.fontSizeMinimum, fontSizeBase);
+          setVal(K_FONT_MIN_SIZE, fontSizeMinimum);
           requiresSave = true;
         }
         if (patch.branchScale && BRANCH_SCALE_TYPES.includes(patch.branchScale)) {
@@ -14389,6 +14644,8 @@ const performAction = async (action, event) => {
         autoLayoutDisabled: { type: "boolean" },
         arrowType: { type: "string", valueset: ARROW_TYPES },
         fontsizeScale: { type: "string", valueset: FONT_SCALE_TYPES },
+        fontSizeBase: { type: "number", valueset: FONT_BASE_SIZES },
+        fontSizeMinimum: { type: "number", valueset: FONT_MIN_SIZES },
         branchScale: { type: "string", valueset: BRANCH_SCALE_TYPES },
         multicolor: { type: "boolean" },
         boxChildren: { type: "boolean" },
