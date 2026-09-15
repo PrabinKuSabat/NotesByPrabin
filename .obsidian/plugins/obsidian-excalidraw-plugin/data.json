@@ -846,9 +846,9 @@
     "Custom/Mindmap Builder.js": {
       "Layout Config": {
         "value": {
-          "GAP_X": 120,
-          "GAP_Y": 25,
-          "GAP_MULTIPLIER": 0.6,
+          "GAP_X": 190,
+          "GAP_Y": 100,
+          "GAP_MULTIPLIER": 2.6,
           "DEPTH_GAP_DECAY": 0.86,
           "ROOT_RADIUS_FACTOR": 0.8,
           "MIN_RADIUS": 350,
@@ -856,9 +856,9 @@
           "RADIAL_POLE_GAP_BONUS": 2,
           "RADIAL_START_ANGLE": 280,
           "RADIAL_MAX_SWEEP": 340,
-          "DIRECTIONAL_ARC_SPAN_RADIANS": 1,
-          "GAP_MULTIPLIER_DIRECTIONAL": 1.5,
-          "RADIUS_PADDING_PER_NODE": 7,
+          "DIRECTIONAL_ARC_SPAN_RADIANS": 2.1,
+          "GAP_MULTIPLIER_DIRECTIONAL": 2.4,
+          "RADIUS_PADDING_PER_NODE": 20,
           "VERTICAL_SUBTREE_WIDTH_BLEND_SINGLE": 0.35,
           "VERTICAL_SUBTREE_WIDTH_BLEND_DUAL": 0.6,
           "VERTICAL_SUBTREE_SMOOTH_THRESHOLD_MULTIPLIER": 6,
@@ -877,7 +877,7 @@
         "hidden": true
       },
       "Is Undocked": {
-        "value": false,
+        "value": true,
         "hidden": false
       },
       "Active Preset": {
@@ -1236,7 +1236,7 @@
         "hidden": true
       },
       "Base Font Size": {
-        "value": 48,
+        "value": 36,
         "hidden": false
       },
       "Minimum Font Size": {

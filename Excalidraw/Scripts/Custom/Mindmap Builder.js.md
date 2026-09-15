@@ -5765,6 +5765,100 @@ const sortL1NodesBasedOnVisualSequence = (l1Nodes, mode, rootCenter) => {
 };
 
 /**
+ * Brings older/unboxed maps into line with the "Box child nodes" setting
+ * before any geometry is calculated.  This deliberately happens in the
+ * layout workbench (rather than by calling toggleBox) so one layout request is
+ * also one undoable scene update, and it never schedules a nested layout.
+ *
+ * Existing containers are left exactly as they are.  The setting applies to
+ * children, not the map root, matching the behavior used when new nodes are
+ * created.
+ */
+const ensureAutomaticNodeBoxes = (rootId, allElements) => {
+  const byId = buildElementMap(allElements);
+  const root = byId.get(rootId);
+  if (!root) {
+    return { changed: false, replacements: new Map() };
+  }
+
+  const branchIds = new Set(getBranchElementIds(rootId, allElements, byId));
+  const parentMap = buildParentMap(allElements, byId);
+  const candidates = allElements
+    .filter((element) =>
+      element.id !== rootId &&
+      branchIds.has(element.id) &&
+      element.type === "text" &&
+      !element.containerId &&
+      element.customData &&
+      (typeof element.customData.mindmapOrder !== "undefined" || element.customData.isAdditionalRoot === true),
+    )
+    .map((textNode) => {
+      const settingsRoot = getSettingsRootNode(textNode, allElements, byId, parentMap);
+      return { textNode, settingsRoot, config: getRootConfigForNode(settingsRoot) };
+    })
+    // A submap owns its own box preference.  A master-map layout must not
+    // override a submap that explicitly keeps children unboxed (or vice versa).
+    .filter(({ config }) => config.boxChildren);
+  if (candidates.length === 0) {
+    return { changed: false, replacements: new Map() };
+  }
+
+  const replacements = new Map();
+
+  candidates.forEach(({ textNode, settingsRoot, config }) => {
+    const depth = getDepthFromAncestor(textNode.id, settingsRoot?.id || rootId, allElements, parentMap, byId);
+    const padding = config.layoutSettings?.CONTAINER_PADDING ?? layoutSettings.CONTAINER_PADDING;
+    const rectId = ea.addRect(
+      textNode.x - padding,
+      textNode.y - padding,
+      textNode.width + padding * 2,
+      textNode.height + padding * 2,
+    );
+    const rect = ea.getElement(rectId);
+    const editableText = ea.getElement(textNode.id);
+    if (!rect || !editableText) return;
+
+    // Node configuration belongs to its visual container.  Moving it before
+    // layout ensures depth, folding, color, and submap settings survive.
+    ea.addAppendUpdateCustomData(rectId, { ...(textNode.customData || {}) });
+    rect.strokeColor = ea.getCM(textNode.strokeColor).stringRGB();
+    rect.strokeWidth = calculateStrokeWidth(depth, config.baseStrokeWidth, config.branchScale);
+    rect.roughness = getAppState().currentItemRoughness;
+    rect.roundness = config.roundedCorners ? { type: 3 } : null;
+    rect.backgroundColor = "transparent";
+    rect.groupIds = textNode.groupIds ? [...textNode.groupIds] : [];
+    rect.boundElements = [{ type: "text", id: textNode.id }];
+
+    editableText.containerId = rectId;
+    editableText.boundElements = [];
+    delete editableText.customData;
+    replacements.set(textNode.id, rectId);
+  });
+
+  // Rebind both branch arrows and user-created cross-links.  This keeps every
+  // relationship anchored to the new box while the text remains editable.
+  ea.getElements().filter((element) => element.type === "arrow").forEach((arrow) => {
+    const editableArrow = ea.getElement(arrow.id);
+    if (!editableArrow) return;
+    ["startBinding", "endBinding"].forEach((bindingName) => {
+      const binding = editableArrow[bindingName];
+      const replacementId = replacements.get(binding?.elementId);
+      if (!replacementId) return;
+      editableArrow[bindingName] = { ...binding, elementId: replacementId };
+      const container = ea.getElement(replacementId);
+      if (container) {
+        container.boundElements = container.boundElements || [];
+        if (!container.boundElements.some((bound) => bound.type === "arrow" && bound.id === editableArrow.id)) {
+          container.boundElements.push({ type: "arrow", id: editableArrow.id });
+        }
+      }
+    });
+  });
+
+  return { changed: replacements.size > 0, replacements };
+};
+
+/**
  * Main layout execution function.
  * Calculates positions for a tree rooted at rootId and moves elements.
  * 
@@ -5774,9 +5868,14 @@ const sortL1NodesBasedOnVisualSequence = (l1Nodes, mode, rootCenter) => {
  */
 const performGlobalLayout = async (rootId, forceUngroup = false, mustHonorMindmapOrder = false) => {
   if (!isViewSet()) return;
+  // A caller can retain the ID of an old, unboxed root text element. Resolve
+  // that stable text ID back to its current visual container before collecting
+  // the project, so box normalization never makes a later layout miss its map.
+  const requestedRoot = ea.getViewElements().find((el) => el.id === rootId);
+  if (requestedRoot?.containerId) rootId = requestedRoot.containerId;
   // Programmatic imports and configuration changes may not have an active
   // canvas selection. The explicit root is sufficient to lay out the map.
-  const selectedElement = getMindmapNodeFromSelection() || ea.getViewElements().find((el) => el.id === rootId);
+  let selectedElement = getMindmapNodeFromSelection() || ea.getViewElements().find((el) => el.id === rootId);
   if (!selectedElement) return;
 
   const run = async (allElements, mindmapIds, root, doVisualSort, sharedSets, mustHonorMindmapOrder = false) => {
@@ -6001,6 +6100,17 @@ const performGlobalLayout = async (rootId, forceUngroup = false, mustHonorMindma
 
   if (root.customData?.autoLayoutDisabled) return;
 
+  // Normalize legacy/plain child nodes first.  Layout then measures the same
+  // boxes the user will see, preventing a later box operation from upsetting
+  // a carefully laid-out map.
+  const autoBoxes = ensureAutomaticNodeBoxes(rootId, allElements);
+  if (autoBoxes.changed) {
+    allElements = ea.getElements();
+    root = allElements.find((el) => el.id === rootId);
+    const selectedReplacement = autoBoxes.replacements.get(selectedElement?.id);
+    if (selectedReplacement) selectedElement = ea.getElement(selectedReplacement) || selectedElement;
+  }
+
   const workbenchElementById = buildElementMap(allElements);
   const mindmapIds = getBranchElementIds(rootId, allElements, workbenchElementById);
   const {
@@ -6080,10 +6190,24 @@ const performGlobalLayout = async (rootId, forceUngroup = false, mustHonorMindma
     }
   }
 
-  if (result1.structuralChange || forceUngroup || boundaryMoved) {
+  // Auto-boxing itself is a structural mutation even when all nodes happened
+  // to already be in their final positions.  Commit it before an optional
+  // second pass; otherwise a no-op layout would clear the new containers.
+  if (autoBoxes.changed || result1.structuralChange || forceUngroup || boundaryMoved) {
     await addElementsToView({
       captureUpdate: "EVENTUALLY"
     });
+
+    // addRect appends new elements to the scene.  Put every new frame behind
+    // its text just as the manual Box action does, keeping the text readable
+    // and the container's z-order stable across subsequent layouts.
+    if (autoBoxes.changed) {
+      autoBoxes.replacements.forEach((containerId, textId) => {
+        const currentViewElements = ea.getViewElements();
+        const textElement = currentViewElements.find((element) => element.id === textId);
+        if (textElement) ea.moveViewElementToZIndex(containerId, currentViewElements.indexOf(textElement));
+      });
+    }
 
     // Isolate subset again for the second pass
     const viewElementsRun2 = ea.getViewElements();
@@ -9408,14 +9532,44 @@ const toggleCodeNode = async () => {
   const selected = getMindmapNodeFromSelection();
   const all = ea.getViewElements();
   const node = selected?.containerId ? all.find((el) => el.id === selected.containerId) : selected;
-  if (!node?.customData?.isCodeBlock) {
-    new Notice("Select a code node to collapse or expand.");
-    return;
-  }
-
+  if (!node) return;
   const textId = node.type === "text" ? node.id : node.boundElements?.find((be) => be.type === "text")?.id;
   const text = all.find((el) => el.id === textId);
   if (!text) return;
+
+  // The same button is intentionally a conversion action for ordinary text
+  // nodes.  It preserves the source verbatim, wraps it as a plain-text fenced
+  // block when needed, and thereafter retains the usual collapse/expand flow.
+  if (!node.customData?.isCodeBlock) {
+    const source = normalizeClipboardText(text.rawText ?? text.text ?? "");
+    const fencedSource = isFencedCodeBlock(source) ? source : `\`\`\`text\n${source}\n\`\`\``;
+    const language = getCodeBlockLanguage(fencedSource);
+
+    ea.copyViewElementsToEAforEditing([text, node].filter((element) => !ea.getElement(element.id)));
+    const eaText = ea.getElement(text.id);
+    if (!eaText) return;
+    eaText.rawText = fencedSource;
+    eaText.originalText = fencedSource;
+    eaText.text = fencedSource;
+    eaText.fontFamily = getCodeFontFamily();
+    ea.refreshTextElementSize(eaText.id);
+    ea.addAppendUpdateCustomData(node.id, {
+      isCodeBlock: true,
+      isCodeCollapsed: false,
+      codeSource: fencedSource,
+      codeLanguage: language,
+    });
+
+    await addElementsToView({ captureUpdate: "EVENTUALLY" });
+    const container = ea.getViewElements().find((element) => element.id === eaText.containerId);
+    if (container) api().updateContainerSize([container]);
+    if (node.customData?.autoLayoutDisabled !== true) {
+      const info = getHierarchy(node, ea.getViewElements());
+      await triggerGlobalLayout(info.rootId);
+    }
+    updateUI();
+    return;
+  }
 
   const collapsed = node.customData?.isCodeCollapsed === true;
   const source = node.customData?.codeSource || text.rawText;
@@ -9930,9 +10084,14 @@ const updateUI = (sel) => {
     if (codeBtn) {
       const isCodeNode = visualNode?.customData?.isCodeBlock === true;
       const isCodeCollapsed = visualNode?.customData?.isCodeCollapsed === true;
-      codeBtn.setIcon(isCodeCollapsed ? "chevrons-down-up" : "braces");
-      codeBtn.setTooltip(isCodeCollapsed ? "Expand code node" : "Collapse code node");
-      setButtonDisabled(codeBtn, !isCodeNode);
+      const boundTextId = visualNode?.type === "text" ? visualNode.id :
+        visualNode?.boundElements?.find((bound) => bound.type === "text")?.id;
+      const canConvertToCode = Boolean(boundTextId && all.some((element) => element.id === boundTextId && element.type === "text"));
+      codeBtn.setIcon(isCodeNode && isCodeCollapsed ? "chevrons-down-up" : "braces");
+      codeBtn.setTooltip(
+        isCodeNode ? (isCodeCollapsed ? "Expand code node" : "Collapse code node") : "Convert selected node to code block",
+      );
+      setButtonDisabled(codeBtn, !canConvertToCode);
     }
 
     if (pinBtn) {
@@ -11709,9 +11868,13 @@ const renderBody = (contentEl) => {
           boxChildren = v;
           if (disableTabEvents) return;
           setVal(K_BOX, v);
-          await updateRootNodeCustomData({
+          const update = await updateRootNodeCustomData({
             boxChildren: v
           });
+          // Enabling automatic boxes upgrades the current map before its next
+          // position pass.  Disabling only stops future auto-boxing; existing
+          // boxes remain part of the map until explicitly removed.
+          if (v && update?.settingsRootId) await triggerGlobalLayout(update.settingsRootId);
         })
     })
     .addExtraButton((btn) => {
