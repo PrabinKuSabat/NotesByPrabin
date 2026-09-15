@@ -886,7 +886,15 @@
       },
       "Growth Mode": {
         "value": "Right-facing",
-        "hidden": false
+        "valueset": [
+          "Radial",
+          "Right-facing",
+          "Left-facing",
+          "Right-Left",
+          "Up-facing",
+          "Down-facing",
+          "Up-Down"
+        ]
       },
       "Arrow Type": {
         "value": "curved",
@@ -894,7 +902,11 @@
       },
       "Font Sizes": {
         "value": "Use scene fontsize",
-        "hidden": false
+        "valueset": [
+          "Use scene fontsize",
+          "Fibonacci Scale",
+          "Normal Scale"
+        ]
       },
       "Multicolor Mode": {
         "value": true,
@@ -938,6 +950,288 @@
           "random": false,
           "colors": []
         },
+        "hidden": true
+      },
+      "Hotkeys": {
+        "value": [
+          {
+            "action": "Add",
+            "key": "Enter",
+            "modifiers": [],
+            "scope": 3
+          },
+          {
+            "action": "Add Next Sibling",
+            "key": "Enter",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Add Prev Sibling",
+            "key": "Enter",
+            "modifiers": [
+              "Alt",
+              "Shift"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Add + follow",
+            "key": "Enter",
+            "modifiers": [
+              "Mod",
+              "Alt"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Add + follow + focus",
+            "key": "Enter",
+            "modifiers": [
+              "Mod"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Add + follow + zoom",
+            "key": "Enter",
+            "modifiers": [
+              "Mod",
+              "Shift"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Dock/Undock",
+            "key": "Enter",
+            "modifiers": [
+              "Alt",
+              "Shift"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Dock & hide",
+            "key": "Escape",
+            "modifiers": [],
+            "scope": 2
+          },
+          {
+            "action": "Edit node",
+            "code": "KeyE",
+            "modifiers": [
+              "Mod"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Toggle Checkbox",
+            "code": "KeyL",
+            "modifiers": [
+              "Mod"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Calendar",
+            "code": "KeyD",
+            "modifiers": [
+              "Alt",
+              "Mod"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Pin/Unpin",
+            "code": "KeyP",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Box/Unbox",
+            "code": "KeyB",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Toggle Boundary",
+            "code": "KeyB",
+            "modifiers": [
+              "Alt",
+              "Shift"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Toggle Submap Root",
+            "code": "KeyJ",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Group/Ungroup Single Branch",
+            "code": "KeyG",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Toggle Embed/Link",
+            "code": "KeyE",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Copy",
+            "code": "KeyC",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Cut",
+            "code": "KeyX",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Paste",
+            "code": "KeyV",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Import Outline from Linked File",
+            "code": "KeyI",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Rearrange Map",
+            "code": "KeyR",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Cycle Zoom",
+            "code": "KeyZ",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Focus (center) node",
+            "code": "KeyF",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Navigate",
+            "key": "ArrowKeys",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Navigate & zoom",
+            "key": "ArrowKeys",
+            "modifiers": [
+              "Alt",
+              "Shift"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Navigate & focus",
+            "key": "ArrowKeys",
+            "modifiers": [
+              "Alt",
+              "Mod"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Change Order/Promote Node",
+            "code": "ArrowKeys",
+            "modifiers": [
+              "Mod"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Fold/Unfold Branch",
+            "code": "Digit1",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Fold/Unfold to Level 1",
+            "code": "Digit2",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Fold/Unfold Branch Recursively",
+            "code": "Digit3",
+            "modifiers": [
+              "Alt"
+            ],
+            "scope": 3
+          },
+          {
+            "action": "Undo",
+            "key": "z",
+            "modifiers": [
+              "Mod"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Redo (Ctrl-Shift-Z)",
+            "key": "z",
+            "modifiers": [
+              "Mod",
+              "Shift"
+            ],
+            "scope": 2
+          },
+          {
+            "action": "Redo (Ctrl-Y)",
+            "key": "y",
+            "modifiers": [
+              "Mod"
+            ],
+            "scope": 2
+          }
+        ],
         "hidden": true
       }
     }
