@@ -201,7 +201,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 489.81005859375
+    "width": 489.81005859375,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -227,7 +228,7 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "1f08514118c9e1ab",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
     "Homepage.md",
     "Excalidraw/Linux Boot-UP.excalidraw.md",
