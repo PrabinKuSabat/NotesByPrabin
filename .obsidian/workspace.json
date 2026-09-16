@@ -201,8 +201,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 489.81005859375,
-    "collapsed": true
+    "width": 489.81005859375
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -228,11 +227,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "c107063573aadd79",
   "lastOpenFiles": [
-    "Homepage.md",
     "Excalidraw/Linux Boot-UP.excalidraw.md",
     "Excalidraw/Mindmap Code/Linux Boot-UP.excalidraw code.md",
+    "Homepage.md",
     "Excalidraw/Mindmap Code",
     "Excalidraw/Scripts/Custom/Mindmap Builder.js.md",
     "Excalidraw/Scripts/Custom",

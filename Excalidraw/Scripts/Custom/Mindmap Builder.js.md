@@ -9679,6 +9679,40 @@ const openCodeNote = async (path, blockId = null) => {
   await app.workspace.openLinkText(target, ea.targetView?.file?.path || "", false);
 };
 
+// Earlier versions placed the block id directly below the heading. Obsidian
+// then treats the heading alone as the block, so Excalidraw renders only the
+// label instead of the fenced code. Repair those sections before embedding.
+const ensureCodeNoteBlockAnchor = async (path, blockId) => {
+  if (!path || !blockId) return;
+  const file = app.vault.getAbstractFileByPath(path);
+  if (!file) return;
+  const marker = `^${blockId}`;
+  const original = await app.vault.read(file);
+  const lines = original.replace(/\r\n/g, "\n").split("\n");
+  const markerLine = lines.findIndex((line) => line.trim() === marker);
+  if (markerLine < 0) return;
+
+  let openingLine = markerLine + 1;
+  while (openingLine < lines.length && !lines[openingLine].trim()) openingLine += 1;
+  const openingFence = getFenceMarker(lines[openingLine] || "");
+  if (!openingFence) return; // Already a heading/block reference, not code.
+
+  let closingLine = -1;
+  for (let i = openingLine + 1; i < lines.length; i += 1) {
+    if (hasMatchingFence(lines[i], openingFence)) {
+      closingLine = i;
+      break;
+    }
+  }
+  if (closingLine < 0) return;
+
+  lines.splice(markerLine, 1);
+  // Removing the marker shifts the closing fence by one line.
+  lines.splice(closingLine, 0, marker);
+  const repaired = lines.join("\n");
+  if (repaired !== original) await app.vault.modify(file, repaired);
+};
+
 // Markdown-file embeds are rendered by the Excalidraw plugin as a single
 // snapshot element.  This retains Obsidian's syntax-colored code on canvas,
 // while auto-layout sees and moves only one element rather than a token cloud.
@@ -9688,18 +9722,16 @@ const showCodeNoteInCanvas = async (nodeId = null) => {
   const selected = nodeId ? all.find((element) => element.id === nodeId) : getMindmapNodeFromSelection();
   const node = selected?.containerId ? all.find((element) => element.id === selected.containerId) : selected;
   if (!node?.customData?.isCodeNote) return;
-  if (node.type === "image") {
-    new Notice("This code note is already visible on the canvas.");
-    return;
-  }
   const file = app.vault.getAbstractFileByPath(node.customData.codeNotePath);
   if (!file) {
     new Notice(`Code note is missing: ${node.customData.codeNotePath}`);
     return;
   }
+  await ensureCodeNoteBlockAnchor(node.customData.codeNotePath, node.customData.codeNoteBlockId);
   const linkText = app.metadataCache.fileToLinktext(file, ea.targetView?.file?.path || "", true);
   const previewWidth = Math.max(320, Math.min(720, Math.round(node.width || 520)));
-  const preview = `![[${linkText}#^${node.customData.codeNoteBlockId}|${previewWidth}]]`;
+  // The harmless trailing space forces existing image snapshots to regenerate.
+  const preview = `![[${linkText}#^${node.customData.codeNoteBlockId}|${previewWidth}]] `;
   const incomingArrow = all.find((element) =>
     element.type === "arrow" && element.customData?.isBranch && element.endBinding?.elementId === node.id,
   );
@@ -9736,7 +9768,9 @@ const moveCodeNodeToObsidianNote = async () => {
   const language = getCodeBlockLanguage(source);
   const path = await getCodeNotePath();
   const blockId = `mindmap-code-${node.id.replace(/[^a-z0-9_-]/gi, "").slice(0, 24)}`;
-  const section = `\n\n## ${language} code\n^${blockId}\n\n${source}\n`;
+  // The block id must follow the fence so it references the complete code
+  // block, not just the heading above it.
+  const section = `\n\n## ${language} code\n\n${source.trimEnd()}\n^${blockId}\n`;
   let file = app.vault.getAbstractFileByPath(path);
   if (file) {
     await app.vault.append(file, section);
@@ -10357,9 +10391,9 @@ const updateUI = (sel) => {
       setButtonDisabled(codeBtn, !canConvertToCode);
       if (codeNoteBtn) {
         const codePreviewVisible = isCodeNote && visualNode?.type === "image";
-        codeNoteBtn.setIcon(codePreviewVisible ? "external-link" : (isCodeNote ? "image-plus" : "file-code-2"));
+        codeNoteBtn.setIcon(codePreviewVisible ? "refresh-cw" : (isCodeNote ? "image-plus" : "file-code-2"));
         codeNoteBtn.setTooltip(
-          codePreviewVisible ? "Code preview is already visible" :
+          codePreviewVisible ? "Refresh highlighted code preview" :
             (isCodeNote ? "Show highlighted code on canvas" : "Move code to an Obsidian note"),
         );
         setButtonDisabled(codeNoteBtn, !(isCodeNode || isCodeNote));
@@ -11785,7 +11819,7 @@ const renderInput = (container, isFloating = false) => {
       const selected = getMindmapNodeFromSelection();
       const all = ea.getViewElements();
       const node = selected?.containerId ? all.find((element) => element.id === selected.containerId) : selected;
-      if (node?.customData?.isCodeNote && node.type !== "image") {
+      if (node?.customData?.isCodeNote) {
         await showCodeNoteInCanvas(node.id);
       } else {
         await moveCodeNodeToObsidianNote();
