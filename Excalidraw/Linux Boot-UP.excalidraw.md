@@ -268,6 +268,13 @@ It then installs `early_pg_dir`, executes another `sfence.vma`, and returns thro
 
 **“Relocate” here changes execution addresses; it does not copy the kernel again.** U-Boot’s earlier `memmove()` already placed the bytes. ^7RdcZZQd
 
+## Element Links
+PXYeLOj2: [[Linux Boot-UP.excalidraw code#^mindmap-code-q0gLhVXM]]
+
+Xre1Pjau: [[Linux Boot-UP.excalidraw code#^mindmap-code-fnxqBgm5]]
+
+hn8x0oxF: [[Linux Boot-UP.excalidraw code#^mindmap-code-rk39gjkl]]
+
 ## Embedded Files
 1349753b8a1371058c2d5c10de70cc5c1811b67c: [[Pasted Image 20260916123305_669.svg]]
 
@@ -772,10 +779,10 @@ DC+EWCy4EWiy8WWqgIWWYIL3Dh9EkW2ACkXN5Sjp0i5kXqCzkWypofh8i5HTSAEUWN0JzkzVdvQKi8Jw
 
 OW99FOWZy2kXMIBkWOAFkXVQEuXkEb/gCixmwNyyUXm5U7hxOP09Ki4WYwYOAAB4DKB47MGA0cC8RoAC6WAQOsBxQMMAGACFYKAAZgkGXkkhYenrYRFxAcCMsBx4a+XlsOCBrhuTW9gBYoCa8XQia1jX92VG60a9fCEiMyRMgGMAD3XCwqa8zWia6QiwIhBD4y1kBHAM8tKa0zXCa5kAea3nSfQFYAACEQA+GK9oaFYkROa6LXia0mKSeYrWaa5k
 
-AkIA1a1a8PQia5dAec9rWWa/oBOenWWoK0UADa0TXjay5onmmbWRa+rX9AP1AK5grXbazrWxa1Ca3hfjWua5kBgIHoLHILwTza5kAj6JfCAQGYhhayIBPa0bXucJrXQwMhQCq46AuwEwjJMgTByBu+KyQJGpZkLHXtQPgBKMKMRPjGgMzeBKbwJt74XSNZgoxAwBRJoBghaP7X9AJrWX3vi9Kaw6ASACf8LaTjJG692j8Mi3XiAEuXva8EWTWB3W
+AkIA1a1a8PQia5dAec9rWWa/oBOenWWoK0UADa0TXjay5onmmbWRa+rX9AP1AK5grXbazrWxa1Ca3hfjWua5kBgIHoLHILwTza5kAj6JfCAQGYhhayIBPa0bXucJrXQwMhQCq46AuwEwixYFAMZkKNherHyAGCLMhY69qB8AJRgbBVQFTMlVKdWQyxvfC6RrMFGIGAKJNAMELR/a/oBNay+98XpTWHQCQAT/hbScZE3Xu0fhlW68QAly97Xgiyax
 
-QPdKBXMEZFlvkaFYCBjhR66ikrmnCArxitBymKUgFizhivSAvXyYkLBnCNjHE/ozW1EPBBKwL9BzAKqBcmsvTxaxcpIOHTXRhCPwGwrFBhwoGBLVY9Bta+LW9a9PK5uHZL/q8FKFqtmXzq7nqVuEQAbKx/WIADh6wZRWBFoFwZ/6+dAlKkwAUEFkBgG9QWmAN3Xey8M0b63YBRcejAvECZQ4AF3Xxq3EgZQCXGEAFvXtQAXQkucpSBY2Ag4REHWR
+O6yB7pQK5gjIst8jQrAQMcGPXUUlc04QFeMVoOUxSkAsWcMV6RF6+TEhYM4RsY4n9Ga2oh4IJWBfoOYBVQLk1l6eLWLlJBw6a6MIR+A2FYoMOFAwJarHoNrXxa3rXp5XNw7Jf9XgpQtVsy+dXc9StwiADZXP6xAAcPWDKKwItAuDAA3zoEpUmACggsgCA3qC0wAe672XhmrfW7AKLj0YF4gTKHABu6+NW4kDKAS4wgBt69qAC6ElzlKQLGwEHCIg
 
-VY/4DABUgaKvzRi+SsAsGzg23nOFqb6+qGtQDsAgQHDBsgEqk7tNaA7BGKjiMpszvS+g20a7eBQSH4pOgCg3risoAYG+/X4YbKpMABQ2MPpwAfqyQQDgBHsAoLZBoijHSX8FxESIEAA=
+6yKrH/AYAKkDRV+aMXyVgNg3cG285wtbfX1Q1qAdgECA4YNkAlUndprQHYIxUcRlNmd6WMG2jXbwKCQ/FJ0BUG9cVlALA2P6/DDZVJgBKGxh9OAD9WSCAcAI9gFBbINEUY6S/guIiRAgAA==
 ```
 %%
