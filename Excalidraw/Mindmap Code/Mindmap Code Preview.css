@@ -1,0 +1,30 @@
+/* Mindmap Builder managed code-preview rules. */
+.excalidraw-md-host pre,
+.excalidraw-md-host pre[class*="language-"],
+.excalidraw-md-host .HyperMD-codeblock-bg,
+.excalidraw-md-host .cm-editor {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: hidden !important;
+}
+
+.excalidraw-md-host pre,
+.excalidraw-md-host pre[class*="language-"],
+.excalidraw-md-host pre > code,
+.excalidraw-md-host pre[class*="language-"] > code {
+  white-space: pre-wrap !important;
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+}
+
+.excalidraw-md-host pre,
+.excalidraw-md-host pre[class*="language-"] {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.excalidraw-md-host > :last-child {
+  margin-bottom: 0 !important;
+}

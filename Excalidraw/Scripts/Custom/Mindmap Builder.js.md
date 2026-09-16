@@ -2062,12 +2062,16 @@ const parseImageInput = (input) => {
   const parts = content.split("|");
   const path = parts[0];
 
+  // Markdown embeds accept WIDTHxMAXHEIGHT. Keep the height in the link for
+  // Excalidraw's Markdown renderer while still using WIDTH for the canvas
+  // image itself. This prevents a later mode switch from resetting a preview.
   let width = null;
-  if (parts.length > 1) {
-    const last = parts[parts.length - 1];
-    if (/^\d+$/.test(last)) {
-      width = parseInt(last);
-    }
+  let height = null;
+  const sizePart = [...parts].reverse().find((part) => /^\d+(?:x\d+)?$/.test(part.trim()));
+  if (sizePart) {
+    const sizeMatch = sizePart.trim().match(/^(\d+)(?:x(\d+))?$/);
+    width = Number.parseInt(sizeMatch[1], 10);
+    height = sizeMatch[2] ? Number.parseInt(sizeMatch[2], 10) : null;
   }
 
   let imageFile = null, file = null;
@@ -2098,6 +2102,7 @@ const parseImageInput = (input) => {
   return {
     path,
     width,
+    height,
     imageFile,
     isImagePath,
     file
@@ -9668,6 +9673,72 @@ const getCodeNotePath = async () => {
   return `${folderPath}/${safeDrawingName} code.md`;
 };
 
+const CODE_NOTE_PREVIEW_CSS_NAME = "Mindmap Code Preview.css";
+const CODE_NOTE_PREVIEW_CSS = `/* Mindmap Builder managed code-preview rules. */
+.excalidraw-md-host pre,
+.excalidraw-md-host pre[class*="language-"],
+.excalidraw-md-host .HyperMD-codeblock-bg,
+.excalidraw-md-host .cm-editor {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: hidden !important;
+}
+
+.excalidraw-md-host pre,
+.excalidraw-md-host pre[class*="language-"],
+.excalidraw-md-host pre > code,
+.excalidraw-md-host pre[class*="language-"] > code {
+  white-space: pre-wrap !important;
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+}
+
+.excalidraw-md-host pre,
+.excalidraw-md-host pre[class*="language-"] {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.excalidraw-md-host > :last-child {
+  margin-bottom: 0 !important;
+}
+`;
+
+const ensureCodeNotePresentation = async (path) => {
+  if (!path) return;
+  const note = app.vault.getAbstractFileByPath(path);
+  if (!note) return;
+  const parentPath = path.includes("/") ? path.slice(0, path.lastIndexOf("/")) : "";
+  const cssPath = parentPath ? `${parentPath}/${CODE_NOTE_PREVIEW_CSS_NAME}` : CODE_NOTE_PREVIEW_CSS_NAME;
+  let cssFile = app.vault.getAbstractFileByPath(cssPath);
+  if (!cssFile) cssFile = await app.vault.create(cssPath, CODE_NOTE_PREVIEW_CSS);
+
+  // This is deliberately file-local: it affects only generated Mindmap Code
+  // notes, not the user's regular Markdown embeds elsewhere in the vault.
+  await app.fileManager.processFrontMatter(note, (frontmatter) => {
+    if (!frontmatter["excalidraw-font"]) frontmatter["excalidraw-font"] = "Cascadia";
+    if (!frontmatter["excalidraw-css"]) frontmatter["excalidraw-css"] = CODE_NOTE_PREVIEW_CSS_NAME;
+  });
+};
+
+const getCodePreviewMaxHeight = async (path, blockId) => {
+  const file = app.vault.getAbstractFileByPath(path);
+  if (!file) return 900;
+  const content = await app.vault.read(file);
+  const markerIndex = content.indexOf(`^${blockId}`);
+  const sectionStart = markerIndex >= 0 ? content.lastIndexOf("\n## ", markerIndex) : -1;
+  const source = markerIndex >= 0
+    ? content.slice(Math.max(0, sectionStart), markerIndex)
+    : content;
+  const lines = source.split(/\r?\n/).slice(-180);
+  // The renderer uses this as a cap rather than a fixed height. A generous,
+  // content-based cap avoids clipping large snippets without creating blank
+  // space below smaller ones.
+  return Math.max(300, Math.min(2400, 84 + lines.length * 22));
+};
+
 const openCodeNote = async (path, blockId = null) => {
   if (!path) return;
   const file = app.vault.getAbstractFileByPath(path);
@@ -9728,10 +9799,12 @@ const showCodeNoteInCanvas = async (nodeId = null) => {
     return;
   }
   await ensureCodeNoteBlockAnchor(node.customData.codeNotePath, node.customData.codeNoteBlockId);
+  await ensureCodeNotePresentation(node.customData.codeNotePath);
   const linkText = app.metadataCache.fileToLinktext(file, ea.targetView?.file?.path || "", true);
-  const previewWidth = Math.max(320, Math.min(720, Math.round(node.width || 520)));
+  const previewWidth = Math.max(320, Math.min(1600, Math.round(node.width || 520)));
+  const previewMaxHeight = await getCodePreviewMaxHeight(node.customData.codeNotePath, node.customData.codeNoteBlockId);
   // The harmless trailing space forces existing image snapshots to regenerate.
-  const preview = `![[${linkText}#^${node.customData.codeNoteBlockId}|${previewWidth}]] `;
+  const preview = `![[${linkText}#^${node.customData.codeNoteBlockId}|${previewWidth}x${previewMaxHeight}]] `;
   const incomingArrow = all.find((element) =>
     element.type === "arrow" && element.customData?.isBranch && element.endBinding?.elementId === node.id,
   );
@@ -9913,6 +9986,16 @@ const toggleEmbedStatus = async () => {
   const isEmbed = match[1] === "!";
   const linkCore = match[2];
   const sectionRef = match[3];
+  const isCodeNote = visualNode.customData?.isCodeNote === true;
+  const embedSize = nodeText.match(/\|(\d+)(?:x(\d+))?\]\]$/);
+  const storedPreviewWidth = visualNode.customData?.codePreviewWidth;
+  const storedPreviewMaxHeight = visualNode.customData?.codePreviewMaxHeight;
+  const previewWidth = Math.max(320, Math.min(1600, Math.round(
+    Number(embedSize?.[1]) || storedPreviewWidth || visualNode.width || 520,
+  )));
+  const previewMaxHeight = Math.max(300, Math.min(2400, Math.round(
+    Number(embedSize?.[2]) || storedPreviewMaxHeight || visualNode.height || 900,
+  )));
 
   let newText = "";
   if (isEmbed) {
@@ -9920,7 +10003,19 @@ const toggleEmbedStatus = async () => {
     const alias = sectionRef.replace(/^#+\s*/, "").trim();
     newText = `[[${linkCore}|${alias}]]`;
   } else {
-    newText = `![[${linkCore}]]`;
+    // Standard links do not retain their former embed dimensions. Persist the
+    // code preview dimensions so returning to image mode keeps the expanded
+    // size the user chose instead of falling back to the default width.
+    newText = isCodeNote
+      ? `![[${linkCore}|${previewWidth}x${previewMaxHeight}]]`
+      : `![[${linkCore}]]`;
+  }
+
+  if (isCodeNote) {
+    ea.addAppendUpdateCustomData(visualNode.id, {
+      codePreviewWidth: previewWidth,
+      codePreviewMaxHeight: previewMaxHeight,
+    });
   }
 
   // Hack into the established edit flow
@@ -10876,7 +10971,8 @@ const commitEdit = async () => {
       "fontsizeScale", "fontSizeBase", "fontSizeMinimum", "multicolor", "boxChildren", "roundedCorners",
       "maxWrapWidth", "isSolidArrow", "centerText", "arrowType",
       "fillSweep", "branchScale", "baseStrokeWidth", "layoutSettings",
-      "isCodeBlock", "isCodeCollapsed", "codeLanguage", "codeSource", "isCodeNote", "codeNotePath", "codeNoteBlockId"
+      "isCodeBlock", "isCodeCollapsed", "codeLanguage", "codeSource", "isCodeNote", "codeNotePath", "codeNoteBlockId",
+      "codePreviewWidth", "codePreviewMaxHeight"
     ];
     const dataToCopy = {};
     keysToCopy.forEach(k => {

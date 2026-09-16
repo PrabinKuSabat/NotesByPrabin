@@ -1,10 +1,14 @@
+---
+excalidraw-font: Cascadia
+excalidraw-css: "Mindmap Code Preview.css"
+---
+
 # Linux Boot-UP.excalidraw code
 
 
 ## assmb code
-^mindmap-code-q0gLhVXM
 
-```assmb
+```asm
 #if CONFIG_IS_ENABLED(SMP)
         /* tp: hart id */
         slli        t0, tp, CONFIG_STACK_SIZE_SHIFT
@@ -30,12 +34,12 @@ spl_secondary_hart_stack_gd_setup:
         jal        hang
 #endif 
 ```
+^mindmap-code-q0gLhVXM
 
 
 ## assmb code
-^mindmap-code-fnxqBgm5
 
-```assmb
+```asm
 #ifdef CONFIG_SPL_BUILD
 spl_clear_bss:
         la        t0, __bss_start
@@ -68,12 +72,13 @@ spl_call_board_init_r:
 #endif
 
 ```
+^mindmap-code-fnxqBgm5
 
 
 ## text code
 ^mindmap-code-rk39gjkl
 
-```text
+```asm
 call_board_init_f_0:
         mv        a0, sp
         jal        board_init_f_alloc_reserve
