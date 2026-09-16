@@ -9728,7 +9728,8 @@ const CODE_PREVIEW_STYLE_PROPERTIES = [
 const getCodeNoteSource = async (path, blockId) => {
   const file = app.vault.getAbstractFileByPath(path);
   if (!file) return null;
-  const lines = (await app.vault.read(file)).replace(/\r\n?/g, "\n").split("\n");
+  const markdown = (await app.vault.read(file)).replace(/\r\n?/g, "\n");
+  const lines = markdown.split("\n");
   const markerLine = lines.findIndex((line) => line.trim() === `^${blockId}`);
   if (markerLine < 0) return null;
 
@@ -9740,7 +9741,27 @@ const getCodeNoteSource = async (path, blockId) => {
   for (let openingLine = closingLine - 1; openingLine >= 0; openingLine -= 1) {
     const openingFence = getFenceMarker(lines[openingLine] || "");
     if (openingFence && openingFence[0] === closingFence[0] && closingFence.length >= openingFence.length) {
-      return lines.slice(openingLine, closingLine + 1).join("\n");
+      let blockIndex = 0;
+      let activeFence = null;
+      for (let lineIndex = 0; lineIndex < openingLine; lineIndex += 1) {
+        const marker = getFenceMarker(lines[lineIndex] || "");
+        if (!marker) continue;
+        if (!activeFence) {
+          activeFence = marker;
+          blockIndex += 1;
+        } else if (marker[0] === activeFence[0] && marker.length >= activeFence.length) {
+          activeFence = null;
+        }
+      }
+      const fenced = lines.slice(openingLine, closingLine + 1).join("\n");
+      return {
+        markdown,
+        fenced,
+        blockIndex,
+        openingLine,
+        closingLine,
+        language: getCodeHighlightLanguage(getCodeBlockLanguage(fenced)),
+      };
     }
   }
   return null;
@@ -9749,7 +9770,7 @@ const getCodeNoteSource = async (path, blockId) => {
 // Render through Obsidian itself so community code-block processors and the
 // active theme run normally. Computed styles are then frozen into a standalone
 // SVG: one lightweight Excalidraw image that scales as a unit with its node.
-const renderCodeSourceToSvg = async (markdown, sourcePath, requestedWidth = CODE_PREVIEW_RENDER_WIDTH) => {
+const renderCodeSourceToSvg = async (source, sourcePath, requestedWidth = CODE_PREVIEW_RENDER_WIDTH) => {
   const doc = ea.targetView?.ownerDocument || globalThis.document;
   const win = doc?.defaultView || globalThis;
   if (!doc?.body || !win?.getComputedStyle) throw new Error("Obsidian document is unavailable");
@@ -9757,6 +9778,8 @@ const renderCodeSourceToSvg = async (markdown, sourcePath, requestedWidth = CODE
   const host = doc.createElement("div");
   const content = doc.createElement("div");
   const override = doc.createElement("style");
+  const component = new ea.obsidian.Component();
+  component.load();
   host.className = "markdown-preview-view markdown-rendered mindmap-code-render-host";
   content.className = "markdown-preview-sizer markdown-preview-section markdown-rendered";
   Object.assign(host.style, {
@@ -9773,14 +9796,48 @@ const renderCodeSourceToSvg = async (markdown, sourcePath, requestedWidth = CODE
   host.append(override, content);
   doc.body.appendChild(host);
   try {
-    await ea.obsidian.MarkdownRenderer.render(app, markdown, content, sourcePath || "", ea.plugin);
-    await new Promise((resolve) => win.requestAnimationFrame(() => win.requestAnimationFrame(resolve)));
-    content.querySelectorAll("button, .copy-code-button, [class*='copy-code'], [class*='collapse-indicator']").forEach((element) => element.remove());
+    // Rendering the complete source note is intentional. Community processors
+    // such as CodeBlock Customizer use the source line position to find their
+    // configuration; an isolated fence has no valid source position.
+    await ea.obsidian.MarkdownRenderer.render(app, source.markdown, content, sourcePath || "", component);
+    const customizerEnabled = !!app.plugins?.getPlugin?.("codeblock-customizer");
+    for (let frame = 0; frame < (customizerEnabled ? 30 : 3); frame += 1) {
+      await new Promise((resolve) => win.requestAnimationFrame(resolve));
+      const candidate = [...content.querySelectorAll("pre")].filter((pre) => pre.querySelector("code"))[source.blockIndex];
+      if (candidate && (!customizerEnabled || candidate.querySelector(".codeblock-customizer-line-wrapper"))) break;
+    }
+    const codeBlocks = [...content.querySelectorAll("pre")].filter((pre) => pre.querySelector("code"));
+    const renderRoot = codeBlocks[source.blockIndex];
+    if (!renderRoot) throw new Error(`Rendered code block ${source.blockIndex + 1} was not found`);
+    if (!renderRoot.classList.contains("codeblock-customizer-pre")) {
+      // The isolated/off-screen renderer may not provide getSectionInfo() to
+      // community processors. Obsidian's own loaded code classes are still
+      // available; explicitly highlight this code with its registered Prism
+      // grammar, leaving the theme's token CSS to choose every color.
+      const prism = await ea.obsidian.loadPrism?.();
+      const code = renderRoot.querySelector("code");
+      const grammar = prism?.languages?.[source.language] ||
+        (source.language === "asm" ? prism?.languages?.nasm : null);
+      if (code && grammar && !code.querySelector(".token")) {
+        code.innerHTML = prism.highlight(code.textContent || "", grammar, source.language);
+        // Reuse the installed CodeBlock Customizer/Obsidian token selectors
+        // and CSS variables. No palette or language colors are hard-coded.
+        if (customizerEnabled) {
+          renderRoot.classList.add(`codeblock-customizer-language-${source.language}`);
+          code.classList.add("cbc-prism", "codeblock-customizer-line-text");
+        }
+      }
+    }
+    if (source.language !== "text" && source.language !== "plain" &&
+      !renderRoot.querySelector(".token, .cm-keyword, .cm-comment, .cm-string")) {
+      console.warn(`Mindmap Builder: ${source.language} preview has no syntax tokens; the installed highlighter did not process this block.`);
+    }
+    renderRoot.querySelectorAll("button, .copy-code-button, [class*='copy-code'], [class*='collapse-indicator']").forEach((element) => element.remove());
 
     const width = renderWidth;
-    const height = Math.max(40, Math.ceil(content.scrollHeight || content.getBoundingClientRect().height));
-    const clone = content.cloneNode(true);
-    const sourceElements = [content, ...content.querySelectorAll("*")];
+    const height = Math.max(40, Math.ceil(renderRoot.scrollHeight || renderRoot.getBoundingClientRect().height));
+    const clone = renderRoot.cloneNode(true);
+    const sourceElements = [renderRoot, ...renderRoot.querySelectorAll("*")];
     const cloneElements = [clone, ...clone.querySelectorAll("*")];
     sourceElements.forEach((sourceElement, index) => {
       const cloneElement = cloneElements[index];
@@ -9805,8 +9862,10 @@ const renderCodeSourceToSvg = async (markdown, sourcePath, requestedWidth = CODE
       dataURL: await ea.convertStringToDataURL(svg, "image/svg+xml"),
       width,
       height,
+      language: source.language,
     };
   } finally {
+    component.unload();
     host.remove();
   }
 };
@@ -9821,7 +9880,12 @@ const ensureCodeNoteHighlightLanguage = async (path, blockId) => {
   const sectionStart = content.lastIndexOf("\n## ", markerIndex);
   const sourceStart = Math.max(0, sectionStart);
   const section = content.slice(sourceStart, markerIndex);
-  const corrected = normalizeCodeFenceLanguage(section);
+  let corrected = normalizeCodeFenceLanguage(section);
+  const fenceLanguage = corrected.match(/(?:^|\n)[ \t]*(?:`{3,}|~{3,})([^`~\n]*)\n/)?.[1]?.trim();
+  if (fenceLanguage) {
+    const normalizedLanguage = getCodeHighlightLanguage(fenceLanguage);
+    corrected = corrected.replace(/(^|\n)(## )[^\n]*? code[ \t]*(?=\n)/, `$1$2${normalizedLanguage} code`);
+  }
   if (corrected !== section) {
     await app.vault.modify(file, `${content.slice(0, sourceStart)}${corrected}${content.slice(markerIndex)}`);
   }
@@ -9888,9 +9952,10 @@ const queueCodePreviewRender = (operation) => {
   return queued;
 };
 
-// Replace legacy text/embeddable previews once; after that, refresh the same
-// image element in place. Its canvas width remains untouched, so resizing is a
-// true visual zoom rather than a request to reflow or recreate the code block.
+// Replace legacy text/embeddable/Markdown-image previews once. Old Markdown
+// images also have a plugin registry entry tied to their file id; creating a
+// fresh element clears that legacy representation. Thereafter refresh the SVG
+// image in place and preserve its canvas width as a true visual zoom.
 const applyCodePreviewToNode = async (node, rendered, { relayout = true, select = true } = {}) => {
   if (!node || !rendered?.dataURL || !isViewSet()) return null;
   const all = ea.getViewElements();
@@ -9915,7 +9980,7 @@ const applyCodePreviewToNode = async (node, rendered, { relayout = true, select 
     : Math.max(CODE_PREVIEW_MIN_WIDTH, current.width || CODE_PREVIEW_RENDER_WIDTH);
   const displayHeight = Math.max(40, displayWidth * rendered.height / rendered.width);
 
-  if (current.type === "image") {
+  if (current.type === "image" && !current.customData?.markdownImage) {
     // Keep the element id and all existing bindings. The temporary image is
     // only used to register its SVG file in EA's image dictionary.
     renderedImage.isDeleted = true;
@@ -9924,6 +9989,8 @@ const applyCodePreviewToNode = async (node, rendered, { relayout = true, select 
     finalNodeId = current.id;
     finalNode.fileId = renderedImage.fileId;
     finalNode.scale = [1, 1];
+    finalNode.crop = null;
+    finalNode.status = renderedImage.status;
   } else {
     const boundTextId = current.boundElements?.find((bound) => bound.type === "text")?.id;
     const idsToReplace = new Set([current.id, boundTextId].filter(Boolean));
@@ -9946,8 +10013,6 @@ const applyCodePreviewToNode = async (node, rendered, { relayout = true, select 
     finalNode.boundElements = newBoundElements;
     finalNode.groupIds = current.groupIds ? [...current.groupIds] : [];
     finalNode.angle = current.angle || 0;
-    scaleDecorations(current, finalNode, all, hierarchy.rootId);
-
     ea.copyViewElementsToEAforEditing([current]);
     ea.getElement(current.id).isDeleted = true;
     if (boundTextId && boundTextId !== current.id) {
@@ -9964,17 +10029,24 @@ const applyCodePreviewToNode = async (node, rendered, { relayout = true, select 
   finalNode.x = centerX - displayWidth / 2;
   finalNode.y = centerY - displayHeight / 2;
   finalNode.link = noteLink;
+  if (finalNodeId !== current.id) scaleDecorations(current, finalNode, all, hierarchy.rootId);
   const migratedData = {
     ...(current.customData || {}),
-    isCodeBlock: undefined,
-    isCodeCollapsed: undefined,
-    codeSource: undefined,
-    codePreviewWidth: undefined,
-    codePreviewMaxHeight: undefined,
     isCodeNote: true,
+    codeLanguage: rendered.language || current.customData?.codeLanguage || "text",
     codeRenderWidth: rendered.width,
+    doNotInvertSVGInDarkMode: true,
   };
-  ea.addAppendUpdateCustomData(finalNodeId, migratedData);
+  delete migratedData.isCodeBlock;
+  delete migratedData.isCodeCollapsed;
+  delete migratedData.codeSource;
+  delete migratedData.codePreviewWidth;
+  delete migratedData.codePreviewMaxHeight;
+  delete migratedData.markdownImage;
+  // Direct replacement is required here. addAppendUpdateCustomData() merges
+  // objects and can leave the legacy markdownImage flag behind, causing the
+  // plugin to ignore the new SVG and display a broken-image placeholder.
+  finalNode.customData = migratedData;
 
   await addElementsToView({ captureUpdate: relayout ? "EVENTUALLY" : "NEVER" });
   const updated = ea.getViewElements().find((element) => element.id === finalNodeId);

@@ -98,7 +98,7 @@ call_harts_early_init:
 ^mindmap-code-rk39gjkl
 
 
-## text code
+## c code
 
 ```c
 void board_init_f(ulong dummy)
