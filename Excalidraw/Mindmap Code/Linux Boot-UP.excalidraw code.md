@@ -72,7 +72,7 @@ spl_call_board_init_r:
 
 ## asm code
 
-```asm
+```c
 call_board_init_f_0:
         mv        a0, sp
         jal        board_init_f_alloc_reserve

@@ -225,7 +225,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 489.81005859375
+    "width": 489.81005859375,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -254,12 +255,12 @@
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
     "Excalidraw/Mindmap Code/Linux Boot-UP.excalidraw code.md",
+    "Excalidraw/Linux Boot-UP.excalidraw.md",
+    "Homepage.md",
     "Extras/ATTACHMENTS/Pasted Image 20260916195830_487.svg",
     "Extras/ATTACHMENTS/Pasted Image 20260916195830_475.svg",
     "Extras/ATTACHMENTS/Pasted Image 20260916195730_174.svg",
     "Extras/ATTACHMENTS/Pasted Image 20260916195730_153.svg",
-    "Excalidraw/Linux Boot-UP.excalidraw.md",
-    "Homepage.md",
     "Extras/ATTACHMENTS/Pasted Image 20260916123408_845.svg",
     "Extras/ATTACHMENTS/Pasted Image 20260916123408_837.svg",
     "Extras/ATTACHMENTS/Pasted Image 20260916123408_828.svg",
