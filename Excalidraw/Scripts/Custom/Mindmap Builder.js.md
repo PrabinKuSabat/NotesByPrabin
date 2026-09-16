@@ -109,6 +109,11 @@ const removeEventListeners = () => {
   } catch (e) {
     console.error("Mindmap Builder: Error removing active-leaf-change listener:", e);
   }
+  try {
+    window.MindmapBuilder?.removeCodeNoteModifyListener?.();
+  } catch (e) {
+    console.error("Mindmap Builder: Error removing code-note listener:", e);
+  }
 };
 
 if (!window.MindmapBuilder) {
@@ -9703,158 +9708,107 @@ const getCodeNotePath = async () => {
   return `${folderPath}/${safeDrawingName} code.md`;
 };
 
-const CODE_NOTE_PREVIEW_CSS_NAME = "Mindmap Code Preview.css";
-const CODE_NOTE_PREVIEW_CSS_MARKER = "/* Mindmap Builder managed code-preview rules. */";
-const CODE_NOTE_PREVIEW_LAYOUT_CSS = `
-.excalidraw-md-host pre,
-.excalidraw-md-host pre[class*="language-"],
-.excalidraw-md-host .HyperMD-codeblock-bg,
-.excalidraw-md-host .cm-editor {
-  box-sizing: border-box !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  min-width: 0 !important;
-  overflow-x: hidden !important;
-}
+const CODE_PREVIEW_RENDER_WIDTH = 660;
+const CODE_PREVIEW_MIN_WIDTH = 360;
+const CODE_PREVIEW_MAX_WIDTH = 1200;
+const CODE_PREVIEW_STYLE_PROPERTIES = [
+  "display", "position", "box-sizing", "width", "height", "min-width", "max-width", "min-height", "max-height",
+  "margin", "margin-top", "margin-right", "margin-bottom", "margin-left",
+  "padding", "padding-top", "padding-right", "padding-bottom", "padding-left",
+  "overflow", "overflow-x", "overflow-y", "white-space", "overflow-wrap", "word-break", "tab-size",
+  "font-family", "font-size", "font-weight", "font-style", "font-variant", "line-height", "letter-spacing",
+  "color", "background", "background-color", "background-image", "background-position", "background-size", "background-repeat",
+  "border", "border-width", "border-style", "border-color", "border-radius", "outline", "box-shadow", "text-shadow",
+  "opacity", "filter", "text-align", "text-decoration", "vertical-align", "flex", "flex-direction", "flex-wrap", "gap",
+  "align-items", "align-content", "justify-content", "grid-template-columns", "transform",
+];
 
-.excalidraw-md-host pre,
-.excalidraw-md-host pre[class*="language-"],
-.excalidraw-md-host pre > code,
-.excalidraw-md-host pre[class*="language-"] > code {
-  white-space: pre-wrap !important;
-  overflow-wrap: anywhere !important;
-  word-break: break-word !important;
-}
+// Return only the fenced block associated with a block id. The heading and
+// block anchor remain useful in the source note, but are not part of the image.
+const getCodeNoteSource = async (path, blockId) => {
+  const file = app.vault.getAbstractFileByPath(path);
+  if (!file) return null;
+  const lines = (await app.vault.read(file)).replace(/\r\n?/g, "\n").split("\n");
+  const markerLine = lines.findIndex((line) => line.trim() === `^${blockId}`);
+  if (markerLine < 0) return null;
 
-.excalidraw-md-host pre,
-.excalidraw-md-host pre[class*="language-"] {
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-  overflow: visible !important;
-}
+  let closingLine = markerLine - 1;
+  while (closingLine >= 0 && !lines[closingLine].trim()) closingLine -= 1;
+  const closingFence = getFenceMarker(lines[closingLine] || "");
+  if (!closingFence) return null;
 
-.excalidraw-md-host > :last-child {
-  margin-bottom: 0 !important;
-}
-`;
+  for (let openingLine = closingLine - 1; openingLine >= 0; openingLine -= 1) {
+    const openingFence = getFenceMarker(lines[openingLine] || "");
+    if (openingFence && openingFence[0] === closingFence[0] && closingFence.length >= openingFence.length) {
+      return lines.slice(openingLine, closingLine + 1).join("\n");
+    }
+  }
+  return null;
+};
 
-// Markdown images are standalone SVGs, so they cannot inherit the app's CSS
-// variables. Resolve the active theme's code variables in Obsidian, then put
-// those resolved values in the SVG stylesheet. This is a theme bridge, not a
-// second hand-maintained syntax palette.
-const getCodeNotePreviewCss = () => {
-  const doc = globalThis.document;
+// Render through Obsidian itself so community code-block processors and the
+// active theme run normally. Computed styles are then frozen into a standalone
+// SVG: one lightweight Excalidraw image that scales as a unit with its node.
+const renderCodeSourceToSvg = async (markdown, sourcePath, requestedWidth = CODE_PREVIEW_RENDER_WIDTH) => {
+  const doc = ea.targetView?.ownerDocument || globalThis.document;
   const win = doc?.defaultView || globalThis;
-  if (!doc?.body || !win?.getComputedStyle) return `${CODE_NOTE_PREVIEW_CSS_MARKER}\n${CODE_NOTE_PREVIEW_LAYOUT_CSS}`;
+  if (!doc?.body || !win?.getComputedStyle) throw new Error("Obsidian document is unavailable");
+  const renderWidth = Math.max(CODE_PREVIEW_MIN_WIDTH, Math.min(CODE_PREVIEW_MAX_WIDTH, Math.round(requestedWidth || CODE_PREVIEW_RENDER_WIDTH)));
   const host = doc.createElement("div");
-  // Blue Topaz and many other themes scope preview syntax rules to one or both
-  // of these classes. Without them getComputedStyle() returns no token color.
-  host.className = "markdown-preview-view markdown-rendered";
-  const pre = doc.createElement("pre");
-  const code = doc.createElement("code");
-  pre.className = "language-asm";
-  code.className = "language-asm";
-  code.textContent = "probe";
-  pre.appendChild(code);
-  host.appendChild(pre);
+  const content = doc.createElement("div");
+  const override = doc.createElement("style");
+  host.className = "markdown-preview-view markdown-rendered mindmap-code-render-host";
+  content.className = "markdown-preview-sizer markdown-preview-section markdown-rendered";
   Object.assign(host.style, {
-    position: "fixed", left: "-100000px", top: "0", visibility: "hidden", pointerEvents: "none",
+    position: "fixed", left: "-100000px", top: "0", width: `${renderWidth}px`,
+    visibility: "hidden", pointerEvents: "none", contain: "layout style paint",
   });
+  override.textContent = `
+    .mindmap-code-render-host, .mindmap-code-render-host > div { box-sizing: border-box !important; width: ${renderWidth}px !important; max-width: ${renderWidth}px !important; height: auto !important; min-height: 0 !important; max-height: none !important; margin: 0 !important; padding: 0 !important; }
+    .mindmap-code-render-host pre, .mindmap-code-render-host [class*="codeblock-customizer"] { box-sizing: border-box !important; max-width: 100% !important; overflow: visible !important; }
+    .mindmap-code-render-host pre { width: 100% !important; margin: 0 !important; }
+    .mindmap-code-render-host pre code, .mindmap-code-render-host code[class*="language-"], .mindmap-code-render-host .codeblock-customizer-line-content { white-space: pre-wrap !important; overflow-wrap: anywhere !important; word-break: break-word !important; min-width: 0 !important; }
+    .mindmap-code-render-host button, .mindmap-code-render-host .copy-code-button, .mindmap-code-render-host [class*="copy-code"], .mindmap-code-render-host [class*="collapse-indicator"] { display: none !important; }
+  `;
+  host.append(override, content);
   doc.body.appendChild(host);
   try {
-    const base = win.getComputedStyle(code);
-    const preStyle = win.getComputedStyle(pre);
-    const bodyStyle = win.getComputedStyle(doc.body);
-    const validCssValue = (value) => typeof value === "string" && value.trim() && !["initial", "inherit", "unset", "normal"].includes(value.trim());
-    const resolveThemeColor = (variable) => {
-      // An unset CSS variable would make the probe inherit the base color;
-      // omit that rule instead of mistakenly claiming a token color exists.
-      if (!variable || !bodyStyle.getPropertyValue(variable).trim()) return "";
-      const probe = doc.createElement("span");
-      probe.style.color = `var(${variable})`;
-      probe.textContent = "x";
-      code.appendChild(probe);
-      const color = win.getComputedStyle(probe).color;
-      probe.remove();
-      return validCssValue(color) ? color : "";
+    await ea.obsidian.MarkdownRenderer.render(app, markdown, content, sourcePath || "", ea.plugin);
+    await new Promise((resolve) => win.requestAnimationFrame(() => win.requestAnimationFrame(resolve)));
+    content.querySelectorAll("button, .copy-code-button, [class*='copy-code'], [class*='collapse-indicator']").forEach((element) => element.remove());
+
+    const width = renderWidth;
+    const height = Math.max(40, Math.ceil(content.scrollHeight || content.getBoundingClientRect().height));
+    const clone = content.cloneNode(true);
+    const sourceElements = [content, ...content.querySelectorAll("*")];
+    const cloneElements = [clone, ...clone.querySelectorAll("*")];
+    sourceElements.forEach((sourceElement, index) => {
+      const cloneElement = cloneElements[index];
+      if (!cloneElement?.style) return;
+      const computed = win.getComputedStyle(sourceElement);
+      CODE_PREVIEW_STYLE_PROPERTIES.forEach((property) => {
+        const value = computed.getPropertyValue(property);
+        if (value) cloneElement.style.setProperty(property, value);
+      });
+      cloneElement.removeAttribute("contenteditable");
+    });
+    clone.style.width = `${width}px`;
+    clone.style.height = `${height}px`;
+    clone.style.margin = "0";
+    clone.style.padding = "0";
+    clone.style.overflow = "hidden";
+    clone.setAttribute("xmlns", "http://www.w3.org/1999/xhtml");
+
+    const serialized = new win.XMLSerializer().serializeToString(clone);
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><foreignObject x="0" y="0" width="${width}" height="${height}">${serialized}</foreignObject></svg>`;
+    return {
+      dataURL: await ea.convertStringToDataURL(svg, "image/svg+xml"),
+      width,
+      height,
     };
-    const tokenVariables = {
-      comment: "--code-comment", prolog: "--code-meta", doctype: "--code-meta", cdata: "--code-meta",
-      string: "--code-string", punctuation: "--code-punctuation", operator: "--code-operator",
-      function: "--code-function", url: "--code-link", symbol: "--code-atom", number: "--code-number",
-      boolean: "--code-atom", variable: "--code-variable", constant: "--code-atom", inserted: "--code-string",
-      atrule: "--code-keyword", keyword: "--code-keyword", "attr-value": "--code-string",
-      deleted: "--code-tag", tag: "--code-tag", selector: "--code-qualifier", "class-name": "--code-string-2",
-      property: "--code-property", "attr-name": "--code-tag", regex: "--code-string", entity: "--code-attribute",
-      important: "--code-important", parameter: "--code-property", builtin: "--code-builtin", unit: "--code-value",
-      "macro-name": "--code-important", "directive-hash": "--code-tag",
-    };
-    const tokenClasses = [
-      "comment", "prolog", "doctype", "cdata", "string", "punctuation", "operator", "function",
-      "url", "symbol", "number", "boolean", "variable", "constant", "inserted", "atrule", "keyword",
-      "attr-value", "deleted", "tag", "selector", "class-name", "property", "attr-name", "regex",
-      "entity", "important", "parameter", "builtin", "unit", "macro-name", "directive-hash",
-    ];
-    const tokenRules = tokenClasses.map((tokenClass) => {
-      const span = doc.createElement("span");
-      span.className = `token ${tokenClass}`;
-      span.textContent = "x";
-      code.appendChild(span);
-      const style = win.getComputedStyle(span);
-      span.remove();
-      // Prefer a theme's own selector; use its resolved semantic variable only
-      // where the theme has no Prism selector for that token type.
-      const color = validCssValue(style.color) && style.color !== base.color ? style.color : resolveThemeColor(tokenVariables[tokenClass]);
-      const declarations = color ? [`color: ${color} !important`] : [];
-      if (validCssValue(style.fontStyle) && style.fontStyle !== base.fontStyle) declarations.push(`font-style: ${style.fontStyle} !important`);
-      if (validCssValue(style.fontWeight) && style.fontWeight !== base.fontWeight) declarations.push(`font-weight: ${style.fontWeight} !important`);
-      if (declarations.length === 0) return "";
-      return `.excalidraw-md-host .token.${tokenClass} { ${declarations.join("; ")} }`;
-    }).filter(Boolean).join("\n");
-    const baseColor = validCssValue(base.color) ? base.color : "inherit";
-    const backgroundColor = validCssValue(preStyle.backgroundColor) ? preStyle.backgroundColor : "transparent";
-    const fontSize = validCssValue(base.fontSize) ? base.fontSize : "inherit";
-    const lineHeight = validCssValue(base.lineHeight) ? base.lineHeight : "normal";
-    return `${CODE_NOTE_PREVIEW_CSS_MARKER}
-.excalidraw-md-host code[class*="language-"],
-.excalidraw-md-host pre[class*="language-"] {
-  color: ${baseColor} !important;
-  background-color: ${backgroundColor} !important;
-  font-size: ${fontSize} !important;
-  line-height: ${lineHeight} !important;
-}
-${tokenRules}
-${CODE_NOTE_PREVIEW_LAYOUT_CSS}`;
   } finally {
     host.remove();
   }
-};
-
-const ensureCodeNotePresentation = async (path) => {
-  if (!path) return;
-  const note = app.vault.getAbstractFileByPath(path);
-  if (!note) return;
-  const parentPath = path.includes("/") ? path.slice(0, path.lastIndexOf("/")) : "";
-  const cssPath = parentPath ? `${parentPath}/${CODE_NOTE_PREVIEW_CSS_NAME}` : CODE_NOTE_PREVIEW_CSS_NAME;
-  const previewCss = getCodeNotePreviewCss();
-  let cssFile = app.vault.getAbstractFileByPath(cssPath);
-  if (!cssFile) {
-    cssFile = await app.vault.create(cssPath, previewCss);
-  } else {
-    // Refresh only the stylesheet the script owns. A user-supplied stylesheet
-    // without this marker is intentionally left untouched.
-    const currentCss = await app.vault.read(cssFile);
-    if (currentCss.startsWith(CODE_NOTE_PREVIEW_CSS_MARKER) && currentCss !== previewCss) {
-      await app.vault.modify(cssFile, previewCss);
-    }
-  }
-
-  // This is deliberately file-local: it affects only generated Mindmap Code
-  // notes, not the user's regular Markdown embeds elsewhere in the vault.
-  await app.fileManager.processFrontMatter(note, (frontmatter) => {
-    if (!frontmatter["excalidraw-font"]) frontmatter["excalidraw-font"] = "Cascadia";
-    if (!frontmatter["excalidraw-css"]) frontmatter["excalidraw-css"] = CODE_NOTE_PREVIEW_CSS_NAME;
-  });
 };
 
 const ensureCodeNoteHighlightLanguage = async (path, blockId) => {
@@ -9871,22 +9825,6 @@ const ensureCodeNoteHighlightLanguage = async (path, blockId) => {
   if (corrected !== section) {
     await app.vault.modify(file, `${content.slice(0, sourceStart)}${corrected}${content.slice(markerIndex)}`);
   }
-};
-
-const getCodePreviewMaxHeight = async (path, blockId) => {
-  const file = app.vault.getAbstractFileByPath(path);
-  if (!file) return 900;
-  const content = await app.vault.read(file);
-  const markerIndex = content.indexOf(`^${blockId}`);
-  const sectionStart = markerIndex >= 0 ? content.lastIndexOf("\n## ", markerIndex) : -1;
-  const source = markerIndex >= 0
-    ? content.slice(Math.max(0, sectionStart), markerIndex)
-    : content;
-  const lines = source.split(/\r?\n/).slice(-180);
-  // The renderer uses this as a cap rather than a fixed height. A generous,
-  // content-based cap avoids clipping large snippets without creating blank
-  // space below smaller ones.
-  return Math.max(300, Math.min(2400, 84 + lines.length * 22));
 };
 
 const openCodeNote = async (path, blockId = null) => {
@@ -9934,42 +9872,143 @@ const ensureCodeNoteBlockAnchor = async (path, blockId) => {
   if (repaired !== original) await app.vault.modify(file, repaired);
 };
 
-// Markdown-file embeds are rendered by the Excalidraw plugin as a single
-// snapshot element.  This retains Obsidian's syntax-colored code on canvas,
-// while auto-layout sees and moves only one element rather than a token cloud.
-const showCodeNoteInCanvas = async (nodeId = null) => {
-  if (!isViewSet()) return;
-  const all = ea.getViewElements();
-  const selected = nodeId ? all.find((element) => element.id === nodeId) : getMindmapNodeFromSelection();
-  const node = selected?.containerId ? all.find((element) => element.id === selected.containerId) : selected;
-  if (!node?.customData?.isCodeNote) return;
-  const file = app.vault.getAbstractFileByPath(node.customData.codeNotePath);
-  if (!file) {
-    new Notice(`Code note is missing: ${node.customData.codeNotePath}`);
-    return;
-  }
-  await ensureCodeNoteBlockAnchor(node.customData.codeNotePath, node.customData.codeNoteBlockId);
-  await ensureCodeNoteHighlightLanguage(node.customData.codeNotePath, node.customData.codeNoteBlockId);
-  await ensureCodeNotePresentation(node.customData.codeNotePath);
+const getCodeNoteLink = (path, blockId) => {
+  const file = app.vault.getAbstractFileByPath(path);
+  if (!file) return null;
   const linkText = app.metadataCache.fileToLinktext(file, ea.targetView?.file?.path || "", true);
-  const previewWidth = Math.max(320, Math.min(1600, Math.round(node.width || 520)));
-  const previewMaxHeight = await getCodePreviewMaxHeight(node.customData.codeNotePath, node.customData.codeNoteBlockId);
-  // The harmless trailing space forces existing image snapshots to regenerate.
-  const preview = `![[${linkText}#^${node.customData.codeNoteBlockId}|${previewWidth}x${previewMaxHeight}]] `;
-  const incomingArrow = all.find((element) =>
-    element.type === "arrow" && element.customData?.isBranch && element.endBinding?.elementId === node.id,
-  );
-
-  // Reuse the battle-tested text-to-image conversion path: it preserves
-  // branch bindings, groups, boundaries, and layout metadata.
-  editingNodeId = node.id;
-  inputEl.value = preview;
-  ontologyEl.value = incomingArrow ? (ea.getBoundTextElement(incomingArrow, true)?.sceneElement?.rawText || "") : "";
-  await commitEdit();
+  return `[[${linkText}#^${blockId}]]`;
 };
 
-// Moves the source out of the scene once. The map retains only a compact
-// wikilink, while Obsidian owns editing and language-aware highlighting.
+let codePreviewRenderQueue = Promise.resolve();
+const queueCodePreviewRender = (operation) => {
+  const queued = codePreviewRenderQueue.then(operation, operation);
+  codePreviewRenderQueue = queued.catch((error) => {
+    console.error("Mindmap Builder: code preview render failed", error);
+  });
+  return queued;
+};
+
+// Replace legacy text/embeddable previews once; after that, refresh the same
+// image element in place. Its canvas width remains untouched, so resizing is a
+// true visual zoom rather than a request to reflow or recreate the code block.
+const applyCodePreviewToNode = async (node, rendered, { relayout = true, select = true } = {}) => {
+  if (!node || !rendered?.dataURL || !isViewSet()) return null;
+  const all = ea.getViewElements();
+  const current = all.find((element) => element.id === node.id);
+  if (!current) return null;
+  const centerX = current.x + current.width / 2;
+  const centerY = current.y + current.height / 2;
+  const hierarchy = getHierarchy(current, all);
+  const path = current.customData?.codeNotePath;
+  const blockId = current.customData?.codeNoteBlockId;
+  const noteLink = getCodeNoteLink(path, blockId);
+
+  ea.clear();
+  const renderedImageId = await ea.addImage(0, 0, rendered.dataURL, false, false);
+  const renderedImage = ea.getElement(renderedImageId);
+  if (!renderedImage) throw new Error("Could not create the rendered code image");
+
+  let finalNode = renderedImage;
+  let finalNodeId = renderedImageId;
+  const displayWidth = current.type === "image"
+    ? Math.max(120, current.width || CODE_PREVIEW_RENDER_WIDTH)
+    : Math.max(CODE_PREVIEW_MIN_WIDTH, current.width || CODE_PREVIEW_RENDER_WIDTH);
+  const displayHeight = Math.max(40, displayWidth * rendered.height / rendered.width);
+
+  if (current.type === "image") {
+    // Keep the element id and all existing bindings. The temporary image is
+    // only used to register its SVG file in EA's image dictionary.
+    renderedImage.isDeleted = true;
+    ea.copyViewElementsToEAforEditing([current]);
+    finalNode = ea.getElement(current.id);
+    finalNodeId = current.id;
+    finalNode.fileId = renderedImage.fileId;
+    finalNode.scale = [1, 1];
+  } else {
+    const boundTextId = current.boundElements?.find((bound) => bound.type === "text")?.id;
+    const idsToReplace = new Set([current.id, boundTextId].filter(Boolean));
+    const connectedArrows = all.filter((element) => element.type === "arrow" && (
+      idsToReplace.has(element.startBinding?.elementId) || idsToReplace.has(element.endBinding?.elementId)
+    ));
+    if (connectedArrows.length) ea.copyViewElementsToEAforEditing(connectedArrows);
+
+    const newBoundElements = [];
+    connectedArrows.forEach((arrow) => {
+      const editableArrow = ea.getElement(arrow.id);
+      if (idsToReplace.has(editableArrow.startBinding?.elementId)) {
+        editableArrow.startBinding = { ...editableArrow.startBinding, elementId: finalNodeId };
+      }
+      if (idsToReplace.has(editableArrow.endBinding?.elementId)) {
+        editableArrow.endBinding = { ...editableArrow.endBinding, elementId: finalNodeId };
+      }
+      newBoundElements.push({ type: "arrow", id: arrow.id });
+    });
+    finalNode.boundElements = newBoundElements;
+    finalNode.groupIds = current.groupIds ? [...current.groupIds] : [];
+    finalNode.angle = current.angle || 0;
+    scaleDecorations(current, finalNode, all, hierarchy.rootId);
+
+    ea.copyViewElementsToEAforEditing([current]);
+    ea.getElement(current.id).isDeleted = true;
+    if (boundTextId && boundTextId !== current.id) {
+      const boundText = all.find((element) => element.id === boundTextId);
+      if (boundText) {
+        ea.copyViewElementsToEAforEditing([boundText]);
+        ea.getElement(boundTextId).isDeleted = true;
+      }
+    }
+  }
+
+  finalNode.width = displayWidth;
+  finalNode.height = displayHeight;
+  finalNode.x = centerX - displayWidth / 2;
+  finalNode.y = centerY - displayHeight / 2;
+  finalNode.link = noteLink;
+  const migratedData = {
+    ...(current.customData || {}),
+    isCodeBlock: undefined,
+    isCodeCollapsed: undefined,
+    codeSource: undefined,
+    codePreviewWidth: undefined,
+    codePreviewMaxHeight: undefined,
+    isCodeNote: true,
+    codeRenderWidth: rendered.width,
+  };
+  ea.addAppendUpdateCustomData(finalNodeId, migratedData);
+
+  await addElementsToView({ captureUpdate: relayout ? "EVENTUALLY" : "NEVER" });
+  const updated = ea.getViewElements().find((element) => element.id === finalNodeId);
+  if (!updated) return null;
+  if (select) selectNodeInView(updated);
+  if (relayout && !autoLayoutDisabled && current.customData?.autoLayoutDisabled !== true && hierarchy?.rootId) {
+    await triggerGlobalLayout(hierarchy.rootId);
+  }
+  return updated;
+};
+
+const renderCodeNoteNodeNow = async (nodeId, { relayout = true, select = true } = {}) => {
+  if (!isViewSet()) return null;
+  const node = ea.getViewElements().find((element) => element.id === nodeId);
+  if (!node?.customData?.isCodeNote) return null;
+  const { codeNotePath: path, codeNoteBlockId: blockId } = node.customData;
+  const file = app.vault.getAbstractFileByPath(path);
+  if (!file) throw new Error(`Code note is missing: ${path}`);
+
+  await ensureCodeNoteBlockAnchor(path, blockId);
+  await ensureCodeNoteHighlightLanguage(path, blockId);
+  const source = await getCodeNoteSource(path, blockId);
+  if (!source) throw new Error(`Code block ${blockId} was not found in ${path}`);
+  const renderWidth = node.customData?.codeRenderWidth || CODE_PREVIEW_RENDER_WIDTH;
+  const rendered = await renderCodeSourceToSvg(source, path, renderWidth);
+  return applyCodePreviewToNode(node, rendered, { relayout, select });
+};
+
+const renderCodeNoteNode = (nodeId, options = {}) => queueCodePreviewRender(
+  () => renderCodeNoteNodeNow(nodeId, options),
+);
+
+// Move the editable source into one shared Markdown note. The original map
+// node is then replaced directly by a tightly cropped, theme-rendered SVG.
 const moveCodeNodeToObsidianNote = async () => {
   if (!isViewSet()) return;
   const selected = getMindmapNodeFromSelection();
@@ -10002,18 +10041,8 @@ const moveCodeNodeToObsidianNote = async () => {
     const drawingName = ea.targetView?.file?.basename || "Mindmap";
     file = await app.vault.create(path, `# ${drawingName} code\n${section}`);
   }
-  const linkText = app.metadataCache.fileToLinktext(file, ea.targetView?.file?.path || "", true);
-  const summary = `[[${linkText}#^${blockId}|${language} code note]]`;
-
-  ea.copyViewElementsToEAforEditing([text, node].filter((element) => !ea.getElement(element.id)));
-  const editableText = ea.getElement(text.id);
-  editableText.rawText = summary;
-  editableText.originalText = summary;
-  editableText.text = summary;
-  editableText.fontFamily = getCodeFontFamily();
-  editableText.autoResize = true;
-  ea.refreshTextElementSize(editableText.id);
-  if (node.type !== "text") fitCodeContainerToText(node.id, editableText.id);
+  ea.clear();
+  ea.copyViewElementsToEAforEditing([node]);
   ea.addAppendUpdateCustomData(node.id, {
     isCodeBlock: undefined,
     isCodeCollapsed: undefined,
@@ -10022,50 +10051,71 @@ const moveCodeNodeToObsidianNote = async () => {
     codeNoteBlockId: blockId,
     codeLanguage: language,
     isCodeNote: true,
+    codeRenderWidth: CODE_PREVIEW_RENDER_WIDTH,
   });
-
-  await addElementsToView({ captureUpdate: "EVENTUALLY" });
-  const container = ea.getViewElements().find((element) => element.id === editableText.containerId);
-  if (container) api().updateContainerSize([container]);
-  const info = getHierarchy(node, ea.getViewElements());
-  if (info?.rootId && node.customData?.autoLayoutDisabled !== true) await triggerGlobalLayout(info.rootId);
-  new Notice(`Created Obsidian code note: ${path}`);
-  await showCodeNoteInCanvas(node.id);
+  await addElementsToView({ captureUpdate: "NEVER" });
+  await renderCodeNoteNode(node.id);
+  new Notice(`Created linked code note: ${path}`);
   updateUI();
 };
 
-// Repair previews made by earlier versions in the currently open map. This
-// deliberately touches only script-owned CSS and code-note blocks; it never
-// rewrites regular Markdown notes or normal text nodes.
+// Migrate old embeddable/Markdown-image previews into the single SVG model and
+// refresh existing SVG previews without changing their displayed dimensions.
 const auditCurrentMapCodeNotes = async () => {
   if (!isViewSet()) return;
   const codeNotes = ea.getViewElements().filter((element) => element.customData?.isCodeNote && element.customData?.codeNotePath && element.customData?.codeNoteBlockId);
-  const codeNoteIds = codeNotes.map((element) => element.id);
-  const refreshedPaths = new Set();
+  const roots = new Set();
   for (const node of codeNotes) {
-    await ensureCodeNoteBlockAnchor(node.customData.codeNotePath, node.customData.codeNoteBlockId);
-    await ensureCodeNoteHighlightLanguage(node.customData.codeNotePath, node.customData.codeNoteBlockId);
-    if (!refreshedPaths.has(node.customData.codeNotePath)) {
-      await ensureCodeNotePresentation(node.customData.codeNotePath);
-      refreshedPaths.add(node.customData.codeNotePath);
-    }
-  }
-  const excalidrawPlugin = app.plugins?.getPlugin?.("obsidian-excalidraw-plugin");
-  for (const path of refreshedPaths) excalidrawPlugin?.triggerEmbedUpdates?.(path);
-
-  // A canvas image is a cached SVG snapshot, so updating only the Markdown
-  // note/CSS is insufficient. Rebuild each current-map preview once, after
-  // the stylesheet has been repaired. It remains one image per node, not a
-  // collection of token elements, so layout cost does not increase.
-  for (const id of codeNoteIds) {
     try {
-      if (ea.getViewElements().some((element) => element.id === id && element.customData?.isCodeNote)) {
-        await showCodeNoteInCanvas(id);
-      }
+      const updated = await renderCodeNoteNode(node.id, { relayout: false, select: false });
+      const hierarchy = updated ? getHierarchy(updated, ea.getViewElements()) : null;
+      if (!autoLayoutDisabled && node.customData?.autoLayoutDisabled !== true && hierarchy?.rootId) roots.add(hierarchy.rootId);
     } catch (error) {
-      console.error(`Mindmap Builder: could not refresh code preview ${id}`, error);
+      console.error(`Mindmap Builder: could not render code preview ${node.id}`, error);
     }
   }
+  for (const rootId of roots) await triggerGlobalLayout(rootId);
+};
+
+const codeNoteRefreshTimers = new Map();
+const scheduleCodeNoteRefresh = (path) => {
+  if (!path) return;
+  if (!isViewSet() || !ea.getViewElements().some((element) =>
+    element.customData?.isCodeNote && element.customData?.codeNotePath === path,
+  )) return;
+  const existing = codeNoteRefreshTimers.get(path);
+  if (existing) clearTimeout(existing);
+  codeNoteRefreshTimers.set(path, setTimeout(async () => {
+    codeNoteRefreshTimers.delete(path);
+    if (!isViewSet()) return;
+    const matchingNodes = ea.getViewElements().filter((element) =>
+      element.customData?.isCodeNote && element.customData?.codeNotePath === path,
+    );
+    const roots = new Set();
+    for (const node of matchingNodes) {
+      try {
+        const updated = await renderCodeNoteNode(node.id, { relayout: false, select: false });
+        const hierarchy = updated ? getHierarchy(updated, ea.getViewElements()) : null;
+        if (!autoLayoutDisabled && node.customData?.autoLayoutDisabled !== true && hierarchy?.rootId) roots.add(hierarchy.rootId);
+      } catch (error) {
+        console.error(`Mindmap Builder: could not update code preview ${node.id}`, error);
+      }
+    }
+    for (const rootId of roots) await triggerGlobalLayout(rootId);
+  }, 400));
+};
+
+const scheduleCurrentDrawingCodeAudit = () => {
+  if (!isViewSet()) return;
+  const drawingPath = ea.targetView?.file?.path;
+  if (!drawingPath) return;
+  const audited = window.MindmapBuilder.auditedCodeNoteDrawings ||= new Set();
+  if (audited.has(drawingPath)) return;
+  audited.add(drawingPath);
+  setTimeout(() => auditCurrentMapCodeNotes().catch((error) => {
+    audited.delete(drawingPath);
+    console.error("Mindmap Builder: code-note audit failed", error);
+  }), 0);
 };
 
 const toggleCodeNode = async () => {
@@ -10074,14 +10124,13 @@ const toggleCodeNode = async () => {
   const all = ea.getViewElements();
   const node = selected?.containerId ? all.find((el) => el.id === selected.containerId) : selected;
   if (!node) return;
-  const textId = node.type === "text" ? node.id : node.boundElements?.find((be) => be.type === "text")?.id;
-  const text = all.find((el) => el.id === textId);
-  if (!text) return;
-
   if (node.customData?.isCodeNote) {
     await openCodeNote(node.customData.codeNotePath, node.customData.codeNoteBlockId);
     return;
   }
+  const textId = node.type === "text" ? node.id : node.boundElements?.find((be) => be.type === "text")?.id;
+  const text = all.find((el) => el.id === textId);
+  if (!text) return;
 
   // The same button is intentionally a conversion action for ordinary text
   // nodes.  It preserves the source verbatim, wraps it as a plain-text fenced
@@ -10160,6 +10209,10 @@ const toggleEmbedStatus = async () => {
 
   const all = ea.getViewElements();
   const visualNode = sel.containerId ? all.find(el => el.id === sel.containerId) : sel;
+  // Linked code nodes are always a single rendered SVG. Opening/editing them
+  // is handled by the code button; they must never enter the generic
+  // link/embed conversion path again.
+  if (visualNode?.customData?.isCodeNote) return;
   const nodeText = getTextFromNode(all, visualNode, true, true).trim();
 
   // Match: ! (optional) | [[ | NoteName#SectionName | | Alias (optional) | ]]
@@ -10171,16 +10224,6 @@ const toggleEmbedStatus = async () => {
   const isEmbed = match[1] === "!";
   const linkCore = match[2];
   const sectionRef = match[3];
-  const isCodeNote = visualNode.customData?.isCodeNote === true;
-  const embedSize = nodeText.match(/\|(\d+)(?:x(\d+))?\]\]$/);
-  const storedPreviewWidth = visualNode.customData?.codePreviewWidth;
-  const storedPreviewMaxHeight = visualNode.customData?.codePreviewMaxHeight;
-  const previewWidth = Math.max(320, Math.min(1600, Math.round(
-    Number(embedSize?.[1]) || storedPreviewWidth || visualNode.width || 520,
-  )));
-  const previewMaxHeight = Math.max(300, Math.min(2400, Math.round(
-    Number(embedSize?.[2]) || storedPreviewMaxHeight || visualNode.height || 900,
-  )));
 
   let newText = "";
   if (isEmbed) {
@@ -10188,19 +10231,7 @@ const toggleEmbedStatus = async () => {
     const alias = sectionRef.replace(/^#+\s*/, "").trim();
     newText = `[[${linkCore}|${alias}]]`;
   } else {
-    // Standard links do not retain their former embed dimensions. Persist the
-    // code preview dimensions so returning to image mode keeps the expanded
-    // size the user chose instead of falling back to the default width.
-    newText = isCodeNote
-      ? `![[${linkCore}|${previewWidth}x${previewMaxHeight}]]`
-      : `![[${linkCore}]]`;
-  }
-
-  if (isCodeNote) {
-    ea.addAppendUpdateCustomData(visualNode.id, {
-      codePreviewWidth: previewWidth,
-      codePreviewMaxHeight: previewMaxHeight,
-    });
+    newText = `![[${linkCore}]]`;
   }
 
   // Hack into the established edit flow
@@ -10653,7 +10684,7 @@ const updateUI = (sel) => {
       const nodeTextForEmbed = getTextFromNode(all, visualNode, true, true).trim();
       // Regex matches only exact format: [[NoteName#SectionName]] or ![[NoteName#SectionName]] with optional alias
       const linkRegex = /^!?\[\[([^\]]+?#[^\]|]+)(?:\|[^\]]*)?\]\]$/;
-      setButtonDisabled(toggleEmbedBtn, !linkRegex.test(nodeTextForEmbed));
+      setButtonDisabled(toggleEmbedBtn, visualNode?.customData?.isCodeNote === true || !linkRegex.test(nodeTextForEmbed));
     }
 
     if (codeBtn) {
@@ -10663,20 +10694,16 @@ const updateUI = (sel) => {
       const boundTextId = visualNode?.type === "text" ? visualNode.id :
         visualNode?.boundElements?.find((bound) => bound.type === "text")?.id;
       const canConvertToCode = Boolean(boundTextId && all.some((element) => element.id === boundTextId && element.type === "text"));
-      codeBtn.setIcon(isCodeNode && isCodeCollapsed ? "chevrons-down-up" : "braces");
+      codeBtn.setIcon(isCodeNote ? "external-link" : (isCodeNode && isCodeCollapsed ? "chevrons-down-up" : "braces"));
       codeBtn.setTooltip(
         isCodeNote ? "Open Obsidian code note" :
           (isCodeNode ? (isCodeCollapsed ? "Expand code node" : "Collapse code node") : "Convert selected node to code block"),
       );
-      setButtonDisabled(codeBtn, !canConvertToCode);
+      setButtonDisabled(codeBtn, !(canConvertToCode || isCodeNote));
       if (codeNoteBtn) {
-        const codePreviewVisible = isCodeNote && visualNode?.type === "image";
-        codeNoteBtn.setIcon(codePreviewVisible ? "refresh-cw" : (isCodeNote ? "image-plus" : "file-code-2"));
-        codeNoteBtn.setTooltip(
-          codePreviewVisible ? "Refresh highlighted code preview" :
-            (isCodeNote ? "Show highlighted code on canvas" : "Move code to an Obsidian note"),
-        );
-        setButtonDisabled(codeNoteBtn, !(isCodeNode || isCodeNote));
+        codeNoteBtn.setIcon("file-code-2");
+        codeNoteBtn.setTooltip("Move code to a linked Obsidian note");
+        setButtonDisabled(codeNoteBtn, !isCodeNode || isCodeNote);
       }
     }
 
@@ -11157,7 +11184,7 @@ const commitEdit = async () => {
       "maxWrapWidth", "isSolidArrow", "centerText", "arrowType",
       "fillSweep", "branchScale", "baseStrokeWidth", "layoutSettings",
       "isCodeBlock", "isCodeCollapsed", "codeLanguage", "codeSource", "isCodeNote", "codeNotePath", "codeNoteBlockId",
-      "codePreviewWidth", "codePreviewMaxHeight"
+      "codeRenderWidth"
     ];
     const dataToCopy = {};
     keysToCopy.forEach(k => {
@@ -12095,17 +12122,8 @@ const renderInput = (container, isFloating = false) => {
   addButton((btn) => {
     codeNoteBtn = btn;
     btn.setIcon("file-code-2");
-    btn.setTooltip("Move code to an Obsidian note");
-    btn.onClick(async () => {
-      const selected = getMindmapNodeFromSelection();
-      const all = ea.getViewElements();
-      const node = selected?.containerId ? all.find((element) => element.id === selected.containerId) : selected;
-      if (node?.customData?.isCodeNote) {
-        await showCodeNoteInCanvas(node.id);
-      } else {
-        await moveCodeNodeToObsidianNote();
-      }
-    });
+    btn.setTooltip("Move code to a linked Obsidian note");
+    btn.onClick(() => moveCodeNodeToObsidianNote());
   }, true);
 
   toggleFloatingExtras = null;
@@ -15617,12 +15635,7 @@ ea.createSidepanelTab(t("DOCK_TITLE"), true, true).then((tab) => {
 
     ensureNodeSelected();
     updateUI();
-    // Runs once per script session. Existing code previews receive the same
-    // repair and active-theme stylesheet as newly converted nodes.
-    if (!window.MindmapBuilder?.codeNoteAuditStarted) {
-      window.MindmapBuilder.codeNoteAuditStarted = true;
-      setTimeout(() => auditCurrentMapCodeNotes().catch((error) => console.error("Mindmap Builder: code-note audit failed", error)), 0);
-    }
+    scheduleCurrentDrawingCodeAudit();
     focusInputEl();
 
     if (ea.activateMindmap) {
@@ -15665,6 +15678,13 @@ ea.createSidepanelTab(t("DOCK_TITLE"), true, true).then((tab) => {
         delete window.MindmapBuilder.removeActiveLeafListener;
       };
     }
+    if (!window.MindmapBuilder?.removeCodeNoteModifyListener) {
+      const codeNoteModifyRef = app.vault.on("modify", (file) => scheduleCodeNoteRefresh(file?.path));
+      window.MindmapBuilder.removeCodeNoteModifyListener = () => {
+        app.vault.offref(codeNoteModifyRef);
+        delete window.MindmapBuilder.removeCodeNoteModifyListener;
+      };
+    }
   };
 
   const onFocus = (view) => {
@@ -15681,6 +15701,7 @@ ea.createSidepanelTab(t("DOCK_TITLE"), true, true).then((tab) => {
 
     ensureNodeSelected();
     updateUI();
+    scheduleCurrentDrawingCodeAudit();
   };
 
   tab.onFocus = (view) => onFocus(view);
@@ -15694,6 +15715,7 @@ ea.createSidepanelTab(t("DOCK_TITLE"), true, true).then((tab) => {
       ea.setView(leaf.view);
       ea.clear();
       setupEventListeners(leaf.view);
+      scheduleCurrentDrawingCodeAudit();
     }
     registerObsidianHotkeyOverrides();
 
@@ -15739,6 +15761,8 @@ ea.createSidepanelTab(t("DOCK_TITLE"), true, true).then((tab) => {
   };
 
   tab.onClose = async () => {
+    codeNoteRefreshTimers.forEach((timer) => clearTimeout(timer));
+    codeNoteRefreshTimers.clear();
     removeEventListeners();
     delete window.MindmapBuilder;
     delete window.MindMapBuilderAPI;
