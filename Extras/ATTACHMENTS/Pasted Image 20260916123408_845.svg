@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="584" viewBox="0 0 660 584"><foreignObject x="0" y="0" width="660" height="584"><div xmlns="http://www.w3.org/1999/xhtml" class="markdown-preview-sizer markdown-preview-section markdown-rendered" style="display: block; position: static; box-sizing: border-box; width: 660px; height: 584px; min-width: 0px; max-width: 660px; min-height: 0px; max-height: none; margin: 0px; padding: 0px; overflow: hidden; white-space: normal; overflow-wrap: break-word; word-break: normal; tab-size: 2; font-family: &quot;Book Antiqua&quot;, &quot;Source Code Pro&quot;, Bookerly, Inter, &quot;Segoe UI&quot;, &quot;霞鹜文楷 GB&quot;, &quot;LXGW WenKai&quot;, &quot;Microsoft YaHei&quot;, ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Inter, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Microsoft YaHei Light&quot;, sans-serif; font-size: 16px; font-weight: 400; font-style: normal; font-variant: normal; line-height: 24px; letter-spacing: normal; color: rgb(239, 233, 217); background: none 0% 0% / auto repeat scroll padding-box border-box rgba(0, 0, 0, 0); border: 0px none rgb(239, 233, 217); border-radius: 0px; outline: rgb(239, 233, 217) none 0px; box-shadow: none; text-shadow: none; opacity: 1; filter: none; text-align: start; text-decoration: none; vertical-align: baseline; flex: 0 1 auto; flex-flow: row; gap: normal; align-items: normal; place-content: normal; grid-template-columns: none; transform: none;"><pre class="language-text" style="display: block; position: relative; box-sizing: border-box; width: 659.991px; height: 584.109px; min-width: 0px; max-width: 100%; min-height: 38px; max-height: none; margin: 0px; padding: 16px 24px; overflow: visible; white-space: pre-wrap; overflow-wrap: break-word; word-break: normal; tab-size: 2; font-family: monospace; font-size: 16px; font-weight: 400; font-style: normal; font-variant: normal; line-height: 24px; letter-spacing: normal; color: rgb(235, 219, 178); background: none 0% 0% / auto repeat scroll padding-box border-box rgba(17, 17, 17, 0.55); border: 0px solid rgb(25, 25, 25); border-radius: 7px; outline: rgb(235, 219, 178) none 0px; box-shadow: none; text-shadow: none; opacity: 1; filter: none; text-align: start; text-decoration: none; vertical-align: baseline; flex: 0 1 auto; flex-flow: row; gap: normal; align-items: normal; place-content: normal; grid-template-columns: none; transform: none;"><code class="language-text is-loaded" style="display: inline; position: static; box-sizing: border-box; width: auto; height: auto; min-width: 0px; max-width: none; min-height: 0px; max-height: none; margin: 0px; padding: 13.2px 6.6px; overflow: visible; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; tab-size: 2; font-family: &quot;Comic Sans MS&quot;, &quot;Ubuntu Sans Mono&quot;, &quot;JetBrains Mono&quot;, Consolas, Monaco, &quot;等距更纱黑体 SC&quot;, &quot;Source Han Mono&quot;, &quot;Microsoft Yahei Mono&quot;, &quot;Segoe UI Emoji&quot;, &quot;Microsoft YaHei&quot;, &quot;Source Code Pro&quot;, monospace, ui-monospace, SFMono-Regular, &quot;Cascadia Mono&quot;, &quot;Roboto Mono&quot;, &quot;DejaVu Sans Mono&quot;, &quot;Liberation Mono&quot;, Menlo, Monaco, Consolas, &quot;Source Code Pro&quot;, monospace; font-size: 13.2px; font-weight: 400; font-style: normal; font-variant: normal; line-height: 19.8px; letter-spacing: normal; color: rgb(235, 219, 178); background: none 0% 0% / auto repeat scroll padding-box border-box rgba(0, 0, 0, 0); border: 0px none rgb(235, 219, 178); border-radius: 5px; outline: rgb(235, 219, 178) none 0px; box-shadow: none; text-shadow: none; opacity: 1; filter: none; text-align: start; text-decoration: none; vertical-align: baseline; flex: 0 1 auto; flex-flow: row; gap: normal; align-items: normal; place-content: normal; grid-template-columns: none; transform: none;">void board_init_f(ulong dummy)
+{
+        int ret;
+
+        // fix boot mode after boot rom
+        fix_boot_mode();
+
+        // setup pinctrl
+        board_pinctrl_setup();
+
+        ret = spl_early_init();
+        if (ret)
+                panic("spl_early_init() failed: %d\n", ret);
+
+        riscv_cpu_setup(NULL, NULL);
+
+        preloader_console_init();
+        pr_debug("boot_mode: %x\n", get_boot_mode());
+
+        ret = spl_board_init_f();
+        if (ret)
+                panic("spl_board_init_f() failed: %d\n", ret);
+}
+</code></pre></div></foreignObject></svg>

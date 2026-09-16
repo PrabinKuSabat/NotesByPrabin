@@ -96,3 +96,33 @@ call_harts_early_init:
         jal        harts_early_init
 ```
 ^mindmap-code-rk39gjkl
+
+
+## text code
+
+```c
+void board_init_f(ulong dummy)
+{
+        int ret;
+
+        // fix boot mode after boot rom
+        fix_boot_mode();
+
+        // setup pinctrl
+        board_pinctrl_setup();
+
+        ret = spl_early_init();
+        if (ret)
+                panic("spl_early_init() failed: %d\n", ret);
+
+        riscv_cpu_setup(NULL, NULL);
+
+        preloader_console_init();
+        pr_debug("boot_mode: %x\n", get_boot_mode());
+
+        ret = spl_board_init_f();
+        if (ret)
+                panic("spl_board_init_f() failed: %d\n", ret);
+}
+```
+^mindmap-code-wMRPYJOe
