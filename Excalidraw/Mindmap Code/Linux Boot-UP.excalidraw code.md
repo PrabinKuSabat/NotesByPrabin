@@ -1,6 +1,6 @@
 ---
 excalidraw-font: Cascadia
-excalidraw-css: "Mindmap Code Preview.css"
+excalidraw-css: Mindmap Code Preview.css
 ---
 
 # Linux Boot-UP.excalidraw code
@@ -39,7 +39,7 @@ spl_secondary_hart_stack_gd_setup:
 
 ## assmb code
 
-```asm
+```cpp
 #ifdef CONFIG_SPL_BUILD
 spl_clear_bss:
         la        t0, __bss_start

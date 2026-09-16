@@ -1,4 +1,40 @@
 /* Mindmap Builder managed code-preview rules. */
+.excalidraw-md-host code[class*="language-"],
+.excalidraw-md-host pre[class*="language-"] {
+  color: rgb(235, 219, 178) !important;
+  background-color: rgba(17, 17, 17, 0.55) !important;
+  font-family: "Comic Sans MS", "Ubuntu Sans Mono", "JetBrains Mono", Consolas, Monaco, "等距更纱黑体 SC", "Source Han Mono", "Microsoft Yahei Mono", "Segoe UI Emoji", "Microsoft YaHei", "Source Code Pro", monospace, ui-monospace, SFMono-Regular, "Cascadia Mono", "Roboto Mono", "DejaVu Sans Mono", "Liberation Mono", Menlo, Monaco, Consolas, "Source Code Pro", monospace !important;
+  font-size: 15px !important;
+  line-height: 22.5px !important;
+}
+.excalidraw-md-host .token.comment { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.prolog { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.doctype { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.cdata { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.string { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.punctuation { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.operator { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.function { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.url { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.symbol { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.number { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.boolean { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.variable { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.constant { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.inserted { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.atrule { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.keyword { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.attr-value { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.deleted { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.tag { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.selector { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.class-name { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.property { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.attr-name { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.regex { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.entity { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.important { color:  !important; font-style:  !important; font-weight:  !important }
+
 .excalidraw-md-host pre,
 .excalidraw-md-host pre[class*="language-"],
 .excalidraw-md-host .HyperMD-codeblock-bg,

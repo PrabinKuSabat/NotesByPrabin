@@ -1823,6 +1823,36 @@ const isFencedCodeBlock = (text) => {
   return !!openingMarker && hasMatchingFence(lines[lines.length - 1], openingMarker);
 };
 const getCodeBlockLanguage = (text) => normalizeClipboardText(text).match(/^\s*(?:`{3,}|~{3,})([^`~\n]*)\n/)?.[1].trim() || "plain";
+// Normalize only genuine aliases/typos. Keep assembly as assembly: changing a
+// fence to C would produce misleading syntax semantics just to obtain color.
+const getCodeHighlightLanguage = (language) => {
+  const normalized = String(language || "").trim().toLowerCase();
+  const aliases = {
+    "assmb": "asm",
+    "assembly": "asm",
+    "riscv": "asm",
+    "risc-v": "asm",
+    "rv32": "asm",
+    "rv64": "asm",
+    "c++": "cpp",
+    "cxx": "cpp",
+    "cc": "cpp",
+    "shell": "bash",
+    "sh": "bash",
+  };
+  return aliases[normalized] || normalized || "text";
+};
+const normalizeCodeFenceLanguage = (source) => {
+  const normalized = normalizeClipboardText(source);
+  const opening = normalized.match(/(^|\n)([ \t]*(?:`{3,}|~{3,}))([^\n]*)/);
+  if (!opening) return normalized;
+  const rawLanguage = opening[3].trim();
+  const highlightLanguage = getCodeHighlightLanguage(rawLanguage);
+  if (!rawLanguage || rawLanguage === highlightLanguage) return normalized;
+  const openingStart = opening.index + opening[1].length;
+  const openingEnd = openingStart + opening[2].length + opening[3].length;
+  return `${normalized.slice(0, openingStart)}${opening[2]}${highlightLanguage}${normalized.slice(openingEnd)}`;
+};
 const getCodeFontFamily = () =>
   globalThis.ExcalidrawLib?.FONT_FAMILY?.Cascadia ||
   globalThis.ExcalidrawLib?.FontFamily?.Cascadia ||
@@ -9674,7 +9704,8 @@ const getCodeNotePath = async () => {
 };
 
 const CODE_NOTE_PREVIEW_CSS_NAME = "Mindmap Code Preview.css";
-const CODE_NOTE_PREVIEW_CSS = `/* Mindmap Builder managed code-preview rules. */
+const CODE_NOTE_PREVIEW_CSS_MARKER = "/* Mindmap Builder managed code-preview rules. */";
+const CODE_NOTE_PREVIEW_LAYOUT_CSS = `
 .excalidraw-md-host pre,
 .excalidraw-md-host pre[class*="language-"],
 .excalidraw-md-host .HyperMD-codeblock-bg,
@@ -9706,14 +9737,76 @@ const CODE_NOTE_PREVIEW_CSS = `/* Mindmap Builder managed code-preview rules. */
 }
 `;
 
+// Markdown images are standalone SVGs, so they cannot inherit the app's CSS
+// variables. Read the active theme's *computed* token colors instead of
+// shipping a separate hard-coded palette.
+const getCodeNotePreviewCss = () => {
+  const doc = globalThis.document;
+  const win = doc?.defaultView || globalThis;
+  if (!doc?.body || !win?.getComputedStyle) return `${CODE_NOTE_PREVIEW_CSS_MARKER}\n${CODE_NOTE_PREVIEW_LAYOUT_CSS}`;
+  const pre = doc.createElement("pre");
+  const code = doc.createElement("code");
+  pre.className = "language-c";
+  code.className = "language-c";
+  pre.appendChild(code);
+  Object.assign(pre.style, {
+    position: "fixed", left: "-100000px", top: "0", visibility: "hidden", pointerEvents: "none",
+  });
+  doc.body.appendChild(pre);
+  try {
+    const base = win.getComputedStyle(code);
+    const preStyle = win.getComputedStyle(pre);
+    const tokenClasses = [
+      "comment", "prolog", "doctype", "cdata", "string", "punctuation", "operator", "function",
+      "url", "symbol", "number", "boolean", "variable", "constant", "inserted", "atrule", "keyword",
+      "attr-value", "deleted", "tag", "selector", "class-name", "property", "attr-name", "regex",
+      "entity", "important",
+    ];
+    const tokenRules = tokenClasses.map((tokenClass) => {
+      const span = doc.createElement("span");
+      span.className = `token ${tokenClass}`;
+      code.appendChild(span);
+      const style = win.getComputedStyle(span);
+      span.remove();
+      const declarations = [`color: ${style.color} !important`];
+      if (style.fontStyle !== base.fontStyle) declarations.push(`font-style: ${style.fontStyle} !important`);
+      if (style.fontWeight !== base.fontWeight) declarations.push(`font-weight: ${style.fontWeight} !important`);
+      return `.excalidraw-md-host .token.${tokenClass} { ${declarations.join("; ")} }`;
+    }).join("\n");
+    return `${CODE_NOTE_PREVIEW_CSS_MARKER}
+.excalidraw-md-host code[class*="language-"],
+.excalidraw-md-host pre[class*="language-"] {
+  color: ${base.color} !important;
+  background-color: ${preStyle.backgroundColor} !important;
+  font-family: ${base.fontFamily} !important;
+  font-size: ${base.fontSize} !important;
+  line-height: ${base.lineHeight} !important;
+}
+${tokenRules}
+${CODE_NOTE_PREVIEW_LAYOUT_CSS}`;
+  } finally {
+    pre.remove();
+  }
+};
+
 const ensureCodeNotePresentation = async (path) => {
   if (!path) return;
   const note = app.vault.getAbstractFileByPath(path);
   if (!note) return;
   const parentPath = path.includes("/") ? path.slice(0, path.lastIndexOf("/")) : "";
   const cssPath = parentPath ? `${parentPath}/${CODE_NOTE_PREVIEW_CSS_NAME}` : CODE_NOTE_PREVIEW_CSS_NAME;
+  const previewCss = getCodeNotePreviewCss();
   let cssFile = app.vault.getAbstractFileByPath(cssPath);
-  if (!cssFile) cssFile = await app.vault.create(cssPath, CODE_NOTE_PREVIEW_CSS);
+  if (!cssFile) {
+    cssFile = await app.vault.create(cssPath, previewCss);
+  } else {
+    // Refresh only the stylesheet the script owns. A user-supplied stylesheet
+    // without this marker is intentionally left untouched.
+    const currentCss = await app.vault.read(cssFile);
+    if (currentCss.startsWith(CODE_NOTE_PREVIEW_CSS_MARKER) && currentCss !== previewCss) {
+      await app.vault.modify(cssFile, previewCss);
+    }
+  }
 
   // This is deliberately file-local: it affects only generated Mindmap Code
   // notes, not the user's regular Markdown embeds elsewhere in the vault.
@@ -9721,6 +9814,22 @@ const ensureCodeNotePresentation = async (path) => {
     if (!frontmatter["excalidraw-font"]) frontmatter["excalidraw-font"] = "Cascadia";
     if (!frontmatter["excalidraw-css"]) frontmatter["excalidraw-css"] = CODE_NOTE_PREVIEW_CSS_NAME;
   });
+};
+
+const ensureCodeNoteHighlightLanguage = async (path, blockId) => {
+  if (!path || !blockId) return;
+  const file = app.vault.getAbstractFileByPath(path);
+  if (!file) return;
+  const content = await app.vault.read(file);
+  const markerIndex = content.indexOf(`^${blockId}`);
+  if (markerIndex < 0) return;
+  const sectionStart = content.lastIndexOf("\n## ", markerIndex);
+  const sourceStart = Math.max(0, sectionStart);
+  const section = content.slice(sourceStart, markerIndex);
+  const corrected = normalizeCodeFenceLanguage(section);
+  if (corrected !== section) {
+    await app.vault.modify(file, `${content.slice(0, sourceStart)}${corrected}${content.slice(markerIndex)}`);
+  }
 };
 
 const getCodePreviewMaxHeight = async (path, blockId) => {
@@ -9799,6 +9908,7 @@ const showCodeNoteInCanvas = async (nodeId = null) => {
     return;
   }
   await ensureCodeNoteBlockAnchor(node.customData.codeNotePath, node.customData.codeNoteBlockId);
+  await ensureCodeNoteHighlightLanguage(node.customData.codeNotePath, node.customData.codeNoteBlockId);
   await ensureCodeNotePresentation(node.customData.codeNotePath);
   const linkText = app.metadataCache.fileToLinktext(file, ea.targetView?.file?.path || "", true);
   const previewWidth = Math.max(320, Math.min(1600, Math.round(node.width || 520)));
@@ -9843,7 +9953,7 @@ const moveCodeNodeToObsidianNote = async () => {
   const blockId = `mindmap-code-${node.id.replace(/[^a-z0-9_-]/gi, "").slice(0, 24)}`;
   // The block id must follow the fence so it references the complete code
   // block, not just the heading above it.
-  const section = `\n\n## ${language} code\n\n${source.trimEnd()}\n^${blockId}\n`;
+  const section = `\n\n## ${language} code\n\n${normalizeCodeFenceLanguage(source).trimEnd()}\n^${blockId}\n`;
   let file = app.vault.getAbstractFileByPath(path);
   if (file) {
     await app.vault.append(file, section);
