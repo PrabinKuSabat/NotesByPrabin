@@ -877,7 +877,7 @@
         "hidden": true
       },
       "Is Undocked": {
-        "value": true,
+        "value": false,
         "hidden": false
       },
       "Active Preset": {
@@ -1268,9 +1268,7 @@
     "Excalidraw/Scripts/Downloaded/Comicbook Callout Editor.md",
     "Excalidraw/Scripts/Downloaded/Printable Layout Wizard.md"
   ],
-  "sidepanelTabs": [
-    "{\"script\":\"Custom/Mindmap Builder.js\",\"title\":\"Mind Map Builder\"}"
-  ],
+  "sidepanelTabs": [],
   "customPens": [
     {
       "type": "default",
