@@ -6,9 +6,9 @@ excalidraw-css: Mindmap Code Preview.css
 # Linux Boot-UP.excalidraw code
 
 
-## assmb code
+## asm code
 
-```asm
+```c
 #if CONFIG_IS_ENABLED(SMP)
         /* tp: hart id */
         slli        t0, tp, CONFIG_STACK_SIZE_SHIFT
@@ -37,9 +37,9 @@ spl_secondary_hart_stack_gd_setup:
 ^mindmap-code-q0gLhVXM
 
 
-## assmb code
+## asm code
 
-```cpp
+```c
 #ifdef CONFIG_SPL_BUILD
 spl_clear_bss:
         la        t0, __bss_start
@@ -75,8 +75,7 @@ spl_call_board_init_r:
 ^mindmap-code-fnxqBgm5
 
 
-## text code
-^mindmap-code-rk39gjkl
+## asm code
 
 ```asm
 call_board_init_f_0:
@@ -101,3 +100,32 @@ call_board_init_f_0:
 call_harts_early_init:
         jal        harts_early_init
 ```
+^mindmap-code-rk39gjkl
+
+
+## text code
+
+```text
+call_board_init_f_0:
+        mv        a0, sp
+        jal        board_init_f_alloc_reserve
+
+        /*
+         * Save global data pointer for later. We don't set it here because it
+         * is not initialized yet.
+         */
+        mv        s0, a0
+
+        /* setup stack */
+#if CONFIG_IS_ENABLED(SMP)
+        /* tp: hart id */
+        slli        t0, tp, CONFIG_STACK_SIZE_SHIFT
+        sub        sp, a0, t0
+#else
+        mv        sp, a0
+#endif
+
+call_harts_early_init:
+        jal        harts_early_init
+```
+^mindmap-code-rk39gjkl

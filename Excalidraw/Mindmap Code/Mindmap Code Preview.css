@@ -3,37 +3,41 @@
 .excalidraw-md-host pre[class*="language-"] {
   color: rgb(235, 219, 178) !important;
   background-color: rgba(17, 17, 17, 0.55) !important;
-  font-family: "Comic Sans MS", "Ubuntu Sans Mono", "JetBrains Mono", Consolas, Monaco, "等距更纱黑体 SC", "Source Han Mono", "Microsoft Yahei Mono", "Segoe UI Emoji", "Microsoft YaHei", "Source Code Pro", monospace, ui-monospace, SFMono-Regular, "Cascadia Mono", "Roboto Mono", "DejaVu Sans Mono", "Liberation Mono", Menlo, Monaco, Consolas, "Source Code Pro", monospace !important;
-  font-size: 15px !important;
-  line-height: 22.5px !important;
+  font-size: 13.2px !important;
+  line-height: 19.8px !important;
 }
-.excalidraw-md-host .token.comment { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.prolog { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.doctype { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.cdata { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.string { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.punctuation { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.operator { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.function { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.url { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.symbol { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.number { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.boolean { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.variable { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.constant { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.inserted { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.atrule { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.keyword { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.attr-value { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.deleted { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.tag { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.selector { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.class-name { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.property { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.attr-name { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.regex { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.entity { color:  !important; font-style:  !important; font-weight:  !important }
-.excalidraw-md-host .token.important { color:  !important; font-style:  !important; font-weight:  !important }
+.excalidraw-md-host .token.comment { color: rgb(27, 188, 155) !important }
+.excalidraw-md-host .token.prolog { color: rgb(255, 203, 107) !important }
+.excalidraw-md-host .token.doctype { color: rgb(255, 203, 107) !important }
+.excalidraw-md-host .token.cdata { color: rgb(255, 203, 107) !important }
+.excalidraw-md-host .token.string { color: rgb(0, 255, 199) !important }
+.excalidraw-md-host .token.punctuation { color: rgb(180, 177, 198) !important }
+.excalidraw-md-host .token.operator { color: rgb(168, 153, 132) !important }
+.excalidraw-md-host .token.function { color: rgb(255, 210, 108) !important }
+.excalidraw-md-host .token.url { color: rgb(105, 109, 112) !important }
+.excalidraw-md-host .token.symbol { color: rgb(218, 144, 75) !important }
+.excalidraw-md-host .token.number { color: rgb(255, 83, 112) !important }
+.excalidraw-md-host .token.boolean { color: rgb(218, 144, 75) !important }
+.excalidraw-md-host .token.variable { color: rgb(255, 144, 144) !important }
+.excalidraw-md-host .token.constant { color: rgb(218, 144, 75) !important }
+.excalidraw-md-host .token.inserted { color: rgb(0, 255, 199) !important }
+.excalidraw-md-host .token.atrule { color: rgb(0, 64, 255) !important }
+.excalidraw-md-host .token.keyword { color: rgb(0, 64, 255) !important }
+.excalidraw-md-host .token.attr-value { color: rgb(0, 255, 199) !important }
+.excalidraw-md-host .token.deleted { color: rgb(255, 144, 144) !important }
+.excalidraw-md-host .token.tag { color: rgb(255, 144, 144) !important }
+.excalidraw-md-host .token.selector { color: rgb(48, 218, 255) !important }
+.excalidraw-md-host .token.class-name { color: rgb(252, 220, 0) !important }
+.excalidraw-md-host .token.property { color: rgb(0, 163, 185) !important }
+.excalidraw-md-host .token.attr-name { color: rgb(255, 144, 144) !important }
+.excalidraw-md-host .token.regex { color: rgb(0, 255, 199) !important }
+.excalidraw-md-host .token.entity { color: rgb(255, 210, 108) !important }
+.excalidraw-md-host .token.important { color: rgb(0, 64, 255) !important }
+.excalidraw-md-host .token.parameter { color: rgb(0, 163, 185) !important }
+.excalidraw-md-host .token.builtin { color: rgb(255, 203, 107) !important }
+.excalidraw-md-host .token.unit { color: rgb(0, 255, 199) !important }
+.excalidraw-md-host .token.macro-name { color: rgb(0, 64, 255) !important }
+.excalidraw-md-host .token.directive-hash { color: rgb(255, 144, 144) !important }
 
 .excalidraw-md-host pre,
 .excalidraw-md-host pre[class*="language-"],
@@ -59,6 +63,7 @@
 .excalidraw-md-host pre[class*="language-"] {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
+  overflow: visible !important;
 }
 
 .excalidraw-md-host > :last-child {

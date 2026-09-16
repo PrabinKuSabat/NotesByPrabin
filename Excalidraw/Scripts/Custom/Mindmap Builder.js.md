@@ -9730,6 +9730,7 @@ const CODE_NOTE_PREVIEW_LAYOUT_CSS = `
 .excalidraw-md-host pre[class*="language-"] {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
+  overflow: visible !important;
 }
 
 .excalidraw-md-host > :last-child {
@@ -9738,54 +9739,94 @@ const CODE_NOTE_PREVIEW_LAYOUT_CSS = `
 `;
 
 // Markdown images are standalone SVGs, so they cannot inherit the app's CSS
-// variables. Read the active theme's *computed* token colors instead of
-// shipping a separate hard-coded palette.
+// variables. Resolve the active theme's code variables in Obsidian, then put
+// those resolved values in the SVG stylesheet. This is a theme bridge, not a
+// second hand-maintained syntax palette.
 const getCodeNotePreviewCss = () => {
   const doc = globalThis.document;
   const win = doc?.defaultView || globalThis;
   if (!doc?.body || !win?.getComputedStyle) return `${CODE_NOTE_PREVIEW_CSS_MARKER}\n${CODE_NOTE_PREVIEW_LAYOUT_CSS}`;
+  const host = doc.createElement("div");
+  // Blue Topaz and many other themes scope preview syntax rules to one or both
+  // of these classes. Without them getComputedStyle() returns no token color.
+  host.className = "markdown-preview-view markdown-rendered";
   const pre = doc.createElement("pre");
   const code = doc.createElement("code");
-  pre.className = "language-c";
-  code.className = "language-c";
+  pre.className = "language-asm";
+  code.className = "language-asm";
+  code.textContent = "probe";
   pre.appendChild(code);
-  Object.assign(pre.style, {
+  host.appendChild(pre);
+  Object.assign(host.style, {
     position: "fixed", left: "-100000px", top: "0", visibility: "hidden", pointerEvents: "none",
   });
-  doc.body.appendChild(pre);
+  doc.body.appendChild(host);
   try {
     const base = win.getComputedStyle(code);
     const preStyle = win.getComputedStyle(pre);
+    const bodyStyle = win.getComputedStyle(doc.body);
+    const validCssValue = (value) => typeof value === "string" && value.trim() && !["initial", "inherit", "unset", "normal"].includes(value.trim());
+    const resolveThemeColor = (variable) => {
+      // An unset CSS variable would make the probe inherit the base color;
+      // omit that rule instead of mistakenly claiming a token color exists.
+      if (!variable || !bodyStyle.getPropertyValue(variable).trim()) return "";
+      const probe = doc.createElement("span");
+      probe.style.color = `var(${variable})`;
+      probe.textContent = "x";
+      code.appendChild(probe);
+      const color = win.getComputedStyle(probe).color;
+      probe.remove();
+      return validCssValue(color) ? color : "";
+    };
+    const tokenVariables = {
+      comment: "--code-comment", prolog: "--code-meta", doctype: "--code-meta", cdata: "--code-meta",
+      string: "--code-string", punctuation: "--code-punctuation", operator: "--code-operator",
+      function: "--code-function", url: "--code-link", symbol: "--code-atom", number: "--code-number",
+      boolean: "--code-atom", variable: "--code-variable", constant: "--code-atom", inserted: "--code-string",
+      atrule: "--code-keyword", keyword: "--code-keyword", "attr-value": "--code-string",
+      deleted: "--code-tag", tag: "--code-tag", selector: "--code-qualifier", "class-name": "--code-string-2",
+      property: "--code-property", "attr-name": "--code-tag", regex: "--code-string", entity: "--code-attribute",
+      important: "--code-important", parameter: "--code-property", builtin: "--code-builtin", unit: "--code-value",
+      "macro-name": "--code-important", "directive-hash": "--code-tag",
+    };
     const tokenClasses = [
       "comment", "prolog", "doctype", "cdata", "string", "punctuation", "operator", "function",
       "url", "symbol", "number", "boolean", "variable", "constant", "inserted", "atrule", "keyword",
       "attr-value", "deleted", "tag", "selector", "class-name", "property", "attr-name", "regex",
-      "entity", "important",
+      "entity", "important", "parameter", "builtin", "unit", "macro-name", "directive-hash",
     ];
     const tokenRules = tokenClasses.map((tokenClass) => {
       const span = doc.createElement("span");
       span.className = `token ${tokenClass}`;
+      span.textContent = "x";
       code.appendChild(span);
       const style = win.getComputedStyle(span);
       span.remove();
-      const declarations = [`color: ${style.color} !important`];
-      if (style.fontStyle !== base.fontStyle) declarations.push(`font-style: ${style.fontStyle} !important`);
-      if (style.fontWeight !== base.fontWeight) declarations.push(`font-weight: ${style.fontWeight} !important`);
+      // Prefer a theme's own selector; use its resolved semantic variable only
+      // where the theme has no Prism selector for that token type.
+      const color = validCssValue(style.color) && style.color !== base.color ? style.color : resolveThemeColor(tokenVariables[tokenClass]);
+      const declarations = color ? [`color: ${color} !important`] : [];
+      if (validCssValue(style.fontStyle) && style.fontStyle !== base.fontStyle) declarations.push(`font-style: ${style.fontStyle} !important`);
+      if (validCssValue(style.fontWeight) && style.fontWeight !== base.fontWeight) declarations.push(`font-weight: ${style.fontWeight} !important`);
+      if (declarations.length === 0) return "";
       return `.excalidraw-md-host .token.${tokenClass} { ${declarations.join("; ")} }`;
-    }).join("\n");
+    }).filter(Boolean).join("\n");
+    const baseColor = validCssValue(base.color) ? base.color : "inherit";
+    const backgroundColor = validCssValue(preStyle.backgroundColor) ? preStyle.backgroundColor : "transparent";
+    const fontSize = validCssValue(base.fontSize) ? base.fontSize : "inherit";
+    const lineHeight = validCssValue(base.lineHeight) ? base.lineHeight : "normal";
     return `${CODE_NOTE_PREVIEW_CSS_MARKER}
 .excalidraw-md-host code[class*="language-"],
 .excalidraw-md-host pre[class*="language-"] {
-  color: ${base.color} !important;
-  background-color: ${preStyle.backgroundColor} !important;
-  font-family: ${base.fontFamily} !important;
-  font-size: ${base.fontSize} !important;
-  line-height: ${base.lineHeight} !important;
+  color: ${baseColor} !important;
+  background-color: ${backgroundColor} !important;
+  font-size: ${fontSize} !important;
+  line-height: ${lineHeight} !important;
 }
 ${tokenRules}
 ${CODE_NOTE_PREVIEW_LAYOUT_CSS}`;
   } finally {
-    pre.remove();
+    host.remove();
   }
 };
 
@@ -9948,7 +9989,7 @@ const moveCodeNodeToObsidianNote = async () => {
   const text = all.find((element) => element.id === textId);
   if (!text) return;
   const source = isFencedCodeBlock(text.rawText) ? text.rawText : (node.customData?.codeSource || text.rawText);
-  const language = getCodeBlockLanguage(source);
+  const language = getCodeHighlightLanguage(getCodeBlockLanguage(source));
   const path = await getCodeNotePath();
   const blockId = `mindmap-code-${node.id.replace(/[^a-z0-9_-]/gi, "").slice(0, 24)}`;
   // The block id must follow the fence so it references the complete code
@@ -9991,6 +10032,40 @@ const moveCodeNodeToObsidianNote = async () => {
   new Notice(`Created Obsidian code note: ${path}`);
   await showCodeNoteInCanvas(node.id);
   updateUI();
+};
+
+// Repair previews made by earlier versions in the currently open map. This
+// deliberately touches only script-owned CSS and code-note blocks; it never
+// rewrites regular Markdown notes or normal text nodes.
+const auditCurrentMapCodeNotes = async () => {
+  if (!isViewSet()) return;
+  const codeNotes = ea.getViewElements().filter((element) => element.customData?.isCodeNote && element.customData?.codeNotePath && element.customData?.codeNoteBlockId);
+  const codeNoteIds = codeNotes.map((element) => element.id);
+  const refreshedPaths = new Set();
+  for (const node of codeNotes) {
+    await ensureCodeNoteBlockAnchor(node.customData.codeNotePath, node.customData.codeNoteBlockId);
+    await ensureCodeNoteHighlightLanguage(node.customData.codeNotePath, node.customData.codeNoteBlockId);
+    if (!refreshedPaths.has(node.customData.codeNotePath)) {
+      await ensureCodeNotePresentation(node.customData.codeNotePath);
+      refreshedPaths.add(node.customData.codeNotePath);
+    }
+  }
+  const excalidrawPlugin = app.plugins?.getPlugin?.("obsidian-excalidraw-plugin");
+  for (const path of refreshedPaths) excalidrawPlugin?.triggerEmbedUpdates?.(path);
+
+  // A canvas image is a cached SVG snapshot, so updating only the Markdown
+  // note/CSS is insufficient. Rebuild each current-map preview once, after
+  // the stylesheet has been repaired. It remains one image per node, not a
+  // collection of token elements, so layout cost does not increase.
+  for (const id of codeNoteIds) {
+    try {
+      if (ea.getViewElements().some((element) => element.id === id && element.customData?.isCodeNote)) {
+        await showCodeNoteInCanvas(id);
+      }
+    } catch (error) {
+      console.error(`Mindmap Builder: could not refresh code preview ${id}`, error);
+    }
+  }
 };
 
 const toggleCodeNode = async () => {
@@ -15542,6 +15617,12 @@ ea.createSidepanelTab(t("DOCK_TITLE"), true, true).then((tab) => {
 
     ensureNodeSelected();
     updateUI();
+    // Runs once per script session. Existing code previews receive the same
+    // repair and active-theme stylesheet as newly converted nodes.
+    if (!window.MindmapBuilder?.codeNoteAuditStarted) {
+      window.MindmapBuilder.codeNoteAuditStarted = true;
+      setTimeout(() => auditCurrentMapCodeNotes().catch((error) => console.error("Mindmap Builder: code-note audit failed", error)), 0);
+    }
     focusInputEl();
 
     if (ea.activateMindmap) {
