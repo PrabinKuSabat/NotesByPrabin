@@ -1955,6 +1955,24 @@ const restoreEscapedOutlineMarkers = (text) => {
 
 // Convert clipboard HTML (from browsers and ChatGPT) to portable Markdown
 // without inserting untrusted HTML into Obsidian or the Excalidraw canvas.
+// Canvas text cannot retain a rich-text baseline. Unicode preserves supported
+// raised/lowered characters as editable text; explicit notation preserves the
+// meaning when Unicode has no equivalent (never silently flatten to baseline).
+const SCRIPT_CHARACTER_MAPS = Object.freeze({
+  super: Object.freeze(Object.fromEntries(Array.from("0123456789+-=()abcdefghijklmnoprstuvwxyz").map((c, i) => [c, Array.from("⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖʳˢᵗᵘᵛʷˣʸᶻ")[i]]))),
+  sub: Object.freeze(Object.fromEntries(Array.from("0123456789+-=()aehijklmnoprstuvx").map((c, i) => [c, Array.from("₀₁₂₃₄₅₆₇₈₉₊₋₌₍₎ₐₑₕᵢⱼₖₗₘₙₒₚᵣₛₜᵤᵥₓ")[i]]))),
+});
+const SCRIPT_UNICODE_CHARACTERS = new Set(Object.values(SCRIPT_CHARACTER_MAPS).flatMap(map => Object.values(map)));
+const preserveScriptText = (text, position) => {
+  const map = SCRIPT_CHARACTER_MAPS[position];
+  const existing = new Set(Object.values(map));
+  const characters = Array.from(text);
+  if (characters.every(c => map[c] || c === "−" || existing.has(c) || /\s/.test(c))) {
+    return characters.map(c => map[c] || (c === "−" ? map["-"] : c)).join("");
+  }
+  return `${position === "super" ? "^" : "_"}{${text}}`;
+};
+
 const htmlToMarkdown = (html) => {
   if (!html || typeof DOMParser === "undefined") return "";
   const doc = new DOMParser().parseFromString(html, "text/html");
@@ -1982,6 +2000,13 @@ const htmlToMarkdown = (html) => {
     if (node.nodeType === Node.TEXT_NODE) return node.nodeValue || "";
     if (node.nodeType !== Node.ELEMENT_NODE) return "";
     const tag = node.tagName.toLowerCase();
+    // Literal source code must not undergo mathematical character conversion.
+    if (tag === "code") return `\`${(node.textContent || "").replace(/`/g, "\\`")}\``;
+    const baseline = (node.style?.verticalAlign || "").trim().toLowerCase();
+    const variant = (node.style?.fontVariantPosition || "").trim().toLowerCase();
+    const position = tag === "sup" || baseline === "super" || variant === "super" ? "super"
+      : tag === "sub" || baseline === "sub" || variant === "sub" ? "sub" : null;
+    if (position) return preserveScriptText(node.textContent || "", position);
     if (tag === "ul" || tag === "ol") {
       const ordered = tag === "ol";
       const listItems = Array.from(node.children).filter((child) => child.tagName?.toLowerCase() === "li");
@@ -2013,7 +2038,6 @@ const htmlToMarkdown = (html) => {
     if (tag === "strong" || tag === "b") return `**${children}**`;
     if (tag === "em" || tag === "i") return `*${children}*`;
     if (tag === "del" || tag === "s" || tag === "strike") return `~~${children}~~`;
-    if (tag === "code") return `\`${children.replace(/`/g, "\\`")}\``;
     if (tag === "a") {
       const href = node.getAttribute("href");
       return href ? `[${children.trim()}](${href})` : children;
@@ -2030,6 +2054,18 @@ const htmlToMarkdown = (html) => {
     .trim();
 };
 
+const convertClipboardContent = (html, plainText = "") => {
+  const markdown = htmlToMarkdown(html);
+  const plain = normalizeClipboardText(plainText);
+  // Some PDF viewers supply better Unicode in text/plain than in text/html.
+  // Prefer it only when it is otherwise the same content, without throwing
+  // away Markdown structure or guessing exponents from ordinary digits.
+  const fold = value => value.normalize("NFKC").replace(/\s+/g, " ").trim();
+  const scriptCount = value => Array.from(value).filter(c => SCRIPT_UNICODE_CHARACTERS.has(c)).length;
+  if (plain && markdown && fold(plain) === fold(markdown) && scriptCount(plain) > scriptCount(markdown)) return plain;
+  return markdown || plain;
+};
+
 const getActiveClipboard = () =>
   app.workspace.activeLeaf?.view?.containerEl?.ownerDocument?.defaultView?.navigator?.clipboard ||
   ea.targetView?.ownerWindow?.navigator?.clipboard || navigator.clipboard;
@@ -2039,11 +2075,12 @@ const readClipboardText = async () => {
   try {
     const items = await clipboard.read();
     const item = items.find((candidate) => candidate.types.includes("text/html") || candidate.types.includes("text/plain"));
+    const plain = item?.types.includes("text/plain") ? await (await item.getType("text/plain")).text() : "";
     if (item?.types.includes("text/html")) {
-      const markdown = htmlToMarkdown(await (await item.getType("text/html")).text());
+      const markdown = convertClipboardContent(await (await item.getType("text/html")).text(), plain);
       if (markdown) return markdown;
     }
-    if (item?.types.includes("text/plain")) return normalizeClipboardText(await (await item.getType("text/plain")).text());
+    if (plain) return normalizeClipboardText(plain);
   } catch (e) {
     // ClipboardItem access is not available in every Obsidian/Electron build.
   }
@@ -12603,7 +12640,8 @@ const renderInput = (container, isFloating = false) => {
   ontologyEl.addEventListener("input", () => updateUI());
   inputEl.addEventListener("paste", (event) => {
     const html = event.clipboardData?.getData("text/html");
-    const markdown = htmlToMarkdown(html);
+    if (!html) return; // Keep native plain-text paste/undo behaviour.
+    const markdown = convertClipboardContent(html, event.clipboardData?.getData("text/plain") || "");
     if (!markdown) return;
 
     // Native paste would discard most browser/ChatGPT structure. Replace the
