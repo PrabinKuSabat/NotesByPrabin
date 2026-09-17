@@ -141,8 +141,14 @@ const isViewSet = () => ea.targetView && ea.targetView._loaded;
 // operation must therefore run serially; otherwise one action's ea.clear()
 // can discard another action's staged elements while it is awaiting I/O.
 let sceneOperationQueue = Promise.resolve();
+let activeLayoutCompletion = Promise.resolve();
 const queueSceneOperation = (operation) => {
-  const queued = sceneOperationQueue.then(operation, operation);
+  const run = async () => {
+    // A standalone layout may have yielded with staged workbench elements.
+    await activeLayoutCompletion;
+    return operation();
+  };
+  const queued = sceneOperationQueue.then(run, run);
   sceneOperationQueue = queued.catch((error) => {
     console.error("Mindmap Builder: scene operation failed", error);
   });
@@ -2040,28 +2046,85 @@ const readClipboardText = async () => {
 };
 
 let activeImportJob = null;
+const activeOperationJobs = new Set();
+// A job owns its DOM and Escape listener, independently of editor focus.
+// Cancel is disabled across commit phases: never interrupt half a scene write.
+const createOperationProgress = (title, total, { visible = true } = {}) => {
+  const view = ea.targetView;
+  const owner = view?.ownerWindow || window;
+  const fragment = owner.document.createDocumentFragment();
+  const label = owner.document.createElement("div");
+  const progress = owner.document.createElement("progress");
+  progress.setAttribute("aria-label", title);
+  progress.max = Math.max(1, total);
+  progress.value = 0;
+  const cancel = owner.document.createElement("button");
+  cancel.textContent = "Cancel";
+  fragment.append(label, progress, cancel);
+  const notice = visible ? new Notice(fragment, 0) : null;
+  let finished = false;
+  const job = {
+    view, notice, total, completed: 0, cancelled: false, cancellable: true,
+    cancel() {
+      if (!job.cancellable || finished) return;
+      job.cancelled = true;
+      label.textContent = `${title}: cancelling at the next safe checkpoint…`;
+      cancel.disabled = true;
+    },
+    async checkpoint(completed, message = title) {
+      if (finished) { job.cancelled = true; return false; }
+      job.completed = completed;
+      if (ea.targetView !== view) job.cancelled = true;
+      if (!job.cancelled) label.textContent = `${message} (${completed}/${total})`;
+      progress.value = completed;
+      if (visible) await sleep(0);
+      if (ea.targetView !== view) job.cancelled = true;
+      return !job.cancelled;
+    },
+    committing(message = "Finishing scene update…") {
+      job.cancellable = false;
+      cancel.disabled = true;
+      label.textContent = message;
+    },
+    resume() {
+      job.cancellable = true;
+      cancel.disabled = job.cancelled;
+    },
+    finish(message, delay = 4000) {
+      if (finished) return;
+      finished = true;
+      activeOperationJobs.delete(job);
+      owner.removeEventListener("keydown", onEscape, true);
+      notice?.setMessage(message);
+      if (notice) owner.setTimeout(() => notice.hide(), delay);
+    },
+  };
+  const onEscape = (event) => {
+    if (event.key !== "Escape" || !job.cancellable || finished) return;
+    job.cancel();
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  };
+  cancel.onclick = () => job.cancel();
+  if (visible) owner.addEventListener("keydown", onEscape, true);
+  activeOperationJobs.add(job);
+  label.textContent = `${title} (0/${total}) — Escape or Cancel`;
+  return job;
+};
 const startImportJob = (total) => {
-  const notice = new Notice(`Importing 0/${total} nodes. Press Escape to cancel.`, 0);
-  const job = { cancelled: false, total, completed: 0, notice };
+  const job = createOperationProgress("Preparing import", total);
   activeImportJob = job;
   return job;
 };
 const updateImportJob = async (job) => {
   job.completed += 1;
   if (job.completed % 25 === 0 || job.completed === job.total) {
-    job.notice.setMessage(`Importing ${job.completed}/${job.total} nodes. Press Escape to cancel.`);
-    // Yield periodically so the cancel hotkey and Obsidian UI can run.
-    await sleep(0);
+    await job.checkpoint(job.completed, "Preparing import");
   }
 };
 const finishImportJob = (job, message, hideAfter = 4000) => {
   if (activeImportJob === job) activeImportJob = null;
-  job.notice.setMessage(message);
-  // Obsidian Notice exposes setMessage() and hide(), but no setAutoHide().
-  // Calling the non-existent method made a successful import report a failure
-  // at the very end of the operation.
-  const timerHost = ea.targetView?.ownerWindow || globalThis;
-  timerHost.setTimeout(() => job.notice.hide(), hideAfter);
+  job.finish(message, hideAfter);
 };
 
 const parseText = async (text) => {
@@ -5930,6 +5993,7 @@ const ensureAutomaticNodeBoxes = (rootId, allElements) => {
       branchIds.has(element.id) &&
       element.type === "text" &&
       !element.containerId &&
+      element.customData?.manualBox !== false &&
       element.customData &&
       (typeof element.customData.mindmapOrder !== "undefined" || element.customData.isAdditionalRoot === true),
     )
@@ -6007,7 +6071,7 @@ const ensureAutomaticNodeBoxes = (rootId, allElements) => {
  * @param {boolean} forceUngroup - Force ungrouping of branches before layout.
  * @param {boolean} mustHonorMindmapOrder - If true, enforces the current mindmapOrder over visual position.
  */
-const performGlobalLayout = async (rootId, forceUngroup = false, mustHonorMindmapOrder = false) => {
+const performGlobalLayout = async (rootId, forceUngroup = false, mustHonorMindmapOrder = false, progressJob = null) => {
   if (!isViewSet()) return;
   // A caller can retain the ID of an old, unboxed root text element. Resolve
   // that stable text ID back to its current visual container before collecting
@@ -6237,9 +6301,9 @@ const performGlobalLayout = async (rootId, forceUngroup = false, mustHonorMindma
   ea.copyViewElementsToEAforEditing(projectElements);
   let allElements = ea.getElements();
   let root = allElements.find((el) => el.id === rootId);
-  if (!root) return;
+  if (!root) { ea.clear(); return; }
 
-  if (root.customData?.autoLayoutDisabled) return;
+  if (root.customData?.autoLayoutDisabled) { ea.clear(); return; }
 
   // Normalize legacy/plain child nodes first.  Layout then measures the same
   // boxes the user will see, preventing a later box operation from upsetting
@@ -6312,7 +6376,16 @@ const performGlobalLayout = async (rootId, forceUngroup = false, mustHonorMindma
     }
   });
 
+  if (progressJob && !await progressJob.checkpoint(1, "Boxes prepared; calculating layout")) {
+    ea.clear();
+    return false;
+  }
   const result1 = await run(allElements, mindmapIds, root, true, sharedSets, mustHonorMindmapOrder);
+  if (progressJob && !await progressJob.checkpoint(2, "Layout calculated; ready to apply")) {
+    ea.clear();
+    return false;
+  }
+  progressJob?.committing("Applying layout and restoring groups…");
 
   // --- Check if any boundary node moved ---
   let boundaryMoved = false;
@@ -6424,7 +6497,34 @@ const triggerGlobalLayout = (rootId, forceUngroup = false, mustHonorMindmapOrder
   };
   const task = layoutQueue.then(async () => {
     request.started = true;
-    return performGlobalLayout(rootId, request.forceUngroup, request.mustHonorMindmapOrder);
+    const project = getMindmapProjectElements(rootId, ea.getViewElements());
+    // Small routine edits should not flash a notice or add timer yields.
+    const job = createOperationProgress("Preparing layout", 3, { visible: project.length >= 80 });
+    let releaseLayout;
+    activeLayoutCompletion = new Promise(resolve => { releaseLayout = resolve; });
+    const originalGroups = new Map();
+    try {
+      for (const el of project) originalGroups.set(el.id, [...(el.groupIds || [])]);
+      if (!await job.checkpoint(0)) return;
+      await performGlobalLayout(rootId, request.forceUngroup, request.mustHonorMindmapOrder, job);
+      job.finish(job.cancelled ? "Layout cancelled; prepared positions discarded." : "Layout complete.");
+    } catch (error) {
+      ea.clear();
+      // Pass one may have committed temporary ungrouping. Restore only the
+      // original group membership, retaining valid geometry and bindings.
+      if (!job.cancellable && ea.targetView === job.view) {
+        const groupFor = element => originalGroups.get(element.id) || originalGroups.get(element.boundElements?.find(bound => bound.type === "text")?.id);
+        const repair = ea.getViewElements().filter(el => !el.isDeleted && groupFor(el));
+        ea.copyViewElementsToEAforEditing(repair);
+        for (const element of ea.getElements()) element.groupIds = [...groupFor(element)];
+        await addElementsToView({ captureUpdate: "IMMEDIATELY" });
+      }
+      job.finish("Layout failed. Check the developer console for details.", 7000);
+      throw error;
+    } finally {
+      job.finish("Layout cancelled.");
+      releaseLayout();
+    }
   });
   request.promise = task.finally(() => {
     if (queuedLayoutRequests.get(rootId) === request) queuedLayoutRequests.delete(rootId);
@@ -8216,10 +8316,18 @@ const performImportTextToMap = async (rawText) => {
     }
   }
 
+  // Last cancellable checkpoint includes tiny/single-root imports, too.
+  if (!await importJob.checkpoint(importJob.total, "Import prepared")) {
+    ea.clear();
+    finishImportJob(importJob, "Import cancelled; no nodes added.");
+    return;
+  }
+  importJob.committing("Adding prepared nodes and finishing layout…");
   await addElementsToView({
     repositionToCursor: !rootSelected,
-    captureUpdate: "EVENTUALLY"
+    captureUpdate: "IMMEDIATELY"
   });
+  importJob.committed = true;
 
   // -------------------------------------------------------------------------
   //  Fix Z-Index for Created Boundaries (Parents Below Children)
@@ -8286,7 +8394,9 @@ const importTextToMap = async (rawText) => {
     if (activeImportJob) {
       const failedJob = activeImportJob;
       ea.clear();
-      finishImportJob(failedJob, `Import failed after ${failedJob.completed}/${failedJob.total} nodes.`, 7000);
+      finishImportJob(failedJob, failedJob.committed
+        ? "Nodes were imported, but finishing/layout failed. Existing imported nodes are retained; check the developer console."
+        : `Import preparation failed after ${failedJob.completed}/${failedJob.total} nodes; uncommitted nodes discarded.`, 7000);
     }
     throw error;
   }
@@ -10161,7 +10271,7 @@ const queueCodePreviewRender = (operation) => {
 // images also have a plugin registry entry tied to their file id; creating a
 // fresh element clears that legacy representation. Thereafter refresh the SVG
 // image in place and preserve its canvas width as a true visual zoom.
-const applyCodePreviewToNode = async (node, rendered, { relayout = true, select = true, codeNotePath = null, codeNoteBlockId = null, codeDisplayMode = null, sourceLanguage = null, resetSize = false, widthChanged = false } = {}) => {
+const applyCodePreviewToNode = async (node, rendered, { relayout = true, select = true, codeNotePath = null, codeNoteBlockId = null, codeDisplayMode = null, sourceLanguage = null, resetSize = false, widthChanged = false, captureUpdate = null } = {}) => {
   if (!node || !rendered?.dataURL || !isViewSet()) return null;
   const all = ea.getViewElements();
   const current = all.find((element) => element.id === node.id);
@@ -10264,7 +10374,7 @@ const applyCodePreviewToNode = async (node, rendered, { relayout = true, select 
     markdownImage: undefined,
   });
 
-  await addElementsToView({ captureUpdate: relayout ? "EVENTUALLY" : "NEVER" });
+  await addElementsToView({ captureUpdate: captureUpdate || (relayout ? "EVENTUALLY" : "NEVER") });
   const updated = ea.getViewElements().find((element) => element.id === finalNodeId);
   if (!updated) return null;
   if (select) selectNodeInView(updated);
@@ -10276,7 +10386,7 @@ const applyCodePreviewToNode = async (node, rendered, { relayout = true, select 
   return updated;
 };
 
-const renderCodeNoteNodeNow = async (nodeId, { relayout = true, select = true, mode = null, resetSize = false, width = null } = {}) => {
+const renderCodeNoteNodeNow = async (nodeId, { relayout = true, select = true, mode = null, resetSize = false, width = null, captureUpdate = null } = {}) => {
   if (!isViewSet()) return null;
   const targetView = ea.targetView;
   const node = ea.getViewElements().find((element) => element.id === nodeId);
@@ -10292,12 +10402,136 @@ const renderCodeNoteNodeNow = async (nodeId, { relayout = true, select = true, m
   const displaySource = getCodeDisplaySource(source, displayMode);
   const rendered = await renderCodeSourceToSvg(displaySource, path, renderWidth);
   if (ea.targetView !== targetView || !isViewSet()) throw new Error("Drawing changed while rendering code; retry in the original drawing.");
-  return applyCodePreviewToNode(node, rendered, { relayout, select, codeDisplayMode: displayMode, sourceLanguage: source.language, resetSize, widthChanged: width !== null });
+  return applyCodePreviewToNode(node, rendered, { relayout, select, codeDisplayMode: displayMode, sourceLanguage: source.language, resetSize, widthChanged: width !== null, captureUpdate });
 };
 
 const renderCodeNoteNode = (nodeId, options = {}) => queueCodePreviewRender(
   () => queueSceneOperation(() => renderCodeNoteNodeNow(nodeId, options)),
 );
+
+// Normalize text+container pairs without pulling unselected descendants or arrows
+// into the operation. Keep stable IDs across asynchronous pickers.
+const collectBatchNodes = (selected, elements) => {
+  const byId = new Map(elements.filter(el => !el.isDeleted).map(el => [el.id, el]));
+  const unique = new Map();
+  for (const selectedElement of selected) {
+    const node = byId.get(selectedElement.containerId || selectedElement.id);
+    if (!node || ["arrow", "line"].includes(node.type)) continue;
+    const data = node.customData;
+    if (data && (data.mindmapOrder !== undefined || data.growthMode !== undefined || data.isAdditionalRoot)) unique.set(node.id, node);
+  }
+  return [...unique.values()];
+};
+
+const runBatchNodePicker = async () => {
+  if (!isViewSet()) return;
+  const view = ea.targetView;
+  const nodes = collectBatchNodes(ea.getViewSelectedElements(), ea.getViewElements());
+  if (!nodes.length) return void new Notice("Select mindmap nodes first (Shift-click or drag-select).");
+  try {
+    const action = await utils.suggester(
+      ["Text/code wrapping width", "Linked code display mode", "Stroke style", "Stroke color", "Add boxes to text nodes", "Remove boxes from text nodes"],
+      ["width", "mode", "strokeStyle", "strokeColor", "box", "unbox"],
+      `Batch edit ${nodes.length} selected nodes`,
+    );
+    if (!action) return;
+    let value;
+    if (action === "width") value = await utils.suggester(CODE_PREVIEW_WIDTH_OPTIONS.map(String), [...CODE_PREVIEW_WIDTH_OPTIONS], "Wrapping width in canvas units");
+    else if (action === "mode") value = await utils.suggester(CODE_DISPLAY_MODES.map(mode => CODE_DISPLAY_MODE_LABELS[mode]), [...CODE_DISPLAY_MODES], "Code display mode");
+    else if (action === "strokeStyle") value = await utils.suggester(["Solid", "Dashed", "Dotted"], ["solid", "dashed", "dotted"], "Stroke style");
+    else if (action === "strokeColor") {
+      value = await utils.inputPrompt("Stroke color (#RRGGBB)", "#000000");
+      if (value == null) return;
+      value = value.trim();
+      if (!/^#[0-9a-f]{6}$/i.test(value)) return void new Notice("Enter a six-digit hexadecimal color, such as #336699.");
+    } else value = action === "box";
+    if (value == null) return;
+    await queueSceneOperation(async () => {
+      if (ea.targetView !== view) throw new Error("Return to the original drawing and retry the batch edit.");
+      const job = createOperationProgress("Updating selected nodes", nodes.length);
+      const selection = new Set(nodes.map(node => node.id));
+      const roots = new Set();
+      let changed = 0, skipped = 0, failed = 0;
+      try {
+        for (let index = 0; index < nodes.length; index++) {
+          if (!await job.checkpoint(index)) break;
+          const elements = ea.getViewElements();
+          const node = elements.find(el => el.id === nodes[index].id && !el.isDeleted);
+          const text = node?.type === "text" ? node : elements.find(el => el.id === node?.boundElements?.find(bound => bound.type === "text")?.id);
+          const linked = node?.customData?.isCodeNote;
+          const compatible = node && (action === "mode" ? linked : action === "width" ? linked || text : action === "box" || action === "unbox" ? text : !["image", "embeddable"].includes(node.type));
+          if (!compatible) { skipped++; continue; }
+          try {
+            // Finish each node atomically, then allow cancellation before the next.
+            job.committing(`Updating node ${index + 1}/${nodes.length}…`);
+            let updated = node;
+            if (linked && (action === "width" || action === "mode")) {
+              updated = await renderCodeNoteNodeNow(node.id, { [action]: value, relayout: false, select: false, captureUpdate: "IMMEDIATELY" });
+              if (!updated) throw new Error("Code node could not be updated.");
+            } else {
+              ea.clear();
+              ea.copyViewElementsToEAforEditing(text && text.id !== node.id ? [node, text] : [node]);
+              if (action === "width") {
+                const savedStyle = { fontFamily: ea.style.fontFamily, fontSize: ea.style.fontSize };
+                try {
+                  ea.style.fontFamily = text.fontFamily;
+                  ea.style.fontSize = text.fontSize;
+                  const source = text.originalText ?? text.text;
+                  const font = `${text.fontSize}px ${ExcalidrawLib.getFontFamilyString({ fontFamily: text.fontFamily })}`;
+                  const wrapped = ExcalidrawLib.wrapText(source, font, value);
+                  const metrics = ea.measureText(wrapped);
+                  Object.assign(ea.getElement(text.id), { text: wrapped, autoResize: false, width: Math.ceil(metrics.width), height: metrics.height });
+                  ea.addAppendUpdateCustomData(node.id, { nodeWrapWidth: value });
+                } finally { Object.assign(ea.style, savedStyle); }
+              } else if (action === "box" || action === "unbox") {
+                ea.addAppendUpdateCustomData(node.id, { manualBox: value });
+                await addElementsToView({ captureUpdate: "IMMEDIATELY" });
+                if (!!text.containerId !== value) {
+                  const fresh = ea.getViewElements().find(el => el.id === node.id);
+                  const id = await toggleBox("rectangle", { node: fresh, relayout: false, select: false });
+                  updated = ea.getViewElements().find(el => el.id === id) || fresh;
+                }
+              } else {
+                for (const element of ea.getElements()) element[action] = value;
+              }
+              if (ea.getElements().length) await addElementsToView({ captureUpdate: "IMMEDIATELY" });
+              if (action === "width" && text.containerId) {
+                const container = ea.getViewElements().find(el => el.id === text.containerId);
+                if (container) api().updateContainerSize([container]);
+              }
+            }
+            selection.delete(node.id);
+            selection.add(updated.id);
+            const rootId = getHierarchy(updated, ea.getViewElements())?.rootId;
+            if (rootId) roots.add(rootId);
+            changed++;
+          } catch (error) {
+            ea.clear();
+            failed++;
+            console.error(`Mindmap Builder: batch ${action} failed for ${node.id}`, error);
+          } finally {
+            job.resume();
+          }
+        }
+        job.committing("Finishing batch…");
+        // Cancel retains completed nodes without starting further expensive work.
+        if (!job.cancelled && ea.targetView === view && !autoLayoutDisabled && ["width", "mode", "box", "unbox"].includes(action)) {
+          for (const rootId of roots) await triggerGlobalLayout(rootId, false, true);
+        }
+      } finally {
+        if (ea.targetView === view) {
+          const live = new Set(ea.getViewElements().filter(el => !el.isDeleted).map(el => el.id));
+          ea.selectElementsInView([...selection].filter(id => live.has(id)));
+          updateUI();
+        }
+        job.finish(`${job.cancelled ? "Batch cancelled. " : "Batch complete. "}${changed} updated, ${skipped} incompatible skipped, ${failed} failed. Completed edits are retained.`, 6000);
+      }
+    });
+  } catch (error) {
+    console.error("Mindmap Builder: batch edit failed", error);
+    new Notice(error.message || String(error));
+  }
+};
 
 const chooseCodeDisplayMode = async () => {
   const node = getMindmapNodeFromSelection();
@@ -10643,9 +10877,9 @@ const padding = layoutSettings.CONTAINER_PADDING;
  * Creates a container if one doesn't exist, or removes it if it does.
  * @param {string} shape - "rectangle" | "ellipse" | "diamond"
  */
-const toggleBox = async (shape = "rectangle") => {
+const toggleBox = async (shape = "rectangle", { node = null, relayout = true, select = true } = {}) => {
   if (!isViewSet()) return;
-  let sel = getMindmapNodeFromSelection();
+  let sel = node || getMindmapNodeFromSelection();
   if (!sel) return;
   sel = ea.getBoundTextElement(sel, true).sceneElement;
   if (!sel) return;
@@ -10740,7 +10974,7 @@ const toggleBox = async (shape = "rectangle") => {
   delete ea.getElement(oldBindId).customData;
 
   await addElementsToView({
-    captureUpdate: autoLayoutDisabled ? "IMMEDIATELY" : "EVENTUALLY"
+    captureUpdate: !relayout || autoLayoutDisabled ? "IMMEDIATELY" : "EVENTUALLY"
   });
 
   if (!hasContainer) {
@@ -10752,9 +10986,10 @@ const toggleBox = async (shape = "rectangle") => {
   if (!hasContainer) {
     api().updateContainerSize([ea.getViewElements().find((el) => el.id === newBindId)]);
   }
-  selectNodeInView(finalElId);
-  if (!autoLayoutDisabled) await refreshMapLayout();
+  if (select) selectNodeInView(finalElId);
+  if (relayout && !autoLayoutDisabled) await refreshMapLayout();
   updateUI();
+  return finalElId;
 };
 
 /**
@@ -11724,7 +11959,8 @@ const commitEdit = async () => {
       ea.style.fontSize = eaEl.fontSize;
 
       const metrics = ea.measureText(renderedText);
-      const shouldWrap = !isCodeBlock && metrics.width > maxWidth;
+      const nodeWidth = visualNode.customData?.nodeWrapWidth || maxWidth;
+      const shouldWrap = !isCodeBlock && metrics.width > nodeWidth;
 
       if (!shouldWrap) {
         eaEl.autoResize = true;
@@ -11733,7 +11969,7 @@ const commitEdit = async () => {
         eaEl.text = renderedText;
       } else {
         eaEl.autoResize = false;
-        const res = await getAdjustedMaxWidth(textInput, maxWidth);
+        const res = await getAdjustedMaxWidth(textInput, nodeWidth);
         eaEl.width = res.width;
         eaEl.height = res.height;
         eaEl.text = res.wrappedText;
@@ -12532,6 +12768,12 @@ const renderInput = (container, isFloating = false) => {
   }, true);
 
   addButton((btn) => {
+    btn.setIcon("layers");
+    btn.setTooltip("Batch edit selected nodes: width, code mode, stroke style/color, or boxes");
+    btn.onClick(() => runBatchNodePicker());
+  }, true);
+
+  addButton((btn) => {
     btn.setIcon("sparkles");
     btn.setTooltip("Safe assist: import, sources, code summary, questions, evidence review");
     btn.onClick(() => queueSceneOperation(runSafeAssist).catch((error) => new Notice(error.message || String(error))));
@@ -13212,6 +13454,21 @@ const renderBody = (contentEl) => {
     updateKeyHandlerLocation();
   };
 
+  const hotkeyRowRefreshers = [];
+  hkContainer.createEl("p", {
+    text: "Editor: Mindmap Builder text field only. Canvas: the target Excalidraw view, including the builder editor. Global: registered with Obsidian while the builder is active. Obsidian conflict warnings are potential overlaps; editor/native shortcuts may take priority.",
+  });
+  new ea.obsidian.Setting(hkContainer)
+    .setName("Reset all shortcuts")
+    .setDesc("Restore default keys and scopes. Individual rows also have a reset button.")
+    .addButton(button => button.setButtonText("Reset to defaults").onClick(async () => {
+      const confirmed = await utils.suggester(["Keep current shortcuts", "Reset all shortcuts"], [false, true], "Replace your custom keys and scopes?");
+      if (!confirmed) return;
+      userHotkeys = userHotkeys.map(current => JSON.parse(JSON.stringify(DEFAULT_HOTKEYS.find(item => item.action === current.action) || current)));
+      saveHotkeys();
+      new Notice("Shortcut keys and scopes restored to defaults.");
+    }));
+
   const saveHotkeys = () => {
     // Strip out structural keys before saving to settings to maintain a single source of truth
     const hotkeysToSave = userHotkeys.map(h => {
@@ -13227,6 +13484,7 @@ const renderBody = (contentEl) => {
 
     setVal(K_HOTKEYS, hotkeysToSave, true);
     refreshHotkeys();
+    hotkeyRowRefreshers.forEach(refresh => refresh());
   };
 
   const isModified = (current) => {
@@ -13389,11 +13647,22 @@ const renderBody = (contentEl) => {
       span.textContent = getHotkeyDisplayString(userHotkeys[index]);
       restoreBtn.style.display = isModified(userHotkeys[index]) ? "" : "none";
       if (updateScopeUI) updateScopeUI();
+      const current = userHotkeys[index];
+      const scopeName = current.isInputOnly || current.scope === SCOPE.input ? "Editor only" : current.scope === SCOPE.excalidraw ? "Canvas + builder editor" : "Global (Obsidian scope)";
+      const builderConflicts = userHotkeys.filter((other, otherIndex) => otherIndex !== index && hotkeysConflict(current, other)).map(other => getActionLabel(other.action));
+      const obsidianConflict = getObsidianConflict(current);
+      const warnings = [
+        ...builderConflicts.map(name => `Builder conflict: ${name}`),
+        ...(obsidianConflict ? [`Possible Obsidian conflict: ${obsidianConflict}`] : []),
+        ...(isReservedMultilineHotkey(current) ? ["Shift+Enter is reserved for multiline input."] : []),
+      ];
+      setting.setDesc(`${scopeName}${warnings.length ? ` — ${warnings.join("; ")}` : " — no detected conflicts"}`);
 
       const existingAlert = hotkeyDisplay.querySelector(".hotkey-conflict-icon");
       if (existingAlert) existingAlert.remove();
       span.removeClass("has-conflict");
       span.style.color = "";
+      if (warnings.length) span.style.color = "var(--text-warning)";
 
       if (userHotkeys[index].scope === SCOPE.global) {
         const conflict = getObsidianConflict(userHotkeys[index]);
@@ -13488,6 +13757,7 @@ const renderBody = (contentEl) => {
       }
     };
 
+    hotkeyRowRefreshers.push(updateRowUI);
     updateRowUI();
 
     const addBtn = controlDiv.createSpan("clickable-icon setting-add-hotkey-button");
@@ -13829,9 +14099,8 @@ const handleKeydown = (e) => {
   // must remain available for typing characters instead of firing shortcuts.
   if (e.getModifierState?.("AltGraph")) return;
 
-  if (activeImportJob && e.key === "Escape") {
-    activeImportJob.cancelled = true;
-    activeImportJob.notice.setMessage(`Cancelling import at ${activeImportJob.completed}/${activeImportJob.total}…`);
+  if (activeImportJob?.cancellable && e.key === "Escape") {
+    activeImportJob.cancel();
     e.preventDefault();
     e.stopPropagation();
     return;
@@ -16330,6 +16599,10 @@ ea.createSidepanelTab(t("DOCK_TITLE"), true, true).then((tab) => {
   };
 
   tab.onClose = async () => {
+    for (const job of activeOperationJobs) {
+      job.cancel();
+      job.finish("Mindmap Builder closed.", 1000);
+    }
     codeNoteRefreshTimers.forEach((timer) => clearTimeout(timer));
     codeNoteRefreshTimers.clear();
     removeEventListeners();
