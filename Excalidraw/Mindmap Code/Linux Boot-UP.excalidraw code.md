@@ -70,7 +70,7 @@ spl_call_board_init_r:
 ^mindmap-code-fnxqBgm5
 
 
-## asm code
+## c code
 
 ```c
 call_board_init_f_0:
@@ -126,3 +126,66 @@ void board_init_f(ulong dummy)
 }
 ```
 ^mindmap-code-wMRPYJOe
+
+
+
+## text code
+
+```c
+int spl_board_init_f(void)
+{
+        int ret;
+        struct udevice *dev;
+        bool flag;
+        // uint64_t chipid = 0, mac_addr = 0;
+
+#if CONFIG_IS_ENABLED(SYS_I2C_LEGACY)
+        /* init i2c */
+        i2c_init_board();
+#endif
+
+#if CONFIG_IS_ENABLED(KY_POWER)
+        board_pmic_init();
+#endif
+
+        raise_cpu_frequency();
+#if CONFIG_IS_ENABLED(KY_X1_EFUSE)
+        // load_chipid_from_efuse(&chipid);
+#endif
+        // get_mac_address(&mac_addr);
+
+        update_ddr_info();
+
+        // restore prevous saved ddr training info data
+        // flag = restore_ddr_training_info(chipid, mac_addr);
+        flag = true;
+        if (!flag) {
+                // flush data and stack
+                flush_dcache_range(CONFIG_SPL_BSS_START_ADDR, CONFIG_SPL_STACK);
+                flush_dcache_range(round_down((size_t)__data_start, CONFIG_RISCV_CBOM_BLOCK_SIZE),
+                         round_up((size_t)__data_end, CONFIG_RISCV_CBOM_BLOCK_SIZE));
+                icache_disable();
+                dcache_disable();
+                invalidate_dcache_range(CONFIG_SPL_BSS_START_ADDR, CONFIG_SPL_STACK);
+        }
+
+        /* DDR init */
+        ret = uclass_get_device(UCLASS_RAM, 0, &dev);
+        if (ret) {
+                pr_err("DRAM init failed: %d\n", ret);
+                return ret;
+        }
+
+        if (!flag) {
+                icache_enable();
+                dcache_enable();
+        }
+
+        // update_ddr_training_info(chipid, mac_addr);
+        update_ddr_config_info(ddr_cs_num);
+        timer_init();
+
+        return 0;
+}
+```
+^mindmap-code-WjqWFbMm
