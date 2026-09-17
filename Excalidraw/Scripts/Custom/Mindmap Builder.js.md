@@ -9940,7 +9940,8 @@ const getCodeNotePath = async () => {
 
 const CODE_PREVIEW_RENDER_WIDTH = 660;
 const CODE_PREVIEW_MIN_WIDTH = 360;
-const CODE_PREVIEW_MAX_WIDTH = 1200;
+const CODE_PREVIEW_MAX_WIDTH = 4096;
+const CODE_PREVIEW_WIDTH_OPTIONS = Object.freeze([360, 480, 660, 900, 1200, 1600, 2200, 3000, 4096]);
 const CODE_PREVIEW_LEGACY_OVERSIZE_WIDTH = 1800;
 const CODE_PREVIEW_STYLE_PROPERTIES = [
   "display", "position", "box-sizing", "width", "height", "min-width", "max-width", "min-height", "max-height",
@@ -10160,7 +10161,7 @@ const queueCodePreviewRender = (operation) => {
 // images also have a plugin registry entry tied to their file id; creating a
 // fresh element clears that legacy representation. Thereafter refresh the SVG
 // image in place and preserve its canvas width as a true visual zoom.
-const applyCodePreviewToNode = async (node, rendered, { relayout = true, select = true, codeNotePath = null, codeNoteBlockId = null, codeDisplayMode = null, sourceLanguage = null, resetSize = false } = {}) => {
+const applyCodePreviewToNode = async (node, rendered, { relayout = true, select = true, codeNotePath = null, codeNoteBlockId = null, codeDisplayMode = null, sourceLanguage = null, resetSize = false, widthChanged = false } = {}) => {
   if (!node || !rendered?.dataURL || !isViewSet()) return null;
   const all = ea.getViewElements();
   const current = all.find((element) => element.id === node.id);
@@ -10185,7 +10186,8 @@ const applyCodePreviewToNode = async (node, rendered, { relayout = true, select 
   const legacyOversized = current.type === "image" && current.customData?.isCodeNote &&
     !current.customData?.codePreviewSizingVersion && current.width > CODE_PREVIEW_LEGACY_OVERSIZE_WIDTH;
   const displayWidth = !resetSize && current.type === "image" && !legacyOversized && current.customData?.isCodeNote
-    ? Math.max(120, current.width || CODE_PREVIEW_RENDER_WIDTH)
+    ? Math.max(120, (current.width || CODE_PREVIEW_RENDER_WIDTH) * (widthChanged
+      ? rendered.width / Math.max(CODE_PREVIEW_MIN_WIDTH, Math.min(CODE_PREVIEW_MAX_WIDTH, current.customData?.codeRenderWidth || CODE_PREVIEW_RENDER_WIDTH)) : 1))
     : CODE_PREVIEW_RENDER_WIDTH;
   const displayHeight = Math.max(40, displayWidth * rendered.height / rendered.width);
 
@@ -10246,7 +10248,7 @@ const applyCodePreviewToNode = async (node, rendered, { relayout = true, select 
     codeNoteBlockId: blockId,
     codeLanguage: sourceLanguage || current.customData?.codeLanguage || rendered.language || "text",
     codeDisplayMode: codeDisplayMode || current.customData?.codeDisplayMode || "full",
-    codeRenderWidth: current.customData?.codeRenderWidth || CODE_PREVIEW_RENDER_WIDTH,
+    codeRenderWidth: rendered.width,
     codePreviewSizingVersion: 2,
     doNotInvertSVGInDarkMode: true,
   };
@@ -10267,12 +10269,14 @@ const applyCodePreviewToNode = async (node, rendered, { relayout = true, select 
   if (!updated) return null;
   if (select) selectNodeInView(updated);
   if (relayout && !autoLayoutDisabled && current.customData?.autoLayoutDisabled !== true && hierarchy?.rootId) {
-    await triggerGlobalLayout(hierarchy.rootId);
+    // Resizing around the center moves the top/left edge. This is a content
+    // change, not a manual reorder: keep saved sibling order at every depth.
+    await triggerGlobalLayout(hierarchy.rootId, false, true);
   }
   return updated;
 };
 
-const renderCodeNoteNodeNow = async (nodeId, { relayout = true, select = true, mode = null, resetSize = false } = {}) => {
+const renderCodeNoteNodeNow = async (nodeId, { relayout = true, select = true, mode = null, resetSize = false, width = null } = {}) => {
   if (!isViewSet()) return null;
   const targetView = ea.targetView;
   const node = ea.getViewElements().find((element) => element.id === nodeId);
@@ -10283,19 +10287,19 @@ const renderCodeNoteNodeNow = async (nodeId, { relayout = true, select = true, m
 
   const source = await getCodeNoteSource(path, blockId);
   if (!source) throw new Error(`Code block ${blockId} was not found in ${path}`);
-  const renderWidth = node.customData?.codeRenderWidth || CODE_PREVIEW_RENDER_WIDTH;
+  const renderWidth = width ?? node.customData?.codeRenderWidth ?? CODE_PREVIEW_RENDER_WIDTH;
   const displayMode = mode || node.customData?.codeDisplayMode || "full";
   const displaySource = getCodeDisplaySource(source, displayMode);
   const rendered = await renderCodeSourceToSvg(displaySource, path, renderWidth);
   if (ea.targetView !== targetView || !isViewSet()) throw new Error("Drawing changed while rendering code; retry in the original drawing.");
-  return applyCodePreviewToNode(node, rendered, { relayout, select, codeDisplayMode: displayMode, sourceLanguage: source.language, resetSize });
+  return applyCodePreviewToNode(node, rendered, { relayout, select, codeDisplayMode: displayMode, sourceLanguage: source.language, resetSize, widthChanged: width !== null });
 };
 
 const renderCodeNoteNode = (nodeId, options = {}) => queueCodePreviewRender(
   () => queueSceneOperation(() => renderCodeNoteNodeNow(nodeId, options)),
 );
 
-const cycleCodeDisplayMode = async (resetSize = false) => {
+const chooseCodeDisplayMode = async () => {
   const node = getMindmapNodeFromSelection();
   if (!node?.customData?.isCodeNote) {
     new Notice("Select a linked code note to change its display mode.");
@@ -10303,20 +10307,57 @@ const cycleCodeDisplayMode = async (resetSize = false) => {
   }
   const targetView = ea.targetView;
   try {
+    const currentMode = CODE_DISPLAY_MODES.includes(node.customData.codeDisplayMode) ? node.customData.codeDisplayMode : "full";
+    const choice = await utils.suggester(
+      CODE_DISPLAY_MODES.map((mode) => `${CODE_DISPLAY_MODE_LABELS[mode]}${mode === currentMode ? " — current" : ""}`),
+      [...CODE_DISPLAY_MODES],
+      "Choose linked code display mode",
+    );
+    if (choice == null) return;
     await queueSceneOperation(async () => {
       if (ea.targetView !== targetView) throw new Error("Return to the drawing before changing code display.");
       const fresh = ea.getViewElements().find((element) => element.id === node.id && !element.isDeleted);
       if (!fresh?.customData?.isCodeNote) throw new Error("The selected code node is no longer available.");
       const current = CODE_DISPLAY_MODES.includes(fresh.customData.codeDisplayMode) ? fresh.customData.codeDisplayMode : "full";
-      const next = resetSize ? current : CODE_DISPLAY_MODES[(CODE_DISPLAY_MODES.indexOf(current) + 1) % CODE_DISPLAY_MODES.length];
-      const updated = await renderCodeNoteNodeNow(node.id, { mode: next, resetSize });
+      const next = choice;
+      if (!CODE_DISPLAY_MODES.includes(next) || next === current) return;
+      const updated = await renderCodeNoteNodeNow(node.id, { mode: next });
       if (!updated) throw new Error("Code preview could not be updated.");
-      new Notice(resetSize ? `Code size reset to ${CODE_PREVIEW_RENDER_WIDTH} canvas units.` : `Code display: ${CODE_DISPLAY_MODE_LABELS[next]}`);
+      new Notice(`Code display: ${CODE_DISPLAY_MODE_LABELS[next]}`);
       updateUI();
     });
   } catch (error) {
     console.error("Mindmap Builder: code display failed", error);
     new Notice(error.message || "Could not change code display.");
+  }
+};
+
+const chooseCodePreviewWidth = async () => {
+  const node = getMindmapNodeFromSelection();
+  if (!node?.customData?.isCodeNote) {
+    new Notice("Select a linked code node first.");
+    return;
+  }
+  const view = ea.targetView;
+  const current = node.customData.codeRenderWidth || CODE_PREVIEW_RENDER_WIDTH;
+  const next = CODE_PREVIEW_WIDTH_OPTIONS.find((width) => width > current) || CODE_PREVIEW_WIDTH_OPTIONS[0];
+  try {
+    const width = await utils.suggester(
+      [`Next width (${next})`, ...CODE_PREVIEW_WIDTH_OPTIONS.map((value) => `${value}${value === current ? " — current" : ""}`)],
+      [next, ...CODE_PREVIEW_WIDTH_OPTIONS],
+      "Code wrapping width — wider means fewer wrapped lines; canvas scale is preserved",
+    );
+    if (width == null) return;
+    await queueSceneOperation(async () => {
+      if (ea.targetView !== view) throw new Error("Return to the original drawing before changing code width.");
+      const updated = await renderCodeNoteNodeNow(node.id, { width });
+      if (!updated) throw new Error("The code node is no longer available.");
+      new Notice(`Code wrapping width: ${width}`);
+      updateUI();
+    });
+  } catch (error) {
+    console.error("Mindmap Builder: code width change failed", error);
+    new Notice(error.message || "Could not change code width.");
   }
 };
 
@@ -10424,7 +10465,7 @@ const auditCurrentMapCodeNotes = async () => {
       console.error(`Mindmap Builder: could not render code preview ${node.id}`, error);
     }
   }
-  for (const rootId of roots) await triggerGlobalLayout(rootId);
+  for (const rootId of roots) await triggerGlobalLayout(rootId, false, true);
 };
 
 const codeNoteRefreshTimers = new Map();
@@ -10451,7 +10492,7 @@ const scheduleCodeNoteRefresh = (path) => {
         console.error(`Mindmap Builder: could not update code preview ${node.id}`, error);
       }
     }
-    for (const rootId of roots) await triggerGlobalLayout(rootId);
+    for (const rootId of roots) await triggerGlobalLayout(rootId, false, true);
   }, 400));
 };
 
@@ -12480,14 +12521,14 @@ const renderInput = (container, isFloating = false) => {
 
   addButton((btn) => {
     btn.setIcon("eye");
-    btn.setTooltip("Cycle linked code display: full, preview, excerpt, summary");
-    btn.onClick(() => cycleCodeDisplayMode());
+    btn.setTooltip("Choose linked code display: Full, Preview, Excerpt, or Summary");
+    btn.onClick(() => chooseCodeDisplayMode());
   }, true);
 
   addButton((btn) => {
-    btn.setIcon("minimize-2");
-    btn.setTooltip("Reset selected linked code width to 660 canvas units; preserve display mode");
-    btn.onClick(() => cycleCodeDisplayMode(true));
+    btn.setIcon("move-horizontal");
+    btn.setTooltip("Choose code wrapping width (360–4096) or step to the next width; preserve canvas scale");
+    btn.onClick(() => chooseCodePreviewWidth());
   }, true);
 
   addButton((btn) => {
