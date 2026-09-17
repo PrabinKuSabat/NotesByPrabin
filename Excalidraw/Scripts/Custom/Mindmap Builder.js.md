@@ -88,7 +88,7 @@ if (existingTab) {
  */
 const removeKeydownHandlers = () => {
   if (!window.MindmapBuilder) return;
-  window.MindmapBuilder.keydownHandlers.forEach((f) => {
+  (window.MindmapBuilder.keydownHandlers || []).forEach((f) => {
     try {
       f();
     } catch (e) {
@@ -2030,9 +2030,14 @@ const htmlToMarkdown = (html) => {
     .trim();
 };
 
+const getActiveClipboard = () =>
+  app.workspace.activeLeaf?.view?.containerEl?.ownerDocument?.defaultView?.navigator?.clipboard ||
+  ea.targetView?.ownerWindow?.navigator?.clipboard || navigator.clipboard;
+
 const readClipboardText = async () => {
+  const clipboard = getActiveClipboard();
   try {
-    const items = await navigator.clipboard.read();
+    const items = await clipboard.read();
     const item = items.find((candidate) => candidate.types.includes("text/html") || candidate.types.includes("text/plain"));
     if (item?.types.includes("text/html")) {
       const markdown = htmlToMarkdown(await (await item.getType("text/html")).text());
@@ -2042,7 +2047,7 @@ const readClipboardText = async () => {
   } catch (e) {
     // ClipboardItem access is not available in every Obsidian/Electron build.
   }
-  return normalizeClipboardText(await navigator.clipboard.readText());
+  return normalizeClipboardText(await clipboard.readText());
 };
 
 let activeImportJob = null;
@@ -2688,14 +2693,14 @@ let RUNTIME_HOTKEYS = generateRuntimeHotkeys();
 /**
  * Returns the current scope context for the hotkey
  **/
-const getHotkeyContext = () => {
-  if (!isViewSet()) return SCOPE.none;
+const hasVisibleMindmapTarget = () => !!(isViewSet() && ea.targetView.leaf?.isVisible?.());
+const getHotkeyContext = (event = null) => {
+  if (!hasVisibleMindmapTarget()) return SCOPE.none;
 
-  const currentWindow = isUndocked && floatingInputModal ?
-    ea.targetView?.ownerWindow :
-    sidepanelWindow;
+  const currentWindow = event?.target?.ownerDocument?.defaultView ||
+    (isUndocked ? ea.targetView?.ownerWindow : sidepanelWindow) || ea.targetView?.ownerWindow;
 
-  if (currentWindow.document?.activeElement === inputEl || currentWindow.document?.activeElement === ontologyEl) {
+  if (currentWindow?.document?.activeElement === inputEl || currentWindow?.document?.activeElement === ontologyEl) {
     return SCOPE.input;
   }
 
@@ -2703,7 +2708,7 @@ const getHotkeyContext = () => {
   if (!leaf) return SCOPE.none;
   if (
     ea.targetView.leaf === leaf ||
-    (ea.getSidepanelLeaf() === leaf && ea.sidepanelTab.isVisible())
+    (ea.getSidepanelLeaf() === leaf && ea.sidepanelTab?.isVisible())
   ) {
     return SCOPE.excalidraw;
   }
@@ -2840,7 +2845,7 @@ const getMindmapNodeFromSelection = () => {
       selectedElements[0].customData.hasOwnProperty("mindmapOrder") ||
       selectedElements[0].customData.hasOwnProperty("growthMode")
     )) {
-    if (selectedElements[0].type === "text" && selectedElements[0].boundElements.length === 0 && !!selectedElements[0].containerId) {
+    if (selectedElements[0].type === "text" && !selectedElements[0].boundElements?.length && !!selectedElements[0].containerId) {
       const node = ea.getViewElements().find((el) => el.id === selectedElements[0].containerId);
       mostRecentlySelectedNodeID = node?.id;
       return node;
@@ -2864,14 +2869,14 @@ const getMindmapNodeFromSelection = () => {
   // Possibly Text + Container Selection
   if (selectedElements.length === 2) {
     const textEl = selectedElements.find((el) => el.type === "text");
-    if (textEl && textEl.boundElements.length > 0 && textEl.customData.hasOwnProperty("mindmapOrder")) {
+    if (textEl && textEl.boundElements?.length > 0 && textEl.customData.hasOwnProperty("mindmapOrder")) {
       mostRecentlySelectedNodeID = textEl.id;
       return textEl;
     } else if (textEl) {
       const containerId = textEl.containerId;
       if (containerId) {
         const container = selectedElements.find((el) => el.id === containerId);
-        if (container && container.boundElements.length > 0 && container.customData.hasOwnProperty("mindmapOrder")) {
+        if (container && container.boundElements?.length > 0 && container.customData.hasOwnProperty("mindmapOrder")) {
           mostRecentlySelectedNodeID = container.id;
           return container;
         }
@@ -8550,7 +8555,7 @@ const pasteElementToMap = async () => {
   let blob = null;
   let mimeType = null;
   try {
-    const items = await navigator.clipboard.read();
+    const items = await getActiveClipboard().read();
     for (const item of items) {
       const imageType = item.types.find(t => t.startsWith("image/"));
       if (imageType) {
@@ -11124,8 +11129,9 @@ let presetDropdown, presetWarningEl, presetSaveBtn, presetTrashBtn, presetPlusBt
 // ---------------------------------------------------------------------------
 // Focus Management & UI State
 // ---------------------------------------------------------------------------
-const registerKeydownHandler = (host, handler) => {
-  removeKeydownHandlers();
+const registerKeydownHandler = (host, handler, replace = true) => {
+  if (replace) removeKeydownHandlers();
+  if (!host?.addEventListener) return;
   if (!window.MindmapBuilder) return; //Mindmap Builder has closed
   if (!window.MindmapBuilder.keydownHandlers) {
     window.MindmapBuilder.keydownHandlers = [];
@@ -11136,18 +11142,20 @@ const registerKeydownHandler = (host, handler) => {
 
 const registerObsidianHotkeyOverrides = () => {
   window.MindmapBuilder?.popObsidianHotkeyScope?.();
+  if (!window.MindmapBuilder || !hasVisibleMindmapTarget()) return;
   const keymapScope = app.keymap.getRootScope();
   const handlers = [];
-  const context = getHotkeyContext();
-
-  if (context === SCOPE.none) return;
   const reg = (mods, key) => {
-    const handler = keymapScope.register(mods, key, (e) => true);
+    // This is a fallback dispatcher, not a no-op override. Context is checked
+    // for the actual event, so changing panes cannot leave stale scope rules.
+    const handler = keymapScope.register(mods, key, (event) => {
+      handleKeydown(event);
+      return handledMindmapKeyEvents.has(event) ? false : true;
+    });
     handlers.push(handler);
   };
 
   RUNTIME_HOTKEYS.forEach(h => {
-    if (context < getEffectiveHotkeyScope(h)) return;
     if (h.key) reg(h.modifiers, h.key);
     if (h.code) {
       const char = h.code.replace("Key", "").replace("Digit", "").toLowerCase();
@@ -13859,17 +13867,14 @@ const removeStyles = () => {
 };
 
 const updateKeyHandlerLocation = () => {
-  // Attach to the appropriate window based on state
-  if (isUndocked) {
-    // Floating: Input is reparented to targetView's window
-    if (ea.targetView && ea.targetView.ownerWindow) {
-      registerKeydownHandler(ea.targetView.ownerWindow, handleKeydown);
-    }
-  } else {
-    // Docked: Input is in the sidepanel's window
-    if (sidepanelWindow) {
-      registerKeydownHandler(sidepanelWindow, handleKeydown);
-    }
+  removeKeydownHandlers();
+  if (!hasVisibleMindmapTarget()) return;
+  // The drawing, sidepanel, and active Markdown/PDF pane can live in different
+  // Obsidian windows. Register each once; never remove the preceding window.
+  const hosts = new Set([window, sidepanelWindow, ea.targetView?.ownerWindow,
+    app.workspace.activeLeaf?.view?.containerEl?.ownerDocument?.defaultView]);
+  for (const host of hosts) {
+    if (host) registerKeydownHandler(host, handleKeydown, false);
   }
 };
 
@@ -14091,7 +14096,9 @@ const getActionFromEvent = (e) => {
  * 
  * @param {KeyboardEvent} e 
  */
+const handledMindmapKeyEvents = new WeakSet();
 const handleKeydown = (e) => {
+  if (handledMindmapKeyEvents.has(e)) return;
   // Fix for IME (Korean, Chinese, Japanese, etc.) composition issues
   // Prevents "Enter" from triggering actions when it's just confirming a character selection
   if (e.isComposing || e.keyCode === 229) return;
@@ -14109,11 +14116,8 @@ const handleKeydown = (e) => {
   if (isRecordingHotkey) return;
   if (!ea.targetView || !ea.targetView.leaf.isVisible()) return;
 
-  const currentWindow = isUndocked && floatingInputModal ?
-    ea.targetView?.ownerWindow :
-    sidepanelWindow;
-
-  if (!currentWindow) return;
+  // Do not operate on the map behind an unrelated dialog/picker.
+  if (e.target?.closest?.(".modal-container") && !floatingInputModal?.modalEl?.contains(e.target)) return;
 
   // The primary editor is deliberately multiline. Keep the established Enter
   // shortcuts for map actions, while unmodified Shift+Enter always inserts a
@@ -14158,7 +14162,7 @@ const handleKeydown = (e) => {
 
   if (!action && !["Tab", "Enter"].includes(e.key)) return;
 
-  let context = getHotkeyContext();
+  let context = getHotkeyContext(e);
 
   // Local Tab handling for floating modal to keep focus cycling inside
   if (!action && isUndocked && floatingInputModal && e.key === "Tab") {
@@ -14219,10 +14223,13 @@ const handleKeydown = (e) => {
     return;
   }
 
+  handledMindmapKeyEvents.add(e);
   e.preventDefault();
-  e.stopPropagation();
+  e.stopImmediatePropagation();
 
-  void performAction(action, e).catch((error) => {
+  // Do not let a queued key event act on a different drawing after a pane switch.
+  const targetView = ea.targetView;
+  void performAction(action, e, targetView).catch((error) => {
     console.error(`Mindmap Builder: hotkey action "${action}" failed`, error);
     new Notice(`Mindmap Builder: ${getActionLabel(action)} failed. Check the developer console for details.`);
   });
@@ -14886,7 +14893,7 @@ const performActionNow = async (action, event) => {
       break;
 
     case ACTION_SORT_ORDER:
-      changeNodeOrder(event?.key);
+      await changeNodeOrder(event?.key);
       updateUI();
       break;
 
@@ -15053,8 +15060,11 @@ const performActionNow = async (action, event) => {
 // All toolbar buttons, public API calls, and hotkeys go through one scene
 // queue. Internal chained actions call performActionNow() to avoid queuing
 // behind themselves.
-const performAction = (action, event) => queueSceneOperation(
-  () => performActionNow(action, event),
+const performAction = (action, event, targetView = ea.targetView) => queueSceneOperation(
+  () => {
+    if (ea.targetView !== targetView) throw new Error("The active drawing changed before the action could run. Retry in the intended drawing.");
+    return performActionNow(action, event);
+  },
 );
 
 // ---------------------------------------------------------------------------
@@ -16409,9 +16419,7 @@ ea.createSidepanelTab(t("DOCK_TITLE"), true, true).then((tab) => {
     sidepanelWindow = newWin;
     registerStyles(newWin?.document);
     // If we are docked, re-attach to the new window immediately
-    if (!isUndocked && sidepanelWindow) {
-      registerKeydownHandler(sidepanelWindow, handleKeydown);
-    }
+    updateKeyHandlerLocation();
   };
 
   // When the view closes, ensure we dock the input back so it's not lost in floating limbo
@@ -16516,7 +16524,10 @@ ea.createSidepanelTab(t("DOCK_TITLE"), true, true).then((tab) => {
 
   const onFocus = (view) => {
     if (!view || !ea.isExcalidrawView(view)) {
-      detachFromExcalidrawView();
+      if (hasVisibleMindmapTarget()) {
+        updateKeyHandlerLocation();
+        registerObsidianHotkeyOverrides();
+      } else detachFromExcalidrawView();
       return;
     }
 
@@ -16542,7 +16553,12 @@ ea.createSidepanelTab(t("DOCK_TITLE"), true, true).then((tab) => {
     const isExcalidrawLeaf = !!leaf && ea.isExcalidrawView(leaf.view);
     const isSidepanelLeaf = !!leaf && ea.getSidepanelLeaf?.() === leaf;
     if (!isExcalidrawLeaf && !isSidepanelLeaf) {
-      detachFromExcalidrawView();
+      // Global means other panes may be active while this drawing is visible.
+      // Do not clear the view/workbench or discard selection in that case.
+      if (hasVisibleMindmapTarget()) {
+        updateKeyHandlerLocation();
+        registerObsidianHotkeyOverrides();
+      } else detachFromExcalidrawView();
       if (floatingInputModal?.modalEl) floatingInputModal.modalEl.style.display = "none";
       return;
     }
