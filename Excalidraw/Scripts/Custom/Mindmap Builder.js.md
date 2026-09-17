@@ -55,10 +55,10 @@ When nodes resize (e.g. text edit), the script intelligently re-positions groupe
 **/
 
 /* --- Initialization Logic --- */
-const VERSION = "test";
+const VERSION = "custom-2026.09.17";
 
 if (!ea.verifyMinimumPluginVersion || !ea.verifyMinimumPluginVersion("2.23.4")) {
-  new Notice("Please update the Excalidraw Plugin to version 2.21.0 or higher.");
+  new Notice("Please update the Excalidraw Plugin to version 2.23.4 or higher.");
   return;
 }
 
@@ -128,6 +128,18 @@ if (!window.MindmapBuilder) {
 const api = () => ea?.getExcalidrawAPI();
 const getAppState = () => api()?.getAppState();
 const isViewSet = () => ea.targetView && ea.targetView._loaded;
+
+// ExcalidrawAutomate has one mutable workbench per EA instance. Every scene
+// operation must therefore run serially; otherwise one action's ea.clear()
+// can discard another action's staged elements while it is awaiting I/O.
+let sceneOperationQueue = Promise.resolve();
+const queueSceneOperation = (operation) => {
+  const queued = sceneOperationQueue.then(operation, operation);
+  sceneOperationQueue = queued.catch((error) => {
+    console.error("Mindmap Builder: scene operation failed", error);
+  });
+  return queued;
+};
 
 // ---------------------------------------------------------------------------
 // LOCALIZATION
@@ -2642,10 +2654,11 @@ ${t("INSTRUCTIONS")}
 <a href="https://www.youtube.com/watch?v=5G9QF-u9w0Q" target="_blank"><img src ="https://i.ytimg.com/vi/5G9QF-u9w0Q/maxresdefault.jpg" style="max-width:560px; width:100%"></a>
 `;
 
-// addElementsToView with different defaults compared to EA
+// Commit persistent mind-map edits through EA's public save path. Callers that
+// are intentionally building a transient preview must opt out explicitly.
 const addElementsToView = async ({
   repositionToCursor = false,
-  save = false,
+  save = true,
   newElementsOnTop = true,
   shouldRestoreElements = true,
   captureUpdate = "IMMEDIATELY",
@@ -10020,16 +10033,17 @@ const applyCodePreviewToNode = async (node, rendered, { relayout = true, select 
     codePreviewSizingVersion: 2,
     doNotInvertSVGInDarkMode: true,
   };
-  delete migratedData.isCodeBlock;
-  delete migratedData.isCodeCollapsed;
-  delete migratedData.codeSource;
-  delete migratedData.codePreviewWidth;
-  delete migratedData.codePreviewMaxHeight;
-  delete migratedData.markdownImage;
-  // Direct replacement is required here. addAppendUpdateCustomData() merges
-  // objects and can leave the legacy markdownImage flag behind, causing the
-  // plugin to ignore the new SVG and display a broken-image placeholder.
-  finalNode.customData = migratedData;
+  // Use EA's supported patch API. Explicit undefined values remove legacy
+  // flags without discarding unrelated data that another script may own.
+  ea.addAppendUpdateCustomData(finalNodeId, {
+    ...migratedData,
+    isCodeBlock: undefined,
+    isCodeCollapsed: undefined,
+    codeSource: undefined,
+    codePreviewWidth: undefined,
+    codePreviewMaxHeight: undefined,
+    markdownImage: undefined,
+  });
 
   await addElementsToView({ captureUpdate: relayout ? "EVENTUALLY" : "NEVER" });
   const updated = ea.getViewElements().find((element) => element.id === finalNodeId);
@@ -10057,7 +10071,7 @@ const renderCodeNoteNodeNow = async (nodeId, { relayout = true, select = true } 
 };
 
 const renderCodeNoteNode = (nodeId, options = {}) => queueCodePreviewRender(
-  () => renderCodeNoteNodeNow(nodeId, options),
+  () => queueSceneOperation(() => renderCodeNoteNodeNow(nodeId, options)),
 );
 
 // Reuse a fenced block already stored in any Markdown note. The source note
@@ -10073,10 +10087,10 @@ const linkSelectedNodeToExistingCodeNote = async (link) => {
   }
   try {
     const { path, blockId, source } = await resolveCodeNoteBlockLink(link);
-    const updated = await queueCodePreviewRender(async () => {
+    const updated = await queueCodePreviewRender(() => queueSceneOperation(async () => {
       const rendered = await renderCodeSourceToSvg(source, path, CODE_PREVIEW_RENDER_WIDTH);
       return applyCodePreviewToNode(node, rendered, { codeNotePath: path, codeNoteBlockId: blockId });
-    });
+    }));
     if (!updated) throw new Error("The selected map node could not be updated.");
     inputEl.value = "";
     editingNodeId = null;
@@ -10608,7 +10622,6 @@ const registerObsidianHotkeyOverrides = () => {
   const reg = (mods, key) => {
     const handler = keymapScope.register(mods, key, (e) => true);
     handlers.push(handler);
-    keymapScope.keys.unshift(keymapScope.keys.pop());
   };
 
   RUNTIME_HOTKEYS.forEach(h => {
@@ -13185,13 +13198,15 @@ const renderBody = (contentEl) => {
 };
 
 const MINDMAP_FOCUS_STYLE_ID = "excalidraw-mindmap-focus-style";
+const mindmapStyleDocuments = new Set();
 
-const registerStyles = () => {
+const registerStyles = (styleDocument = document) => {
+  if (!styleDocument?.head) return;
   // Remove existing styles first to ensure updates are applied immediately
-  const existing = document.getElementById(MINDMAP_FOCUS_STYLE_ID);
+  const existing = styleDocument.getElementById(MINDMAP_FOCUS_STYLE_ID);
   if (existing) existing.remove();
 
-  const styleEl = document.createElement("style");
+  const styleEl = styleDocument.createElement("style");
   styleEl.id = MINDMAP_FOCUS_STYLE_ID;
   styleEl.textContent = [
     ".modal.excalidraw-mindmap-ui {",
@@ -13251,12 +13266,15 @@ const registerStyles = () => {
     "  cursor: grabbing;",
     "}"
   ].join("\n");
-  document.head.appendChild(styleEl);
+  styleDocument.head.appendChild(styleEl);
+  mindmapStyleDocuments.add(styleDocument);
 };
 
 const removeStyles = () => {
-  const styleEl = document.getElementById(MINDMAP_FOCUS_STYLE_ID);
-  if (styleEl) styleEl.remove();
+  mindmapStyleDocuments.forEach((styleDocument) => {
+    styleDocument.getElementById(MINDMAP_FOCUS_STYLE_ID)?.remove();
+  });
+  mindmapStyleDocuments.clear();
 };
 
 const updateKeyHandlerLocation = () => {
@@ -13685,7 +13703,7 @@ const addSibling = async (event, insertAfter = true) => {
   inputEl.value = "";
   ontologyEl.value = "";
   updateUI();
-  await performAction(ACTION_ADD, event); // Move selection to new node
+  await performActionNow(ACTION_ADD, event); // Move selection to new node
 }
 
 // Helper for retrieving Tasks plugin configuration and formats
@@ -14191,7 +14209,7 @@ const openCalendarModal = async () => {
   modal.open();
 };
 
-const performAction = async (action, event) => {
+const performActionNow = async (action, event) => {
   if (!action || !ea.targetView) return;
   switch (action) {
     case ACTION_CALENDAR:
@@ -14451,6 +14469,13 @@ const performAction = async (action, event) => {
       break;
   }
 };
+
+// All toolbar buttons, public API calls, and hotkeys go through one scene
+// queue. Internal chained actions call performActionNow() to avoid queuing
+// behind themselves.
+const performAction = (action, event) => queueSceneOperation(
+  () => performActionNow(action, event),
+);
 
 // ---------------------------------------------------------------------------
 // 11. Public Puppeteering API (minimal-impact wrappers)
@@ -15685,9 +15710,10 @@ const handleCanvasPointerDown = (e) => {
 ea.createSidepanelTab(t("DOCK_TITLE"), true, true).then((tab) => {
 
   if (!tab) return;
-  registerStyles();
+  registerStyles(tab.contentEl?.ownerDocument);
   tab.onWindowMigrated = (newWin) => {
     sidepanelWindow = newWin;
+    registerStyles(newWin?.document);
     // If we are docked, re-attach to the new window immediately
     if (!isUndocked && sidepanelWindow) {
       registerKeydownHandler(sidepanelWindow, handleKeydown);
@@ -15707,6 +15733,7 @@ ea.createSidepanelTab(t("DOCK_TITLE"), true, true).then((tab) => {
 
   tab.onOpen = () => {
     const contentEl = tab.contentEl;
+    registerStyles(contentEl.ownerDocument);
     contentEl.classList.add("excalidraw-mindmap-ui");
     if (!contentEl.hasChildNodes()) {
       renderHelp(contentEl);
@@ -15780,8 +15807,24 @@ ea.createSidepanelTab(t("DOCK_TITLE"), true, true).then((tab) => {
     }
   };
 
+  const detachFromExcalidrawView = () => {
+    mostRecentlySelectedNodeID = null;
+    // Keep workspace/vault subscriptions alive so a later return to an
+    // Excalidraw leaf can bind again; only view-bound listeners and hotkeys
+    // must be removed here.
+    removeKeydownHandlers();
+    window.MindmapBuilder?.popObsidianHotkeyScope?.();
+    window.MindmapBuilder?.removePointerDownHandler?.();
+    ea.clear();
+    ea.setView(null);
+    updateUI();
+  };
+
   const onFocus = (view) => {
-    if (!view) return;
+    if (!view || !ea.isExcalidrawView(view)) {
+      detachFromExcalidrawView();
+      return;
+    }
 
     if (ea.targetView !== view) {
       mostRecentlySelectedNodeID = null;
@@ -15802,7 +15845,15 @@ ea.createSidepanelTab(t("DOCK_TITLE"), true, true).then((tab) => {
   const onActiveLeafChange = (leaf) => {
     if (cancelHotkeyRecording) cancelHotkeyRecording();
 
-    if (ea.targetView !== leaf.view && ea.isExcalidrawView(leaf.view)) {
+    const isExcalidrawLeaf = !!leaf && ea.isExcalidrawView(leaf.view);
+    const isSidepanelLeaf = !!leaf && ea.getSidepanelLeaf?.() === leaf;
+    if (!isExcalidrawLeaf && !isSidepanelLeaf) {
+      detachFromExcalidrawView();
+      if (floatingInputModal?.modalEl) floatingInputModal.modalEl.style.display = "none";
+      return;
+    }
+
+    if (isExcalidrawLeaf && ea.targetView !== leaf.view) {
       mostRecentlySelectedNodeID = null;
       if (ea.targetView) removeEventListeners(ea.targetView);
       ea.setView(leaf.view);
