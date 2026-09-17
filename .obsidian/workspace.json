@@ -4,43 +4,43 @@
     "type": "split",
     "children": [
       {
-        "id": "29672806bc04fd0e",
+        "id": "914423c9809d5448",
         "type": "tabs",
-        "dimension": 68.43607305936074,
+        "dimension": 68.26697892271663,
         "children": [
           {
-            "id": "d491050571fd89ca",
+            "id": "bf55ed581034d57b",
             "type": "leaf",
             "state": {
               "type": "pdf",
               "state": {
-                "file": "Extras/Pdfs/Computer Architecture - A Quantitative Approach (John L. Hennessy,.pdf",
-                "page": 305,
-                "left": -20,
-                "top": 1048,
-                "zoom": 0.884157631188925
+                "file": "Extras/Pdfs/Introduction to Algorithms, Fourth Edition - Thomas H. Cormen;Charles E. Leiserson;Rona.pdf",
+                "page": 482,
+                "left": -11,
+                "top": 659,
+                "zoom": 1.3725490196078434
               },
               "icon": "lucide-file-text",
-              "title": "Computer Architecture - A Quantitative Approach (John L. Hennessy,"
+              "title": "Introduction to Algorithms, Fourth Edition - Thomas H. Cormen;Charles E. Leiserson;Rona"
             }
           }
         ]
       },
       {
-        "id": "9cd8b5fdcaff6ebc",
+        "id": "3b599b969a32e37b",
         "type": "tabs",
-        "dimension": 31.56392694063927,
+        "dimension": 31.733021077283375,
         "children": [
           {
-            "id": "b6b513a25f296189",
+            "id": "0288b80678ebbe7b",
             "type": "leaf",
             "state": {
               "type": "excalidraw",
               "state": {
-                "file": "Excalidraw/Quantitative Design and Analysis.excalidraw.md"
+                "file": "Excalidraw/Drawing 2026-09-17 20.14.27.excalidraw.md"
               },
               "icon": "excalidraw-icon",
-              "title": "Quantitative Design and Analysis.excalidraw"
+              "title": "Drawing 2026-09-17 20.14.27.excalidraw"
             }
           }
         ]
@@ -252,11 +252,15 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "b6b513a25f296189",
+  "active": "bf55ed581034d57b",
   "lastOpenFiles": [
+    "Excalidraw/Drawing 2026-09-17 20.14.27.excalidraw.md",
+    "Extras/Pdfs/Introduction to Algorithms, Fourth Edition - Thomas H. Cormen;Charles E. Leiserson;Rona.pdf",
+    "Homepage.md",
     "Extras/Pdfs/Computer Architecture - A Quantitative Approach (John L. Hennessy,.pdf",
     "Excalidraw/Quantitative Design and Analysis.excalidraw.md",
-    "Homepage.md",
+    "Extras/Pdfs/Wayfinder_ Automated Operating System Spec - Alexander Jung.pdf",
+    "Extras/Pdfs/Hands-On Machine Learning with Scikit-Lear - Geron, Aurelien;.pdf",
     "Excalidraw/Linux Boot-UP.excalidraw.md",
     "Extras/ATTACHMENTS/Pasted Image 20260917145518_717.svg",
     "Extras/ATTACHMENTS/Pasted Image 20260917145511_300.svg",
@@ -279,9 +283,6 @@
     "Extras/ICONS/tabler-icons-main/turbo.json",
     "Extras/ICONS/tabler-icons-main/test/test-astro/src/styles/index.css",
     "Extras/ICONS/tabler-icons-main/test/test-astro/src/styles/app.css",
-    "Extras/ICONS/tabler-icons-main/test/test-angular/src/app/app.component.ts",
-    "Extras/ICONS/tabler-icons-main/test/test-angular/src/app/app.component.html",
-    "Extras/ICONS/tabler-icons-main/test/test-astro/src/pages/index.astro",
     "Extras/ICONS/tabler-icons-main/test/test-svelte/README.md",
     "Extras/ICONS/tabler-icons-main/test/test-vue/README.md",
     "Extras/ICONS/tabler-icons-main/packages/icons-webfont/README.md",
@@ -298,7 +299,6 @@
     "Extras/ICONS/tabler-icons-main/packages/icons-eps/README.md",
     "Extras/ICONS/tabler-icons-main/packages/icons-astro/README.md",
     "Extras/ICONS/tabler-icons-main/packages/icons-angular/README.md",
-    "Extras/ICONS/tabler-icons-main/packages/icons/README.md",
     "EFFORTS/Untitled.canvas",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "EFFORTS/Binary Search.canvas",

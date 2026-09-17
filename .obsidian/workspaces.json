@@ -276,7 +276,7 @@
                     "file": "Extras/Pdfs/Computer Architecture - A Quantitative Approach (John L. Hennessy,.pdf",
                     "page": 305,
                     "left": -20,
-                    "top": 1189,
+                    "top": 1048,
                     "zoom": 0.884157631188925
                   },
                   "icon": "lucide-file-text",
@@ -512,8 +512,265 @@
         }
       },
       "active": "b6b513a25f296189",
-      "mtime": "2026-09-17T15:57:27+05:30"
+      "mtime": "2026-09-17T20:13:15+05:30"
+    },
+    "Algorithms": {
+      "main": {
+        "id": "5324373015726ba8",
+        "type": "split",
+        "children": [
+          {
+            "id": "914423c9809d5448",
+            "type": "tabs",
+            "dimension": 68.26697892271663,
+            "children": [
+              {
+                "id": "bf55ed581034d57b",
+                "type": "leaf",
+                "state": {
+                  "type": "pdf",
+                  "state": {
+                    "file": "Extras/Pdfs/Introduction to Algorithms, Fourth Edition - Thomas H. Cormen;Charles E. Leiserson;Rona.pdf",
+                    "page": 1,
+                    "left": -11,
+                    "top": 796,
+                    "zoom": 1.3725490196078434
+                  },
+                  "icon": "lucide-file-text",
+                  "title": "Introduction to Algorithms, Fourth Edition - Thomas H. Cormen;Charles E. Leiserson;Rona"
+                }
+              }
+            ]
+          },
+          {
+            "id": "3b599b969a32e37b",
+            "type": "tabs",
+            "dimension": 31.733021077283375,
+            "children": [
+              {
+                "id": "0288b80678ebbe7b",
+                "type": "leaf",
+                "state": {
+                  "type": "excalidraw",
+                  "state": {
+                    "file": "Excalidraw/Drawing 2026-09-17 20.14.27.excalidraw.md"
+                  },
+                  "icon": "excalidraw-icon",
+                  "title": "Drawing 2026-09-17 20.14.27.excalidraw"
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "vertical"
+      },
+      "left": {
+        "id": "e50fecc47fceb20a",
+        "type": "split",
+        "children": [
+          {
+            "id": "eee1ce37f7e285e3",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "4b44bc66b81b0ac8",
+                "type": "leaf",
+                "state": {
+                  "type": "file-explorer",
+                  "state": {
+                    "sortOrder": "byModifiedTime",
+                    "autoReveal": false,
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-folder-closed",
+                  "title": "Files"
+                }
+              },
+              {
+                "id": "0445b4c3c474b762",
+                "type": "leaf",
+                "state": {
+                  "type": "search",
+                  "state": {
+                    "query": "file:QEM",
+                    "matchingCase": false,
+                    "explainSearch": false,
+                    "collapseAll": false,
+                    "extraContext": false,
+                    "sortOrder": "alphabetical"
+                  },
+                  "icon": "lucide-search",
+                  "title": "Search"
+                }
+              },
+              {
+                "id": "dd26984cf0895579",
+                "type": "leaf",
+                "state": {
+                  "type": "bookmarks",
+                  "state": {
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-bookmark",
+                  "title": "Bookmarks"
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "horizontal",
+        "width": 251.32353591918945,
+        "collapsed": true
+      },
+      "right": {
+        "id": "43fc27400badb105",
+        "type": "split",
+        "children": [
+          {
+            "id": "1c065ec571345d62",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "141091543637c66f",
+                "type": "leaf",
+                "state": {
+                  "type": "backlink",
+                  "state": {
+                    "file": "Homepage.md",
+                    "collapseAll": false,
+                    "extraContext": false,
+                    "sortOrder": "alphabetical",
+                    "showSearch": false,
+                    "searchQuery": "",
+                    "backlinkCollapsed": false,
+                    "unlinkedCollapsed": false
+                  },
+                  "icon": "links-coming-in",
+                  "title": "Backlinks for Homepage"
+                }
+              },
+              {
+                "id": "c44e965ec4ffd46f",
+                "type": "leaf",
+                "state": {
+                  "type": "outgoing-link",
+                  "state": {
+                    "file": "Homepage.md",
+                    "linksCollapsed": false,
+                    "unlinkedCollapsed": false
+                  },
+                  "icon": "links-going-out",
+                  "title": "Outgoing links from Homepage"
+                }
+              },
+              {
+                "id": "a6df045dc5c37977",
+                "type": "leaf",
+                "state": {
+                  "type": "tag",
+                  "state": {
+                    "sortOrder": "frequency",
+                    "useHierarchy": true
+                  },
+                  "icon": "lucide-tags",
+                  "title": "Tags"
+                }
+              },
+              {
+                "id": "d23d8299e353448c",
+                "type": "leaf",
+                "state": {
+                  "type": "outline",
+                  "state": {
+                    "file": "Homepage.md"
+                  },
+                  "icon": "lucide-list",
+                  "title": "Outline of Homepage"
+                }
+              },
+              {
+                "id": "450eaf829269d505",
+                "type": "leaf",
+                "state": {
+                  "type": "calendar",
+                  "state": {},
+                  "icon": "calendar-with-checkmark",
+                  "title": "Calendar"
+                }
+              },
+              {
+                "id": "2ec51cd4ad75cd52",
+                "type": "leaf",
+                "state": {
+                  "type": "all-properties",
+                  "state": {
+                    "sortOrder": "frequency",
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-archive",
+                  "title": "All properties"
+                }
+              },
+              {
+                "id": "058bebb3067d4924",
+                "type": "leaf",
+                "state": {
+                  "type": "file-properties",
+                  "state": {
+                    "file": "Excalidraw/Drawing 2026-09-07 10.28.59.excalidraw.md"
+                  },
+                  "icon": "lucide-info",
+                  "title": "File properties"
+                }
+              },
+              {
+                "id": "1f08514118c9e1ab",
+                "type": "leaf",
+                "state": {
+                  "type": "excalidraw-sidepanel",
+                  "state": {},
+                  "icon": "excalidraw-icon",
+                  "title": "Excalidraw Sidepanel"
+                }
+              }
+            ],
+            "currentTab": 7
+          }
+        ],
+        "direction": "horizontal",
+        "width": 489.81005859375,
+        "collapsed": true
+      },
+      "left-ribbon": {
+        "hiddenItems": {
+          "bases:Create new base": false,
+          "daily-notes:Open today's daily note": false,
+          "templates:Insert template": true,
+          "command-palette:Open command palette": true,
+          "switcher:Open quick switcher": false,
+          "workspaces:Manage workspace layouts": false,
+          "graph:Open graph view": false,
+          "obsidian-kanban:Create new board": false,
+          "obsidian-projects:Open projects": false,
+          "templater-obsidian:Templater": false,
+          "obsidian-statusbar-pomo:Start pomodoro": false,
+          "obsidian-git:Open Git source control": false,
+          "homepage:Open homepage": false,
+          "pdf-plus:PDF++: Toggle auto-copy": false,
+          "pdf-plus:PDF++: Toggle auto-focus": false,
+          "pdf-plus:PDF++: Toggle auto-paste": false,
+          "obsidian-excalidraw-plugin:New drawing": false,
+          "digitalgarden:Digital Garden Publication Center": false,
+          "table-editor-obsidian:Advanced Tables Toolbar": false,
+          "periodic-notes:Open today": false
+        }
+      },
+      "active": "bf55ed581034d57b",
+      "mtime": "2026-09-17T20:15:24+05:30"
     }
   },
-  "active": "COA"
+  "active": "Algorithms"
 }
