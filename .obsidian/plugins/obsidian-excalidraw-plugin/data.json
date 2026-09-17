@@ -1115,7 +1115,7 @@
             "modifiers": [
               "Alt"
             ],
-            "scope": 3
+            "scope": 1
           },
           {
             "action": "Import Outline from Linked File",
@@ -1173,7 +1173,7 @@
               "Mod",
               "Shift"
             ],
-            "scope": 2
+            "scope": 1
           },
           {
             "action": "Change Order/Promote Node",

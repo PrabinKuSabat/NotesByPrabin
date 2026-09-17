@@ -6,18 +6,15 @@
       {
         "id": "4509724f8bf84da7",
         "type": "tabs",
-        "dimension": 76.1986301369863,
         "children": [
           {
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Excalidraw/Linux Boot-UP.excalidraw.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "Linux Boot-UP.excalidraw"
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
             }
           },
           {
@@ -28,32 +25,12 @@
               "state": {
                 "file": "Extras/Pdfs/Computer Architecture - A Quantitative Approach (John L. Hennessy,.pdf",
                 "page": 305,
-                "left": -67,
+                "left": -241,
                 "top": 1179,
                 "zoom": 0.9
               },
               "icon": "lucide-file-text",
               "title": "Computer Architecture - A Quantitative Approach (John L. Hennessy,"
-            }
-          }
-        ],
-        "currentTab": 1
-      },
-      {
-        "id": "a42f46dda5d2a249",
-        "type": "tabs",
-        "dimension": 23.8013698630137,
-        "children": [
-          {
-            "id": "497c0a561b569dfc",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Excalidraw/Quantitative Design and Analysis.excalidraw.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "Quantitative Design and Analysis.excalidraw"
             }
           }
         ]
@@ -265,12 +242,12 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "34a675aba8b2d65e",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Excalidraw/Quantitative Design and Analysis.excalidraw.md",
-    "Extras/Pdfs/Computer Architecture - A Quantitative Approach (John L. Hennessy,.pdf",
-    "Homepage.md",
     "Excalidraw/Linux Boot-UP.excalidraw.md",
+    "Extras/Pdfs/Computer Architecture - A Quantitative Approach (John L. Hennessy,.pdf",
+    "Excalidraw/Quantitative Design and Analysis.excalidraw.md",
+    "Homepage.md",
     "Excalidraw/Mindmap Code/Linux Boot-UP.excalidraw code.md",
     "Extras/ATTACHMENTS/Pasted Image 20260917112730_166.svg",
     "Extras/ATTACHMENTS/Pasted Image 20260917112730_151.svg",
