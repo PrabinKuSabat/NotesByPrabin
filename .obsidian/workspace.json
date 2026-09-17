@@ -29,7 +29,7 @@
                 "file": "Extras/Pdfs/Computer Architecture - A Quantitative Approach (John L. Hennessy,.pdf",
                 "page": 305,
                 "left": -67,
-                "top": 996,
+                "top": 1179,
                 "zoom": 0.9
               },
               "icon": "lucide-file-text",
@@ -265,10 +265,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "497c0a561b569dfc",
+  "active": "34a675aba8b2d65e",
   "lastOpenFiles": [
-    "Extras/Pdfs/Computer Architecture - A Quantitative Approach (John L. Hennessy,.pdf",
     "Excalidraw/Quantitative Design and Analysis.excalidraw.md",
+    "Extras/Pdfs/Computer Architecture - A Quantitative Approach (John L. Hennessy,.pdf",
     "Homepage.md",
     "Excalidraw/Linux Boot-UP.excalidraw.md",
     "Excalidraw/Mindmap Code/Linux Boot-UP.excalidraw code.md",

@@ -18,6 +18,10 @@ The script uses `ea.addAppendUpdateCustomData` to store state on elements:
 - `autoLayoutDisabled`: Stored on the Root node to pause layout engine for specific maps (toggle from UI).
 - `arrowType`, `fontsizeScale`, `fontSizeBase`, `fontSizeMinimum`, `multicolor`, `boxChildren`, `roundedCorners`, `maxWrapWidth`, `isSolidArrow`, `centerText`: Stored on the Root node to persist display preferences per map.
 - `isPinned`: Stored on individual nodes (boolean) to bypass the layout engine.
+- `sourceRefs`: Source file/line references extracted from pasted Markdown. They remain metadata, so source provenance survives layout and export without changing the visible node text.
+- `codeDisplayMode`: Per-code-node display mode (`full`, `preview`, `excerpt`, or `summary`). The original fenced source remains in the linked Markdown note.
+- `needsEvidence`: A user-review marker for a node whose pasted claim has no accompanying source reference. It never declares a claim false.
+- `mindmapSyncPath` / `mindmapSyncId`: Opt-in, marker-delimited Markdown synchronization metadata. Pull is additive by design; it never deletes an existing branch.
 - `isBranch`: Stored on arrows (boolean) to distinguish Mind Map connectors from standard annotations.
 - `mindmapOrder`: Stored on nodes (number) to maintain manual sort order of siblings.
 - `mindmapNew`: Stored on nodes (boolean) to tag freshly added items so new siblings append after existing order; cleared after layout.
@@ -48,6 +52,10 @@ When nodes resize (e.g. text edit), the script intelligently re-positions groupe
 - **Hierarchy**: Markdown lists are parsed into the mind map structure.
 - **Cross-links**: The script preserves non-structural connections by generating internal block references (`^blockId`) and valid wikilinks (`[[#^blockId]]`) when copying branches to markdown.
 - **Existing code blocks**: Put a block ID such as `^my-code-block` immediately after a fenced code block in a Markdown note. Select a mind-map node, paste `[[Note Name#^my-code-block]]` into the script editor, and click the file-code button. This links the existing source without moving or rewriting it. The button still moves a selected local code node to the shared note when no link is pasted.
+- **Source-aware paste**: Markdown links ending in `:line`, e.g. `[setup_vm](/path/init.c:1060)`, are retained as source metadata on their nodes. The sparkle helper can extract all such links into a reviewable child branch.
+- **Code display modes**: For a linked code note, the eye button cycles Full → Preview → Excerpt → Summary. This only changes the lightweight canvas preview; the complete, editable source remains in the Markdown code note.
+- **Safe Markdown sync**: The sync button writes a marker-delimited section to an existing vault Markdown note. Pull imports that section as a new child branch for comparison; it never deletes an existing canvas branch.
+- **Safe assist**: The sparkle button offers deterministic import, source extraction, code summary, evidence-question, and provenance-review helpers. It does not contact an AI service or make unsupported claims automatically.
 
 ### Link suggester keydown events (Enter, Escape)
 - **Key-safe integration**: The suggester implements the `KeyBlocker` interface so the script's own key handlers pause while the suggester is active, preventing shortcut collisions during link insertion.
@@ -6429,6 +6437,195 @@ const triggerGlobalLayout = (rootId, forceUngroup = false, mustHonorMindmapOrder
 };
 
 // ---------------------------------------------------------------------------
+// 3b. Provenance, lightweight code views, safe Markdown sync, and helpers
+// ---------------------------------------------------------------------------
+// These helpers deliberately keep the canvas model small.  Source links and
+// evidence status live in customData; code remains a single image/node instead
+// of becoming hundreds of syntax-token elements that would slow auto-layout.
+const CODE_DISPLAY_MODES = Object.freeze(["full", "preview", "excerpt", "summary"]);
+const CODE_DISPLAY_MODE_LABELS = Object.freeze({
+  full: "Full code",
+  preview: "Preview (first 32 lines)",
+  excerpt: "Excerpt (start and end)",
+  summary: "Source summary",
+});
+
+const extractSourceReferences = (value) => {
+  const text = String(value || "");
+  const refs = [];
+  const seen = new Set();
+  // Markdown links are the reliable form produced by ChatGPT and Obsidian.
+  // Accept a path:line suffix but do not guess ordinary prose containing a
+  // colon, which would create misleading provenance.
+  const markdownLink = /\[([^\]]+)\]\(([^)\s]+)\)/g;
+  for (const match of text.matchAll(markdownLink)) {
+    const target = decodeURIComponent(match[2]);
+    const location = target.match(/^(.*?):(\d+)(?::\d+)?$/);
+    if (!location || !location[1]) continue;
+    const key = `${location[1]}:${location[2]}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    refs.push({ label: match[1].trim() || location[1], path: location[1], line: Number(location[2]), target });
+  }
+  return refs;
+};
+
+const addSourceReferencesToNode = (nodeId, value) => {
+  const refs = extractSourceReferences(value);
+  if (refs.length) ea.addAppendUpdateCustomData(nodeId, { sourceRefs: refs });
+  return refs;
+};
+
+const getCodeDisplaySource = (source, mode) => {
+  const normalized = CODE_DISPLAY_MODES.includes(mode) ? mode : "full";
+  const language = getCodeBlockLanguage(source) || "text";
+  const lines = String(source || "").replace(/^```[^\n]*\n?/, "").replace(/\n?```\s*$/, "").split("\n");
+  if (normalized === "full") return source;
+  if (normalized === "summary") {
+    const nonEmpty = lines.filter((line) => line.trim());
+    const functions = nonEmpty.filter((line) => /\b[A-Za-z_$][\w$]*\s*\([^;{}]*\)\s*\{?\s*$/.test(line.trim())).slice(0, 6);
+    return `\`\`\`text\n${language} source • ${lines.length} lines\n${functions.length ? `Symbols: ${functions.map((line) => line.trim()).join(", ")}` : "No function signatures detected."}\nOpen the linked Markdown code note to edit the complete source.\n\`\`\``;
+  }
+  if (normalized === "preview") {
+    const shown = lines.slice(0, 32);
+    if (lines.length > shown.length) shown.push(`… ${lines.length - shown.length} more lines …`);
+    return `\`\`\`${language}\n${shown.join("\n")}\n\`\`\``;
+  }
+  if (lines.length <= 32) return `\`\`\`${language}\n${lines.join("\n")}\n\`\`\``;
+  return `\`\`\`${language}\n${lines.slice(0, 16).join("\n")}\n… ${lines.length - 32} lines omitted …\n${lines.slice(-16).join("\n")}\n\`\`\``;
+};
+
+const getBranchMarkdown = async (node) => {
+  if (!node) throw new Error("Select a mind-map node first.");
+  selectNodeInView(node);
+  return copyMapAsText(false, false);
+};
+
+const parseSyncMarkers = (content, syncId) => {
+  const escaped = String(syncId).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const re = new RegExp(`<!-- mindmap-sync:${escaped}:start -->\\n?([\\s\\S]*?)\\n?<!-- mindmap-sync:${escaped}:end -->`);
+  return { match: content.match(re), re };
+};
+
+const pushBranchToMarkdown = async (node, requestedPath) => {
+  const path = String(requestedPath || node?.customData?.mindmapSyncPath || "").trim();
+  if (!path) throw new Error("Enter an existing vault Markdown path.");
+  const file = app.vault.getAbstractFileByPath(path);
+  if (!file || file.extension !== "md") throw new Error(`Markdown note not found: ${path}`);
+  const syncId = node.customData?.mindmapSyncId || `mm-${node.id}`;
+  const markdown = await getBranchMarkdown(node);
+  const block = `<!-- mindmap-sync:${syncId}:start -->\n${markdown.trim()}\n<!-- mindmap-sync:${syncId}:end -->`;
+  const current = await app.vault.read(file);
+  const { match, re } = parseSyncMarkers(current, syncId);
+  await app.vault.modify(file, match ? current.replace(re, block) : `${current.replace(/\s*$/, "")}\n\n${block}\n`);
+  ea.addAppendUpdateCustomData(node.id, { mindmapSyncPath: path, mindmapSyncId: syncId });
+  await addElementsToView({ captureUpdate: "EVENTUALLY" });
+  return { path, syncId, markdown };
+};
+
+const pullBranchFromMarkdown = async (node) => {
+  const path = node?.customData?.mindmapSyncPath;
+  const syncId = node?.customData?.mindmapSyncId;
+  if (!path || !syncId) throw new Error("Push this branch to a Markdown note once before pulling it back.");
+  const file = app.vault.getAbstractFileByPath(path);
+  if (!file || file.extension !== "md") throw new Error(`Markdown note not found: ${path}`);
+  const { match } = parseSyncMarkers(await app.vault.read(file), syncId);
+  if (!match?.[1]?.trim()) throw new Error("The synchronized section was not found in the Markdown note.");
+  // Safe pull: the imported version is a new child. This preserves the canvas
+  // branch, manually positioned nodes, decorations, and cross-links for review.
+  selectNodeInView(node);
+  await importTextToMap(match[1]);
+  return { path, markdown: match[1] };
+};
+
+const summarizeCodeForNode = (node) => {
+  const source = node?.customData?.codeSource || getTextFromNode(ea.getViewElements(), node, true, true);
+  if (!source || !isFencedCodeBlock(source)) throw new Error("Select a fenced code node first.");
+  const language = getCodeBlockLanguage(source) || "text";
+  const lines = source.replace(/^```[^\n]*\n?/, "").replace(/\n?```\s*$/, "").split("\n");
+  const symbols = lines.map((line) => line.trim()).filter((line) => /\b[A-Za-z_$][\w$]*\s*\([^;{}]*\)\s*\{?\s*$/.test(line)).slice(0, 6);
+  return `${language} code — ${lines.length} lines${symbols.length ? `\nSymbols: ${symbols.join(", ")}` : ""}`;
+};
+
+const makeReviewQuestions = (text) => {
+  const clauses = String(text || "").split(/(?<=[.!?])\s+|\n+/).map((item) => item.trim()).filter(Boolean).slice(0, 5);
+  return clauses.map((clause) => `What evidence supports: ${clause.replace(/[.!?]+$/, "")}?`);
+};
+
+const markNodeNeedsEvidence = async (node) => {
+  const text = getTextFromNode(ea.getViewElements(), node, true, true);
+  const refs = node.customData?.sourceRefs || extractSourceReferences(text);
+  if (refs.length) {
+    ea.addAppendUpdateCustomData(node.id, { needsEvidence: false, sourceRefs: refs });
+    await addElementsToView({ captureUpdate: "EVENTUALLY" });
+    return false;
+  }
+  ea.addAppendUpdateCustomData(node.id, { needsEvidence: true });
+  await addElementsToView({ captureUpdate: "EVENTUALLY" });
+  return true;
+};
+
+const runSafeAssist = async () => {
+  const selected = getMindmapNodeFromSelection();
+  const editorText = String(inputEl?.value || "").trim();
+  const choices = [
+    "Convert editor Markdown into a child branch",
+    "Extract source file/line links from editor Markdown",
+    "Summarize selected code into a child node",
+    "Generate evidence questions for selected branch",
+    "Mark selected claim as needs evidence",
+  ];
+  const action = await utils.suggester(choices, choices, "Safe assist (deterministic, reviewable)");
+  if (!action) return;
+  if (!selected && action !== choices[0]) throw new Error("Select a mind-map node first.");
+
+  if (action === choices[0]) {
+    if (!editorText) throw new Error("Paste Markdown into the editor first.");
+    await importTextToMap(editorText);
+    return;
+  }
+  if (action === choices[1]) {
+    if (!editorText) throw new Error("Paste Markdown containing file/line links into the editor first.");
+    const refs = extractSourceReferences(editorText);
+    if (!refs.length) throw new Error("No Markdown file/line links such as [name](/path/file.c:42) were found.");
+    selectNodeInView(selected);
+    await importTextToMap(refs.map((ref) => `- [${ref.label}](${ref.target})`).join("\n"));
+    return;
+  }
+  if (action === choices[2]) {
+    await addNode(summarizeCodeForNode(selected), false);
+    return;
+  }
+  if (action === choices[3]) {
+    const text = getTextFromNode(ea.getViewElements(), selected, true, true);
+    const questions = makeReviewQuestions(text);
+    if (!questions.length) throw new Error("The selected node has no text to turn into questions.");
+    selectNodeInView(selected);
+    await importTextToMap(questions.map((question) => `- ${question}`).join("\n"));
+    return;
+  }
+  const needsEvidence = await markNodeNeedsEvidence(selected);
+  new Notice(needsEvidence ? "Marked for evidence review." : "Source reference found; evidence marker cleared.");
+};
+
+const runMarkdownSync = async () => {
+  const selected = getMindmapNodeFromSelection();
+  if (!selected) throw new Error("Select the branch to synchronize first.");
+  const choices = ["Push branch to Markdown", "Pull Markdown as a new child branch"];
+  const action = await utils.suggester(choices, choices, "Markdown synchronization");
+  if (!action) return;
+  if (action === choices[0]) {
+    const path = await utils.inputPrompt("Vault Markdown path (for example: Notes/My Map.md)", selected.customData?.mindmapSyncPath || "");
+    if (!path?.trim()) return;
+    const result = await pushBranchToMarkdown(selected, path);
+    new Notice(`Branch synchronized to ${result.path}`);
+    return;
+  }
+  const result = await pullBranchFromMarkdown(selected);
+  new Notice(`Imported synchronized Markdown from ${result.path} as a new child branch.`);
+};
+
+// ---------------------------------------------------------------------------
 // 4. Add Node Logic
 // ---------------------------------------------------------------------------
 let mostRecentlyAddedNodeID;
@@ -6946,6 +7143,10 @@ const addNode = async (text, follow = false, skipFinalLayout = false, batchModeA
       codeSource: text,
     });
   }
+
+  // Preserve file/line provenance from pasted Markdown even when its visible
+  // rendering is simplified for the canvas.
+  addSourceReferencesToNode(newNodeId, text);
 
   if (isBatchMode) {
     return ea.getElement(newNodeId);
@@ -10066,13 +10267,30 @@ const renderCodeNoteNodeNow = async (nodeId, { relayout = true, select = true } 
   const source = await getCodeNoteSource(path, blockId);
   if (!source) throw new Error(`Code block ${blockId} was not found in ${path}`);
   const renderWidth = node.customData?.codeRenderWidth || CODE_PREVIEW_RENDER_WIDTH;
-  const rendered = await renderCodeSourceToSvg(source, path, renderWidth);
+  const displaySource = getCodeDisplaySource(source, node.customData?.codeDisplayMode);
+  const rendered = await renderCodeSourceToSvg(displaySource, path, renderWidth);
   return applyCodePreviewToNode(node, rendered, { relayout, select });
 };
 
 const renderCodeNoteNode = (nodeId, options = {}) => queueCodePreviewRender(
   () => queueSceneOperation(() => renderCodeNoteNodeNow(nodeId, options)),
 );
+
+const cycleCodeDisplayMode = async () => {
+  const node = getMindmapNodeFromSelection();
+  if (!node?.customData?.isCodeNote) {
+    new Notice("Select a linked code note to change its display mode.");
+    return;
+  }
+  const current = CODE_DISPLAY_MODES.includes(node.customData?.codeDisplayMode) ? node.customData.codeDisplayMode : "full";
+  const next = CODE_DISPLAY_MODES[(CODE_DISPLAY_MODES.indexOf(current) + 1) % CODE_DISPLAY_MODES.length];
+  await queueSceneOperation(async () => {
+    ea.addAppendUpdateCustomData(node.id, { codeDisplayMode: next });
+    await addElementsToView({ captureUpdate: "EVENTUALLY" });
+  });
+  await renderCodeNoteNode(node.id);
+  new Notice(`Code display: ${CODE_DISPLAY_MODE_LABELS[next]}`);
+};
 
 // Reuse a fenced block already stored in any Markdown note. The source note
 // stays untouched; only the selected map node is converted to a linked image.
@@ -12230,6 +12448,24 @@ const renderInput = (container, isFloating = false) => {
     btn.setIcon("file-code-2");
     btn.setTooltip("Move code to a note, or link an existing code block");
     btn.onClick(() => useCodeNoteButton());
+  }, true);
+
+  addButton((btn) => {
+    btn.setIcon("eye");
+    btn.setTooltip("Cycle linked code display: full, preview, excerpt, summary");
+    btn.onClick(() => cycleCodeDisplayMode());
+  }, true);
+
+  addButton((btn) => {
+    btn.setIcon("sparkles");
+    btn.setTooltip("Safe assist: import, sources, code summary, questions, evidence review");
+    btn.onClick(() => queueSceneOperation(runSafeAssist).catch((error) => new Notice(error.message || String(error))));
+  }, true);
+
+  addButton((btn) => {
+    btn.setIcon("file-sync");
+    btn.setTooltip("Synchronize selected branch with a marker-delimited Markdown section");
+    btn.onClick(() => queueSceneOperation(runMarkdownSync).catch((error) => new Notice(error.message || String(error))));
   }, true);
 
   toggleFloatingExtras = null;
@@ -14896,6 +15132,37 @@ const performAction = (action, event) => queueSceneOperation(
       }],
       returns: "Promise<MMResult<{success:boolean}>>",
     },
+    getNodeProvenance: {
+      summary: "Returns extracted source references, evidence status, and optional Markdown sync metadata",
+      params: [{ name: "nodeId", type: "string", required: false }],
+      returns: "MMResult<{nodeId:string,sourceRefs:array,needsEvidence:boolean,markdownSync:object|null}>",
+    },
+    setCodeDisplayMode: {
+      summary: "Changes a linked code note between full, preview, excerpt, and summary display without changing its source",
+      params: [
+        { name: "nodeId", type: "string", required: true },
+        { name: "mode", type: "string", required: true, enum: CODE_DISPLAY_MODES },
+      ],
+      returns: "Promise<MMResult<{nodeId:string,mode:string}>>",
+    },
+    syncMarkdown: {
+      summary: "Pushes a branch into a marker-delimited Markdown section or safely pulls that section as a new child branch",
+      params: [
+        { name: "nodeId", type: "string", required: true },
+        { name: "direction", type: "string", required: true, enum: ["push", "pull"] },
+        { name: "path", type: "string", required: false },
+      ],
+      returns: "Promise<MMResult<object>>",
+    },
+    assist: {
+      summary: "Runs deterministic, reviewable import/source/code-question/evidence helpers; it never calls an external AI service",
+      params: [
+        { name: "kind", type: "string", required: true, enum: ["import", "sources", "codeSummary", "questions", "evidence"] },
+        { name: "nodeId", type: "string", required: false },
+        { name: "markdown", type: "string", required: false },
+      ],
+      returns: "Promise<MMResult<object>>",
+    },
     getConfigSchema: {
       summary: "Returns the schema, allowed values, and definitions for map configurations",
       params: [],
@@ -15631,6 +15898,90 @@ const performAction = (action, event) => queueSceneOperation(
         return mmErr(MMError.OPERATION_FAILED, "setGlobalConfig failed", e);
       }
     },
+
+    getNodeProvenance: (nodeId) => {
+      const nodeRes = resolveNode(nodeId);
+      if (!nodeRes.ok) return nodeRes;
+      const node = nodeRes.data;
+      return mmOk({
+        nodeId: node.id,
+        sourceRefs: cloneJSON(node.customData?.sourceRefs || []),
+        needsEvidence: node.customData?.needsEvidence === true,
+        markdownSync: node.customData?.mindmapSyncPath ? {
+          path: node.customData.mindmapSyncPath,
+          id: node.customData.mindmapSyncId,
+        } : null,
+      });
+    },
+
+    setCodeDisplayMode: async ({ nodeId, mode } = {}) => queueSceneOperation(async () => {
+      const nodeRes = resolveNode(nodeId);
+      if (!nodeRes.ok) return nodeRes;
+      if (!CODE_DISPLAY_MODES.includes(mode)) {
+        return mmErr(MMError.INVALID_ARGUMENT, `mode must be one of: ${CODE_DISPLAY_MODES.join(", ")}`);
+      }
+      const node = nodeRes.data;
+      if (!node.customData?.isCodeNote) return mmErr(MMError.INVALID_ARGUMENT, "node must be a linked code note");
+      try {
+        ea.addAppendUpdateCustomData(node.id, { codeDisplayMode: mode });
+        await addElementsToView({ captureUpdate: "EVENTUALLY" });
+        await renderCodeNoteNodeNow(node.id);
+        return mmOk({ nodeId: node.id, mode });
+      } catch (e) {
+        return mmErr(MMError.OPERATION_FAILED, "setCodeDisplayMode failed", e);
+      }
+    }),
+
+    syncMarkdown: async ({ nodeId, direction, path } = {}) => queueSceneOperation(async () => {
+      const nodeRes = resolveNode(nodeId);
+      if (!nodeRes.ok) return nodeRes;
+      if (!["push", "pull"].includes(direction)) {
+        return mmErr(MMError.INVALID_ARGUMENT, "direction must be push or pull");
+      }
+      try {
+        const result = direction === "push" ?
+          await pushBranchToMarkdown(nodeRes.data, path) :
+          await pullBranchFromMarkdown(nodeRes.data);
+        return mmOk(result);
+      } catch (e) {
+        return mmErr(MMError.OPERATION_FAILED, "syncMarkdown failed", e);
+      }
+    }),
+
+    assist: async ({ kind, nodeId, markdown } = {}) => queueSceneOperation(async () => {
+      const nodeRes = nodeId ? resolveNode(nodeId) : null;
+      if (nodeId && !nodeRes.ok) return nodeRes;
+      const node = nodeRes?.data || getMindmapNodeFromSelection();
+      try {
+        if (kind === "import") {
+          if (!String(markdown || "").trim()) return mmErr(MMError.INVALID_ARGUMENT, "markdown is required for import");
+          await importTextToMap(markdown);
+          return mmOk({ kind });
+        }
+        if (!node) return mmErr(MMError.NO_SELECTION, "Select a node or provide nodeId");
+        if (kind === "sources") {
+          const refs = extractSourceReferences(markdown);
+          if (!refs.length) return mmErr(MMError.INVALID_ARGUMENT, "No Markdown file/line links found");
+          selectNodeInView(node);
+          await importTextToMap(refs.map((ref) => `- [${ref.label}](${ref.target})`).join("\n"));
+          return mmOk({ kind, sourceRefs: refs });
+        }
+        if (kind === "codeSummary") {
+          const child = await addNode(summarizeCodeForNode(node), false);
+          return mmOk({ kind, nodeId: child?.id || null });
+        }
+        if (kind === "questions") {
+          const questions = makeReviewQuestions(getTextFromNode(ea.getViewElements(), node, true, true));
+          selectNodeInView(node);
+          await importTextToMap(questions.map((question) => `- ${question}`).join("\n"));
+          return mmOk({ kind, questions });
+        }
+        if (kind === "evidence") return mmOk({ kind, needsEvidence: await markNodeNeedsEvidence(node) });
+        return mmErr(MMError.INVALID_ARGUMENT, "kind must be import, sources, codeSummary, questions, or evidence");
+      } catch (e) {
+        return mmErr(MMError.OPERATION_FAILED, "assist failed", e);
+      }
+    }),
 
     getConfigSchema: () => {
       const schema = {
