@@ -47,6 +47,7 @@ When nodes resize (e.g. text edit), the script intelligently re-positions groupe
 ### Copy/Paste & Cross-linking
 - **Hierarchy**: Markdown lists are parsed into the mind map structure.
 - **Cross-links**: The script preserves non-structural connections by generating internal block references (`^blockId`) and valid wikilinks (`[[#^blockId]]`) when copying branches to markdown.
+- **Existing code blocks**: Put a block ID such as `^my-code-block` immediately after a fenced code block in a Markdown note. Select a mind-map node, paste `[[Note Name#^my-code-block]]` into the script editor, and click the file-code button. This links the existing source without moving or rewriting it. The button still moves a selected local code node to the shared note when no link is pasted.
 
 ### Link suggester keydown events (Enter, Escape)
 - **Key-safe integration**: The suggester implements the `KeyBlocker` interface so the script's own key handlers pause while the suggester is active, preventing shortcut collisions during link insertion.
@@ -9734,47 +9735,45 @@ const getCodeNoteSource = async (path, blockId) => {
   const markerLine = lines.findIndex((line) => line.trim() === `^${blockId}`);
   if (markerLine < 0) return null;
 
-  let openingLine = -1;
-  let closingLine = markerLine - 1;
-  while (closingLine >= 0 && !lines[closingLine].trim()) closingLine -= 1;
-  const closingFence = getFenceMarker(lines[closingLine] || "");
-  if (closingFence) {
-    for (let index = closingLine - 1; index >= 0; index -= 1) {
-      const openingFence = getFenceMarker(lines[index] || "");
-      if (openingFence && openingFence[0] === closingFence[0] && closingFence.length >= openingFence.length) {
-        openingLine = index;
-        break;
-      }
-    }
-  } else {
-    // Earlier generated notes put the block id immediately before the fence.
-    // Read those without rewriting a user-owned Markdown file.
-    openingLine = markerLine + 1;
-    while (openingLine < lines.length && !lines[openingLine].trim()) openingLine += 1;
-    const openingFence = getFenceMarker(lines[openingLine] || "");
-    if (!openingFence) return null;
-    closingLine = lines.findIndex((line, index) => index > openingLine && hasMatchingFence(line, openingFence));
-  }
-  if (openingLine < 0 || closingLine < 0) return null;
-
-  let blockIndex = 0;
+  const blocks = [];
   let activeFence = null;
-  for (let lineIndex = 0; lineIndex < openingLine; lineIndex += 1) {
-    const marker = getFenceMarker(lines[lineIndex] || "");
-    if (!marker) continue;
+  let openingLine = -1;
+  lines.forEach((line, index) => {
+    const marker = getFenceMarker(line);
+    if (!marker) return;
     if (!activeFence) {
       activeFence = marker;
-      blockIndex += 1;
-    } else if (marker[0] === activeFence[0] && marker.length >= activeFence.length) {
+      openingLine = index;
+    } else if (hasMatchingFence(line, activeFence) && !line.trim().slice(marker.length).trim()) {
+      blocks.push({ openingLine, closingLine: index });
       activeFence = null;
     }
-  }
-  const fenced = lines.slice(openingLine, closingLine + 1).join("\n");
+  });
+  const previousNonblankLine = (start) => {
+    let index = start;
+    while (index >= 0 && !lines[index].trim()) index -= 1;
+    return index;
+  };
+  const nextNonblankLine = (start) => {
+    let index = start;
+    while (index < lines.length && !lines[index].trim()) index += 1;
+    return index;
+  };
+  const beforeAnchor = previousNonblankLine(markerLine - 1);
+  const afterAnchor = nextNonblankLine(markerLine + 1);
+  let blockIndex = blocks.findIndex((block) => block.closingLine === markerLine - 1);
+  if (blockIndex < 0) blockIndex = blocks.findIndex((block) => block.openingLine === markerLine + 1);
+  // Legacy anchors can be separated from their fence by blank lines.
+  if (blockIndex < 0) blockIndex = blocks.findIndex((block) => block.openingLine === afterAnchor);
+  if (blockIndex < 0) blockIndex = blocks.findIndex((block) => block.closingLine === beforeAnchor);
+  if (blockIndex < 0) return null;
+  const { openingLine: blockOpeningLine, closingLine } = blocks[blockIndex];
+  const fenced = lines.slice(blockOpeningLine, closingLine + 1).join("\n");
   return {
     markdown,
     fenced,
     blockIndex,
-    openingLine,
+    openingLine: blockOpeningLine,
     closingLine,
     language: getCodeHighlightLanguage(getCodeBlockLanguage(fenced)),
   };
@@ -9883,27 +9882,6 @@ const renderCodeSourceToSvg = async (source, sourcePath, requestedWidth = CODE_P
   }
 };
 
-const ensureCodeNoteHighlightLanguage = async (path, blockId) => {
-  if (!path || !blockId) return;
-  const file = app.vault.getAbstractFileByPath(path);
-  if (!file) return;
-  const content = await app.vault.read(file);
-  const markerIndex = content.indexOf(`^${blockId}`);
-  if (markerIndex < 0) return;
-  const sectionStart = content.lastIndexOf("\n## ", markerIndex);
-  const sourceStart = Math.max(0, sectionStart);
-  const section = content.slice(sourceStart, markerIndex);
-  let corrected = normalizeCodeFenceLanguage(section);
-  const fenceLanguage = corrected.match(/(?:^|\n)[ \t]*(?:`{3,}|~{3,})([^`~\n]*)\n/)?.[1]?.trim();
-  if (fenceLanguage) {
-    const normalizedLanguage = getCodeHighlightLanguage(fenceLanguage);
-    corrected = corrected.replace(/(^|\n)(## )[^\n]*? code[ \t]*(?=\n)/, `$1$2${normalizedLanguage} code`);
-  }
-  if (corrected !== section) {
-    await app.vault.modify(file, `${content.slice(0, sourceStart)}${corrected}${content.slice(markerIndex)}`);
-  }
-};
-
 const openCodeNote = async (path, blockId = null) => {
   if (!path) return;
   const file = app.vault.getAbstractFileByPath(path);
@@ -9915,45 +9893,29 @@ const openCodeNote = async (path, blockId = null) => {
   await app.workspace.openLinkText(target, ea.targetView?.file?.path || "", false);
 };
 
-// Earlier versions placed the block id directly below the heading. Obsidian
-// then treats the heading alone as the block, so Excalidraw renders only the
-// label instead of the fenced code. Repair those sections before embedding.
-const ensureCodeNoteBlockAnchor = async (path, blockId) => {
-  if (!path || !blockId) return;
-  const file = app.vault.getAbstractFileByPath(path);
-  if (!file) return;
-  const marker = `^${blockId}`;
-  const original = await app.vault.read(file);
-  const lines = original.replace(/\r\n/g, "\n").split("\n");
-  const markerLine = lines.findIndex((line) => line.trim() === marker);
-  if (markerLine < 0) return;
-
-  let openingLine = markerLine + 1;
-  while (openingLine < lines.length && !lines[openingLine].trim()) openingLine += 1;
-  const openingFence = getFenceMarker(lines[openingLine] || "");
-  if (!openingFence) return; // Already a heading/block reference, not code.
-
-  let closingLine = -1;
-  for (let i = openingLine + 1; i < lines.length; i += 1) {
-    if (hasMatchingFence(lines[i], openingFence)) {
-      closingLine = i;
-      break;
-    }
-  }
-  if (closingLine < 0) return;
-
-  lines.splice(markerLine, 1);
-  // Removing the marker shifts the closing fence by one line.
-  lines.splice(closingLine, 0, marker);
-  const repaired = lines.join("\n");
-  if (repaired !== original) await app.vault.modify(file, repaired);
-};
-
 const getCodeNoteLink = (path, blockId) => {
   const file = app.vault.getAbstractFileByPath(path);
   if (!file) return null;
   const linkText = app.metadataCache.fileToLinktext(file, ea.targetView?.file?.path || "", true);
   return `[[${linkText}#^${blockId}]]`;
+};
+
+const parseCodeNoteBlockLink = (value) => {
+  const match = String(value || "").trim().match(/^!?\[\[(.+)#\^([A-Za-z0-9_-]+)(?:\|[^\]]*)?\]\]$/);
+  if (!match) return null;
+  return { linkPath: match[1].trim(), blockId: match[2] };
+};
+
+const resolveCodeNoteBlockLink = async (value) => {
+  const parsed = parseCodeNoteBlockLink(value);
+  if (!parsed) throw new Error("Paste an Obsidian block link such as [[My Code Note#^my-code-block]] into the editor.");
+  const sourcePath = ea.targetView?.file?.path || "";
+  const file = app.metadataCache.getFirstLinkpathDest(parsed.linkPath, sourcePath) ||
+    app.vault.getAbstractFileByPath(parsed.linkPath);
+  if (!file || file.extension !== "md") throw new Error(`Markdown note not found: ${parsed.linkPath}`);
+  const source = await getCodeNoteSource(file.path, parsed.blockId);
+  if (!source) throw new Error(`No fenced code block was found next to ^${parsed.blockId} in ${file.path}`);
+  return { path: file.path, blockId: parsed.blockId, source };
 };
 
 let codePreviewRenderQueue = Promise.resolve();
@@ -9969,7 +9931,7 @@ const queueCodePreviewRender = (operation) => {
 // images also have a plugin registry entry tied to their file id; creating a
 // fresh element clears that legacy representation. Thereafter refresh the SVG
 // image in place and preserve its canvas width as a true visual zoom.
-const applyCodePreviewToNode = async (node, rendered, { relayout = true, select = true } = {}) => {
+const applyCodePreviewToNode = async (node, rendered, { relayout = true, select = true, codeNotePath = null, codeNoteBlockId = null } = {}) => {
   if (!node || !rendered?.dataURL || !isViewSet()) return null;
   const all = ea.getViewElements();
   const current = all.find((element) => element.id === node.id);
@@ -9977,8 +9939,8 @@ const applyCodePreviewToNode = async (node, rendered, { relayout = true, select 
   const centerX = current.x + current.width / 2;
   const centerY = current.y + current.height / 2;
   const hierarchy = getHierarchy(current, all);
-  const path = current.customData?.codeNotePath;
-  const blockId = current.customData?.codeNoteBlockId;
+  const path = codeNotePath || current.customData?.codeNotePath;
+  const blockId = codeNoteBlockId || current.customData?.codeNoteBlockId;
   const noteLink = getCodeNoteLink(path, blockId);
 
   ea.clear();
@@ -9988,9 +9950,14 @@ const applyCodePreviewToNode = async (node, rendered, { relayout = true, select 
 
   let finalNode = renderedImage;
   let finalNodeId = renderedImageId;
-  const displayWidth = current.type === "image"
+  // A newly linked multiline text node can be thousands of units wide. That
+  // width is its old text geometry, not the requested code-image zoom.
+  // Preserve later user resizing, but repair one-time legacy oversized images.
+  const legacyOversized = current.type === "image" && current.customData?.isCodeNote &&
+    !current.customData?.codePreviewSizingVersion && current.width > CODE_PREVIEW_LEGACY_OVERSIZE_WIDTH;
+  const displayWidth = current.type === "image" && !legacyOversized && current.customData?.isCodeNote
     ? Math.max(120, current.width || CODE_PREVIEW_RENDER_WIDTH)
-    : Math.max(CODE_PREVIEW_MIN_WIDTH, current.width || CODE_PREVIEW_RENDER_WIDTH);
+    : CODE_PREVIEW_RENDER_WIDTH;
   const displayHeight = Math.max(40, displayWidth * rendered.height / rendered.width);
 
   if (current.type === "image" && !current.customData?.markdownImage) {
@@ -10046,8 +10013,11 @@ const applyCodePreviewToNode = async (node, rendered, { relayout = true, select 
   const migratedData = {
     ...(current.customData || {}),
     isCodeNote: true,
+    codeNotePath: path,
+    codeNoteBlockId: blockId,
     codeLanguage: rendered.language || current.customData?.codeLanguage || "text",
     codeRenderWidth: rendered.width,
+    codePreviewSizingVersion: 2,
     doNotInvertSVGInDarkMode: true,
   };
   delete migratedData.isCodeBlock;
@@ -10079,8 +10049,6 @@ const renderCodeNoteNodeNow = async (nodeId, { relayout = true, select = true } 
   const file = app.vault.getAbstractFileByPath(path);
   if (!file) throw new Error(`Code note is missing: ${path}`);
 
-  await ensureCodeNoteBlockAnchor(path, blockId);
-  await ensureCodeNoteHighlightLanguage(path, blockId);
   const source = await getCodeNoteSource(path, blockId);
   if (!source) throw new Error(`Code block ${blockId} was not found in ${path}`);
   const renderWidth = node.customData?.codeRenderWidth || CODE_PREVIEW_RENDER_WIDTH;
@@ -10091,6 +10059,43 @@ const renderCodeNoteNodeNow = async (nodeId, { relayout = true, select = true } 
 const renderCodeNoteNode = (nodeId, options = {}) => queueCodePreviewRender(
   () => renderCodeNoteNodeNow(nodeId, options),
 );
+
+// Reuse a fenced block already stored in any Markdown note. The source note
+// stays untouched; only the selected map node is converted to a linked image.
+const linkSelectedNodeToExistingCodeNote = async (link) => {
+  if (!isViewSet()) return;
+  const selected = getMindmapNodeFromSelection();
+  const all = ea.getViewElements();
+  const node = selected?.containerId ? all.find((element) => element.id === selected.containerId) : selected;
+  if (!node) {
+    new Notice("Select the map node that should show this code first.");
+    return;
+  }
+  try {
+    const { path, blockId, source } = await resolveCodeNoteBlockLink(link);
+    const updated = await queueCodePreviewRender(async () => {
+      const rendered = await renderCodeSourceToSvg(source, path, CODE_PREVIEW_RENDER_WIDTH);
+      return applyCodePreviewToNode(node, rendered, { codeNotePath: path, codeNoteBlockId: blockId });
+    });
+    if (!updated) throw new Error("The selected map node could not be updated.");
+    inputEl.value = "";
+    editingNodeId = null;
+    new Notice(`Linked code block: ${path}#^${blockId}`);
+    updateUI();
+  } catch (error) {
+    console.error("Mindmap Builder: could not link existing code block", error);
+    new Notice(error.message || "Could not link this code block.");
+  }
+};
+
+const useCodeNoteButton = async () => {
+  const text = inputEl?.value?.trim() || "";
+  if (text.startsWith("[[") || text.startsWith("![[")) {
+    await linkSelectedNodeToExistingCodeNote(text);
+    return;
+  }
+  await moveCodeNodeToObsidianNote();
+};
 
 // Move the editable source into one shared Markdown note. The original map
 // node is then replaced directly by a tightly cropped, theme-rendered SVG.
@@ -10787,8 +10792,11 @@ const updateUI = (sel) => {
       setButtonDisabled(codeBtn, !(canConvertToCode || isCodeNote));
       if (codeNoteBtn) {
         codeNoteBtn.setIcon("file-code-2");
-        codeNoteBtn.setTooltip("Move code to a linked Obsidian note");
-        setButtonDisabled(codeNoteBtn, !isCodeNode || isCodeNote);
+        const hasCodeLink = !!parseCodeNoteBlockLink(inputEl?.value);
+        codeNoteBtn.setTooltip(hasCodeLink
+          ? "Link selected node to the pasted Markdown code block"
+          : "Move selected code to a linked Obsidian note (or paste a code-block link here)");
+        setButtonDisabled(codeNoteBtn, !hasCodeLink && (!isCodeNode || isCodeNote));
       }
     }
 
@@ -12207,8 +12215,8 @@ const renderInput = (container, isFloating = false) => {
   addButton((btn) => {
     codeNoteBtn = btn;
     btn.setIcon("file-code-2");
-    btn.setTooltip("Move code to a linked Obsidian note");
-    btn.onClick(() => moveCodeNodeToObsidianNote());
+    btn.setTooltip("Move code to a note, or link an existing code block");
+    btn.onClick(() => useCodeNoteButton());
   }, true);
 
   toggleFloatingExtras = null;
