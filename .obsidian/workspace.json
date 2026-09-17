@@ -11,12 +11,24 @@
             "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "Excalidraw/Linux Boot-UP.excalidraw.md"
+                "file": "Homepage.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "excalidraw-icon",
-              "title": "Linux Boot-UP.excalidraw"
+              "icon": "lucide-file",
+              "title": "Homepage"
             }
           }
         ]
@@ -81,7 +93,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 251.32353591918945
+    "width": 251.32353591918945,
+    "collapsed": true
   },
   "right": {
     "id": "43fc27400badb105",
@@ -229,6 +242,10 @@
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Excalidraw/Quantitative Design and Analysis.excalidraw.md",
+    "Extras/Pdfs/Computer Architecture - A Quantitative Approach (John L. Hennessy,.pdf",
+    "Homepage.md",
+    "Excalidraw/Linux Boot-UP.excalidraw.md",
     "Extras/ATTACHMENTS/Pasted Image 20260917145518_717.svg",
     "Extras/ATTACHMENTS/Pasted Image 20260917145511_300.svg",
     "Extras/ATTACHMENTS/Pasted Image 20260917145502_360.svg",
@@ -239,12 +256,7 @@
     "Extras/ATTACHMENTS/Pasted Image 20260917145416_289.svg",
     "Extras/ATTACHMENTS/Pasted Image 20260917145355_876.svg",
     "Extras/ATTACHMENTS/Pasted Image 20260917145351_922.svg",
-    "Homepage.md",
-    "Excalidraw/Linux Boot-UP.excalidraw.md",
     "Excalidraw/Mindmap Code/Linux Boot-UP.excalidraw code.md",
-    "Extras/ATTACHMENTS/Pasted Image 20260917145319_803.svg",
-    "Excalidraw/Quantitative Design and Analysis.excalidraw.md",
-    "Extras/Pdfs/Computer Architecture - A Quantitative Approach (John L. Hennessy,.pdf",
     "Excalidraw/Mindmap Code/Mindmap Code Preview.css",
     "Excalidraw/Mindmap Code",
     "Excalidraw/Scripts/Custom/Mindmap Builder.js.md",
