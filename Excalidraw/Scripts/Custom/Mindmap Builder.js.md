@@ -1973,6 +1973,109 @@ const preserveScriptText = (text, position) => {
   return `${position === "super" ? "^" : "_"}{${text}}`;
 };
 
+// PDF++ writes selection.toString() to the clipboard: baseline information is
+// not HTML. Capture only the live, selected text layer (no PDF/plugin writes).
+// These optional PDF++ internals are feature-tested; unsupported versions fall
+// back to ordinary paste. Never infer indices from strings such as "i1".
+let pdfScriptSelection = null;
+const pdfTextKey = text => text.replace(/[\s\u200b\u00ad]/gu, "");
+const buildPdfScriptSnapshot = (items, range, plain) => {
+  const { beginIndex, beginOffset, endIndex, endOffset } = range;
+  if (![beginIndex, beginOffset, endIndex, endOffset].every(Number.isInteger) ||
+      beginIndex < 0 || endIndex < beginIndex || endIndex >= items.length ||
+      endIndex - beginIndex > 3000 || plain.length > 100000) return null;
+  const positions = new Map();
+  const metric = item => {
+    const m = item?.transform;
+    if (!m || m.length !== 6 || !m.every(Number.isFinite) || item.dir === "rtl") return null;
+    const size = Math.hypot(m[2], m[3]);
+    if (!size || Math.abs(m[1]) > size * .01 || Math.abs(m[2]) > size * .01) return null;
+    return { size, x: m[4], y: m[5], width: item.width };
+  };
+  let previous = -1, previousBase = -1;
+  for (let i = Math.max(0, beginIndex - 8); i <= endIndex; i++) {
+    const item = items[i];
+    const text = item?.str?.trim();
+    if (!text) continue;
+    const current = metric(item);
+    let position = null;
+    // Tight horizontal adjacency prevents interpreting the next table row or
+    // fraction denominator as an index. Same-size shifted runs are supported.
+    for (const candidate of [...new Set([previous, previousBase])]) {
+      const base = metric(items[candidate]);
+      if (!current || !base || !Number.isFinite(base.width)) continue;
+      const gap = current.x - (base.x + base.width);
+      const shift = (current.y - base.y) / base.size;
+      const ratio = current.size / base.size;
+      if (gap < -.12 * base.size || gap > .30 * base.size || ratio < .45 || ratio > 1.05) continue;
+      if (positions.has(candidate) && Math.abs(shift) < .04 && ratio > .90) position = positions.get(candidate);
+      else if (!positions.has(candidate) && Math.abs(shift) >= .10 && Math.abs(shift) <= .65) position = shift > 0 ? "super" : "sub";
+      if (position) break;
+    }
+    if (position && text.length <= 16 && Array.from(text).every(c => SCRIPT_CHARACTER_MAPS[position][c] || c === "−" || /\s/u.test(c))) {
+      positions.set(i, position);
+    } else previousBase = i;
+    previous = i;
+  }
+  let key = "", cursor = 0;
+  const replacements = [];
+  for (let i = beginIndex; i <= endIndex; i++) {
+    if (typeof items[i]?.str !== "string") return null;
+    const raw = items[i].str;
+    const start = i === beginIndex ? beginOffset : 0;
+    const end = i === endIndex ? endOffset : raw.length;
+    if (start < 0 || end < start || end > raw.length) return null;
+    const selected = pdfTextKey(raw.slice(start, end));
+    const length = Array.from(selected).length;
+    if (positions.has(i) && length) replacements.push({ start: cursor, end: cursor + length, position: positions.get(i) });
+    key += selected;
+    cursor += length;
+  }
+  if (!replacements.length || key !== pdfTextKey(plain)) return null;
+  return { key, replacements, capturedAt: Date.now() };
+};
+
+const capturePdfScriptSelection = (host, clearOnMiss = false) => {
+  try {
+    const lib = app.plugins?.plugins?.["pdf-plus"]?.lib;
+    const selection = host?.getSelection?.();
+    if (!lib || !selection || selection.isCollapsed || !selection.rangeCount) {
+      if (clearOnMiss) pdfScriptSelection = null;
+      return;
+    }
+    const info = lib.copyLink?.getPageAndTextRangeFromSelection?.(selection);
+    const child = info?.selection && lib.getPDFViewerChildFromSelection?.(selection);
+    const layer = child?.getPage?.(info.page)?.textLayer;
+    const items = (layer?.textLayer || layer)?.textContentItems;
+    if (!Array.isArray(items)) {
+      if (clearOnMiss) pdfScriptSelection = null;
+      return;
+    }
+    pdfScriptSelection = buildPdfScriptSnapshot(items, info.selection, selection.toString());
+  } catch (_) {
+    // PDF++ or its text layer may have changed while the selection was read.
+    pdfScriptSelection = null;
+  }
+};
+
+const restorePdfScriptText = text => {
+  const snapshot = pdfScriptSelection;
+  if (!snapshot || Date.now() - snapshot.capturedAt > 120000 || pdfTextKey(text) !== snapshot.key) return text;
+  const offsets = [];
+  let offset = 0;
+  for (const char of text) {
+    if (pdfTextKey(char)) offsets.push({ start: offset, end: offset + char.length });
+    offset += char.length;
+  }
+  let output = text;
+  for (const replacement of [...snapshot.replacements].reverse()) {
+    const start = offsets[replacement.start]?.start, end = offsets[replacement.end - 1]?.end;
+    if (start === undefined || end === undefined) return text;
+    output = output.slice(0, start) + preserveScriptText(text.slice(start, end), replacement.position) + output.slice(end);
+  }
+  return output;
+};
+
 const htmlToMarkdown = (html) => {
   if (!html || typeof DOMParser === "undefined") return "";
   const doc = new DOMParser().parseFromString(html, "text/html");
@@ -2062,8 +2165,8 @@ const convertClipboardContent = (html, plainText = "") => {
   // away Markdown structure or guessing exponents from ordinary digits.
   const fold = value => value.normalize("NFKC").replace(/\s+/g, " ").trim();
   const scriptCount = value => Array.from(value).filter(c => SCRIPT_UNICODE_CHARACTERS.has(c)).length;
-  if (plain && markdown && fold(plain) === fold(markdown) && scriptCount(plain) > scriptCount(markdown)) return plain;
-  return markdown || plain;
+  if (plain && markdown && fold(plain) === fold(markdown) && scriptCount(plain) > scriptCount(markdown)) return restorePdfScriptText(plain);
+  return restorePdfScriptText(markdown || plain);
 };
 
 const getActiveClipboard = () =>
@@ -2071,6 +2174,7 @@ const getActiveClipboard = () =>
   ea.targetView?.ownerWindow?.navigator?.clipboard || navigator.clipboard;
 
 const readClipboardText = async () => {
+  capturePdfScriptSelection(app.workspace.activeLeaf?.view?.containerEl?.ownerDocument?.defaultView);
   const clipboard = getActiveClipboard();
   try {
     const items = await clipboard.read();
@@ -2080,11 +2184,11 @@ const readClipboardText = async () => {
       const markdown = convertClipboardContent(await (await item.getType("text/html")).text(), plain);
       if (markdown) return markdown;
     }
-    if (plain) return normalizeClipboardText(plain);
+    if (plain) return restorePdfScriptText(normalizeClipboardText(plain));
   } catch (e) {
     // ClipboardItem access is not available in every Obsidian/Electron build.
   }
-  return normalizeClipboardText(await clipboard.readText());
+  return restorePdfScriptText(normalizeClipboardText(await clipboard.readText()));
 };
 
 let activeImportJob = null;
@@ -6807,6 +6911,14 @@ const getAdjustedMaxWidth = async (text, max) => {
   };
 }
 
+const getReadablePasteWidth = (width, height) => {
+  const ratio = Number(width) / Number(height);
+  // Wide PDF tables/equations need a minimum height as well as a base width.
+  // Bound the automatic width so a long strip cannot explode the whole map.
+  return Number.isFinite(ratio) && ratio > 0 ? Math.min(1800, Math.max(660, 120 * ratio)) : 660;
+};
+const isPdfRectangleSource = source => typeof source === "string" && /\.pdf#.*\brect=/i.test(source);
+
 const addImage = async ({
   pathOrFile,
   width,
@@ -6817,7 +6929,9 @@ const addImage = async ({
 } = {}) => {
   const newNodeId = await ea.addImage(x, y, pathOrFile);
   const el = ea.getElement(newNodeId);
-  const targetWidth = width || (depth === 0 ? EMBEDED_OBJECT_WIDTH_ROOT : EMBEDED_OBJECT_WIDTH_CHILD);
+  const targetWidth = width || (isPdfRectangleSource(pathOrFile)
+    ? getReadablePasteWidth(el.width, el.height)
+    : (depth === 0 ? EMBEDED_OBJECT_WIDTH_ROOT : EMBEDED_OBJECT_WIDTH_CHILD));
   const ratio = el.width / el.height;
   el.width = targetWidth;
   el.height = targetWidth / ratio;
@@ -8587,6 +8701,14 @@ const pasteElementToMap = async () => {
     }
   }
 
+  // Prefer a PDF rectangle reference over an accompanying raster clipboard
+  // preview, preserving the source/page link and using readable initial sizing.
+  const pdfRectangle = parseImageInput(rawText);
+  if (pdfRectangle?.isImagePath && isPdfRectangleSource(pdfRectangle.path)) {
+    await pasteListToMap(rawText);
+    return;
+  }
+
   // Scenario 2: Native image payload intercepted from system clipboard (Blobs)
   let hasImageBlob = false;
   let blob = null;
@@ -8667,7 +8789,11 @@ const pasteElementToMap = async () => {
       }
 
       if (imagePathResolved) {
-        await pasteListToMap(`![pasted image](${imagePathResolved})`);
+        const width = Math.round(getReadablePasteWidth(newImageEl.width, newImageEl.height));
+        const imageInput = /^https?:\/\//i.test(imagePathResolved)
+          ? `![pasted image|${width}](${imagePathResolved})`
+          : `![[${imagePathResolved}|${width}]]`;
+        await pasteListToMap(imageInput);
         return;
       }
     }
@@ -12640,8 +12766,9 @@ const renderInput = (container, isFloating = false) => {
   ontologyEl.addEventListener("input", () => updateUI());
   inputEl.addEventListener("paste", (event) => {
     const html = event.clipboardData?.getData("text/html");
-    if (!html) return; // Keep native plain-text paste/undo behaviour.
-    const markdown = convertClipboardContent(html, event.clipboardData?.getData("text/plain") || "");
+    const plain = event.clipboardData?.getData("text/plain") || "";
+    const markdown = convertClipboardContent(html, plain);
+    if (!html && markdown === plain) return; // Keep unchanged native paste/undo.
     if (!markdown) return;
 
     // Native paste would discard most browser/ChatGPT structure. Replace the
@@ -13906,13 +14033,21 @@ const removeStyles = () => {
 
 const updateKeyHandlerLocation = () => {
   removeKeydownHandlers();
-  if (!hasVisibleMindmapTarget()) return;
+  if (!window.MindmapBuilder) return;
   // The drawing, sidepanel, and active Markdown/PDF pane can live in different
   // Obsidian windows. Register each once; never remove the preceding window.
   const hosts = new Set([window, sidepanelWindow, ea.targetView?.ownerWindow,
     app.workspace.activeLeaf?.view?.containerEl?.ownerDocument?.defaultView]);
   for (const host of hosts) {
-    if (host) registerKeydownHandler(host, handleKeydown, false);
+    if (!host) continue;
+    if (hasVisibleMindmapTarget()) registerKeydownHandler(host, handleKeydown, false);
+    // Copy observes the selection before PDF++ flattens it. Pointer/keyboard
+    // completion also covers PDF++'s automatic-copy mode (no native copy event).
+    const capture = event => capturePdfScriptSelection(host, event.type === "copy");
+    for (const type of ["copy", "pointerup", "keyup"]) host.addEventListener(type, capture, true);
+    (window.MindmapBuilder.keydownHandlers ||= []).push(() => {
+      for (const type of ["copy", "pointerup", "keyup"]) host.removeEventListener(type, capture, true);
+    });
   }
 };
 
@@ -16558,6 +16693,9 @@ ea.createSidepanelTab(t("DOCK_TITLE"), true, true).then((tab) => {
     ea.clear();
     ea.setView(null);
     updateUI();
+    // Keep read-only PDF selection capture while the user copies from a PDF
+    // tab, even when the drawing is not currently visible.
+    updateKeyHandlerLocation();
   };
 
   const onFocus = (view) => {
@@ -16653,6 +16791,7 @@ ea.createSidepanelTab(t("DOCK_TITLE"), true, true).then((tab) => {
   };
 
   tab.onClose = async () => {
+    pdfScriptSelection = null;
     for (const job of activeOperationJobs) {
       job.cancel();
       job.finish("Mindmap Builder closed.", 1000);

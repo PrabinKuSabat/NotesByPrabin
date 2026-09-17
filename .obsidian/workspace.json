@@ -17,7 +17,7 @@
                 "file": "Extras/Pdfs/Introduction to Algorithms, Fourth Edition - Thomas H. Cormen;Charles E. Leiserson;Rona.pdf",
                 "page": 484,
                 "left": -11,
-                "top": 626,
+                "top": 462,
                 "zoom": 1.3725490196078431
               },
               "icon": "lucide-file-text",
@@ -252,10 +252,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "bf55ed581034d57b",
+  "active": "0288b80678ebbe7b",
   "lastOpenFiles": [
-    "Excalidraw/Drawing 2026-09-17 20.14.27.excalidraw.md",
     "Extras/Pdfs/Introduction to Algorithms, Fourth Edition - Thomas H. Cormen;Charles E. Leiserson;Rona.pdf",
+    "Excalidraw/Drawing 2026-09-17 20.14.27.excalidraw.md",
     "Homepage.md",
     "Extras/Pdfs/Computer Architecture - A Quantitative Approach (John L. Hennessy,.pdf",
     "Excalidraw/Quantitative Design and Analysis.excalidraw.md",
