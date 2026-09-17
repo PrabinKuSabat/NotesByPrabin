@@ -8,7 +8,19 @@
         "type": "tabs",
         "children": [
           {
-            "id": "3ecdca4af7db559c",
+            "id": "e7a7b303c61786dc",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Excalidraw/Linux Boot-UP.excalidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Linux Boot-UP.excalidraw"
+            }
+          },
+          {
+            "id": "52ed14a703de2098",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -30,21 +42,8 @@
               "icon": "lucide-file",
               "title": "Linux Boot-UP.excalidraw code"
             }
-          },
-          {
-            "id": "73d1385f2343db1c",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Excalidraw/Linux Boot-UP.excalidraw.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "Linux Boot-UP.excalidraw"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -226,8 +225,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 489.81005859375,
-    "collapsed": true
+    "width": 489.81005859375
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -253,21 +251,21 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "73d1385f2343db1c",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
     "Homepage.md",
     "Excalidraw/Linux Boot-UP.excalidraw.md",
     "Excalidraw/Mindmap Code/Linux Boot-UP.excalidraw code.md",
+    "Extras/ATTACHMENTS/Pasted Image 20260917112730_166.svg",
+    "Extras/ATTACHMENTS/Pasted Image 20260917112730_151.svg",
+    "Extras/ATTACHMENTS/Pasted Image 20260917112730_116.svg",
+    "Extras/ATTACHMENTS/Pasted Image 20260917104517_460.svg",
     "Extras/ATTACHMENTS/Pasted Image 20260917104517_476.svg",
     "Extras/ATTACHMENTS/Pasted Image 20260917104517_468.svg",
-    "Extras/ATTACHMENTS/Pasted Image 20260917104517_460.svg",
     "Extras/ATTACHMENTS/Pasted Image 20260917104320_219.svg",
     "Extras/ATTACHMENTS/Pasted Image 20260917103958_085.svg",
     "Extras/ATTACHMENTS/Pasted Image 20260917103958_060.svg",
     "Extras/ATTACHMENTS/Pasted Image 20260917103824_381.svg",
-    "Extras/ATTACHMENTS/Pasted Image 20260917103824_373.svg",
-    "Extras/ATTACHMENTS/Pasted Image 20260917103824_364.svg",
-    "Extras/ATTACHMENTS/Pasted Image 20260917103824_350.svg",
     "Excalidraw/Mindmap Code/Mindmap Code Preview.css",
     "Excalidraw/Mindmap Code",
     "Excalidraw/Scripts/Custom/Mindmap Builder.js.md",

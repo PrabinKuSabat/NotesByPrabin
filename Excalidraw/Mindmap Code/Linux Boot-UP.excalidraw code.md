@@ -129,7 +129,7 @@ void board_init_f(ulong dummy)
 
 
 
-## text code
+## c code
 
 ```c
 int spl_board_init_f(void)
