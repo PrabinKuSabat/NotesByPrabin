@@ -189,3 +189,56 @@ int spl_board_init_f(void)
 }
 ```
 ^mindmap-code-WjqWFbMm
+
+
+## text code
+
+```text
+/*
+         * Save hart id and dtb pointer. The thread pointer register is not
+         * modified by C code. It is used by secondary_hart_loop.
+         */
+        mv        tp, a0
+        mv        s1, a1
+
+        /*
+         * Set the global data pointer to a known value in case we get a very
+         * early trap. The global data pointer will be set its actual value only
+         * after it has been initialized.
+         */
+        mv        gp, zero
+
+        /*
+         * Set the trap handler. This must happen after initializing gp because
+         * the handler may use it.
+         */
+        la        t0, trap_entry
+        csrw        MODE_PREFIX(tvec), t0
+
+        /*
+         * Mask all interrupts. Interrupts are disabled globally (in m/sstatus)
+         * for U-Boot, but we will need to read m/sip to determine if we get an
+         * IPI
+         */
+        csrw        MODE_PREFIX(ie), zero
+```
+^mindmap-code-CL925ijl
+
+
+## text code
+
+```text
+/*
+ * Set stackpointer in internal/ex RAM to call board_init_f
+ */
+call_board_init_f:
+        li        t0, -16
+#if defined(CONFIG_SPL_BUILD) && defined(CONFIG_SPL_STACK)
+        li        t1, CONFIG_SPL_STACK
+#else
+        li        t1, SYS_INIT_SP_ADDR
+#endif
+        and        sp, t1, t0                /* force 16 byte alignment */
+
+```
+^mindmap-code-t5EOn3jT
