@@ -70,9 +70,9 @@ spl_call_board_init_r:
 ^mindmap-code-fnxqBgm5
 
 
-## c code
+## asm code
 
-```c
+```asm
 call_board_init_f_0:
         mv        a0, sp
         jal        board_init_f_alloc_reserve
