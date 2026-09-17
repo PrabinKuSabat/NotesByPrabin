@@ -6478,21 +6478,36 @@ const addSourceReferencesToNode = (nodeId, value) => {
 
 const getCodeDisplaySource = (source, mode) => {
   const normalized = CODE_DISPLAY_MODES.includes(mode) ? mode : "full";
-  const language = getCodeBlockLanguage(source) || "text";
-  const lines = String(source || "").replace(/^```[^\n]*\n?/, "").replace(/\n?```\s*$/, "").split("\n");
+  if (!source || typeof source.fenced !== "string" || typeof source.markdown !== "string") {
+    throw new Error("Code preview requires a resolved Markdown code block.");
+  }
   if (normalized === "full") return source;
+  const language = source.language || "text";
+  const fencedLines = source.fenced.split("\n");
+  const lines = fencedLines.slice(1, -1);
+  // Keep the complete note and block index: community highlighters use the
+  // source context. Replace only this block in the in-memory render input.
+  const makeDisplay = (body, displayLanguage = language) => {
+    const longestFence = Math.max(2, ...(body.match(/`+/g) || []).map((run) => run.length));
+    const fence = "`".repeat(longestFence + 1);
+    const fenced = `${fence}${displayLanguage}\n${body}\n${fence}`;
+    const markdownLines = source.markdown.split("\n");
+    markdownLines.splice(source.openingLine, source.closingLine - source.openingLine + 1, ...fenced.split("\n"));
+    return { ...source, fenced, markdown: markdownLines.join("\n"),
+      closingLine: source.openingLine + fenced.split("\n").length - 1, language: displayLanguage };
+  };
   if (normalized === "summary") {
     const nonEmpty = lines.filter((line) => line.trim());
     const functions = nonEmpty.filter((line) => /\b[A-Za-z_$][\w$]*\s*\([^;{}]*\)\s*\{?\s*$/.test(line.trim())).slice(0, 6);
-    return `\`\`\`text\n${language} source • ${lines.length} lines\n${functions.length ? `Symbols: ${functions.map((line) => line.trim()).join(", ")}` : "No function signatures detected."}\nOpen the linked Markdown code note to edit the complete source.\n\`\`\``;
+    return makeDisplay(`${language} source • ${lines.length} lines\n${functions.length ? `Symbols: ${functions.map((line) => line.trim()).join(", ")}` : "No function signatures detected."}\nOpen the linked Markdown code note to edit the complete source.`, "text");
   }
   if (normalized === "preview") {
     const shown = lines.slice(0, 32);
     if (lines.length > shown.length) shown.push(`… ${lines.length - shown.length} more lines …`);
-    return `\`\`\`${language}\n${shown.join("\n")}\n\`\`\``;
+    return makeDisplay(shown.join("\n"));
   }
-  if (lines.length <= 32) return `\`\`\`${language}\n${lines.join("\n")}\n\`\`\``;
-  return `\`\`\`${language}\n${lines.slice(0, 16).join("\n")}\n… ${lines.length - 32} lines omitted …\n${lines.slice(-16).join("\n")}\n\`\`\``;
+  if (lines.length <= 32) return source;
+  return makeDisplay(`${lines.slice(0, 16).join("\n")}\n… ${lines.length - 32} lines omitted …\n${lines.slice(-16).join("\n")}`);
 };
 
 const getBranchMarkdown = async (node) => {
@@ -10145,7 +10160,7 @@ const queueCodePreviewRender = (operation) => {
 // images also have a plugin registry entry tied to their file id; creating a
 // fresh element clears that legacy representation. Thereafter refresh the SVG
 // image in place and preserve its canvas width as a true visual zoom.
-const applyCodePreviewToNode = async (node, rendered, { relayout = true, select = true, codeNotePath = null, codeNoteBlockId = null } = {}) => {
+const applyCodePreviewToNode = async (node, rendered, { relayout = true, select = true, codeNotePath = null, codeNoteBlockId = null, codeDisplayMode = null, sourceLanguage = null, resetSize = false } = {}) => {
   if (!node || !rendered?.dataURL || !isViewSet()) return null;
   const all = ea.getViewElements();
   const current = all.find((element) => element.id === node.id);
@@ -10169,7 +10184,7 @@ const applyCodePreviewToNode = async (node, rendered, { relayout = true, select 
   // Preserve later user resizing, but repair one-time legacy oversized images.
   const legacyOversized = current.type === "image" && current.customData?.isCodeNote &&
     !current.customData?.codePreviewSizingVersion && current.width > CODE_PREVIEW_LEGACY_OVERSIZE_WIDTH;
-  const displayWidth = current.type === "image" && !legacyOversized && current.customData?.isCodeNote
+  const displayWidth = !resetSize && current.type === "image" && !legacyOversized && current.customData?.isCodeNote
     ? Math.max(120, current.width || CODE_PREVIEW_RENDER_WIDTH)
     : CODE_PREVIEW_RENDER_WIDTH;
   const displayHeight = Math.max(40, displayWidth * rendered.height / rendered.width);
@@ -10229,8 +10244,9 @@ const applyCodePreviewToNode = async (node, rendered, { relayout = true, select 
     isCodeNote: true,
     codeNotePath: path,
     codeNoteBlockId: blockId,
-    codeLanguage: rendered.language || current.customData?.codeLanguage || "text",
-    codeRenderWidth: rendered.width,
+    codeLanguage: sourceLanguage || current.customData?.codeLanguage || rendered.language || "text",
+    codeDisplayMode: codeDisplayMode || current.customData?.codeDisplayMode || "full",
+    codeRenderWidth: current.customData?.codeRenderWidth || CODE_PREVIEW_RENDER_WIDTH,
     codePreviewSizingVersion: 2,
     doNotInvertSVGInDarkMode: true,
   };
@@ -10256,8 +10272,9 @@ const applyCodePreviewToNode = async (node, rendered, { relayout = true, select 
   return updated;
 };
 
-const renderCodeNoteNodeNow = async (nodeId, { relayout = true, select = true } = {}) => {
+const renderCodeNoteNodeNow = async (nodeId, { relayout = true, select = true, mode = null, resetSize = false } = {}) => {
   if (!isViewSet()) return null;
+  const targetView = ea.targetView;
   const node = ea.getViewElements().find((element) => element.id === nodeId);
   if (!node?.customData?.isCodeNote) return null;
   const { codeNotePath: path, codeNoteBlockId: blockId } = node.customData;
@@ -10267,29 +10284,40 @@ const renderCodeNoteNodeNow = async (nodeId, { relayout = true, select = true } 
   const source = await getCodeNoteSource(path, blockId);
   if (!source) throw new Error(`Code block ${blockId} was not found in ${path}`);
   const renderWidth = node.customData?.codeRenderWidth || CODE_PREVIEW_RENDER_WIDTH;
-  const displaySource = getCodeDisplaySource(source, node.customData?.codeDisplayMode);
+  const displayMode = mode || node.customData?.codeDisplayMode || "full";
+  const displaySource = getCodeDisplaySource(source, displayMode);
   const rendered = await renderCodeSourceToSvg(displaySource, path, renderWidth);
-  return applyCodePreviewToNode(node, rendered, { relayout, select });
+  if (ea.targetView !== targetView || !isViewSet()) throw new Error("Drawing changed while rendering code; retry in the original drawing.");
+  return applyCodePreviewToNode(node, rendered, { relayout, select, codeDisplayMode: displayMode, sourceLanguage: source.language, resetSize });
 };
 
 const renderCodeNoteNode = (nodeId, options = {}) => queueCodePreviewRender(
   () => queueSceneOperation(() => renderCodeNoteNodeNow(nodeId, options)),
 );
 
-const cycleCodeDisplayMode = async () => {
+const cycleCodeDisplayMode = async (resetSize = false) => {
   const node = getMindmapNodeFromSelection();
   if (!node?.customData?.isCodeNote) {
     new Notice("Select a linked code note to change its display mode.");
     return;
   }
-  const current = CODE_DISPLAY_MODES.includes(node.customData?.codeDisplayMode) ? node.customData.codeDisplayMode : "full";
-  const next = CODE_DISPLAY_MODES[(CODE_DISPLAY_MODES.indexOf(current) + 1) % CODE_DISPLAY_MODES.length];
-  await queueSceneOperation(async () => {
-    ea.addAppendUpdateCustomData(node.id, { codeDisplayMode: next });
-    await addElementsToView({ captureUpdate: "EVENTUALLY" });
-  });
-  await renderCodeNoteNode(node.id);
-  new Notice(`Code display: ${CODE_DISPLAY_MODE_LABELS[next]}`);
+  const targetView = ea.targetView;
+  try {
+    await queueSceneOperation(async () => {
+      if (ea.targetView !== targetView) throw new Error("Return to the drawing before changing code display.");
+      const fresh = ea.getViewElements().find((element) => element.id === node.id && !element.isDeleted);
+      if (!fresh?.customData?.isCodeNote) throw new Error("The selected code node is no longer available.");
+      const current = CODE_DISPLAY_MODES.includes(fresh.customData.codeDisplayMode) ? fresh.customData.codeDisplayMode : "full";
+      const next = resetSize ? current : CODE_DISPLAY_MODES[(CODE_DISPLAY_MODES.indexOf(current) + 1) % CODE_DISPLAY_MODES.length];
+      const updated = await renderCodeNoteNodeNow(node.id, { mode: next, resetSize });
+      if (!updated) throw new Error("Code preview could not be updated.");
+      new Notice(resetSize ? `Code size reset to ${CODE_PREVIEW_RENDER_WIDTH} canvas units.` : `Code display: ${CODE_DISPLAY_MODE_LABELS[next]}`);
+      updateUI();
+    });
+  } catch (error) {
+    console.error("Mindmap Builder: code display failed", error);
+    new Notice(error.message || "Could not change code display.");
+  }
 };
 
 // Reuse a fenced block already stored in any Markdown note. The source note
@@ -12454,6 +12482,12 @@ const renderInput = (container, isFloating = false) => {
     btn.setIcon("eye");
     btn.setTooltip("Cycle linked code display: full, preview, excerpt, summary");
     btn.onClick(() => cycleCodeDisplayMode());
+  }, true);
+
+  addButton((btn) => {
+    btn.setIcon("minimize-2");
+    btn.setTooltip("Reset selected linked code width to 660 canvas units; preserve display mode");
+    btn.onClick(() => cycleCodeDisplayMode(true));
   }, true);
 
   addButton((btn) => {
@@ -15923,9 +15957,8 @@ const performAction = (action, event) => queueSceneOperation(
       const node = nodeRes.data;
       if (!node.customData?.isCodeNote) return mmErr(MMError.INVALID_ARGUMENT, "node must be a linked code note");
       try {
-        ea.addAppendUpdateCustomData(node.id, { codeDisplayMode: mode });
-        await addElementsToView({ captureUpdate: "EVENTUALLY" });
-        await renderCodeNoteNodeNow(node.id);
+        const updated = await renderCodeNoteNodeNow(node.id, { mode });
+        if (!updated) return mmErr(MMError.OPERATION_FAILED, "Code preview could not be updated");
         return mmOk({ nodeId: node.id, mode });
       } catch (e) {
         return mmErr(MMError.OPERATION_FAILED, "setCodeDisplayMode failed", e);
