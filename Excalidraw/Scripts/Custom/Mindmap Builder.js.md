@@ -9711,6 +9711,7 @@ const getCodeNotePath = async () => {
 const CODE_PREVIEW_RENDER_WIDTH = 660;
 const CODE_PREVIEW_MIN_WIDTH = 360;
 const CODE_PREVIEW_MAX_WIDTH = 1200;
+const CODE_PREVIEW_LEGACY_OVERSIZE_WIDTH = 1800;
 const CODE_PREVIEW_STYLE_PROPERTIES = [
   "display", "position", "box-sizing", "width", "height", "min-width", "max-width", "min-height", "max-height",
   "margin", "margin-top", "margin-right", "margin-bottom", "margin-left",
@@ -9733,38 +9734,50 @@ const getCodeNoteSource = async (path, blockId) => {
   const markerLine = lines.findIndex((line) => line.trim() === `^${blockId}`);
   if (markerLine < 0) return null;
 
+  let openingLine = -1;
   let closingLine = markerLine - 1;
   while (closingLine >= 0 && !lines[closingLine].trim()) closingLine -= 1;
   const closingFence = getFenceMarker(lines[closingLine] || "");
-  if (!closingFence) return null;
-
-  for (let openingLine = closingLine - 1; openingLine >= 0; openingLine -= 1) {
-    const openingFence = getFenceMarker(lines[openingLine] || "");
-    if (openingFence && openingFence[0] === closingFence[0] && closingFence.length >= openingFence.length) {
-      let blockIndex = 0;
-      let activeFence = null;
-      for (let lineIndex = 0; lineIndex < openingLine; lineIndex += 1) {
-        const marker = getFenceMarker(lines[lineIndex] || "");
-        if (!marker) continue;
-        if (!activeFence) {
-          activeFence = marker;
-          blockIndex += 1;
-        } else if (marker[0] === activeFence[0] && marker.length >= activeFence.length) {
-          activeFence = null;
-        }
+  if (closingFence) {
+    for (let index = closingLine - 1; index >= 0; index -= 1) {
+      const openingFence = getFenceMarker(lines[index] || "");
+      if (openingFence && openingFence[0] === closingFence[0] && closingFence.length >= openingFence.length) {
+        openingLine = index;
+        break;
       }
-      const fenced = lines.slice(openingLine, closingLine + 1).join("\n");
-      return {
-        markdown,
-        fenced,
-        blockIndex,
-        openingLine,
-        closingLine,
-        language: getCodeHighlightLanguage(getCodeBlockLanguage(fenced)),
-      };
+    }
+  } else {
+    // Earlier generated notes put the block id immediately before the fence.
+    // Read those without rewriting a user-owned Markdown file.
+    openingLine = markerLine + 1;
+    while (openingLine < lines.length && !lines[openingLine].trim()) openingLine += 1;
+    const openingFence = getFenceMarker(lines[openingLine] || "");
+    if (!openingFence) return null;
+    closingLine = lines.findIndex((line, index) => index > openingLine && hasMatchingFence(line, openingFence));
+  }
+  if (openingLine < 0 || closingLine < 0) return null;
+
+  let blockIndex = 0;
+  let activeFence = null;
+  for (let lineIndex = 0; lineIndex < openingLine; lineIndex += 1) {
+    const marker = getFenceMarker(lines[lineIndex] || "");
+    if (!marker) continue;
+    if (!activeFence) {
+      activeFence = marker;
+      blockIndex += 1;
+    } else if (marker[0] === activeFence[0] && marker.length >= activeFence.length) {
+      activeFence = null;
     }
   }
-  return null;
+  const fenced = lines.slice(openingLine, closingLine + 1).join("\n");
+  return {
+    markdown,
+    fenced,
+    blockIndex,
+    openingLine,
+    closingLine,
+    language: getCodeHighlightLanguage(getCodeBlockLanguage(fenced)),
+  };
 };
 
 // Render through Obsidian itself so community code-block processors and the
