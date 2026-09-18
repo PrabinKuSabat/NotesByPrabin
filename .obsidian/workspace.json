@@ -4,46 +4,57 @@
     "type": "split",
     "children": [
       {
-        "id": "914423c9809d5448",
+        "id": "d9d7539f078e3dc9",
         "type": "tabs",
-        "dimension": 68.26697892271663,
         "children": [
           {
-            "id": "bf55ed581034d57b",
+            "id": "71ce987067d28238",
             "type": "leaf",
             "state": {
-              "type": "pdf",
+              "type": "markdown",
               "state": {
-                "file": "Extras/Pdfs/Introduction to Algorithms, Fourth Edition - Thomas H. Cormen;Charles E. Leiserson;Rona.pdf",
-                "page": 554,
-                "left": -11,
-                "top": 618,
-                "zoom": 1.3725490196078431
+                "file": "ATLAS/DAA Assignment 19-09.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "lucide-file-text",
-              "title": "Introduction to Algorithms, Fourth Edition - Thomas H. Cormen;Charles E. Leiserson;Rona"
+              "icon": "lucide-file",
+              "title": "DAA Assignment 19-09"
             }
-          }
-        ]
-      },
-      {
-        "id": "3b599b969a32e37b",
-        "type": "tabs",
-        "dimension": 31.733021077283375,
-        "children": [
+          },
           {
-            "id": "0288b80678ebbe7b",
+            "id": "865e01b5e04ac848",
             "type": "leaf",
             "state": {
               "type": "excalidraw",
               "state": {
-                "file": "Excalidraw/Algorithms.excalidraw.md"
+                "file": "Excalidraw/DAA 19-09.excalidraw.md"
               },
               "icon": "excalidraw-icon",
-              "title": "Algorithms.excalidraw"
+              "title": "DAA 19-09.excalidraw"
+            }
+          },
+          {
+            "id": "46e8c6aaad312ab0",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -252,13 +263,13 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "0288b80678ebbe7b",
+  "active": "865e01b5e04ac848",
   "lastOpenFiles": [
-    "Extras/Pdfs/Introduction to Algorithms, Fourth Edition - Thomas H. Cormen;Charles E. Leiserson;Rona.pdf",
-    "Excalidraw/Algorithms.excalidraw.md",
+    "ATLAS/DAA Assignment 19-09.md",
     "Homepage.md",
     "Excalidraw/DAA 19-09.excalidraw.md",
-    "ATLAS/DAA Assignment 19-09.md",
+    "Excalidraw/Algorithms.excalidraw.md",
+    "Extras/Pdfs/Introduction to Algorithms, Fourth Edition - Thomas H. Cormen;Charles E. Leiserson;Rona.pdf",
     "ATLAS/DAA - M.Tech..md",
     "ATLAS/Atlas.md",
     "ATLAS/Design and Analysis of Algorithms.md",
