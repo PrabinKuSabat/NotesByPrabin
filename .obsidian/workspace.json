@@ -6,7 +6,7 @@
       {
         "id": "e21c924f8649c572",
         "type": "tabs",
-        "dimension": 68.6768149882904,
+        "dimension": 42.50585480093677,
         "children": [
           {
             "id": "74108e81e1457681",
@@ -15,10 +15,10 @@
               "type": "pdf",
               "state": {
                 "file": "Extras/Pdfs/Wayfinder_ Automated Operating System Spec - Alexander Jung.pdf",
-                "page": 2,
-                "left": -11,
-                "top": 621,
-                "zoom": 1.3811274509803924
+                "page": 3,
+                "left": -19,
+                "top": 709,
+                "zoom": 0.8333333333333334
               },
               "icon": "lucide-file-text",
               "title": "Wayfinder_ Automated Operating System Spec - Alexander Jung"
@@ -29,7 +29,7 @@
       {
         "id": "b99d3788a63236da",
         "type": "tabs",
-        "dimension": 31.323185011709604,
+        "dimension": 57.494145199063226,
         "children": [
           {
             "id": "5a16d2730d8672c6",
@@ -252,10 +252,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "74108e81e1457681",
+  "active": "5a16d2730d8672c6",
   "lastOpenFiles": [
-    "Excalidraw/Seminar 2.excalidraw.md",
     "Extras/Pdfs/Wayfinder_ Automated Operating System Spec - Alexander Jung.pdf",
+    "Excalidraw/Seminar 2.excalidraw.md",
     "Excalidraw/Algorithms.excalidraw.md",
     "Homepage.md",
     "Extras/Pdfs/Introduction to Algorithms, Fourth Edition - Thomas H. Cormen;Charles E. Leiserson;Rona.pdf",
