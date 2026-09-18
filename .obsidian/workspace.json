@@ -4,43 +4,43 @@
     "type": "split",
     "children": [
       {
-        "id": "914423c9809d5448",
+        "id": "e21c924f8649c572",
         "type": "tabs",
-        "dimension": 68.26697892271663,
+        "dimension": 68.6768149882904,
         "children": [
           {
-            "id": "bf55ed581034d57b",
+            "id": "74108e81e1457681",
             "type": "leaf",
             "state": {
               "type": "pdf",
               "state": {
-                "file": "Extras/Pdfs/Introduction to Algorithms, Fourth Edition - Thomas H. Cormen;Charles E. Leiserson;Rona.pdf",
-                "page": 484,
+                "file": "Extras/Pdfs/Wayfinder_ Automated Operating System Spec - Alexander Jung.pdf",
+                "page": 2,
                 "left": -11,
-                "top": 486,
-                "zoom": 1.3725490196078434
+                "top": 621,
+                "zoom": 1.3811274509803924
               },
               "icon": "lucide-file-text",
-              "title": "Introduction to Algorithms, Fourth Edition - Thomas H. Cormen;Charles E. Leiserson;Rona"
+              "title": "Wayfinder_ Automated Operating System Spec - Alexander Jung"
             }
           }
         ]
       },
       {
-        "id": "3b599b969a32e37b",
+        "id": "b99d3788a63236da",
         "type": "tabs",
-        "dimension": 31.733021077283375,
+        "dimension": 31.323185011709604,
         "children": [
           {
-            "id": "0288b80678ebbe7b",
+            "id": "5a16d2730d8672c6",
             "type": "leaf",
             "state": {
               "type": "excalidraw",
               "state": {
-                "file": "Excalidraw/Drawing 2026-09-17 20.14.27.excalidraw.md"
+                "file": "Excalidraw/Seminar 2.excalidraw.md"
               },
               "icon": "excalidraw-icon",
-              "title": "Drawing 2026-09-17 20.14.27.excalidraw"
+              "title": "Seminar 2.excalidraw"
             }
           }
         ]
@@ -252,14 +252,15 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "0288b80678ebbe7b",
+  "active": "74108e81e1457681",
   "lastOpenFiles": [
-    "Extras/Pdfs/Introduction to Algorithms, Fourth Edition - Thomas H. Cormen;Charles E. Leiserson;Rona.pdf",
-    "Excalidraw/Drawing 2026-09-17 20.14.27.excalidraw.md",
+    "Excalidraw/Seminar 2.excalidraw.md",
+    "Extras/Pdfs/Wayfinder_ Automated Operating System Spec - Alexander Jung.pdf",
+    "Excalidraw/Algorithms.excalidraw.md",
     "Homepage.md",
+    "Extras/Pdfs/Introduction to Algorithms, Fourth Edition - Thomas H. Cormen;Charles E. Leiserson;Rona.pdf",
     "Extras/Pdfs/Computer Architecture - A Quantitative Approach (John L. Hennessy,.pdf",
     "Excalidraw/Quantitative Design and Analysis.excalidraw.md",
-    "Extras/Pdfs/Wayfinder_ Automated Operating System Spec - Alexander Jung.pdf",
     "Extras/Pdfs/Hands-On Machine Learning with Scikit-Lear - Geron, Aurelien;.pdf",
     "Excalidraw/Linux Boot-UP.excalidraw.md",
     "Extras/ATTACHMENTS/Pasted Image 20260917145518_717.svg",
@@ -298,7 +299,6 @@
     "Extras/ICONS/tabler-icons-main/packages/icons-png/README.md",
     "Extras/ICONS/tabler-icons-main/packages/icons-eps/README.md",
     "Extras/ICONS/tabler-icons-main/packages/icons-astro/README.md",
-    "Extras/ICONS/tabler-icons-main/packages/icons-angular/README.md",
     "EFFORTS/Untitled.canvas",
     "NotesByPrabin/EFFORTS/Binary Search.canvas",
     "EFFORTS/Binary Search.canvas",

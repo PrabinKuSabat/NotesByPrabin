@@ -856,9 +856,9 @@
           "RADIAL_POLE_GAP_BONUS": 2,
           "RADIAL_START_ANGLE": 280,
           "RADIAL_MAX_SWEEP": 340,
-          "DIRECTIONAL_ARC_SPAN_RADIANS": 2.1,
+          "DIRECTIONAL_ARC_SPAN_RADIANS": 1,
           "GAP_MULTIPLIER_DIRECTIONAL": 2.4,
-          "RADIUS_PADDING_PER_NODE": 20,
+          "RADIUS_PADDING_PER_NODE": 7,
           "VERTICAL_SUBTREE_WIDTH_BLEND_SINGLE": 0.35,
           "VERTICAL_SUBTREE_WIDTH_BLEND_DUAL": 0.6,
           "VERTICAL_SUBTREE_SMOOTH_THRESHOLD_MULTIPLIER": 6,
@@ -921,7 +921,7 @@
         "hidden": false
       },
       "Max Text Width": {
-        "value": 560,
+        "value": 500,
         "hidden": false
       },
       "Arrow Stroke Style": {
@@ -1058,7 +1058,7 @@
             "modifiers": [
               "Alt"
             ],
-            "scope": 3
+            "scope": 1
           },
           {
             "action": "Toggle Boundary",
