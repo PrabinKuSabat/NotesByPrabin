@@ -852,12 +852,12 @@
           "DEPTH_GAP_DECAY": 0.86,
           "ROOT_RADIUS_FACTOR": 0.8,
           "MIN_RADIUS": 350,
-          "RADIAL_ASPECT_RATIO": 0.7,
-          "RADIAL_POLE_GAP_BONUS": 2,
+          "RADIAL_ASPECT_RATIO": 1.5,
+          "RADIAL_POLE_GAP_BONUS": 4.8,
           "RADIAL_START_ANGLE": 280,
           "RADIAL_MAX_SWEEP": 340,
-          "DIRECTIONAL_ARC_SPAN_RADIANS": 1,
-          "GAP_MULTIPLIER_DIRECTIONAL": 2.4,
+          "DIRECTIONAL_ARC_SPAN_RADIANS": 0.8,
+          "GAP_MULTIPLIER_DIRECTIONAL": 3,
           "RADIUS_PADDING_PER_NODE": 7,
           "VERTICAL_SUBTREE_WIDTH_BLEND_SINGLE": 0.35,
           "VERTICAL_SUBTREE_WIDTH_BLEND_DUAL": 0.6,
@@ -869,7 +869,7 @@
           "DIRECTIONAL_CROSS_AXIS_RATIO": 0.2,
           "INDICATOR_OFFSET": 10,
           "INDICATOR_OPACITY": 40,
-          "CONTAINER_PADDING": 10,
+          "CONTAINER_PADDING": 34,
           "MAX_SEGMENT_LENGTH": 80,
           "MANUAL_GAP_MULTIPLIER": 1.3,
           "MANUAL_JITTER_RANGE": 300
@@ -885,7 +885,7 @@
         "hidden": false
       },
       "Growth Mode": {
-        "value": "Right-facing",
+        "value": "Right-Left",
         "valueset": [
           "Radial",
           "Right-facing",
@@ -901,7 +901,7 @@
         "hidden": false
       },
       "Font Sizes": {
-        "value": "Uniform Size",
+        "value": "Fibonacci Scale",
         "valueset": [
           "Uniform Size",
           "Normal Scale",
@@ -937,7 +937,7 @@
         "hidden": false
       },
       "Branch Scale Style": {
-        "value": "Uniform",
+        "value": "Hierarchical",
         "hidden": false
       },
       "Base Stroke Width": {
@@ -1107,7 +1107,7 @@
             "modifiers": [
               "Alt"
             ],
-            "scope": 3
+            "scope": 1
           },
           {
             "action": "Paste",
@@ -1236,11 +1236,11 @@
         "hidden": true
       },
       "Base Font Size": {
-        "value": 36,
+        "value": 56,
         "hidden": false
       },
       "Minimum Font Size": {
-        "value": 10,
+        "value": 16,
         "hidden": false
       }
     }

@@ -779,7 +779,7 @@
           {
             "id": "e21c924f8649c572",
             "type": "tabs",
-            "dimension": 68.6768149882904,
+            "dimension": 76.22950819672131,
             "children": [
               {
                 "id": "74108e81e1457681",
@@ -788,10 +788,10 @@
                   "type": "pdf",
                   "state": {
                     "file": "Extras/Pdfs/Wayfinder_ Automated Operating System Spec - Alexander Jung.pdf",
-                    "page": 1,
-                    "left": -11,
-                    "top": 796,
-                    "zoom": 1.3811274509803924
+                    "page": 3,
+                    "left": -10,
+                    "top": 713,
+                    "zoom": 1.5392156862745099
                   },
                   "icon": "lucide-file-text",
                   "title": "Wayfinder_ Automated Operating System Spec - Alexander Jung"
@@ -802,7 +802,7 @@
           {
             "id": "b99d3788a63236da",
             "type": "tabs",
-            "dimension": 31.323185011709604,
+            "dimension": 23.770491803278688,
             "children": [
               {
                 "id": "5a16d2730d8672c6",
@@ -1026,8 +1026,8 @@
         }
       },
       "active": "5a16d2730d8672c6",
-      "mtime": "2026-09-18T10:29:29+05:30"
+      "mtime": "2026-09-18T13:37:22+05:30"
     }
   },
-  "active": "Seminar 2"
+  "active": "Algorithms"
 }

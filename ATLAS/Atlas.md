@@ -21,6 +21,8 @@ updated: 2026-07-31
 > [[Design and Analysis of Algorithms]]  
 > [[Computer Networks]]  
 > [[System Programming]]
+> [[DAA - M.Tech.]]
+
 
 ```ad-summary
 title: Architecture
